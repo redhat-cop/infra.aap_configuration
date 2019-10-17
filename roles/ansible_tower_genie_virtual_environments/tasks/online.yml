@@ -1,0 +1,23 @@
+---
+
+
+- name: "Check virtual environment exists"
+  stat:
+    get_attributes: False
+    get_checksum: False
+    get_mime: False
+    path: "{{ tower_venv_path }}"
+  register: "tower_venv_path_check"
+
+- name: "Initialize virtual environment"
+  include_tasks: "init_venv.yml"
+  when: 'not tower_venv_path_check.stat.exists'
+
+- name: "Ensure Python libraries are installed to virtual environment"
+  pip:
+    name: "{{ tower_venv_pylibs }}"
+    umask: "{{ tower_venv_umask }}"
+    virtualenv: "{{ tower_venv_path }}"
+    virtualenv_command: "virtualenv"
+    state: "latest"
+  become: True

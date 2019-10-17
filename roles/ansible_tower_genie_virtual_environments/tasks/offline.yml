@@ -1,0 +1,30 @@
+---
+
+  - name: "Ensure virtual environment path exists"
+    file:
+      mode: "0755"
+      owner: "awx"
+      group: "awx"
+      path: "{{ tower_venv_path }}"
+      state: "directory"
+    become: True
+    when: create_venv_path == 'True'
+  
+  
+  - name: Copy Over the Python Libraries For Offline Install
+    copy:
+      src: "{{ item.package_path }}"
+      dest: "{{ tower_tmp_path }}"
+    loop: "{{ tower_venv_installs }}"
+
+  - name: Install the Python Libraries in a created virtualenv Offline
+    pip:
+      virtualenv_site_packages: yes
+      requirements: "{{ tower_tmp_path }}/{{ item.package_path }}/{{ item.reqts_file }}"
+      umask: "{{ tower_venv_umask }}"
+      virtualenv: "{{ tower_venv_path }}/{{ item.name }}"
+      virtualenv_command: "virtualenv"
+      extra_args: "--no-index --find-links file://{{ tower_tmp_path }}/{{ item.package_path }}"
+      state: "latest"
+    become: True
+    loop: "{{ tower_venv_installs }}"
