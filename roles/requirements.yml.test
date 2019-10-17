@@ -1,4 +1,3 @@
----
 
   - src: git@github.com:redhat-ansible-practice/ansible_gitlab_groups.git
     version: master
