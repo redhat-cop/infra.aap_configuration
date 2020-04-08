@@ -7,11 +7,7 @@
 #Create Job Template
 - name: Create Job Template {{ tower_jt_name }}
   #this module should be changed to tower_job_template when problems with the original module are fixed in ansible 2.6
-  tower_jt:
-    tower_host: "{{ tower_url }}"
-    tower_username: "{{ tower_user }}"
-    tower_password: "{{ tower_pass }}"
-    tower_verify_ssl: "{{ tower_verify_ssl }}"
+  tower_job_template:
     name: "{{ tower_jt_name }}"
     description: "{{ tower_jt_desc | default(omit) }}"
     job_type: "{{ tower_jt_job_type }}"

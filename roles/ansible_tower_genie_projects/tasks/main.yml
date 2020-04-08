@@ -6,11 +6,7 @@
 
 - name: Create Project in Ansible Tower
   tower_project:
-    tower_host: "{{ tower_url }}"
-    tower_username: "{{ tower_user }}"
-    tower_password: "{{ tower_pass }}"
     organization: "{{ tower_org }}"
-    tower_verify_ssl: "{{ tower_verify_ssl }}"
     description: "{{ tower_proj_desc }}"
     name: "{{ tower_proj_name }}"
     scm_url: "{{ tower_proj_url }}"

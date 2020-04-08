@@ -8,7 +8,6 @@
 - name: Create Ansible Tower Credential | Source Control
   tower_credential:
     organization: "{{ tower_org }}"
-    tower_verify_ssl: "{{ tower_verify_ssl }}"
     name: "{{ tower_cred_name }}"
     username: "{{ tower_cred_user }}"
     password: "{{ tower_cred_pass | default(omit) }}"
@@ -23,7 +22,6 @@
 - name: Create Ansible Tower Credential | Machine Credential
   tower_credential:
     organization: "{{ tower_org }}"
-    tower_verify_ssl: "{{ tower_verify_ssl }}"
     name: "{{ tower_cred_name }}"
     username: "{{ tower_cred_user }}"
     password: "{{ tower_cred_pass | default('ASK') }}"
@@ -38,7 +36,6 @@
 - name: Create Ansible Tower Credential | Vault Credential
   tower_credential:
     organization: "{{ tower_org }}"
-    tower_verify_ssl: "{{ tower_verify_ssl }}"
     name: "{{ tower_cred_name }}"
     description: "{{ tower_cred_desc | default(omit) }}"
     vault_password: "{{ tower_cred_vault_pass | default('ASK') }}"
@@ -50,7 +47,6 @@
 - name: Create Ansible Tower Credential | Network Credential
   tower_credential:
     organization: "{{ tower_org }}"
-    tower_verify_ssl: "{{ tower_verify_ssl }}"
     name: "{{ tower_cred_name }}"
     description: "{{ tower_cred_desc | default(omit) }}"
     kind: "{{ tower_cred_type }}"
@@ -67,7 +63,6 @@
 - name: Create Ansible Tower Credential | Amazon Web Services Credential
   tower_credential:
     organization: "{{ tower_org }}"
-    tower_verify_ssl: "{{ tower_verify_ssl }}"
     name: "{{ tower_cred_name }}"
     description: "{{ tower_cred_desc | default(omit) }}"
     kind: "{{ tower_cred_type }}"
