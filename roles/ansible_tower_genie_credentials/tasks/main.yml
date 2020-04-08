@@ -7,9 +7,6 @@
 # Type SCM
 - name: Create Ansible Tower Credential | Source Control
   tower_credential:
-    tower_host: "{{ tower_url }}"
-    tower_username: "{{ tower_user }}"
-    tower_password: "{{ tower_pass }}"
     organization: "{{ tower_org }}"
     tower_verify_ssl: "{{ tower_verify_ssl }}"
     name: "{{ tower_cred_name }}"
@@ -25,9 +22,6 @@
 # Type machine, AKA ssh
 - name: Create Ansible Tower Credential | Machine Credential
   tower_credential:
-    tower_host: "{{ tower_url }}"
-    tower_username: "{{ tower_user }}"
-    tower_password: "{{ tower_pass }}"
     organization: "{{ tower_org }}"
     tower_verify_ssl: "{{ tower_verify_ssl }}"
     name: "{{ tower_cred_name }}"
@@ -43,9 +37,6 @@
 # Type vault
 - name: Create Ansible Tower Credential | Vault Credential
   tower_credential:
-    tower_host: "{{ tower_url }}"
-    tower_username: "{{ tower_user }}"
-    tower_password: "{{ tower_pass }}"
     organization: "{{ tower_org }}"
     tower_verify_ssl: "{{ tower_verify_ssl }}"
     name: "{{ tower_cred_name }}"
@@ -58,9 +49,6 @@
 # Type net
 - name: Create Ansible Tower Credential | Network Credential
   tower_credential:
-    tower_host: "{{ tower_url }}"
-    tower_username: "{{ tower_user }}"
-    tower_password: "{{ tower_pass }}"
     organization: "{{ tower_org }}"
     tower_verify_ssl: "{{ tower_verify_ssl }}"
     name: "{{ tower_cred_name }}"
@@ -78,9 +66,6 @@
 # Type aws
 - name: Create Ansible Tower Credential | Amazon Web Services Credential
   tower_credential:
-    tower_host: "{{ tower_url }}"
-    tower_username: "{{ tower_user }}"
-    tower_password: "{{ tower_pass }}"
     organization: "{{ tower_org }}"
     tower_verify_ssl: "{{ tower_verify_ssl }}"
     name: "{{ tower_cred_name }}"
