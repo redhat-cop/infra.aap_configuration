@@ -1,12 +1,14 @@
 ---
+
 tower_venv_pylibs:
   - "ansible-tower-cli"
 tower_venv_umask: "0022"
 tower_venv_path: "/var/lib/awx/venv/ansible"
-requirements: "true"
-pip_req: "false"
-virtual_offline: "true"
-virtual_backup: "false"
+requirements: "True"
+pip_req: "False"
+virtual_offline: "False"
+virtual_online: "True"
+virtual_backup: "False"
 virtualenv_rpms:
   - gcc
   - python-pip
