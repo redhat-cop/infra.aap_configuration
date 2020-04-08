@@ -1,0 +1,25 @@
+---
+- name: Bring in vaulted Ansible Tower secrets
+  include_vars: vars/tower-secrets.yml
+  when: tower_secrets
+  no_log: True
+
+- name: Create Project in Ansible Tower
+  tower_project:
+    tower_host: "{{ tower_url }}"
+    tower_username: "{{ tower_user }}"
+    tower_password: "{{ tower_pass }}"
+    organization: "{{ tower_org }}"
+    tower_verify_ssl: "{{ tower_verify_ssl }}"
+    description: "{{ tower_proj_desc }}"
+    name: "{{ tower_proj_name }}"
+    scm_url: "{{ tower_proj_url }}"
+    scm_branch: "{{ tower_proj_branch }}"
+    scm_type: "{{ tower_proj_type }}"
+    scm_credential: "{{ tower_proj_credential }}"
+    scm_clean: "{{ tower_proj_clean }}"
+    scm_delete_on_update: "{{ tower_proj_delete }}"
+    scm_update_on_launch: "{{ tower_proj_update_on_launch }}"
+    state: "present"
+
+# TODO add manual type project creation and conditional to above task for git, hg, and svn types

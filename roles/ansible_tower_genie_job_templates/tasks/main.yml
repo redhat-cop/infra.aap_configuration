@@ -1,0 +1,47 @@
+---
+- name: Bring in vaulted Ansible Tower secrets
+  include_vars: vars/tower-secrets.yml
+  when: tower_secrets
+  no_log: True
+
+#Create Job Template
+- name: Create Job Template {{ tower_jt_name }}
+  #this module should be changed to tower_job_template when problems with the original module are fixed in ansible 2.6
+  tower_jt:
+    tower_host: "{{ tower_url }}"
+    tower_username: "{{ tower_user }}"
+    tower_password: "{{ tower_pass }}"
+    tower_verify_ssl: "{{ tower_verify_ssl }}"
+    name: "{{ tower_jt_name }}"
+    description: "{{ tower_jt_desc | default(omit) }}"
+    job_type: "{{ tower_jt_job_type }}"
+    inventory: "{{ tower_jt_inventory | default(omit) }}"
+    project: "{{ tower_jt_proj }}"
+    playbook: "{{ tower_jt_playbook }}"
+    credential: "{{ tower_jt_cred | default(omit) }}"
+    vault_credential: "{{ tower_jt_vault_cred | default(omit) }}"
+    forks: "{{ tower_jt_forks | default(omit) }}"
+    limit: "{{ tower_jt_limit | default(omit) }}"
+    verbosity: "{{ tower_jt_verbosity | default(omit) }}"
+    extra_vars_path: "{{ tower_jt_extra_vars_path | default(omit) }}"
+    job_tags: "{{ tower_jt_job_tags | default(omit) }}"
+    force_handlers_enabled: "{{ tower_jt_force_handlers | default(omit) }}"
+    skip_tags: "{{ tower_jt_skip_tags | default(omit) }}"
+    start_at_task: "{{ tower_jt_start_at_task | default(omit) }}"
+    timeout: "{{ tower_jt_timeout | default(omit) }}"
+    fact_caching_enabled: "{{ tower_jt_fact_caching }}"
+    host_config_key: "{{ tower_jt_host_conf_key | default(omit) }}"
+    ask_diff_mode: "{{ tower_jt_ask_diff_mode }}"
+    ask_extra_vars: "{{ tower_jt_ask_extra_vars | default(omit) }}"
+    ask_limit: "{{ tower_jt_ask_limit }}"
+    ask_tags: "{{ tower_jt_ask_tags | default(omit) }}"
+    ask_skip_tags: "{{ tower_jt_ask_skip_tags }}"
+    ask_job_type: "{{ tower_jt_ask_job_type | default(omit) }}"
+    ask_verbosity: "{{ tower_jt_ask_verbosity }}"
+    ask_inventory: "{{ tower_jt_ask_inventory | default(omit) }}"
+    ask_credential: "{{ tower_jt_ask_cred | default(omit) }}"
+    survey_enabled: "{{ tower_jt_survey }}"
+    become_enabled: "{{ tower_jt_become | default(omit) }}"
+    diff_mode_enabled: "{{ tower_jt_diff_mode }}"
+    concurrent_jobs_enabled: "{{ tower_jt_concurrent_jobs }}"
+    state: "present"

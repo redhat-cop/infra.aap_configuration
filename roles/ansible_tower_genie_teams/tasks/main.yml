@@ -1,0 +1,16 @@
+---
+- name: Bring in vaulted Ansible Tower secrets
+  include_vars: vars/tower-secrets.yml
+  when: tower_secrets
+  no_log: True
+
+- name: Create Ansible Tower Team
+  tower_team:
+    name: "{{ tower_team_name }}"
+    description: "{{ tower_team_desc }}"
+    tower_host: "{{ tower_url }}"
+    tower_username: "{{ tower_user }}"
+    tower_password: "{{ tower_pass }}"
+    organization: "{{ tower_org }}"
+    tower_verify_ssl: "{{ tower_verify_ssl }}"
+    state: "present"
