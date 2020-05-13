@@ -6,7 +6,7 @@
     custom_virtualenv: "{{ item.custom_virtualenv | default(omit) }}"
     max_hosts: "{{ item.max_hosts | default(omit) }}"
     state: "{{ item.state | default('present') }}"
-    tower_oauthtoken: "{{ tower_oauthtoken }}"
+    tower_oauthtoken: "{{ tower_oauthtoken | default('omit') }}"
     tower_host: "{{ tower_server }}"
     tower_verify_ssl: "{{ tower_verify_ssl | default('omit') }}"
   with_items: "{{ organizations }}"
