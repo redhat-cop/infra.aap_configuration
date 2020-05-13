@@ -1,0 +1,13 @@
+---
+- name: Add organizations
+  awx.awx.tower_organization:
+    name: "{{ item.name }}"
+    description: "{{ item.description | default(omit) }}"
+    custom_virtualenv: "{{ item.custom_virtualenv | default(omit) }}"
+    max_hosts: "{{ item.max_hosts | default(omit) }}"
+    state: "{{ item.state | default('present') }}"
+    tower_oauthtoken: "{{ tower_oauthtoken }}"
+    tower_host: "{{ tower_server }}"
+    tower_verify_ssl: "{{ tower_verify_ssl | default('omit') }}"
+  with_items: "{{ organizations }}"
+  no_log: "{{ tower_genie_organizations_secure_logging }}"
