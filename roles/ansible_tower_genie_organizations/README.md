@@ -11,6 +11,8 @@ Currently:
 |:---:|:---:|:---:|:---:|:---:|
 |`tower_url`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
 |`tower_verify_ssl`|False|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
+|`tower_user`|""|yes|Admin User on the Ansible Tower Server.||
+|`tower_pass`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 |`organizations`|"see below"|yes|Data structure describing your orgainzation or orgainzations Described below.||
 
