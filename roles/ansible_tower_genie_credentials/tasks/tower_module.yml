@@ -1,0 +1,32 @@
+---
+
+- name: Bring in vaulted Ansible Tower secrets
+  include_vars: vars/tower-secrets.yml
+  when: tower_secrets
+  no_log: True
+
+# Type SCM
+
+
+- name: Create a valid SCM credential from a private_key file or a machine credential
+  tower_credential:
+    name: SCM Credential
+    organization: "{{ tower_org }}"
+    state: "present"
+    credential_type: Source Control
+    inputs:
+      username: "{{ tower_cred_user }}"
+      password: "{{ tower_cred_pass | default(omit) }}"
+      ssh_key_data: "{{ tower_cred_ssh_key_path | default(omit) }}"
+      ssh_key_unlock: "{{ tower_cred_ssh_key_pass | default(omit) }}"
+
+- name: Create Ansible Tower Credential | Source Control
+  tower_credential_type:
+    organization: "{{ tower_org }}"
+    name: "{{ tower_cred_name }}"
+    username: "{{ tower_cred_user }}"
+    password: "{{ tower_cred_pass | default(omit) }}"
+    description: "{{ tower_cred_desc | default(omit) }}"
+    kind: "{{ tower_cred_type }}"
+    state: "present"
+  when: tower_cred_type == "scm"

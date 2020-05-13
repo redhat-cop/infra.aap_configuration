@@ -1,0 +1,128 @@
+---
+
+
+- name: Bring in vaulted Ansible Tower secrets
+  include_vars: vars/tower-secrets.yml
+  when: tower_secrets
+  no_log: True
+
+# Type SCM
+- name: Create Ansible Tower Credential | Source Control
+  tower_credential:
+    organization: "{{ tower_org }}"
+    name: "{{ tower_cred_name }}"
+    username: "{{ tower_cred_user }}"
+    password: "{{ tower_cred_pass | default(omit) }}"
+    description: "{{ tower_cred_desc | default(omit) }}"
+    ssh_key_data: "{{ tower_cred_ssh_key_path | default(omit) }}"
+    ssh_key_unlock: "{{ tower_cred_ssh_key_pass | default(omit) }}"
+    kind: "{{ tower_cred_type }}"
+    state: "present"
+  when: tower_cred_type == "scm"
+
+# Type machine, AKA ssh
+- name: Create Ansible Tower Credential | Machine Credential
+  tower_credential:
+    organization: "{{ tower_org }}"
+    name: "{{ tower_cred_name }}"
+    username: "{{ tower_cred_user }}"
+    password: "{{ tower_cred_pass | default('ASK') }}"
+    description: "{{ tower_cred_desc | default(omit) }}"
+    ssh_key_data: "{{ tower_cred_ssh_key_path | default(omit) }}"
+    ssh_key_unlock: "{{ tower_cred_ssh_key_pass | default(omit) }}"
+    kind: "{{ tower_cred_type }}"
+    state: "present"
+  when: tower_cred_type == "ssh"
+
+# Type vault
+- name: Create Ansible Tower Credential | Vault Credential
+  tower_credential:
+    organization: "{{ tower_org }}"
+    name: "{{ tower_cred_name }}"
+    description: "{{ tower_cred_desc | default(omit) }}"
+    vault_password: "{{ tower_cred_vault_pass | default('ASK') }}"
+    kind: "{{ tower_cred_type }}"
+    state: "present"
+  when: tower_cred_type == "vault"
+
+# Type net
+- name: Create Ansible Tower Credential | Network Credential
+  tower_credential:
+    organization: "{{ tower_org }}"
+    name: "{{ tower_cred_name }}"
+    description: "{{ tower_cred_desc | default(omit) }}"
+    kind: "{{ tower_cred_type }}"
+    username: "{{ tower_cred_user }}"
+    password: "{{ tower_cred_pass | default(omit) }}"
+    ssh_key_data: "{{ tower_cred_ssh_key_path | default(omit) }}"
+    ssh_key_unlock: "{{ tower_cred_ssh_key_pass | default(omit) }}"
+    state: "present"
+    authorize: "{{ tower_cred_authorize | default('False') }}"
+    authorize_password: "{{ tower_cred_authorize_password | default(omit) }}"
+  when: tower_cred_type == "net"
+
+# Type aws
+- name: Create Ansible Tower Credential | Amazon Web Services Credential
+  tower_credential:
+    organization: "{{ tower_org }}"
+    name: "{{ tower_cred_name }}"
+    description: "{{ tower_cred_desc | default(omit) }}"
+    kind: "{{ tower_cred_type }}"
+    state: present
+    username: "{{ tower_cred_user }}"
+    password: "{{ tower_cred_pass }}"
+  when: tower_cred_type == "aws"
+
+# Type vmware
+- name: Create Ansible Tower Credential | VMWare Credential
+  debug:
+    msg: "This role does not yet support this type."
+  when: tower_cred_type == "vmware"
+
+# Type satellite6
+- name: Create Ansible Tower Credential | Red Hat Satellite 6 Credential
+  debug:
+    msg: "This role does not yet support this type."
+  when: tower_cred_type == "satellite6"
+
+# Type cloudforms
+- name: Create Ansible Tower Credential | Red Hat Cloudforms Credential
+  debug:
+    msg: "This role does not yet support this type."
+  when: tower_cred_type == "cloudforms"
+
+# Type gce
+- name: Create Ansible Tower Credential | Google Compute Engine Credential
+  debug:
+    msg: "This role does not yet support this type."
+  when: tower_cred_type == "gce"
+
+# Type azure_rm
+- name: Create Ansible Tower Credential | Microsoft Azure Credential
+  debug:
+    msg: "This role does not yet support this type."
+  when: tower_cred_type == "azure_rm"
+
+# Type openstack
+- name: Create Ansible Tower Credential | Openstack Credential
+  debug:
+    msg: "This role does not yet support this type."
+  when: tower_cred_type == "openstack"
+
+# Type rhv
+- name: Create Ansible Tower Credential | Red Hat Enterprise Virtualization Credential
+  debug:
+    msg: "This role does not yet support this type."
+  when: tower_cred_type == "rhv"
+
+# Type insights
+- name: Create Ansible Tower Credential | Red Hat Insights Credential
+  debug:
+    msg: "This role does not yet support this type."
+  when: tower_cred_type == "insights"
+
+# Type tower
+- name: Create Ansible Tower Credential | Ansible Tower Credential
+  debug:
+    msg: "This role does not yet support this type."
+  when: tower_cred_type == "tower"

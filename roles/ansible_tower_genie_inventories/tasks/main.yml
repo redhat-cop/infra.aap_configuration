@@ -1,0 +1,10 @@
+---
+
+
+  - name: Use Tower Modules
+    include_tasks: tower_module.yml
+    when: tower_module
+
+  - name: Use Tower CLI
+    include_tasks: tower_cli.yml
+    when: tower_cli

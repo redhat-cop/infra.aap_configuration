@@ -1,0 +1,9 @@
+---
+
+  - name: Configure UI Settings
+    tower_settings:
+      PENDO_TRACKING_STATE: "off"
+      CUSTOM_LOGIN_INFO: ""
+      CUSTOM_LOGO: ""
+      MAX_UI_JOB_EVENTS: 4000
+      UI_LIVE_UPDATES_ENABLED: "True"

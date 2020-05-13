@@ -1,0 +1,8 @@
+---
+# tasks file for ansible_tower_genie_license
+
+
+ - name: Install the tower license
+   tower_license:
+    data: "{{ lookup('file', '/tmp/my_tower.license') }}"
+    eula_accepted: True

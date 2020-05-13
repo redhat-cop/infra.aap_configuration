@@ -1,0 +1,77 @@
+---
+- name: Bring in vaulted Ansible Tower secrets
+  include_vars: vars/tower-secrets.yml
+  when: tower_secrets
+  no_log: True
+
+- name: Configure tower-cli
+  template:
+    src: 'tower_cli.cfg.j2'
+    dest: '~/.tower_cli.cfg'
+    mode: '0400'
+  changed_when: False
+
+  # http://docs.ansible.com/ansible/latest/modules/tower_inventory_module.html
+- name: Ensure Ansible Tower Inventory exists
+  tower_inventory:
+    tower_username: "{{ tower_user }}"
+    tower_password: "{{ tower_pass }}"
+    tower_verify_ssl: "{{ tower_verify_ssl | default(False) }}"
+    name:           "{{ tower_inv_name }}"
+    description:    "{{ tower_inv_desc }}"
+    organization:   "{{ tower_org }}"
+    state:          "present"
+- name: Ensure Inventory's Project Sourced Inventory exists
+  block:
+    - name: Get Ansible Tower Inventory source Project ID
+      shell: 'tower-cli                                                        \
+                project                                                        \
+                  get                                                          \
+                    --name                  "{{ tower_src_prj_name }}"         \
+                    --format                "id"                               \
+                    {% if not tower_verify_ssl %}
+                    --insecure
+                    {% endif %}
+             '
+      register: tower_src_prj_id
+
+    - name: Create Ansible Tower inventory sources
+      shell: 'tower-cli                                                                                   \
+                inventory_source                                                                          \
+                  create                                                                                  \
+                    --name                      "{{ tower_inv_name }}"                                    \
+                    --description               "{{ tower_inv_src_desc }}"                                \
+                    --inventory                 "{{ tower_inv_src_name }}"                                \
+                    --source                    "scm"                                                     \
+                    --source-vars               "{{ tower_src_vars }}"                                    \
+                    --source-path               "{{ tower_inv_src_path }}"                                \
+                    --overwrite                 "{{ tower_inv_src_overwrite | default(True) }}"           \
+                    --overwrite-vars            "{{ tower_inv_src_overwrite_vars | default(True) }}"      \
+                    --timeout                   "{{ tower_inv_src_timeout | default('0') }}"              \
+                    --update-on-launch          "{{ tower_inv_src_update_on_launch | default(False) }}"   \
+                    --update-cache-timeout      "{{ tower_inv_src_update_cache_timeout | default('0') }}" \
+                    --source-project            "{{ tower_src_prj_id.stdout }}"                           \
+                    --update-on-project-update  "{{ tower_inv_update_on_prj_update | default(False) }}"   \
+                    --force-on-exists                                                                     \
+                    {% if not tower_verify_ssl %}
+                    --insecure
+                    {% endif %}'
+      with_items: "{{ tower_inv_sources }}"
+  when: tower_inv_src_type == "scm"
+# TODO: More Inventory Source types
+# AWS EC2
+# GCE
+# MS Azure Resource Manager
+# VMWare vCenter
+# RH Sat6
+# RH Cloudforms
+# Openstack
+# RHEV
+# Ansible Tower
+# Custom Script
+
+- name: Destroy tower_cli config
+  file:
+    path:  "~/.tower_cli.cfg"
+    state: "absent"
+  changed_when: False
