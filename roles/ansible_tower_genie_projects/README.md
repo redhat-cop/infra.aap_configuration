@@ -69,7 +69,7 @@ tower_genie_projects_secure_logging defaults to the value of tower_genie_secure_
         "scm_update_on_launch": "no",
         "scm_url": "https://github.com/ansible/tower-example.git",
         "notification_templates_error": [
-          "Slack_fake_notification_for_testing"
+          "Slack_for_testing"
         ]           
       }
     ]
@@ -89,7 +89,7 @@ projects:
   scm_update_on_launch: 'no'
   scm_url: https://github.com/ansible/tower-example.git
   notification_templates_error:
-  - Slack_fake_notification_for_testing
+  - Slack_for_testing
 
 ```
 ## Playbook Examples

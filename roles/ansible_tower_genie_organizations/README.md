@@ -57,7 +57,7 @@ tower_genie_organizations_secure_logging defaults to the value of tower_genie_se
         "custom_virtualenv": "/opt/cust/enviroment/",
         "max_hosts": 10,
         "notification_templates_error": [
-          "Slack_fake_notification_for_testing"
+          "Slack_for_testing"
         ]
       }      
     ]
