@@ -1,38 +1,32 @@
 ---
-tower_url: ""
+tower_server: ""
+tower_oauthtoken: ""
 tower_verify_ssl: False
-tower_secrets: False
-tower_user: ""
-tower_pass: "" #Put in a vault at vars/tower-secrets.yml when tower_secrets: True
-tower_jt_name: ""
-#tower_jt_desc: ""
-tower_jt_job_type: "run"
-#tower_jt_inventory: ""
-tower_jt_proj: ""
-tower_jt_playbook: ""
-#tower_jt_cred: ""
-#tower_jt_vault_cred: ""
-tower_jt_forks: "0"
-#tower_jt_limit: ""
-tower_jt_verbosity: "0"
-#tower_jt_extra_vars_path: ""
-#tower_jt_job_tags: ""
-tower_jt_force_handlers: False
-#tower_jt_skip_tags: ""
-#tower_jt_start_at_task: ""
-tower_jt_timeout: "0"
-tower_jt_fact_caching: False
-#tower_jt_host_conf_key: ""
-tower_jt_ask_diff_mode: False
-tower_jt_ask_extra_vars: False
-tower_jt_ask_limit: False
-tower_jt_ask_tags: False
-tower_jt_ask_skip_tags: False
-tower_jt_ask_job_type: False
-tower_jt_ask_verbosity: False
-tower_jt_ask_inventory: False
-tower_jt_ask_cred: False
-tower_jt_survey: False
-tower_jt_become: False
-tower_jt_diff_mode: False
-tower_jt_concurrent_jobs: False
+tower_genie_job_templates_secure_logging: "{{tower_genie_secure_logging | default(False)}}"
+
+
+templates:
+- name: Survey Template with vars
+  job_type: run
+  inventory: Demo Inventory
+  survey_enabled: true
+  survey: "{{ lookup('template', 'template_surveys/basic_survey.json') | regex_replace('\\n', '') }}"
+  project: Tower Config
+  playbook: helloworld.yml
+  credentials:
+  - Demo Credential
+  extra_vars: "{{ survey_extra_vars }}"
+  notification_templates_error:
+  - Slack_for_testing
+- name: No Survey Template no vars
+  job_type: run
+  inventory: Demo Inventory
+  project: Tower Config
+  playbook: helloworld.yml
+  credentials:
+  - Demo Credential
+  survey: {}
+  extra_vars: "{{ empty_master_vars }}"
+  notification_templates_error:
+  - Slack_for_testing
+
