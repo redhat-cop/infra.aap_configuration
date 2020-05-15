@@ -9,12 +9,12 @@ Currently:
 ## Variables
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`tower_url`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
-|`tower_verify_ssl`|False|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
-|`tower_user`|""|yes|Admin User on the Ansible Tower Server.||
-|`tower_pass`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
+|`tower_server`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
+|`tower_verify_ssl`|`False`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
+|`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
+|`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`organizations`|"see below"|yes|Data structure describing your orgainzation or orgainzations Described below.||
+|`organizations`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
 
 ### Secure Logging Variables
 The following Variables compliment each other. 
@@ -24,19 +24,24 @@ tower_genie_organizations_secure_logging defaults to the value of tower_genie_se
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`tower_genie_organizations_secure_logging`|False|no|Whether or not to include the sensative Organization role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`tower_genie_secure_logging`|False|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
+|`tower_genie_organizations_secure_logging`|`False`|no|Whether or not to include the sensative Organization role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`tower_genie_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
 ### Varibles
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`name`|""|yes|Name of Organization|
-|`description`|False|no|Description of  of Organization.|
+|`description`|`False`|no|Description of  of Organization.|
 |`custom_virtualenv`|""|no|Local absolute file path containing a custom Python virtualenv to use.|
-|`max_hosts`|""|no|The max hosts allowed in this organizations.|
+|`max_hosts`|""|no|The max hosts allowed in this organization.|
+|`notification_templates_started`|""|no|The notifications on started to use for this organization in a list.|
+|`notification_templates_success`|""|no|The notifications on success to use for this organization in a list.|
+|`notification_templates_error`|""|no|The notifications on error to use for this organization in a list.|
+|`notification_templates_approvals`|""|no|The notifications for approval to use for this organization in a list.|
+|`state`|`present`|no|Desired state of the resource.|
 
-### Standard Organization Structure
+### Standard Organization Data Structure
 #### Json Example
 ```json
 ---
@@ -50,7 +55,10 @@ tower_genie_organizations_secure_logging defaults to the value of tower_genie_se
         "name": "Automation Group",
         "description": "This is the Automation Group",
         "custom_virtualenv": "/opt/cust/enviroment/",
-        "max_hosts": 10
+        "max_hosts": 10,
+        "notification_templates_error": [
+          "Slack_fake_notification_for_testing"
+        ]
       }      
     ]
 }
