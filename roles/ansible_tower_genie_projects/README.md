@@ -32,7 +32,7 @@ tower_genie_projects_secure_logging defaults to the value of tower_genie_secure_
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`name`|""|yes|Name of Project|
-|`description`|`False`|no|Description of  of Project.|
+|`description`|`False`|no|Description of the Project.|
 |`organization`|`False`|yes|Name of organization for project.|
 |`scm_type`|""|no|Type of SCM resource.|
 |`scm_url`|""|no|URL of SCM resource.|
