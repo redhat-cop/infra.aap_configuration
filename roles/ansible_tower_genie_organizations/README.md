@@ -1,6 +1,6 @@
-# ansible_tower_genie_projects
+# ansible_tower_genie_organizations
 ## Description
-An Ansible Role to create Projects in Ansible Tower.
+An Ansible Role to create Organizations in Ansible Tower.
 
 ## Requirements 
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
@@ -14,90 +14,72 @@ Currently:
 |`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
 |`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`projects`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
+|`organizations`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
 
 ### Secure Logging Variables
 The following Variables compliment each other. 
 If Both variables are not set, secure logging defaults to false.  
 The role defaults to False as normally the add organization task does not include sensative information.  
-tower_genie_projects_secure_logging defaults to the value of tower_genie_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of genie roles with a single variable, or for the user to selectively use it.  
+tower_genie_organizations_secure_logging defaults to the value of tower_genie_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of genie roles with a single variable, or for the user to selectively use it.  
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`tower_genie_projects_secure_logging`|`False`|no|Whether or not to include the sensative Project role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`tower_genie_organizations_secure_logging`|`False`|no|Whether or not to include the sensative Organization role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`tower_genie_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
 ### Varibles
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`name`|""|yes|Name of Project|
-|`description`|`False`|no|Description of the Project.|
-|`organization`|`False`|yes|Name of organization for project.|
-|`scm_type`|""|no|Type of SCM resource.|
-|`scm_url`|""|no|URL of SCM resource.|
-|`local_path`|""|no|The server playbook directory for manual projects.|
-|`scm_branch`|""|no|The branch to use for the SCM resource.|
-|`scm_refspec`|""|no|The refspec to use for the SCM resource.|
-|`scm_credential`|""|no|Name of the credential to use with this SCM resource.|
-|`scm_clean`|""|no|Remove local modifications before updating.|
-|`scm_delete_on_update`|""|no|Remove the repository completely before updating.|
-|`scm_update_on_launch`|""|no|Before an update to the local repository before launching a job with this project.|
-|`scm_update_cache_timeout`|""|no|Cache Timeout to cache prior project syncs for a certain number of seconds. Only valid if scm_update_on_launch is to True, otherwise ignored.|
-|`allow_override`|""|no|Allow changing the SCM branch or revision in a job template that uses this project.|
-|`job_timeout`|""|no|The amount of time (in seconds) to run before the SCM Update is canceled. A value of 0 means no timeout.|
+|`name`|""|yes|Name of Organization|
+|`description`|`False`|no|Description of  of Organization.|
 |`custom_virtualenv`|""|no|Local absolute file path containing a custom Python virtualenv to use.|
+|`max_hosts`|""|no|The max hosts allowed in this organization.|
 |`notification_templates_started`|""|no|The notifications on started to use for this organization in a list.|
 |`notification_templates_success`|""|no|The notifications on success to use for this organization in a list.|
 |`notification_templates_error`|""|no|The notifications on error to use for this organization in a list.|
+|`notification_templates_approvals`|""|no|The notifications for approval to use for this organization in a list.|
 |`state`|`present`|no|Desired state of the resource.|
-|`wait`|""|no|Provides option to wait for completed project sync before returning.|
 
-### Standard Project Data Structure
+### Standard Organization Data Structure
 #### Json Example
 ```json
 ---
 {
-    "projects": [
+    "organizations": [
       {
-        "name": "Tower Config",
-        "organization": "Default",
-        "scm_branch": "master",
-        "scm_clean": "no",
-        "scm_delete_on_update": "no",
-        "scm_type": "git",
-        "scm_update_on_launch": "no",
-        "scm_url": "https://github.com/ansible/tower-example.git",
+        "name": "Default",
+        "description": "This is the Default Group"
+      },
+      {
+        "name": "Automation Group",
+        "description": "This is the Automation Group",
+        "custom_virtualenv": "/opt/cust/enviroment/",
+        "max_hosts": 10,
         "notification_templates_error": [
           "Slack_for_testing"
-        ]           
-      }
+        ]
+      }      
     ]
-  }
-  
+}
 ```
 #### Ymal Example
 ```yaml
 ---
-projects:
-- name: Tower Config
-  organization: Default
-  scm_branch: master
-  scm_clean: 'no'
-  scm_delete_on_update: 'no'
-  scm_type: git
-  scm_update_on_launch: 'no'
-  scm_url: https://github.com/ansible/tower-example.git
-  notification_templates_error:
-  - Slack_for_testing
-
+organizations:
+- name: Default
+  description: This is the Default Group
+- name: Automation Group
+  description: This is the Automation Group
+  custom_virtualenv: "/opt/cust/enviroment/"
+  max_hosts: 10
 ```
 ## Playbook Examples
 ### Standard Role Usage
 ```yaml
 ---
 
-- name: Add Projects to Tower
+- name: Add Organizations to Tower
   hosts: localhost
   connection: local
   gather_facts: false
@@ -126,14 +108,14 @@ projects:
 
     - name: Import JSON
       include_vars:
-        file: "json/projects.json"
-        name: projects_json
+        file: "json/organizations.json"
+        name: organizations_json
 
-    - name: Add Projects
+    - name: Add Organizations
       include_role: 
         name: ../..
       vars:
-        projects: "{{ projects_json.projects }}"
+        organizations: "{{ organizations_json.organizations }}"
 ```
 ## License
 [MIT](LICENSE)

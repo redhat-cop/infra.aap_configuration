@@ -1,0 +1,9 @@
+---
+tower_server: ""
+tower_oauthtoken: ""
+tower_verify_ssl: False
+tower_genie_organizations_secure_logging: "{{tower_genie_secure_logging | default(False)}}"
+organizations:
+- name: Default
+  description: Default
+
