@@ -52,4 +52,4 @@
     tower_host: "{{ tower_server }}"
     tower_verify_ssl: "{{ tower_verify_ssl | default('yes') }}"
   with_items: "{{ templates }}"
-  register: template_create
+  no_log: "{{ tower_genie_job_templates_secure_logging }}"
