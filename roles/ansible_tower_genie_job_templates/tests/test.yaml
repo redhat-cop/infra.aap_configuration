@@ -42,6 +42,6 @@
       include_role: 
         name: ../..
       vars:
-        templates: "{{ templates_json.templates }}"
+        tower_templates: "{{ templates_json.tower_templates }}"
 
 

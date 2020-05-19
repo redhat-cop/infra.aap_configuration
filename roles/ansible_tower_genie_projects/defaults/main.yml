@@ -3,7 +3,7 @@ tower_server: ""
 tower_oauthtoken: ""
 tower_verify_ssl: False
 tower_genie_projects_secure_logging: "{{tower_genie_secure_logging | default(False)}}"
-projects:
+tower_projects:
 - name: Tower Config
   organization: Default
   scm_branch: master

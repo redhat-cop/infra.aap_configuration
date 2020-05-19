@@ -14,7 +14,7 @@ Currently:
 |`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
 |`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`projects`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
+|`tower_projects`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
 
 ### Secure Logging Variables
 The following Variables compliment each other. 
@@ -58,7 +58,7 @@ tower_genie_projects_secure_logging defaults to the value of tower_genie_secure_
 ```json
 ---
 {
-    "projects": [
+    "tower_projects": [
       {
         "name": "Tower Config",
         "organization": "Default",
@@ -79,7 +79,7 @@ tower_genie_projects_secure_logging defaults to the value of tower_genie_secure_
 #### Ymal Example
 ```yaml
 ---
-projects:
+tower_projects:
 - name: Tower Config
   organization: Default
   scm_branch: master
