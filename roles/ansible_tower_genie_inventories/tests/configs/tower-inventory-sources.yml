@@ -1,0 +1,6 @@
+---
+tower_inventory_sources:
+  - name: test-source1
+    inventory: test1
+    source: scm
+...
