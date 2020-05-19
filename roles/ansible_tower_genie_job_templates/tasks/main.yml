@@ -53,7 +53,7 @@
     tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
     tower_host:                     "{{ tower_server }}"
     tower_config_file:              "{{ tower_config_file | default(omit) }}"
-    tower_verify_ssl:               "{{ tower_verify_ssl | default('yes') }}"
+    validate_certs:                 "{{ tower_validate_certs | default('yes') }}"
   loop: "{{ tower_templates }}"
   loop_control:
     loop_var: tower_templates_item  
