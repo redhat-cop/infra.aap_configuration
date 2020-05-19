@@ -4,7 +4,7 @@
     description:          "{{ inventory.description | default(omit) }}"
     host_filter:          "{{ inventory.host_filter | default(omit) }}"
     kind:                 "{{ inventory.kind | default(omit) }}"
-    name:                 "{{ inventory.name }}"
+    name:                 "{{ inventory.name }}" # REQUIRED
     organization:         "{{ inventory.organization | default('Default') }}"
     state:                "{{ inventory.state | default('present') }}"
     variables:            "{{ inventory.variables | default(omit) }}"
@@ -12,7 +12,8 @@
     tower_host:           "{{ tower_hostname | default(omit) }}"
     tower_username:       "{{ tower_username | default(omit) }}"
     tower_password:       "{{ tower_password | default(omit) }}"
-    tower_verify_ssl:     "{{ tower_verify_ssl | default('False') }}"
+    tower_oauthtoken:     "{{ tower_oauthtoken | default(omit) }}"
+    validate_certs:       "{{ tower_verify_ssl | default('False') }}"
   loop: "{{ tower_inventories }}"
   loop_control:
     loop_var: inventory
@@ -44,7 +45,8 @@
     tower_host:                  "{{ tower_hostname | default(omit) }}"
     tower_username:              "{{ tower_username | default(omit) }}"
     tower_password:              "{{ tower_password | default(omit) }}"
-    tower_verify_ssl:            "{{ tower_verify_ssl | default('False') }}"
+    tower_oauthtoken:            "{{ tower_oauthtoken | default(omit) }}"
+    validate_certs:              "{{ tower_verify_ssl | default('False') }}"
   loop: "{{ tower_inventory_sources }}"
   loop_control:
     loop_var: source

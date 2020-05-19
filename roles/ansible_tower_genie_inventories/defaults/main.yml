@@ -3,4 +3,3 @@ tower_hostname: ""
 tower_verify_ssl: False
 tower_secrets: False
 tower_username: ""
-tower_password: "" #Put in a vault at vars/tower-secrets.yml when tower_secrets: True
