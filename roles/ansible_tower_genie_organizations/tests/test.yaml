@@ -37,6 +37,6 @@
       include_role: 
         name: ../..
       vars:
-        organizations: "{{ organizations_json.organizations }}"
+        tower_organizations: "{{ organizations_json.tower_organizations }}"
 
 
