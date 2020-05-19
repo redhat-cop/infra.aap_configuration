@@ -1,18 +1,50 @@
 ---
+- name: Create inventory
+  awx.awx.tower_inventory:
+    description:          "{{ inventory.description | default(omit) }}"
+    host_filter:          "{{ inventory.host_filter | default(omit) }}"
+    kind:                 "{{ inventory.kind | default(omit) }}"
+    name:                 "{{ inventory.name }}"
+    organization:         "{{ inventory.organization | default('Default') }}"
+    state:                "{{ inventory.state | default('present') }}"
+    variables:            "{{ inventory.variables | default(omit) }}"
+    tower_config_file:    "{{ tower_config_file | default(omit) }}"
+    tower_host:           "{{ tower_hostname | default(omit) }}"
+    tower_username:       "{{ tower_username | default(omit) }}"
+    tower_password:       "{{ tower_password | default(omit) }}"
+    tower_verify_ssl:     "{{ tower_verify_ssl }}"
+  loop: "{{ tower_inventories }}"
+  loop_control:
+    loop_var: inventory
 
-  - name: Create Ansible Tower inventory 
-    tower_inventory:
-      name: "{{ tower_inv_name }}"
-      description: "{{ tower_inv_src_desc }}"
-      organization: "{{ tower_org }}"
-      state: "present"
-
-  - name: Add an inventory source
-    tower_inventory_source:
-      name: "{{ tower_inv_src_name }}"
-      source: "{{ tower_inv_src }}"
-      description: "{{ tower_inv_src_description }}"
-      inventory: "{{ tower_inv_name }}"
-      credential: "{{ tower_inv_credential }}"
-      overwrite: True
-      update_on_launch: True
+- name: Add an inventory source
+  awx.awx.tower_inventory_source:
+    credential:                  "{{ source.credential | default(omit) }}"
+    custom_virtualenv:           "{{ source.custom_virtualenv | default(omit) }}"
+    description:                 "{{ source.description | default(omit) }}"
+    group_by:                    "{{ source.group_by | default(omit) }}"
+    instance_filters:            "{{ source.instance_filters | default(omit) }}"
+    inventory:                   "{{ source.inventory }}" # REQUIRED
+    name:                        "{{ source.name }}" # REQUIRED
+    organization:                "{{ source.organization | default('Default') }}"
+    overwrite:                   "{{ source.overwrite | default(omit) }}"
+    overwrite_vars:              "{{ source.overwrite_vars | default(omit) }}"
+    source:                      "{{ source.source }}" # REQUIRED
+    source_path:                 "{{ source.source_path | default(omit) }}"
+    source_project:              "{{ source.source_project | default(omit) }}"
+    source_regions:              "{{ source.source_regions | default(omit) }}"
+    source_script:               "{{ source.source_script | default(omit) }}"
+    source_vars:                 "{{ source.source_vars | default(omit) }}"
+    state:                       "{{ source.state | default('present') }}"
+    timeout:                     "{{ source.timeout | default(omit) }}"
+    update_cache_timeout:        "{{ source.update_cache_timeout | default(omit) }}"
+    update_on_launch:            "{{ source.update_on_launch | default(omit) }}"
+    update_on_project_update:    "{{ source.update_on_project_update | default(omit) }}"
+    tower_config_file:           "{{ tower_config_file | default(omit) }}"
+    tower_host:                  "{{ tower_hostname | default(omit) }}"
+    tower_username:              "{{ tower_username | default(omit) }}"
+    tower_password:              "{{ tower_password | default(omit) }}"
+    tower_verify_ssl:            "{{ tower_verify_ssl }}"
+  loop: "{{ tower_inventory_sources }}"
+  loop_control:
+    loop_var: source
