@@ -15,7 +15,7 @@
     forks:                          "{{ tower_templates_item.forks | default(0) }}"
     limit:                          "{{ tower_templates_item.limit | default(omit) }}"
     verbosity:                      "{{ tower_templates_item.verbosity | default(omit) }}"
-    extra_vars:                     "{{ tower_templates_item.extra_vars | to_json }}"
+    extra_vars:                     "{{ tower_templates_item.extra_vars | to_json | default(omit) }}"
     job_tags:                       "{{ tower_templates_item.job_tags | default('') }}"
     force_handlers:                 "{{ tower_templates_item.force_handlers | default(omit) }}"
     skip_tags:                      "{{ tower_templates_item.skip_tags | default(omit) }}"
