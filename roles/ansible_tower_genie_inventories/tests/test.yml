@@ -24,5 +24,9 @@
       include_vars:
         file: "configs/tower-inventories.yml"
 
+    - name: Import Inventory sources
+      include_vars:
+        file: "configs/tower-inventory-sources.yml"
+
   roles:
     - ../../ansible_tower_genie_inventories

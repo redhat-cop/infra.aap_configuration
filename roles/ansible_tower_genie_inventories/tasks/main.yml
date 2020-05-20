@@ -27,7 +27,6 @@
     instance_filters:            "{{ source.instance_filters | default(omit) }}"
     inventory:                   "{{ source.inventory }}" # REQUIRED
     name:                        "{{ source.name }}" # REQUIRED
-    organization:                "{{ source.organization | default('Default') }}"
     overwrite:                   "{{ source.overwrite | default(omit) }}"
     overwrite_vars:              "{{ source.overwrite_vars | default(omit) }}"
     source:                      "{{ source.source }}" # REQUIRED
