@@ -1,6 +1,4 @@
 ---
-- debug:
-    var: tower_credentials
     
 - name: Add Credential Types
   awx.awx.tower_credential_type:
