@@ -5,7 +5,7 @@ An Ansible Role to create Credential Types in Ansible Tower.
 ## Requirements 
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
 
-| Requiremed collections | 
+| Required collections | 
 |:---:|
 |awx.awx|
 
