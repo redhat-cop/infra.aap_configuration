@@ -17,6 +17,7 @@
   loop: "{{ tower_inventories }}"
   loop_control:
     loop_var: inventory
+  when: tower_inventories is defined
 
 - name: Add an inventory source
   awx.awx.tower_inventory_source:
@@ -49,4 +50,5 @@
   loop: "{{ tower_inventory_sources }}"
   loop_control:
     loop_var: source
+  when: tower_inventory_sources is defined    
 ...
