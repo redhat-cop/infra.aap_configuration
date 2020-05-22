@@ -1,0 +1,8 @@
+---
+tower_validate_certs: False
+tower_configuration_*******_secure_logging: "{{tower_configuration_secure_logging | default(False)}}"
+
+
+tower_*******:
+- name: Tower object yml example here
+
