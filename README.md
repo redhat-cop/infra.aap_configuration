@@ -1,5 +1,5 @@
 # ansible_tower_genie_collections
-
+![Ansible Lint](https://github.com/redhat-cop/automate_tower_genie_collections/workflows/Ansible%20Lint/badge.svg)
 
 # Foo Collection
 <!-- Add CI and code coverage badges here. Samples included below. -->
