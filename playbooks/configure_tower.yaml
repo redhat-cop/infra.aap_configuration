@@ -1,0 +1,25 @@
+---
+- name: Configure Tower
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+#Bring in vaulted Ansible Tower secrets
+  vars_files:
+    - vars/tower_secrets.yml
+
+  tasks:
+
+    - name: Auth tasks
+      include_tasks: "tasks/auth.yaml"
+      tags:
+        - always
+      args:
+        apply:
+          tags:
+          - always
+
+    - name: Add roles
+      include_tasks: "tasks/add_tower_objects.yaml"
+      tags:
+        - always
