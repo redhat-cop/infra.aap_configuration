@@ -1,7 +1,7 @@
 ---
 # based on method defined here: https://coderwall.com/p/8yfuva/how-to-develop-ansible-roles-w-unit-test-and-ci
 
-- name: Add Organizations to Tower
+- name: Add Credentials to Tower
   hosts: localhost
   connection: local
   gather_facts: false
@@ -30,13 +30,13 @@
 
     - name: Import JSON
       include_vars:
-        file: "json/organizations.json"
-        name: organizations_json
+        file: "json/credential_types.json"
+        name: credential_types_json
 
-    - name: Add Organizations
+    - name: Add Credential Types
       include_role: 
         name: ../..
       vars:
-        tower_organizations: "{{ organizations_json.tower_organizations }}"
+        tower_credential_types: "{{ credential_types_json.tower_credential_types }}"
 
 
