@@ -1,19 +1,23 @@
 ---
 - name: Add organizations
   awx.awx.tower_organization:
-    name: "{{ item.name }}"
-    description: "{{ item.description | default(omit) }}"
-    custom_virtualenv: "{{ item.custom_virtualenv | default(omit) }}"
-    max_hosts: "{{ item.max_hosts | default(omit) }}"
-    notification_templates_started: "{{ item.notification_templates_started | default(omit) }}"
-    notification_templates_success: "{{ item.notification_templates_success | default(omit) }}"
-    notification_templates_error: "{{ item.notification_templates_error | default(omit) }}"  
-    notification_templates_approvals: "{{ item.notification_templates_approvals | default(omit) }}"
-    state: "{{ item.state | default('present') }}"
-    tower_username: "{{ tower_username | default(omit) }}"
-    tower_password: "{{ tower_password | default(omit) }}"
-    tower_oauthtoken: "{{ tower_oauthtoken | default(omit) }}"
-    tower_host: "{{ tower_server }}"
-    tower_verify_ssl: "{{ tower_verify_ssl | default('omit') }}"
-  with_items: "{{ organizations }}"
+    name:                               "{{ tower_organizations_item.name }}"
+    description:                        "{{ tower_organizations_item.description | default(omit) }}"
+    custom_virtualenv:                  "{{ tower_organizations_item.custom_virtualenv | default(omit) }}"
+    max_hosts:                          "{{ tower_organizations_item.max_hosts | default(omit) }}"
+    notification_templates_started:     "{{ tower_organizations_item.notification_templates_started | default(omit) }}"
+    notification_templates_success:     "{{ tower_organizations_item.notification_templates_success | default(omit) }}"
+    notification_templates_error:       "{{ tower_organizations_item.notification_templates_error | default(omit) }}"  
+    notification_templates_approvals:   "{{ tower_organizations_item.notification_templates_approvals | default(omit) }}"
+    state:                              "{{ tower_organizations_item.state | default('present') }}"
+    tower_username:                     "{{ tower_username | default(omit) }}"
+    tower_password:                     "{{ tower_password | default(omit) }}"
+    tower_oauthtoken:                   "{{ tower_oauthtoken | default(omit) }}"
+    tower_host:                         "{{ tower_server }}"
+    tower_config_file:                  "{{ tower_config_file | default(omit) }}"
+    validate_certs:                     "{{ tower_validate_certs | default('yes') }}"
+  loop: "{{ tower_organizations }}"
+  loop_control:
+    loop_var: tower_organizations_item
   no_log: "{{ tower_genie_organizations_secure_logging }}"
+  when: tower_organizations is defined

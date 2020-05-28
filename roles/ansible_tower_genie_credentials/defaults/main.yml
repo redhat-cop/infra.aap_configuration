@@ -1,14 +1,14 @@
 ---
-tower_url: ""
-tower_verify_ssl: False
-tower_secrets: False
-tower_user: ""
-tower_pass: "" #Put in a vault at vars/tower-secrets.yml when tower_secrets: True
-tower_org: ""
-tower_cred_name: ""
-tower_cred_user: ""
-tower_cred_desc: ""
-tower_cred_type: ""
-# tower_cred_ssh_key_path: ""
-# tower_cred_ssh_key_pass: "ASK"
-tower_cred_vault_pass: "ASK"
+tower_server: ""
+tower_oauthtoken: ""
+tower_validate_certs: False
+tower_genie_credentials_secure_logging: "{{tower_genie_secure_logging | default(False)}}"
+tower_credentials:
+- name: gitlab
+  description: Credentials for GitLab
+  organization: Default
+  credential_type: Source Control
+  inputs:
+    username: person
+    password: password
+

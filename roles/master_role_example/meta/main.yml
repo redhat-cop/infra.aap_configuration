@@ -1,7 +1,7 @@
 galaxy_info:
-  role_name: "ansible_tower_genie_credentials"
-  author: "Sean Sulivan"
-  description: "An Ansible Role to create Credentials in Ansible Tower."
+  role_name: "tower_configuration_**************"
+  author: "************"
+  description: "An Ansible Role to create ************ in Ansible Tower."
   company: "Red Hat"
 
   # If the issue tracker for your role is not on github, uncomment the
@@ -31,9 +31,8 @@ galaxy_info:
     - "ansibletower"
     - "tower"
     - "awx"
-    - "genie"
-    - "credential"
-    - "credentials"
+    - "***************"
+    - "***************s"
 
 dependencies: []
   # List your role dependencies here, one per line. Be sure to remove the '[]' above,

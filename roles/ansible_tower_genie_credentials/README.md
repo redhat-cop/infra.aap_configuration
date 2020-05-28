@@ -1,90 +1,148 @@
 # ansible_tower_genie_credentials
 ## Description
-An Ansible Role to create a Credential in Ansible Tower.
+An Ansible Role to create Credentials in Ansible Tower.
+
+## Requirements 
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
+
+| Requiremed collections | 
+|:---:|
+|awx.awx|
+
 ## Variables
+|Variable Name|Default Value|Required|Description|Example|
+|:---:|:---:|:---:|:---:|:---:|
+|`tower_server`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
+|`tower_validate_certs`|`False`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
+|`tower_config_file`|""|no|Path to the Tower or AWX config file.||
+|`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
+|`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
+|`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`tower_credentials`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
+
+### Secure Logging Variables
+The following Variables compliment each other. 
+If Both variables are not set, secure logging defaults to false.  
+The role defaults to False as normally the add organization task does not include sensative information.  
+tower_genie_credentials_secure_logging defaults to the value of tower_genie_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of genie roles with a single variable, or for the user to selectively use it.  
+
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`tower_url`|""|yes|URL to the Ansible Tower Server.|
-|`tower_verify_ssl`|False|no|Whether or not to validate the Ansible Tower Server's SSL certificate.|
-|`tower_secrets`|False|yes|Whether or not to include variables stored in vars/tower-secrets.yml.  Set this value to `False` if you will be providing your sensitive values from elsewhere.|
-|`tower_user`|""|yes|Admin User on the Ansible Tower Server.|
-|`tower_pass`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at= vars/tower-secrets.yml or elsewhere and called from a parent playbook.|
-|`tower_org`|""|yes|Ansible Tower organization to create the Ansible Tower team in.|
-|`tower_cred_name`|""|yes|Name of the credential to create in Ansible Tower.|
-|`tower_cred_user`|""|yes|Username of the credential. For AWS credentials, this is the access key.|
-|`tower_cred_pass`|"ASK"|no|Password of the credential.  Not required when using SSH keys.  This value should be stored in an Ansible Vault at vars/tower-secrets.yml.  Use the value "ASK" for password prompting. This is **required** for **AWS credentials** and is your secret key.|
-|`tower_cred_desc`|""|no|Description of the credential.|
-|`tower_cred_type`|""|yes|Type of Ansible Tower credential to create.  Value can be one of the following types ssh, vault, net, scm, aws, vmware, satellite6, cloudforms, gce, azure_rm, openstack, rhv, insights, tower.|
-|`tower_cred_ssh_key_path`|""|no|Path to a SSH private key for an Ansible Tower credential to use.|
-|`tower_cred_ssh_key_pass`|"ASK"|no|Password to unlock a SSH private key.  Use the value "ASK" for password prompting.|
-|`tower_cred_vault_pass`|"ASK"|no|Password for your Ansible Vault file. Use the value "ASK" for password prompting.|
-|`tower_cred_authorize`|False|no|Whether or not to enable Authorize for network devices.|
-|`tower_cred_authorize_password`|""|no|Authorize password for network devices.|
+|`tower_genie_credentials_secure_logging`|`False`|no|Whether or not to include the sensative Organization role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`tower_genie_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
+## Data Structure
+### Varibles
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|
+|`name`|""|yes|Name of Credential|
+|`new_name`|""|yes|Name of Credential, used in updating a Credential.|
+|`description`|`False`|no|Description of  of Credential.|
+|`organization`|""|no|Organization this Credential belongs to. If provided on creation, do not give either user or team.|
+|`credential_type`|""|no|Name of credential type. See below for list of options. More information in Ansible Tower documentation. |
+|`inputs`|""|no|Credential inputs where the keys are var names used in templating. Refer to the Ansible Tower documentation for example syntax. Individual examples can be found at /api/v2/credential_types/ on an Tower.|
+|`user`|""|no|User that should own this credential. If provided, do not give either team or organization. |
+|`team`|""|no|Team that should own this credential. If provided, do not give either user or organization. |
+|`state`|`present`|no|Desired state of the resource.|
 
+### Credential types
+|Credential types|
+|:---:|
+|Amazon Web Services|
+|Ansible Tower|
+|GitHub Personal Access Token|
+|GitLab Personal Access Token|
+|Google Compute Engine|
+|Insights|
+|Machine|
+|Microsoft Azure Resource Manager|
+|Network|
+|OpenShift or Kubernetes API Bearer Token|
+|OpenStack|
+|Red Hat CloudForms|
+|Red Hat Satellite 6|
+|Red Hat Virtualization|
+|Source Control|
+|Vault|
+|VMware vCenter|
+
+### Standard Organization Data Structure
+#### Json Example
+```json
+---
+{
+    "tower_credentials": [
+      {
+        "name": "gitlab",
+        "description": "Credentials for GitLab",
+        "organization": "Default",
+        "credential_type": "Source Control",
+        "inputs": {
+          "username": "person",
+          "password": "password"
+        }       
+      }
+    ]
+}
+```
+#### Ymal Example
+```yaml
+---
+tower_credentials:
+- name: gitlab
+  description: Credentials for GitLab
+  organization: Default
+  credential_type: Source Control
+  inputs:
+    username: person
+    password: password
+```
 ## Playbook Examples
 ### Standard Role Usage
 ```yaml
 ---
-- hosts: all
-  roles:
-    - role: "genie-credentials"
-      tower_url: "https:/my-tower-server.foo.bar"
-      tower_verify_ssl: False
-      tower_user: "admin"
-      tower_pass: "{{ my_tower_vault_pass }}"
-      tower_org: "MY_ORG"
-      tower_cred_name: "doG"
-      tower_cred_user: "root"
-      tower_cred_pass: "{{ my_cred_vault_pass }}"
-      tower_cred_desc: "High-level special account for doing Ansible work"
-      tower_cred_type: "ssh"
-      tower_cred_ssh_key_path: "/home/myuser/.ssh/id_rsa"
-      tower_cred_ssh_key_pass: "{{ my_cred_vaulted_ssh_key_pass }}"
-```
-### Included Role within a Loop
-```yaml
----
-- hosts: all
-  vars:
-    tower_url: "https://my-tower-server.foo.bar"
-    tower_verify_ssl: False
-    tower_user: "admin"
-    tower_pass: "{{ my_tower_vault_pass }}"
-    tower_org: "MY_ORG"
-    my_cred_loop_var:
-      - name: "doG"
-        tower_cred_user: "root"
-        tower_cred_pass: "{{ my_cred_vault_pass }}"
-        tower_cred_desc: "High-level special account for doing Ansible work"
-        tower_cred_type: "ssh"
-        tower_cred_ssh_key_path: "/home/myuser/.ssh/id_rsa"
-        tower_cred_ssh_key_pass: "{{ my_cred_vaulted_ssh_key_pass }}"
-      - name: "My Special Project's Vault"
-        tower_cred_vault_pass: "{{ my_vaulted_vault_pass }}"
-        tower_cred_desc: "A vault password for the cool project that deploys stuff to production."
-        tower_cred_type: "vault"
+
+- name: Add Credentials to Tower
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+#Bring in vaulted Ansible Tower secrets
+  vars_files:
+    - ../tests/vars/tower_secrets.yml
+
   tasks:
-    - name: "Create a bunch of credentials in Ansible Tower"
-      include_role:
-        name: "genie-credentials"
+
+    - name: Get token for use during play
+      uri:
+        url: "https://{{ tower_server }}/api/v2/tokens/"
+        method: POST
+        user: "{{ tower_username }}"
+        password: "{{ tower_passname }}"
+        force_basic_auth: yes
+        status_code: 201
+        validate_certs: no
+      register: user_token
+      no_log: True
+
+    - name: Set Tower oath Token
+      set_fact:
+        tower_oauthtoken: "{{ user_token.json.token }}"
+
+    - name: Import JSON
+      include_vars:
+        file: "json/credentials.json"
+        name: credentials_json
+
+    - name: Add Credentials
+      include_role: 
+        name: ../..
       vars:
-        tower_cred_name: "{{ cred.name }}"
-        tower_cred_user: "{{ cred.tower_cred_user }}"
-        tower_cred_pass: "{{ cred.tower_cred_pass }}"
-        tower_cred_vault_pass: "{{ cred.tower_cred_vault_pass }}"
-        tower_cred_desc: "{{ cred.tower_cred_desc }}"
-        tower_cred_type: "{{ cred.tower_cred_type }}"
-        tower_cred_ssh_key_path: "{{ cred.tower_cred_ssh_key_path }}"
-        tower_cred_ssh_key_pass: "{{ cred.tower_cred_ssh_key_pass }}"
-      with_items: "{{ my_cred_loop_var }}"
-      loop_control:
-        loop_var: "cred"
-        label: "{{ cred.name }}"
-      no_log: True #if you don't use this your passwords could be exposed to standard out
+        tower_credentials: "{{ credentials_json.tower_credentials }}"
 ```
 ## License
 [MIT](LICENSE)
 
-## Author  
-[Andrew J. Huffman](https://github.com/ahuffman)  
+## Author
+[Andrew J. Huffman](https://github.com/ahuffman) 
+[Sean Sullivan](https://github.com/Wilk42)
