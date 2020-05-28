@@ -1,0 +1,12 @@
+{
+    "organizations": [
+      {
+        "name": "Default",
+        "description": "Default",
+        "notification_templates_error": [
+          "Slack_for_testing"
+        ]
+      }
+    ]
+}
+  

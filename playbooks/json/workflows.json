@@ -1,0 +1,60 @@
+{
+	"workflows": [{
+			"name": "Complicated Schema Workflow",
+			"description": "Complicated Schema Workflow",
+			"organization": "Default",
+			"schema": [{
+				"job_template": "No Survey Template no vars",
+				"success_nodes": [{
+					"inventory_source": "demo_inventory_source",
+					"always_nodes": [{
+						"job_template": "No Survey Template no vars",
+						"success_nodes": [{
+							"job_template": "No Survey Template no vars",
+							"failure_nodes": [{
+								"job_template": "No Survey Template no vars",
+								"success_nodes": [{
+									"job_template": "No Survey Template no vars"
+								}]
+							}],
+							"success_nodes": [{
+								"job_template": "No Survey Template no vars",
+								"failure_nodes": [{
+									"job_template": "No Survey Template no vars",
+									"success_nodes": [{
+										"job_template": "No Survey Template no vars"
+									}]
+								}],
+								"success_nodes": [{
+										"job_template": "No Survey Template no vars"
+									},
+									{
+										"job_template": "No Survey Template no vars"
+									}
+								]
+							}]
+						}]
+					}]
+				}]
+			}],
+			"survey_enabled": true,
+			"survey": "{{ lookup('template', 'template_surveys/basic_survey.json') | regex_replace('\\n', '') }}",
+			"extra_vars": "{{ survey_extra_vars }}"
+		},
+		{
+			"name": "Simple workflow schema",
+			"description": "Simple workflow schema",
+			"organization": "Default",
+			"schema": [{
+				"inventory_source": "demo_inventory_source",
+				"success_nodes": [{
+					"job_template": "No Survey Template no vars"
+				}]
+			}],
+			"survey_enabled": false,
+			"survey": {},
+			"ask_variables_on_launch": false,
+			"extra_vars": "{{ empty_master_vars }}"
+		}
+	]
+}
