@@ -11,7 +11,7 @@ jobs:
       uses: ibiqlik/action-yamllint@master
       with:
         # File(s) or Directory, separate by space if multiple files or folder are specified
-        file_or_dir: roles/* playbooks
+        file_or_dir: roles/* playbooks .yamllint.yml *.yml plugins
         # Path to custom configuration
         config_file: .yamllint.yml
         # Custom configuration (as YAML source)
