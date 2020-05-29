@@ -14,5 +14,5 @@
     umask: "{{ tower_venv_umask }}"
     virtualenv: "{{ tower_venv_path }}"
     virtualenv_command: "virtualenv"
-  state: "latest"
+    state: latest
   become: true
