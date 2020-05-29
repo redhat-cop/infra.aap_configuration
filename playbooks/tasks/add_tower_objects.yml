@@ -11,7 +11,7 @@
   args:
     apply:
       tags:
-      - organizations
+        - organizations
   tags:
     - organizations
 
@@ -20,25 +20,25 @@
   args:
     apply:
       tags:
-      - credential_types
+        - credential_types
   tags:
-    - credential_types    
+    - credential_types
 
 - name: Add credentials
   include_tasks: "tasks/add_credentials.yaml"
   args:
     apply:
       tags:
-      - credentials
+        - credentials
   tags:
-    - credentials 
+    - credentials
 
 - name: Add projects
   include_tasks: "tasks/add_projects.yaml"
   args:
     apply:
       tags:
-      - projects
+        - projects
   tags:
     - projects
 
@@ -47,7 +47,7 @@
   args:
     apply:
       tags:
-      - templates
+        - templates
   tags:
     - templates
 
@@ -56,6 +56,6 @@
   args:
     apply:
       tags:
-      - workflows
+        - workflows
   tags:
-    - workflows    
+    - workflows

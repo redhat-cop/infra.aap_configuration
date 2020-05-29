@@ -1,3 +1,4 @@
+---
 - name: Get token for use during play
   uri:
     url: "https://{{ tower_server }}/api/v2/tokens/"
@@ -6,7 +7,7 @@
     password: "{{ tower_passname }}"
     force_basic_auth: true
     status_code: 201
-    validate_certsfalse
+    validate_certs: false
   register: user_token
   no_log: true
 
