@@ -4,11 +4,11 @@ An Ansible Role to create Teams in Ansible Tower.
 ## Variables
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`tower_url`|""|yes|URL to the Ansible Tower Server.|
+|`tower_hostname`|""|yes|URL to the Ansible Tower Server.|
 |`tower_verify_ssl`|False|no|Whether or not to validate the Ansible Tower Server's SSL certificate.|
-|`tower_secrets`|False|yes|Whether or not to include variables stored in vars/tower-secrets.yml.  Set this value to `False` if you will be providing the `tower_pass` value from elsewhere.|
-|`tower_user`|""|yes|Admin User on the Ansible Tower Server.|
-|`tower_pass`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.|
+|`tower_secrets`|False|yes|Whether or not to include variables stored in vars/tower-secrets.yml.  Set this value to `False` if you will be providing the `tower_password` value from elsewhere.|
+|`tower_username`|""|yes|Admin User on the Ansible Tower Server.|
+|`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.|
 |`tower_org`|""|yes|Ansible Tower organization to create the Ansible Tower team in.|
 |`tower_team_name`|""|yes| Name of the Ansible Tower Team to create.|
 |`tower_team_desc`|""|no|Description of the Ansible Tower Team to create.|
@@ -19,10 +19,10 @@ An Ansible Role to create Teams in Ansible Tower.
 - hosts: all
   roles:
     - role: "genie-teams"
-      tower_url: "https:/my-tower-server.foo.bar"
+      tower_hostname: "https:/my-tower-server.foo.bar"
       tower_verify_ssl: False
-      tower_user: "admin"
-      tower_pass: "{{ my_tower_vault_pass }}"
+      tower_username: "admin"
+      tower_password: "{{ my_tower_vault_pass }}"
       tower_org: "MY_ORG"
       tower_team_name: "Developers"
       tower_team_desc: "Team for Development of software deployments."
@@ -32,10 +32,10 @@ An Ansible Role to create Teams in Ansible Tower.
 ---
 - hosts: all
   vars:
-    tower_url: "https://my-tower-server.foo.bar"
+    tower_hostname: "https://my-tower-server.foo.bar"
     tower_verify_ssl: False
-    tower_user: "admin"
-    tower_pass: "{{ my_tower_vault_pass }}"
+    tower_username: "admin"
+    tower_password: "{{ my_tower_vault_pass }}"
     tower_org: "MY_ORG"
     teams:
       - name: "team1"

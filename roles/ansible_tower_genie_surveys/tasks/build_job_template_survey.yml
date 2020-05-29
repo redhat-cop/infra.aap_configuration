@@ -17,10 +17,10 @@
   block:
     - name: "Retrieve Ansible Tower job template ID"
       uri:
-        url: "{{ tower_url }}/api/v2/job_templates/"
-        user: "{{ tower_user }}"
-        password: "{{ tower_pass }}"
-        force_basic_auth: true
+        url: "{{ tower_hostname }}/api/v2/job_templates/"
+        user: "{{ tower_username }}"
+        password: "{{ tower_password }}"
+        force_basic_auth: True
         method: "GET"
         status_code: "200"
         validate_certs: "{{ tower_verify_ssl }}"
@@ -53,10 +53,10 @@
 # Get current survey
 - name: "Retrieve current Ansible Tower job template survey"
   uri:
-    url: "{{ tower_url }}/api/v2/job_templates/{{ job_template_id }}/survey_spec/"
-    user: "{{ tower_user }}"
-    password: "{{ tower_pass }}"
-    force_basic_auth: true
+    url: "{{ tower_hostname }}/api/v2/job_templates/{{ job_template_id }}/survey_spec/"
+    user: "{{ tower_username }}"
+    password: "{{ tower_password }}"
+    force_basic_auth: True
     method: "GET"
     status_code: "200"
     validate_certs: "{{ tower_verify_ssl }}"
@@ -71,10 +71,10 @@
 
 - name: "Update job template {{ job_template.job_template_name }}'s survey"
   uri:
-    url: "{{ tower_url }}/api/v2/job_templates/{{ job_template_id }}/survey_spec/"
-    user: "{{ tower_user }}"
-    password: "{{ tower_pass }}"
-    force_basic_auth: true
+    url: "{{ tower_hostname }}/api/v2/job_templates/{{ job_template_id }}/survey_spec/"
+    user: "{{ tower_username }}"
+    password: "{{ tower_password }}"
+    force_basic_auth: True
     method: "POST"
     body: "{{ tower_survey_formatted | to_json }}"
     body_format: "json"
@@ -88,10 +88,10 @@
 # Ensure survey is enabled
 - name: "Ensure {{ job_template.job_template_name }}'s survey is enabled"
   uri:
-    url: "{{ tower_url }}/api/v2/job_templates/{{ job_template_id }}/"
-    user: "{{ tower_user }}"
-    password: "{{ tower_pass }}"
-    force_basic_auth: true
+    url: "{{ tower_hostname }}/api/v2/job_templates/{{ job_template_id }}/"
+    user: "{{ tower_username }}"
+    password: "{{ tower_password }}"
+    force_basic_auth: True
     method: "PATCH"
     body: '{"survey_enabled": true}'
     body_format: "json"
@@ -107,10 +107,10 @@
 # Ensure survey is not enabled
 - name: "Ensure {{ job_template.job_template_name }}'s survey is not enabled"
   uri:
-    url: "{{ tower_url }}/api/v2/job_templates/{{ job_template_id }}/"
-    user: "{{ tower_user }}"
-    password: "{{ tower_pass }}"
-    force_basic_auth: true
+    url: "{{ tower_hostname }}/api/v2/job_templates/{{ job_template_id }}/"
+    user: "{{ tower_username }}"
+    password: "{{ tower_password }}"
+    force_basic_auth: True
     method: "PATCH"
     body: '{"survey_enabled": false}'
     body_format: "json"

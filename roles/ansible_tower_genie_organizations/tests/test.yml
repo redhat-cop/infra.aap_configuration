@@ -14,7 +14,7 @@
 
     - name: Get token for use during play
       uri:
-        url: "https://{{ tower_server }}/api/v2/tokens/"
+        url: "https://{{ tower_hostname }}/api/v2/tokens/"
         method: POST
         user: "{{ tower_username }}"
         password: "{{ tower_passname }}"

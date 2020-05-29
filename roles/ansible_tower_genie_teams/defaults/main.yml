@@ -1,7 +1,7 @@
 ---
-tower_url: ""
-tower_user: ""
-tower_pass: ""  # Put in a vault at vars/tower-secrets.yml when tower_secrets: true
+tower_hostname: ""
+tower_username: ""
+tower_password: "" #Put in a vault at vars/tower-secrets.yml when tower_secrets: true
 tower_org: ""
 tower_verify_ssl: false
 tower_team_name: ""
