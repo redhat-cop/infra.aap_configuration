@@ -1,0 +1,5 @@
+exclude_paths:
+  - ./roles/master_role_example
+parseable: true
+use_default_rules: true
+verbosity: 1
