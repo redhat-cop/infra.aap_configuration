@@ -1,40 +1,135 @@
 # ansible_tower_genie_rbac
 ## Description
-An Ansible role to assign role based access controls on Ansible Tower objects to a given team.
+An Ansible Role to create RBAC Entries in Ansible Tower.
+
+## Requirements
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
+Currently:
+  awx.awx
+
 ## Variables
+|Variable Name|Default Value|Required|Description|Example|
+|:---:|:---:|:---:|:---:|:---:|
+|`tower_server`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
+|`tower_verify_ssl`|`False`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
+|`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
+|`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
+|`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`tower_rbac`|`see below`|yes|Data structure describing your RBAC entries described below.||
+
+### Secure Logging Variables
+The following Variables compliment each other.
+If Both variables are not set, secure logging defaults to false.
+The role defaults to False as normally the add rbac task does not include sensative information.
+`tower_genie_rbac_secure_logging` defaults to the value of `tower_genie_secure_logging` if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of genie roles with a single variable, or for the user to selectively use it.
+
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`tower_url`|""|yes|URL to the Ansible Tower Server.|
-|`tower_verify_ssl`|False|no|Whether or not to validate the Ansible Tower Server's SSL certificate.|
-|`tower_secrets`|False|yes|Whether or not to include variables stored in vars/tower-secrets.yml.  Set this value to `False` if you will be providing your sensitive values from elsewhere.|
-|`tower_user`|""|yes|Admin User on the Ansible Tower Server.|
-|`tower_pass`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.|
-|`tower_org`|""|yes|Ansible Tower organization to apply the RBAC controls in.|
-|`tower_rbac_credential`||no|Credential to apply the `tower_rbac_role` to.|
-|`tower_rbac_inventory`||no|Inventory to apply the `tower_rbac_role` to.|
-|`tower_rbac_job_template`||no|Job Template to apply the `tower_rbac_role` to.|
-|`tower_rbac_workflow`||no|Workflow to apply the `tower_rbac_role` to.|
-|`tower_rbac_project`||no|Project to apply the `tower_rbac_role` to.|
-|`tower_rbac_role`|""|yes|Role to assign to the `tower_rbac_team` for the `tower_rbac_cred`, `tower_rbac_inventory`, `tower_rbac_job_template`, `tower_rbac_workflow`, or `tower_rbac_project`. Can be one of the following options: `admin`, `read`, `member`, `execute`, `adhoc`, `update`, `use`, or `auditor`.|
-|`tower_rbac_team`|""|yes|Team to assign the role based access control (`tower_rbac_role`) to.|
+|`tower_genie_rbac_secure_logging`|`False`|no|Whether or not to include the sensitive rbac role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`tower_genie_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
+
+## Data Structure
+### Variables
+|Variable Name|Default Value|Required|Type|Description|
+|:---:|:---:|:---:|:---:|:---:|
+|`user`|""|no|str|The user for which the role applies|
+|`team`|""|no|str|The team for which the role applies|
+|`role`|""|no|str (see note below)|The role which is applied to one of {`target_team`, `inventory`, `job_template`, `target_team`, `inventory`, `job_template`} for either `user` or `team` |
+|`target_team`|""|no|str|The team the role applies against|
+|`inventory`|""|no|str|The inventory the role applies against|
+|`job_template`|""|no|str|The job template the role applies against|
+|`workflow`|""|no|str|The workflow the role applies against|
+|`credential`|""|no|str|The credential the role applies against|
+|`organization`|""|no|str|The organization the role applies against|
+|`project`|""|no|str|The project the role applies against|
+|`state`|`present`|no|str|Desired state of the resource.|
+
+#### Role
+`role` must be one of the following:
+- `admin`
+- `read`
+- `member`
+- `execute`
+- `adhoc`
+- `update`
+- `use`
+- `auditor`
+- `project_admin`
+- `inventory_admin`
+- `credential_admin`
+- `workflow_admin`
+- `notification_admin`
+- `job_template_admin`
+
+### Standard RBAC Data Structure
+#### Json Example
+```json
+{
+  "tower_rbac": [
+    {
+      "user": "jdoe",
+      "target_team": "My Team",
+      "role": "member"
+    },
+    {
+      "team": "My Team",
+      "organization": "Default",
+      "role": "execute"
+    }
+  ]
+}
+```
+#### Ymal Example
+```yaml
+---
+tower_rbac:
+- user: jdoe
+  target_team: "My Team"
+  role: member
+- team: "My Team"
+  organization: "Default"
+  role: execute
+```
+
 ## Playbook Examples
 ### Standard Role Usage
 ```yaml
 ---
-- hosts: all
-  roles:
-    - role: "genie-rbac"
-      tower_url: "https:/my-tower-server.foo.bar"
-      tower_verify_ssl: False
-      tower_user: "admin"
-      tower_pass: "{{ my_tower_vault_pass }}"
-      tower_org: "MY_ORG"
-      tower_rbac_credential: "Demo Credential"
-      tower_rbac_role: "use"
-      tower_rbac_team: "team1"
+
+- name: Add RBAC entry to Tower
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Get token for use during play
+      uri:
+        url: "https://{{ tower_server }}/api/v2/tokens/"
+        method: POST
+        user: "{{ tower_username }}"
+        password: "{{ tower_passname }}"
+        force_basic_auth: yes
+        status_code: 201
+        validate_certs: no
+      register: user_token
+      no_log: True
+
+    - name: Set Tower oath Token
+      set_fact:
+        tower_oauthtoken: "{{ user_token.json.token }}"
+
+    - name: Import JSON
+      include_vars:
+        file: "json/rbac.json"
+        name: rbac_json
+
+    - name: Add Projects
+      include_role:
+        name: ansible_tower_genie_rbac
+      vars:
+        tower_rbac: "{{ rbac_json.tower_rbac }}"
 ```
 ## License
 [MIT](LICENSE)
 
 ## Author
-[Andrew J. Huffman](https://github.com/ahuffman)
+[Tom Page](https://github.com/Tompage1994)

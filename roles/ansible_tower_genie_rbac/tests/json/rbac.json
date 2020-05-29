@@ -1,0 +1,14 @@
+{
+  "tower_rbac": [
+    {
+      "user": "jdoe",
+      "target_team": "My Team",
+      "role": "member"
+    },
+    {
+      "team": "My Team",
+      "organization": "Default",
+      "role": "execute"
+    }
+  ]
+}
