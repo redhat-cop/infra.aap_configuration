@@ -1,5 +1,4 @@
-# Work In Progress
-# ansible_tower_genie_inventories
+# tower_inventories
 An Ansible role to create inventories and inventory sources.
 
 

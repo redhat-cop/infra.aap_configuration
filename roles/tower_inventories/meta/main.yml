@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "ansible_tower_genie_inventories"
+  role_name: "tower_inventories"
   author: "Andrew J. Huffman, Kedar Kulkarni"
   description: "An Ansible role to create inventories and inventory sources."
   company: "Red Hat"

@@ -20,10 +20,6 @@
       set_fact:
         tower_oauthtoken: "{{ user_token.json.token }}"
 
-    - name: Import Inventories
-      include_vars:
-        file: "configs/tower-inventories.yml"
-
     - name: Import Inventory sources
       include_vars:
         file: "configs/tower-inventory-sources.yml"
