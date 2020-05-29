@@ -31,7 +31,9 @@ jobs:
 
     - name: Install Collections
       run: |
-        yum install -y ansible
+        sudo apt install software-properties-common
+        sudo apt-add-repository --yes --update ppa:ansible/ansible
+        sudo apt install ansible
         ansible-galaxy collection install -f -r collections/requirements.yml
 
     - name: Lint Ansible Playbook
