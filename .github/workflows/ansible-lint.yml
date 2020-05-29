@@ -13,7 +13,7 @@ jobs:
         # File(s) or Directory, separate by space if multiple files or folder are specified
         file_or_dir: roles/*
         # Path to custom configuration
-        # config_file: # optional
+        config_file: .yamllint.yml
         # Custom configuration (as YAML source)
         # config_data: # optional
         # Format for parsing output [parsable,standard,colored,auto]
