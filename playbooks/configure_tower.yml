@@ -11,7 +11,7 @@
   tasks:
 
     - name: Auth tasks
-      include_tasks: "tasks/auth.yaml"
+      include_tasks: "tasks/auth.yml"
       tags:
         - always
       args:
@@ -20,6 +20,6 @@
             - always
 
     - name: Add roles
-      include_tasks: "tasks/add_tower_objects.yaml"
+      include_tasks: "tasks/add_tower_objects.yml"
       tags:
         - always
