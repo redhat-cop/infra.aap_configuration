@@ -14,9 +14,9 @@ workflows:
     job_tags: jobtag1, jobtag2
     skip_tags: jobtag3
     limit: a:b
-    diff_mode: 'False'
+    diff_mode: 'false'
     verbosity: 1
-    all_parents_must_converge: 'False'
+    all_parents_must_converge: 'false'
     state: present
     credentials:
     - Demo Credential
@@ -43,9 +43,9 @@ workflows:
     job_tags: jobtag1, jobtag2
     skip_tags: jobtag3
     limit: a:b
-    diff_mode: 'False'
+    diff_mode: 'false'
     verbosity: 1
-    all_parents_must_converge: 'True'
+    all_parents_must_converge: 'true'
     state: present
     credentials:
     - Demo Credential
@@ -70,7 +70,7 @@ workflows:
     unified_job_template: No Survey Template no vars
   - identifier: Node603
     unified_job_template: No Survey Template no vars
-    all_parents_must_converge: 'True'
+    all_parents_must_converge: 'true'
     success_nodes:
     - Node701
   - identifier: Node604

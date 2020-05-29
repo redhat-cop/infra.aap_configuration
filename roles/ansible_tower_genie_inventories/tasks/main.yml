@@ -4,7 +4,7 @@
     description:          "{{ inventory.description | default(omit) }}"
     host_filter:          "{{ inventory.host_filter | default(omit) }}"
     kind:                 "{{ inventory.kind | default(omit) }}"
-    name:                 "{{ inventory.name }}" # REQUIRED
+    name:                 "{{ inventory.name }}"  # REQUIRED
     organization:         "{{ inventory.organization | default('Default') }}"
     state:                "{{ inventory.state | default('present') }}"
     variables:            "{{ inventory.variables | default(omit) }}"
@@ -13,7 +13,7 @@
     tower_username:       "{{ tower_username | default(omit) }}"
     tower_password:       "{{ tower_password | default(omit) }}"
     tower_oauthtoken:     "{{ tower_oauthtoken | default(omit) }}"
-    validate_certs:       "{{ tower_verify_ssl | default('False') }}"
+    validate_certs:       "{{ tower_verify_ssl | default('false') }}"
   loop: "{{ tower_inventories }}"
   loop_control:
     loop_var: inventory
@@ -26,11 +26,11 @@
     description:                 "{{ source.description | default(omit) }}"
     group_by:                    "{{ source.group_by | default(omit) }}"
     instance_filters:            "{{ source.instance_filters | default(omit) }}"
-    inventory:                   "{{ source.inventory }}" # REQUIRED
-    name:                        "{{ source.name }}" # REQUIRED
+    inventory:                   "{{ source.inventory }}"  # REQUIRED
+    name:                        "{{ source.name }}"  # REQUIRED
     overwrite:                   "{{ source.overwrite | default(omit) }}"
     overwrite_vars:              "{{ source.overwrite_vars | default(omit) }}"
-    source:                      "{{ source.source }}" # REQUIRED
+    source:                      "{{ source.source }}"  # REQUIRED
     source_path:                 "{{ source.source_path | default(omit) }}"
     source_project:              "{{ source.source_project | default(omit) }}"
     source_regions:              "{{ source.source_regions | default(omit) }}"
@@ -46,9 +46,9 @@
     tower_username:              "{{ tower_username | default(omit) }}"
     tower_password:              "{{ tower_password | default(omit) }}"
     tower_oauthtoken:            "{{ tower_oauthtoken | default(omit) }}"
-    validate_certs:              "{{ tower_verify_ssl | default('False') }}"
+    validate_certs:              "{{ tower_verify_ssl | default('false') }}"
   loop: "{{ tower_inventory_sources }}"
   loop_control:
     loop_var: source
-  when: tower_inventory_sources is defined    
+  when: tower_inventory_sources is defined
 ...

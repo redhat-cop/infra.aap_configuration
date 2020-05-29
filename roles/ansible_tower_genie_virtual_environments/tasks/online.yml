@@ -3,9 +3,9 @@
 
 - name: "Check virtual environment exists"
   stat:
-    get_attributes: False
-    get_checksum: False
-    get_mime: False
+    get_attributes: false
+    get_checksum: false
+    get_mime: false
     path: "{{ tower_venv_path }}"
   register: "tower_venv_path_check"
 
@@ -20,4 +20,4 @@
     virtualenv: "{{ tower_venv_path }}"
     virtualenv_command: "virtualenv"
     state: "latest"
-  become: True
+  become: true

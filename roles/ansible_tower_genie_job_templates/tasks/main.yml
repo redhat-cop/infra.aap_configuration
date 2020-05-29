@@ -1,6 +1,6 @@
 ---
 
-#Create Job Template
+# Create Job Template
 - name: Add Tower Job Templates
   awx.awx.tower_job_template:
     name:                           "{{ tower_templates_item.name }}"
@@ -24,17 +24,17 @@
     use_fact_cache:                 "{{ tower_templates_item.use_fact_cache | default('no') }}"
     host_config_key:                "{{ tower_templates_item.host_config_key | default(omit) }}"
     ask_scm_branch_on_launch:       "{{ tower_templates_item.ask_scm_branch_on_launch | default(omit) }}"
-    ask_diff_mode_on_launch:        "{{ tower_templates_item.ask_diff_mode_on_launch | default('False') }}"
-    ask_variables_on_launch:        "{{ tower_templates_item.ask_variables_on_launch | default('False') }}"
-    ask_limit_on_launch:            "{{ tower_templates_item.ask_limit_on_launch | default('False') }}"
+    ask_diff_mode_on_launch:        "{{ tower_templates_item.ask_diff_mode_on_launch | default('false') }}"
+    ask_variables_on_launch:        "{{ tower_templates_item.ask_variables_on_launch | default('false') }}"
+    ask_limit_on_launch:            "{{ tower_templates_item.ask_limit_on_launch | default('false') }}"
     ask_tags_on_launch:             "{{ tower_templates_item.ask_tags | default('no') }}"
     ask_skip_tags_on_launch:        "{{ tower_templates_item.ask_skip_tags | default('no') }}"
     ask_job_type_on_launch:         "{{ tower_templates_item.ask_job_type_on_launch | default(omit) }}"
-    ask_verbosity_on_launch:        "{{ tower_templates_item.ask_verbosity_on_launch | default('False') }}"
+    ask_verbosity_on_launch:        "{{ tower_templates_item.ask_verbosity_on_launch | default('false') }}"
     ask_inventory_on_launch:        "{{ tower_templates_item.ask_inventory_on_launch | default(omit) }}"
     ask_credential_on_launch:       "{{ tower_templates_item.ask_inventory_on_launch | default(omit) }}"
     survey_enabled:                 "{{ tower_templates_item.survey_enabled | default('no') }}"
-    survey_spec:                    "{{ tower_templates_item.survey | to_json }}" 
+    survey_spec:                    "{{ tower_templates_item.survey | to_json }}"
     become_enabled:                 "{{ tower_templates_item.become_enabled | default(omit) }}"
     allow_simultaneous:             "{{ tower_templates_item.allow_simultaneous | default('no') }}"
     timeout:                        "{{ tower_templates_item.timeout | default(omit) }}"
@@ -49,13 +49,13 @@
     notification_templates_success: "{{ tower_templates_item.notification_templates_success | default(omit) }}"
     notification_templates_error:   "{{ tower_templates_item.notification_templates_error | default(omit) }}"
     tower_username:                 "{{ tower_username | default(omit) }}"
-    tower_password:                 "{{ tower_password | default(omit) }}"    
+    tower_password:                 "{{ tower_password | default(omit) }}"
     tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
     tower_host:                     "{{ tower_server }}"
     tower_config_file:              "{{ tower_config_file | default(omit) }}"
-    validate_certs:                 "{{ tower_validate_certs | default('yes') }}"
+    validate_certs:                 "{{ tower_validate_certs | default('true') }}"
   loop: "{{ tower_templates }}"
   loop_control:
-    loop_var: tower_templates_item  
+    loop_var: tower_templates_item
   no_log: "{{ tower_genie_job_templates_secure_logging }}"
   when: tower_templates is defined

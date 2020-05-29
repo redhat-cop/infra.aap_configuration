@@ -2,7 +2,7 @@
 - name: Bring in vaulted Ansible Tower secrets
   include_vars: vars/tower-secrets.yml
   when: tower_secrets
-  no_log: True
+  no_log: true
 
 # Temporarily configure tower-cli
 # This task could be removed if tower_role module worked in Ansible 2.5 with tower-cli 3.2.1
@@ -11,7 +11,7 @@
     src: 'tower_cli.cfg.j2'
     dest: '~/.tower_cli.cfg'
     mode: '0400'
-  changed_when: False
+  changed_when: false
 
 # tower_role module not working properly in Ansible 2.5 with tower-cli 3.2.1
 # Someday when the tower_role module actually works:
@@ -161,4 +161,4 @@
   file:
     path:  "~/.tower_cli.cfg"
     state: "absent"
-  changed_when: False
+  changed_when: false
