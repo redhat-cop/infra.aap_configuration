@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
 
-#Bring in vaulted Ansible Tower secrets
+  # Bring in vaulted Ansible Tower secrets
   vars_files:
     - vars/tower_secrets.yml
 
@@ -17,7 +17,7 @@
       args:
         apply:
           tags:
-          - always
+            - always
 
     - name: Add roles
       include_tasks: "tasks/add_tower_objects.yaml"
