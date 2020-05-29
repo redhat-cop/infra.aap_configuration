@@ -1,19 +1,13 @@
 ---
-# General
-tower_url: ""
-tower_user: ""
-tower_pass: "" #Put in a vault at vars/tower-secrets.yml when tower_secrets: True
-tower_org: ""
-tower_verify_ssl: False
-tower_secrets: False
+tower_server: ""
+tower_oauthtoken: ""
+tower_validate_certs: False
+tower_genie_rbac_secure_logging: "{{tower_genie_secure_logging | default(False)}}"
 
-# Required
-tower_rbac_role: ""
-tower_rbac_team: ""
-
-#Objects to apply permissions on.
-# tower_rbac_credential: ""
-# tower_rbac_inventory: ""
-# tower_rbac_job_template: ""
-# tower_rbac_workflow: ""
-# tower_rbac_project: ""
+tower_rbac:
+- user: jdoe
+  target_team: "My Team"
+  role: member
+- team: "My Team"
+  organization: "Default"
+  role: execute
