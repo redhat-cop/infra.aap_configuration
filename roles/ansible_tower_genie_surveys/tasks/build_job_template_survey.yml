@@ -48,7 +48,7 @@
         msg:
           - "Could not find specified job template name {{ job_template.job_template_name }}"
           - "Please make sure the job template exists."
-      when: 'job_template_id == ""'
+      when: not job_template_id
 
 # Get current survey
 - name: "Retrieve current Ansible Tower job template survey"

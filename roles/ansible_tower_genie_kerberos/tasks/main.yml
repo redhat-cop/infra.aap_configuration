@@ -2,7 +2,7 @@
 - name: Install required kerberos packages
   package:
     name: "{{ item }}"
-    state: latest
+    state: "present"
   with_items: "{{ krb_req_pkgs }}"
   become: true
 
@@ -20,7 +20,7 @@
 - name: Ensure pip is installed
   package:
     name: "python-pip"
-    state: "latest"
+    state: "present"
   when: (ansible_os_family == "RedHat" and ansible_distribution_major_version == "7") or
         (ansible_distribution == "Fedora")
   become: true
@@ -30,7 +30,7 @@
   pip:
     name: "{{ item }}"
     umask: "0022"
-    state: "latest"
+    state: "present"
   with_items: "{{ krb_pip_pkgs }}"
   become: true
 

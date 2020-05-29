@@ -25,6 +25,6 @@
     virtualenv: "{{ tower_venv_path }}/{{ item.name }}"
     virtualenv_command: "virtualenv"
     extra_args: "--no-index --find-links file://{{ tower_tmp_path }}/{{ item.package_path }}"
-    state: "latest"
+    state: "present"
   become: true
   loop: "{{ tower_venv_installs }}"
