@@ -9,5 +9,5 @@
     name: "{{ tower_team_name }}"
     description: "{{ tower_team_desc }}"
     organization: "{{ tower_org }}"
-    tower_verify_ssl: "{{ tower_verify_ssl }}"
+    validate_certs: "{{ validate_certs }}"
     state: "present"
