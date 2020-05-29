@@ -29,6 +29,11 @@ jobs:
     # Important: This sets up your GITHUB_WORKSPACE environment variable
     - uses: actions/checkout@v2
 
+    - name: Install Collections
+      run: |
+        yum install -y ansible
+        ansible-galaxy collection install -f -r collections/requirements.yml
+
     - name: Lint Ansible Playbook
       # replace "master" with any valid ref
       uses: ansible/ansible-lint-action@master
