@@ -1,5 +1,4 @@
 ---
-
 - name: "Ensure virtual environment path exists"
   file:
     mode: "0755"

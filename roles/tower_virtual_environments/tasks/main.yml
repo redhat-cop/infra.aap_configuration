@@ -1,5 +1,4 @@
 ---
-
 - name: Find the current run time.
   set_fact:
     backup_date: '{{ lookup("pipe", "date +%F-%T") }}'
