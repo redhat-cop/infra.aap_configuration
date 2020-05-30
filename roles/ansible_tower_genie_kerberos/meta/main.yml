@@ -26,7 +26,7 @@ galaxy_info:
   # this branch. If travis integration is cofigured, only notification for this
   # branch will be accepted. Otherwise, in all cases, the repo's default branch
   # (usually master) will be used.
-  #github_branch:
+  # github_branch:
 
   #
   # Below are all platforms currently available. Just uncomment
@@ -34,120 +34,120 @@ galaxy_info:
   # platform on this list, let us know and we'll get it added!
   #
   platforms:
-  - name: "EL"
-    versions:
-      - "all"
-  #  - 5
-  #   - 6
-  #- name: GenericUNIX
-  #  versions:
-  #  - all
-  #  - any
-  #- name: Solaris
-  #  versions:
-  #  - all
-  #  - 10
-  #  - 11.0
-  #  - 11.1
-  #  - 11.2
-  #  - 11.3
-  # - name: Fedora
-  #   versions:
-  #  - all
-  #  - 16
-  #  - 17
-  #  - 18
-  #  - 19
-  #  - 20
-  #  - 21
-  #  - 22
-  #  - 23
-  #- name: opensuse
-  #  versions:
-  #  - all
-  #  - 12.1
-  #  - 12.2
-  #  - 12.3
-  #  - 13.1
-  #  - 13.2
-  #- name: IOS
-  #  versions:
-  #  - all
-  #  - any
-  #- name: SmartOS
-  #  versions:
-  #  - all
-  #  - any
-  #- name: eos
-  #  versions:
-  #  - all
-  #  - Any
-  #- name: Windows
-  #  versions:
-  #  - all
-  #  - 2012R2
-  #- name: Amazon
-  #  versions:
-  #  - all
-  #  - 2013.03
-  #  - 2013.09
-  #- name: GenericBSD
-  #  versions:
-  #  - all
-  #  - any
-  #- name: Junos
-  #  versions:
-  #  - all
-  #  - any
-  #- name: FreeBSD
-  #  versions:
-  #  - all
-  #  - 10.0
-  #  - 10.1
-  #  - 10.2
-  #  - 8.0
-  #  - 8.1
-  #  - 8.2
-  #  - 8.3
-  #  - 8.4
-  #  - 9.0
-  #  - 9.1
-  #  - 9.1
-  #  - 9.2
-  #  - 9.3
-  # - name: Ubuntu
-  #   versions:
-  #  - all
-  #  - lucid
-  #  - maverick
-  #  - natty
-  #  - oneiric
-  #  - precise
-  #  - quantal
-  #  - raring
-  #  - saucy
-  #  - trusty
-  #  - utopic
-  #  - vivid
-  # - wily
-  # - xenial
-  #- name: SLES
-  #  versions:
-  #  - all
-  #  - 10SP3
-  #  - 10SP4
-  #  - 11
-  #  - 11SP1
-  #  - 11SP2
-  #  - 11SP3
-  #- name: GenericLinux
-  #  versions:
-  #  - all
-  #  - any
-  #- name: NXOS
-  #  versions:
-  #  - all
-  #  - any
+    - name: "EL"
+      versions:
+        - "all"
+        #   - 5
+        #   - 6
+        # - name: GenericUNIX
+        #   versions:
+        #   - all
+        #   - any
+        # - name: Solaris
+        #   versions:
+        #   - all
+        #   - 10
+        #   - 11.0
+        #   - 11.1
+        #   - 11.2
+        #   - 11.3
+        # - name: Fedora
+        #   versions:
+        #   - all
+        #   - 16
+        #   - 17
+        #   - 18
+        #   - 19
+        #   - 20
+        #   - 21
+        #   - 22
+        #   - 23
+        # - name: opensuse
+        #   versions:
+        #   - all
+        #   - 12.1
+        #   - 12.2
+        #   - 12.3
+        #   - 13.1
+        #   - 13.2
+        # - name: IOS
+        #   versions:
+        #   - all
+        #   - any
+        # - name: SmartOS
+        #   versions:
+        #   - all
+        #   - any
+        # - name: eos
+        #   versions:
+        #   - all
+        #   - Any
+        # - name: Windows
+        #   versions:
+        #   - all
+        #   - 2012R2
+        # - name: Amazon
+        #   versions:
+        #   - all
+        #   - 2013.03
+        #   - 2013.09
+        # - name: GenericBSD
+        #   versions:
+        #   - all
+        #   - any
+        # - name: Junos
+        #   versions:
+        #   - all
+        #   - any
+        # - name: FreeBSD
+        #   versions:
+        #   - all
+        #   - 10.0
+        #   - 10.1
+        #   - 10.2
+        #   - 8.0
+        #   - 8.1
+        #   - 8.2
+        #   - 8.3
+        #   - 8.4
+        #   - 9.0
+        #   - 9.1
+        #   - 9.1
+        #   - 9.2
+        #   - 9.3
+        # - name: Ubuntu
+        #   versions:
+        #   - all
+        #   - lucid
+        #   - maverick
+        #   - natty
+        #   - oneiric
+        #   - precise
+        #   - quantal
+        #   - raring
+        #   - saucy
+        #   - trusty
+        #   - utopic
+        #   - vivid
+        # - wily
+        # - xenial
+        # - name: SLES
+        #   versions:
+        #   - all
+        #   - 10SP3
+        #   - 10SP4
+        #   - 11
+        #   - 11SP1
+        #   - 11SP2
+        #   - 11SP3
+        # - name: GenericLinux
+        #   versions:
+        #   - all
+        #   - any
+        # - name: NXOS
+        #   versions:
+        #   - all
+        #   - any
 
   galaxy_tags:
     - "ansibletower"
@@ -167,6 +167,6 @@ galaxy_info:
     # alphanumeric characters. Maximum 20 tags per role.
 
 dependencies: []
-  # List your role dependencies here, one per line.
-  # Be sure to remove the '[]' above if you add dependencies
-  # to this list.
+# List your role dependencies here, one per line.
+# Be sure to remove the '[]' above if you add dependencies
+# to this list.

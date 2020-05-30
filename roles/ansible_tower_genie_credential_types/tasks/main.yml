@@ -1,9 +1,9 @@
 ---
-    
+
 - name: Add Credential Types
   awx.awx.tower_credential_type:
     name:                           "{{ tower_credential_types_item.name }}"
-    new_name:                       "{{ tower_credential_types_item.new_name | default(omit) }}" #To be included in future module updates it looks like, keeping in for use later. 
+    new_name:                       "{{ tower_credential_types_item.new_name | default(omit) }}"  # To be included in future module updates it looks like, keeping in for use later.
     description:                    "{{ tower_credential_types_item.description | default(omit) }}"
     injectors:                      "{{ tower_credential_types_item.injectors | default(omit) | regex_replace('[ ]{2,}','') }}"
     inputs:                         "{{ tower_credential_types_item.inputs | default(omit) }}"

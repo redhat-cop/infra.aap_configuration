@@ -1,10 +1,11 @@
+---
 - name: Import JSON
   include_vars:
     file: "json/organizations.json"
     name: organizations_json
 
 - name: Add Organizations
-  include_role: 
+  include_role:
     name: ansible_tower_genie_organizations
   vars:
     tower_organizations: "{{ organizations_json.organizations }}"

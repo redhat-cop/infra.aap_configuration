@@ -1,3 +1,4 @@
+---
 galaxy_info:
   role_name: "ansible_tower_genie_inventories"
   author: "Andrew J. Huffman, Kedar Kulkarni"

@@ -1,6 +1,5 @@
 ---
 # tasks file for ansible_tower_genie_settings
 
-  - name: Configure LDAP
-    include_tasks: ldap.yml
-    when: 
+- name: Configure LDAP
+  include_tasks: ldap.yml

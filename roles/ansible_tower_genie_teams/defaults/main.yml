@@ -1,9 +1,9 @@
 ---
 tower_url: ""
 tower_user: ""
-tower_pass: "" #Put in a vault at vars/tower-secrets.yml when tower_secrets: True
+tower_pass: ""  # Put in a vault at vars/tower-secrets.yml when tower_secrets: true
 tower_org: ""
-tower_verify_ssl: False
+tower_verify_ssl: false
 tower_team_name: ""
 tower_team_desc: ""
-tower_secrets: False
+tower_secrets: false
