@@ -1,12 +1,12 @@
 ---
 # based on method defined here: https://coderwall.com/p/8yfuva/how-to-develop-ansible-roles-w-unit-test-and-ci
 
-- name: Add Credentials to Tower
+- name: Add Organizations to Tower
   hosts: localhost
   connection: local
   gather_facts: false
 
-#Bring in vaulted Ansible Tower secrets
+  # Bring in vaulted Ansible Tower secrets
   vars_files:
     - ../tests/vars/tower_secrets.yml
 
@@ -18,11 +18,11 @@
         method: POST
         user: "{{ tower_username }}"
         password: "{{ tower_passname }}"
-        force_basic_auth: yes
+        force_basic_auth: true
         status_code: 201
-        validate_certs: no
+        validate_certs: false
       register: user_token
-      no_log: True
+      no_log: true
 
     - name: Set Tower oath Token
       set_fact:
@@ -30,13 +30,11 @@
 
     - name: Import JSON
       include_vars:
-        file: "json/credential_types.json"
-        name: credential_types_json
+        file: "json/organizations.json"
+        name: organizations_json
 
-    - name: Add Credential Types
-      include_role: 
+    - name: Add Organizations
+      include_role:
         name: ../..
       vars:
-        tower_credential_types: "{{ credential_types_json.tower_credential_types }}"
-
-
+        tower_organizations: "{{ organizations_json.tower_organizations }}"
