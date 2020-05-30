@@ -1,7 +1,7 @@
 ---
 - name: Import vars
   include_vars:
-    file: "vars/extra_vars.yaml"
+    file: "vars/extra_vars.yml"
 
 - name: Import JSON
   include_vars:

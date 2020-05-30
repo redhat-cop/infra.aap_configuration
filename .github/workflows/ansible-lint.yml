@@ -29,6 +29,13 @@ jobs:
     # Important: This sets up your GITHUB_WORKSPACE environment variable
     - uses: actions/checkout@v2
 
+    - name: Install Collections
+      run: |
+        sudo apt install software-properties-common
+        sudo apt-add-repository --yes --update ppa:ansible/ansible
+        sudo apt install ansible
+        ansible-galaxy collection install -f -r collections/requirements.yml
+
     - name: Lint Ansible Playbook
       # replace "master" with any valid ref
       uses: ansible/ansible-lint-action@master
@@ -41,7 +48,9 @@ jobs:
         # targets: |
         #   playbook_1.yml
         #   playbook_2.yml
-        targets: "roles/*"
+        targets: |
+          roles/*
+          playbooks
         # [optional]
         # Arguments to override a package and its version to be set explicitly.
         # Must follow the example syntax.
@@ -70,4 +79,4 @@ jobs:
         #                         path to directories or files to skip. This option is
         #                         repeatable.
         #   -c C                  Specify configuration file to use. Defaults to ".ansible-lint"
-        args: ""
+        args: "-c .ansiblelint.yml"
