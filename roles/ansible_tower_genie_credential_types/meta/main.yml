@@ -33,8 +33,8 @@ galaxy_info:
     - "tower"
     - "awx"
     - "genie"
-    - "credential_type"
-    - "credential_types"
+    - "credentialtype"
+    - "credentialtypes"
 
 dependencies: []
 # List your role dependencies here, one per line. Be sure to remove the '[]' above,
