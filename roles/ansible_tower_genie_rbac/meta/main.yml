@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: "ansible_tower_genie_rbac"
-  author: "Andrew J. Huffman"
+  author: "Tom Page"
   description: "An Ansible role to assign role based access controls on Ansible Tower objects to a given team."
   company: "Red Hat"
 
@@ -18,7 +18,7 @@ galaxy_info:
   # - CC-BY
   license: "MIT"
 
-  min_ansible_version: "2.4"
+  min_ansible_version: "2.8"
 
   # If this a Container Enabled role, provide the minimum Ansible Container version.
   # min_ansible_container_version:

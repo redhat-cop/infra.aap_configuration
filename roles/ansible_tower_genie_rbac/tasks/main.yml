@@ -1,164 +1,26 @@
 ---
-- name: Bring in vaulted Ansible Tower secrets
-  include_vars: vars/tower-secrets.yml
-  when: tower_secrets
-  no_log: true
 
-# Temporarily configure tower-cli
-# This task could be removed if tower_role module worked in Ansible 2.5 with tower-cli 3.2.1
-- name: Configure tower-cli
-  template:
-    src: 'tower_cli.cfg.j2'
-    dest: '~/.tower_cli.cfg'
-    mode: '0400'
-  changed_when: false
-
-# tower_role module not working properly in Ansible 2.5 with tower-cli 3.2.1
-# Someday when the tower_role module actually works:
-# # Credential
-# - name: Assign RBAC to Team | Credential
-#   tower_role:
-#     tower_host: "{{ tower_url }}"
-#     tower_username: "{{ tower_user }}"
-#     tower_password: "{{ tower_pass }}"
-#     organization: "{{ tower_org }}"
-#     tower_verify_ssl:  "{{ tower_verify_ssl }}"
-#     credential: "{{ tower_rbac_credential }}"
-#     role: "{{ tower_rbac_role }}"
-#     team: "{{ tower_rbac_team }}"
-#     state: "present"
-#   when: tower_rbac_credential is defined
-#
-# # Inventory
-# - name: Assign RBAC to Team | Inventory
-#   tower_role:
-#     tower_host: "{{ tower_url }}"
-#     tower_username: "{{ tower_user }}"
-#     tower_password: "{{ tower_pass }}"
-#     organization: "{{ tower_org }}"
-#     tower_verify_ssl:  "{{ tower_verify_ssl }}"
-#     inventory: "{{ tower_rbac_inventory }}"
-#     role: "{{ tower_rbac_role }}"
-#     team: "{{ tower_rbac_team }}"
-#     state: "present"
-#   when: tower_rbac_inventory is defined
-#
-# # Job Template
-# - name: Assign RBAC to Team | Job Template
-#   tower_role:
-#     tower_host: "{{ tower_url }}"
-#     tower_username: "{{ tower_user }}"
-#     tower_password: "{{ tower_pass }}"
-#     organization: "{{ tower_org }}"
-#     tower_verify_ssl:  "{{ tower_verify_ssl }}"
-#     job_template: "{{ tower_rbac_job_template }}"
-#     role: "{{ tower_rbac_role }}"
-#     team: "{{ tower_rbac_team }}"
-#     state: "present"
-#   when: tower_rbac_job_template is defined
-#
-# # Workflow
-# - name: Assign RBAC to Team | Workflow
-#   tower_role:
-#     tower_host: "{{ tower_url }}"
-#     tower_username: "{{ tower_user }}"
-#     tower_password: "{{ tower_pass }}"
-#     organization: "{{ tower_org }}"
-#     tower_verify_ssl:  "{{ tower_verify_ssl }}"
-#     workflow: "{{ tower_rbac_workflow }}"
-#     role: "{{ tower_rbac_role }}"
-#     team: "{{ tower_rbac_team }}"
-#     state: "present"
-#   when: tower_rbac_workflow is defined
-#
-# # Project
-# - name: Assign RBAC to Team | Project
-#   tower_role:
-#     tower_host: "{{ tower_url }}"
-#     tower_username: "{{ tower_user }}"
-#     tower_password: "{{ tower_pass }}"
-#     organization: "{{ tower_org }}"
-#     tower_verify_ssl:  "{{ tower_verify_ssl }}"
-#     project: "{{ tower_rbac_project }}"
-#     role: "{{ tower_rbac_role }}"
-#     team: "{{ tower_rbac_team }}"
-#     state: "present"
-#   when: tower_rbac_project is defined
-
-# Credential
-- name: Assign RBAC to Team | Credential
-  command: 'tower-cli                                                  \
-            role                                                       \
-              grant                                                    \
-                --team                 "{{ tower_rbac_team }}"         \
-                --type                 "{{ tower_rbac_role }}"         \
-                --credential           "{{ tower_rbac_credential }}"   \
-                {% if not tower_verify_ssl %}
-                --insecure
-                {% endif %}
-         '
-  when: tower_rbac_credential is defined
-
-# Inventory
-- name: Assign RBAC to Team | Inventory
-  command: 'tower-cli                                                  \
-            role                                                       \
-              grant                                                    \
-                --team                 "{{ tower_rbac_team }}"         \
-                --type                 "{{ tower_rbac_role }}"         \
-                --inventory            "{{ tower_rbac_inventory }}"    \
-                {% if not tower_verify_ssl %}
-                --insecure
-                {% endif %}
-         '
-  when: tower_rbac_inventory is defined
-
-# Job Template
-- name: Assign RBAC to Team | Job Template
-  command: 'tower-cli                                                  \
-            role                                                       \
-              grant                                                    \
-                --team                 "{{ tower_rbac_team }}"         \
-                --type                 "{{ tower_rbac_role }}"         \
-                --job-template         "{{ tower_rbac_job_template }}" \
-                {% if not tower_verify_ssl %}
-                --insecure
-                {% endif %}
-         '
-  when: tower_rbac_job_template is defined
-
-# Workflow
-- name: Assign RBAC to Team | Workflow
-  command: 'tower-cli                                                  \
-            role                                                       \
-              grant                                                    \
-                --team                 "{{ tower_rbac_team }}"         \
-                --type                 "{{ tower_rbac_role }}"         \
-                --workflow             "{{ tower_rbac_workflow }}"     \
-                {% if not tower_verify_ssl %}
-                --insecure
-                {% endif %}
-         '
-  when: tower_rbac_workflow is defined
-
-# Project
-- name: Assign RBAC to Team | Project
-  command: 'tower-cli                                                  \
-            role                                                       \
-              grant                                                    \
-                --team                 "{{ tower_rbac_team }}"         \
-                --type                 "{{ tower_rbac_role }}"         \
-                --project              "{{ tower_rbac_project }}"      \
-                {% if not tower_verify_ssl %}
-                --insecure
-                {% endif %}
-         '
-  when: tower_rbac_project is defined
-
-# This task could be removed if tower_role module worked in Ansible 2.5 with tower-cli 3.2.1
-# Cleanup
-- name: Destroy tower-cli config
-  file:
-    path:  "~/.tower_cli.cfg"
-    state: "absent"
-  changed_when: false
+- name: Create RBAC Entry
+  awx.awx.tower_role:
+    user:                           "{{ tower_rbac_item.user | default(omit) }}"
+    team:                           "{{ tower_rbac_item.team | default(omit) }}"
+    role:                           "{{ tower_rbac_item.role }}"
+    target_team:                    "{{ tower_rbac_item.target_team | default(omit) }}"
+    inventory:                      "{{ tower_rbac_item.inventory | default(omit) }}"
+    job_template:                   "{{ tower_rbac_item.job_template | default(omit) }}"
+    workflow:                       "{{ tower_rbac_item.workflow | default(omit) }}"
+    credential:                     "{{ tower_rbac_item.credential | default(omit) }}"
+    organization:                   "{{ tower_rbac_item.organization | default(omit) }}"
+    project:                        "{{ tower_rbac_item.project | default(omit) }}"
+    state:                          "{{ tower_rbac_item.state | default('present') }}"
+    tower_username:                 "{{ tower_username | default(omit) }}"
+    tower_password:                 "{{ tower_password | default(omit) }}"
+    tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
+    tower_host:                     "{{ tower_server }}"
+    tower_config_file:              "{{ tower_config_file | default(omit) }}"
+    validate_certs:                 "{{ tower_validate_certs | default('omit') }}"
+  loop: "{{ tower_rbac }}"
+  loop_control:
+    loop_var: tower_rbac_item
+  no_log: "{{ tower_genie_rbac_secure_logging }}"
+  when: tower_rbac is defined
