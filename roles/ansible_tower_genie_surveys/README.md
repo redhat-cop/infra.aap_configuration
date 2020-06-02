@@ -1,21 +1,24 @@
 # ansible_tower_genie_surveys
 ## Table of Contents
-- [Description](#description)
-- [Variables](#variables)
-	- [Variable `tower_surveys` Dictionary Specification](#variable-towersurveys-dictionary-specification)
-		- [`survey` Dictionary](#survey-dictionary)
-			- [Common Keys for `survey` Dictionaries](#common-keys-for-survey-dictionaries)
-			- [Type float Keys](#type-float-keys)
-			- [Type integer Keys](#type-integer-keys)
-			- [Type multiselect Keys](#type-multiselect-keys)
-			- [Type multiplechoice Keys](#type-multiplechoice-keys)
-			- [Type password Keys](#type-password-keys)
-			- [Type textarea Keys](#type-textarea-keys)
-			- [Type text Keys](#type-text-keys)
-- [Playbook Examples](#playbook-examples)
-	- [Normal Role Definition in Play](#normal-role-definition-in-play)
-	- [Import Role in Task](#import-role-in-task)
-- [Author](#author)
+- [ansible_tower_genie_surveys](#ansible_tower_genie_surveys)
+  - [Table of Contents](#table-of-contents)
+  - [Description](#description)
+  - [Variables](#variables)
+    - [Variable `tower_surveys` Dictionary Specification](#variable-tower_surveys-dictionary-specification)
+      - [`survey` Dictionary](#survey-dictionary)
+        - [Common Keys for `survey` Dictionaries](#common-keys-for-survey-dictionaries)
+        - [Type float Keys](#type-float-keys)
+        - [Type integer Keys](#type-integer-keys)
+        - [Type multiselect Keys](#type-multiselect-keys)
+        - [Type multiplechoice Keys](#type-multiplechoice-keys)
+        - [Type password Keys](#type-password-keys)
+        - [Type textarea Keys](#type-textarea-keys)
+        - [Type text Keys](#type-text-keys)
+  - [Playbook Examples](#playbook-examples)
+    - [Normal Role Definition in Play](#normal-role-definition-in-play)
+    - [Include Role in Task](#include-role-in-task)
+  - [License](#license)
+  - [Author](#author)
 
 ## Description
 An Ansible Role to deploy and ensure job template surveys are in a desired state in Ansible Tower.
@@ -23,7 +26,7 @@ An Ansible Role to deploy and ensure job template surveys are in a desired state
 |Variable Name|Default Value|Required|Description|Type|
 |---|:---:|:---:|---|:---:|
 |`tower_hostname`|""|yes|URL to the Ansible Tower Server.|string|
-|`tower_verify_ssl`|False|no|Whether or not to validate the Ansible Tower Server's SSL certificate.|boolean|
+|`validate_certs`|False|no|Whether or not to validate the Ansible Tower Server's SSL certificate.|boolean|
 |`tower_secrets`|False|yes|Whether or not to include variables stored in vars/tower-secrets.yml.  Set this value to `False` if you will be providing your sensitive values from elsewhere.|boolean|
 |`tower_username`|""|yes|Admin User on the Ansible Tower Server.|string|
 |`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.|string|
@@ -130,8 +133,8 @@ A field to enter text (string).
   roles:
     - role: "ansible_tower_genie_surveys"
       tower_hostname: "https://mytower.mydomain.com"
-      tower_verify_ssl: False
-      tower_secrets: False
+      validate_certs: false
+      tower_secrets: false
       tower_username: ""
       tower_password: "{{ vaulted_tower_pass }}"
       tower_surveys:
@@ -198,7 +201,7 @@ A field to enter text (string).
         name: "genie-survey"
       vars:
         tower_hostname: "https://mytower.mydomain.com"
-        tower_verify_ssl: False
+        validate_certs: false
         tower_secrets: False
         tower_username: ""
         tower_password: "{{ vaulted_tower_pass }}"

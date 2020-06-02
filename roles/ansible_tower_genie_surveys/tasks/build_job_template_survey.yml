@@ -23,7 +23,7 @@
         force_basic_auth: True
         method: "GET"
         status_code: "200"
-        validate_certs: "{{ tower_verify_ssl }}"
+        validate_certs: "{{ validate_certs }}"
       register: "tower_job_templates"
       changed_when: false
       no_log: true
@@ -59,7 +59,7 @@
     force_basic_auth: True
     method: "GET"
     status_code: "200"
-    validate_certs: "{{ tower_verify_ssl }}"
+    validate_certs: "{{ validate_certs }}"
   register: "tower_job_template_current_survey"
   changed_when: false
   no_log: true
@@ -79,7 +79,7 @@
     body: "{{ tower_survey_formatted | to_json }}"
     body_format: "json"
     status_code: "200"
-    validate_certs: "{{ tower_verify_ssl }}"
+    validate_certs: "{{ validate_certs }}"
   register: "update_survey"
   changed_when: 'update_survey.status == 200'
   no_log: true
@@ -96,7 +96,7 @@
     body: '{"survey_enabled": true}'
     body_format: "json"
     status_code: "200"
-    validate_certs: "{{ tower_verify_ssl }}"
+    validate_certs: "{{ validate_certs }}"
   register: "enable_job_template_survey"
   changed_when: 'enable_job_template_survey.status == 200'
   no_log: true
@@ -115,7 +115,7 @@
     body: '{"survey_enabled": false}'
     body_format: "json"
     status_code: "200"
-    validate_certs: "{{ tower_verify_ssl }}"
+    validate_certs: "{{ validate_certs }}"
   register: "disable_job_template_survey"
   changed_when: 'disable_job_template_survey.status == 200'
   no_log: true

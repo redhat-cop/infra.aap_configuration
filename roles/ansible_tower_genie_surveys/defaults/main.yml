@@ -1,6 +1,6 @@
 ---
 tower_hostname: ""
-tower_verify_ssl: false
+validate_certs: false
 tower_secrets: false
 tower_username: ""
 tower_password: "" #Put in a vault at vars/tower-secrets.yml when tower_secrets: True

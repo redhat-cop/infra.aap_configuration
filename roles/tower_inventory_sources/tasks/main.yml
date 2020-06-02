@@ -26,7 +26,7 @@
     tower_username:              "{{ tower_username | default(omit) }}"
     tower_password:              "{{ tower_password | default(omit) }}"
     tower_oauthtoken:            "{{ tower_oauthtoken | default(omit) }}"
-    validate_certs:              "{{ tower_verify_ssl | default('false') }}"
+    validate_certs:              "{{ validate_certs | default('false') }}"
   loop: "{{ tower_inventory_sources }}"
   loop_control:
     loop_var: source
