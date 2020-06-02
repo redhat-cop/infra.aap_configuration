@@ -12,7 +12,7 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 ## Variables
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`tower_server`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
+|`tower_hostname`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
 |`tower_validate_certs`|`False`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
 |`tower_config_file`|""|no|Path to the Tower or AWX config file.||
 |`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
@@ -178,7 +178,7 @@ tower_credential_types:
 
     - name: Get token for use during play
       uri:
-        url: "https://{{ tower_server }}/api/v2/tokens/"
+        url: "https://{{ tower_hostname }}/api/v2/tokens/"
         method: POST
         user: "{{ tower_username }}"
         password: "{{ tower_passname }}"
