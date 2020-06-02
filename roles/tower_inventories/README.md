@@ -1,5 +1,5 @@
 # tower_inventories
-An Ansible role to create inventories and inventory sources.
+An Ansible role to create inventories.
 
 
 ## Variables
