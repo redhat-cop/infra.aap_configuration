@@ -1,5 +1,4 @@
 ---
-
 tower_venv_pylibs:
   - "ansible-tower-cli"
 tower_venv_umask: "0022"

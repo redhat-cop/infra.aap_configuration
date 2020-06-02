@@ -1,12 +1,11 @@
 ---
-
 - name: "Ensure virtual environment path exists"
   file:
     mode: "0755"
     owner: "awx"
     group: "awx"
     path: "{{ tower_venv_path }}"
-    state: "directory"
+    state: directory
   become: true
 
 - name: "Ensure virtual environment has Ansible Tower base dependencies"
@@ -15,5 +14,5 @@
     umask: "{{ tower_venv_umask }}"
     virtualenv: "{{ tower_venv_path }}"
     virtualenv_command: "virtualenv"
-  state: "latest"
+    state: present
   become: true
