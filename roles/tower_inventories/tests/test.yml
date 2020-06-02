@@ -10,11 +10,11 @@
         method: POST
         user: "{{ tower_username }}"
         password: "{{ tower_password }}"
-        force_basic_auth: yes
+        force_basic_auth: true
         status_code: 201
-        validate_certs: no
+        validate_certs: false
       register: user_token
-      no_log: True
+      no_log: true
 
     - name: Set Tower oath Token
       set_fact:

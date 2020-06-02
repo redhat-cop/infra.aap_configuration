@@ -4,7 +4,7 @@
     description:          "{{ inventory.description | default(omit) }}"
     host_filter:          "{{ inventory.host_filter | default(omit) }}"
     kind:                 "{{ inventory.kind | default(omit) }}"
-    name:                 "{{ inventory.name }}" # REQUIRED
+    name:                 "{{ inventory.name }}"  # REQUIRED
     organization:         "{{ inventory.organization | default('Default') }}"
     state:                "{{ inventory.state | default('present') }}"
     variables:            "{{ inventory.variables | default(omit) }}"
