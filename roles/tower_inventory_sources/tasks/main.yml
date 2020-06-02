@@ -1,24 +1,4 @@
 ---
-- name: Create inventory
-  awx.awx.tower_inventory:
-    description:          "{{ inventory.description | default(omit) }}"
-    host_filter:          "{{ inventory.host_filter | default(omit) }}"
-    kind:                 "{{ inventory.kind | default(omit) }}"
-    name:                 "{{ inventory.name }}"  # REQUIRED
-    organization:         "{{ inventory.organization | default('Default') }}"
-    state:                "{{ inventory.state | default('present') }}"
-    variables:            "{{ inventory.variables | default(omit) }}"
-    tower_config_file:    "{{ tower_config_file | default(omit) }}"
-    tower_host:           "{{ tower_hostname | default(omit) }}"
-    tower_username:       "{{ tower_username | default(omit) }}"
-    tower_password:       "{{ tower_password | default(omit) }}"
-    tower_oauthtoken:     "{{ tower_oauthtoken | default(omit) }}"
-    validate_certs:       "{{ tower_verify_ssl | default('false') }}"
-  loop: "{{ tower_inventories }}"
-  loop_control:
-    loop_var: inventory
-  when: tower_inventories is defined
-
 - name: Add an inventory source
   awx.awx.tower_inventory_source:
     credential:                  "{{ source.credential | default(omit) }}"
