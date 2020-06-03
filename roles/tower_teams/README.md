@@ -1,4 +1,4 @@
-# ansible_tower_genie_teams
+# tower_teams
 ## Description
 An Ansible Role to create Teams in Ansible Tower.
 ## Variables
@@ -14,46 +14,28 @@ An Ansible Role to create Teams in Ansible Tower.
 |`tower_team_desc`|""|no|Description of the Ansible Tower Team to create.|
 ## Playbook Examples
 ### Standard Role Usage
-```yaml
----
-- hosts: all
-  roles:
-    - role: "genie-teams"
-      tower_hostname: "https:/my-tower-server.foo.bar"
-      validate_certs: false
-      tower_username: "admin"
-      tower_password: "{{ my_tower_vault_pass }}"
-      tower_org: "MY_ORG"
-      tower_team_name: "Developers"
-      tower_team_desc: "Team for Development of software deployments."
-```
-### Included Role within a Loop
 ``` yaml
 ---
-- hosts: all
+- name: Test playbook for local testing
+  hosts: localhost
+  connection: local
   vars:
-    tower_hostname: "https://my-tower-server.foo.bar"
+    tower_hostname: "https://tower.example.com"
     validate_certs: false
     tower_username: "admin"
-    tower_password: "{{ my_tower_vault_pass }}"
-    tower_org: "MY_ORG"
-    teams:
+    tower_password: "password"
+    tower_teams:
       - name: "team1"
         desc: "My first team"
+        organization: "Default"
       - name: "team2"
         desc: "My second team"
+        organization: "Default"
       - name: "team3"
         desc: "My third team"
-  tasks:
-    - name: Create my Ansible Tower Teams
-      include_role:
-        name: "genie-teams"
-      vars:
-        tower_team_name: "{{ team.name }}"
-        tower_team_desc: "{{ team.desc }}"
-      with_items: "{{ teams }}"
-      loop_control:
-        loop_var: team
+        organization: "Default"
+  roles:
+    - tower_teams
 ```
 
 ## License
@@ -61,3 +43,4 @@ An Ansible Role to create Teams in Ansible Tower.
 
 ## Author
 [Andrew J. Huffman](https://github.com/ahuffman)
+[Kedar Kulkarni](https://github.com/kedark3)
