@@ -2,16 +2,37 @@
 ## Description
 An Ansible Role to create Teams in Ansible Tower.
 ## Variables
+
+### Authentication
+|Variable Name|Default Value|Required|Description|Example|
+|:---:|:---:|:---:|:---:|:---:|
+|`tower_hostname`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
+|`validate_certs`|`False`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
+|`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
+|`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
+|`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`tower_teams`|`see below`|yes|Data structure describing your RBAC entries described below.||
+
+### Secure Logging Variables
+The following Variables compliment each other.
+If Both variables are not set, secure logging defaults to false.
+The role defaults to False as normally the add rbac task does not include sensative information.
+`tower_genie_rbac_secure_logging` defaults to the value of `tower_genie_secure_logging` if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of genie roles with a single variable, or for the user to selectively use it.
+
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`tower_hostname`|""|yes|URL to the Ansible Tower Server.|
-|`validate_certs`|False|no|Whether or not to validate the Ansible Tower Server's SSL certificate.|
-|`tower_secrets`|False|yes|Whether or not to include variables stored in vars/tower-secrets.yml.  Set this value to `False` if you will be providing the `tower_password` value from elsewhere.|
-|`tower_username`|""|yes|Admin User on the Ansible Tower Server.|
-|`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.|
-|`tower_org`|""|yes|Ansible Tower organization to create the Ansible Tower team in.|
-|`tower_team_name`|""|yes| Name of the Ansible Tower Team to create.|
-|`tower_team_desc`|""|no|Description of the Ansible Tower Team to create.|
+|`tower_genie_rbac_secure_logging`|`False`|no|Whether or not to include the sensitive rbac role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`tower_genie_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
+
+
+### Data structure `tower_teams:` should include following vars
+|Variable Name|Default Value|Required|Type|Description|
+|:---:|:---:|:---:|:---:|:---:|
+|`name`||yes|str|The desired team name to create or modify|
+|`description`|omitted|no|str|The team description|
+|`organization`||yes|str|The organization in which team will be created|
+|`state`|`present`|no|str|Desired state of the resource.|
+
 ## Playbook Examples
 ### Standard Role Usage
 ``` yaml
