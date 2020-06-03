@@ -1,7 +1,7 @@
 {
   "tower_rbac": [
     {
-      "user": "jdoe",
+      "user": "admin",
       "target_team": "My Team",
       "role": "member"
     },

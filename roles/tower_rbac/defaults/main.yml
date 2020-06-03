@@ -13,3 +13,7 @@ tower_rbac:
   - team: "My Team"
     organization: "Default"
     role: execute
+  - job_template: Demo Job Template
+    organization: "Default"
+    user: "admin"
+    role: auditor
