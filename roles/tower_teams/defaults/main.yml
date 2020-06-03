@@ -1,0 +1,9 @@
+---
+tower_hostname: ""
+tower_username: ""
+tower_password: "" #Put in a vault at vars/tower-secrets.yml when tower_secrets: True
+tower_org: ""
+validate_certs: false
+tower_team_name: ""
+tower_team_desc: ""
+tower_secrets: false
