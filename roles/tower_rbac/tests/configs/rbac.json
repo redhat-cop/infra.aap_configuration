@@ -2,13 +2,13 @@
   "tower_rbac": [
     {
       "user": "admin",
-      "target_team": "My Team",
-      "role": "member"
+      "job_template": "Demo Job Template",
+      "role": "read"
     },
     {
-      "team": "My Team",
-      "organization": "Default",
-      "role": "execute"
+      "inventory": "Demo Inventory",
+      "user": "admin",
+      "role": "read"
     }
   ]
 }
