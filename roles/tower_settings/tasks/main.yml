@@ -1,7 +1,7 @@
 ---
 # tasks file for ansible_tower_genie_settings
 
-- name: Configure LDAP
+- name: Update Ansible Tower Settings
   awx.awx.tower_settings:
     name:                "{{ tower_setting_item.name | default(omit) }}"
     value:               "{{ tower_setting_item.value | default(omit) }}"
