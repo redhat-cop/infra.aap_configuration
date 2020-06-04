@@ -4,8 +4,8 @@
   gather_facts: no
   connection: local
   vars:
-    collection_namespace: "{{ namespace  | lower }}"
-    collection_name: tower_genie
+    collection_namespace: "{{ namespace  | lower | regex_replace('-','_') }}"
+    collection_name: tower_configuration
     collection_version: "{{ github_tag.split('/')[-1] | regex_search('(\\d.\\d.\\d.*)') }}"
     collection_repo:  undef
     api_key: undef
