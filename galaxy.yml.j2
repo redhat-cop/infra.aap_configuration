@@ -2,19 +2,27 @@
 namespace: {{ collection_namespace }}
 name: {{ collection_name }}
 version: {{ collection_version }}
+description: A collection of roles to manage Ansible Tower
 readme: README.md
 authors:
-- "Andrew Huffman"
-- "Jonathan Lozada De La Matta"
-description: Ansible Collection for Red Hat insights
+    - Andrew Huffman
+    - Jonathan Lozada De La Matta @jlozadad
+    - Kedar Kulkarni @kedark3
+    - Tom Page @Tompage1994
+    - Sean Sullivan @sean-m-sullivan
 repository: {{ collection_repo }}
 issues: {{ collection_repo }}/issues
 build_ignore:
-- galaxy.yml.j2
-- release.yml
+    - galaxy.yml.j2
+    - release.yml
+    - .github
+    - .ansiblelint.yml
+    - .yamllint.yml
 license:
-- "GPLv3"
+- GPLv3
 tags:
-- tower
-- collection
-- genie
+    - tower
+    - collection
+    - tower_configuration
+dependencies:
+    awx.awx: "*"
