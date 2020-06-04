@@ -1,0 +1,16 @@
+---
+# tasks file for ansible_tower_genie_settings
+
+- name: Update Ansible Tower Settings
+  awx.awx.tower_settings:
+    name:                "{{ tower_setting_item.name | default(omit) }}"
+    value:               "{{ tower_setting_item.value | default(omit) }}"
+    tower_config_file:   "{{ tower_config_file | default(omit) }}"
+    tower_host:          "{{ tower_hostname | default(omit) }}"
+    tower_password:      "{{ tower_password | default(omit) }}"
+    tower_username:      "{{ tower_username | default(omit) }}"
+    validate_certs:      "{{ validate_certs | default('false') }}"
+  loop: "{{ tower_settings }}"
+  loop_control:
+    loop_var: tower_setting_item
+...
