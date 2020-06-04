@@ -1,0 +1,5 @@
+---
+tower_hostname: ""
+validate_certs: False
+tower_secrets: False
+tower_username: ""
