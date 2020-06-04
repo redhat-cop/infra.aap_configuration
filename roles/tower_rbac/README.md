@@ -1,4 +1,4 @@
-# ansible_tower_genie_rbac
+# tower_rbac
 ## Description
 An Ansible Role to create RBAC Entries in Ansible Tower.
 
@@ -124,7 +124,7 @@ tower_rbac:
 
     - name: Add Projects
       include_role:
-        name: ansible_tower_genie_rbac
+        name: tower_rbac
       vars:
         tower_rbac: "{{ rbac_json.tower_rbac }}"
 ```
