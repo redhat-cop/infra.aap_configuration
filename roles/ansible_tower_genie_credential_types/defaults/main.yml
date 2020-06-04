@@ -1,27 +1,27 @@
 ---
-tower_server: ""
+tower_hostname: ""
 tower_oauthtoken: ""
-tower_validate_certs: False
-tower_genie_credential_types_secure_logging: "{{tower_genie_secure_logging | default(False)}}"
+tower_validate_certs: false
+tower_genie_credential_types_secure_logging: "{{tower_genie_secure_logging | default(false)}}"
 tower_credential_types:
-- name: REST API Credential
-  description: REST API Credential
-  inputs:
-    fields:
-    - type: string
-      id: rest_username
-      label: REST Username
-    - secret: true
-      type: string
-      id: rest_password
-      label: REST Password
-    required:
-    - rest_username
-    - rest_password
-  injectors:
-    extra_vars:
-      rest_password: "{% raw %}{  { rest_password }}{% endraw %}"
-      rest_username: "{% raw %}{  { rest_username }}{% endraw %}"
-    env:
-      rest_username_env: "{% raw %}{  { rest_username }}{% endraw %}"
-      rest_password_env: "{% raw %}{  { rest_password }}{% endraw %}"
+  - name: REST API Credential
+    description: REST API Credential
+    inputs:
+      fields:
+        - type: string
+          id: rest_username
+          label: REST Username
+        - secret: true
+          type: string
+          id: rest_password
+          label: REST Password
+      required:
+        - rest_username
+        - rest_password
+    injectors:
+      extra_vars:
+        rest_password: "{% raw %}{  { rest_password }}{% endraw %}"
+        rest_username: "{% raw %}{  { rest_username }}{% endraw %}"
+      env:
+        rest_username_env: "{% raw %}{  { rest_username }}{% endraw %}"
+        rest_password_env: "{% raw %}{  { rest_password }}{% endraw %}"

@@ -1,7 +1,0 @@
----
-
-
-  - name: Required Pip packages For Virtualenv
-    yum:
-        name: "{{ virtualenv_rpms }}"  # not required. A package name or package specifier with version, like C(name-1.0).,If a previous version is specified, the task also needs to turn C(allow_downgrade) on. See the C(allow_downgrade) documentation for caveats with downgrading packages.,When using state=latest, this can be C('*') which means run C(yum -y update).,You can also pass a url or a local path to a rpm file (using state=present). To operate on several packages this can accept a comma separated list of packages or (as of 2.0) a list of packages.
-        state: installed # not required. choices: absent;installed;latest;present;removed. Whether to install (C(present) or C(installed), C(latest)), or remove (C(absent) or C(removed)) a package.,C(present) and C(installed) will simply ensure that a desired package is installed.,C(latest) will update the specified package if it's not of the latest available version.,C(absent) and C(removed) will remove the specified package.

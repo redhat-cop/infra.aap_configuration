@@ -1,0 +1,23 @@
+---
+tower_venv_pylibs:
+  - "ansible-tower-cli"
+tower_venv_umask: "0022"
+tower_venv_path: "/var/lib/awx/venv/ansible"
+requirements: "true"
+pip_req: "false"
+virtual_offline: "false"
+virtual_online: "true"
+virtual_backup: "false"
+virtualenv_rpms:
+  - gcc
+  - python-pip
+  - krb5-devel
+  - python-gssapi
+
+tower_venv_installs:
+  - name: rhv-cloud
+    package_path: pip-deps
+    reqts_file: pip-reqts-provisioner.txt
+  - name: networking
+    package_path: pip-deps
+    reqts_file: pip-reqts-provisioner.txt

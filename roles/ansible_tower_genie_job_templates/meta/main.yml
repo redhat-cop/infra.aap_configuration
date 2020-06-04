@@ -1,3 +1,4 @@
+---
 galaxy_info:
   role_name: "ansible_tower_genie_job_templates"
   author: "Sean Sulivan"
@@ -17,7 +18,7 @@ galaxy_info:
   # this branch. If Travis integration is configured, only notifications for this
   # branch will be accepted. Otherwise, in all cases, the repo's default branch
   # (usually master) will be used.
-  #github_branch:
+  # github_branch:
 
   #
   # platforms is a list of platforms, and each platform has a name and a list of versions.
@@ -33,8 +34,8 @@ galaxy_info:
     - "awx"
     - "genie"
     - "organization"
-    - "job templates"
+    - "jobtemplates"
 
 dependencies: []
-  # List your role dependencies here, one per line. Be sure to remove the '[]' above,
-  # if you add dependencies to this list.
+# List your role dependencies here, one per line. Be sure to remove the '[]' above,
+# if you add dependencies to this list.

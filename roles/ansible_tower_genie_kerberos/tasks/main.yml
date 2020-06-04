@@ -2,9 +2,9 @@
 - name: Install required kerberos packages
   package:
     name: "{{ item }}"
-    state: latest
+    state: "present"
   with_items: "{{ krb_req_pkgs }}"
-  become: True
+  become: true
 
 # EPEL required for python-pip install
 - name: Ensure EPEL repository is installed | EL7
@@ -14,25 +14,25 @@
   when:
     - ansible_os_family == "RedHat"
     - ansible_distribution_major_version == "7"
-  become: True
+  become: true
   tags: prerequisites
 
 - name: Ensure pip is installed
   package:
     name: "python-pip"
-    state: "latest"
+    state: "present"
   when: (ansible_os_family == "RedHat" and ansible_distribution_major_version == "7") or
         (ansible_distribution == "Fedora")
-  become: True
+  become: true
   tags: prerequisites
 
 - name: Ensure Python libraries are installed
   pip:
     name: "{{ item }}"
     umask: "0022"
-    state: "latest"
+    state: "present"
   with_items: "{{ krb_pip_pkgs }}"
-  become: True
+  become: true
 
 - name: Configure kerberos
   template:

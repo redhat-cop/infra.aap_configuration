@@ -24,14 +24,13 @@
     notification_templates_success: "{{ tower_projects_item.notification_templates_success | default(omit) }}"
     notification_templates_error:   "{{ tower_projects_item.notification_templates_error | default(omit) }}"
     tower_username:                 "{{ tower_username | default(omit) }}"
-    tower_password:                 "{{ tower_password | default(omit) }}"    
+    tower_password:                 "{{ tower_password | default(omit) }}"
     tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
-    tower_host:                     "{{ tower_server }}"
+    tower_host:                     "{{ tower_hostname }}"
     tower_config_file:              "{{ tower_config_file | default(omit) }}"
-    validate_certs:                 "{{ tower_validate_certs | default('yes') }}"
+    validate_certs:                 "{{ tower_validate_certs | default('true') }}"
   loop: "{{ tower_projects }}"
   loop_control:
     loop_var: tower_projects_item
   no_log: "{{ tower_genie_projects_secure_logging }}"
   when: tower_projects is defined
-  

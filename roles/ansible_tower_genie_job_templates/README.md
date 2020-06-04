@@ -10,8 +10,8 @@ Currently:
 ## Variables
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`tower_server`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
-|`tower_verify_ssl`|`False`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
+|`tower_hostname`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
+|`validate_certs`|`False`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
 |`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
 |`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
@@ -229,7 +229,7 @@ templates:
 
     - name: Get token for use during play
       uri:
-        url: "https://{{ tower_server }}/api/v2/tokens/"
+        url: "https://{{ tower_hostname }}/api/v2/tokens/"
         method: POST
         user: "{{ tower_username }}"
         password: "{{ tower_passname }}"

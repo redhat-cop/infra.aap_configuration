@@ -1,0 +1,11 @@
+---
+- name: Import JSON
+  include_vars:
+    file: "json/projects.json"
+    name: projects_json
+
+- name: Add projects
+  include_role:
+    name: ansible_tower_genie_projects
+  vars:
+    tower_projects: "{{ projects_json.projects }}"

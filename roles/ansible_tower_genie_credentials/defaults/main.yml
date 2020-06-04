@@ -1,14 +1,13 @@
 ---
-tower_server: ""
+tower_hostname: ""
 tower_oauthtoken: ""
-tower_validate_certs: False
-tower_genie_credentials_secure_logging: "{{tower_genie_secure_logging | default(False)}}"
+tower_validate_certs: false
+tower_genie_credentials_secure_logging: "{{tower_genie_secure_logging | default(false)}}"
 tower_credentials:
-- name: gitlab
-  description: Credentials for GitLab
-  organization: Default
-  credential_type: Source Control
-  inputs:
-    username: person
-    password: password
-
+  - name: gitlab
+    description: Credentials for GitLab
+    organization: Default
+    credential_type: Source Control
+    inputs:
+      username: person
+      password: password

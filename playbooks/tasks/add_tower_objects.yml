@@ -1,0 +1,61 @@
+---
+
+- name: Import vars
+  include_vars:
+    file: "vars/extra_vars.yml"
+  tags:
+    - always
+
+- name: Add organizations
+  include_tasks: "tasks/add_organizations.yml"
+  args:
+    apply:
+      tags:
+        - organizations
+  tags:
+    - organizations
+
+- name: Add credential types
+  include_tasks: "tasks/add_credential_types.yml"
+  args:
+    apply:
+      tags:
+        - credential_types
+  tags:
+    - credential_types
+
+- name: Add credentials
+  include_tasks: "tasks/add_credentials.yml"
+  args:
+    apply:
+      tags:
+        - credentials
+  tags:
+    - credentials
+
+- name: Add projects
+  include_tasks: "tasks/add_projects.yml"
+  args:
+    apply:
+      tags:
+        - projects
+  tags:
+    - projects
+
+- name: Add templates
+  include_tasks: "tasks/add_templates.yml"
+  args:
+    apply:
+      tags:
+        - templates
+  tags:
+    - templates
+
+- name: Add workflows
+  include_tasks: "tasks/add_workflows.yml"
+  args:
+    apply:
+      tags:
+        - workflows
+  tags:
+    - workflows

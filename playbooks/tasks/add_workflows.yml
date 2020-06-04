@@ -1,0 +1,12 @@
+---
+- name: Import JSON
+  include_vars:
+    file: "json/workflows.json"
+    name: workflows_json
+
+- name: Add Templates
+  include_role:
+    name: ansible_tower_genie_workflow_templates
+  vars:
+    tower_workflows: "{{ workflows_json.workflows }}"
+    tower_password: "{{ tower_passname | default(omit) }}"

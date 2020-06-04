@@ -1,0 +1,6 @@
+---
+
+- name: Required Pip packages For Virtualenv
+  yum:
+    name: "{{ virtualenv_rpms }}"
+    state: installed

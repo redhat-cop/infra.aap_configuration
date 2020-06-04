@@ -1,0 +1,17 @@
+---
+
+- name: Create a directory for custom virtual environments
+  file:
+    path: "{{ tower_venv_tmp }}/venv/"
+    group: root
+    mode: 0755
+    owner: root
+    state: directory
+
+- name: compress the virtual environments
+  archive:
+    path: "{{ tower_venv_path }}"
+    dest: "{{ tower_venv_tmp }}/{{ backup_date }}"
+    format: gz
+    mode: 0755
+    owner: root

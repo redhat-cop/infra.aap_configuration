@@ -1,0 +1,20 @@
+---
+- name: Find the current run time.
+  set_fact:
+    backup_date: '{{ lookup("pipe", "date +%F-%T") }}'
+
+- name: Include Requirements
+  include_tasks: requirements.yml
+  when: requirements|bool
+
+- name: Include Online Virtualenv
+  include_tasks: online.yml
+  when: virtual_online|bool
+
+- name: Include Offline Virtualenv
+  include_tasks: offline.yml
+  when: virtual_offline|bool
+
+- name: Include Backup of the Virtualenv
+  include_tasks: online.yml
+  when: virtual_backup|bool

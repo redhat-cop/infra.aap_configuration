@@ -1,0 +1,16 @@
+---
+- name: Import vars
+  include_vars:
+    file: "vars/extra_vars.yml"
+
+- name: Import JSON
+  include_vars:
+    file: "json/workflows_new.json"
+    name: workflows_json
+
+- name: Add Templates
+  include_role:
+    name: ansible_tower_genie_workflow_templates_3_7
+  vars:
+    tower_workflows: "{{ workflows_json.workflows }}"
+    tower_password: "{{ tower_passname | default(omit) }}"
