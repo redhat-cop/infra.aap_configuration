@@ -19,10 +19,10 @@ tags:
     - tower_configuration
 dependencies:
   # Required for awx modules
-  awx.awx: "*"    
+    awx.awx: "*"
 repository: https://github.com/redhat-cop/tower_configuration
 issues: https://github.com/redhat-cop/tower_configuration/issues
 build_ignore:
-- .github
-- .ansiblelint.yml
-- .yamllint.yml
+    - .github
+    - .ansiblelint.yml
+    - .yamllint.yml
