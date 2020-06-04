@@ -1,0 +1,31 @@
+---
+name: galaxy-release
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      ANSIBLE_FORCE_COLOR: 1
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v1
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Install ansible-base
+        run: pip install ansible
+      
+      - name: Publish to galaxy
+        run: ansible-playbook release.yml
+          -e namespace=${{ github.repository_owner }}
+          -e github_tag=${{ github.ref }}
+          -e api_key=${{ secrets.ANSIBLE_GALAXY_APIKEY }}
+          -e collection_repo=https://github.com/${{ github.repository }}
+          --skip-tags=install,cleanup
