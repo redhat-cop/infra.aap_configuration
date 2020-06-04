@@ -7,7 +7,10 @@ version: 0.1
 readme: README.md
 authors:
     - Andrew Huffman
-    - Jonathan Lozada De La Matta
+    - Jonathan Lozada De La Matta @jlozadad
+    - Kedar Kulkarni @kedark3
+    - Tom Page @Tompage1994
+    - Sean Sullivan @sean-m-sullivan
 license:
     - MIT
 tags:
@@ -19,3 +22,7 @@ dependencies:
   awx.awx: "*"    
 repository: https://github.com/redhat-cop/tower_configuration
 issues: https://github.com/redhat-cop/tower_configuration/issues
+build_ignore:
+- .github
+- .ansiblelint.yml
+- .yamllint.yml
