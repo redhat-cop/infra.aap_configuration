@@ -16,4 +16,4 @@
   loop: "{{ tower_user_accounts }}"
   when: tower_user_accounts is defined
   tags:
-    - tower-user-create
+     - tower-user-create
