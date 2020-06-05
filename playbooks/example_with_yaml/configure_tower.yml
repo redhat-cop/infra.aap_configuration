@@ -21,7 +21,7 @@
     - { role: tower_inventories, when: tower_inventories is defined }
     - { role: tower_projects, when: tower_projects is defined }
     - { role: tower_inventory_sources, when: tower_inventory_sources is defined }
-    # - { role: tower_hosts, when: tower_hosts is defined }
+    - { role: tower_hosts, when: tower_hosts is defined }
     - { role: tower_job_templates, when: tower_templates is defined }
     # - { role: tower_notifications, when: tower_notifications is defined }
     # - { role: tower_workflow, when: tower_workflows is defined }
