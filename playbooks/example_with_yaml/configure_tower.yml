@@ -13,7 +13,7 @@
         ignore_files: [tower_config.yml.template]
         extensions: ["json", "yaml", "yml"]
   roles:
-    # - { role: tower_settings, when: tower_settings is defined }
+    - { role: tower_settings, when: tower_settings is defined }
     - { role: tower_organizations, when: tower_organizations is defined }
     - { role: tower_users, when: tower_user_accounts is defined }
     - { role: tower_teams, when: tower_teams is defined }
