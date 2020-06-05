@@ -15,8 +15,8 @@
   roles:
     # - { role: tower_settings, when: tower_settings is defined }
     - { role: tower_organizations, when: tower_organizations is defined }
-    # - { role: tower_user, when: tower_user_accounts is defined }
-    # - { role: tower_teams, when: tower_teams is defined }
+    - { role: tower_users, when: tower_user_accounts is defined }
+    - { role: tower_teams, when: tower_teams is defined }
     - { role: tower_credentials, when: tower_credentials is defined }
     - { role: tower_inventories, when: tower_inventories is defined }
     # - { role: tower_project, when: tower_projects is defined }
