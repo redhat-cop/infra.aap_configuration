@@ -1,0 +1,64 @@
+---
+# References:
+# https://tower-cli.readthedocs.io/en/latest/api_ref/resources/workflow.html
+# https://github.com/ansible/tower-cli/blob/master/docs/source/cli_ref/usage/WORKFLOWS.rst
+# https://github.com/ansible/tower-cli/pull/322#issuecomment-314801676
+tower_workflows:
+  - name: Test workflow 1
+    description: created by Ansible Playbook
+    organization: Satellite
+    survey_enabled: false
+    allow_simultaneous: no
+    schema:
+      - job_template: Demo Job Template
+        failure_nodes:
+          - job_template: test-template-1
+        success_nodes:
+          # https://github.com/ansible/awx/issues/6168
+          - job_template: test-template-1  # This does not work very well, maybe a bug in tower-cli
+            always_nodes:
+              - job_template: test-template-1
+    # Extra vars won't work until https://github.com/ansible/tower-cli/pull/748 is fixed
+    # I filed: https://github.com/ansible/awx/issues/6167
+    # extra_vars:
+    #   var1: val1
+    #   var2:
+    #     var21: val21
+    #     var22: val22
+    #   var3:
+    #     - var4
+    #     - var5
+    #   var6:
+    #     - var7: val7
+    #     - var8: val8
+    #       var9: val9
+  - name: Test workflow 2
+    # https://github.com/ansible/awx/issues/5946
+    # survey_enabled: true
+    # survey:
+    #   name: ''
+    #   description: ''
+    #   spec:
+    #   - question_name: Enter a Unique name for your miq appliance
+    #     question_description: Please choose a name that is different from any of existing
+    #       VM names on rhv43
+    #     required: true
+    #     type: text
+    #     variable: miq_vm_name
+    #     min: 0
+    #     max: 20
+    #     default: ''
+    #     choices: ''
+    allow_simultaneous: yes
+    schema:
+      - job_template: Demo Job Template
+        failure_nodes:
+          - job_template: test-template-1
+        success_nodes:
+          - workflow: Test workflow 2
+            always_nodes:
+              - job_template:  Demo Job Template
+            success_nodes:
+              - job_template: test-template-1
+            # failure_nodes:
+            #   - project: Demo project # This didn't work for me, but we can invenstigate if needed. Maybe bug in module

@@ -1,0 +1,28 @@
+---
+- name: Playbook to configure ansible tower post installation
+  hosts: localhost
+  connection: local
+  # Define following vars here, or in tower_configs/tower-hostname.yml
+  # tower_hostname: ansible-tower-web-svc-test-project.example.com
+  # tower_username: admin
+  # tower_password: changeme
+  pre_tasks:
+    - name: Include vars from tower_configs directory
+      include_vars:
+        dir: ./tower_configs
+        ignore_files: [tower_config.yml.template]
+        extensions: ["json", "yaml", "yml"]
+  roles:
+    # - { role: tower_settings, when: tower_settings is defined }
+    - { role: tower_organizations, when: tower_organizations is defined }
+    # - { role: tower_user, when: tower_user_accounts is defined }
+    # - { role: tower_teams, when: tower_teams is defined }
+    - { role: tower_credentials, when: tower_credentials is defined }
+    - { role: tower_inventories, when: tower_inventories is defined }
+    # - { role: tower_project, when: tower_projects is defined }
+    - { role: tower_inventory_sources, when: tower_inventory_sources is defined }
+    # - { role: tower_hosts, when: tower_hosts is defined }
+    # - { role: tower_job_templates, when: tower_job_templates is defined }
+    # - { role: tower_notifications, when: tower_notifications is defined }
+    # - { role: tower_workflow, when: tower_workflows is defined }
+    - { role: tower_rbac, when: tower_rbac is defined }

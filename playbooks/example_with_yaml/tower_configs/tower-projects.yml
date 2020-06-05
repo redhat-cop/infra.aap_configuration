@@ -1,0 +1,21 @@
+---
+tower_projects:
+  - name: Test Project
+    scm_url: https://github.com/kedark3/infra-playbooks
+    scm_branch: master
+    scm_clean: yes
+    description: Test Project 1
+    organization: Satellite
+    # custom_virtualenv: /opt/virtualenvs/satlab-venv/ -- This venv has to be created and present to make it work.
+  - name: Test Project 2
+    scm_url: https://github.com/kedark3/infra-playbooks
+    description: Test Project 2
+    organization: Satellite
+  # - name: satlab-admin master
+  #   description: Satlab-admin repo master branch
+  #   organization: Satellite
+  #   scm_url: https://gitlab.example.com/example-user/satlab-admin.git
+  #   scm_clean: yes
+  #   scm_update_on_launch: yes
+  #   scm_delete_on_update: yes
+  #   scm_credential: gitlab-personal-access-token for satqe_auto_droid
