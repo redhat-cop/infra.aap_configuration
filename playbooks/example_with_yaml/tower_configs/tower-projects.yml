@@ -4,7 +4,7 @@ tower_projects:
     scm_type: git
     scm_url: https://github.com/kedark3/infra-playbooks
     scm_branch: master
-    scm_clean: yes
+    scm_clean: true
     description: Test Project 1
     organization: Satellite
   - name: Test Project 2
