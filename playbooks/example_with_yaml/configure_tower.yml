@@ -13,16 +13,15 @@
         ignore_files: [tower_config.yml.template]
         extensions: ["json", "yaml", "yml"]
   roles:
-    - {role: tower_settings,when: tower_settings is defined}
-    - {role: tower_organizations,when: tower_organizations is defined}
-    - {role: tower_users, when: tower_user_accounts is defined}
-    - {role: tower_teams, when: tower_teams is defined}
-    - {role: tower_credentials, when: tower_credentials is defined}
-    - {role: tower_inventories, when: tower_inventories is defined}
-    - {role: tower_projects, when: tower_projects is defined}
-    - {role: tower_inventory_sources, when: tower_inventory_sources is defined}
-    - {role: tower_hosts, when: tower_hosts is defined}
-    - {role: tower_job_templates, when: tower_templates is defined}
-    # - { role: tower_notifications, when: tower_notifications is defined }
-    # - { role: tower_workflow, when: tower_workflows is defined }
-    - {role: tower_rbac, when: tower_rbac is defined}
+    - {role: tower_settings, when: tower_settings is defined}
+    - {role: organizations, when: tower_organizations is defined}
+    - {role: users, when: tower_user_accounts is defined}
+    - {role: teams, when: tower_teams is defined}
+    - {role: credentials, when: tower_credentials is defined}
+    - {role: inventories, when: tower_inventories is defined}
+    - {role: projects, when: tower_projects is defined}
+    - {role: inventory_sources, when: tower_inventory_sources is defined}
+    - {role: hosts, when: tower_hosts is defined}
+    - {role: job_templates, when: tower_templates is defined}
+    - {role: notifications, when: tower_notifications is defined}
+    - {role: tower_role, when: tower_rbac is defined}
