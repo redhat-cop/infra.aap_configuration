@@ -1,13 +1,13 @@
 ---
 - name: Add tower user
   awx.awx.tower_user:
-     auditor:             "{{ item.auditor| default('no') }}"
+     auditor:             "{{ item.is_auditor| default('false') }}"
      username:            "{{ item.user }}"
      password:            "{{ item.password | default('change_me') }}"
      email:               "{{ item.email | default('rhpds-admins@redhat.com') }}"
      first_name:          "{{ item.firstname | default(item.user) }}"
      last_name:           "{{ item.lastname | default(item.user) }}"
-     superuser:           "{{ item.superuser | default('no') }}"
+     superuser:           "{{ item.is_superuser | default('false') }}"
      state:               "{{ item.state | default('present') }}"
      tower_host:          "{{ tower_hostname }}"
      tower_username:      "{{ tower_username | default('admin') }}"

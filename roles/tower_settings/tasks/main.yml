@@ -4,7 +4,7 @@
 - name: Update Ansible Tower Settings
   awx.awx.tower_settings:
     name:                "{{ tower_setting_item.name | default(omit) }}"
-    value:               "{{ tower_setting_item.setting | default(omit) }}"
+    value:               "{{ tower_setting_item.value | default(omit) }}"
     tower_config_file:   "{{ tower_config_file | default(omit) }}"
     tower_host:          "{{ tower_hostname | default(omit) }}"
     tower_password:      "{{ tower_password | default(omit) }}"
