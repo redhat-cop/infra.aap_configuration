@@ -2,7 +2,7 @@
 - name: Add tower host
   awx.awx.tower_host:
     name:             "{{ item.name }}"
-    description:      "{{ item.description | d('created via Ansible Playbook') }}"
+    description:      "{{ item.description | default('created via Ansible Playbook') }}"
     inventory:        "{{ item.inventory }}"
     state:            "{{ item.state | d('present') }}"
     variables:        "{{ item.variables | d('') }}"
