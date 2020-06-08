@@ -16,8 +16,8 @@ tower_notifications:
     notification_type: email
     host: smtp.example.com
     recipients:
-      - kedar.kulkarni0@gmail.com
-    sender: kedar.kulkarni0@gmail.com
+      - admin@example.com
+    sender: tower0@example.com
     port: 25
     username: '' # this is required even if there's no username
     password: '' # this is required even if there's no password
