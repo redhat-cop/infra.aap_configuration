@@ -1,19 +1,28 @@
 ---
 
-namespace: "redhat_cop"
-name: "tower_genie_collections"
-version: "0.1"
-readme: "README.md"
+namespace: redhat_cop
+name: tower_configuration
+description: A collection of roles to manage Ansible Tower
+version: 0.1
+readme: README.md
 authors:
-    - "Andrew Huffman"
-    - "Jonathan Lozada De La Matta"
+    - Andrew Huffman
+    - Jonathan Lozada De La Matta @jlozadad
+    - Kedar Kulkarni @kedark3
+    - Tom Page @Tompage1994
+    - Sean Sullivan @sean-m-sullivan
 license:
-    - "GPLv3"
+    - MIT
 tags:
     - tower
     - collection
-    - genie
-repository: "https://www.github.com/redhat-cop/tower_genie_collections"
-# documentation: "http://my-docs.example.com"
-# homepage: "http://www.example.com"
-issues: "https://www.github.com/redhat-cop/tower_genie_collections/issues"
+    - tower_configuration
+dependencies:
+  # Required for awx modules
+    awx.awx: "*"
+repository: https://github.com/redhat-cop/tower_configuration
+issues: https://github.com/redhat-cop/tower_configuration/issues
+build_ignore:
+    - .github
+    - .ansiblelint.yml
+    - .yamllint.yml
