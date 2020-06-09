@@ -1,0 +1,8 @@
+---
+tower_teams:
+  - name: satellite-qe
+    organization: Satellite
+    state: present
+  - name: satlab-admin
+    organization: Satellite
+    state: present

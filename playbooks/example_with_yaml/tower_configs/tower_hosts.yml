@@ -1,0 +1,7 @@
+---
+tower_hosts:
+  - name: localhost
+    inventory: localhost
+    state: present
+    variables:
+      some_var: some_val
