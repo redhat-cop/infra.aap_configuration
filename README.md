@@ -9,6 +9,16 @@
 
 This is a collection of roles for AWX/Tower.
 
+## Release Process
+This collection uses an auatomated GitHub workflow to publish releases to Ansible Galaxy. This workflow can be found in `.github/workflows/galaxy-release.yml`. It is dependent on `release.yml` and `galaxy.yml.j2`. See instructions below for usage.
+
+To publish a release to Galaxy:
+1) An administrator of the repository must configure a secret in the settings containing the API key for the Galaxy namespace. The secret should be called `ANSIBLE_GALAXY_APIKEY`. This is a one time step.
+2) To publish a release, click "releases" at the top of repository home page and "Draft a new release"
+3) The "Tag version" should be in the form `v#.#.#`. A suffix may be added such as `-dev#` or `rc#` for pre-releases. These will still publish to Galaxy but will not be chosen when installing `latest`. The version must be explicitly stated when installing to use pre-releases.
+4) Title the release, it is recommended to use the "Tag version"
+5) Clicking "Publish release" will initiate the workflow. If there are no errors building the collection, it will be automatically published to galaxy as the version suppied for "Tag version"
+
 ## Tested with Ansible
 
 <!-- List the versions of Ansible the collection has been tested with. Must match what is in galaxy.yml. -->
