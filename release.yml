@@ -1,0 +1,47 @@
+---
+- name: release collection
+  hosts: localhost
+  gather_facts: no
+  connection: local
+  vars:
+    collection_namespace: "{{ namespace  | lower | regex_replace('-','_') }}"
+    collection_name: tower_configuration
+    collection_version: "{{ github_tag.split('/')[-1] | regex_search('(\\d.\\d.\\d.*)') }}"
+    collection_repo:  undef
+    api_key: undef
+
+  tasks:
+    - name: create galaxy.yml
+      template:
+        src: "{{ playbook_dir}}/galaxy.yml.j2"
+        dest: "{{ playbook_dir }}/galaxy.yml"
+
+    - name: build collection
+      command:
+        cmd: ansible-galaxy collection build
+        chdir: "{{ playbook_dir }}"
+        creates: "{{ playbook_dir }}/{{ collection_namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz"
+      tags: build
+
+    - name: install collection
+      command:
+        cmd: "ansible-galaxy collection install {{ collection_namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz -p ~/.ansible/collections/"
+        chdir: "{{ playbook_dir }}"
+      tags: install
+
+    - name: publish collection
+      command:
+        cmd: "ansible-galaxy collection publish --api-key={{ api_key }} {{ collection_namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz"
+        chdir: "{{ playbook_dir }}"
+      tags: publish
+
+    - name: git cleanup
+      command:
+        cmd: git reset --hard
+      tags: cleanup
+
+    - name: remove galaxy.yml
+      file:
+        path: "{{ playbook_dir }}/galaxy.yml"
+        state: absent
+      tags: cleanup
