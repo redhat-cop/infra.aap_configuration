@@ -1,0 +1,13 @@
+---
+tower_validate_certs: false
+tower_configuration_schedules_secure_logging: "{{tower_configuration_secure_logging | default(false)}}"
+
+
+tower_schedules:
+  - name: Demo Schedule
+    description: A demonstration
+    unified_job_template: Demo Job Template
+    rrule: "DTSTART:20191219T130551Z RRULE:FREQ=DAILY;INTERVAL=1;COUNT=1"
+    extra_data:
+      scheduled: true
+    verbosity: 1
