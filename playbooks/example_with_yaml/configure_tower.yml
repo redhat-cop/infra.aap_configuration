@@ -23,5 +23,6 @@
     - {role: inventory_sources, when: tower_inventory_sources is defined}
     - {role: hosts, when: tower_hosts is defined}
     - {role: job_templates, when: tower_templates is defined}
+    - {role: schedules, when: tower_schedules is defined}
     - {role: notifications, when: tower_notifications is defined}
     - {role: tower_role, when: tower_rbac is defined}
