@@ -31,7 +31,7 @@ galaxy_info:
     - "ansibletower"
     - "tower"
     - "awx"
-    - "genie"
+    - "configuration"
     - "organization"
     - "workflow"
     - "workflows"
