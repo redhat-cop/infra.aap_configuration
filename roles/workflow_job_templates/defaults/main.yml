@@ -5,119 +5,119 @@ tower_verify_ssl: False
 workflow_job_templates_secure_logging: "{{tower_configuration_secure_logging | default(False)}}"
 
 workflow_job_templates:
-- name: Simple workflow schema
-  description: a basic workflow
-  extra_vars: ''
-  survey_enabled: false
-  allow_simultaneous: false
-  ask_variables_on_launch: false
-  inventory:
-  limit:
-  scm_branch:
-  ask_inventory_on_launch: false
-  ask_scm_branch_on_launch: false
-  ask_limit_on_launch: false
-  webhook_service: ''
-  webhook_credential:
-  organization:
-    name: Default
-    type: organization
-  related:
-    schedules: []
-    workflow_nodes:
-    - extra_data: {}
-      inventory:
-      scm_branch:
-      job_type:
-      job_tags:
-      skip_tags:
-      limit:
-      diff_mode:
-      verbosity:
-      all_parents_must_converge: false
-      identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
-      workflow_job_template:
-        organization:
-          name: Default
-          type: organization
-        name: Simple workflow schema
-        type: workflow_job_template
-      unified_job_template:
-        name: RHVM-01
-        inventory:
-          organization:
-            name: Satellite
-            type: organization
-          name: RHVM-01
-          type: inventory
-        type: inventory_source
-      related:
-        credentials: []
-        success_nodes:
-        - workflow_job_template:
+  - name: Simple workflow schema
+    description: a basic workflow
+    extra_vars: ''
+    survey_enabled: false
+    allow_simultaneous: false
+    ask_variables_on_launch: false
+    inventory:
+    limit:
+    scm_branch:
+    ask_inventory_on_launch: false
+    ask_scm_branch_on_launch: false
+    ask_limit_on_launch: false
+    webhook_service: ''
+    webhook_credential:
+    organization:
+      name: Default
+      type: organization
+    related:
+      schedules: []
+      workflow_nodes:
+        - extra_data: {}
+          inventory:
+          scm_branch:
+          job_type:
+          job_tags:
+          skip_tags:
+          limit:
+          diff_mode:
+          verbosity:
+          all_parents_must_converge: false
+          identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
+          workflow_job_template:
             organization:
               name: Default
               type: organization
             name: Simple workflow schema
             type: workflow_job_template
+          unified_job_template:
+            name: RHVM-01
+            inventory:
+              organization:
+                name: Satellite
+                type: organization
+              name: RHVM-01
+              type: inventory
+            type: inventory_source
+          related:
+            credentials: []
+            success_nodes:
+              - workflow_job_template:
+                  organization:
+                    name: Default
+                    type: organization
+                  name: Simple workflow schema
+                  type: workflow_job_template
+                identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
+                type: workflow_job_template_node
+            failure_nodes: []
+            always_nodes: []
+          natural_key:
+            workflow_job_template:
+              organization:
+                name: Default
+                type: organization
+              name: Simple workflow schema
+              type: workflow_job_template
+            identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
+            type: workflow_job_template_node
+        - extra_data: {}
+          inventory:
+          scm_branch:
+          job_type:
+          job_tags:
+          skip_tags:
+          limit:
+          diff_mode:
+          verbosity:
+          all_parents_must_converge: false
           identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
-          type: workflow_job_template_node
-        failure_nodes: []
-        always_nodes: []
-      natural_key:
-        workflow_job_template:
-          organization:
-            name: Default
-            type: organization
-          name: Simple workflow schema
-          type: workflow_job_template
-        identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
-        type: workflow_job_template_node
-    - extra_data: {}
-      inventory:
-      scm_branch:
-      job_type:
-      job_tags:
-      skip_tags:
-      limit:
-      diff_mode:
-      verbosity:
-      all_parents_must_converge: false
-      identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
-      workflow_job_template:
-        organization:
-          name: Default
-          type: organization
-        name: Simple workflow schema
-        type: workflow_job_template
-      unified_job_template:
-        organization:
-          name: Satellite
-          type: organization
-        name: test-template-1
-        type: job_template
-      related:
-        credentials: []
-        success_nodes: []
-        failure_nodes: []
-        always_nodes: []
-      natural_key:
-        workflow_job_template:
-          organization:
-            name: Default
-            type: organization
-          name: Simple workflow schema
-          type: workflow_job_template
-        identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
-        type: workflow_job_template_node
-    notification_templates_started: []
-    notification_templates_success: []
-    notification_templates_error: []
-    notification_templates_approvals: []
-    survey_spec: {}
-  natural_key:
-    organization:
-      name: Default
-      type: organization
-    name: Simple workflow schema
-    type: workflow_job_template
+          workflow_job_template:
+            organization:
+              name: Default
+              type: organization
+            name: Simple workflow schema
+            type: workflow_job_template
+          unified_job_template:
+            organization:
+              name: Satellite
+              type: organization
+            name: test-template-1
+            type: job_template
+          related:
+            credentials: []
+            success_nodes: []
+            failure_nodes: []
+            always_nodes: []
+          natural_key:
+            workflow_job_template:
+              organization:
+                name: Default
+                type: organization
+              name: Simple workflow schema
+              type: workflow_job_template
+            identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
+            type: workflow_job_template_node
+      notification_templates_started: []
+      notification_templates_success: []
+      notification_templates_error: []
+      notification_templates_approvals: []
+      survey_spec: {}
+    natural_key:
+      organization:
+        name: Default
+        type: organization
+      name: Simple workflow schema
+      type: workflow_job_template
