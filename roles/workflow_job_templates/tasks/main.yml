@@ -28,7 +28,7 @@
   loop: "{{ tower_workflows }}"
   loop_control:
     loop_var: workflow_loop_var
-
+  no_log: "{{ workflow_job_templates_secure_logging }}"
 
 # Create links between workflow node 
 - name: loop over nodes in schema to add to workflow templates

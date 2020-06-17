@@ -4,7 +4,7 @@ An Ansible Role to create Workflow Job Templates in Ansible Tower.
 
 ## Requirements 
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
-Currently:
+Required Collections:
   awx.awx
 
 ## Variables
@@ -102,157 +102,393 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
 ```json
 ---
 {
-    "templates": [
-        {
-            "name": "Survey Template with vars",
-            "job_type": "run",
-            "inventory": "Demo Inventory",
-            "survey_enabled": true,
-            "survey": "{{ lookup('template', 'template_surveys/basic_survey.json') | regex_replace('\\n', '') }}",
-            "project": "Tower Config",
-            "playbook": "helloworld.yml",
-            "credentials": [
-                "Demo Credential"
-              ],           
-            "extra_vars": "{{ survey_extra_vars }}",
-            "notification_templates_error": [
-                "Slack_for_testing"
-              ]
-        },
-        {
-            "name": "No Survey Template no vars",
-            "job_type": "run",
-            "inventory": "Demo Inventory",
-            "project": "Tower Config",
-            "playbook": "helloworld.yml",
-            "credentials": [
-                "Demo Credential"
+  "tower_workflows": [
+    {
+      "name": "Simple workflow schema",
+      "description": "a basic workflow",
+      "extra_vars": "",
+      "survey_enabled": false,
+      "allow_simultaneous": false,
+      "ask_variables_on_launch": false,
+      "inventory": null,
+      "limit": null,
+      "scm_branch": null,
+      "ask_inventory_on_launch": false,
+      "ask_scm_branch_on_launch": false,
+      "ask_limit_on_launch": false,
+      "webhook_service": "",
+      "webhook_credential": null,
+      "organization": {
+        "name": "Default",
+        "type": "organization"
+      },
+      "related": {
+        "schedules": [
+
+        ],
+        "workflow_nodes": [
+          {
+            "extra_data": {
+            },
+            "inventory": null,
+            "scm_branch": null,
+            "job_type": null,
+            "job_tags": null,
+            "skip_tags": null,
+            "limit": null,
+            "diff_mode": null,
+            "verbosity": null,
+            "all_parents_must_converge": false,
+            "identifier": "d9779889-cfdb-4a8c-8a11-1f54acf84aca",
+            "workflow_job_template": {
+              "organization": {
+                "name": "Default",
+                "type": "organization"
+              },
+              "name": "Simple workflow schema",
+              "type": "workflow_job_template"
+            },
+            "unified_job_template": {
+              "name": "RHVM-01",
+              "inventory": {
+                "organization": {
+                  "name": "Satellite",
+                  "type": "organization"
+                },
+                "name": "RHVM-01",
+                "type": "inventory"
+              },
+              "type": "inventory_source"
+            },
+            "related": {
+              "credentials": [
+
               ],
-            "survey": {},
-            "extra_vars": "{{ empty_master_vars }}",            
-            "notification_templates_error": [
-                "Slack_for_testing"
+              "success_nodes": [
+                {
+                  "workflow_job_template": {
+                    "organization": {
+                      "name": "Default",
+                      "type": "organization"
+                    },
+                    "name": "Simple workflow schema",
+                    "type": "workflow_job_template"
+                  },
+                  "identifier": "f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44",
+                  "type": "workflow_job_template_node"
+                }
+              ],
+              "failure_nodes": [
+
+              ],
+              "always_nodes": [
+
               ]
+            },
+            "natural_key": {
+              "workflow_job_template": {
+                "organization": {
+                  "name": "Default",
+                  "type": "organization"
+                },
+                "name": "Simple workflow schema",
+                "type": "workflow_job_template"
+              },
+              "identifier": "d9779889-cfdb-4a8c-8a11-1f54acf84aca",
+              "type": "workflow_job_template_node"
+            }
+          },
+          {
+            "extra_data": {
+            },
+            "inventory": null,
+            "scm_branch": null,
+            "job_type": null,
+            "job_tags": null,
+            "skip_tags": null,
+            "limit": null,
+            "diff_mode": null,
+            "verbosity": null,
+            "all_parents_must_converge": false,
+            "identifier": "f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44",
+            "workflow_job_template": {
+              "organization": {
+                "name": "Default",
+                "type": "organization"
+              },
+              "name": "Simple workflow schema",
+              "type": "workflow_job_template"
+            },
+            "unified_job_template": {
+              "organization": {
+                "name": "Satellite",
+                "type": "organization"
+              },
+              "name": "test-template-1",
+              "type": "job_template"
+            },
+            "related": {
+              "credentials": [
+
+              ],
+              "success_nodes": [
+
+              ],
+              "failure_nodes": [
+
+              ],
+              "always_nodes": [
+
+              ]
+            },
+            "natural_key": {
+              "workflow_job_template": {
+                "organization": {
+                  "name": "Default",
+                  "type": "organization"
+                },
+                "name": "Simple workflow schema",
+                "type": "workflow_job_template"
+              },
+              "identifier": "f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44",
+              "type": "workflow_job_template_node"
+            }
+          }
+        ],
+        "notification_templates_started": [
+
+        ],
+        "notification_templates_success": [
+
+        ],
+        "notification_templates_error": [
+
+        ],
+        "notification_templates_approvals": [
+
+        ],
+        "survey_spec": {
+          "name": "",
+          "description": "",
+          "spec": [
+            {
+              "question_name": "Basic Name",
+              "question_description": "Name",
+              "required": true,
+              "type": "text",
+              "variable": "basic_name",
+              "min": 0,
+              "max": 1024,
+              "default": "",
+              "choices": "",
+              "new_question": true
+            },
+            {
+              "question_name": "Choose yes or no?",
+              "question_description": "Choosing yes or no.",
+              "required": false,
+              "type": "multiplechoice",
+              "variable": "option_true_false",
+              "min": null,
+              "max": null,
+              "default": "yes",
+              "choices": "yes\nno",
+              "new_question": true
+            },
+            {
+              "question_name": "Select Group:",
+              "question_description": "",
+              "required": true,
+              "type": "multiplechoice",
+              "variable": "target_groups",
+              "min": null,
+              "max": null,
+              "default": "",
+              "choices": "group1\ngroup2\ngroup3",
+              "new_question": true
+            }
+          ]
         }
-    ]
-} 
+      }
+    }
+  ]
+}
 ```
 #### Ymal Example
 ```yaml
 ---
-templates:
-- name: Survey Template with vars
-  job_type: run
-  inventory: Demo Inventory
-  survey_enabled: true
-  survey: "{{ lookup('template', 'template_surveys/basic_survey.json') | regex_replace('\\n', '') }}"
-  project: Tower Config
-  playbook: helloworld.yml
-  credentials:
-  - Demo Credential
-  extra_vars: "{{ survey_extra_vars }}"
-  notification_templates_error:
-  - Slack_for_testing
-- name: No Survey Template no vars
-  job_type: run
-  inventory: Demo Inventory
-  project: Tower Config
-  playbook: helloworld.yml
-  credentials:
-  - Demo Credential
-  survey: {}
-  extra_vars: "{{ empty_master_vars }}"
-  notification_templates_error:
-  - Slack_for_testing
+tower_workflows:
+- name: Simple workflow schema
+  description: a basic workflow
+  extra_vars: ''
+  survey_enabled: false
+  allow_simultaneous: false
+  ask_variables_on_launch: false
+  inventory: 
+  limit: 
+  scm_branch: 
+  ask_inventory_on_launch: false
+  ask_scm_branch_on_launch: false
+  ask_limit_on_launch: false
+  webhook_service: ''
+  webhook_credential: 
+  organization:
+    name: Default
+    type: organization
+  related:
+    schedules: []
+    workflow_nodes:
+    - extra_data: {}
+      inventory: 
+      scm_branch: 
+      job_type: 
+      job_tags: 
+      skip_tags: 
+      limit: 
+      diff_mode: 
+      verbosity: 
+      all_parents_must_converge: false
+      identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
+      workflow_job_template:
+        organization:
+          name: Default
+          type: organization
+        name: Simple workflow schema
+        type: workflow_job_template
+      unified_job_template:
+        name: RHVM-01
+        inventory:
+          organization:
+            name: Satellite
+            type: organization
+          name: RHVM-01
+          type: inventory
+        type: inventory_source
+      related:
+        credentials: []
+        success_nodes:
+        - workflow_job_template:
+            organization:
+              name: Default
+              type: organization
+            name: Simple workflow schema
+            type: workflow_job_template
+          identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
+          type: workflow_job_template_node
+        failure_nodes: []
+        always_nodes: []
+      natural_key:
+        workflow_job_template:
+          organization:
+            name: Default
+            type: organization
+          name: Simple workflow schema
+          type: workflow_job_template
+        identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
+        type: workflow_job_template_node
+    - extra_data: {}
+      inventory: 
+      scm_branch: 
+      job_type: 
+      job_tags: 
+      skip_tags: 
+      limit: 
+      diff_mode: 
+      verbosity: 
+      all_parents_must_converge: false
+      identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
+      workflow_job_template:
+        organization:
+          name: Default
+          type: organization
+        name: Simple workflow schema
+        type: workflow_job_template
+      unified_job_template:
+        organization:
+          name: Satellite
+          type: organization
+        name: test-template-1
+        type: job_template
+      related:
+        credentials: []
+        success_nodes: []
+        failure_nodes: []
+        always_nodes: []
+      natural_key:
+        workflow_job_template:
+          organization:
+            name: Default
+            type: organization
+          name: Simple workflow schema
+          type: workflow_job_template
+        identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
+        type: workflow_job_template_node
+    notification_templates_started: []
+    notification_templates_success: []
+    notification_templates_error: []
+    notification_templates_approvals: []
+    survey_spec:
+      name: ''
+      description: ''
+      spec:
+      - question_name: Basic Name
+        question_description: Name
+        required: true
+        type: text
+        variable: basic_name
+        min: 0
+        max: 1024
+        default: ''
+        choices: ''
+        new_question: true
+      - question_name: Choose yes or no?
+        question_description: Choosing yes or no.
+        required: false
+        type: multiplechoice
+        variable: option_true_false
+        min: 
+        max: 
+        default: 'yes'
+        choices: |-
+          yes
+          no
+        new_question: true
+      - question_name: 'Select Group:'
+        question_description: ''
+        required: true
+        type: multiplechoice
+        variable: target_groups
+        min: 
+        max: 
+        default: ''
+        choices: |-
+          group1
+          group2
+          group3
+        new_question: true
+
 ```
-### Survey Data Structure
-#### Json Example
-```json
-{
-    "name": "Basic Survey",
-    "description": "Basic Survey",
-    "spec": [
-      {
-        "question_description": "Name",
-        "min": 0,
-        "default": "",
-        "max": 128,
-        "required": true,
-        "choices": "",
-        "new_question": true,
-        "variable": "basic_name",
-        "question_name": "Basic Name",
-        "type": "text"
-      },
-      {
-        "question_description": "Choosing yes or no.",
-        "min": 0,
-        "default": "yes",
-        "max": 0,
-        "required": true,
-        "choices": "yes\nno",
-        "new_question": true,
-        "variable": "option_true_false",
-        "question_name": "Choose yes or no?",
-        "type": "multiplechoice"
-      },
-      {
-        "question_description": "",
-        "min": 0,
-        "default": "",
-        "max": 0,
-        "required": true,
-        "choices": "group1\ngroup2\ngroup3",
-        "new_question": true,
-        "variable": "target_groups",
-        "question_name": "Select Group:",
-        "type": "multiselect"
-      }
-    ]
-  }
-```
+
 ## Playbook Examples
 ### Standard Role Usage
 ```yaml
 ---
-
-- name: Add Job Templates to Tower
+- name: Playbook to configure ansible tower post installation
   hosts: localhost
   connection: local
-  gather_facts: false
-
-#Bring in vaulted Ansible Tower secrets
-  vars_files:
-    - ../tests/vars/tower_secrets.yml
-
-  tasks:
-
-    - name: Get token for use during play
-      uri:
-        url: "https://{{ tower_server }}/api/v2/tokens/"
-        method: POST
-        user: "{{ tower_username }}"
-        password: "{{ tower_passname }}"
-        force_basic_auth: yes
-        status_code: 201
-        validate_certs: no
-      register: user_token
-      no_log: True
-
-    - name: Set Tower oath Token
-      set_fact:
-        tower_oauthtoken: "{{ user_token.json.token }}"
-
-    - name: Import JSON
+  # Define following vars here, or in tower_configs/tower_auth.yml
+  # tower_hostname: ansible-tower-web-svc-test-project.example.com
+  # tower_username: admin
+  # tower_password: changeme
+  pre_tasks:
+    - name: Include vars from tower_configs directory
       include_vars:
-        file: "json/templates.json"
-        name: workflow_job_templates
+        dir: ./yaml
+        ignore_files: [tower_config.yml.template]
+        extensions: ["yml"]
+  roles:
+    - {role: ../.., when: workflow_job_templates is defined}
 
-    - name: Add Projects
-      include_role: 
-        name: ../..
-      vars:
-        templates: "{{ workflow_job_templates.workflow_job_templates }}"
 ```
 ## License
 [MIT](LICENSE)
