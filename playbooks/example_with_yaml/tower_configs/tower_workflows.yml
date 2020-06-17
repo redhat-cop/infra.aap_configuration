@@ -49,22 +49,22 @@ tower_workflows:
           related:
             credentials: []
             success_nodes:
-            - workflow_job_template:
-                organization:
-                  name: Default
-                  type: organization
-                name: Complicated workflow schema
-                type: workflow_job_template
-              identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
-              type: workflow_job_template_node
-            - workflow_job_template:
-                organization:
-                  name: Default
-                  type: organization
-                name: Complicated workflow schema
-                type: workflow_job_template
-              identifier: ca7ffc3b-8401-4153-83bf-bb3dd918ca87
-              type: workflow_job_template_node
+              - workflow_job_template:
+                  organization:
+                    name: Default
+                    type: organization
+                  name: Complicated workflow schema
+                  type: workflow_job_template
+                identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
+                type: workflow_job_template_node
+              - workflow_job_template:
+                  organization:
+                    name: Default
+                    type: organization
+                  name: Complicated workflow schema
+                  type: workflow_job_template
+                identifier: ca7ffc3b-8401-4153-83bf-bb3dd918ca87
+                type: workflow_job_template_node
             failure_nodes: []
             always_nodes: []
           natural_key:
@@ -103,23 +103,23 @@ tower_workflows:
             credentials: []
             success_nodes: []
             failure_nodes:
-            - workflow_job_template:
-                organization:
-                  name: Default
-                  type: organization
-                name: Complicated workflow schema
-                type: workflow_job_template
-              identifier: 28910097-e606-4252-8aa9-2c1a0b8b6c92
-              type: workflow_job_template_node
+              - workflow_job_template:
+                  organization:
+                    name: Default
+                    type: organization
+                  name: Complicated workflow schema
+                  type: workflow_job_template
+                identifier: 28910097-e606-4252-8aa9-2c1a0b8b6c92
+                type: workflow_job_template_node
             always_nodes:
-            - workflow_job_template:
-                organization:
-                  name: Default
-                  type: organization
-                name: Complicated workflow schema
-                type: workflow_job_template
-              identifier: 046378e5-ff53-4168-afc2-a82d87327099
-              type: workflow_job_template_node
+              - workflow_job_template:
+                  organization:
+                    name: Default
+                    type: organization
+                  name: Complicated workflow schema
+                  type: workflow_job_template
+                identifier: 046378e5-ff53-4168-afc2-a82d87327099
+                type: workflow_job_template_node
           natural_key:
             workflow_job_template:
               organization:
@@ -133,7 +133,7 @@ tower_workflows:
             basic_name: test
             option_true_false: 'yes'
             target_groups:
-            - group1
+              - group1
           inventory:
           scm_branch:
           job_type:
@@ -235,14 +235,14 @@ tower_workflows:
             success_nodes: []
             failure_nodes: []
             always_nodes:
-            - workflow_job_template:
-                organization:
-                  name: Default
-                  type: organization
-                name: Complicated workflow schema
-                type: workflow_job_template
-              identifier: ca7ffc3b-8401-4153-83bf-bb3dd918ca87
-              type: workflow_job_template_node
+              - workflow_job_template:
+                  organization:
+                    name: Default
+                    type: organization
+                  name: Complicated workflow schema
+                  type: workflow_job_template
+                identifier: ca7ffc3b-8401-4153-83bf-bb3dd918ca87
+                type: workflow_job_template_node
           natural_key:
             workflow_job_template:
               organization:
@@ -350,14 +350,14 @@ tower_workflows:
           related:
             credentials: []
             success_nodes:
-            - workflow_job_template:
-                organization:
-                  name: Default
-                  type: organization
-                name: Simple workflow schema
-                type: workflow_job_template
-              identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
-              type: workflow_job_template_node
+              - workflow_job_template:
+                  organization:
+                    name: Default
+                    type: organization
+                  name: Simple workflow schema
+                  type: workflow_job_template
+                identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
+                type: workflow_job_template_node
             failure_nodes: []
             always_nodes: []
           natural_key:
