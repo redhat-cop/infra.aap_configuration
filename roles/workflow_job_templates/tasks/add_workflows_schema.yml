@@ -1,0 +1,42 @@
+# Creating Workflow Node
+- name : Create the Workfow Node
+  awx.awx.tower_workflow_job_template_node:
+    identifier :                    "{{workflow_loop_node.identifier}}"   # internal identification ID 
+    unified_job_template :          "{{workflow_loop_node.unified_job_template.name }}"  # Run Job template 
+    workflow :                      "{{workflow_loop_var.name}}"        # Workflow job template name to associate with
+    state:                          "{{ workflow_loop_node.state | default('present') }}"
+    all_parents_must_converge :     "{{workflow_loop_node.all_parents_must_converge | default (omit)}}"
+    organization:                   "{{ workflow_loop_var.organization.name }}" # Workflow job template organization
+    tower_username:                 "{{ tower_username | default(omit) }}"
+    tower_password:                 "{{ tower_password | default(omit) }}"
+    tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
+    tower_host:                     "{{ tower_hostname }}"
+    tower_config_file:              "{{ tower_config_file | default(omit) }}"
+    validate_certs:                 "{{ tower_validate_certs | default('true') }}"
+  loop : "{{ workflow_loop_var.related.workflow_nodes }}"
+  loop_control:
+    loop_var: workflow_loop_node
+
+# Create links between workflow node
+- name : Create links between Workflow Nodes
+  awx.awx.tower_workflow_job_template_node:
+    identifier:                     "{{workflow_loop_node.identifier}}"
+    workflow :                      "{{workflow_loop_var.name}}"
+    always_nodes:                   "{{ workflow_loop_node.related.always_nodes  | json_query('[*].identifier') | default (omit)}}" # Nodes to advance on always (blue links)
+    success_nodes:                  "{{ workflow_loop_node.related.success_nodes | json_query('[*].identifier') | default (omit)}}" # Nodes to advance on success (green links)
+    failure_nodes:                  "{{ workflow_loop_node.related.failure_nodes | json_query('[*].identifier') | default (omit)}}" # Nodes to advance on failure (red links)
+    state:                          "{{ workflow_loop_node.state | default('present') }}"
+    organization:                   "{{ workflow_loop_var.organization.name }}"
+    tower_username:                 "{{ tower_username | default(omit) }}"
+    tower_password:                 "{{ tower_password | default(omit) }}"
+    tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
+    tower_host:                     "{{ tower_hostname }}"
+    tower_config_file:              "{{ tower_config_file | default(omit) }}"
+    validate_certs:                 "{{ tower_validate_certs | default('true') }}"
+  loop : "{{ workflow_loop_var.related.workflow_nodes }}"
+  loop_control:
+    loop_var: workflow_loop_node  
+  # Execute only the nodes that define links to the following
+  when : (workflow_loop_node.related.always_nodes is defined and workflow_loop_node.related.always_nodes | length > 0 ) or
+         (workflow_loop_node.related.success_nodes is defined and workflow_loop_node.related.success_nodes | length > 0 ) or
+         (workflow_loop_node.related.failure_nodes is defined and workflow_loop_node.related.failure_nodes | length > 0 )
