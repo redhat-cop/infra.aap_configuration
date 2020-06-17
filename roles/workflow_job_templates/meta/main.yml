@@ -33,7 +33,8 @@ galaxy_info:
     - "awx"
     - "genie"
     - "organization"
-    - "workflow templates"
+    - "workflow"
+    - "workflows"
 
 dependencies: []
   # List your role dependencies here, one per line. Be sure to remove the '[]' above,
