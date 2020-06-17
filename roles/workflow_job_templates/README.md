@@ -10,7 +10,7 @@ Required Collections:
 ## Variables
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`tower_server`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
+|`tower_host`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
 |`tower_verify_ssl`|`False`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
 |`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
 |`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
@@ -29,54 +29,53 @@ workflow_job_templates_secure_logging defaults to the value of tower_genie_secur
 |`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
-### Varibles
+### Varibles For Workflow Job Template
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|Name of Job Template|
+|`name`|""|yes|str|Name of Workflow Job Template|
 |`new_name`|""|str|no|Setting this option will change the existing name (looked up via the name field).|
-|`description`|`False`|no|str|Description to use for the job template.|
-|`job_type`|`run`|no|str|The job type to use for the job template(run, check).|
-|`inventory`|""|no|str|Name of the inventory to use for the job template.|
-|`project`|""|no|str|Name of the project to use for the job template.|
-|`playbook`|""|no|str|Path to the playbook to use for the job template within the project provided.|
-|`credentials`|""|no|list|List of credentials to use for the job template.|
-|`vault_credential`|""|no|str|Name of the vault credential to use for the job template.|
-|`forks`|""|no|int|The number of parallel or simultaneous processes to use while executing the playbook.|
-|`limit`|""|no|str|A host pattern to further constrain the list of hosts managed or affected by the playbook|
-|`verbosity`|""|no|int|Control the output level Ansible produces as the playbook runs. 0 - Normal, 1 - Verbose, 2 - More Verbose, 3 - Debug, 4 - Connection Debug .|
-|`extra_vars`|""|no|dict|Specify extra_vars for the template.|
-|`job_tags`|""|no|str|Comma separated list of the tags to use for the job template.|
-|`force_handlers`|""|no|bool|Enable forcing playbook handlers to run even if a task fails.|
-|`skip_tags`|""|no|str|Comma separated list of the tags to skip for the job template.|
-|`start_at_task`|""|no|str|Start the playbook at the task matching this name.|
-|`diff_mode`|""|no|bool|Enable diff mode for the job template |
-|`use_fact_cache`|""|no|bool|Enable use of fact caching for the job template.|
-|`host_config_key`|""|no|str|Allow provisioning callbacks using this host config key.|
-|`ask_scm_branch_on_launch`|""|no|bool|Prompt user for scm branch on launch.|
-|`ask_diff_mode_on_launch`|""|no|bool|Prompt user to enable diff mode show changes to files when supported by modules.|
-|`ask_variables_on_launch`|""|no|bool|Prompt user for extra_vars on launch.|
-|`ask_limit_on_launch`|""|no|bool|Prompt user for a limit on launch.|
-|`ask_tags_on_launch`|""|no|bool|Prompt user for job tags on launch.|
-|`ask_skip_tags_on_launch`|""|no|bool|Prompt user for job tags to skip on launch.|
-|`ask_job_type_on_launch`|""|no|bool|Prompt user for job type on launch.|
-|`ask_verbosity_on_launch`|""|no|bool|Prompt user to choose a verbosity level on launch.|
+|`description`|""|no|str|Description to use for the job template.|
+|`organization`|""|""|no|list|Organization the workflow job template exists in. Used to lookup the object, cannot be changed with this module|
 |`ask_inventory_on_launch`|""|no|bool|Prompt user for inventory on launch.|
-|`ask_credential_on_launch`|""|no|bool|Prompt user for credential on launch.|
-|`survey_enabled`|""|no|bool|Enable a survey on the job template.|
-|`survey_spec`|""|no|dict|JSON/YAML dict formatted survey definition.|
-|`become_enabled`|""|no|bool|Activate privilege escalation.|
-|`allow_simultaneous`|""|no|bool|Allow simultaneous runs of the job template.|
-|`timeout`|""|no|int|Maximum time in seconds to wait for a job to finish (server-side).|
-|`job_slice_count`|""|no|int|The number of jobs to slice into at runtime. Will cause the Job Template to launch a workflow if value is greater than 1.|
-|`webhook_service`|""|no|str|Service that webhook requests will be accepted from (github, gitlab)|
-|`webhook_credential`|""|no|str|Personal Access Token for posting back the status to the service API|
-|`scm_branch`|""|no|str|Branch to use in job run. Project default used if blank. Only allowed if project allow_override field is set to true.|
-|`labels`|""|no|list|The labels applied to this job template|
-|`custom_virtualenv`|""|no|str|Local absolute file path containing a custom Python virtualenv to use.|
+|`ask_limit_on_launch`|""|no|bool|Prompt user for a limit on launch.|
+|`ask_scm_branch_on_launch`|""|no|bool|Prompt user for scm branch on launch.|
+|`ask_variables_on_launch`|""|no|bool|Prompt user for extra_vars on launch.|
+|`extra_vars`|""|no|dict|Specify extra_vars for the template.|
+|`inventory`|""|no|str|Inventory applied as a prompt, assuming job template prompts for inventory|
+|`limit`|""|no|str|Limit applied as a prompt, assuming job template prompts for limit|
+|`notification_templates_approvals`|""|no|list|The notifications on approval to use for this organization in a list.|
+|`notification_templates_error`|""|no|list|The notifications on error to use for this organization in a list.|
 |`notification_templates_started`|""|no|list|The notifications on started to use for this organization in a list.|
 |`notification_templates_success`|""|no|list|The notifications on success to use for this organization in a list.|
-|`notification_templates_error`|""|no|list|The notifications on error to use for this organization in a list.|
+|`scm_branch`|""|no|str|SCM branch applied as a prompt, assuming job template prompts for SCM branch|
 |`state`|`present`|no|str|Desired state of the resource.|
+|`survey_enabled`|""|no|bool|Enable a survey on the job template.|
+|`survey_spec`|""|no|dict|JSON/YAML dict formatted survey definition.|
+|`webhook_service`|""|no|str|Service that webhook requests will be accepted from (github, gitlab)|
+|`webhook_credential`|""|no|str|Personal Access Token for posting back the status to the service API|
+
+### Varibles For Workflow Job Template Node
+|Variable Name|Default Value|Required|Type|Description|
+|:---:|:---:|:---:|:---:|:---:|
+|`workflow_job_template`|""|yes|str|The workflow job template the node exists in. Used for looking up the node, cannot be modified after creation.|
+|`identifier`|""|yes|str|An identifier for this node that is unique within its workflow. It is copied to workflow job nodes corresponding to this node.|
+|`unified_job_template`|""|no|str|Name of unified job template to run in the workflow. Can be a job template, project, inventory source, etc. Omit if creating an approval node (not yet implemented).|
+|`organization`|""|no|str|The organization of the workflow job template the node exists in. Used for looking up the workflow, not a direct model field.|
+|`all_parents_must_converge`|""|no|bool|If enabled then the node will only run if all of the parent nodes have met the criteria to reach this node|
+|`always_nodes`|""|no|list|Nodes that will run after this node completes.|
+|`failure_nodes`|""|no|list|Nodes that will run after this node completes.|
+|`success_nodes`|""|no|list|Nodes that will run after this node completes.|
+|`verbosity`|""|no|str|Verbosity applied as a prompt, if job template prompts for verbosity|
+|`state`|""|no|str|Desired state of the resource|
+|`credentials`|""|no|list|Credentials to be applied to job as launch-time prompts.|
+|`diff_mode`|""|no|bool|Run diff mode, applied as a prompt, if job template prompts for diff mode|
+|`extra_data`|""|no|dict|Variables to apply at launch time. Will only be accepted if job template prompts for vars or has a survey asking for those vars.|
+|`inventory`|""|no|str|Inventory applied as a prompt, if job template prompts for inventory|
+|`job_tags`|""|no|str|NJob tags applied as a prompt, if job template prompts for job tags|
+|`job_type`|""|no|str|Job type applied as a prompt, if job template prompts for job type|
+|`limit`|""|no|str|Limit to act on, applied as a prompt, if job template prompts for limit|
+|`scm_branch`|""|no|str|SCM branch applied as a prompt, if job template prompts for SCM branch|
+|`skip_tags`|""|no|str|Tags to skip, applied as a prompt, if job tempalte prompts for job tags|
 
 
 ### Surveys
