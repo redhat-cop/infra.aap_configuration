@@ -4,4 +4,3 @@ empty_master_vars:
 survey_extra_vars:
   example_a: 127.0.0.1
   example_b: "text"
-
