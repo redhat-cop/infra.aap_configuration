@@ -1,3 +1,4 @@
+---
 tower_rbac:
   - inventory:  RHVM-01
     team: satlab-admin
