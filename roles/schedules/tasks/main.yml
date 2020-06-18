@@ -18,7 +18,7 @@
     verbosity:                      "{{ schedule_item.verbosity | default(omit) }}"
     unified_job_template:           "{{ schedule_item.unified_job_template | default(omit) }}"
     enabled:                        "{{ schedule_item.enabled | default(omit) }}"
-    state:                          "{{ schedule_item.state | default('present') }}"
+    state:                          "{{ schedule_item.state | default(tower_state | default('present')) }}"
     tower_username:                 "{{ tower_username | default(omit) }}"
     tower_password:                 "{{ tower_password | default(omit) }}"
     tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"

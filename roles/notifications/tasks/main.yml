@@ -14,7 +14,7 @@
     recipients:            "{{ item.recipients | default(omit) }}"
     sender:                "{{ item.sender| default(omit) }}"
     server:                "{{ item.server| default(omit) }}"
-    state:                 "{{ item.state | default('present') }}"
+    state:                 "{{ item.state | default(tower_state | default('present')) }}"
     targets:               "{{ item.targets | default(omit) }}"
     use_ssl:               "{{ item.use_ssl | default('no') }}"
     use_tls:               "{{ item.use_tls | default('no')   }}"

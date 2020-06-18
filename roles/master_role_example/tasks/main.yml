@@ -8,7 +8,7 @@
     description:                    "{{ ***********_item.description | default('') }}"
 
     # Role specific options
-
+    state:                          "{{ ***********_item.state | default(tower_state | default('present')) }}"
     tower_username:                 "{{ tower_username | default(omit) }}"
     tower_password:                 "{{ tower_password | default(omit) }}"
     tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
