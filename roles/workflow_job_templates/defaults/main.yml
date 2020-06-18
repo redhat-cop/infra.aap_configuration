@@ -1,0 +1,52 @@
+---
+tower_server: ""
+tower_oauthtoken: ""
+tower_verify_ssl: False
+workflow_job_templates_secure_logging: "{{tower_configuration_secure_logging | default(False)}}"
+
+workflow_job_templates:
+  - name: Simple workflow schema
+    description: a basic workflow
+    extra_vars: ''
+    survey_enabled: false
+    allow_simultaneous: false
+    ask_variables_on_launch: false
+    inventory:
+    limit:
+    scm_branch:
+    ask_inventory_on_launch: false
+    ask_scm_branch_on_launch: false
+    ask_limit_on_launch: false
+    webhook_service: ''
+    webhook_credential:
+    organization:
+      name: Default
+    related:
+      schedules: []
+      workflow_nodes:
+        - all_parents_must_converge: false
+          identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
+          unified_job_template:
+            name: RHVM-01
+          related:
+            credentials: []
+            success_nodes:
+              - workflow_job_template:
+                  name: Simple workflow schema
+                identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
+            failure_nodes: []
+            always_nodes: []
+        - all_parents_must_converge: false
+          identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
+          unified_job_template:
+            name: test-template-1
+          related:
+            credentials: []
+            success_nodes: []
+            failure_nodes: []
+            always_nodes: []
+      notification_templates_started: []
+      notification_templates_success: []
+      notification_templates_error: []
+      notification_templates_approvals: []
+      survey_spec: {}
