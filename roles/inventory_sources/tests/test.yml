@@ -25,4 +25,4 @@
         file: "configs/tower-inventory-sources.yml"
 
   roles:
-    - ../../ansible_tower_genie_inventories
+    - ../../inventories
