@@ -1,4 +1,4 @@
-# ansible_tower_genie_virtual_environments
+# tower_virtual_environments
 
 ## Description
 An Ansible Role to manage Python virtual environments in Ansible Tower.
@@ -16,7 +16,7 @@ An Ansible Role to manage Python virtual environments in Ansible Tower.
 ---
 - hosts: "all"
   roles:
-    - role: "ansible_tower_genie_virtual_environments"
+    - role: "tower_virtual_environments"
       tower_venv_pylibs:
         - "ansible-tower-cli"
         - "boto"
@@ -32,7 +32,7 @@ An Ansible Role to manage Python virtual environments in Ansible Tower.
   tasks:
     - name: "Ensure Ansible Prerequisites are installed"
       import_role:
-        name: "ansible_tower_genie_virtual_environments"
+        name: "tower_virtual_environments"
 ```
 ### Included Role
 ```yaml
@@ -41,7 +41,7 @@ An Ansible Role to manage Python virtual environments in Ansible Tower.
   tasks:
     - name: "Ensure Ansible Prerequisites are installed"
       include_role:
-        name: "ansible_tower_genie_virtual_environments"
+        name: "tower_virtual_environments"
       vars:
         tower_venv_pylibs:
           - "ansible-tower-cli"

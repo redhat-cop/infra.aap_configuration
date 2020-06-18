@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "ansible_tower_genie_kerberos"
+  role_name: "kerberos"
   author: "Andrew J. Huffman"
   description: "An Ansible role to configure Ansible Tower nodes to manage Windows systems."
   company: "Red Hat"
@@ -153,7 +153,7 @@ galaxy_info:
     - "ansibletower"
     - "tower"
     - "awx"
-    - "genie"
+    - "configuration"
     - "system"
     - "kerberos"
     - "pywinrm"
