@@ -101,7 +101,7 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
 ```json
 ---
 {
-  "tower_workflows": [
+  "workflow_job_templates": [
     {
       "name": "Simple workflow schema",
       "description": "a basic workflow",
@@ -118,8 +118,7 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
       "webhook_service": "",
       "webhook_credential": null,
       "organization": {
-        "name": "Default",
-        "type": "organization"
+        "name": "Default"
       },
       "related": {
         "schedules": [
@@ -127,37 +126,10 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
         ],
         "workflow_nodes": [
           {
-            "extra_data": {
-            },
-            "inventory": null,
-            "scm_branch": null,
-            "job_type": null,
-            "job_tags": null,
-            "skip_tags": null,
-            "limit": null,
-            "diff_mode": null,
-            "verbosity": null,
             "all_parents_must_converge": false,
             "identifier": "d9779889-cfdb-4a8c-8a11-1f54acf84aca",
-            "workflow_job_template": {
-              "organization": {
-                "name": "Default",
-                "type": "organization"
-              },
-              "name": "Simple workflow schema",
-              "type": "workflow_job_template"
-            },
             "unified_job_template": {
-              "name": "RHVM-01",
-              "inventory": {
-                "organization": {
-                  "name": "Satellite",
-                  "type": "organization"
-                },
-                "name": "RHVM-01",
-                "type": "inventory"
-              },
-              "type": "inventory_source"
+              "name": "RHVM-01"
             },
             "related": {
               "credentials": [
@@ -166,15 +138,9 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
               "success_nodes": [
                 {
                   "workflow_job_template": {
-                    "organization": {
-                      "name": "Default",
-                      "type": "organization"
-                    },
-                    "name": "Simple workflow schema",
-                    "type": "workflow_job_template"
+                    "name": "Simple workflow schema"
                   },
-                  "identifier": "f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44",
-                  "type": "workflow_job_template_node"
+                  "identifier": "f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44"
                 }
               ],
               "failure_nodes": [
@@ -183,48 +149,13 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
               "always_nodes": [
 
               ]
-            },
-            "natural_key": {
-              "workflow_job_template": {
-                "organization": {
-                  "name": "Default",
-                  "type": "organization"
-                },
-                "name": "Simple workflow schema",
-                "type": "workflow_job_template"
-              },
-              "identifier": "d9779889-cfdb-4a8c-8a11-1f54acf84aca",
-              "type": "workflow_job_template_node"
             }
           },
           {
-            "extra_data": {
-            },
-            "inventory": null,
-            "scm_branch": null,
-            "job_type": null,
-            "job_tags": null,
-            "skip_tags": null,
-            "limit": null,
-            "diff_mode": null,
-            "verbosity": null,
             "all_parents_must_converge": false,
             "identifier": "f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44",
-            "workflow_job_template": {
-              "organization": {
-                "name": "Default",
-                "type": "organization"
-              },
-              "name": "Simple workflow schema",
-              "type": "workflow_job_template"
-            },
             "unified_job_template": {
-              "organization": {
-                "name": "Satellite",
-                "type": "organization"
-              },
-              "name": "test-template-1",
-              "type": "job_template"
+              "name": "test-template-1"
             },
             "related": {
               "credentials": [
@@ -239,18 +170,6 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
               "always_nodes": [
 
               ]
-            },
-            "natural_key": {
-              "workflow_job_template": {
-                "organization": {
-                  "name": "Default",
-                  "type": "organization"
-                },
-                "name": "Simple workflow schema",
-                "type": "workflow_job_template"
-              },
-              "identifier": "f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44",
-              "type": "workflow_job_template_node"
             }
           }
         ],
@@ -267,46 +186,6 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
 
         ],
         "survey_spec": {
-          "name": "",
-          "description": "",
-          "spec": [
-            {
-              "question_name": "Basic Name",
-              "question_description": "Name",
-              "required": true,
-              "type": "text",
-              "variable": "basic_name",
-              "min": 0,
-              "max": 1024,
-              "default": "",
-              "choices": "",
-              "new_question": true
-            },
-            {
-              "question_name": "Choose yes or no?",
-              "question_description": "Choosing yes or no.",
-              "required": false,
-              "type": "multiplechoice",
-              "variable": "option_true_false",
-              "min": null,
-              "max": null,
-              "default": "yes",
-              "choices": "yes\nno",
-              "new_question": true
-            },
-            {
-              "question_name": "Select Group:",
-              "question_description": "",
-              "required": true,
-              "type": "multiplechoice",
-              "variable": "target_groups",
-              "min": null,
-              "max": null,
-              "default": "",
-              "choices": "group1\ngroup2\ngroup3",
-              "new_question": true
-            }
-          ]
         }
       }
     }
@@ -316,155 +195,52 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
 #### Ymal Example
 ```yaml
 ---
-tower_workflows:
-- name: Simple workflow schema
-  description: a basic workflow
-  extra_vars: ''
-  survey_enabled: false
-  allow_simultaneous: false
-  ask_variables_on_launch: false
-  inventory: 
-  limit: 
-  scm_branch: 
-  ask_inventory_on_launch: false
-  ask_scm_branch_on_launch: false
-  ask_limit_on_launch: false
-  webhook_service: ''
-  webhook_credential: 
-  organization:
-    name: Default
-    type: organization
-  related:
-    schedules: []
-    workflow_nodes:
-    - extra_data: {}
-      inventory: 
-      scm_branch: 
-      job_type: 
-      job_tags: 
-      skip_tags: 
-      limit: 
-      diff_mode: 
-      verbosity: 
-      all_parents_must_converge: false
-      identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
-      workflow_job_template:
-        organization:
-          name: Default
-          type: organization
-        name: Simple workflow schema
-        type: workflow_job_template
-      unified_job_template:
-        name: RHVM-01
-        inventory:
-          organization:
-            name: Satellite
-            type: organization
-          name: RHVM-01
-          type: inventory
-        type: inventory_source
-      related:
-        credentials: []
-        success_nodes:
-        - workflow_job_template:
-            organization:
-              name: Default
-              type: organization
-            name: Simple workflow schema
-            type: workflow_job_template
+workflow_job_templates:
+  - name: Simple workflow schema
+    description: a basic workflow
+    extra_vars: ''
+    survey_enabled: false
+    allow_simultaneous: false
+    ask_variables_on_launch: false
+    inventory:
+    limit:
+    scm_branch:
+    ask_inventory_on_launch: false
+    ask_scm_branch_on_launch: false
+    ask_limit_on_launch: false
+    webhook_service: ''
+    webhook_credential:
+    organization:
+      name: Default
+    related:
+      schedules: []
+      workflow_nodes:
+        - all_parents_must_converge: false
+          identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
+          unified_job_template:
+            name: RHVM-01
+          related:
+            credentials: []
+            success_nodes:
+              - workflow_job_template:
+                  name: Simple workflow schema
+                identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
+            failure_nodes: []
+            always_nodes: []
+        - all_parents_must_converge: false
           identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
-          type: workflow_job_template_node
-        failure_nodes: []
-        always_nodes: []
-      natural_key:
-        workflow_job_template:
-          organization:
-            name: Default
-            type: organization
-          name: Simple workflow schema
-          type: workflow_job_template
-        identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
-        type: workflow_job_template_node
-    - extra_data: {}
-      inventory: 
-      scm_branch: 
-      job_type: 
-      job_tags: 
-      skip_tags: 
-      limit: 
-      diff_mode: 
-      verbosity: 
-      all_parents_must_converge: false
-      identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
-      workflow_job_template:
-        organization:
-          name: Default
-          type: organization
-        name: Simple workflow schema
-        type: workflow_job_template
-      unified_job_template:
-        organization:
-          name: Satellite
-          type: organization
-        name: test-template-1
-        type: job_template
-      related:
-        credentials: []
-        success_nodes: []
-        failure_nodes: []
-        always_nodes: []
-      natural_key:
-        workflow_job_template:
-          organization:
-            name: Default
-            type: organization
-          name: Simple workflow schema
-          type: workflow_job_template
-        identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
-        type: workflow_job_template_node
-    notification_templates_started: []
-    notification_templates_success: []
-    notification_templates_error: []
-    notification_templates_approvals: []
-    survey_spec:
-      name: ''
-      description: ''
-      spec:
-      - question_name: Basic Name
-        question_description: Name
-        required: true
-        type: text
-        variable: basic_name
-        min: 0
-        max: 1024
-        default: ''
-        choices: ''
-        new_question: true
-      - question_name: Choose yes or no?
-        question_description: Choosing yes or no.
-        required: false
-        type: multiplechoice
-        variable: option_true_false
-        min: 
-        max: 
-        default: 'yes'
-        choices: |-
-          yes
-          no
-        new_question: true
-      - question_name: 'Select Group:'
-        question_description: ''
-        required: true
-        type: multiplechoice
-        variable: target_groups
-        min: 
-        max: 
-        default: ''
-        choices: |-
-          group1
-          group2
-          group3
-        new_question: true
+          unified_job_template:
+            name: test-template-1
+          related:
+            credentials: []
+            success_nodes: []
+            failure_nodes: []
+            always_nodes: []
+      notification_templates_started: []
+      notification_templates_success: []
+      notification_templates_error: []
+      notification_templates_approvals: []
+      survey_spec: {}
 
 ```
 
