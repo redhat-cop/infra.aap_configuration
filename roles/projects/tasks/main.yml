@@ -18,7 +18,7 @@
     job_timeout:                    "{{ tower_projects_item.job_timeout | default(omit) }}"
     custom_virtualenv:              "{{ tower_projects_item.custom_virtualenv | default(omit) }}"
     organization:                   "{{ tower_projects_item.organization }}"
-    state:                          "{{ tower_projects_item.state | default('present') }}"
+    state:                          "{{ tower_projects_item.state | default(tower_state | default('present')) }}"
     wait:                           "{{ tower_projects_item.wait | default(omit) }}"
     notification_templates_started: "{{ tower_projects_item.notification_templates_started | default(omit) }}"
     notification_templates_success: "{{ tower_projects_item.notification_templates_success | default(omit) }}"
