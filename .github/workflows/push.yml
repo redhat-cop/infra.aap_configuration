@@ -22,6 +22,9 @@ jobs:
       - name: "Install dependencies"
         run: pip install -r .github/requirements.txt
 
+      - name: Display Versions
+        run: which python && pip --version && ansible --version
+
       - name: "Build AWX stack"
         run: cd .github/awx/installer && ansible-playbook -i inventory install.yml
 
@@ -42,4 +45,4 @@ jobs:
           time: '20s'
 
       - name: "Perform playbook tests"
-        run: ansible-playbook playbooks/example_with_yaml/configure_tower.yml -e tower_hostname=http://localhost -e tower_username=admin -e tower_password=password -vv
+        run: ansible-playbook playbooks/example_with_yaml/configure_tower.yml -e tower_hostname=http://localhost -e tower_username=admin -e tower_password=password
