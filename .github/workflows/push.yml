@@ -20,7 +20,7 @@ jobs:
         run: cd .github && git clone https://github.com/ansible/awx.git
 
       - name: "Install dependencies"
-        run: pip install docker docker-compose
+        run: pip install -r .github/requirements.txt
 
       - name: "Build AWX stack"
         run: cd .github/awx/installer && ansible-playbook -i inventory install.yml
