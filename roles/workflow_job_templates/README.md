@@ -10,6 +10,7 @@ Required Collections:
 ## Variables
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
+|`tower_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
 |`tower_host`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
 |`tower_verify_ssl`|`False`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
 |`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
