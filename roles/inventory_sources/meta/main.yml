@@ -18,7 +18,7 @@ galaxy_info:
     - "ansibletower"
     - "tower"
     - "awx"
-    - "genie"
+    - "configuration"
     - "inventory"
     - "inventories"
     - "source"

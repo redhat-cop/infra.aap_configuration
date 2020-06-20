@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "ansible_tower_genie_teams"
+  role_name: "teams"
   author: "Andrew J. Huffman"
   description: "An Ansible Role to create Teams in Ansible Tower."
   company: "Red Hat"
@@ -54,7 +54,7 @@ galaxy_info:
     - "ansibletower"
     - "tower"
     - "awx"
-    - "genie"
+    - "configuration"
     - "team"
     - "teams"
     # List tags for your role here, one per line. A tag is a keyword that describes

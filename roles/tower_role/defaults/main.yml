@@ -4,7 +4,7 @@ tower_username: ""
 tower_password: "" #Put in a vault at vars/tower-secrets.yml when tower_secrets: true
 tower_oauthtoken: ""
 validate_certs: false
-tower_genie_rbac_secure_logging: "{{tower_genie_secure_logging | default(false)}}"
+tower_configuration_rbac_secure_logging: "{{tower_configuration_secure_logging | default(false)}}"
 
 tower_rbac:
   - user: jdoe

@@ -32,5 +32,5 @@
   loop: "{{ tower_projects }}"
   loop_control:
     loop_var: tower_projects_item
-  no_log: "{{ tower_genie_projects_secure_logging }}"
+  no_log: "{{ tower_configuration_projects_secure_logging }}"
   when: tower_projects is defined
