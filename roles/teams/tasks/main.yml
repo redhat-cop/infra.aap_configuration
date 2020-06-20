@@ -4,7 +4,7 @@
     description:         "{{ team.description | default(omit) }}"
     name:                "{{ team.name }}"
     organization:        "{{ team.organization }}"
-    state:               "{{ team.state | default(omit) }}"
+    state:               "{{ team.state | default(tower_state | default('present')) }}"
     tower_config_file:   "{{ team.tower_config_file | default(omit) }}"
     tower_host:          "{{ tower_hostname | default(omit) }}"
     tower_password:      "{{ tower_password | default(omit) }}"
@@ -14,5 +14,5 @@
   loop_control:
     loop_var: team
   when: tower_teams is defined
-  no_log: "{{ tower_genie_rbac_secure_logging }}"
+  no_log: "{{ tower_configuration_rbac_secure_logging }}"
 ...

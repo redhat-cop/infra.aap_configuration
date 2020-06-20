@@ -1,4 +1,4 @@
-# ansible_tower_genie_credential_types
+# credential_types
 ## Description
 An Ansible Role to create Credential Types in Ansible Tower.
 
@@ -12,6 +12,7 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 ## Variables
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
+|`tower_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
 |`tower_hostname`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
 |`tower_validate_certs`|`False`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
 |`tower_config_file`|""|no|Path to the Tower or AWX config file.||
@@ -24,12 +25,12 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 The following Variables compliment each other. 
 If Both variables are not set, secure logging defaults to false.  
 The role defaults to False as normally the add organization task does not include sensative information.  
-tower_genie_credential_types_secure_logging defaults to the value of tower_genie_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of genie roles with a single variable, or for the user to selectively use it.  
+tower_configuration_credential_types_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.  
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`tower_genie_credential_types_secure_logging`|`False`|no|Whether or not to include the sensative Organization role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`tower_genie_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
+|`tower_configuration_credential_types_secure_logging`|`False`|no|Whether or not to include the sensative Organization role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
 ### Varibles
