@@ -22,5 +22,5 @@
   loop: "{{ tower_rbac }}"
   loop_control:
     loop_var: tower_rbac_item
-  no_log: "{{ tower_genie_rbac_secure_logging }}"
+  no_log: "{{ tower_configuration_rbac_secure_logging }}"
   when: tower_rbac is defined

@@ -1,5 +1,5 @@
 ---
-# tasks file for ansible_tower_genie_license
+# tasks file for license role
 - name: Install the tower license
   awx.awx.tower_license:
     data: "{{ lookup('file', '/tmp/my_tower.license') }}"

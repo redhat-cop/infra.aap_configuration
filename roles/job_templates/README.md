@@ -1,4 +1,4 @@
-# ansible_tower_genie_job_templates
+# job_templates
 ## Description
 An Ansible Role to create Job Templates in Ansible Tower.
 
@@ -22,12 +22,12 @@ Currently:
 The following Variables compliment each other. 
 If Both variables are not set, secure logging defaults to false.  
 The role defaults to False as normally the add organization task does not include sensative information.  
-tower_genie_job_templates_secure_logging defaults to the value of tower_genie_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of genie roles with a single variable, or for the user to selectively use it.  
+tower_configuration_job_templates_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.  
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`tower_genie_job_templates_secure_logging`|`False`|no|Whether or not to include the sensative Project role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`tower_genie_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
+|`tower_configuration_job_templates_secure_logging`|`False`|no|Whether or not to include the sensative Project role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
 ### Varibles

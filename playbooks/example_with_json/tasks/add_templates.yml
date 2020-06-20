@@ -6,6 +6,6 @@
 
 - name: Add Templates
   include_role:
-    name: ansible_tower_genie_job_templates
+    name: job_templates
   vars:
     tower_templates: "{{ templates_json.templates }}"

@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "ansible_tower_genie_organizations"
+  role_name: "organizations"
   author: "Sean Sulivan"
   description: "An Ansible Role to create Organizations in Ansible Tower."
   company: "Red Hat"
@@ -32,7 +32,7 @@ galaxy_info:
     - "ansibletower"
     - "tower"
     - "awx"
-    - "genie"
+    - "configuration"
     - "organization"
     - "organizations"
 

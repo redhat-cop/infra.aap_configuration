@@ -18,5 +18,5 @@
   loop: "{{ tower_credential_types }}"
   loop_control:
     loop_var: tower_credential_types_item
-  no_log: "{{ tower_genie_credential_types_secure_logging }}"
+  no_log: "{{ tower_configuration_credential_types_secure_logging }}"
   when: tower_credential_types is defined
