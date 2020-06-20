@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "ansible_tower_genie_virtual_environments"
+  role_name: "tower_virtual_environments"
   author: "Andrew J. Huffman"
   description: "An Ansible Role to manage virtual environments in Ansible Tower."
   company: "Red Hat"
@@ -43,7 +43,7 @@ galaxy_info:
     - "ansibletower"
     - "tower"
     - "awx"
-    - "genie"
+    - "configuration"
     - "virtualenvironment"
     - "python"
     - "environment"

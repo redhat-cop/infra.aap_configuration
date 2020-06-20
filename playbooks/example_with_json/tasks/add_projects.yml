@@ -6,6 +6,6 @@
 
 - name: Add projects
   include_role:
-    name: ansible_tower_genie_projects
+    name: projects
   vars:
     tower_projects: "{{ projects_json.projects }}"
