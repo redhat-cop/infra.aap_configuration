@@ -3,7 +3,7 @@ name: docker-compose
 on: [push, pull_request]
 
 jobs:
-  test:
+  Integration-test:
 
     runs-on: ubuntu-latest
 
