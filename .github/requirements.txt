@@ -1,0 +1,4 @@
+ansible
+docker
+docker-compose
+jmespath
