@@ -14,5 +14,5 @@
   loop_control:
     loop_var: team
   when: tower_teams is defined
-  no_log: "{{ tower_genie_rbac_secure_logging }}"
+  no_log: "{{ tower_configuration_rbac_secure_logging }}"
 ...

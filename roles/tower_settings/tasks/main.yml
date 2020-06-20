@@ -1,5 +1,5 @@
 ---
-# tasks file for ansible_tower_genie_settings
+# tasks file for tower_settings
 
 - name: Update Ansible Tower Settings
   awx.awx.tower_settings:
