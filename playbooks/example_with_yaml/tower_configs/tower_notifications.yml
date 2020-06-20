@@ -21,4 +21,3 @@ tower_notifications:
     port: 25
     username: '' # this is required even if there's no username
     password: '' # this is required even if there's no password
-
