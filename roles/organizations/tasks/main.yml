@@ -9,7 +9,7 @@
     notification_templates_success:     "{{ tower_organizations_item.notification_templates_success | default(omit) }}"
     notification_templates_error:       "{{ tower_organizations_item.notification_templates_error | default(omit) }}"
     notification_templates_approvals:   "{{ tower_organizations_item.notification_templates_approvals | default(omit) }}"
-    state:                              "{{ tower_organizations_item.state | default('present') }}"
+    state:                              "{{ tower_organizations_item.state | default(tower_state | default('present')) }}"
     tower_username:                     "{{ tower_username | default(omit) }}"
     tower_password:                     "{{ tower_password | default(omit) }}"
     tower_oauthtoken:                   "{{ tower_oauthtoken | default(omit) }}"

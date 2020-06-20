@@ -44,7 +44,7 @@
     webhook_credential:             "{{ tower_templates_item.webhook_credential | default(omit) }}"
     scm_branch:                     "{{ tower_templates_item.scm_branch | default(omit) }}"
     labels:                         "{{ tower_templates_item.labels | default(omit) }}"
-    state:                          "{{ tower_templates_item.state | default('present') }}"
+    state:                          "{{ tower_templates_item.state | default(tower_state | default('present')) }}"
     notification_templates_started: "{{ tower_templates_item.notification_templates_started | default(omit) }}"
     notification_templates_success: "{{ tower_templates_item.notification_templates_success | default(omit) }}"
     notification_templates_error:   "{{ tower_templates_item.notification_templates_error | default(omit) }}"

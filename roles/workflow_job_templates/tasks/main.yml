@@ -15,7 +15,7 @@
     ask_limit_on_launch:                "{{ workflow_loop_var.ask_limit_on_launch | default(omit) }}"
     survey_enabled:                     "{{ workflow_loop_var.survey_enabled }}"
     survey:                             "{{ workflow_loop_var.related.survey_spec | to_json }}"
-    state:                              "{{ workflow_loop_var.state | default('present') }}"
+    state:                              "{{ workflow_loop_var.state | default(tower_state | default('present')) }}"
     notification_templates_started:     "{{ workflow_loop_var.related.notification_templates_started.name | default(omit) }}"
     notification_templates_success:     "{{ workflow_loop_var.related.notification_templates_success.name | default(omit) }}"
     notification_templates_error:       "{{ workflow_loop_var.related.notification_templates_error.name | default(omit) }}"

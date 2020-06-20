@@ -19,6 +19,5 @@ tower_notifications:
       - admin@example.com
     sender: tower0@example.com
     port: 25
-    username: ''  # this is required even if there's no username
-    password: ''  # this is required even if there's no password
-    state: present
+    username: '' # this is required even if there's no username
+    password: '' # this is required even if there's no password

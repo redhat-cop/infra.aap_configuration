@@ -23,7 +23,6 @@ tower_templates:
     credentials: Demo Credential
     verbosity: 0
     inventory: localhost
-    state: present
 
 # You can retrieve a job along with its survey spec using tower cli as follows:
 # tower-cli receive --job_template <Name> --user admin --format yaml

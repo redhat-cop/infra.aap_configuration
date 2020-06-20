@@ -8,7 +8,7 @@
     injectors:                      "{{ tower_credential_types_item.injectors | default(omit) | regex_replace('[ ]{2,}','') }}"
     inputs:                         "{{ tower_credential_types_item.inputs | default(omit) }}"
     kind:                           "{{ tower_credential_types_item.kind | default(omit) }}"
-    state:                          "{{ tower_credential_types_item.state | default('present') }}"
+    state:                          "{{ tower_credential_types_item.state | default(tower_state | default('present')) }}"
     tower_username:                 "{{ tower_username | default(omit) }}"
     tower_password:                 "{{ tower_password | default(omit) }}"
     tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
