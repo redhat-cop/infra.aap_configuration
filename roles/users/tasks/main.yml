@@ -8,7 +8,7 @@
      first_name:          "{{ item.firstname | default(item.user) }}"
      last_name:           "{{ item.lastname | default(item.user) }}"
      superuser:           "{{ item.is_superuser | default('false') }}"
-     state:               "{{ item.state | default('present') }}"
+     state:               "{{ item.state | default(tower_state | default('present')) }}"
      tower_host:          "{{ tower_hostname }}"
      tower_username:      "{{ tower_username | default('admin') }}"
      tower_password:      "{{ tower_password }}"

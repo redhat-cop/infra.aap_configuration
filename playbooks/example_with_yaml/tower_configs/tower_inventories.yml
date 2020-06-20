@@ -10,14 +10,11 @@ tower_inventories:
   - name: RHVM-01
     organization: Satellite
     description: created by Ansible Playbook - for RHVM-01
-    state: present
   - name: RHVM-02
     organization: Satellite
     description: created by Ansible Playbook - for RHVM-02
-    state: present
   - name: Test Inventory - Smart
     organization: Default
     description: created by Ansible Playbook
-    state: present
     kind: smart
     host_filter:  "name__icontains=localhost"

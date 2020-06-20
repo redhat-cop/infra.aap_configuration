@@ -1,5 +1,5 @@
 ---
 tower_user_accounts:
   - user: tower_user
-    superuser: no
+    superuser: false
     password: tower_password

@@ -6,7 +6,7 @@
 
 - name: Add Templates
   include_role:
-    name: ansible_tower_genie_workflow_templates
+    name: workflow_job_templates
   vars:
     tower_workflows: "{{ workflows_json.workflows }}"
     tower_password: "{{ tower_passname | default(omit) }}"

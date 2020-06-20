@@ -1,6 +1,4 @@
 ---
 tower_organizations:
   - name: Satellite
-    state: present # optional
   - name: Default
-    state: present

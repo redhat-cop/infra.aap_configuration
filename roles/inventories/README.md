@@ -5,6 +5,7 @@ An Ansible role to create inventories.
 ## Variables
 | Variable Name | Default Value | Required | Description | Type |
 |---|---|:---:|---|:---:|
+|`tower_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
 |`tower_hostname`|""|yes|URL to the Ansible Tower Server.| string |
 |`validate_certs`|False|no|Whether or not to validate the Ansible Tower Server's SSL certificate.| boolean |
 |`tower_secrets`|False|yes|Whether or not to include variables stored in vars/tower-secrets.yml.  Set this value to `False` if you will be providing your sensitive values from elsewhere.| boolean |

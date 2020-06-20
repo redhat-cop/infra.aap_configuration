@@ -6,7 +6,7 @@
     kind:                 "{{ inventory.kind | default(omit) }}"
     name:                 "{{ inventory.name }}"  # REQUIRED
     organization:         "{{ inventory.organization | default('Default') }}"
-    state:                "{{ inventory.state | default('present') }}"
+    state:                "{{ inventory.state | default(tower_state | default('present')) }}"
     variables:            "{{ inventory.variables | default(omit) }}"
     tower_config_file:    "{{ tower_config_file | default(omit) }}"
     tower_host:           "{{ tower_hostname | default(omit) }}"
