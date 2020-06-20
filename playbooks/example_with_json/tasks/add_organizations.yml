@@ -6,6 +6,6 @@
 
 - name: Add Organizations
   include_role:
-    name: ansible_tower_genie_organizations
+    name: organizations
   vars:
     tower_organizations: "{{ organizations_json.organizations }}"

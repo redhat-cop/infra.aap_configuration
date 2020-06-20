@@ -2,6 +2,6 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: "Include ansible_tower_genie_virtual_environments"
+    - name: "Include tower_virtual_environments"
       include_role:
-        name: "ansible_tower_genie_virtual_environments"
+        name: "tower_virtual_environments"

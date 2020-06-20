@@ -12,18 +12,20 @@
         dir: ./tower_configs
         ignore_files: [tower_config.yml.template]
         extensions: ["yml"]
+      tags:
+        - always
   roles:
-    - {role: tower_settings, when: tower_settings is defined}
-    - {role: organizations, when: tower_organizations is defined}
-    - {role: users, when: tower_user_accounts is defined}
-    - {role: teams, when: tower_teams is defined}
-    - {role: credentials, when: tower_credentials is defined}
-    - {role: inventories, when: tower_inventories is defined}
-    - {role: projects, when: tower_projects is defined}
-    - {role: inventory_sources, when: tower_inventory_sources is defined}
-    - {role: hosts, when: tower_hosts is defined}
-    - {role: job_templates, when: tower_templates is defined}
-    - {role: workflow_job_templates, when: workflow_job_templates is defined}
-    - {role: schedules, when: tower_schedules is defined}
-    - {role: notifications, when: tower_notifications is defined}
-    - {role: tower_role, when: tower_rbac is defined}
+    - {role: tower_settings, when: tower_settings is defined, tags: tower_settings}
+    - {role: organizations, when: tower_organizations is defined, tags: organizations}
+    - {role: users, when: tower_user_accounts is defined, tags: users}
+    - {role: teams, when: tower_teams is defined, tags: teams}
+    - {role: credentials, when: tower_credentials is defined, tags: credentials}
+    - {role: inventories, when: tower_inventories is defined, tags: inventories}
+    - {role: projects, when: tower_projects is defined, tags: projects}
+    - {role: inventory_sources, when: tower_inventory_sources is defined, tags: inventory_sources}
+    - {role: hosts, when: tower_hosts is defined, tags: hosts}
+    - {role: job_templates, when: tower_templates is defined, tags: job_templates}
+    - {role: workflow_job_templates, when: workflow_job_templates is defined, tags: workflow_job_templates}
+    - {role: schedules, when: tower_schedules is defined, tags: schedules}
+    - {role: notifications, when: tower_notifications is defined, tags: notifications}
+    - {role: tower_role, when: tower_rbac is defined, tags: tower_role}

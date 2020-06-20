@@ -1,14 +1,12 @@
-# ansible_tower_genie_collections
-![Ansible Lint](https://github.com/redhat-cop/automate_tower_genie_collections/workflows/Ansible%20Lint/badge.svg)
-![docker-compose](https://github.com/redhat-cop/tower_configuration/workflows/docker-compose/badge.svg)
+# tower_configuration
+![Ansible Lint](https://github.com/redhat-cop/tower_configuration/workflows/Ansible%20Lint/badge.svg)
+![Galaxy Release](https://github.com/redhat-cop/tower_configuration/workflows/galaxy-release/badge.svg)
+<!-- Further CI badges go here as above -->
 
-# Foo Collection
-<!-- Add CI and code coverage badges here. Samples included below. -->
-[![CI](https://github.com/ansible-collections/REPONAMEHERE/workflows/CI/badge.svg?event=push)](https://github.com/ansible-collections/REPONAMEHERE/actions) [![Codecov](https://img.shields.io/codecov/c/github/ansible-collections/REPONAMEHERE)](https://codecov.io/gh/ansible-collections/REPONAMEHERE)
 
 <!-- Describe the collection and why a user would want to use it. What does the collection do? -->
 
-This is a collection of roles for AWX/Tower.
+This is a collection of roles for AWX/Ansible Tower.
 
 ## Release Process
 This collection uses an auatomated GitHub workflow to publish releases to Ansible Galaxy. This workflow can be found in `.github/workflows/galaxy-release.yml`. It is dependent on `release.yml` and `galaxy.yml.j2`. See instructions below for usage.
