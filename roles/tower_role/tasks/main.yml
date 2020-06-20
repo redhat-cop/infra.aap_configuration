@@ -12,7 +12,7 @@
     credential:                     "{{ tower_rbac_item.credential | default(omit) }}"
     organization:                   "{{ tower_rbac_item.organization | default(omit) }}"
     project:                        "{{ tower_rbac_item.project | default(omit) }}"
-    state:                          "{{ tower_rbac_item.state | default('present') }}"
+    state:                          "{{ tower_rbac_item.state | default(tower_state | default('present')) }}"
     tower_username:                 "{{ tower_username | default(omit) }}"
     tower_password:                 "{{ tower_password | default(omit) }}"
     tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"

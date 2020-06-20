@@ -12,6 +12,7 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 ## Variables
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
+|`tower_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
 |`tower_hostname`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
 |`tower_validate_certs`|`False`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
 |`tower_config_file`|""|no|Path to the Tower or AWX config file.||

@@ -16,7 +16,7 @@
     source_regions:              "{{ source.source_regions | default(omit) }}"
     source_script:               "{{ source.source_script | default(omit) }}"
     source_vars:                 "{{ source.source_vars | default(omit) }}"
-    state:                       "{{ source.state | default('present') }}"
+    state:                       "{{ source.state | default(tower_state | default('present')) }}"
     timeout:                     "{{ source.timeout | default(omit) }}"
     update_cache_timeout:        "{{ source.update_cache_timeout | default(omit) }}"
     update_on_launch:            "{{ source.update_on_launch | default(omit) }}"
