@@ -26,7 +26,7 @@ jobs:
         run: which python && pip --version && ansible --version
 
       - name: "Build AWX stack"
-        run: cd .github/awx/installer && ansible-playbook -i inventory install.yml
+        run: cd .github/awx/installer && ansible-playbook -i inventory install.yml -e create_preload_data=false
 
       - name: "Wait for awx to be alive"
         uses: nev7n/wait_for_response@v1
