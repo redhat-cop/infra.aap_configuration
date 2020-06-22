@@ -5,7 +5,7 @@
     description:      "{{ item.description | default('created via Ansible Playbook') }}"
     inventory:        "{{ item.inventory }}"
     state:            "{{ item.state | default(tower_state | default('present')) }}"
-    variables:        "{{ item.variables | d('') }}"
+    variables:        "{{ item.variables | default(omit) }}"
     tower_host:       "{{ tower_hostname }}"
     tower_username:   "{{ tower_username | default('admin') }}"
     tower_password:   "{{ tower_password }}"
