@@ -3,6 +3,7 @@
 ![Galaxy Release](https://github.com/redhat-cop/tower_configuration/workflows/galaxy-release/badge.svg)
 <!-- Further CI badges go here as above -->
 
+
 <!-- Describe the collection and why a user would want to use it. What does the collection do? -->
 
 This is a collection of roles for AWX/Ansible Tower.
