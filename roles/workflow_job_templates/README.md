@@ -59,7 +59,7 @@ workflow_job_templates_secure_logging defaults to the value of tower_genie_secur
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`workflow_job_template`|""|yes|str|The workflow job template the node exists in. Used for looking up the node, cannot be modified after creation.|
-|`identifier`|""|yes|str|An identifier for this node that is unique within its workflow. It is copied to workflow job nodes corresponding to this node.|
+|`identifier`|""|yes|str|An identifier for this node that is unique within its workflow. It is copied to workflow job nodes corresponding to this node. It can be any value. Recomended to use Column and row numbers for identifiers.|
 |`unified_job_template`|""|no|str|Name of unified job template to run in the workflow. Can be a job template, project, inventory source, etc. Omit if creating an approval node (not yet implemented).|
 |`organization`|""|no|str|The organization of the workflow job template the node exists in. Used for looking up the workflow, not a direct model field.|
 |`all_parents_must_converge`|""|no|bool|If enabled then the node will only run if all of the parent nodes have met the criteria to reach this node|
@@ -102,7 +102,7 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
 ```json
 ---
 {
-  "workflow_job_templates": [
+  "tower_workflows": [
     {
       "name": "Simple workflow schema",
       "description": "a basic workflow",
@@ -128,7 +128,7 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
         "workflow_nodes": [
           {
             "all_parents_must_converge": false,
-            "identifier": "d9779889-cfdb-4a8c-8a11-1f54acf84aca",
+            "identifier": "node101",
             "unified_job_template": {
               "name": "RHVM-01"
             },
@@ -141,7 +141,7 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
                   "workflow_job_template": {
                     "name": "Simple workflow schema"
                   },
-                  "identifier": "f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44"
+                  "identifier": "node201"
                 }
               ],
               "failure_nodes": [
@@ -154,7 +154,7 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
           },
           {
             "all_parents_must_converge": false,
-            "identifier": "f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44",
+            "identifier": "node201",
             "unified_job_template": {
               "name": "test-template-1"
             },
@@ -196,7 +196,7 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
 #### Ymal Example
 ```yaml
 ---
-workflow_job_templates:
+tower_workflows:
   - name: Simple workflow schema
     description: a basic workflow
     extra_vars: ''
@@ -217,7 +217,7 @@ workflow_job_templates:
       schedules: []
       workflow_nodes:
         - all_parents_must_converge: false
-          identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
+          identifier: node101
           unified_job_template:
             name: RHVM-01
           related:
@@ -225,11 +225,11 @@ workflow_job_templates:
             success_nodes:
               - workflow_job_template:
                   name: Simple workflow schema
-                identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
+                identifier: node201
             failure_nodes: []
             always_nodes: []
         - all_parents_must_converge: false
-          identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
+          identifier: node201
           unified_job_template:
             name: test-template-1
           related:
