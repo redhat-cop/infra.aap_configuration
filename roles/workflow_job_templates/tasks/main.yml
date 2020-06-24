@@ -4,7 +4,7 @@
 - name: Create Workflow
   awx.awx.tower_workflow_job_template:
     name:                               "{{ workflow_loop_var.name }}"
-    description:                        "{{ workflow_loop_var.description }}"
+    description:                        "{{ workflow_loop_var.description | default(omit) }}"
     allow_simultaneous:                 "{{ workflow_loop_var.allow_simultaneous | default('no') }}"
     organization:                       "{{ workflow_loop_var.organization.name }}"
     ask_variables_on_launch:            "{{ workflow_loop_var.ask_variables_on_launch | default(false) }}" ## only supported starting from Ansible 2.9
@@ -13,7 +13,7 @@
     scm_branch:                         "{{ workflow_loop_var.scm_branch | default(omit) }}"
     ask_inventory_on_launch:            "{{ workflow_loop_var.ask_inventory_on_launch | default(omit) }}"
     ask_limit_on_launch:                "{{ workflow_loop_var.ask_limit_on_launch | default(omit) }}"
-    survey_enabled:                     "{{ workflow_loop_var.survey_enabled }}"
+    survey_enabled:                     "{{ workflow_loop_var.survey_enabled | default(false) }}"
     survey:                             "{{ workflow_loop_var.related.survey_spec | default(omit)  }}"
     state:                              "{{ workflow_loop_var.state | default(tower_state | default('present')) }}"
     notification_templates_started:     "{{ workflow_loop_var.related.notification_templates_started.name | default(omit) }}"
