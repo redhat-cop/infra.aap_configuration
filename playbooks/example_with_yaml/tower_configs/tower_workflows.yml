@@ -418,4 +418,3 @@ tower_workflows:
       name: Simple workflow schema
       type: workflow_job_template
   - name: Blank workflow
- 
