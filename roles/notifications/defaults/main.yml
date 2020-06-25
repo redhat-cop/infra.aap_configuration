@@ -1,0 +1,27 @@
+---
+tower_hostname: ""
+tower_oauthtoken: ""
+tower_validate_certs: false
+tower_configuration_notifications_secure_logging: "{{tower_configuration_secure_logging | default(false)}}"
+tower_notifications:
+  - name: irc-satqe-chat-notification
+    description: Notify us on job in IRC!
+    organization: Satellite
+    notification_type: irc
+    nickname: Ansible-Tower-Stage-Bot-01
+    port: 6667
+    server: irc.freenode.com
+    targets:
+      - '#my-channel'
+    password: ''  # this is required even if there's no password
+  - name: Email notification
+    description: Send out emails for tower jobs
+    organization: Satellite
+    notification_type: email
+    host: smtp.example.com
+    recipients:
+      - admin@example.com
+    sender: tower0@example.com
+    port: 25
+    username: '' # this is required even if there's no username
+    password: '' # this is required even if there's no password
