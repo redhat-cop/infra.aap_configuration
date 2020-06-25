@@ -9,7 +9,7 @@
 This is a collection of roles for AWX/Ansible Tower.
 
 ## Release Process
-This collection uses an auatomated GitHub workflow to publish releases to Ansible Galaxy. This workflow can be found in `.github/workflows/galaxy-release.yml`. It is dependent on `release.yml` and `galaxy.yml.j2`. See instructions below for usage.
+This collection uses an automated GitHub workflow to publish releases to Ansible Galaxy. This workflow can be found in `.github/workflows/galaxy-release.yml`. It is dependent on `release.yml` and `galaxy.yml.j2`. See instructions below for usage.
 
 To publish a release to Galaxy:
 1) An administrator of the repository must configure a secret in the settings containing the API key for the Galaxy namespace. The secret should be called `ANSIBLE_GALAXY_APIKEY`. This is a one time step.
@@ -24,7 +24,7 @@ To publish a release to Galaxy:
 
 ## External requirements
 
-This collection depends on the awx.collection since it uses the modules there.
+This collection depends on the [awx.awx collection](https://galaxy.ansible.com/awx/awx) since it uses the modules there.
 
 ### Supported connections
 <!-- Optional. If your collection supports only specific connection types (such as HTTPAPI, netconf, or others), list them here. -->
