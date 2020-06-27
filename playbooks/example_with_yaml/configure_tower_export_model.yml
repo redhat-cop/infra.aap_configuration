@@ -15,4 +15,4 @@
         ignore_files: [tower_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: workflow_job_templates, when: workflow_job_templates is defined}    
+    - {role: workflow_job_templates, when: workflow_job_templates is defined}

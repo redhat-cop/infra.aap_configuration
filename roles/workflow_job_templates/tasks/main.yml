@@ -18,7 +18,7 @@
     state:                              "{{ workflow_loop_var.state | default(tower_state | default('present')) }}"
     notification_templates_started:     "{{ workflow_loop_var.related.notification_templates_started.name | default(workflow_loop_var.notification_templates_started.name | default(omit)) }}"
     notification_templates_success:     "{{ workflow_loop_var.related.notification_templates_success.name | default(workflow_loop_var.notification_templates_success.name | default(omit)) }}"
-    notification_templates_error:       "{{ workflow_loop_var.related.notification_templates_error.name | default(workflow_loop_var.notification_templates_error.name | default(omit)) }}"    
+    notification_templates_error:       "{{ workflow_loop_var.related.notification_templates_error.name | default(workflow_loop_var.notification_templates_error.name | default(omit)) }}"
     tower_username:                     "{{ tower_username | default(omit) }}"
     tower_password:                     "{{ tower_password | default(omit) }}"
     tower_oauthtoken:                   "{{ tower_oauthtoken | default(omit) }}"
