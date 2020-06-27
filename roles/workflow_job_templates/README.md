@@ -97,8 +97,107 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
 |`question_name`|""|
 |`type`|""|
 
-### Standard Project Data Structure
-#### Json Example
+### Wokrflow Data Structures
+This role accepts two data models. A simple starightforward easy to maintain model, and another based on the tower api. The 2nd one is more complicated and includes more detail, and is compatiable with tower import/export. 
+
+#### Standard Data structure model
+```yaml
+---
+---
+tower_workflows:
+  - name: Simple workflow schema
+    description: a basic workflow
+    extra_vars: ''
+    survey_enabled: false
+    allow_simultaneous: false
+    ask_variables_on_launch: false
+    inventory:
+    limit:
+    scm_branch:
+    ask_inventory_on_launch: false
+    ask_scm_branch_on_launch: false
+    ask_limit_on_launch: false
+    webhook_service: ''
+    webhook_credential:
+    organization: Default
+    schedules: []
+    workflow_nodes:
+      - all_parents_must_converge: false
+        identifier: node101
+        unified_job_template: RHVM-01
+        credentials: []
+        success_nodes:
+          - node201
+        failure_nodes: []
+        always_nodes: []
+      - all_parents_must_converge: false
+        identifier: node201
+        unified_job_template: test-template-1
+        credentials: []
+        success_nodes: []
+        failure_nodes: []
+        always_nodes: []
+    notification_templates_started: []
+    notification_templates_success: []
+    notification_templates_error: []
+    notification_templates_approvals: []
+    survey_spec: {}
+
+```
+#### Tower Export Data structure model
+##### Ymal Example
+```yaml
+---
+tower_workflows:
+  - name: Simple workflow schema
+    description: a basic workflow
+    extra_vars: ''
+    survey_enabled: false
+    allow_simultaneous: false
+    ask_variables_on_launch: false
+    inventory:
+    limit:
+    scm_branch:
+    ask_inventory_on_launch: false
+    ask_scm_branch_on_launch: false
+    ask_limit_on_launch: false
+    webhook_service: ''
+    webhook_credential:
+    organization:
+      name: Default
+    related:
+      schedules: []
+      workflow_nodes:
+        - all_parents_must_converge: false
+          identifier: node101
+          unified_job_template:
+            name: RHVM-01
+          related:
+            credentials: []
+            success_nodes:
+              - workflow_job_template:
+                  name: Simple workflow schema
+                identifier: node201
+            failure_nodes: []
+            always_nodes: []
+        - all_parents_must_converge: false
+          identifier: node201
+          unified_job_template:
+            name: test-template-1
+          related:
+            credentials: []
+            success_nodes: []
+            failure_nodes: []
+            always_nodes: []
+      notification_templates_started: []
+      notification_templates_success: []
+      notification_templates_error: []
+      notification_templates_approvals: []
+      survey_spec: {}
+
+```
+
+##### Json Example
 ```json
 ---
 {
@@ -193,57 +292,7 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
   ]
 }
 ```
-#### Ymal Example
-```yaml
----
-tower_workflows:
-  - name: Simple workflow schema
-    description: a basic workflow
-    extra_vars: ''
-    survey_enabled: false
-    allow_simultaneous: false
-    ask_variables_on_launch: false
-    inventory:
-    limit:
-    scm_branch:
-    ask_inventory_on_launch: false
-    ask_scm_branch_on_launch: false
-    ask_limit_on_launch: false
-    webhook_service: ''
-    webhook_credential:
-    organization:
-      name: Default
-    related:
-      schedules: []
-      workflow_nodes:
-        - all_parents_must_converge: false
-          identifier: node101
-          unified_job_template:
-            name: RHVM-01
-          related:
-            credentials: []
-            success_nodes:
-              - workflow_job_template:
-                  name: Simple workflow schema
-                identifier: node201
-            failure_nodes: []
-            always_nodes: []
-        - all_parents_must_converge: false
-          identifier: node201
-          unified_job_template:
-            name: test-template-1
-          related:
-            credentials: []
-            success_nodes: []
-            failure_nodes: []
-            always_nodes: []
-      notification_templates_started: []
-      notification_templates_success: []
-      notification_templates_error: []
-      notification_templates_approvals: []
-      survey_spec: {}
 
-```
 
 ## Playbook Examples
 ### Standard Role Usage
