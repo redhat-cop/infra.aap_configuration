@@ -59,7 +59,7 @@ workflow_job_templates_secure_logging defaults to the value of tower_genie_secur
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`workflow_job_template`|""|yes|str|The workflow job template the node exists in. Used for looking up the node, cannot be modified after creation.|
-|`identifier`|""|yes|str|An identifier for this node that is unique within its workflow. It is copied to workflow job nodes corresponding to this node. It can be any value. Recomended to use Column and row numbers for identifiers.|
+|`identifier`|""|yes|str|An identifier for this node that is unique within its workflow. It is copied to workflow job nodes corresponding to this node. This functions the same as the name field for other resources, however if it is not set, it will be set to a random UUID4 value. Recomended to use Column and row numbers for identifiers such as Node401. [Refer to this documentation for more](https://github.com/ansible/awx/blob/devel/docs/workflow.md)|
 |`unified_job_template`|""|no|str|Name of unified job template to run in the workflow. Can be a job template, project, inventory source, etc. Omit if creating an approval node (not yet implemented).|
 |`organization`|""|no|str|The organization of the workflow job template the node exists in. Used for looking up the workflow, not a direct model field.|
 |`all_parents_must_converge`|""|no|bool|If enabled then the node will only run if all of the parent nodes have met the criteria to reach this node|
