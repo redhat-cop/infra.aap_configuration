@@ -15,7 +15,7 @@
      tower_verify_ssl:    "{{ tower_verify_ssl | default('false') }}"
   loop: "{{ tower_user_accounts }}"
   loop_control:
-    loop_var: tower_user_accounts_item  
+    loop_var: tower_user_accounts_item
   no_log: "{{ tower_configuration_users_secure_logging }}"
   when: tower_user_accounts is defined
   tags:
