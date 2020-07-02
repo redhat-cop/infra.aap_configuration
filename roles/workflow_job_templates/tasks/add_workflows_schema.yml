@@ -1,3 +1,4 @@
+---
 # Creating Workflow Node
 - name : Create the Workfow Node
   awx.awx.tower_workflow_job_template_node:
