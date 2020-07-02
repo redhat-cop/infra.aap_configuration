@@ -20,6 +20,7 @@
     - {role: users, when: tower_user_accounts is defined, tags: users}
     - {role: teams, when: tower_teams is defined, tags: teams}
     - {role: credentials, when: tower_credentials is defined, tags: credentials}
+    - {role: credential_input_sources, when: tower_credential_input_sources is defined, tags: credential_input_sources}
     - {role: inventories, when: tower_inventories is defined, tags: inventories}
     - {role: projects, when: tower_projects is defined, tags: projects}
     - {role: inventory_sources, when: tower_inventory_sources is defined, tags: inventory_sources}
