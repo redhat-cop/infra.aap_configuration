@@ -1,3 +1,4 @@
+---
 # Creating Workflow Node
 - name : Create the Workfow Node
   awx.awx.tower_workflow_job_template_node:
@@ -6,7 +7,7 @@
     workflow :                      "{{ workflow_loop_var.name }}"        # Workflow job template name to associate with
     state:                          "{{ workflow_loop_node.state | default(tower_state | default('present')) }}"
     all_parents_must_converge :     "{{ workflow_loop_node.all_parents_must_converge | default (omit) }}"
-    organization:                   "{{ workflow_loop_var.organization.name | default( workflow_loop_var.organization ) }}" # Workflow job template organization
+    organization:                   "{{ workflow_loop_var.organization.name | default( workflow_loop_var.organization ) }}"  # Workflow job template organization
     tower_username:                 "{{ tower_username | default(omit) }}"
     tower_password:                 "{{ tower_password | default(omit) }}"
     tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
@@ -30,7 +31,7 @@
     success_nodes:                  "{{ workflow_loop_node.success_nodes | default( workflow_loop_node.related.success_nodes | json_query('[*].identifier') | default(omit) ) }}"  # Nodes to advance on success (green links) # noqa 204
     failure_nodes:                  "{{ workflow_loop_node.failure_nodes | default( workflow_loop_node.related.failure_nodes | json_query('[*].identifier') | default(omit) ) }}"  # Nodes to advance on success (green links) # noqa 204
     state:                          "{{ workflow_loop_node.state | default(tower_state | default('present')) }}"
-    organization:                   "{{ workflow_loop_var.organization.name | default( workflow_loop_var.organization ) }}" # Workflow job template organization
+    organization:                   "{{ workflow_loop_var.organization.name | default( workflow_loop_var.organization ) }}"  # Workflow job template organization
     tower_username:                 "{{ tower_username | default(omit) }}"
     tower_password:                 "{{ tower_password | default(omit) }}"
     tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
