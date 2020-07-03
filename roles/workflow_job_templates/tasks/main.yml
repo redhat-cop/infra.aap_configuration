@@ -1,13 +1,13 @@
 ---
 
-#Create Job Template
+# Create Job Template
 - name: Create Workflow
   awx.awx.tower_workflow_job_template:
     name:                               "{{ workflow_loop_var.name }}"
     description:                        "{{ workflow_loop_var.description }}"
     allow_simultaneous:                 "{{ workflow_loop_var.allow_simultaneous | default('no') }}"
     organization:                       "{{ workflow_loop_var.organization.name | default( workflow_loop_var.organization ) }}"
-    ask_variables_on_launch:            "{{ workflow_loop_var.ask_variables_on_launch | default(false) }}" ## only supported starting from Ansible 2.9
+    ask_variables_on_launch:            "{{ workflow_loop_var.ask_variables_on_launch | default(false) }}"  # only supported starting from Ansible 2.9
     inventory:                          "{{ workflow_loop_var.inventory | default(omit) }}"
     limit:                              "{{ workflow_loop_var.limit | default(omit) }}"
     scm_branch:                         "{{ workflow_loop_var.scm_branch | default(omit) }}"
