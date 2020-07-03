@@ -8,3 +8,9 @@ rules:
   indentation:
     level: warning
     indent-sequences: consistent
+  truthy:
+    allowed-values:
+    - 'True'
+    - 'False'
+    - 'true'
+    - 'false'    
