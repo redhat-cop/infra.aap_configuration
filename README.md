@@ -1,68 +1,77 @@
-# tower_configuration
+# Redhat Communties of Practice Tower Configuration Collection
+
 ![Ansible Lint](https://github.com/redhat-cop/tower_configuration/workflows/Ansible%20Lint/badge.svg)
 ![Galaxy Release](https://github.com/redhat-cop/tower_configuration/workflows/galaxy-release/badge.svg)
 <!-- Further CI badges go here as above -->
 
-
-<!-- Describe the collection and why a user would want to use it. What does the collection do? -->
-
-This is a collection of roles for AWX/Ansible Tower.
-
-## Release Process
-This collection uses an automated GitHub workflow to publish releases to Ansible Galaxy. This workflow can be found in `.github/workflows/galaxy-release.yml`. It is dependent on `release.yml` and `galaxy.yml.j2`. See instructions below for usage.
-
-To publish a release to Galaxy:
-1) An administrator of the repository must configure a secret in the settings containing the API key for the Galaxy namespace. The secret should be called `ANSIBLE_GALAXY_APIKEY`. This is a one time step.
-2) To publish a release, click "releases" at the top of repository home page and "Draft a new release"
-3) The "Tag version" should be in the form `v#.#.#`. A suffix may be added such as `-dev#` or `rc#` for pre-releases. These will still publish to Galaxy but will not be chosen when installing `latest`. The version must be explicitly stated when installing to use pre-releases.
-4) Title the release, it is recommended to use the "Tag version"
-5) Clicking "Publish release" will initiate the workflow. If there are no errors building the collection, it will be automatically published to galaxy as the version suppied for "Tag version"
-
-## Tested with Ansible
-
-<!-- List the versions of Ansible the collection has been tested with. Must match what is in galaxy.yml. -->
-
-## External requirements
-
-This collection depends on the [awx.awx collection](https://galaxy.ansible.com/awx/awx) since it uses the modules there.
-
-### Supported connections
-<!-- Optional. If your collection supports only specific connection types (such as HTTPAPI, netconf, or others), list them here. -->
+This Ansible collection allows for easy interaction with an AWX or Ansible Tower server via Ansible roles using the AWX/Tower collection modules.
 
 ## Included content
 
-<!-- Galaxy will eventually list the module docs within the UI, but until that is ready, you may need to either describe your plugins etc here, or point to an external docsite to cover that information. -->
+Click the `Content` button to see the list of content included in this collection.
+
+## Installing this collection
+
+You can install the redhat_cop tower_configuration collection with the Ansible Galaxy CLI:
+
+    ansible-galaxy collection install redhat_cop.tower_configuration
+
+You can also include it in a `requirements.yml` file and install it with `ansible-galaxy collection install -r requirements.yml`, using the format:
+
+```yaml
+---
+collections:
+  - name: redhat_cop.tower_configuration
+    # If you need a specific version of the collection, you can specify like this:
+    # version: ...
+```
 
 ## Using this collection
+Define following vars here, or in tower_configs/tower_auth.yml
+tower_hostname: ansible-tower-web-svc-test-project.example.com
 
-<!--Include some quick examples that cover the most common use cases for your collection content. -->
+You can also specify authentication by a combination of either:
 
-See [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for more details.
+ - tower_hostname, tower_username, tower_password
+ - tower_hostname, tower_oauthtoken
+
+The OAuth2 token is the preferred method. You can obtain a token via the
+AWX CLI [login](https://docs.ansible.com/ansible-tower/latest/html/towercli/reference.html#awx-login)
+command.
+
+These can be specified via (from highest to lowest precedence):
+
+ - direct role variables as mentioned above
+ - environment variables (most useful when running against localhost)
+ - a config file path specified by the `tower_config_file` parameter
+ - a config file at `~/.tower_cli.cfg`
+ - a config file at `/etc/tower/tower_cli.cfg`
+
+Config file syntax looks like this:
+
+```
+[general]
+host = https://localhost:8043
+verify_ssl = true
+oauth_token = LEdCpKVKc4znzffcpQL5vLG8oyeku6
+```
+
+### See Also:
+
+* [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for more details.
+
+## Release and Upgrade Notes
+Notable releases of the `awx.awx` collection:
+ - 0.1.0 Initial Release Allows for a single json structure to import all modules in the awx.awx collection.
+
+## Roadmap
+Adding the ability to use direct output from the awx export command in the roles along with the current data model.
 
 ## Contributing to this collection
 
-<!--Describe how the community can contribute to your collection. At a minimum, include how and where users can create issues to report problems or request features for this collection.  List contribution requirements, including preferred workflows and necessary testing, so you can benefit from community PRs. If you are following general Ansible contributor guidelines, you can link to - [Ansible Community Guide](https://docs.ansible.com/ansible/latest/community/index.html). -->
-
-
-## Release notes
-<!--Add a link to a changelog.md file or an external docsite to cover this information. -->
-
-## Roadmap
-
-<!-- Optional. Include the roadmap for this collection, and the proposed release/versioning strategy so users can anticipate the upgrade/update cycle. -->
-
-## More information
-
-<!-- List out where the user can find additional information, such as working group meeting times, slack/IRC channels, or documentation for the product this collection automates. At a minimum, link to: -->
-
-- [Ansible Collection overview](https://github.com/ansible-collections/overview)
-- [Ansible User guide](https://docs.ansible.com/ansible/latest/user_guide/index.html)
-- [Ansible Developer guide](https://docs.ansible.com/ansible/latest/dev_guide/index.html)
-- [Ansible Community code of conduct](https://docs.ansible.com/ansible/latest/community/code_of_conduct.html)
+We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [Tower Configuration collection repository](https://github.com/redhat-cop/tower_configuration).
 
 ## Licensing
-
-<!-- Include the appropriate license information here and a pointer to the full licensing details. If the collection contains modules migrated from the ansible/ansible repo, you must use the same license that existed in the ansible/ansible repo. See the GNU license example below. -->
 
 GNU General Public License v3.0 or later.
 
