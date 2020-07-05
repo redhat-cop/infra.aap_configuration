@@ -35,9 +35,9 @@ You can also specify authentication by a combination of either:
  - tower_hostname, tower_username, tower_password
  - tower_hostname, tower_oauthtoken
 
-The OAuth2 token is the preferred method. You can obtain a token via the
+The OAuth2 token is the preferred method. You can obtain the token through the prefered tower_token module, or throuhg the 
 AWX CLI [login](https://docs.ansible.com/ansible-tower/latest/html/towercli/reference.html#awx-login)
-command, or via the tower_token module
+command.
 
 These can be specified via (from highest to lowest precedence):
 
