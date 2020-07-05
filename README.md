@@ -37,7 +37,7 @@ You can also specify authentication by a combination of either:
 
 The OAuth2 token is the preferred method. You can obtain a token via the
 AWX CLI [login](https://docs.ansible.com/ansible-tower/latest/html/towercli/reference.html#awx-login)
-command.
+command, or via the tower_token module
 
 These can be specified via (from highest to lowest precedence):
 
@@ -54,6 +54,19 @@ Config file syntax looks like this:
 host = https://localhost:8043
 verify_ssl = true
 oauth_token = LEdCpKVKc4znzffcpQL5vLG8oyeku6
+```
+
+Tower token module would be invoked with this code:
+```yaml
+    - name: Create a new token using tower username/password
+      awx.awx.tower_token:
+        description: 'Creating token to test tower jobs'
+        scope: "write"
+        state: present
+        tower_host: "{{ tower_hostname }}"
+        tower_username: "{{ tower_username }}"
+        tower_password: "{{ tower_password }}"
+
 ```
 
 ### See Also:
