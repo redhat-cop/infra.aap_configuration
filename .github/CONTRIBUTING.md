@@ -17,3 +17,5 @@ If you feel like getting your hands dirty, feel free to make the change yourself
 5. Open a Pull Request to merge your changes to this repo. The comment box will be filled in automatically via a template.
 
 See [Using Pull Requests](https://help.github.com/articles/using-pull-requests/) got more information on how to use GitHub PRs.
+
+For an in depth guide on how to contribute see [this article](https://opensource.com/article/19/7/create-pull-request-github)
