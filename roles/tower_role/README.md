@@ -1,4 +1,4 @@
-# tower_rbac
+# tower_configuration.tower_rbac
 ## Description
 An Ansible Role to create RBAC Entries in Ansible Tower.
 
