@@ -1,4 +1,4 @@
-Tower Setting Role
+tower_configuration.tower_settings
 ==================
 
 Role to apply/modify tower settings.
