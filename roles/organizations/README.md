@@ -1,4 +1,4 @@
-# organizations
+# tower_configuration.organizations
 ## Description
 An Ansible Role to create Organizations in Ansible Tower.
 
