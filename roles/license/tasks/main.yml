@@ -1,9 +1,10 @@
 ---
 # tasks file for license role
 - name: Ensure EULA Accepted
-  fail:
-    msg: "You must accept the EULA by passing in the param eula_accepted as true"
-  when: tower_license.eula_accepted != true
+  assert:
+    that:
+      - tower_license.eula_accepted
+    fail_msg: "You must accept the EULA by passing in the param eula_accepted as true"
 
 - name: Install the tower license
   awx.awx.tower_license:
