@@ -60,7 +60,7 @@ tower_credential_input_sources:
 ### Standard Role Usage
 ```yaml
 ---
-- name: Add License to Ttower
+- name: Add License to Tower
   hosts: localhost
   gather_facts: false
   connection: local
