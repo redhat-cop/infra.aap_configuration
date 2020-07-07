@@ -114,7 +114,7 @@ tower_organizations:
 
     - name: Add Organizations
       include_role: 
-        name: ../..
+        name: redhat_cop.tower_configuration.organizations
       vars:
         tower_organizations: "{{ organizations_json.tower_organizations }}"
 ```
