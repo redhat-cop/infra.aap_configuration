@@ -1,4 +1,4 @@
-# tower_configuration_***********
+# tower_configuration.credential_input_sources
 ## Description
 An Ansible Role to create Job Templates in Ansible Tower.
 
