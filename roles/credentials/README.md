@@ -1,4 +1,4 @@
-# credentials
+# tower_configuration.credentials
 ## Description
 An Ansible Role to create Credentials in Ansible Tower.
 
@@ -137,7 +137,7 @@ tower_credentials:
 
     - name: Add Credentials
       include_role: 
-        name: ../..
+        name: redhat_cop.tower_configuration.credentials
       vars:
         tower_credentials: "{{ credentials_json.tower_credentials }}"
 ```
