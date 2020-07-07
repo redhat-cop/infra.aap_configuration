@@ -1,4 +1,4 @@
-# projects
+# tower_configuration.projects
 ## Description
 An Ansible Role to create Projects in Ansible Tower.
 
@@ -132,7 +132,7 @@ tower_projects:
 
     - name: Add Projects
       include_role: 
-        name: ../..
+        name: redhat_cop.tower_configuration.projects
       vars:
         projects: "{{ projects_json.projects }}"
 ```

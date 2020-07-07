@@ -1,4 +1,4 @@
-# notifications
+# tower_configuration.notifications
 ## Description
 An Ansible Role to add notifications to Ansible Tower.
 

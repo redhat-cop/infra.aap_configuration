@@ -1,4 +1,4 @@
-# job_templates
+# tower_configuration.job_templates
 ## Description
 An Ansible Role to create Job Templates in Ansible Tower.
 
@@ -251,7 +251,7 @@ templates:
 
     - name: Add Projects
       include_role: 
-        name: ../..
+        name: redhat_cop.tower_configuration.job_templates
       vars:
         templates: "{{ job_templates_json.templates }}"
 ```
