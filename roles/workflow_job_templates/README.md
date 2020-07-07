@@ -1,4 +1,4 @@
-# workflow_job_templates
+# tower_configuration.workflow_job_templates
 ## Description
 An Ansible Role to create Workflow Job Templates in Ansible Tower.
 
@@ -312,7 +312,7 @@ tower_workflows:
         ignore_files: [tower_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: ../.., when: workflow_job_templates is defined}
+    - {role: tower_configuration.workflow_job_templates, when: workflow_job_templates is defined}
 
 ```
 ## License

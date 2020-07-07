@@ -1,4 +1,4 @@
-# tower_inventory_sources
+# tower_configuration.tower_inventory_sources
 An Ansible role to create inventory sources.
 
 

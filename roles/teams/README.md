@@ -1,4 +1,4 @@
-# tower_teams
+# tower_configuration.tower_teams
 ## Description
 An Ansible Role to create Teams in Ansible Tower.
 ## Variables

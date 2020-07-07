@@ -1,4 +1,4 @@
-# credential_types
+# tower_configuration.credential_types
 ## Description
 An Ansible Role to create Credential Types in Ansible Tower.
 
@@ -200,7 +200,7 @@ tower_credential_types:
 
     - name: Add Credential Types
       include_role: 
-        name: ../..
+        name: redhat_cop.tower_configuration.credential_types
       vars:
         tower_credential_types: "{{ credential_types_json.tower_credential_types }}"
 ```

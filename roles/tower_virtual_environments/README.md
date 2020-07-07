@@ -1,4 +1,4 @@
-# tower_virtual_environments
+# tower_configuration.tower_virtual_environments
 
 ## Description
 An Ansible Role to manage Python virtual environments in Ansible Tower.
