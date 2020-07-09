@@ -53,8 +53,7 @@ tower_configuration_credentials_secure_logging defaults to the value of tower_co
 {
     "tower_group": [
       {
-        "name": "gitlab",
-        "new_name": "Credentials for GitLab",
+        "name": "PSQL_Servers",
         "description": "Default",
         "inventory": "Source Control",
         "variables": {
@@ -88,7 +87,7 @@ tower_group:
 ```yaml
 ---
 
-- name: Add Credentials to Tower
+- name: Add Groups to Tower
   hosts: localhost
   connection: local
   gather_facts: false
@@ -130,5 +129,6 @@ tower_group:
 [MIT](LICENSE)
 
 ## Author
+[Wei-Yen Tan](https://github.com/)
 [Andrew J. Huffman](https://github.com/ahuffman) 
 [Sean Sullivan](https://github.com/Wilk42)
