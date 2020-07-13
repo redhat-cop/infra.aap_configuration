@@ -5,3 +5,18 @@ tower_hosts:
     variables:
       some_var: some_val
       ansible_connection: local
+  - name: PSQL1
+    inventory: localhost
+    variables:
+      some_var: some_val
+      ansible_connection: local
+  - name: PSQL2
+    inventory: localhost
+    variables:
+      some_var: some_val
+      ansible_connection: local
+  - name: PSQL3
+    inventory: localhost
+    variables:
+      some_var: some_val
+      ansible_connection: local
