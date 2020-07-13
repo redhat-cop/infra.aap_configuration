@@ -1,5 +1,20 @@
 ---
 tower_groups:
+  - name: group1
+    inventory: satlab-admin-inventory
+    variables:
+      some_var: some_val
+      ansible_connection: local
+  - name: group2
+    inventory: satlab-admin-inventory
+    variables:
+      some_var: some_val
+      ansible_connection: local
+  - name: group3
+    inventory: satlab-admin-inventory
+    variables:
+      some_var: some_val
+      ansible_connection: local      
   - name: sat_lab_group
     inventory: satlab-admin-inventory
     variables:
