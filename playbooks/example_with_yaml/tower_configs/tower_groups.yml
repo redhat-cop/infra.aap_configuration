@@ -1,3 +1,4 @@
+---
 tower_groups:
   - name: localhost
     inventory: localhost
@@ -5,10 +6,10 @@ tower_groups:
       some_var: some_val
       ansible_connection: local
     hosts:
-     - PSQL1
-     - PSQL2
-     - PSQL3
+      - PSQL1
+      - PSQL2
+      - PSQL3
     children:
-     - group1
-     - group2
-     - group3      
+      - group1
+      - group2
+      - group3
