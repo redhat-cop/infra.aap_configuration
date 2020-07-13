@@ -123,7 +123,7 @@ tower_group:
       include_role: 
         name: redhat_cop.tower_configuration.groups
       vars:
-        tower_group: "{{ groups_json.tower_groups }}"
+        tower_groups: "{{ groups_json.tower_groups }}"
 ```
 ## License
 [MIT](LICENSE)
