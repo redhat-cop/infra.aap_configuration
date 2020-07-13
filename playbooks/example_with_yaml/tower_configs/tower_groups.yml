@@ -1,7 +1,7 @@
 ---
 tower_groups:
-  - name: localhost
-    inventory: localhost
+  - name: sat_lab_group
+    inventory: satlab-admin-inventory
     variables:
       some_var: some_val
       ansible_connection: local
