@@ -131,4 +131,4 @@ tower_group:
 ## Author
 [Wei-Yen Tan](https://github.com/weiyentan)
 [Andrew J. Huffman](https://github.com/ahuffman) 
-[Sean Sullivan](https://github.com/Wilk42)
+[Sean Sullivan](https://github.com/sean-m-sullivan)
