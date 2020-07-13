@@ -1,12 +1,14 @@
 ---
-- name: Add License to Ttower
+# based on method defined here: https://coderwall.com/p/8yfuva/how-to-develop-ansible-roles-w-unit-test-and-ci
+
+- name: Add Host to Tower
   hosts: localhost
-  gather_facts: false
   connection: local
+  gather_facts: false
 
   # Bring in vaulted Ansible Tower secrets
   vars_files:
-    - "../var/tower-secrets.yml"
+    - ../tests/vars/tower_secrets.yml
 
   tasks:
 
@@ -26,17 +28,13 @@
       set_fact:
         tower_oauthtoken: "{{ user_token.json.token }}"
 
-    - name: Import vars
-      include_vars:
-        file: "vars/extra_vars.yml"
-
     - name: Import JSON
       include_vars:
-        file: "json/license.json"
-        name: "license_json"
+        file: "json/group.json"
+        name: group_json
 
-    - name: Add License
+    - name: Add groups
       include_role:
-        name: redhat_cop.tower_configuration.license
+        name: ../..
       vars:
-        tower_credential_input_sources: "{{ license_json.tower_license }}"
+        tower_host: "{{ group_json.tower_group }}"
