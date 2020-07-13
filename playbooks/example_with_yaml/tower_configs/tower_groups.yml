@@ -14,7 +14,7 @@ tower_groups:
     inventory: satlab-admin-inventory
     variables:
       some_var: some_val
-      ansible_connection: local      
+      ansible_connection: local
   - name: sat_lab_group
     inventory: satlab-admin-inventory
     variables:
