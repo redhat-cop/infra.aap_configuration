@@ -14,4 +14,3 @@
     loop_var: tower_groups_item
   no_log: "{{ tower_configuration_group_secure_logging }}"
   when: tower_groups is defined
-  
