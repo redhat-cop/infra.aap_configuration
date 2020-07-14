@@ -83,6 +83,7 @@ Adding the ability to use direct output from the awx export command in the roles
 ## Contributing to this collection
 
 We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [Tower Configuration collection repository](https://github.com/redhat-cop/tower_configuration).
+More information about contributing can be found in our [Contribution Guidelines.](https://github.com/redhat-cop/tower_configuration/blob/devel/.github/CONTRIBUTING.md)
 
 ## Licensing
 
