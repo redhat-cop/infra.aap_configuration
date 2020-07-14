@@ -1,4 +1,4 @@
-# tower_inventories
+# tower_configuration.tower_inventories
 An Ansible role to create inventories.
 
 

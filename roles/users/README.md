@@ -1,4 +1,4 @@
-# users
+# tower_configuration.users
 ## Description
 An Ansible Role to add users to Ansible Tower.
 

@@ -1,4 +1,4 @@
-# hosts
+# tower_configuration.hosts
 ## Description
 An Ansible Role to add hosts to Ansible Tower.
 
