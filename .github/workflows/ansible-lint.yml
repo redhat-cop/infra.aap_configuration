@@ -13,7 +13,7 @@ jobs:
         # File(s) or Directory, separate by space if multiple files or folder are specified
         file_or_dir: roles/* playbooks/* plugins/*
         # Path to custom configuration
-        config_file: .github/workflows/.yamllint.yml
+        config_file: .github/workflow-config/.yamllint.yml
         # Custom configuration (as YAML source)
         # config_data: # optional
         # Format for parsing output [parsable,standard,colored,auto]
@@ -79,4 +79,4 @@ jobs:
         #                         path to directories or files to skip. This option is
         #                         repeatable.
         #   -c C                  Specify configuration file to use. Defaults to ".ansible-lint"
-        args: "-c .github/workflows/.ansiblelint.yml"
+        args: "-c .github/workflow-config/.ansiblelint.yml"

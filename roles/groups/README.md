@@ -1,6 +1,6 @@
-# tower_configuration.credentials
+# tower_configuration.groups
 ## Description
-An Ansible Role to create Credentials in Ansible Tower.
+An Ansible Role to create Groups in Ansible Tower.
 
 ## Requirements 
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
@@ -19,7 +19,7 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 |`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
 |`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`tower_credentials`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
+|`tower_groups`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
 
 ### Secure Logging Variables
 The following Variables compliment each other. 
@@ -33,55 +33,32 @@ tower_configuration_credentials_secure_logging defaults to the value of tower_co
 |`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
-### Varibles
+### Variables
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`name`|""|yes|Name of Credential|
-|`new_name`|""|yes|Name of Credential, used in updating a Credential.|
-|`description`|`False`|no|Description of  of Credential.|
-|`organization`|""|no|Organization this Credential belongs to. If provided on creation, do not give either user or team.|
-|`credential_type`|""|no|Name of credential type. See below for list of options. More information in Ansible Tower documentation. |
-|`inputs`|""|no|Credential inputs where the keys are var names used in templating. Refer to the Ansible Tower documentation for example syntax. Individual examples can be found at /api/v2/credential_types/ on an Tower.|
-|`user`|""|no|User that should own this credential. If provided, do not give either team or organization. |
-|`team`|""|no|Team that should own this credential. If provided, do not give either user or organization. |
+|`name`|""|yes|Name of Group|
+|`new_name`|""|yes|Name of Group, used in updating a Group.|
+|`description`|`False`|no|Description of  of Group.|
+|`inventory`|""|yes| Name of inventory|
+|`variables`|{}|no| variables applicable to group.|
+|`hosts`|""|no | hosts (list) in group|
+|`children`|""|no|  List of groups that should be nested inside in this group|
 |`state`|`present`|no|Desired state of the resource.|
 
-### Credential types
-|Credential types|
-|:---:|
-|Amazon Web Services|
-|Ansible Tower|
-|GitHub Personal Access Token|
-|GitLab Personal Access Token|
-|Google Compute Engine|
-|Insights|
-|Machine|
-|Microsoft Azure Resource Manager|
-|Network|
-|OpenShift or Kubernetes API Bearer Token|
-|OpenStack|
-|Red Hat CloudForms|
-|Red Hat Satellite 6|
-|Red Hat Virtualization|
-|Source Control|
-|Vault|
-|VMware vCenter|
 
 ### Standard Organization Data Structure
 #### Json Example
 ```json
 ---
 {
-    "tower_credentials": [
+    "tower_group": [
       {
-        "name": "gitlab",
-        "description": "Credentials for GitLab",
-        "organization": "Default",
-        "credential_type": "Source Control",
-        "inputs": {
-          "username": "person",
-          "password": "password"
-        }       
+        "name": "PSQL_Servers",
+        "description": "Default",
+        "inventory": "Source Control",
+        "variables": {
+        "my_var": true
+        }
       }
     ]
 }
@@ -89,21 +66,28 @@ tower_configuration_credentials_secure_logging defaults to the value of tower_co
 #### Ymal Example
 ```yaml
 ---
-tower_credentials:
-- name: gitlab
-  description: Credentials for GitLab
-  organization: Default
-  credential_type: Source Control
-  inputs:
-    username: person
-    password: password
+tower_group:
+- name: PSQL_Servers
+  description: Group for Postgres SQL Servers
+  inventory: Default
+  variables:
+    myvars: example1
+  hosts:
+   - PSQL1
+   - PSQL2
+   - PSQL3
+  children:
+   - group1
+   - group2
+   - group3
 ```
+
 ## Playbook Examples
 ### Standard Role Usage
 ```yaml
 ---
 
-- name: Add Credentials to Tower
+- name: Add Groups to Tower
   hosts: localhost
   connection: local
   gather_facts: false
@@ -132,18 +116,19 @@ tower_credentials:
 
     - name: Import JSON
       include_vars:
-        file: "json/credentials.json"
-        name: credentials_json
+        file: "json/groups.json"
+        name: groups_json
 
-    - name: Add Credentials
+    - name: Add Groups
       include_role: 
-        name: redhat_cop.tower_configuration.credentials
+        name: redhat_cop.tower_configuration.groups
       vars:
-        tower_credentials: "{{ credentials_json.tower_credentials }}"
+        tower_groups: "{{ groups_json.tower_groups }}"
 ```
 ## License
 [MIT](LICENSE)
 
 ## Author
+[Wei-Yen Tan](https://github.com/weiyentan)
 [Andrew J. Huffman](https://github.com/ahuffman) 
-[Sean Sullivan](https://github.com/Wilk42)
+[Sean Sullivan](https://github.com/sean-m-sullivan)

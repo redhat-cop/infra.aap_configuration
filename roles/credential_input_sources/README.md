@@ -1,4 +1,4 @@
-# tower_configuration_***********
+# tower_configuration.credential_input_sources
 ## Description
 An Ansible Role to create Job Templates in Ansible Tower.
 
@@ -116,7 +116,7 @@ tower_credential_input_sources:
 
     - name: Add Credential Input Source
       include_role:
-        name: ../..
+        name: redhat_cop.tower_configuration.credential_input_sources
       vars:
         tower_credential_input_sources: "{{ cred_input_src_json.tower_credential_input_sources }}"
 ```
