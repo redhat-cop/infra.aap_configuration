@@ -10,6 +10,3 @@ resolves #<number>
 
 ### Other Relevant info, PRs, etc.
 Please provide link to other PRs that may be related (blocking, resolves, etc. etc.)
-
-### People to notify
-cc: @redhat-cop/tower_configuration
