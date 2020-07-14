@@ -21,9 +21,9 @@ jobs:
 
       - name: Install ansible-base
         run: pip install ansible
-      
+
       - name: Publish to galaxy
-        run: ansible-playbook .github/workflows/release.yml
+        run: ansible-playbook .github/workflow-config/release.yml
           -e namespace=${{ github.repository_owner }}
           -e github_tag=${{ github.ref }}
           -e api_key=${{ secrets.ANSIBLE_GALAXY_APIKEY }}
