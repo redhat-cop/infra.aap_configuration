@@ -25,7 +25,7 @@ tower_workflows:
           job_tags:
           skip_tags:
           limit:
-          verbosity:
+          verbosity: 0
           all_parents_must_converge: false
           identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
           workflow_job_template:
@@ -80,7 +80,7 @@ tower_workflows:
           job_tags:
           skip_tags:
           limit:
-          verbosity:
+          verbosity: 0
           all_parents_must_converge: false
           identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
           workflow_job_template:
@@ -136,7 +136,7 @@ tower_workflows:
           job_tags:
           skip_tags:
           limit:
-          verbosity:
+          verbosity: 0
           all_parents_must_converge: false
           identifier: 28910097-e606-4252-8aa9-2c1a0b8b6c92
           workflow_job_template:
@@ -172,7 +172,7 @@ tower_workflows:
           job_tags:
           skip_tags:
           limit:
-          verbosity:
+          verbosity: 0
           all_parents_must_converge: true
           identifier: ca7ffc3b-8401-4153-83bf-bb3dd918ca87
           workflow_job_template:
@@ -208,7 +208,7 @@ tower_workflows:
           job_tags:
           skip_tags:
           limit:
-          verbosity:
+          verbosity: 0
           all_parents_must_converge: false
           identifier: 046378e5-ff53-4168-afc2-a82d87327099
           workflow_job_template:
@@ -319,7 +319,7 @@ tower_workflows:
           job_tags:
           skip_tags:
           limit:
-          verbosity:
+          verbosity: 0
           all_parents_must_converge: false
           identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
           workflow_job_template:
@@ -366,7 +366,7 @@ tower_workflows:
           job_tags:
           skip_tags:
           limit:
-          verbosity:
+          verbosity: 0
           all_parents_must_converge: false
           identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
           workflow_job_template:
