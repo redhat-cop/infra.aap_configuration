@@ -10,7 +10,7 @@
     job_tags:                       "{{ workflow_loop_node.job_tags | default (omit) }}"
     skip_tags:                      "{{ workflow_loop_node.skip_tags | default (omit) }}"
     limit:                          "{{ workflow_loop_node.limit | default (omit) }}"
-    diff_mode:                      "{{ workflow_loop_node.diff_mode | default (False) }}"
+    diff_mode:                      "{{ workflow_loop_node.diff_mode | default (false) }}"
     verbosity:                      "{{ workflow_loop_node.verbosity | default (omit) }}"
     workflow_job_template:          "{{ workflow_loop_node.workflow_job_template.name | default( workflow_loop_node.workflow_job_template | default (omit) ) }}"
     unified_job_template :          "{{ workflow_loop_node.unified_job_template.name | default( workflow_loop_node.unified_job_template ) }}"  # Run Job template
