@@ -1,0 +1,109 @@
+---
+teams:
+- name: team1
+  description: ''
+  organization:
+    name: Testing
+    type: organization
+  related:
+    roles:
+    - name: Admin
+      type: role
+      content_object:
+        organization:
+          name: Testing
+          type: organization
+        name: Survey Template with vars no org
+        type: job_template
+    - name: Admin
+      type: role
+      content_object:
+        organization:
+          name: Testing
+          type: organization
+        name: No Survey Template no vars
+        type: job_template
+    - name: Admin
+      type: role
+      content_object:
+        organization:
+          name: Testing
+          type: organization
+        name: workflow_test_template
+        type: job_template
+    - name: Admin
+      type: role
+      content_object:
+        organization:
+          name: Testing
+          type: organization
+        name: Tower Config Testing
+        type: project
+    - name: Admin
+      type: role
+      content_object:
+        organization:
+          name: Testing
+          type: organization
+        name: Tower Config
+        type: project
+    - name: Admin
+      type: role
+      content_object:
+        organization:
+          name: Testing
+          type: organization
+        name: Complicated Schema Workflow
+        type: workflow_job_template
+    - name: Admin
+      type: role
+      content_object:
+        organization:
+          name: Testing
+          type: organization
+        name: Simple workflow schema
+        type: workflow_job_template
+    - name: Admin
+      type: role
+      content_object:
+        organization:
+          name: Testing
+          type: organization
+        name: gitlab
+        credential_type:
+          name: Source Control
+          kind: scm
+          type: credential_type
+        type: credential
+    - name: Admin
+      type: role
+      content_object:
+        organization:
+          name: 2nd organization
+          type: organization
+        name: 2nd Testing Inventory
+        type: inventory
+    - name: Admin
+      type: role
+      content_object:
+        organization:
+          name: Testing
+          type: organization
+        name: Testing Inventory
+        type: inventory
+    - name: Project Admin
+      type: role
+      content_object:
+        name: 2nd organization
+        type: organization
+    - name: Project Admin
+      type: role
+      content_object:
+        name: Testing
+        type: organization
+  natural_key:
+    organization:
+      name: Testing
+      type: organization
+    name: team1
+    type: team

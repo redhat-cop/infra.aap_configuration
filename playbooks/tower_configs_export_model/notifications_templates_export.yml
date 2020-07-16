@@ -1,0 +1,40 @@
+---
+notification_templates:
+- name: Slack_for_testing
+  description: ''
+  notification_type: slack
+  notification_configuration:
+    channels:
+    - asdf
+    token: ''
+    use_ssl: false
+    use_tls: false
+  messages: 
+  organization:
+    name: Testing
+    type: organization
+  natural_key:
+    organization:
+      name: Testing
+      type: organization
+    name: Slack_for_testing
+    type: notification_template
+- name: Slack_for_testing 2nd
+  description: ''
+  notification_type: slack
+  notification_configuration:
+    channels:
+    - asdf
+    token: ''
+    use_ssl: false
+    use_tls: false
+  messages: 
+  organization:
+    name: 2nd organization
+    type: organization
+  natural_key:
+    organization:
+      name: 2nd organization
+      type: organization
+    name: Slack_for_testing 2nd
+    type: notification_template
