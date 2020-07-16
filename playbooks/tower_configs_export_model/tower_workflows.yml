@@ -324,7 +324,7 @@ tower_workflows:
           job_tags:
           skip_tags:
           limit:
-          diff_mode:
+          diff_mode: false
           verbosity:
           all_parents_must_converge: false
           identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
