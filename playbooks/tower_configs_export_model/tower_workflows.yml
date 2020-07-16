@@ -21,7 +21,7 @@ tower_workflows:
         - extra_data: {}
           inventory:
           scm_branch:
-          job_type:
+          job_type: "run"
           job_tags:
           skip_tags:
           limit:
@@ -76,7 +76,7 @@ tower_workflows:
         - extra_data: {}
           inventory:
           scm_branch:
-          job_type:
+          job_type: "run"
           job_tags:
           skip_tags:
           limit:
@@ -132,7 +132,7 @@ tower_workflows:
               - group1
           inventory:
           scm_branch:
-          job_type:
+          job_type: "run"
           job_tags:
           skip_tags:
           limit:
@@ -168,7 +168,7 @@ tower_workflows:
         - extra_data: {}
           inventory:
           scm_branch:
-          job_type:
+          job_type: "run"
           job_tags:
           skip_tags:
           limit:
@@ -204,7 +204,7 @@ tower_workflows:
         - extra_data: {}
           inventory:
           scm_branch:
-          job_type:
+          job_type: "run"
           job_tags:
           skip_tags:
           limit:
@@ -315,7 +315,7 @@ tower_workflows:
         - extra_data: {}
           inventory:
           scm_branch:
-          job_type:
+          job_type: "run"
           job_tags:
           skip_tags:
           limit:
@@ -362,7 +362,7 @@ tower_workflows:
         - extra_data: {}
           inventory:
           scm_branch:
-          job_type:
+          job_type: "run"
           job_tags:
           skip_tags:
           limit:
