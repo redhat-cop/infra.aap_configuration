@@ -12,8 +12,6 @@ tower_workflows:
     ask_inventory_on_launch: false
     ask_scm_branch_on_launch: false
     ask_limit_on_launch: false
-    webhook_service:
-    webhook_credential:
     organization:
       name: Default
       type: organization
@@ -313,9 +311,6 @@ tower_workflows:
     ask_inventory_on_launch: false
     ask_scm_branch_on_launch: false
     ask_limit_on_launch: false
-    webhook_service:
-    webhook_credential:
-      name:
     organization:
       name: Default
       type: organization
