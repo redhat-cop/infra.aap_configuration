@@ -1,4 +1,4 @@
-name: docker-compose
+name: Run Test Playbooks
 
 on: [push, pull_request]
 
