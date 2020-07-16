@@ -2,7 +2,7 @@
 tower_workflows:
   - name: Complicated workflow schema
     description: a complicated workflow
-    extra_vars: ''
+    extra_vars: {}
     survey_enabled: true
     allow_simultaneous: false
     ask_variables_on_launch: false
@@ -303,7 +303,7 @@ tower_workflows:
       type: workflow_job_template
   - name: Simple workflow schema
     description: a basic workflow
-    extra_vars: ''
+    extra_vars: {}
     survey_enabled: false
     allow_simultaneous: false
     ask_variables_on_launch: false
