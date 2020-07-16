@@ -12,7 +12,7 @@ tower_workflows:
     ask_inventory_on_launch: false
     ask_scm_branch_on_launch: false
     ask_limit_on_launch: false
-    webhook_service: ''
+    webhook_service:
     webhook_credential:
     organization: Default
     schedules: []
