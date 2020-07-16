@@ -315,6 +315,7 @@ tower_workflows:
     ask_limit_on_launch: false
     webhook_service: ''
     webhook_credential:
+      name: ''
     organization:
       name: Default
       type: organization
