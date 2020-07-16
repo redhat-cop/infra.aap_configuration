@@ -18,10 +18,8 @@ tower_workflows:
     related:
       schedules: []
       workflow_nodes:
-        - extra_data: {}
-          inventory:
+        - inventory:
           scm_branch:
-          job_type: "run"
           job_tags:
           skip_tags:
           limit:
@@ -72,10 +70,8 @@ tower_workflows:
               type: workflow_job_template
             identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
             type: workflow_job_template_node
-        - extra_data: {}
-          inventory:
+        - inventory:
           scm_branch:
-          job_type: "run"
           job_tags:
           skip_tags:
           limit:
@@ -123,14 +119,8 @@ tower_workflows:
               type: workflow_job_template
             identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
             type: workflow_job_template_node
-        - extra_data:
-            basic_name: test
-            option_true_false: 'yes'
-            target_groups:
-              - group1
-          inventory:
+        - inventory:
           scm_branch:
-          job_type: "run"
           job_tags:
           skip_tags:
           limit:
@@ -162,10 +152,8 @@ tower_workflows:
               type: workflow_job_template
             identifier: 28910097-e606-4252-8aa9-2c1a0b8b6c92
             type: workflow_job_template_node
-        - extra_data: {}
-          inventory:
+        - inventory:
           scm_branch:
-          job_type: "run"
           job_tags:
           skip_tags:
           limit:
@@ -197,10 +185,8 @@ tower_workflows:
               type: workflow_job_template
             identifier: ca7ffc3b-8401-4153-83bf-bb3dd918ca87
             type: workflow_job_template_node
-        - extra_data: {}
-          inventory:
+        - inventory:
           scm_branch:
-          job_type: "run"
           job_tags:
           skip_tags:
           limit:
@@ -307,10 +293,8 @@ tower_workflows:
     related:
       schedules: []
       workflow_nodes:
-        - extra_data: {}
-          inventory:
+        - inventory:
           scm_branch:
-          job_type: "run"
           job_tags:
           skip_tags:
           limit:
@@ -356,7 +340,6 @@ tower_workflows:
         - extra_data: {}
           inventory:
           scm_branch:
-          job_type: "run"
           job_tags:
           skip_tags:
           limit:
