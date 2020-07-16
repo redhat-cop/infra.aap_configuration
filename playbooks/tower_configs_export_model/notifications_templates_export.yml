@@ -9,7 +9,7 @@ notification_templates:
     token: ''
     use_ssl: false
     use_tls: false
-  messages: 
+  messages:
   organization:
     name: Testing
     type: organization
@@ -28,7 +28,7 @@ notification_templates:
     token: ''
     use_ssl: false
     use_tls: false
-  messages: 
+  messages:
   organization:
     name: 2nd organization
     type: organization

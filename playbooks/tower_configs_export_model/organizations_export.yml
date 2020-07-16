@@ -3,7 +3,7 @@ organizations:
 - name: 2nd organization
   description: 2nd organization
   max_hosts: 0
-  custom_virtualenv: 
+  custom_virtualenv:
   related:
     notification_templates:
     - organization:
@@ -26,7 +26,7 @@ organizations:
 - name: Testing
   description: Testing
   max_hosts: 0
-  custom_virtualenv: 
+  custom_virtualenv:
   related:
     notification_templates:
     - organization:

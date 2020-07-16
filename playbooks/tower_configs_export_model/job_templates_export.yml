@@ -30,10 +30,10 @@ job_templates:
   become_enabled: false
   diff_mode: false
   allow_simultaneous: false
-  custom_virtualenv: 
+  custom_virtualenv:
   job_slice_count: 1
   webhook_service: ''
-  webhook_credential: 
+  webhook_credential:
   inventory:
     organization:
       name: Testing
@@ -49,7 +49,7 @@ job_templates:
   related:
     labels: []
     credentials:
-    - organization: 
+    - organization:
       name: Demo Credential
       credential_type:
         name: Machine
@@ -102,10 +102,10 @@ job_templates:
   become_enabled: false
   diff_mode: false
   allow_simultaneous: false
-  custom_virtualenv: 
+  custom_virtualenv:
   job_slice_count: 1
   webhook_service: ''
-  webhook_credential: 
+  webhook_credential:
   inventory:
     organization:
       name: Testing
@@ -121,7 +121,7 @@ job_templates:
   related:
     labels: []
     credentials:
-    - organization: 
+    - organization:
       name: Demo Credential
       credential_type:
         name: Machine
@@ -212,10 +212,10 @@ job_templates:
   become_enabled: false
   diff_mode: false
   allow_simultaneous: false
-  custom_virtualenv: 
+  custom_virtualenv:
   job_slice_count: 1
   webhook_service: ''
-  webhook_credential: 
+  webhook_credential:
   inventory:
     organization:
       name: Testing
@@ -231,7 +231,7 @@ job_templates:
   related:
     labels: []
     credentials:
-    - organization: 
+    - organization:
       name: Demo Credential
       credential_type:
         name: Machine

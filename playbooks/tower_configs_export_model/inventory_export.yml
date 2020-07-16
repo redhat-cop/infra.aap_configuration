@@ -3,9 +3,9 @@ inventory:
 - name: 2nd Testing Inventory
   description: ''
   kind: ''
-  host_filter: 
+  host_filter:
   variables: "---"
-  insights_credential: 
+  insights_credential:
   organization:
     name: 2nd organization
     type: organization
@@ -18,9 +18,9 @@ inventory:
 - name: Testing Inventory
   description: ''
   kind: ''
-  host_filter: 
+  host_filter:
   variables: "---"
-  insights_credential: 
+  insights_credential:
   organization:
     name: Testing
     type: organization
