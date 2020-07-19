@@ -1,0 +1,48 @@
+---
+organizations:
+- name: 2nd organization
+  description: 2nd organization
+  max_hosts: 0
+  custom_virtualenv:
+  related:
+    notification_templates:
+    - organization:
+        name: 2nd organization
+        type: organization
+      name: Slack_for_testing 2nd
+      type: notification_template
+    notification_templates_started: []
+    notification_templates_success: []
+    notification_templates_error:
+    - organization:
+        name: Testing
+        type: organization
+      name: Slack_for_testing
+      type: notification_template
+    notification_templates_approvals: []
+  natural_key:
+    name: 2nd organization
+    type: organization
+- name: Testing
+  description: Testing
+  max_hosts: 0
+  custom_virtualenv:
+  related:
+    notification_templates:
+    - organization:
+        name: Testing
+        type: organization
+      name: Slack_for_testing
+      type: notification_template
+    notification_templates_started: []
+    notification_templates_success: []
+    notification_templates_error:
+    - organization:
+        name: Testing
+        type: organization
+      name: Slack_for_testing
+      type: notification_template
+    notification_templates_approvals: []
+  natural_key:
+    name: Testing
+    type: organization
