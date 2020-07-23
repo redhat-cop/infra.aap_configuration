@@ -15,4 +15,5 @@
         ignore_files: [README.md]
         extensions: ["yml"]
   roles:
+    - {role: organizations, when: tower_organizations is defined, tags: organizations}
     - {role: workflow_job_templates, when: workflow_job_templates is defined}
