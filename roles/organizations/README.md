@@ -6,6 +6,7 @@ An Ansible Role to create Organizations in Ansible Tower.
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
 Currently:
   awx.awx
+
 ## Variables
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
@@ -28,7 +29,9 @@ tower_configuration_organizations_secure_logging defaults to the value of tower_
 |`tower_configuration_organizations_secure_logging`|`False`|no|Whether or not to include the sensative Organization role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
-## Data Structure
+## Organization Data Structure
+This role accepts two data models. A simple starightforward easy to maintain model, and another based on the tower api. The 2nd one is more complicated and includes more detail, and is compatiable with tower import/export.
+
 ### Varibles
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
@@ -42,7 +45,7 @@ tower_configuration_organizations_secure_logging defaults to the value of tower_
 |`notification_templates_approvals`|""|no|The notifications for approval to use for this organization in a list.|
 |`state`|`present`|no|Desired state of the resource.|
 
-### Standard Organization Data Structure
+### Standard Organization Data Structure model
 #### Json Example
 ```json
 ---
@@ -75,6 +78,33 @@ tower_organizations:
   custom_virtualenv: "/opt/cust/enviroment/"
   max_hosts: 10
 ```
+
+#### Tower Export Data structure model
+##### Ymal Example
+```yaml
+---
+tower_organizations:
+- name: Satellite
+  description: Satellite
+  max_hosts: 0
+  custom_virtualenv:
+  related:
+    notification_templates_started: []
+    notification_templates_success: []
+    notification_templates_error:
+    - name: irc-satqe-chat-notification
+    notification_templates_approvals: []
+- name: Default
+  description: Default
+  max_hosts: 0
+  custom_virtualenv:
+  related:
+    notification_templates_started: []
+    notification_templates_success: []
+    notification_templates_error: []
+    notification_templates_approvals: []
+```
+
 ## Playbook Examples
 ### Standard Role Usage
 ```yaml
