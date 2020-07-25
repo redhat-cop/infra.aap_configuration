@@ -27,5 +27,5 @@
       loop_control:
         loop_var: tower_setting_item
       no_log: "{{ tower_configuration_settings_secure_logging }}"
-  when: tower_settings is iterable
+  when: tower_settings[0] is defined
 ...
