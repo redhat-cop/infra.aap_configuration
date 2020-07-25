@@ -10,7 +10,7 @@ tower_settings:
       - SCOPE_SUBTREE
       - "(objectClass=person)"
     AUTH_LDAP_GROUP_TYPE: "GroupOfUniqueNamesType"
-    AUTH_LDAP_USER_SEARCH: 
+    AUTH_LDAP_USER_SEARCH:
       - OU=Users,DC=example,DC=com
       - SCOPE_SUBTREE
       - "(cn=%(user)s)"
@@ -25,7 +25,7 @@ tower_settings:
     # Next name helps each sat-qe-infra group to become superuser in tower as soon as they login
     AUTH_LDAP_USER_FLAGS_BY_GROUP:
       is_superuser:
-      - cn=sat-qe-infra,ou=adhoc,ou=managedGroups,dc=example,dc=com
+        - cn=sat-qe-infra,ou=adhoc,ou=managedGroups,dc=example,dc=com
     # This maps all users to satellite-qe org and makes sure they are not part of satlab-admin
     AUTH_LDAP_ORGANIZATION_MAP:
       Satellite:
