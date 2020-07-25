@@ -2,8 +2,10 @@
 - name: Add tower host
   awx.awx.tower_host:
     name:             "{{ tower_hosts_item.name }}"
+    new_name:         "{{ tower_hosts_item.new_name }}"
     description:      "{{ tower_hosts_item.description | default('') }}"
     inventory:        "{{ tower_hosts_item.inventory }}"
+    enabled:          "{{ tower_hosts_item.enabled | default(True) }}"
     state:            "{{ tower_hosts_item.state | default(tower_state | default('present')) }}"
     variables:        "{{ tower_hosts_item.variables | default(omit) }}"
     tower_host:       "{{ tower_hostname }}"

@@ -34,8 +34,10 @@ The role defaults to False as normally the add host task does not include sensat
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|The name of the host|
+|`name`|""|yes|str|The name of the host|
 |`description`|""|no|str|The description of the host|
 |`inventory`|""|yes|str|The inventory the host applies against|
+|`enabled`|`True`|no|bool|If the host should be enabled.|
 |`variables`|{}|no|str|The variables applicable to the host|
 |`state`|`present`|no|str|Desired state of the resource.|
 
