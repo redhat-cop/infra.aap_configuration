@@ -1,5 +1,5 @@
 # tower_configuration.tower_inventory_sources
-An Ansible role to create inventory sources.
+An Ansible role to create labels for tempaltes in tower.
 
 ## Requirements 
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
@@ -26,53 +26,30 @@ tower_configuration_projects_secure_logging defaults to the value of tower_confi
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`tower_configuration_projects_secure_logging`|`False`|no|Whether or not to include the sensative Project role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`tower_configuration_inventory_sources_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
+|`tower_configuration_labels_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
 ### Varibles
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`name`|""|yes|The name to use for the inventory source.|
-|`new_name`|""|no|A new name for this assets (will rename the asset).|
-|`description`|`False`|no|The description to use for the inventory source.|
-|`inventory`|""|yes|Inventory the group should be made a member of.|
-|`source`|""|no|The source to use for this group.|
-|`source_path`|""|no|For an SCM based inventory source, the source path points to the file within the repo to use as an inventory.|
-|`source_script`|""|no|Inventory script to be used when group type is C(custom).|
-|`source_vars`|""|no|The variables or environment fields to apply to this source type.|
-|`credential`|""|no|Credential to use for the source.|
-|`source_regions`|""|no|Regions for cloud provider.|
-|`instance_filters`|""|no|Comma-separated list of filter expressions for matching hosts.|
-|`group_by`|""|no|Limit groups automatically created from inventory source.|
-|`overwrite`|""|no|Delete child groups and hosts not found in source.|
-|`overwrite_vars`|""|no|Override vars in child groups and hosts with those from external source.|
-|`custom_virtualenv`|""|no|Local absolute file path containing a custom Python virtualenv to use.|
-|`timeout`|""|no|The amount of time (in seconds) to run before the task is canceled.|
-|`verbosity`|""|no|The verbosity level to run this inventory source under.|
-|`update_on_launch`|""|no|Refresh inventory data from its source each time a job is run.|
-|`update_cache_timeout`|""|no|Time in seconds to consider an inventory sync to be current.|
-|`source_project`|""|no|Project to use as source with scm option|
-|`update_on_project_update`|""|no|Update this source when the related project updates if source is C(scm)|
+|`name`|""|yes|Name of this label.|
+|`new_name`|""|no|Setting this option will change the existing name (looked up via the name field).|
+|`organization`|`False`|no|Organization this label belongs to.|
 |`state`|`present`|no|Desired state of the resource.|
-|`notification_templates_started`|""|no|The notifications on started to use for this inventory source in a list.|
-|`notification_templates_success`|""|no|The notifications on success to use for this inventory source in a list.|
-|`notification_templates_error`|""|no|The notifications on error to use for this inventory source in a list.|
 
-### Standard Inventory Source Data Structure
+### Standard Label Data Structure
 #### Json Example
 ```json
 ---
 {
-  "tower_inventory_sources": [
+  "tower_labels": [
     {
-      "name": "RHVM-01",
-      "source": "rhv",
-      "inventory": "RHVM-01",
-      "credential": "admin@internal-RHVM-01",
-      "description": "created by Ansible Tower",
-      "overwrite": true,
-      "update_on_launch": true,
-      "update_cache_timeout": 0
+      "name": "Dev",
+      "organization": "Satellite"
+    },
+    {
+      "name": "Prod",
+      "organization": "Default"
     }
   ]
 }
@@ -81,15 +58,11 @@ tower_configuration_projects_secure_logging defaults to the value of tower_confi
 #### Ymal Example
 ```yaml
 ---
-tower_inventory_sources:
-  - name: RHVM-01
-    source: rhv
-    inventory: RHVM-01
-    credential: admin@internal-RHVM-01
-    description: created by Ansible Tower
-    overwrite: true
-    update_on_launch: true
-    update_cache_timeout: 0
+tower_labels:
+  - name: Dev
+    organization: Satellite
+  - name: Prod
+    organization: Default
 
 ```
 ## Playbook Examples
@@ -126,22 +99,18 @@ tower_inventory_sources:
 
     - name: Import JSON
       include_vars:
-        file: "json/sources.json"
-        name: sources_json
+        file: "json/tower_labels.json"
+        name: tower_labels
 
     - name: Add Inventory Sources
       include_role: 
-        name: redhat_cop.tower_configuration.inventory_sources
+        name: redhat_cop.tower_configuration.labels
       vars:
-        tower_inventory_sources: "{{ sources_json.sources }}"
+        tower_inventory_sources: "{{ tower_labels.tower_labels }}"
 ```
 
 # License
 [MIT](LICENSE)
 
 # Author
-[Edward Quail](mailto:equail@redhat.com)  
-
-[Andrew J. Huffman](https://github.com/ahuffman)
-
-[Kedar Kulkarni](https://github.com/kedark3)
+[Sean Sullivan](https://github.com/sean-m-sullivan)
