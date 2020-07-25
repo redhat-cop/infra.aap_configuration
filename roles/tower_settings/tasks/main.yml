@@ -9,9 +9,6 @@
     tower_password:      "{{ tower_password | default(omit) }}"
     tower_username:      "{{ tower_username | default(omit) }}"
     validate_certs:      "{{ validate_certs | default('false') }}"
-  loop: "{{ tower_settings }}"
-  loop_control:
-    loop_var: tower_setting_item
 
 - name: Update Ansible Tower Settings
   awx.awx.tower_settings:
