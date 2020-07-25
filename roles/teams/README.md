@@ -30,6 +30,7 @@ The role defaults to False as normally the add rbac task does not include sensat
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`||yes|str|The desired team name to create or modify|
+|`new_name`||no|str|To use when changing a team's name.|
 |`description`|omitted|no|str|The team description|
 |`organization`||yes|str|The organization in which team will be created|
 |`state`|`present`|no|str|Desired state of the resource.|
