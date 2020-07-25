@@ -32,7 +32,7 @@
     ask_job_type_on_launch:         "{{ tower_templates_item.ask_job_type_on_launch | default(omit) }}"
     ask_verbosity_on_launch:        "{{ tower_templates_item.ask_verbosity_on_launch | default('false') }}"
     ask_inventory_on_launch:        "{{ tower_templates_item.ask_inventory_on_launch | default(omit) }}"
-    ask_credential_on_launch:       "{{ tower_templates_item.ask_inventory_on_launch | default(omit) }}"
+    ask_credential_on_launch:       "{{ tower_templates_item.ask_credential_on_launch | default(omit) }}"
     survey_enabled:                 "{{ tower_templates_item.survey_enabled | default('false') }}"
     survey_spec:                    "{{ tower_templates_item.survey | default(omit) }}"
     become_enabled:                 "{{ tower_templates_item.become_enabled | default(omit) }}"
