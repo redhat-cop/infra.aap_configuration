@@ -17,6 +17,7 @@
   roles:
     - {role: tower_settings, when: tower_settings is defined, tags: tower_settings}
     - {role: organizations, when: tower_organizations is defined, tags: organizations}
+    - {role: labels, when: tower_labels is defined, tags: labels}
     - {role: users, when: tower_user_accounts is defined, tags: users}
     - {role: teams, when: tower_teams is defined, tags: teams}
     - {role: credentials, when: tower_credentials is defined, tags: credentials}
