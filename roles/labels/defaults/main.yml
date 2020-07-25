@@ -1,0 +1,5 @@
+---
+tower_hostname: ""
+tower_oauthtoken: ""
+tower_validate_certs: false
+tower_configuration_labels_secure_logging: "{{tower_configuration_secure_logging | default(false)}}"
