@@ -10,10 +10,10 @@
     tower_host:          "{{ tower_hostname | default(omit) }}"
     tower_password:      "{{ tower_password | default(omit) }}"
     tower_username:      "{{ tower_username | default(omit) }}"
-    validate_certs:      "{{ validate_certs | default(omit) }}"
+    validate_certs:      "{{ tower_validate_certs | default(omit) }}"
   loop: "{{ tower_teams }}"
   loop_control:
     loop_var: team
   when: tower_teams is defined
-  no_log: "{{ tower_configuration_rbac_secure_logging }}"
+  no_log: "{{ tower_configuration_teams_secure_logging }}"
 ...
