@@ -14,5 +14,5 @@
 
 - name: use loop when tower_settings is a list
   include_tasks: "settings_list.yml"
-  when: tower_settings is iterable
+  when: tower_settings[0] is defined
 ...
