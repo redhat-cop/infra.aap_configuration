@@ -1,3 +1,4 @@
+---
 - name: Update Ansible Tower Settings as a List
   awx.awx.tower_settings:
     name:                "{{ tower_setting_item.name | default(omit) }}"
