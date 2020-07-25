@@ -1,8 +1,9 @@
 ---
 - name: Create Ansible Tower Team
   awx.awx.tower_team:
-    description:         "{{ team.description | default(omit) }}"
     name:                "{{ team.name }}"
+    new_name:            "{{ team.new_name }}"
+    description:         "{{ team.description | default(omit) }}"
     organization:        "{{ team.organization }}"
     state:               "{{ team.state | default(tower_state | default('present')) }}"
     tower_config_file:   "{{ team.tower_config_file | default(omit) }}"
