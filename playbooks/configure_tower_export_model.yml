@@ -12,7 +12,8 @@
     - name: Include vars from tower_configs directory
       include_vars:
         dir: ./tower_configs_export_model
-        ignore_files: [tower_config.yml.template]
+        ignore_files: [README.md]
         extensions: ["yml"]
   roles:
+    - {role: organizations, when: tower_organizations is defined, tags: organizations}
     - {role: workflow_job_templates, when: workflow_job_templates is defined}
