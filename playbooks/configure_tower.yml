@@ -35,7 +35,7 @@
   tasks:
 
     - name: Add Tower Settings Individually
-      include_role: 
+      include_role:
         name: tower_settings
       vars:
         tower_settings: "{{ tower_settings_individuale }}"
