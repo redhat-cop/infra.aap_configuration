@@ -31,3 +31,11 @@
     - {role: schedules, when: tower_schedules is defined, tags: schedules}
     - {role: notifications, when: tower_notifications is defined, tags: notifications}
     - {role: tower_role, when: tower_rbac is defined, tags: tower_role}
+
+  tasks:
+
+    - name: Add Tower Settings Individually
+      include_role:
+        name: tower_settings
+      vars:
+        tower_settings: "{{ tower_settings_individuale }}"
