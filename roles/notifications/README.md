@@ -33,22 +33,13 @@ The role defaults to False as normally the add notification task does not includ
 ### Variables
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|The name of the notification|
-|`description`|""|no|str|The description of the notification|
-|`host`|""|yes|str|The host for the notification|
-|`channels`|""|no|list|The channels for the notification|
-|`nickname`|""|no|str|The nickname of the notification|
-|`notification_type`|""|no|str|The type of notification|
-|`organization`|""|no|str|The organization applicable to the notification|
-|`username`|""|no|str|The username applicable to the notification|
-|`password`|""|no|str|The password applicable to the notification|
-|`port`|""|no|str|The port applicable to the notification|
-|`recipients`|[]|no|list|The notification recipients|
-|`sender`|""|no|str|The notification sender|
-|`server`|""|no|str|The notification server|
-|`targets`|""|no|list|The notification targets|
-|`use_ssl`|false|no|bool|Whether the notification uses SSL|
-|`use_tls`|false|no|bool|Whether the notification uses TLS|
+|`name`|""|yes|str|The name of the notification.|
+|`new_name`|""|yes|str|Setting this option will change the existing name (looked up via the name field.|
+|`description`|""|no|str|The description of the notification.|
+|`organization`|""|no|str|The organization applicable to the notification.|
+|`notification_type`|""|no|str|The type of notification to be sent.|
+|`notification_configuration`|""|no|str|The notification configuration file. Note providing this field would disable all depreciated notification-configuration-related fields.|
+|`messages`|""|no|list|Optional custom messages for notification template.|
 |`state`|`present`|no|str|Desired state of the resource.|
 
 
@@ -56,12 +47,40 @@ The role defaults to False as normally the add notification task does not includ
 #### Json Example
 ```json
 {
-  "tower_notification": [
+  "tower_notifications": [
     {
-      "name": "localhost",
-      "inventory": "My Inv",
-      "variables": {
-        "my_var": true
+      "name": "irc-satqe-chat-notification",
+      "description": "Notify us on job in IRC!",
+      "organization": "Satellite",
+      "notification_type": "irc",
+      "notification_configuration": {
+        "use_tls": false,
+        "use_ssl": false,
+        "password": "",
+        "port": 6667,
+        "server": "irc.freenode.com",
+        "nickname": "Ansible-Tower-Stage-Bot-01",
+        "targets": [
+          "#my-channel"
+        ]
+      }
+    },
+    {
+      "name": "Email notification",
+      "description": "Send out emails for tower jobs",
+      "organization": "Satellite",
+      "notification_type": "email",
+      "notification_configuration": {
+        "username": "",
+        "sender": "tower0@example.com",
+        "recipients": [
+          "admin@example.com"
+        ],
+        "use_tls": false,
+        "host": "smtp.example.com",
+        "use_ssl": false,
+        "password": "",
+        "port": 25
       }
     }
   ]
@@ -71,11 +90,33 @@ The role defaults to False as normally the add notification task does not includ
 ```yaml
 ---
 tower_notifications:
-  - name: localhost
-    inventory: localhost
-    variables:
-      some_var: some_val
-      ansible_connection: local
+  - name: irc-satqe-chat-notification
+    description: Notify us on job in IRC!
+    organization: Satellite
+    notification_type: irc
+    notification_configuration:
+      use_tls: false
+      use_ssl: false
+      password: ''  # this is required even if there's no password
+      port: 6667
+      server: irc.freenode.com
+      nickname: Ansible-Tower-Stage-Bot-01
+      targets:
+      - "#my-channel"    
+  - name: Email notification
+    description: Send out emails for tower jobs
+    organization: Satellite
+    notification_type: email
+    notification_configuration:
+      username: ''  # this is required even if there's no username
+      sender: tower0@example.com
+      recipients:
+      - admin@example.com
+      use_tls: false
+      host: smtp.example.com
+      use_ssl: false
+      password: ''  # this is required even if there's no password
+      port: 25  
 ```
 
 ## Playbook Examples
@@ -109,7 +150,7 @@ tower_notifications:
         file: "json/notification.json"
         name: notification_json
 
-    - name: Add Projects
+    - name: Add Notifications
       include_role:
         name: tower_notification
       vars:
@@ -120,3 +161,4 @@ tower_notifications:
 
 ## Author
 [Tom Page](https://github.com/Tompage1994)
+[Sean Sullivan](https://github.com/sean-m-sullivan)
