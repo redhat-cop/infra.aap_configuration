@@ -2,7 +2,7 @@
 tower_workflows:
   - name: Simple workflow schema
     description: a basic workflow
-    extra_vars: ''
+    extra_vars: {}
     survey_enabled: false
     allow_simultaneous: false
     ask_variables_on_launch: false
@@ -12,8 +12,6 @@ tower_workflows:
     ask_inventory_on_launch: false
     ask_scm_branch_on_launch: false
     ask_limit_on_launch: false
-    webhook_service: ''
-    webhook_credential:
     organization: Default
     schedules: []
     workflow_nodes:

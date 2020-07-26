@@ -1,13 +1,13 @@
 ---
 - name: Create inventory
   awx.awx.tower_inventory:
-    description:          "{{ inventory.description | default(omit) }}"
-    host_filter:          "{{ inventory.host_filter | default(omit) }}"
-    kind:                 "{{ inventory.kind | default(omit) }}"
     name:                 "{{ inventory.name }}"  # REQUIRED
+    description:          "{{ inventory.description | default(omit) }}"
     organization:         "{{ inventory.organization | default('Default') }}"
-    state:                "{{ inventory.state | default(tower_state | default('present')) }}"
     variables:            "{{ inventory.variables | default(omit) }}"
+    kind:                 "{{ inventory.kind | default(omit) }}"
+    host_filter:          "{{ inventory.host_filter | default(omit) }}"
+    state:                "{{ inventory.state | default(tower_state | default('present')) }}"
     tower_config_file:    "{{ tower_config_file | default(omit) }}"
     tower_host:           "{{ tower_hostname | default(omit) }}"
     tower_username:       "{{ tower_username | default(omit) }}"
