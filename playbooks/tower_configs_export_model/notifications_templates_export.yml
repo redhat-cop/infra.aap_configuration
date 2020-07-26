@@ -1,40 +1,44 @@
 ---
 notification_templates:
-- name: Slack_for_testing
-  description: ''
-  notification_type: slack
+- name: Email notification
+  description: Send out emails for tower jobs
+  notification_type: email
   notification_configuration:
-    channels:
-    - asdf
-    token: ''
-    use_ssl: false
+    username: ''
+    sender: tower0@example.com
+    recipients:
+    - admin@example.com
     use_tls: false
+    host: smtp.example.com
+    use_ssl: false
+    password: ''
+    port: 25
+    timeout: 30
   messages:
+    started: 
+    success: 
+    error: 
+    workflow_approval: 
   organization:
-    name: Testing
+    name: Satellite
     type: organization
-  natural_key:
-    organization:
-      name: Testing
-      type: organization
-    name: Slack_for_testing
-    type: notification_template
-- name: Slack_for_testing 2nd
-  description: ''
-  notification_type: slack
+- name: irc-satqe-chat-notification
+  description: Notify us on job in IRC!
+  notification_type: irc
   notification_configuration:
-    channels:
-    - asdf
-    token: ''
-    use_ssl: false
     use_tls: false
+    use_ssl: false
+    password: ''
+    port: 6667
+    server: irc.freenode.com
+    nickname: Ansible-Tower-Stage-Bot-01
+    targets:
+    - "#my-channel"
   messages:
+    started: 
+    success: 
+    error: 
+    workflow_approval: 
   organization:
-    name: 2nd organization
+    name: Satellite
     type: organization
-  natural_key:
-    organization:
-      name: 2nd organization
-      type: organization
-    name: Slack_for_testing 2nd
-    type: notification_template
