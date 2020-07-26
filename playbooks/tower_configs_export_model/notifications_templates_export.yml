@@ -15,10 +15,10 @@ notification_templates:
     port: 25
     timeout: 30
   messages:
-    started: 
-    success: 
-    error: 
-    workflow_approval: 
+    started:
+    success:
+    error:
+    workflow_approval:
   organization:
     name: Satellite
     type: organization
@@ -35,10 +35,10 @@ notification_templates:
     targets:
     - "#my-channel"
   messages:
-    started: 
-    success: 
-    error: 
-    workflow_approval: 
+    started:
+    success:
+    error:
+    workflow_approval:
   organization:
     name: Satellite
     type: organization
