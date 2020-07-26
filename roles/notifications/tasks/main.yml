@@ -12,7 +12,7 @@
     username:                       "{{ tower_notifications_item.username | default(omit) }}"
     sender:                         "{{ tower_notifications_item.sender| default(omit) }}"
     recipients:                     "{{ tower_notifications_item.recipients | default(omit) }}"
-    use_tls:                        "{{ tower_notifications_item.use_tls | default('false')   }}" 
+    use_tls:                        "{{ tower_notifications_item.use_tls | default('false')   }}"
     host:                           "{{ tower_notifications_item.host | default(omit) }}"
     use_ssl:                        "{{ tower_notifications_item.use_ssl | default('false') }}"
     password:                       "{{ tower_notifications_item.password | default(omit) }}"
