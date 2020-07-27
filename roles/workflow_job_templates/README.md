@@ -70,7 +70,7 @@ workflow_job_templates_secure_logging defaults to the value of tower_genie_secur
 |`state`|""|no|str|Desired state of the resource|
 |`credentials`|""|no|list|Credentials to be applied to job as launch-time prompts.|
 |`diff_mode`|""|no|bool|Run diff mode, applied as a prompt, if job template prompts for diff mode|
-|`extra_data`|""|no|dict|Variables to apply at launch time. Will only be accepted if job template prompts for vars or has a survey asking for those vars.|
+|`extra_data`|""|no|dict|Variables to apply at launch time. Will only be accepted if job template prompts for vars or has a survey asking for those vars. extra_data are extra_vars at the node level and named so to match the module and the API. These are only for "ask extra vars on prompt" on a given job template.|
 |`inventory`|""|no|str|Inventory applied as a prompt, if job template prompts for inventory|
 |`job_tags`|""|no|str|NJob tags applied as a prompt, if job template prompts for job tags|
 |`job_type`|""|no|str|Job type applied as a prompt, if job template prompts for job type|

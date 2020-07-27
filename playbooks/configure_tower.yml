@@ -17,6 +17,7 @@
   roles:
     - {role: tower_settings, when: tower_settings is defined, tags: tower_settings}
     - {role: organizations, when: tower_organizations is defined, tags: organizations}
+    - {role: labels, when: tower_labels is defined, tags: labels}
     - {role: users, when: tower_user_accounts is defined, tags: users}
     - {role: teams, when: tower_teams is defined, tags: teams}
     - {role: credentials, when: tower_credentials is defined, tags: credentials}
@@ -31,3 +32,11 @@
     - {role: schedules, when: tower_schedules is defined, tags: schedules}
     - {role: notifications, when: tower_notifications is defined, tags: notifications}
     - {role: tower_role, when: tower_rbac is defined, tags: tower_role}
+
+  tasks:
+
+    - name: Add Tower Settings Individually
+      include_role:
+        name: tower_settings
+      vars:
+        tower_settings: "{{ tower_settings_individuale }}"
