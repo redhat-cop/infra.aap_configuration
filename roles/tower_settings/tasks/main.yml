@@ -3,15 +3,16 @@
 
 - name: Update Ansible Tower Settings
   awx.awx.tower_settings:
-    name:                "{{ tower_setting_item.name | default(omit) }}"
-    value:               "{{ tower_setting_item.value | default(omit) }}"
+    settings:            "{{ tower_settings.settings | default(omit) }}"
     tower_config_file:   "{{ tower_config_file | default(omit) }}"
     tower_host:          "{{ tower_hostname | default(omit) }}"
     tower_password:      "{{ tower_password | default(omit) }}"
     tower_username:      "{{ tower_username | default(omit) }}"
-    validate_certs:      "{{ tower_validate_certs | default('false') }}"
-  loop: "{{ tower_settings }}"
-  loop_control:
-    loop_var: tower_setting_item
+    validate_certs:      "{{ validate_certs | default('false') }}"
+  when: tower_settings.settings is defined
   no_log: "{{ tower_configuration_settings_secure_logging }}"
+
+- name: use loop when tower_settings is a list
+  include_tasks: "settings_list.yml"
+  when: tower_settings[0] is defined
 ...
