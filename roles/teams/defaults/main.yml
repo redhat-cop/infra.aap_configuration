@@ -1,5 +1,5 @@
 ---
 tower_hostname: ""
-tower_username: ""
-tower_password: ""  # Put in a vault at vars/tower-secrets.yml when tower_secrets: True
-validate_certs: false
+tower_oauthtoken: ""
+tower_validate_certs: false
+tower_configuration_teams_secure_logging: "{{tower_configuration_secure_logging | default(false)}}"

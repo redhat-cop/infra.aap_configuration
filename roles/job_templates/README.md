@@ -38,10 +38,10 @@ tower_configuration_job_templates_secure_logging defaults to the value of tower_
 |`description`|`False`|no|str|Description to use for the job template.|
 |`job_type`|`run`|no|str|The job type to use for the job template(run, check).|
 |`inventory`|""|no|str|Name of the inventory to use for the job template.|
+|`organization`|""|no|str|Organization the job template exists in. Used to help lookup the object, cannot be modified using this module. The Organization is inferred from the associated project|
 |`project`|""|no|str|Name of the project to use for the job template.|
 |`playbook`|""|no|str|Path to the playbook to use for the job template within the project provided.|
 |`credentials`|""|no|list|List of credentials to use for the job template.|
-|`vault_credential`|""|no|str|Name of the vault credential to use for the job template.|
 |`forks`|""|no|int|The number of parallel or simultaneous processes to use while executing the playbook.|
 |`limit`|""|no|str|A host pattern to further constrain the list of hosts managed or affected by the playbook|
 |`verbosity`|""|no|int|Control the output level Ansible produces as the playbook runs. 0 - Normal, 1 - Verbose, 2 - More Verbose, 3 - Debug, 4 - Connection Debug .|
