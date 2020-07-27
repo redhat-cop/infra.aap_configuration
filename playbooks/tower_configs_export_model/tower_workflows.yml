@@ -2,7 +2,7 @@
 tower_workflows:
   - name: Complicated workflow schema
     description: a complicated workflow
-    extra_vars: ''
+    extra_vars: {}
     survey_enabled: true
     allow_simultaneous: false
     ask_variables_on_launch: false
@@ -12,23 +12,17 @@ tower_workflows:
     ask_inventory_on_launch: false
     ask_scm_branch_on_launch: false
     ask_limit_on_launch: false
-    webhook_service: ''
-    webhook_credential:
     organization:
       name: Default
       type: organization
     related:
       schedules: []
       workflow_nodes:
-        - extra_data: {}
-          inventory:
+        - inventory:
           scm_branch:
-          job_type:
           job_tags:
           skip_tags:
           limit:
-          diff_mode:
-          verbosity:
           all_parents_must_converge: false
           identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
           workflow_job_template:
@@ -76,15 +70,11 @@ tower_workflows:
               type: workflow_job_template
             identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
             type: workflow_job_template_node
-        - extra_data: {}
-          inventory:
+        - inventory:
           scm_branch:
-          job_type:
           job_tags:
           skip_tags:
           limit:
-          diff_mode:
-          verbosity:
           all_parents_must_converge: false
           identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
           workflow_job_template:
@@ -129,19 +119,11 @@ tower_workflows:
               type: workflow_job_template
             identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
             type: workflow_job_template_node
-        - extra_data:
-            basic_name: test
-            option_true_false: 'yes'
-            target_groups:
-              - group1
-          inventory:
+        - inventory:
           scm_branch:
-          job_type:
           job_tags:
           skip_tags:
           limit:
-          diff_mode:
-          verbosity:
           all_parents_must_converge: false
           identifier: 28910097-e606-4252-8aa9-2c1a0b8b6c92
           workflow_job_template:
@@ -170,15 +152,11 @@ tower_workflows:
               type: workflow_job_template
             identifier: 28910097-e606-4252-8aa9-2c1a0b8b6c92
             type: workflow_job_template_node
-        - extra_data: {}
-          inventory:
+        - inventory:
           scm_branch:
-          job_type:
           job_tags:
           skip_tags:
           limit:
-          diff_mode:
-          verbosity:
           all_parents_must_converge: true
           identifier: ca7ffc3b-8401-4153-83bf-bb3dd918ca87
           workflow_job_template:
@@ -207,15 +185,11 @@ tower_workflows:
               type: workflow_job_template
             identifier: ca7ffc3b-8401-4153-83bf-bb3dd918ca87
             type: workflow_job_template_node
-        - extra_data: {}
-          inventory:
+        - inventory:
           scm_branch:
-          job_type:
           job_tags:
           skip_tags:
           limit:
-          diff_mode:
-          verbosity:
           all_parents_must_converge: false
           identifier: 046378e5-ff53-4168-afc2-a82d87327099
           workflow_job_template:
@@ -303,7 +277,7 @@ tower_workflows:
       type: workflow_job_template
   - name: Simple workflow schema
     description: a basic workflow
-    extra_vars: ''
+    extra_vars: {}
     survey_enabled: false
     allow_simultaneous: false
     ask_variables_on_launch: false
@@ -313,23 +287,17 @@ tower_workflows:
     ask_inventory_on_launch: false
     ask_scm_branch_on_launch: false
     ask_limit_on_launch: false
-    webhook_service: ''
-    webhook_credential:
     organization:
       name: Default
       type: organization
     related:
       schedules: []
       workflow_nodes:
-        - extra_data: {}
-          inventory:
+        - inventory:
           scm_branch:
-          job_type:
           job_tags:
           skip_tags:
           limit:
-          diff_mode:
-          verbosity:
           all_parents_must_converge: false
           identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
           workflow_job_template:
@@ -372,12 +340,9 @@ tower_workflows:
         - extra_data: {}
           inventory:
           scm_branch:
-          job_type:
           job_tags:
           skip_tags:
           limit:
-          diff_mode:
-          verbosity:
           all_parents_must_converge: false
           identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
           workflow_job_template:
