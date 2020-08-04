@@ -120,7 +120,7 @@ tower_inventory_sources:
       register: user_token
       no_log: True
 
-    - name: Set Tower oath Token
+    - name: Set Tower oauth Token
       set_fact:
         tower_oauthtoken: "{{ user_token.json.token }}"
 
