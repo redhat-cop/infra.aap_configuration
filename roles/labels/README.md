@@ -1,5 +1,5 @@
 # tower_configuration.tower_inventory_sources
-An Ansible role to create labels for tempaltes in tower.
+An Ansible role to create labels for templates in tower.
 
 ## Requirements 
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
