@@ -56,7 +56,7 @@ The role defaults to False as normally the add user task does not include sensat
   ]
 }
 ```
-#### Ymal Example
+#### Yaml Example
 ```yaml
 ---
 tower_user_accounts:

@@ -20,7 +20,7 @@ Currently:
 ### Secure Logging Variables
 The following Variables compliment each other. 
 If Both variables are not set, secure logging defaults to false.  
-The role defaults to False as normally the add organization task does not include sensative information.  
+The role defaults to False as normally the add projects task does not include sensative information.  
 tower_configuration_projects_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.  
 
 |Variable Name|Default Value|Required|Description|
@@ -29,7 +29,7 @@ tower_configuration_projects_secure_logging defaults to the value of tower_confi
 |`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
-### Varibles
+### Variables
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`name`|""|yes|Name of Project|
@@ -77,7 +77,7 @@ tower_configuration_projects_secure_logging defaults to the value of tower_confi
   }
   
 ```
-#### Ymal Example
+#### Yaml Example
 ```yaml
 ---
 tower_projects:
@@ -134,7 +134,7 @@ tower_projects:
       include_role: 
         name: redhat_cop.tower_configuration.projects
       vars:
-        projects: "{{ projects_json.projects }}"
+        tower_projects: "{{ projects_json.tower_projects }}"
 ```
 ## License
 [MIT](LICENSE)
