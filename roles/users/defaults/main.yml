@@ -5,8 +5,3 @@ tower_password: ""  # Put in a vault at vars/tower-secrets.yml when tower_secret
 tower_oauthtoken: ""
 validate_certs: false
 tower_configuration_users_secure_logging: "{{tower_configuration_secure_logging | default(false)}}"
-
-tower_user_accounts:
-  - user: tower_user
-    is_superuser: false
-    password: tower_password
