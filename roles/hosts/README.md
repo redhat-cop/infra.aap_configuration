@@ -56,7 +56,7 @@ The role defaults to False as normally the add host task does not include sensat
   ]
 }
 ```
-#### Ymal Example
+#### Yaml Example
 ```yaml
 ---
 tower_hosts:

@@ -20,8 +20,8 @@ Currently:
 ### Secure Logging Variables
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
-The role defaults to False as normally the add credential input source task does not include sensative information.
-tower_configuration_credential_input_sources_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of tower configuration roles with a single variable, or for the user to selectively use it.
+The role defaults to False as normally the add license task does not include sensative information.
+tower_configuration_license_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of tower configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
@@ -29,7 +29,7 @@ tower_configuration_credential_input_sources_secure_logging defaults to the valu
 |`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
-### Varibles
+### Variables
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`data`|""|yes|obj|The contents of the license file (Suggested usage with lookup plugin)|

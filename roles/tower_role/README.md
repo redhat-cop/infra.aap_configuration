@@ -80,7 +80,7 @@ The role defaults to False as normally the add rbac task does not include sensat
   ]
 }
 ```
-#### Ymal Example
+#### Yaml Example
 ```yaml
 ---
 tower_rbac:
