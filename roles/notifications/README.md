@@ -86,7 +86,7 @@ The role defaults to False as normally the add notification task does not includ
   ]
 }
 ```
-#### Ymal Example
+#### Yaml Example
 ```yaml
 ---
 tower_notifications:

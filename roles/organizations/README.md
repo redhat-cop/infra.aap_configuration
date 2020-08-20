@@ -32,7 +32,7 @@ tower_configuration_organizations_secure_logging defaults to the value of tower_
 ## Organization Data Structure
 This role accepts two data models. A simple starightforward easy to maintain model, and another based on the tower api. The 2nd one is more complicated and includes more detail, and is compatiable with tower import/export.
 
-### Varibles
+### Variables
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`name`|""|yes|Name of Organization|
@@ -67,7 +67,7 @@ This role accepts two data models. A simple starightforward easy to maintain mod
     ]
 }
 ```
-#### Ymal Example
+#### Yaml Example
 ```yaml
 ---
 tower_organizations:
@@ -80,7 +80,7 @@ tower_organizations:
 ```
 
 #### Tower Export Data structure model
-##### Ymal Example
+##### Yaml Example
 ```yaml
 ---
 tower_organizations:
