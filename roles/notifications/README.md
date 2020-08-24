@@ -102,7 +102,7 @@ tower_notifications:
       server: irc.freenode.com
       nickname: Ansible-Tower-Stage-Bot-01
       targets:
-      - "#my-channel"    
+      - "#my-channel"
   - name: Email notification
     description: Send out emails for tower jobs
     organization: Satellite
@@ -116,7 +116,7 @@ tower_notifications:
       host: smtp.example.com
       use_ssl: false
       password: ''  # this is required even if there's no password
-      port: 25  
+      port: 25
 ```
 
 ## Playbook Examples

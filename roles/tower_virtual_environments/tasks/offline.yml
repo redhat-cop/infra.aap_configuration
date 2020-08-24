@@ -15,6 +15,7 @@
   copy:
     src: "{{ item.package_path }}"
     dest: "{{ tower_tmp_path }}"
+    mode: "preserve"  # not required, but E208 in lint without it
   loop: "{{ tower_venv_installs }}"
 
 - name: Install the Python Libraries in a created virtualenv Offline

@@ -2,10 +2,10 @@
 ## Description
 An Ansible Role to create Credentials in Ansible Tower.
 
-## Requirements 
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
+## Requirements
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 
-| Requiremed collections | 
+| Requiremed collections |
 |:---:|
 |awx.awx|
 
@@ -22,10 +22,10 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 |`tower_credentials`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
 
 ### Secure Logging Variables
-The following Variables compliment each other. 
-If Both variables are not set, secure logging defaults to false.  
-The role defaults to False as normally the add credentials task does not include sensitive information.  
-tower_configuration_credentials_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.  
+The following Variables compliment each other.
+If Both variables are not set, secure logging defaults to false.
+The role defaults to False as normally the add credentials task does not include sensitive information.
+tower_configuration_credentials_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
@@ -81,7 +81,7 @@ tower_configuration_credentials_secure_logging defaults to the value of tower_co
         "inputs": {
           "username": "person",
           "password": "password"
-        }       
+        }
       }
     ]
 }
@@ -136,7 +136,7 @@ tower_credentials:
         name: credentials_json
 
     - name: Add Credentials
-      include_role: 
+      include_role:
         name: redhat_cop.tower_configuration.credentials
       vars:
         tower_credentials: "{{ credentials_json.tower_credentials }}"
@@ -145,5 +145,5 @@ tower_credentials:
 [MIT](LICENSE)
 
 ## Author
-[Andrew J. Huffman](https://github.com/ahuffman) 
+[Andrew J. Huffman](https://github.com/ahuffman)
 [Sean Sullivan](https://github.com/Wilk42)

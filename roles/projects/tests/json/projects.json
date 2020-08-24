@@ -11,8 +11,7 @@
         "scm_url": "https://github.com/ansible/tower-example.git",
         "notification_templates_error": [
           "Slack_for_testing"
-        ]           
+        ]
       }
     ]
   }
-  

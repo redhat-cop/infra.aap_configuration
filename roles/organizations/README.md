@@ -2,8 +2,8 @@
 ## Description
 An Ansible Role to create Organizations in Ansible Tower.
 
-## Requirements 
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
+## Requirements
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
 
@@ -19,10 +19,10 @@ Currently:
 |`tower_organizations`|`see below`|yes|Data structure describing your organzation or organizations Described below.||
 
 ### Secure Logging Variables
-The following Variables compliment each other. 
-If Both variables are not set, secure logging defaults to false.  
-The role defaults to False as normally the add organization task does not include sensitive information.  
-tower_configuration_organizations_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.  
+The following Variables compliment each other.
+If Both variables are not set, secure logging defaults to false.
+The role defaults to False as normally the add organization task does not include sensitive information.
+tower_configuration_organizations_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
@@ -63,7 +63,7 @@ This role accepts two data models. A simple straightforward easy to maintain mod
         "notification_templates_error": [
           "Slack_for_testing"
         ]
-      }      
+      }
     ]
 }
 ```
@@ -143,7 +143,7 @@ tower_organizations:
         name: organizations_json
 
     - name: Add Organizations
-      include_role: 
+      include_role:
         name: redhat_cop.tower_configuration.organizations
       vars:
         tower_organizations: "{{ organizations_json.tower_organizations }}"

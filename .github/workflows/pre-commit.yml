@@ -1,0 +1,23 @@
+# This workflow action will run pre-commit, which will execute ansible and yaml linting
+# See .github/workflow-config/.pre-commit-config.yml for what hooks are executed
+name: Yaml and Ansible Lint
+
+on: [push, pull_request]
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+    - name: Install Collections
+      run: |
+        sudo apt install software-properties-common
+        sudo apt-add-repository --yes --update ppa:ansible/ansible
+        sudo apt install ansible
+        ansible-galaxy collection install -f -r .github/collections/requirements.yml
+    - name: Hack pre-commit
+      # https://github.com/pre-commit/action/issues/44
+      run: |
+        sudo cp .github/workflow-config/.pre-commit-config.yml .pre-commit-config.yaml
+    - uses: pre-commit/action@v2.0.0
