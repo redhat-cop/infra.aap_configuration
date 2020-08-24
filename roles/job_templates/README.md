@@ -2,8 +2,8 @@
 ## Description
 An Ansible Role to create Job Templates in Ansible Tower.
 
-## Requirements 
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
+## Requirements
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
 
@@ -19,10 +19,10 @@ Currently:
 |`job_templates`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
 
 ### Secure Logging Variables
-The following Variables compliment each other. 
-If Both variables are not set, secure logging defaults to false.  
-The role defaults to False as normally the add job_template task does not include sensitive information.  
-tower_configuration_job_templates_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.  
+The following Variables compliment each other.
+If Both variables are not set, secure logging defaults to false.
+The role defaults to False as normally the add job_template task does not include sensitive information.
+tower_configuration_job_templates_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
@@ -114,7 +114,7 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
             "playbook": "helloworld.yml",
             "credentials": [
                 "Demo Credential"
-              ],           
+              ],
             "extra_vars": "{{ survey_extra_vars }}",
             "notification_templates_error": [
                 "Slack_for_testing"
@@ -130,13 +130,13 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
                 "Demo Credential"
               ],
             "survey": {},
-            "extra_vars": "{{ empty_master_vars }}",            
+            "extra_vars": "{{ empty_master_vars }}",
             "notification_templates_error": [
                 "Slack_for_testing"
               ]
         }
     ]
-} 
+}
 ```
 #### Yaml Example
 ```yaml
@@ -250,7 +250,7 @@ templates:
         name: job_templates_json
 
     - name: Add Projects
-      include_role: 
+      include_role:
         name: redhat_cop.tower_configuration.job_templates
       vars:
         templates: "{{ job_templates_json.templates }}"

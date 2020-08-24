@@ -2,10 +2,10 @@
 ## Description
 An Ansible Role to create Credential Types in Ansible Tower.
 
-## Requirements 
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
+## Requirements
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 
-| Required collections | 
+| Required collections |
 |:---:|
 |awx.awx|
 
@@ -22,12 +22,11 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 |`tower_credential_types`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
 
 ### Secure Logging Variables
-The following Variables compliment each other. 
-If Both variables are not set, secure logging defaults to false.  
-The role defaults to False as normally the add credential type task does not include sensitive information.  
-tower_configuration_credential_types_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.  
+The following Variables compliment each other.
+If Both variables are not set, secure logging defaults to false.
+The role defaults to False as normally the add credential type task does not include sensitive information.
+tower_configuration_credential_types_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
-|Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`tower_configuration_credential_types_secure_logging`|`False`|no|Whether or not to include the sensitive Credential Type role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
@@ -47,18 +46,18 @@ tower_configuration_credential_types_secure_logging defaults to the value of tow
 ### Formating Injectors
 Injectors use a standard Jinja templating format to describe the resource.
 
-Example: 
-```json 
-{{ variable }} 
+Example:
+```json
+{{ variable }}
 ```
 
-Because of this it is difficult to provide tower with the required format for these fields. 
+Because of this it is difficult to provide tower with the required format for these fields.
 
 The workaround is to use the following format:
-```json 
+```json
 {  { variable }}
 ```
-The role will strip the double space between the curly bracket in order to provide tower with the correct format for the Injectors. 
+The role will strip the double space between the curly bracket in order to provide tower with the correct format for the Injectors.
 
 ### Input and Injector Schema
 The following detais the data format to use for inputs and injectors. These can be in either YAML or JSON For the most up to date information and more details see [Custom Credential Types - Ansible Tower Documentation](https://docs.ansible.com/ansible-tower/latest/html/userguide/credential_types.html)
@@ -199,7 +198,7 @@ tower_credential_types:
         name: credential_types_json
 
     - name: Add Credential Types
-      include_role: 
+      include_role:
         name: redhat_cop.tower_configuration.credential_types
       vars:
         tower_credential_types: "{{ credential_types_json.tower_credential_types }}"
