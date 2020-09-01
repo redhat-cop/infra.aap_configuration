@@ -10,7 +10,7 @@
           "playbook": "helloworld.yml",
           "credentials": [
               "Demo Credential"
-            ],           
+            ],
           "extra_vars": "{{ survey_extra_vars }}",
           "notification_templates_error": [
               "Slack_for_testing"
@@ -26,7 +26,7 @@
               "Demo Credential"
             ],
           "survey": {},
-          "extra_vars": "{{ empty_master_vars }}",            
+          "extra_vars": "{{ empty_master_vars }}",
           "notification_templates_error": [
               "Slack_for_testing"
             ]

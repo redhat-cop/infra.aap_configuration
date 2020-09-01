@@ -1,8 +1,13 @@
-exclude_paths:
-  - ./roles/master_role_example
+# The exclude_paths does not appear to be working in pre-commit
+# this issue describes similar behavior but suggested fix doesn't work
+# https://github.com/ansible/ansible-lint/issues/371
+#exclude_paths:
+#  - roles/master_role_example/
 parseable: true
 use_default_rules: true
-verbosity: 1
+#https://github.com/ansible/ansible-lint/issues/808
+# with verbosity set to 1, its dumping 'unknown file type messages'
+#verbosity: 1
 skip_list:
   # [E204]: "Lines should be no longer than 160 chars"
   # (Disabled in June 2020)

@@ -1,8 +1,8 @@
 # tower_configuration.labels
 An Ansible role to create labels for templates in tower.
 
-## Requirements 
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
+## Requirements
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
 
@@ -18,10 +18,10 @@ Currently:
 |`tower_projects`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
 
 ### Secure Logging Variables
-The following Variables compliment each other. 
-If Both variables are not set, secure logging defaults to false.  
-The role defaults to False as normally the add labels task does not include sensitive information.  
-tower_configuration_labels_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.  
+The following Variables compliment each other.
+If Both variables are not set, secure logging defaults to false.
+The role defaults to False as normally the add labels task does not include sensitive information.
+tower_configuration_labels_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
@@ -53,7 +53,7 @@ tower_configuration_labels_secure_logging defaults to the value of tower_configu
     }
   ]
 }
-  
+
 ```
 #### Yaml Example
 ```yaml
@@ -103,7 +103,7 @@ tower_labels:
         name: tower_labels
 
     - name: Add Inventory Sources
-      include_role: 
+      include_role:
         name: redhat_cop.tower_configuration.labels
       vars:
         tower_inventory_sources: "{{ tower_labels.tower_labels }}"

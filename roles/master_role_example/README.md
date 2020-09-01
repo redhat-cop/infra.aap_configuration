@@ -2,8 +2,8 @@
 ## Description
 An Ansible Role to create ******* in Ansible Tower.
 
-## Requirements 
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
+## Requirements
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
 
@@ -19,10 +19,10 @@ Currently:
 |`tower_************`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
 
 ### Secure Logging Variables
-The following Variables compliment each other. 
-If Both variables are not set, secure logging defaults to false.  
-The role defaults to False as normally the add ******* task does not include sensitive information.  
-tower_configuration_*******_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of tower configuration roles with a single variable, or for the user to selectively use it.  
+The following Variables compliment each other.
+If Both variables are not set, secure logging defaults to false.
+The role defaults to False as normally the add ******* task does not include sensitive information.
+tower_configuration_*******_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of tower configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
@@ -45,7 +45,7 @@ tower_configuration_*******_secure_logging defaults to the value of tower_config
 #### Json Example
 ```json
 ---
- 
+
 ```
 #### Yaml Example
 ```yaml

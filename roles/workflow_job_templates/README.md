@@ -2,8 +2,8 @@
 ## Description
 An Ansible Role to create Workflow Job Templates in Ansible Tower.
 
-## Requirements 
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
+## Requirements
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Required Collections:
   awx.awx
 
@@ -19,10 +19,10 @@ Required Collections:
 |`workflow_job_templates`|`see below`|yes|Data structure describing your workflow job templates described below.||
 
 ### Secure Logging Variables
-The following Variables compliment each other. 
-If Both variables are not set, secure logging defaults to false.  
-The role defaults to False as normally the add Workflow Job Templates task does not include sensitive information.  
-workflow_job_templates_secure_logging defaults to the value of tower_genie_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of genie roles with a single variable, or for the user to selectively use it.  
+The following Variables compliment each other.
+If Both variables are not set, secure logging defaults to false.
+The role defaults to False as normally the add Workflow Job Templates task does not include sensitive information.
+workflow_job_templates_secure_logging defaults to the value of tower_genie_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of genie roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
@@ -97,8 +97,8 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
 |`question_name`|""|
 |`type`|""|
 
-### Wokrflow Data Structures
-This role accepts two data models. A simple starightforward easy to maintain model, and another based on the tower api. The 2nd one is more complicated and includes more detail, and is compatiable with tower import/export. 
+### Workflow Data Structures
+This role accepts two data models. A simple starightforward easy to maintain model, and another based on the tower api. The 2nd one is more complicated and includes more detail, and is compatiable with tower import/export.
 
 #### Standard Data structure model
 ```yaml
