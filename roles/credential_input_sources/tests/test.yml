@@ -29,10 +29,6 @@
       set_fact:
         tower_oauthtoken: "{{ user_token.json.token }}"
 
-    - name: Import vars
-      include_vars:
-        file: "vars/extra_vars.yml"
-
     - name: Import JSON
       include_vars:
         file: "json/cred_input_src.json"

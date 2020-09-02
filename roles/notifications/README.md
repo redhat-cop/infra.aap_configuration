@@ -21,7 +21,7 @@ Currently:
 ### Secure Logging Variables
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
-The role defaults to False as normally the add notification task does not include sensative information.
+The role defaults to False as normally the add notification task does not include sensitive information.
 `tower_configuration_notification_secure_logging` defaults to the value of `tower_configuration_secure_logging` if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
@@ -86,7 +86,7 @@ The role defaults to False as normally the add notification task does not includ
   ]
 }
 ```
-#### Ymal Example
+#### Yaml Example
 ```yaml
 ---
 tower_notifications:
@@ -102,7 +102,7 @@ tower_notifications:
       server: irc.freenode.com
       nickname: Ansible-Tower-Stage-Bot-01
       targets:
-      - "#my-channel"    
+      - "#my-channel"
   - name: Email notification
     description: Send out emails for tower jobs
     organization: Satellite
@@ -116,7 +116,7 @@ tower_notifications:
       host: smtp.example.com
       use_ssl: false
       password: ''  # this is required even if there's no password
-      port: 25  
+      port: 25
 ```
 
 ## Playbook Examples
