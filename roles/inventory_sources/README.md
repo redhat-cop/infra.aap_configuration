@@ -1,8 +1,8 @@
-# tower_configuration.tower_inventory_sources
+# tower_configuration.inventory_sources
 An Ansible role to create inventory sources.
 
-## Requirements 
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
+## Requirements
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
 
@@ -18,18 +18,18 @@ Currently:
 |`tower_projects`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
 
 ### Secure Logging Variables
-The following Variables compliment each other. 
-If Both variables are not set, secure logging defaults to false.  
-The role defaults to False as normally the add organization task does not include sensative information.  
-tower_configuration_projects_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.  
+The following Variables compliment each other.
+If Both variables are not set, secure logging defaults to false.
+The role defaults to False as normally the add inventory_source task does not include sensitive information.
+tower_configuration_inventory_sources_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`tower_configuration_projects_secure_logging`|`False`|no|Whether or not to include the sensative Project role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`tower_configuration_inventory_sources_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
+|`tower_configuration_inventory_sources_secure_logging`|`False`|no|Whether or not to include the sensitive Inventory Sources role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
-### Varibles
+### Variables
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`name`|""|yes|The name to use for the inventory source.|
@@ -76,9 +76,9 @@ tower_configuration_projects_secure_logging defaults to the value of tower_confi
     }
   ]
 }
-  
+
 ```
-#### Ymal Example
+#### Yaml Example
 ```yaml
 ---
 tower_inventory_sources:
@@ -130,7 +130,7 @@ tower_inventory_sources:
         name: sources_json
 
     - name: Add Inventory Sources
-      include_role: 
+      include_role:
         name: redhat_cop.tower_configuration.inventory_sources
       vars:
         tower_inventory_sources: "{{ sources_json.sources }}"
@@ -140,7 +140,7 @@ tower_inventory_sources:
 [MIT](LICENSE)
 
 # Author
-[Edward Quail](mailto:equail@redhat.com)  
+[Edward Quail](mailto:equail@redhat.com)
 
 [Andrew J. Huffman](https://github.com/ahuffman)
 

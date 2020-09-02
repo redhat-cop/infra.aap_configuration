@@ -2,10 +2,10 @@
 ## Description
 An Ansible Role to create Groups in Ansible Tower.
 
-## Requirements 
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
+## Requirements
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 
-| Requiremed collections | 
+| Requiremed collections |
 |:---:|
 |awx.awx|
 
@@ -22,14 +22,14 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 |`tower_groups`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
 
 ### Secure Logging Variables
-The following Variables compliment each other. 
-If Both variables are not set, secure logging defaults to false.  
-The role defaults to False as normally the add organization task does not include sensative information.  
-tower_configuration_credentials_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.  
+The following Variables compliment each other.
+If Both variables are not set, secure logging defaults to false.
+The role defaults to False as normally the add groups task does not include sensitive information.
+tower_configuration_groups_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`tower_configuration_credentials_secure_logging`|`False`|no|Whether or not to include the sensative Organization role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`tower_configuration_groups_secure_logging`|`False`|no|Whether or not to include the sensitive Group role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
@@ -63,7 +63,7 @@ tower_configuration_credentials_secure_logging defaults to the value of tower_co
     ]
 }
 ```
-#### Ymal Example
+#### Yaml Example
 ```yaml
 ---
 tower_group:
@@ -120,7 +120,7 @@ tower_group:
         name: groups_json
 
     - name: Add Groups
-      include_role: 
+      include_role:
         name: redhat_cop.tower_configuration.groups
       vars:
         tower_groups: "{{ groups_json.tower_groups }}"
@@ -130,5 +130,5 @@ tower_group:
 
 ## Author
 [Wei-Yen Tan](https://github.com/weiyentan)
-[Andrew J. Huffman](https://github.com/ahuffman) 
+[Andrew J. Huffman](https://github.com/ahuffman)
 [Sean Sullivan](https://github.com/sean-m-sullivan)

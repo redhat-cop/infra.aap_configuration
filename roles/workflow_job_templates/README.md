@@ -2,8 +2,8 @@
 ## Description
 An Ansible Role to create Workflow Job Templates in Ansible Tower.
 
-## Requirements 
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed 
+## Requirements
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Required Collections:
   awx.awx
 
@@ -16,21 +16,21 @@ Required Collections:
 |`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
 |`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`workflow_job_templates`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
+|`workflow_job_templates`|`see below`|yes|Data structure describing your workflow job templates described below.||
 
 ### Secure Logging Variables
-The following Variables compliment each other. 
-If Both variables are not set, secure logging defaults to false.  
-The role defaults to False as normally the add organization task does not include sensative information.  
-workflow_job_templates_secure_logging defaults to the value of tower_genie_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of genie roles with a single variable, or for the user to selectively use it.  
+The following Variables compliment each other.
+If Both variables are not set, secure logging defaults to false.
+The role defaults to False as normally the add Workflow Job Templates task does not include sensitive information.
+workflow_job_templates_secure_logging defaults to the value of tower_genie_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of genie roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`workflow_job_templates_secure_logging`|`False`|no|Whether or not to include the sensative Project role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`workflow_job_templates_secure_logging`|`False`|no|Whether or not to include the sensitive Workflow Job Templates role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
-### Varibles For Workflow Job Template
+### Variables For Workflow Job Template
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of Workflow Job Template|
@@ -55,7 +55,7 @@ workflow_job_templates_secure_logging defaults to the value of tower_genie_secur
 |`webhook_service`|""|no|str|Service that webhook requests will be accepted from (github, gitlab)|
 |`webhook_credential`|""|no|str|Personal Access Token for posting back the status to the service API|
 
-### Varibles For Workflow Job Template Node
+### Variables For Workflow Job Template Node
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`workflow_job_template`|""|yes|str|The workflow job template the node exists in. Used for looking up the node, cannot be modified after creation.|
@@ -97,8 +97,8 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
 |`question_name`|""|
 |`type`|""|
 
-### Wokrflow Data Structures
-This role accepts two data models. A simple starightforward easy to maintain model, and another based on the tower api. The 2nd one is more complicated and includes more detail, and is compatiable with tower import/export. 
+### Workflow Data Structures
+This role accepts two data models. A simple starightforward easy to maintain model, and another based on the tower api. The 2nd one is more complicated and includes more detail, and is compatiable with tower import/export.
 
 #### Standard Data structure model
 ```yaml
@@ -145,7 +145,7 @@ tower_workflows:
 
 ```
 #### Tower Export Data structure model
-##### Ymal Example
+##### Yaml Example
 ```yaml
 ---
 tower_workflows:

@@ -13,4 +13,4 @@ rules:
     - 'True'
     - 'False'
     - 'true'
-    - 'false'    
+    - 'false'
