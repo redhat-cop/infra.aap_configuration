@@ -47,7 +47,11 @@ job_templates:
     name: Tower Config
     type: project
   related:
-    labels: []
+    labels:
+    - name: Prod
+      organization:
+        name: Default
+        type: organization
     credentials:
     - organization:
       name: Demo Credential
