@@ -13,14 +13,17 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Set up Python 3.8
         uses: actions/setup-python@v1
         with:
           python-version: 3.8
 
-      - name: Install ansible-base
-        run: pip install ansible
+      - name: Install ansible-base and changelog
+        run: pip install ansible antsibull-changelog
 
       - name: Publish to galaxy
         run: ansible-playbook .github/workflow-config/release.yml
@@ -29,3 +32,9 @@ jobs:
           -e api_key=${{ secrets.ANSIBLE_GALAXY_APIKEY }}
           -e collection_repo=https://github.com/${{ github.repository }}
           --skip-tags=install,cleanup
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          branch: devel
+          github_token: ${{ secrets.GITHUB_TOKEN }}
