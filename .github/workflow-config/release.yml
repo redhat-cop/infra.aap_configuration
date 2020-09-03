@@ -48,7 +48,7 @@
 
     - name: push changelogs to devel
       shell:
-        cmd: "git checkout devel && git add changelogs CHANGELOG.rst && git commit -m 'add changelog {{ collection_version }}' && git push"
+        cmd: "git add changelogs CHANGELOG.rst && git commit -m 'add changelog {{ collection_version }}'"
         chdir: "{{ repo_base_dir }}"
 
     - name: git cleanup
