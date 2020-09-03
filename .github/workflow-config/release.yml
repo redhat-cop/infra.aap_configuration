@@ -35,11 +35,11 @@
         chdir: "{{ repo_base_dir }}"
       tags: install
 
-    # - name: publish collection
-    #   command:
-    #     cmd: "ansible-galaxy collection publish --api-key={{ api_key }} {{ collection_namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz"
-    #     chdir: "{{ repo_base_dir }}"
-    #   tags: publish
+    - name: publish collection
+      command:
+        cmd: "ansible-galaxy collection publish --api-key={{ api_key }} {{ collection_namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz"
+        chdir: "{{ repo_base_dir }}"
+      tags: publish
 
     - name: Set git config
       shell:
