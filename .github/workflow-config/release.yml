@@ -43,7 +43,7 @@
 
     - name: Set git config
       shell:
-        cmd: "git config user.name 'GitHub Action' && git config user.email 'action@github.com'"
+        cmd: "git config user.name 'redhat-cop-ci-bot' && git config user.email 'action@github.com'"
         chdir: "{{ repo_base_dir }}"
 
     - name: push changelogs to devel
