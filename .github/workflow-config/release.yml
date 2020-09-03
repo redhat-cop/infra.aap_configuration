@@ -35,14 +35,14 @@
         chdir: "{{ repo_base_dir }}"
       tags: install
 
-    - name: publish collection
-      command:
-        cmd: "ansible-galaxy collection publish --api-key={{ api_key }} {{ collection_namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz"
-        chdir: "{{ repo_base_dir }}"
-      tags: publish
+    # - name: publish collection
+    #   command:
+    #     cmd: "ansible-galaxy collection publish --api-key={{ api_key }} {{ collection_namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz"
+    #     chdir: "{{ repo_base_dir }}"
+    #   tags: publish
 
     - name: push changelogs to devel
-      command:
+      shell:
         cmd: "git checkout devel && git add changelogs CHANGELOG.rst && git commit -m 'add changelog {{ collection_version }}' && git push"
         chdir: "{{ repo_base_dir }}"
 
