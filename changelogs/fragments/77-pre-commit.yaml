@@ -1,0 +1,2 @@
+minor_changes:
+  - Added pre-commit hook for local development and automated testing purposes
