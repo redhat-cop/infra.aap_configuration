@@ -27,6 +27,6 @@ sections:
   - Bugfixes
 - - known_issues
   - Known Issues
-title: Redhat_Cop.Tower_Configuration
+title: redhat_cop.tower_configuration
 trivial_section_name: trivial
 use_fqcn: true
