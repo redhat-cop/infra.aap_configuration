@@ -1,2 +1,0 @@
-bugfixes:
-  - Removed defaulted objects for all roles so that they were not always run if using a conditional against the variable. (see https://github.com/redhat-cop/tower_configuration/issues/68)
