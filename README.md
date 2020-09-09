@@ -74,8 +74,7 @@ Tower token module would be invoked with this code:
 * [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for more details.
 
 ## Release and Upgrade Notes
-Notable releases of the `awx.awx` collection:
- - 0.1.0 Initial Release Allows for a single json structure to import all modules in the awx.awx collection.
+For details on changes between versions, please see [the changelog for this collection](CHANGELOG.rst).
 
 ## Roadmap
 Adding the ability to use direct output from the awx export command in the roles along with the current data model.
