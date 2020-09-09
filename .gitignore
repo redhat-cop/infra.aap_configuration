@@ -1,2 +1,3 @@
 collections/*
 !collections/requirements.yml
+galaxy.yml
