@@ -12,7 +12,8 @@ jobs:
     name: Merge
     steps:
     - name: Merge changelog automated PR
-      uses: squalrus/merge-bot@v0.1.0
+      uses: squalrus/merge-bot@master
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         labels: changelog, automated pr
+        reviewers: false
