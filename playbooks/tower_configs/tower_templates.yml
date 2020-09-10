@@ -8,8 +8,6 @@ tower_templates:
     description: created by Ansible Playbook
     job_type: run
     inventory: RHVM-01
-    labels:
-      - Prod
     credentials: admin@internal-RHVM-01
     project: Test Project
     playbook: helloworld.yml
