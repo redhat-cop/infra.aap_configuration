@@ -24,3 +24,16 @@ releases:
     - new_roles.yaml
     - workflows.yaml
     release_date: '2020-08-04'
+  0.2.0:
+    changes:
+      bugfixes:
+      - Removed defaulted objects for all roles so that they were not always run if
+        using a conditional against the variable. (see https://github.com/redhat-cop/tower_configuration/issues/68)
+      minor_changes:
+      - Added pre-commit hook for local development and automated testing purposes
+      - Standardised and corrected all READMEs
+    fragments:
+    - 72-defaults.yaml
+    - 73-readmes.yaml
+    - 77-pre-commit.yaml
+    release_date: '2020-09-09'
