@@ -27,15 +27,15 @@ collections:
 ```
 
 ## Using this collection
-Define following vars here, or in tower_configs/tower_auth.yml
-tower_hostname: ansible-tower-web-svc-test-project.example.com
+Define following vars here, or in `tower_configs/tower_auth.yml`
+`tower_hostname: ansible-tower-web-svc-test-project.example.com`
 
 You can also specify authentication by a combination of either:
 
- - tower_hostname, tower_username, tower_password
- - tower_hostname, tower_oauthtoken
+ - `tower_hostname`, `tower_username`, `tower_password`
+ - `tower_hostname`, `tower_oauthtoken`
 
-The OAuth2 token is the preferred method. You can obtain the token through the prefered tower_token module, or through the
+The OAuth2 token is the preferred method. You can obtain the token through the prefered `tower_token` module, or through the
 AWX CLI [login](https://docs.ansible.com/ansible-tower/latest/html/towercli/reference.html#awx-login)
 command.
 
@@ -74,8 +74,7 @@ Tower token module would be invoked with this code:
 * [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for more details.
 
 ## Release and Upgrade Notes
-Notable releases of the `awx.awx` collection:
- - 0.1.0 Initial Release Allows for a single json structure to import all modules in the awx.awx collection.
+For details on changes between versions, please see [the changelog for this collection](CHANGELOG.rst).
 
 ## Roadmap
 Adding the ability to use direct output from the awx export command in the roles along with the current data model.
