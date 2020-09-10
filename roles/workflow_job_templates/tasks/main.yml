@@ -31,7 +31,7 @@
     tower_host:                         "{{ tower_hostname }}"
     tower_config_file:                  "{{ tower_config_file | default(omit) }}"
     validate_certs:                     "{{ tower_validate_certs | default('true') }}"
-  loop: "{{ tower_workflows }}"
+  loop: "{{ workflow_job_templates }}"
   loop_control:
     loop_var: workflow_loop_var
   no_log: "{{ workflow_job_templates_secure_logging }}"
@@ -39,6 +39,6 @@
 # Create links between workflow node
 - name: loop over nodes in schema to add to workflow templates
   include_tasks: "add_workflows_schema.yml"
-  loop: "{{ tower_workflows }}"
+  loop: "{{ workflow_job_templates }}"
   loop_control:
     loop_var: workflow_loop_var
