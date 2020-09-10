@@ -16,5 +16,5 @@
         extensions: ["yml"]
   roles:
     - {role: organizations, when: tower_organizations is defined, tags: organizations}
-    - {role: workflow_job_templates, when: workflow_job_templates is defined}
+    - {role: workflow_job_templates, when: tower_workflows is defined}
     - {role: notifications, when: tower_notifications is defined, tags: notifications}
