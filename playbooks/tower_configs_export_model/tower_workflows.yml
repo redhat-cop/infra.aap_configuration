@@ -1,5 +1,5 @@
 ---
-workflow_job_templates:
+tower_workflows:
   - name: Complicated workflow schema
     description: a complicated workflow
     extra_vars: {}

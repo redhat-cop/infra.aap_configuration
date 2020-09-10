@@ -1,5 +1,5 @@
 ---
-workflow_job_templates:
+tower_workflows:
   - name: Simple workflow schema
     description: a basic workflow
     extra_vars: {}
