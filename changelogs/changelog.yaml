@@ -37,3 +37,10 @@ releases:
     - 73-readmes.yaml
     - 77-pre-commit.yaml
     release_date: '2020-09-09'
+  0.2.1:
+    changes:
+      minor_changes:
+      - Changelog release cycle
+    fragments:
+    - changelogs.yml
+    release_date: '2020-09-22'
