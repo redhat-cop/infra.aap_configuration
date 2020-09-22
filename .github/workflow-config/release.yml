@@ -41,21 +41,6 @@
         chdir: "{{ repo_base_dir }}"
       tags: publish
 
-    - name: Set git config
-      shell:
-        cmd: "git config user.name 'redhat-cop-ci-bot' && git config user.email 'action@github.com'"
-        chdir: "{{ repo_base_dir }}"
-
-    - name: push changelogs to devel
-      shell:
-        cmd: "git add changelogs CHANGELOG.rst && git commit -m 'add changelog {{ collection_version }}'"
-        chdir: "{{ repo_base_dir }}"
-
-    - name: git cleanup
-      command:
-        cmd: git reset --hard
-      tags: cleanup
-
     - name: remove galaxy.yml
       file:
         path: "{{ repo_base_dir }}/galaxy.yml"
