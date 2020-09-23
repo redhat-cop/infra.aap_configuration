@@ -39,6 +39,8 @@
     tower_host:                     "{{ tower_hostname }}"
     tower_username:                 "{{ tower_username | default('admin') }}"
     tower_password:                 "{{ tower_password }}"
+    tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
+    tower_config_file:              "{{ tower_config_file | default(omit) }}"
     tower_verify_ssl:               "{{ tower_verify_ssl | default('false') }}"
   loop: "{{ tower_notifications }}"
   loop_control:

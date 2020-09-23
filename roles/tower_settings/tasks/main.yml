@@ -8,6 +8,7 @@
     tower_host:          "{{ tower_hostname | default(omit) }}"
     tower_password:      "{{ tower_password | default(omit) }}"
     tower_username:      "{{ tower_username | default(omit) }}"
+    tower_oauthtoken:    "{{ tower_oauthtoken | default(omit) }}"
     validate_certs:      "{{ validate_certs | default('false') }}"
   when: tower_settings.settings is defined
   no_log: "{{ tower_configuration_settings_secure_logging }}"
