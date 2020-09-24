@@ -1,0 +1,3 @@
+---
+minor_changes:
+  - updated to allow vars in messages for notifications. 
