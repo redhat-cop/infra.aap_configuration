@@ -107,7 +107,7 @@ tower_notifications:
       success:
         body: '{"fields": {"project": {"id": "11111"},"summary": "Lab {  { job.status
           }} Ansible Tower {  { job.name }}","description": "{  { job.status }} in {  {
-          job.name }} {  { job.id }} {  {url}}","issuetype": {"id": "1"}}}'      
+          job.name }} {  { job.id }} {  {url}}","issuetype": {"id": "1"}}}'
   - name: Email notification
     description: Send out emails for tower jobs
     organization: Satellite
