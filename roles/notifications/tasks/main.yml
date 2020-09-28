@@ -7,7 +7,7 @@
     organization:                   "{{ tower_notifications_item.organization.name | default( tower_notifications_item.organization ) }}"
     notification_type:              "{{ tower_notifications_item.notification_type }}"
     notification_configuration:     "{{ tower_notifications_item.notification_configuration }}"
-    messages:                       "{{ tower_notifications_item.messages | default(omit) }}"
+    messages:                       "{{ tower_notifications_item.messages | default(omit) | regex_replace('[ ]{2,}','') }}"
     # Depreciated Options
     username:                       "{{ tower_notifications_item.username | default(omit) }}"
     sender:                         "{{ tower_notifications_item.sender| default(omit) }}"
