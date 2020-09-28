@@ -39,7 +39,7 @@ The role defaults to False as normally the add notification task does not includ
 |`organization`|""|no|str|The organization applicable to the notification.|
 |`notification_type`|""|no|str|The type of notification to be sent.|
 |`notification_configuration`|""|no|str|The notification configuration file. Note providing this field would disable all depreciated notification-configuration-related fields.|
-|`messages`|""|no|list|Optional custom messages for notification template.|
+|`messages`|""|no|list|Optional custom messages for notification template. Assumes any instance of two space __ are used for adding variables and removes them. Does not effect single space.|
 |`state`|`present`|no|str|Desired state of the resource.|
 
 
@@ -103,6 +103,11 @@ tower_notifications:
       nickname: Ansible-Tower-Stage-Bot-01
       targets:
       - "#my-channel"
+    messages:
+      success:
+        body: '{"fields": {"project": {"id": "11111"},"summary": "Lab {  { job.status
+          }} Ansible Tower {  { job.name }}","description": "{  { job.status }} in {  {
+          job.name }} {  { job.id }} {  {url}}","issuetype": {"id": "1"}}}'
   - name: Email notification
     description: Send out emails for tower jobs
     organization: Satellite
