@@ -1,6 +1,6 @@
-# tower_configuration.notifications
+# tower_configuration.notification_templates
 ## Description
-An Ansible Role to add notifications to Ansible Tower.
+An Ansible Role to add notification templates to Ansible Tower.
 
 ## Requirements
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
@@ -16,7 +16,7 @@ Currently:
 |`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
 |`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`tower_notifications`|`see below`|yes|Data structure describing your notification entries described below.||
+|`tower_notification_templates`|`see below`|yes|Data structure describing your notification entries described below.||
 
 ### Secure Logging Variables
 The following Variables compliment each other.
@@ -47,7 +47,7 @@ The role defaults to False as normally the add notification task does not includ
 #### Json Example
 ```json
 {
-  "tower_notifications": [
+  "tower_notification_templates": [
     {
       "name": "irc-satqe-chat-notification",
       "description": "Notify us on job in IRC!",
@@ -89,7 +89,7 @@ The role defaults to False as normally the add notification task does not includ
 #### Yaml Example
 ```yaml
 ---
-tower_notifications:
+tower_notification_templates:
   - name: irc-satqe-chat-notification
     description: Notify us on job in IRC!
     organization: Satellite
@@ -157,9 +157,9 @@ tower_notifications:
 
     - name: Add Notifications
       include_role:
-        name: tower_notification
+        name: tower_notification_templates
       vars:
-        tower_notification: "{{ notification_json.tower_notification }}"
+        tower_notification_templates: "{{ notification_json.tower_notification_templates }}"
 ```
 ## License
 [MIT](LICENSE)
