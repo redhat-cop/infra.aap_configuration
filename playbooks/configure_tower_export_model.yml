@@ -17,4 +17,4 @@
   roles:
     - {role: organizations, when: tower_organizations is defined, tags: organizations}
     - {role: workflow_job_templates, when: tower_workflows is defined}
-    - {role: notifications, when: tower_notifications is defined, tags: notifications}
+    - {role: notification_templates, when: tower_notification_templates is defined, tags: notification_templates}
