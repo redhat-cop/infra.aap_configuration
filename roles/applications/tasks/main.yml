@@ -9,7 +9,7 @@
     authorization_grant_type:       "{{ application_item.authorization_grant_type | default('password') }}"
     client_type:                    "{{ application_item.client_type | default('public') }}"
     redirect_uris:                  "{{ application_item.redirect_uris | default([]) }}"
-    skip_authorization:             "{{ application_item.description | default(false) }}"
+    skip_authorization:             "{{ application_item.skip_authorization | default(false) }}"
     state:                          "{{ application_item.state | default(tower_state | default('present')) }}"
     tower_username:                 "{{ tower_username | default(omit) }}"
     tower_password:                 "{{ tower_password | default(omit) }}"
