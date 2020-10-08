@@ -37,4 +37,4 @@
       include_role:
         name: ../..
       vars:
-        tower_notifications: "{{ notifications_json.tower_notifications }}"
+        tower_notification_templates: "{{ notifications_json.tower_notification_templates }}"
