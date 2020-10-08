@@ -3,7 +3,7 @@
 An Ansible Role to create Applications in Ansible Tower.
 
 
-## Requirements 
+## Requirements
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
