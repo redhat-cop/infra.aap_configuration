@@ -1,24 +1,15 @@
 ---
-# based on method defined here: https://coderwall.com/p/8yfuva/how-to-develop-ansible-roles-w-unit-test-and-ci
-
-- name: Add *********** to tower
+- name: Add applications to Tower
   hosts: localhost
-  gather_facts: false
   connection: local
-
-
-  # Bring in vaulted Ansible Tower secrets
-  vars_files:
-    - "../var/tower-secrets.yml"
-
-  tasks:
-
+  gather_facts: false
+  pre_tasks:
     - name: Get token for use during play
       uri:
         url: "https://{{ tower_hostname }}/api/v2/tokens/"
         method: POST
         user: "{{ tower_username }}"
-        password: "{{ tower_passname }}"
+        password: "{{ tower_password }}"
         force_basic_auth: true
         status_code: 201
         validate_certs: false
@@ -29,17 +20,9 @@
       set_fact:
         tower_oauthtoken: "{{ user_token.json.token }}"
 
-    - name: Import vars
+    - name: Import Inventory sources
       include_vars:
-        file: "vars/extra_vars.yml"
+        file: "configs/tower_applications.yml"
 
-    - name: Import JSON
-      include_vars:
-        file: "json/***********.json"
-        name: "***********"
-
-    - name: Add ***********
-      include_role:
-        name: ../..
-      vars:
-        tower_***********: "{{ ***********_json.tower_*********** }}"
+  roles:
+    - ../../applications
