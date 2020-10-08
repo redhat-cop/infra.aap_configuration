@@ -39,12 +39,11 @@ tower_configuration_applications_secure_logging defaults to the value of tower_c
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of application|
 |`organization`|""|yes|str|Name of the organization for the application|
-|`client_type`|"confidential"|yes|str|Application client type, "confidential" or "public"|
-|`authorization_grant_type`|"password"|yes|str|Grant type for tokens in this application, "password" or "authorization-code"|
 |`description`|""|no|str|Description to use for the application.|
-|`client_id`|""|no|str|Generated and returned in response if not provided|
-|`client_secret`|""|no|str|Generated and returned in response if not provided|
+|`authorization_grant_type`|"password"|yes|str|Grant type for tokens in this application, "password" or "authorization-code"|
+|`client_type`|"public"|yes|str|Application client type, "confidential" or "public"|
 |`redirect_uris`|""|no|str|Allowed urls list, space separated. Required with "autorization-code" grant type|
+|`skip_authorization`|"false"|yes|bool|Set True to skip authorization step for completely trusted applications.|
 |`state`|`present`|no|str|Desired state of the application.|
 
 
