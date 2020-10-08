@@ -1,0 +1,74 @@
+---
+# @author Anthony Loukinas <anthony.loukinas@redhat.com>
+
+version: '3'
+
+services:
+  web:
+    image: registry.redhat.io/ansible-tower-36/ansible-tower
+    container_name: awx_web
+    depends_on:
+      - rabbitmq
+      - memcached
+      - postgres
+    hostname: awx_web
+    user: root
+    restart: unless-stopped
+    ports:
+      - 80:8052
+    volumes:
+      - "./assets/SECRET_KEY:/etc/tower/SECRET_KEY"
+      - "./assets/environment.sh:/etc/tower/conf.d/environment.sh"
+      - "./assets/credentials.py:/etc/tower/conf.d/credentials.py"
+      - "./settings.py:/etc/tower/settings.py"
+
+  task:
+    image: registry.redhat.io/ansible-tower-36/ansible-tower
+    container_name: awx_task
+    command: /usr/bin/launch_awx_task.sh
+    depends_on:
+      - rabbitmq
+      - memcached
+      - postgres
+      - web
+    # https://github.com/ansible/awx/issues/86#issuecomment-331923704
+    hostname: awx
+    user: root
+    restart: unless-stopped
+    volumes:
+      - "./assets/SECRET_KEY:/etc/tower/SECRET_KEY"
+      - "./assets/environment.sh:/etc/tower/conf.d/environment.sh"
+      - "./assets/credentials.py:/etc/tower/conf.d/credentials.py"
+      - "./settings.py:/etc/tower/settings.py"
+
+  rabbitmq:
+    image: ansible/awx_rabbitmq:3.7.4
+    container_name: awx_rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_VHOST: "awx"
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+      RABBITMQ_ERLANG_COOKIE: cookiemonster
+
+  memcached:
+    image: memcached:alpine
+    container_name: awx_memcached
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:10
+    container_name: awx_postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    volumes:
+      - awx_db:/var/lib/postgresql/data:Z
+    environment:
+      POSTGRES_USER: awx
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: awx
+      PGDATA: /var/lib/postgresql/data/pgdata
+
+volumes:
+  awx_db:

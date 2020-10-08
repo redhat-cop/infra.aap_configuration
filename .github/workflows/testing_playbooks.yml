@@ -10,23 +10,17 @@ jobs:
     steps:
       - name: "Checkout Project"
         uses: actions/checkout@v2
-
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.8
-
-      - name: "Clone AWX"
-        run: cd .github && git clone https://github.com/ansible/awx.git
-
-      - name: "Install dependencies"
-        run: pip install -r .github/requirements.txt
-
-      - name: Display Versions
-        run: which python && pip --version && ansible --version
+      
+    - name: Login to RedHat registry
+      shell: bash
+      env:
+        DOCKER_USERNAME: ${{ secrets.RegistryUsername }}
+        DOCKER_PASSWRD: ${{ secrets.RegistryPassword }}
+      run: |
+        docker login registry.redhat.io -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 
       - name: "Build AWX stack"
-        run: cd .github/awx/installer && ansible-playbook -i inventory install.yml -e create_preload_data=false
+        run: cd .docker && docker-compose up -d
 
       - name: "Wait for awx to be alive"
         uses: nev7n/wait_for_response@v1
