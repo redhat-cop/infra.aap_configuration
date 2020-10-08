@@ -297,6 +297,7 @@ tower_workflows:
       type: organization
     related:
       schedules: []
+      labels: []
       workflow_nodes:
         - inventory:
           scm_branch:
