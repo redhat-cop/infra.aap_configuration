@@ -30,7 +30,7 @@
     - {role: job_templates, when: tower_templates is defined, tags: job_templates}
     - {role: workflow_job_templates, when: tower_workflows is defined, tags: workflow_job_templates}
     - {role: schedules, when: tower_schedules is defined, tags: schedules}
-    - {role: notifications, when: tower_notifications is defined, tags: notifications}
+    - {role: notification_templates, when: tower_notification_templates is defined, tags: notification_templates}
     - {role: tower_role, when: tower_rbac is defined, tags: tower_role}
 
   tasks:
