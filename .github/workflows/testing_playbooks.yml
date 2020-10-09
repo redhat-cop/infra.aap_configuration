@@ -83,6 +83,12 @@ jobs:
 
       - name: check port 80
         run: curl http://localhost:80
+      
+      - name: Log output sql
+        run: docker logs awx_postgres
+
+      - name: Log output web container
+        run: docker logs awx_web
 
       - name: "Wait for awx to be alive"
         uses: nev7n/wait_for_response@v1
