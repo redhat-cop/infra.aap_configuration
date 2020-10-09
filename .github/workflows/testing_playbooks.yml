@@ -22,6 +22,17 @@ jobs:
       - name: "Build AWX stack"
         run: cd .docker && docker-compose up -d
 
+      - name: List containers
+        run: docker ps -a
+
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '60s'
+
+      - name: List containers
+        run: "docker exec -it awx_web curl localhost:8052"
+
       - name: "Wait for awx to be alive"
         uses: nev7n/wait_for_response@v1
         with:
