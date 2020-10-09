@@ -16,7 +16,6 @@ services:
     restart: unless-stopped
     ports:
       - 80:8052
-    network_mode: host
     volumes:
       - "./assets/SECRET_KEY:/etc/tower/SECRET_KEY"
       - "./assets/environment.sh:/etc/tower/conf.d/environment.sh"
