@@ -8,6 +8,8 @@ tower_workflows:
     ask_variables_on_launch: false
     inventory:
     limit:
+    labels:
+      - Prod
     scm_branch:
     ask_inventory_on_launch: false
     ask_scm_branch_on_launch: false
