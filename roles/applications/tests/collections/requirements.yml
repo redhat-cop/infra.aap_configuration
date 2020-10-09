@@ -1,5 +1,5 @@
 ---
 collections:
   - name: awx.awx
-    version: 13.0.0  # Correct??  we're not actually pulling the collection, its stored locally anyway
-    # at the time of writing this comment, tower_application is an upstream PR anyway
+    version: 15.0.0
+    # https://github.com/ansible/awx/pull/8205
