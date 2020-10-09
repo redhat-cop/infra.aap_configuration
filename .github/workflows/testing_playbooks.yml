@@ -7,6 +7,57 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    # services:
+    #   rabbitmq:
+    #     image: ansible/awx_rabbitmq:3.7.4
+    #     options: >- 
+    #       --name awx_rabbitmq
+    #       --hostname=awx_rabbitmq
+    #     env:
+    #       RABBITMQ_DEFAULT_VHOST: "awx"
+    #       RABBITMQ_DEFAULT_USER: "guest"
+    #       RABBITMQ_DEFAULT_PASS: "guest"
+    #       RABBITMQ_ERLANG_COOKIE: cookiemonster
+
+    #   memcached:
+    #     image: memcached:alpine
+    #     options: >-
+    #       --name awx_memcached
+    #       --hostname=awx_memcached
+
+    #   postgres:
+    #     image: postgres:10
+    #     ports:
+    #     - 5432:5432
+    #     options: >-
+    #       --name awx_postgres
+    #       --hostname=awx_postgres
+    #       --volume=src:dest
+    #     env:
+    #       POSTGRES_USER: awx
+    #       POSTGRES_PASSWORD: postgres
+    #       POSTGRES_DB: awx
+    #       PGDATA: /var/lib/postgresql/data/pgdata
+
+    #   awx_web:
+    #     image: registry.redhat.io/ansible-tower-36/ansible-tower
+    #     options: >- 
+    #       --name=awx_web 
+    #       --user=root 
+    #       --volume=host-src:container-dest 
+    #       --hostname=awx_web
+    #     ports:
+    #     - 80:8052
+
+    #   awx_task:
+    #     image: registry.redhat.io/ansible-tower-36/ansible-tower
+    #     options: >- 
+    #       --name=awx_task
+    #       --user=root 
+    #       --volume=host-src:container-dest 
+    #       --hostname=awx_task
+    #       --command=/usr/bin/launch_awx_task.sh
+
     steps:
       - name: "Checkout Project"
         uses: actions/checkout@v2
@@ -30,8 +81,8 @@ jobs:
         with:
           time: '60s'
 
-      - name: List containers
-        run: "docker exec -it awx_web curl localhost:8052"
+      - name: check port 80
+        run: curl http://localhost:80
 
       - name: "Wait for awx to be alive"
         uses: nev7n/wait_for_response@v1
