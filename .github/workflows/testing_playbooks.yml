@@ -10,14 +10,14 @@ jobs:
     steps:
       - name: "Checkout Project"
         uses: actions/checkout@v2
-      
-      - name: Login to RedHat registry
-        shell: bash
-        env:
-          DOCKER_USERNAME: ${{ secrets.RegistryUsername }}
-          DOCKER_PASSWRD: ${{ secrets.RegistryPassword }}
-        run: |
-          docker login registry.redhat.io -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+
+      -
+        name: Login to RedHat Registry
+        uses: docker/login-action@v1
+        with:
+          registry: registry.redhat.io
+          username: ${{ secrets.RegistryUsername }}
+          password: ${{ secrets.RegistryPassword }}
 
       - name: "Build AWX stack"
         run: cd .docker && docker-compose up -d
