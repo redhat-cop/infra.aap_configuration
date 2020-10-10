@@ -62,8 +62,7 @@ jobs:
       - name: "Checkout Project"
         uses: actions/checkout@v2
 
-      -
-        name: Login to RedHat Registry
+      - name: Login to RedHat Registry
         uses: docker/login-action@v1
         with:
           registry: registry.redhat.io
@@ -73,22 +72,10 @@ jobs:
       - name: "Build AWX stack"
         run: cd .docker && docker-compose up -d
 
-      - name: List containers
-        run: docker ps -a
-
       - name: Wait / Sleep
         uses: jakejarvis/wait-action@v0.1.0
         with:
           time: '60s'
-
-      - name: check port 80
-        run: curl http://localhost:80
-      
-      - name: Log output sql
-        run: docker logs awx_postgres
-
-      - name: Log output web container
-        run: docker logs awx_web
 
       - name: "Wait for awx to be alive"
         uses: nev7n/wait_for_response@v1
