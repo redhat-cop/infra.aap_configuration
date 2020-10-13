@@ -5,10 +5,10 @@ version: '3'
 
 services:
   web:
-    image: registry.redhat.io/ansible-tower-37/ansible-tower-rhel7
+    image: registry.redhat.io/ansible-tower-37/ansible-tower-rhel7:3.7.3
     container_name: awx_web
     depends_on:
-      - rabbitmq
+      - ansible-tower-redis
       - memcached
       - postgres
     hostname: awx_web
@@ -23,7 +23,7 @@ services:
       - "./assets/settings.py:/etc/tower/settings.py"
 
   task:
-    image: registry.redhat.io/ansible-tower-36/ansible-tower
+    image: registry.redhat.io/ansible-tower-37/ansible-tower-rhel7:3.7.3
     container_name: awx_task
     command: /usr/bin/launch_awx_task.sh
     depends_on:
@@ -42,8 +42,8 @@ services:
       - "./assets/settings.py:/etc/tower/settings.py"
 
   rabbitmq:
-    image: ansible/awx_rabbitmq:3.7.4
-    container_name: awx_rabbitmq
+    image: registry.redhat.io/rhscl/redis-5-rhel7:latest
+    container_name: ansible-tower-redis
     restart: unless-stopped
     environment:
       RABBITMQ_DEFAULT_VHOST: "awx"
@@ -52,7 +52,7 @@ services:
       RABBITMQ_ERLANG_COOKIE: cookiemonster
 
   memcached:
-    image: memcached:alpine
+    image: registry.redhat.io/ansible-tower-37/ansible-tower-memcached-rhel7:latest\
     container_name: awx_memcached
     restart: unless-stopped
 
