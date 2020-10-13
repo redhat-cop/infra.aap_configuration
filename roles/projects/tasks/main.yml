@@ -34,6 +34,7 @@
     loop_var: tower_projects_item
   no_log: "{{ tower_configuration_projects_secure_logging }}"
   when: tower_projects is defined
+  ignore_errors: true
 
 - name: Update Projects
   awx.awx.tower_project_update:
