@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: "Checkout Project"
         uses: actions/checkout@v2
-      
+
       - name: Login to RedHat registry
         shell: bash
         env:
