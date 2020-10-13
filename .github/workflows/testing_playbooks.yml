@@ -45,7 +45,7 @@ jobs:
           time: '20s'
 
       - name: "Perform playbook tests"
-        run: ansible-playbook playbooks/configure_tower.yml -e tower_hostname=http://localhost -e tower_username=admin -e tower_password=password
+        run: ansible-playbook playbooks/configure_tower.yml -e tower_hostname=http://localhost -e tower_username=admin -e tower_password=password -vvv
 
       - name: "Perform export model playbook tests"
         run: ansible-playbook playbooks/configure_tower_export_model.yml -e tower_hostname=http://localhost -e tower_username=admin -e tower_password=password
