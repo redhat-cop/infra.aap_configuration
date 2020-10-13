@@ -17,6 +17,7 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.REGISTRYUSERNAME }}
           DOCKER_PASSWRD: ${{ secrets.REGISTRYPASSWORD }}
         run: |
+          echo $DOCKER_USERNAME
           docker login registry.redhat.io -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 
       - name: "Build AWX stack"
