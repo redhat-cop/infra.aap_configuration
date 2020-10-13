@@ -48,9 +48,9 @@ services:
     image: redis
     container_name: registry.redhat.io/rhscl/redis-5-rhel7:latest
     restart: unless-stopped
-    command: ["/usr/local/etc/redis/redis.conf"]
+    command: ["/etc/redis.conf"]
     volumes:
-      - "./assets/redis.conf:/usr/local/etc/redis/redis.conf:ro"
+      - "./assets/redis.conf:/etc/redis.conf:ro"
       - "./assets/redis_socket:/var/run/redis/:rw"
 
   postgres:
