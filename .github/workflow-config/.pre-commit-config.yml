@@ -20,4 +20,4 @@ repos:
     - id: ansible-lint
       pass_filenames: false
       always_run: true
-      entry: "ansible-lint -c .github/workflow-config/.ansiblelint.yml --exclude=roles/master_role_example"
+      entry: "ansible-lint -c .github/workflow-config/.ansiblelint.yml --exclude=roles/master_role_example --exclude=.github/awxcompose/nginx.conf"
