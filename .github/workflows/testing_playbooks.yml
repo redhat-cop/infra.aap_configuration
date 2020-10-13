@@ -14,8 +14,8 @@ jobs:
       - name: Login to RedHat registry
         shell: bash
         env:
-          DOCKER_USERNAME: ${{ secrets.RegistryUsername }}
-          DOCKER_PASSWRD: ${{ secrets.RegistryPassword }}
+          DOCKER_USERNAME: ${{ secrets.REGISTRYUSERNAME }}
+          DOCKER_PASSWRD: ${{ secrets.REGISTRYPASSWORD }}
         run: |
           docker login registry.redhat.io -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 
