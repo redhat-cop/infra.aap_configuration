@@ -41,15 +41,10 @@ services:
       - "./assets/credentials.py:/etc/tower/conf.d/credentials.py"
       - "./assets/settings.py:/etc/tower/settings.py"
 
-  rabbitmq:
+  ansible-tower-redis:
     image: registry.redhat.io/rhscl/redis-5-rhel7:latest
     container_name: ansible-tower-redis
     restart: unless-stopped
-    environment:
-      RABBITMQ_DEFAULT_VHOST: "awx"
-      RABBITMQ_DEFAULT_USER: "guest"
-      RABBITMQ_DEFAULT_PASS: "guest"
-      RABBITMQ_ERLANG_COOKIE: cookiemonster
 
   memcached:
     image: registry.redhat.io/ansible-tower-37/ansible-tower-memcached-rhel7:latest\
