@@ -51,7 +51,6 @@ services:
     image: redis
     container_name: awx_redis
     restart: unless-stopped
-    environment:
     command: ["/usr/local/etc/redis/redis.conf"]
     volumes:
       - "./redis.conf:/usr/local/etc/redis/redis.conf:ro"
