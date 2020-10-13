@@ -4,22 +4,27 @@ on: [push, pull_request]
 
 jobs:
   Integration-test:
-
     runs-on: ubuntu-latest
 
     steps:
       - name: "Checkout Project"
         uses: actions/checkout@v2
 
-      - name: Login to RedHat registry
+      - name: Login to RedHat Registry
         uses: docker/login-action@v1
         with:
           registry: registry.redhat.io
-          username: ${{ secrets.REGISTRYUSERNAME }}
-          password: ${{ secrets.REGISTRYPASSWORD }}
+          username: ${{ secrets.RegistryUsername }}
+          password: ${{ secrets.RegistryPassword }}
+
 
       - name: "Build AWX stack"
         run: cd .docker && docker-compose up -d
+
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '60s'
 
       - name: "Wait for awx to be alive"
         uses: nev7n/wait_for_response@v1

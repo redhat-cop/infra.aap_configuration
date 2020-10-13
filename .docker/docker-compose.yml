@@ -20,7 +20,7 @@ services:
       - "./assets/SECRET_KEY:/etc/tower/SECRET_KEY"
       - "./assets/environment.sh:/etc/tower/conf.d/environment.sh"
       - "./assets/credentials.py:/etc/tower/conf.d/credentials.py"
-      - "./settings.py:/etc/tower/settings.py"
+      - "./assets/settings.py:/etc/tower/settings.py"
 
   task:
     image: registry.redhat.io/ansible-tower-36/ansible-tower
@@ -39,7 +39,7 @@ services:
       - "./assets/SECRET_KEY:/etc/tower/SECRET_KEY"
       - "./assets/environment.sh:/etc/tower/conf.d/environment.sh"
       - "./assets/credentials.py:/etc/tower/conf.d/credentials.py"
-      - "./settings.py:/etc/tower/settings.py"
+      - "./assets/settings.py:/etc/tower/settings.py"
 
   rabbitmq:
     image: ansible/awx_rabbitmq:3.7.4
