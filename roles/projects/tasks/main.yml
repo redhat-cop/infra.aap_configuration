@@ -34,3 +34,19 @@
     loop_var: tower_projects_item
   no_log: "{{ tower_configuration_projects_secure_logging }}"
   when: tower_projects is defined
+
+- name: Update Projects
+  awx.awx.tower_project_update:
+    name:                           "{{ tower_projects_item.name }}"
+    organization:                   "{{ tower_projects_item.organization }}"
+    tower_username:                 "{{ tower_username | default(omit) }}"
+    tower_password:                 "{{ tower_password | default(omit) }}"
+    tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
+    tower_host:                     "{{ tower_hostname }}"
+    tower_config_file:              "{{ tower_config_file | default(omit) }}"
+    validate_certs:                 "{{ tower_validate_certs | default('true') }}"
+  loop: "{{ tower_projects }}"
+  loop_control:
+    loop_var: tower_projects_item
+  no_log: "{{ tower_configuration_projects_secure_logging }}"
+  when: tower_projects is defined
