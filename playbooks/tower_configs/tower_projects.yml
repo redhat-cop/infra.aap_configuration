@@ -7,10 +7,8 @@ tower_projects:
     scm_clean: true
     description: Test Project 1
     organization: Satellite
-    wait: false
   - name: Test Project 2
     scm_type: git
     scm_url: https://github.com/ansible/tower-example.git
     description: Test Project 2
     organization: Satellite
-    wait: false

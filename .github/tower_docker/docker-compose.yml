@@ -45,8 +45,8 @@ services:
       SUPERVISOR_WEB_CONFIG_PATH: '/etc/supervisord.conf'
 
   redis:
-    image: redis
-    container_name: registry.redhat.io/rhscl/redis-5-rhel7:5
+    image: registry.redhat.io/rhscl/redis-5-rhel7:latest
+    container_name: awx_redis
     restart: unless-stopped
     command: ["/etc/redis.conf"]
     volumes:
