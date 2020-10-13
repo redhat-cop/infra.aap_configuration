@@ -5,7 +5,7 @@ version: '3'
 
 services:
   web:
-    image: registry.redhat.io/ansible-tower-36/ansible-tower
+    image: registry.redhat.io/ansible-tower-37/ansible-tower
     container_name: awx_web
     depends_on:
       - rabbitmq
