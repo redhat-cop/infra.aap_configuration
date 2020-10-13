@@ -19,7 +19,7 @@ jobs:
 
 
       - name: "Build AWX stack"
-        run: cd .docker && docker-compose up -d
+        run: cd .github/awxcompose && docker-compose up -d
 
       - name: Wait / Sleep
         uses: jakejarvis/wait-action@v0.1.0
