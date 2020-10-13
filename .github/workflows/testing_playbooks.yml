@@ -17,6 +17,7 @@ jobs:
           username: ${{ secrets.RegistryUsername }}
           password: ${{ secrets.RegistryPassword }}
 
+
       - name: "Build AWX stack"
         run: cd .docker && docker-compose up -d
 
