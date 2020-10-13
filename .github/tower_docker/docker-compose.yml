@@ -46,7 +46,7 @@ services:
 
   redis:
     image: redis
-    container_name: registry.redhat.io/rhscl/redis-5-rhel7:latest
+    container_name: registry.redhat.io/rhscl/redis-5-rhel7:5
     restart: unless-stopped
     command: ["/etc/redis.conf"]
     volumes:
