@@ -47,7 +47,7 @@ services:
     restart: unless-stopped
 
   memcached:
-    image: registry.redhat.io/ansible-tower-37/ansible-tower-memcached-rhel7:latest\
+    image: registry.redhat.io/ansible-tower-37/ansible-tower-memcached-rhel7:latest
     container_name: awx_memcached
     restart: unless-stopped
 
