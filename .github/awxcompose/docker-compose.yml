@@ -21,6 +21,10 @@ services:
       - "./assets/credentials.py:/etc/tower/conf.d/credentials.py"
       - "./assets/nginx.conf:/etc/nginx/nginx.conf:ro"
       - "./assets/redis_socket:/var/run/redis/:rw"
+    environment:
+      http_proxy:
+      https_proxy:
+      no_proxy:
 
   task:
     image: ansible/awx:15.0.0
@@ -43,11 +47,18 @@ services:
       - "./assets/redis_socket:/var/run/redis/:rw"
     environment:
       SUPERVISOR_WEB_CONFIG_PATH: '/etc/supervisord.conf'
+      http_proxy:
+      https_proxy:
+      no_proxy:
 
   redis:
     image: redis
     container_name: awx_redis
     restart: unless-stopped
+    environment:
+      http_proxy:
+      https_proxy:
+      no_proxy:
     command: ["/usr/local/etc/redis/redis.conf"]
     volumes:
       - "./assets/redis.conf:/usr/local/etc/redis/redis.conf:ro"
@@ -63,6 +74,9 @@ services:
       POSTGRES_USER: awx
       POSTGRES_PASSWORD: awxpass
       POSTGRES_DB: awx
+      http_proxy:
+      https_proxy:
+      no_proxy:
 
 volumes:
   supervisor-socket:
