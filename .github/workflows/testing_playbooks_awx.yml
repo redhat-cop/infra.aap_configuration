@@ -10,14 +10,6 @@ jobs:
       - name: "Checkout Project"
         uses: actions/checkout@v2
 
-      - name: Login to RedHat Registry
-        uses: docker/login-action@v1
-        with:
-          registry: registry.redhat.io
-          username: ${{ secrets.RegistryUsername }}
-          password: ${{ secrets.RegistryPassword }}
-
-
       - name: "Build AWX stack"
         run: cd .github/awxcompose && docker-compose up -d
 
@@ -41,6 +33,12 @@ jobs:
         uses: jakejarvis/wait-action@v0.1.0
         with:
           time: '20s'
+
+      - name: Test Internet
+        run: docker exec awx_task ping -c 4 google.com
+
+      - name: Test Internet
+        run: docker exec awx_task wget https://github.com/ansible/
 
       - name: "Perform playbook tests"
         run: ansible-playbook playbooks/configure_tower.yml -e tower_hostname=http://localhost -e tower_username=admin -e tower_password=password -vvv
