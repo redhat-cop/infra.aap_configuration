@@ -34,6 +34,12 @@ jobs:
         with:
           time: '20s'
 
+      - name: Update CA trust in awx_web container
+        run: docker exec awx_web '/usr/bin/update-ca-trust'
+
+      - name: Update CA trust in awx_task container
+        run: docker exec awx_task '/usr/bin/update-ca-trust'
+
       - name: Test Internet
         run: docker exec awx_task ping -c 4 google.com
 
