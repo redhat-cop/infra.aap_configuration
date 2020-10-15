@@ -41,7 +41,7 @@ jobs:
         run: docker exec awx_task '/usr/bin/update-ca-trust'
 
       - name: Test Internet
-        run: docker-compose down && docker-compose up
+        run: cd .github/awxcompose && docker-compose down && docker-compose up
 
       - name: Test Internet
         run: docker exec awx_task ping -c 4 google.com
