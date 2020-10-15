@@ -1,6 +1,6 @@
 name: Run Test Playbooks Tower
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   Integration-test:
