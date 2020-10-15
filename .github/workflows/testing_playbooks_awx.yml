@@ -41,6 +41,9 @@ jobs:
         run: docker exec awx_task '/usr/bin/update-ca-trust'
 
       - name: Test Internet
+        run: docker exec awx_task cat /etc/resolv. conf
+
+      - name: Test Internet
         run: docker exec awx_task ping -c 4 google.com
 
       - name: Test Internet
