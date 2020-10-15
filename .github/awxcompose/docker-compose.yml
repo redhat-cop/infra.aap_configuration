@@ -2,7 +2,7 @@ version: '2'
 services:
 
   web:
-    image: ansible/awx:15.0.0
+    image: ansible/awx:14.0.0
     container_name: awx_web
     depends_on:
       - redis
@@ -27,7 +27,7 @@ services:
       no_proxy:
 
   task:
-    image: ansible/awx:15.0.0
+    image: ansible/awx:14.0.0
     container_name: awx_task
     depends_on:
       - redis

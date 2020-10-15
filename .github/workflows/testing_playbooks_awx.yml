@@ -41,7 +41,7 @@ jobs:
         run: docker exec awx_task '/usr/bin/update-ca-trust'
 
       - name: Test Internet
-        run: docker exec awx_task nslookup google.com
+        run: docker exec awx_task ping -c 4 google.com
 
       - name: Test Internet
         run: docker exec awx_task wget https://github.com/ansible/
