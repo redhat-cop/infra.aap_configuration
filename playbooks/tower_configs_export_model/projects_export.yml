@@ -1,5 +1,5 @@
 ---
-projects:
+tower_projects:
 - name: Tower Config Testing
   description: ''
   local_path: _48__tower_config_testing

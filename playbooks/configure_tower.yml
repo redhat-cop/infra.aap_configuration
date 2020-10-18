@@ -20,10 +20,12 @@
     - {role: labels, when: tower_labels is defined, tags: labels}
     - {role: users, when: tower_user_accounts is defined, tags: users}
     - {role: teams, when: tower_teams is defined, tags: teams}
+    - {role: credential_types, when: tower_credential_types is defined, tags: credential_types}
     - {role: credentials, when: tower_credentials is defined, tags: credentials}
     - {role: credential_input_sources, when: tower_credential_input_sources is defined, tags: credential_input_sources}
     - {role: applications, when: tower_applications is defined, tags: applications}
     - {role: inventories, when: tower_inventories is defined, tags: inventories}
+    - {role: inventory_sources, when: tower_inventory_sources is defined, tags: inventory_sources}
     - {role: projects, when: tower_projects is defined, tags: projects}
     - {role: inventory_sources, when: tower_inventory_sources is defined, tags: inventory_sources}
     - {role: hosts, when: tower_hosts is defined, tags: hosts}
