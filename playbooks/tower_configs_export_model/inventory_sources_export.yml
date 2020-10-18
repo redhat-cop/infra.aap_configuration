@@ -26,7 +26,7 @@ tower_inventory_sources:
       organization:
         name: Satellite
         type: organization
-      name: Tower Config
+      name: Test Project
       type: project
     related:
       schedules: []
