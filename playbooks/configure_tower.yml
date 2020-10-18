@@ -25,12 +25,12 @@
     - {role: credential_input_sources, when: tower_credential_input_sources is defined, tags: credential_input_sources}
     - {role: applications, when: tower_applications is defined, tags: applications}
     - {role: inventories, when: tower_inventories is defined, tags: inventories}
-#    - {role: inventory_sources, when: tower_inventory_sources is defined, tags: inventory_sources}
+    - {role: inventory_sources, when: tower_inventory_sources is defined, tags: inventory_sources}
     - {role: projects, when: tower_projects is defined, tags: projects}
     - {role: hosts, when: tower_hosts is defined, tags: hosts}
     - {role: groups, when: tower_groups is defined, tags: inventories}
     - {role: job_templates, when: tower_templates is defined, tags: job_templates}
-#    - {role: workflow_job_templates, when: tower_workflows is defined, tags: workflow_job_templates}
+    - {role: workflow_job_templates, when: tower_workflows is defined, tags: workflow_job_templates}
     - {role: schedules, when: tower_schedules is defined, tags: schedules}
     - {role: notification_templates, when: tower_notifications is defined, tags: notification_templates}
     - {role: tower_role, when: tower_rbac is defined, tags: tower_role}
