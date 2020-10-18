@@ -30,9 +30,9 @@
     tower_password:                       "{{ tower_password | default(omit) }}"
     tower_oauthtoken:                     "{{ tower_oauthtoken | default(omit) }}"
     validate_certs:                       "{{ tower_validate_certs | default('false') }}"
-  loop: "{{ tower_inventory_sources }}"
-  loop_control:
-    loop_var: source
-  no_log: "{{ tower_configuration_inventory_sources_secure_logging }}"
-  when: tower_inventory_sources is defined
+#  loop: "{{ tower_inventory_sources }}"
+#  loop_control:
+#    loop_var: source
+#  no_log: "{{ tower_configuration_inventory_sources_secure_logging }}"
+#  when: tower_inventory_sources is defined
 ...
