@@ -4,7 +4,6 @@ tower_inventories:
     description: ''
     kind: ''
     host_filter: null
-    insights_credential: null
     organization:
       name: Satellite
       type: organization
@@ -18,7 +17,6 @@ tower_inventories:
     description: ''
     kind: ''
     host_filter: null
-    insights_credential: null
     organization:
       name: Satellite
       type: organization
