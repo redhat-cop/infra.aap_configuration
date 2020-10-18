@@ -1,5 +1,5 @@
 ---
-teams:
+tower_teams:
   - name: team1
     description: ''
     organization:
