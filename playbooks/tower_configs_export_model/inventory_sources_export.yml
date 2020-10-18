@@ -21,7 +21,7 @@ tower_inventory_sources:
       organization:
         name: Satellite
         type: organization
-      name: 2nd Testing Inventory
+      name: Testing Inventory
       type: inventory
     source_project:
       organization:
@@ -41,6 +41,6 @@ tower_inventory_sources:
         organization:
           name: Satellite
           type: organization
-        name: 2nd Testing Inventory
+        name: Testing Inventory
         type: inventory
       type: inventory_source
