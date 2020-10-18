@@ -20,13 +20,13 @@ tower_inventory_sources:
     update_on_project_update: false
     inventory:
       organization:
-        name: 2nd organization
+        name: Satellite
         type: organization
       name: 2nd Testing Inventory
       type: inventory
     source_project:
       organization:
-        name: Testing
+        name: Satellite
         type: organization
       name: Tower Config
       type: project
@@ -40,7 +40,7 @@ tower_inventory_sources:
       name: test
       inventory:
         organization:
-          name: 2nd organization
+          name: Satellite
           type: organization
         name: 2nd Testing Inventory
         type: inventory

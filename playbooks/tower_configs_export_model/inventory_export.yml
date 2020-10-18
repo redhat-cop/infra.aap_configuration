@@ -6,11 +6,11 @@ tower_inventories:
     host_filter: null
     insights_credential: null
     organization:
-      name: 2nd organization
+      name: Satellite
       type: organization
     natural_key:
       organization:
-        name: 2nd organization
+        name: Satellite
         type: organization
       name: 2nd Testing Inventory
       type: inventory
@@ -20,11 +20,11 @@ tower_inventories:
     host_filter: null
     insights_credential: null
     organization:
-      name: Testing
+      name: Satellite
       type: organization
     natural_key:
       organization:
-        name: Testing
+        name: Satellite
         type: organization
       name: Testing Inventory
       type: inventory

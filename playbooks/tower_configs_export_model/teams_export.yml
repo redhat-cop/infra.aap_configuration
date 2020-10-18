@@ -11,7 +11,7 @@ tower_teams:
           type: role
           content_object:
             organization:
-              name: Testing
+              name: Satellite
               type: organization
             name: Survey Template with vars no org
             type: job_template
@@ -19,7 +19,7 @@ tower_teams:
           type: role
           content_object:
             organization:
-              name: Testing
+              name: Satellite
               type: organization
             name: No Survey Template no vars
             type: job_template
@@ -27,7 +27,7 @@ tower_teams:
           type: role
           content_object:
             organization:
-              name: Testing
+              name: Satellite
               type: organization
             name: workflow_test_template
             type: job_template
@@ -35,7 +35,7 @@ tower_teams:
           type: role
           content_object:
             organization:
-              name: Testing
+              name: Satellite
               type: organization
             name: Tower Config Testing
             type: project
@@ -43,7 +43,7 @@ tower_teams:
           type: role
           content_object:
             organization:
-              name: Testing
+              name: Satellite
               type: organization
             name: Tower Config
             type: project
@@ -51,7 +51,7 @@ tower_teams:
           type: role
           content_object:
             organization:
-              name: Testing
+              name: Satellite
               type: organization
             name: Complicated Schema Workflow
             type: workflow_job_template
@@ -59,7 +59,7 @@ tower_teams:
           type: role
           content_object:
             organization:
-              name: Testing
+              name: Satellite
               type: organization
             name: Simple workflow schema
             type: workflow_job_template
@@ -67,7 +67,7 @@ tower_teams:
           type: role
           content_object:
             organization:
-              name: Testing
+              name: Satellite
               type: organization
             name: gitlab
             credential_type:
@@ -79,7 +79,7 @@ tower_teams:
           type: role
           content_object:
             organization:
-              name: 2nd organization
+              name: Satellite
               type: organization
             name: 2nd Testing Inventory
             type: inventory
@@ -87,23 +87,23 @@ tower_teams:
           type: role
           content_object:
             organization:
-              name: Testing
+              name: Satellite
               type: organization
             name: Testing Inventory
             type: inventory
         - name: Project Admin
           type: role
           content_object:
-            name: 2nd organization
+            name: Satellite
             type: organization
         - name: Project Admin
           type: role
           content_object:
-            name: Testing
+            name: Satellite
             type: organization
     natural_key:
       organization:
-        name: Testing
+        name: Satellite
         type: organization
       name: team1
       type: team

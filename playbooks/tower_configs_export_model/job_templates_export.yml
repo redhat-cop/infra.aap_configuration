@@ -36,13 +36,13 @@ tower_templates:
     webhook_credential: null
     inventory:
       organization:
-        name: Testing
+        name: Satellite
         type: organization
       name: Testing Inventory
       type: inventory
     project:
       organization:
-        name: Testing
+        name: Satellite
         type: organization
       name: Tower Config
       type: project
@@ -61,14 +61,14 @@ tower_templates:
       notification_templates_success: []
       notification_templates_error:
         - organization:
-            name: Testing
+            name: Satellite
             type: organization
-          name: Slack_for_testing
+          name: irc-satqe-chat-notification
           type: notification_template
       survey_spec: {}
     natural_key:
       organization:
-        name: Testing
+        name: Satellite
         type: organization
       name: No Survey Template no vars
       type: job_template
@@ -108,13 +108,13 @@ tower_templates:
     webhook_credential: null
     inventory:
       organization:
-        name: Testing
+        name: Satellite
         type: organization
       name: Testing Inventory
       type: inventory
     project:
       organization:
-        name: Testing
+        name: Satellite
         type: organization
       name: Tower Config Testing
       type: project
@@ -137,9 +137,9 @@ tower_templates:
       notification_templates_success: []
       notification_templates_error:
         - organization:
-            name: Testing
+            name: Satellite
             type: organization
-          name: Slack_for_testing
+          name: irc-satqe-chat-notification
           type: notification_template
       survey_spec:
         name: Basic Survey
@@ -182,7 +182,7 @@ tower_templates:
             type: multiselect
     natural_key:
       organization:
-        name: Testing
+        name: Satellite
         type: organization
       name: Survey Template with vars no org
       type: job_template
@@ -222,13 +222,13 @@ tower_templates:
     webhook_credential: null
     inventory:
       organization:
-        name: Testing
+        name: Satellite
         type: organization
       name: Testing Inventory
       type: inventory
     project:
       organization:
-        name: Testing
+        name: Satellite
         type: organization
       name: Tower Config
       type: project
@@ -247,14 +247,14 @@ tower_templates:
       notification_templates_success: []
       notification_templates_error:
         - organization:
-            name: Testing
+            name: Satellite
             type: organization
-          name: Slack_for_testing
+          name: irc-satqe-chat-notification
           type: notification_template
       survey_spec: {}
     natural_key:
       organization:
-        name: Testing
+        name: Satellite
         type: organization
       name: workflow_test_template
       type: job_template
