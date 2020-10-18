@@ -3,7 +3,7 @@ tower_teams:
   - name: team1
     description: ''
     organization:
-      name: Testing
+      name: Satellite
       type: organization
     related:
       roles:
