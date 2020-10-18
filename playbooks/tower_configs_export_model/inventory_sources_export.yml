@@ -4,7 +4,6 @@ tower_inventory_sources:
     description: ''
     source: scm
     source_path: /test.yml
-    source_script: null
     source_regions: ''
     instance_filters: ''
     group_by: ''
