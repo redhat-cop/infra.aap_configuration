@@ -1,58 +1,12 @@
 ---
 tower_user_accounts:
-  - username: admin
-    first_name: ''
-    last_name: ''
-    email: root@localhost
-    is_superuser: true
-    is_system_auditor: false
-    related:
-      roles:
-        - name: Admin
-          type: role
-          content_object:
-            organization:
-              name: Default
-              type: organization
-            name: AWX-Collection-tests-tower_workflow_job_template-jt1
-            type: job_template
-        - name: Admin
-          type: role
-          content_object:
-            organization:
-              name: Default
-              type: organization
-            name: AWX-Collection-tests-tower_workflow_job_template-jt2
-            type: job_template
-        - name: Admin
-          type: role
-          content_object:
-            organization:
-              name: Default
-              type: organization
-            name: test_linked_template
-            type: job_template
-        - name: Admin
-          type: role
-          content_object:
-            organization: null
-            name: Demo Credential
-            credential_type:
-              name: Machine
-              kind: ssh
-              type: credential_type
-            type: credential
-        - name: System Administrator
-          type: role
-    natural_key:
-      username: admin
-      type: user
   - username: AWX-Collection-tests-tower_role-user
     first_name: Joe
     last_name: User
     email: joe@example.org
     is_superuser: false
     is_system_auditor: false
+    password: tower_password
     related:
       roles:
         - name: Execute
@@ -72,6 +26,7 @@ tower_user_accounts:
     email: joe@example.org
     is_superuser: false
     is_system_auditor: false
+    password: tower_password
     related:
       roles: []
     natural_key:
