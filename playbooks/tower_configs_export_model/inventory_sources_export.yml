@@ -4,7 +4,6 @@ inventory_sources:
   description: ''
   source: scm
   source_path: "/test.yml"
-  source_script:
   source_vars: ''
   credential:
   source_regions: ''
