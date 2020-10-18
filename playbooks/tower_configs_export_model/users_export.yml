@@ -1,5 +1,5 @@
 ---
-users:
+tower_user_accounts:
   - username: admin
     first_name: ''
     last_name: ''
