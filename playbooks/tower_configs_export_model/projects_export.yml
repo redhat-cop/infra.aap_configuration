@@ -30,7 +30,7 @@ tower_projects:
       type: notification_template
   natural_key:
     organization:
-      name: Testing
+      name: Satellite
       type: organization
     name: Tower Config Testing
     type: project
@@ -64,7 +64,7 @@ tower_projects:
       type: notification_template
   natural_key:
     organization:
-      name: Testing
+      name: Satellite
       type: organization
     name: Tower Config
     type: project
