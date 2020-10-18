@@ -43,7 +43,7 @@
     webhook_service:                "{{ tower_templates_item.webhook_service | default(omit) }}"
     webhook_credential:             "{{ tower_templates_item.webhook_credential | default(omit) }}"
     scm_branch:                     "{{ tower_templates_item.scm_branch | default(omit) }}"
-    labels:                         "{{ tower_templates_item.labels | default(tower_templates_item.related.labels | default(omit) | map(attribute='name') | list ) }}"
+    labels:                         "{{ tower_templates_item.labels | default(tower_templates_item.related.labels | default([]) | map(attribute='name') | list ) }}"
     state:                          "{{ tower_templates_item.state | default(tower_state | default('present')) }}"
     notification_templates_started: "{{ tower_templates_item.notification_templates_started | default(tower_templates_item.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
     notification_templates_success: "{{ tower_templates_item.notification_templates_success | default(tower_templates_item.related.notification_templates_success | default([]) | map(attribute='name') | list ) }}"
