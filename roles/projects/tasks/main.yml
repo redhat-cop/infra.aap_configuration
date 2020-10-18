@@ -16,7 +16,6 @@
     scm_update_cache_timeout:       "{{ tower_projects_item.scm_update_cache_timeout | default(omit) }}"
     allow_override:                 "{{ tower_projects_item.allow_override | default(omit) }}"
     job_timeout:                    "{{ tower_projects_item.job_timeout | default(tower_projects_item.timeout | default(omit)) }}"
-    job_timeout:                    "{{ tower_projects_item.job_timeout | default(omit) }}"
     custom_virtualenv:              "{{ tower_projects_item.custom_virtualenv | default(omit) }}"
     organization:                   "{{ workflow_loop_var.organization.name | default( workflow_loop_var.organization ) }}"
     state:                          "{{ tower_projects_item.state | default(tower_state | default('present')) }}"
