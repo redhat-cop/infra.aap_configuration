@@ -1,5 +1,5 @@
 ---
-job_templates:
+tower_templates:
   - name: No Survey Template no vars
     description: ''
     job_type: run
