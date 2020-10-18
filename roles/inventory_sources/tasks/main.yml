@@ -21,7 +21,7 @@
     verbosity:                            "{{ source.verbosity | default(omit) }}"
     update_on_launch:                     "{{ source.update_on_launch | default(omit) }}"
     update_cache_timeout:                 "{{ source.update_cache_timeout | default(omit) }}"
-    source_project:                       "{{ source.inventory.source_project.name | default( source.source_project ) }}"
+    source_project:                       "{{ source.inventory.source_project.name | default( source.source_project | default(omit)) }}"
     update_on_project_update:             "{{ source.update_on_project_update | default(omit) }}"
     state:                                "{{ source.state | default(tower_state | default('present')) }}"
     notification_templates_started:       "{{ source.notification_templates_started | default(source.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
