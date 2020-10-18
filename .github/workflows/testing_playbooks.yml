@@ -1,3 +1,4 @@
+---
 name: Run Test Playbooks
 
 on: [push, pull_request]
