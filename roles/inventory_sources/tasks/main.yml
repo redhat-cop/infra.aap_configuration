@@ -1,29 +1,29 @@
 ---
 - name: Add an inventory source
   awx.awx.tower_inventory_source:
-    name:                                 "{{ tower_inventory_sources.name }}"  # REQUIRED
-    new_name:                             "{{ tower_inventory_sources.new_name | default(omit) }}"
-    description:                          "{{ tower_inventory_sources.description | default(omit) }}"
-    inventory:                            "{{ tower_inventory_sources.inventory.inventory.name | default( tower_inventory_sources.inventory ) }}" # REQUIRED
-    organization:                         "{{ tower_inventory_sources.inventory.organization.name | default( tower_inventory_sources.organization | default(omit)) }}"
-    source:                               "{{ tower_inventory_sources.source }}"  # REQUIRED
-    source_path:                          "{{ tower_inventory_sources.source_path | default(omit) }}"
-    source_script:                        "{{ tower_inventory_sources.source_script | default(omit) }}"
-    source_vars:                          "{{ tower_inventory_sources.source_vars | default(omit) }}"
-    credential:                           "{{ tower_inventory_sources.credential | default(omit) }}"
-    overwrite:                            "{{ tower_inventory_sources.overwrite | default(omit) }}"
-    overwrite_vars:                       "{{ tower_inventory_sources.overwrite_vars | default(omit) }}"
-    custom_virtualenv:                    "{{ tower_inventory_sources.custom_virtualenv | default(omit) }}"
-    timeout:                              "{{ tower_inventory_sources.timeout | default(omit) }}"
-    verbosity:                            "{{ tower_inventory_sources.verbosity | default(omit) }}"
-    update_on_launch:                     "{{ tower_inventory_sources.update_on_launch | default(omit) }}"
-    update_cache_timeout:                 "{{ tower_inventory_sources.update_cache_timeout | default(omit) }}"
-    source_project:                       "{{ tower_inventory_sources.inventory.source_project.name | default( tower_inventory_sources.source_project | default(omit)) }}"
-    update_on_project_update:             "{{ tower_inventory_sources.update_on_project_update | default(omit) }}"
-    state:                                "{{ tower_inventory_sources.state | default(tower_state | default('present')) }}"
-    notification_templates_started:       "{{ tower_inventory_sources.notification_templates_started | default(tower_inventory_sources.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
-    notification_templates_success:       "{{ tower_inventory_sources.notification_templates_success | default(tower_inventory_sources.related.notification_templates_success | default([]) | map(attribute='name') | list ) }}"
-    notification_templates_error:         "{{ tower_inventory_sources.notification_templates_error | default(tower_inventory_sources.related.notification_templates_error | default([]) | map(attribute='name') | list ) }}"
+    name:                                 "{{ tower_inventory_sources[0].name }}"  # REQUIRED
+    new_name:                             "{{ tower_inventory_sources[0].new_name | default(omit) }}"
+    description:                          "{{ tower_inventory_sources[0].description | default(omit) }}"
+    inventory:                            "{{ tower_inventory_sources[0].inventory.inventory.name | default( tower_inventory_sources[0].inventory ) }}" # REQUIRED
+    organization:                         "{{ tower_inventory_sources[0].inventory.organization.name | default( tower_inventory_sources[0].organization | default(omit)) }}"
+    source:                               "{{ tower_inventory_sources[0].source }}"  # REQUIRED
+    source_path:                          "{{ tower_inventory_sources[0].source_path | default(omit) }}"
+    source_script:                        "{{ tower_inventory_sources[0].source_script | default(omit) }}"
+    source_vars:                          "{{ tower_inventory_sources[0].source_vars | default(omit) }}"
+    credential:                           "{{ tower_inventory_sources[0].credential | default(omit) }}"
+    overwrite:                            "{{ tower_inventory_sources[0].overwrite | default(omit) }}"
+    overwrite_vars:                       "{{ tower_inventory_sources[0].overwrite_vars | default(omit) }}"
+    custom_virtualenv:                    "{{ tower_inventory_sources[0].custom_virtualenv | default(omit) }}"
+    timeout:                              "{{ tower_inventory_sources[0].timeout | default(omit) }}"
+    verbosity:                            "{{ tower_inventory_sources[0].verbosity | default(omit) }}"
+    update_on_launch:                     "{{ tower_inventory_sources[0].update_on_launch | default(omit) }}"
+    update_cache_timeout:                 "{{ tower_inventory_sources[0].update_cache_timeout | default(omit) }}"
+    source_project:                       "{{ tower_inventory_sources[0].inventory.source_project.name | default( tower_inventory_sources[0].source_project | default(omit)) }}"
+    update_on_project_update:             "{{ tower_inventory_sources[0].update_on_project_update | default(omit) }}"
+    state:                                "{{ tower_inventory_sources[0].state | default(tower_state | default('present')) }}"
+    notification_templates_started:       "{{ tower_inventory_sources[0].notification_templates_started | default(tower_inventory_sources[0].related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
+    notification_templates_success:       "{{ tower_inventory_sources[0].notification_templates_success | default(tower_inventory_sources[0].related.notification_templates_success | default([]) | map(attribute='name') | list ) }}"
+    notification_templates_error:         "{{ tower_inventory_sources[0].notification_templates_error | default(tower_inventory_sources[0].related.notification_templates_error | default([]) | map(attribute='name') | list ) }}"
     tower_config_file:                    "{{ tower_config_file | default(omit) }}"
     tower_host:                           "{{ tower_hostname | default(omit) }}"
     tower_username:                       "{{ tower_username | default(omit) }}"
