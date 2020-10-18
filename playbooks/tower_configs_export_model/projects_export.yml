@@ -16,7 +16,7 @@ tower_projects:
   allow_override: false
   custom_virtualenv:
   organization:
-    name: Testing
+    name: Satellite
     type: organization
   related:
     schedules: []
@@ -24,7 +24,7 @@ tower_projects:
     notification_templates_success: []
     notification_templates_error:
     - organization:
-        name: Testing
+        name: Satellite
         type: organization
       name: Slack_for_testing
       type: notification_template
@@ -50,7 +50,7 @@ tower_projects:
   allow_override: false
   custom_virtualenv:
   organization:
-    name: Testing
+    name: Satellite
     type: organization
   related:
     schedules: []
@@ -58,7 +58,7 @@ tower_projects:
     notification_templates_success: []
     notification_templates_error:
     - organization:
-        name: Testing
+        name: Satellite
         type: organization
       name: Slack_for_testing
       type: notification_template

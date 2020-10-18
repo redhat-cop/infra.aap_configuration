@@ -1,5 +1,5 @@
 ---
-inventory_sources:
+tower_inventory_sources:
   - name: test
     description: ''
     source: scm

@@ -34,7 +34,7 @@ jobs:
         with:
           url: 'http://localhost/api/v2/ping'
           responseCode: 200
-          timeout: 600000  # Wait max 10 mins for response
+          timeout: 300000  # Wait max 5 mins for response.
           interval: 3000
 
       - name: "Install Galaxy dependencies"
