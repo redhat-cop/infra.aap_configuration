@@ -25,4 +25,4 @@
     - {role: projects, when: tower_projects is defined, tags: projects}
     - {role: job_templates, when: tower_templates is defined, tags: job_templates}
     - {role: workflow_job_templates, when: tower_workflows is defined}
-    - {role: notification_templates, when: tower_notification_templates is defined, tags: notification_templates}
+    - {role: notification_templates, when: tower_notifications is defined, tags: notification_templates}
