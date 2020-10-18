@@ -5,7 +5,7 @@
     new_name:                             "{{ source.new_name | default(omit) }}"
     description:                          "{{ source.description | default(omit) }}"
     inventory:                            "{{ source.inventory }}"  # REQUIRED
-    organization:                         "{{ source.inventory.organization.name | default( source.organization ) }}"
+    organization:                         "{{ source.inventory.organization.name | default( source.organization | default(omit)) }}"
     source:                               "{{ source.source }}"  # REQUIRED
     source_path:                          "{{ source.source_path | default(omit) }}"
     source_script:                        "{{ source.source_script | default(omit) }}"
