@@ -9,7 +9,6 @@ tower_projects:
   scm_refspec: ''
   scm_clean: false
   scm_delete_on_update: false
-  credential:
   timeout: 0
   scm_update_on_launch: false
   scm_update_cache_timeout: 0
@@ -43,7 +42,6 @@ tower_projects:
   scm_refspec: ''
   scm_clean: false
   scm_delete_on_update: false
-  credential:
   timeout: 0
   scm_update_on_launch: false
   scm_update_cache_timeout: 0
