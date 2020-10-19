@@ -4,7 +4,7 @@
     name:                "{{ team.name }}"
     new_name:            "{{ team.new_name | default(omit) }}"
     description:         "{{ team.description | default(omit) }}"
-    organization:        "{{ team.organization }}"
+    organization:        "{{ team.organization.name | default( team.organization ) }}"
     state:               "{{ team.state | default(tower_state | default('present')) }}"
     tower_config_file:   "{{ team.tower_config_file | default(omit) }}"
     tower_host:          "{{ tower_hostname | default(omit) }}"

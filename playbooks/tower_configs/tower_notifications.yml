@@ -1,5 +1,5 @@
 ---
-tower_notification_templates:
+tower_notifications:
   - name: irc-satqe-chat-notification
     description: Notify us on job in IRC!
     organization: Satellite

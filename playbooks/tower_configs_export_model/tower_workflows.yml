@@ -18,10 +18,10 @@ tower_workflows:
     related:
       schedules: []
       labels:
-      - name: Prod
-        organization:
-          name: Default
-          type: organization
+        - name: Prod
+          organization:
+            name: Default
+            type: organization
       workflow_nodes:
         - inventory:
           scm_branch:

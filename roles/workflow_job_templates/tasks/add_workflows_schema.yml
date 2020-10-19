@@ -12,6 +12,7 @@
     limit:                          "{{ workflow_loop_node.limit | default (omit) }}"
     diff_mode:                      "{{ workflow_loop_node.diff_mode | default (false) }}"
     verbosity:                      "{{ workflow_loop_node.verbosity | default (omit) }}"
+    credentials:                    "{{ workflow_loop_node.credentials | default(workflow_loop_node.related.credentials | default([]) | map(attribute='name') | list ) }}"
     workflow_job_template:          "{{ workflow_loop_node.workflow_job_template.name | default( workflow_loop_node.workflow_job_template | default (omit) ) }}"
     unified_job_template :          "{{ workflow_loop_node.unified_job_template.name | default( workflow_loop_node.unified_job_template ) }}"  # Run Job template
     workflow :                      "{{ workflow_loop_var.name }}"        # Workflow job template name to associate with

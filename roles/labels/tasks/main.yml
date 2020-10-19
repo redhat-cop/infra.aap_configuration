@@ -1,5 +1,5 @@
 ---
-- name: Add an label to tower
+- name: Add a label to tower
   awx.awx.tower_label:
     name:                                 "{{ label.name }}"  # REQUIRED
     new_name:                             "{{ label.new_name | default(omit) }}"
