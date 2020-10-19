@@ -192,7 +192,7 @@ tower_templates:
     forks: 0
     limit: ''
     verbosity: 0
-    extra_vars: 'empty_var: nothing'
+    extra_vars: '{"empty_var": "nothing"}'
     job_tags: ''
     force_handlers: false
     skip_tags: ''
