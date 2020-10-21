@@ -25,6 +25,14 @@ jobs:
       - name: Install ansible-base and changelog
         run: pip install ansible antsibull-changelog
 
+      - name: Publish to galaxy
+        run: ansible-playbook .github/workflow-config/release.yml
+          -e namespace=${{ github.repository_owner }}
+          -e github_tag=${{ github.ref }}
+          -e api_key=${{ secrets.ANSIBLE_GALAXY_APIKEY }}
+          -e collection_repo=https://github.com/${{ github.repository }}
+          --skip-tags=install,cleanup -vv
+
       - name: Create Pull Request
         id: prcreate
         uses: peter-evans/create-pull-request@v3
@@ -48,11 +56,3 @@ jobs:
             changelog
             automated pr
           draft: false
-
-      - name: Publish to galaxy
-        run: ansible-playbook .github/workflow-config/release.yml
-          -e namespace=${{ github.repository_owner }}
-          -e github_tag=${{ github.ref }}
-          -e api_key=${{ secrets.ANSIBLE_GALAXY_APIKEY }}
-          -e collection_repo=https://github.com/${{ github.repository }}
-          --skip-tags=install,cleanup -vv
