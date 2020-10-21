@@ -1,14 +1,12 @@
 # Ansible Tower Export Documentation
 
 ## Description
-This is documentation on how to use a the Tower export commands in development. All commands are subject to change.
+This is documentation on how to use a the Tower export commands in development.
 
 This command for awx allows you to export all available endpoints for tower for use in import, use in your own templates, for backup and many other uses.
 
 ## Installation
-clone https://github.com/john-westcott-iv/awx/tree/import-export-collection
-cd awxkit
-sudo pip3 install -r requirements.txt
+pip install awxkit
 
 ## Basic command options
 awx export --conf.host https://localhost --conf.username admin --conf.password ******** --conf.insecure --help

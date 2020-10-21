@@ -1,5 +1,5 @@
 ---
-projects:
+tower_projects:
 - name: Tower Config Testing
   description: ''
   local_path: _48__tower_config_testing
@@ -9,14 +9,13 @@ projects:
   scm_refspec: ''
   scm_clean: false
   scm_delete_on_update: false
-  credential:
   timeout: 0
   scm_update_on_launch: false
   scm_update_cache_timeout: 0
   allow_override: false
   custom_virtualenv:
   organization:
-    name: Testing
+    name: Satellite
     type: organization
   related:
     schedules: []
@@ -24,13 +23,13 @@ projects:
     notification_templates_success: []
     notification_templates_error:
     - organization:
-        name: Testing
+        name: Satellite
         type: organization
-      name: Slack_for_testing
+      name: irc-satqe-chat-notification
       type: notification_template
   natural_key:
     organization:
-      name: Testing
+      name: Satellite
       type: organization
     name: Tower Config Testing
     type: project
@@ -43,14 +42,13 @@ projects:
   scm_refspec: ''
   scm_clean: false
   scm_delete_on_update: false
-  credential:
   timeout: 0
   scm_update_on_launch: false
   scm_update_cache_timeout: 0
   allow_override: false
   custom_virtualenv:
   organization:
-    name: Testing
+    name: Satellite
     type: organization
   related:
     schedules: []
@@ -58,13 +56,13 @@ projects:
     notification_templates_success: []
     notification_templates_error:
     - organization:
-        name: Testing
+        name: Satellite
         type: organization
-      name: Slack_for_testing
+      name: irc-satqe-chat-notification
       type: notification_template
   natural_key:
     organization:
-      name: Testing
+      name: Satellite
       type: organization
     name: Tower Config
     type: project
