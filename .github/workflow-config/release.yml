@@ -1,7 +1,7 @@
 ---
 - name: release collection
   hosts: localhost
-  gather_facts: no
+  gather_facts: False
   connection: local
   vars:
     collection_namespace: "{{ namespace  | lower | regex_replace('-','_') }}"
