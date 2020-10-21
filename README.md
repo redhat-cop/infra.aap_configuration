@@ -69,6 +69,10 @@ Tower token module would be invoked with this code:
 
 ```
 
+### Tower Export
+The awx command line can export json that is compatable with this collection.
+More details can be found [here](playbooks/tower_configs_export_model/README.md)
+
 ### See Also:
 
 * [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for more details.
