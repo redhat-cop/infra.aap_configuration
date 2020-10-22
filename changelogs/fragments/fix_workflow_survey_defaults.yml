@@ -1,0 +1,5 @@
+---
+minor_changes:
+  - updated tower workflows related role `workflow_job_templates`
+    to include `survey_enabled` defaulting to `false` which
+    is a module default and `omit` the `survey_spec` if not passed.
