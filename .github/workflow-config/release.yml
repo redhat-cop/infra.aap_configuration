@@ -19,7 +19,7 @@
 
     - name: Update changelog
       command:
-        cmd: antsibull-changelog release --version {{ collection_version }}
+        cmd: antsibull-changelog release --version {{ collection_version }} -vv
         chdir: "{{ repo_base_dir }}"
 
     - name: build collection

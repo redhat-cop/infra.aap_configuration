@@ -1,6 +1,6 @@
 ---
 breaking_changes:
-  - Removed depreciated options in inventory sources role: source_regions, instance_filters, group_by
+  - Removed depreciated options in inventory sources role (source_regions, instance_filters, group_by)
 major_changes:
   - Updated Roles to use the tower_export model from the awx command line.
   - credential_types Updated to use the tower_export model from the awx command line.
