@@ -31,7 +31,7 @@ jobs:
           -e github_tag=${{ github.ref }}
           -e api_key=${{ secrets.ANSIBLE_GALAXY_APIKEY }}
           -e collection_repo=https://github.com/${{ github.repository }}
-          --skip-tags=install,cleanup
+          --skip-tags=install,cleanup -vv
 
       - name: Create Pull Request
         id: prcreate
