@@ -76,3 +76,5 @@ releases:
     - notif_update.yml
     - tower_export_update.yml
     release_date: '2020-10-22'
+  1.0.1:
+    release_date: '2020-10-23'

@@ -5,6 +5,9 @@ redhat_cop.tower_configuration Release Notes
 .. contents:: Topics
 
 
+v1.0.1
+======
+
 v1.0.0
 ======
 
