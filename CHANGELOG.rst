@@ -34,6 +34,9 @@ Breaking Changes / Porting Guide
 - Removed depreciated options in inventory sources role (source_regions, instance_filters, group_by)
 - Renamed notifications role to notification_templates role as in awx.awx:15.0. The variable is not tower_notification_templates.
 
+v0.9.2
+======
+
 v0.2.1
 ======
 
