@@ -20,7 +20,7 @@ author: "Sean Sullivan (@sean-m-sullivan)"
 short_description: create, update, or destroy Automation Hub Namespace.
 description:
     - Create, update, or destroy Automation Hub Namespace. See
-      U(https://www.ansible.com/tower) for an overview.
+      U(https://www.ansible.com/) for an overview.
 options:
     name:
       description:
