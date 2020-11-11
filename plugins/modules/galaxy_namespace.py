@@ -154,19 +154,12 @@ def main():
     # Check that Links and groups works with this.
     new_fields['name'] = new_name if new_name else (module.get_item_name(existing_item) if existing_item else name)
     for field_name in (
-        'description', 'company', 'email', 'avatar_url', 'resources',
+        'description', 'company', 'email', 'avatar_url', 'resources', 'links', 'groups',
     ):
         field_val = module.params.get(field_name)
         if field_val is not None:
             new_fields[field_name] = field_val
 
-    # Special treatment of links and groups parameter
-    links = module.params.get('links')
-    if links is not None:
-        new_fields['links'] = links
-    groups = module.params.get('groups')
-    if groups is not None:
-        new_fields['groups'] = groups
     # If the state was present and we can let the module build or update the existing item, this will return on its own
     module.create_or_update_if_needed(
         existing_item, new_fields,
