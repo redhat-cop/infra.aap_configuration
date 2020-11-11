@@ -6,14 +6,15 @@
   tasks:
     - name: set namespace collections
       ansible.galaxy.galaxy_namespace:
-        name: redhat2
+        name: abc123
         company: Redhat
         email: user@example.com
         avatar_url: https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo.svg
         description: string
-#        links:
-#          - name: "homepage"
-#            url: "http://www.google.com"
+        resources: "# Redhat\nA Namespace test with changes"
+        links:
+          - name: "New_Google"
+            url: "http://www.google.com"
         groups:
           - name: system:partner-engineers
             object_permissions:

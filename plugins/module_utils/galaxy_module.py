@@ -40,6 +40,7 @@ class GalaxyModule(AnsibleModule):
     }
     IDENTITY_FIELDS = {
     }
+    ENCRYPTED_STRING = "$encrypted$"
     host = '127.0.0.1'
     verify_ssl = True
     oauth_token = None
@@ -94,6 +95,11 @@ class GalaxyModule(AnsibleModule):
             gethostbyname(hostname)
         except Exception as e:
             self.fail_json(msg="Unable to resolve galaxy host ({1}): {0}".format(hostname, e))
+
+        if 'update_secrets' in self.params:
+            self.update_secrets = self.params.pop('update_secrets')
+        else:
+            self.update_secrets = True
 
     def build_url(self, endpoint, query_params=None):
         # Make sure we start with /api/vX
@@ -262,6 +268,7 @@ class GalaxyModule(AnsibleModule):
                 for asset in response['json']['data']:
                     if str(asset['id']) == name_or_id:
                         return self.existing_item_add_url(asset, endpoint)
+
             # We got > 1 and either didn't find something by ID (which means multiple names)
             # Or we weren't running with a or search and just got back too many to begin with.
             self.fail_wanted_one(response, endpoint, new_kwargs.get('data'))
@@ -270,7 +277,7 @@ class GalaxyModule(AnsibleModule):
 
     def existing_item_add_url(self, existing_item, endpoint):
         # Add url and type to response as its missing in current iteration of Automation Hub.
-        existing_item['url'] = self.build_url(endpoint).geturl()[len(self.host):]
+        existing_item['url'] = "{0}{1}/".format(self.build_url(endpoint).geturl()[len(self.host):], existing_item['name'])
         existing_item['type'] = endpoint
         return existing_item
 
@@ -386,7 +393,7 @@ class GalaxyModule(AnsibleModule):
                         self.json_output['name'] = response['json'][key]
                 self.json_output['id'] = response['json']['id']
                 self.json_output['changed'] = True
-                item_url = response['json']['url']
+                item_url = "{0}{1}/".format(self.build_url(endpoint).geturl()[len(self.host):], new_item['name'])
             else:
                 if 'json' in response and '__all__' in response['json']:
                     self.fail_json(msg="Unable to create {0} {1}: {2}".format(item_type, item_name, response['json']['__all__'][0]))
@@ -420,7 +427,6 @@ class GalaxyModule(AnsibleModule):
         # Note: common error codes from the Tower API can cause the module to fail
         response = None
         if existing_item:
-            self.fail_json(msg="Unable to process update of item due to missing data {0}".format(existing_item))
             # If we have an item, we can see if it needs an update
             try:
                 item_url = existing_item['url']
@@ -435,8 +441,10 @@ class GalaxyModule(AnsibleModule):
 
             # If we decided the item needs to be updated, update it
             self.json_output['id'] = item_id
+            self.json_output['name'] = item_name
+            self.json_output['type'] = item_type
             if needs_patch:
-                response = self.patch_endpoint(item_url, **{'data': new_item})
+                response = self.put_endpoint(item_url, **{'data': new_item})
                 if response['status_code'] == 200:
                     # compare apples-to-apples, old API data to new API data
                     # but do so considering the fields given in parameters
@@ -514,6 +522,14 @@ class GalaxyModule(AnsibleModule):
 
         return self.make_request('PATCH', endpoint, **kwargs)
 
+    def put_endpoint(self, endpoint, *args, **kwargs):
+        # Handle check mode
+        if self.check_mode:
+            self.json_output['changed'] = True
+            self.exit_json(**self.json_output)
+
+        return self.make_request('PUT', endpoint, **kwargs)
+
     def get_all_endpoint(self, endpoint, *args, **kwargs):
         response = self.get_endpoint(endpoint, *args, **kwargs)
         if 'next' not in response['json']:
@@ -544,3 +560,44 @@ class GalaxyModule(AnsibleModule):
             response=sample,
             total_results=response['json']['meta']['count']
         )
+
+    def objects_could_be_different(self, old, new, field_set=None, warning=False):
+        if field_set is None:
+            field_set = set(fd for fd in new.keys() if fd not in ('modified', 'related', 'summary_fields'))
+        for field in field_set:
+            new_field = new.get(field, None)
+            old_field = old.get(field, None)
+            if old_field != new_field:
+                if self.update_secrets or (not self.fields_could_be_same(old_field, new_field)):
+                    return True  # Something doesn't match, or something might not match
+            elif self.has_encrypted_values(new_field) or field not in new:
+                if self.update_secrets or (not self.fields_could_be_same(old_field, new_field)):
+                    # case of 'field not in new' - user password write-only field that API will not display
+                    self._encrypted_changed_warning(field, old, warning=warning)
+                    return True
+        return False
+
+    @staticmethod
+    def has_encrypted_values(obj):
+        """Returns True if JSON-like python content in obj has $encrypted$
+        anywhere in the data as a value
+        """
+        if isinstance(obj, dict):
+            for val in obj.values():
+                if GalaxyModule.has_encrypted_values(val):
+                    return True
+        elif isinstance(obj, list):
+            for val in obj:
+                if GalaxyModule.has_encrypted_values(val):
+                    return True
+        elif obj == GalaxyModule.ENCRYPTED_STRING:
+            return True
+        return False
+
+    def _encrypted_changed_warning(self, field, old, warning=False):
+        if not warning:
+            return
+        self.warn(
+            'The field {0} of {1} {2} has encrypted data and may inaccurately report task is changed.'.format(
+                field, old.get('type', 'unknown'), old.get('id', 'unknown')
+            ))
