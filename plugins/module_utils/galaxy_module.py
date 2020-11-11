@@ -38,6 +38,8 @@ class GalaxyModule(AnsibleModule):
         'verify_ssl': 'validate_certs',
         'oauth_token': 'galaxy_token',
     }
+    IDENTITY_FIELDS = {
+    }
     host = '127.0.0.1'
     verify_ssl = True
     oauth_token = None
@@ -57,10 +59,9 @@ class GalaxyModule(AnsibleModule):
 
         if direct_params is not None:
             self.params = direct_params
-        else:
-            super(GalaxyModule, self).__init__(argument_spec=full_argspec, direct_params=direct_params,
-                                                error_callback=error_callback, warn_callback=warn_callback, **kwargs)
-            self.session = Request(cookies=CookieJar(), validate_certs=self.verify_ssl)
+#        else:
+        super(GalaxyModule, self).__init__(argument_spec=full_argspec, **kwargs)
+        self.session = Request(cookies=CookieJar(), validate_certs=self.verify_ssl)
 
         # Parameters specified on command line will override settings in any config
         for short_param, long_param in self.short_params.items():
@@ -205,26 +206,6 @@ class GalaxyModule(AnsibleModule):
         except(Exception) as e:
             self.fail_json(msg="There was an unknown error when trying to connect to {2}: {0} {1}".format(type(e).__name__, e, url.geturl()))
 
-        if not self.version_checked:
-            # In PY2 we get back an HTTPResponse object but PY2 is returning an addinfourl
-            # First try to get the headers in PY3 format and then drop down to PY2.
-            try:
-                tower_type = response.getheader('X-API-Product-Name', None)
-                tower_version = response.getheader('X-API-Product-Version', None)
-            except Exception:
-                tower_type = response.info().getheader('X-API-Product-Name', None)
-                tower_version = response.info().getheader('X-API-Product-Version', None)
-
-            if self._COLLECTION_TYPE not in self.collection_to_version or self.collection_to_version[self._COLLECTION_TYPE] != tower_type:
-                self.warn("You are using the {0} version of this collection but connecting to {1}".format(
-                    self._COLLECTION_TYPE, tower_type
-                ))
-            elif self._COLLECTION_VERSION != tower_version:
-                self.warn("You are running collection version {0} but connecting to tower version {1}".format(
-                    self._COLLECTION_VERSION, tower_version
-                ))
-            self.version_checked = True
-
         response_body = ''
         try:
             response_body = response.read()
@@ -267,25 +248,31 @@ class GalaxyModule(AnsibleModule):
                 fail_msg += ', detail: {0}'.format(response['json']['detail'])
             self.fail_json(msg=fail_msg)
 
-        if 'count' not in response['json'] or 'results' not in response['json']:
-            self.fail_json(msg="The endpoint did not provide count and results")
+        if 'count' not in response['json']['meta'] or 'data' not in response['json']:
+            self.fail_json(msg="The endpoint did not provide count and results.")
 
-        if response['json']['count'] == 0:
+        if response['json']['meta']['count'] == 0:
             if allow_none:
                 return None
             else:
                 self.fail_wanted_one(response, endpoint, new_kwargs.get('data'))
-        elif response['json']['count'] > 1:
+        elif response['json']['meta']['count'] > 1:
             if name_or_id:
                 # Since we did a name or ID search and got > 1 return something if the id matches
-                for asset in response['json']['results']:
+                for asset in response['json']['data']:
                     if str(asset['id']) == name_or_id:
-                        return asset
+                        return self.existing_item_add_url(asset, endpoint)
             # We got > 1 and either didn't find something by ID (which means multiple names)
             # Or we weren't running with a or search and just got back too many to begin with.
             self.fail_wanted_one(response, endpoint, new_kwargs.get('data'))
 
-        return response['json']['results'][0]
+        return self.existing_item_add_url(response['json']['data'][0], endpoint)
+
+    def existing_item_add_url(self, existing_item, endpoint):
+        # Add url and type to response as its missing in current iteration of Automation Hub.
+        existing_item['url'] = self.build_url(endpoint).geturl()[len(self.host):]
+        existing_item['type'] = endpoint
+        return existing_item
 
     def delete_if_needed(self, existing_item, on_delete=None, auto_exit=True):
         # This will exit from the module on its own.
@@ -433,7 +420,7 @@ class GalaxyModule(AnsibleModule):
         # Note: common error codes from the Tower API can cause the module to fail
         response = None
         if existing_item:
-
+            self.fail_json(msg="Unable to process update of item due to missing data {0}".format(existing_item))
             # If we have an item, we can see if it needs an update
             try:
                 item_url = existing_item['url']
@@ -542,3 +529,18 @@ class GalaxyModule(AnsibleModule):
             next_page = next_response['json']['next']
             response['json']['next'] = next_page
         return response
+
+    def fail_wanted_one(self, response, endpoint, query_params):
+        sample = response.copy()
+        if len(sample['json']['data']) > 1:
+            sample['json']['data'] = sample['json']['data'][:2] + ['...more results snipped...']
+        url = self.build_url(endpoint, query_params)
+        display_endpoint = url.geturl()[len(self.host):]  # truncate to not include the base URL
+        self.fail_json(
+            msg="Request to {0} returned {1} items, expected 1".format(
+                display_endpoint, response['json']['meta']['count']
+            ),
+            query=query_params,
+            response=sample,
+            total_results=response['json']['meta']['count']
+        )
