@@ -1,0 +1,27 @@
+- name: Launch VRF workflows
+  hosts: localhost
+  connection: local
+  gather_facts: false
+            
+  tasks:
+    - name: set namespace collections
+      ansible.galaxy.galaxy_namespace:
+        name: redhat1
+        company: Redhat
+        email: user@example.com
+        avatar_url: https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo.svg
+        description: string
+# Disabling links for now
+#        links:
+#          - name: "homepage"
+#            url: "http://www.google.com"
+        groups:
+          - name: system:partner-engineers
+            object_permissions:
+              - "change_namespace"
+              - "upload_to_namespace"
+      register: test
+      ignore_errors: true
+
+    - debug:
+        var: test
