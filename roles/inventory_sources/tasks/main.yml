@@ -34,5 +34,3 @@
   loop_control:
     loop_var: source
   no_log: "{{ tower_configuration_inventory_sources_secure_logging }}"
-  when: tower_inventory_sources is defined
-...
