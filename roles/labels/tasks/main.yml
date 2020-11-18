@@ -15,5 +15,3 @@
   loop_control:
     loop_var: label
   no_log: "{{ tower_configuration_labels_secure_logging }}"
-  when: tower_labels is defined
-...
