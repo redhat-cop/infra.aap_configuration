@@ -1,24 +1,23 @@
 ---
 - name: Add tower user
   awx.awx.tower_user:
-     auditor:             "{{ tower_user_accounts_item.is_auditor | default(tower_user_accounts_item.is_system_auditor | default('false')) }}"
-     username:            "{{ tower_user_accounts_item.user | default(tower_user_accounts_item.username) }}"
-     password:            "{{ tower_user_accounts_item.password | default('change_me') }}"
-     email:               "{{ tower_user_accounts_item.email | default('rhpds-admins@redhat.com') }}"
-     first_name:          "{{ tower_user_accounts_item.firstname | default(tower_user_accounts_item.first_name | default(omit)) }}"
-     last_name:           "{{ tower_user_accounts_item.lastname | default(tower_user_accounts_item.last_name | default(omit)) }}"
-     superuser:           "{{ tower_user_accounts_item.is_superuser | default('false') }}"
-     state:               "{{ tower_user_accounts_item.state | default(tower_state | default('present')) }}"
-     tower_host:          "{{ tower_hostname }}"
-     tower_username:      "{{ tower_username | default('admin') }}"
-     tower_password:      "{{ tower_password }}"
-     tower_oauthtoken:    "{{ tower_oauthtoken | default(omit) }}"
-     tower_verify_ssl:    "{{ tower_verify_ssl | default('false') }}"
-     tower_config_file:   "{{ tower_config_file | default(omit) }}"
+    auditor:             "{{ tower_user_accounts_item.is_auditor | default(tower_user_accounts_item.is_system_auditor | default('false')) }}"
+    username:            "{{ tower_user_accounts_item.user | default(tower_user_accounts_item.username) }}"
+    password:            "{{ tower_user_accounts_item.password | default('change_me') }}"
+    email:               "{{ tower_user_accounts_item.email | default('rhpds-admins@redhat.com') }}"
+    first_name:          "{{ tower_user_accounts_item.firstname | default(tower_user_accounts_item.first_name | default(omit)) }}"
+    last_name:           "{{ tower_user_accounts_item.lastname | default(tower_user_accounts_item.last_name | default(omit)) }}"
+    superuser:           "{{ tower_user_accounts_item.is_superuser | default('false') }}"
+    state:               "{{ tower_user_accounts_item.state | default(tower_state | default('present')) }}"
+    tower_host:          "{{ tower_hostname }}"
+    tower_username:      "{{ tower_username | default('admin') }}"
+    tower_password:      "{{ tower_password }}"
+    tower_oauthtoken:    "{{ tower_oauthtoken | default(omit) }}"
+    tower_verify_ssl:    "{{ tower_verify_ssl | default('false') }}"
+    tower_config_file:   "{{ tower_config_file | default(omit) }}"
   loop: "{{ tower_user_accounts }}"
   loop_control:
-     loop_var: tower_user_accounts_item
+    loop_var: tower_user_accounts_item
   no_log: "{{ tower_configuration_users_secure_logging }}"
-  when: tower_user_accounts is defined
   tags:
-     - tower-user-create
+    - tower-user-create

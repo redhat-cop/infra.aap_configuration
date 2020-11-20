@@ -23,4 +23,3 @@
   loop_control:
     loop_var: tower_rbac_item
   no_log: "{{ tower_configuration_rbac_secure_logging }}"
-  when: tower_rbac is defined
