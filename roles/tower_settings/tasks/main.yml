@@ -1,7 +1,7 @@
 ---
 # tasks file for tower_settings
 
-- name: Update Ansible Tower Settings as a List
+- name: Update Ansible Tower Settings from dictionary or list of dictionaries
   awx.awx.tower_settings:
     settings:            "{{ tower_setting_item.settings | default(omit) }}"
     name:                "{{ tower_setting_item.name | default(omit) }}"
