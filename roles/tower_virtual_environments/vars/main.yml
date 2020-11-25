@@ -1,4 +1,0 @@
----
-tower_venv_base_deps:
-  - "python-memcached"
-  - "psutil"
