@@ -17,7 +17,7 @@ tower_organizations: []
 #  custom_virtualenv: "/var/lib/awx/myvenv"  # optional, absolute path to custom virtualenv
 #  max_hosts: 0  # optional, integer
 #  galaxy_credentials: []  # optional
-#  notification_templates_approval: [] # optional, notification template names
+#  notification_templates_approvals: [] # optional, notification template names
 #  notification_templates_started: [] # optional, notification template names
 #  notification_templates_success: [] # optional, notification template names
 #  notification_templates_error: [] # optional, notification template names
