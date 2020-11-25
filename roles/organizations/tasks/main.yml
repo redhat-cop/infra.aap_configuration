@@ -6,7 +6,7 @@
     custom_virtualenv:                  "{{ tower_organizations_item.custom_virtualenv | default(omit) }}"
     max_hosts:                          "{{ tower_organizations_item.max_hosts | default(omit) }}"
     galaxy_credentials:                 "{{ tower_organizations_item.galaxy_credentials | default(omit) }}"
-    notification_templates_approval:     "{{ tower_organizations_item.notification_templates_approval | default(tower_organizations_item.related.notification_templates_approval | default([]) | map(attribute='name') | list ) }}"
+    notification_templates_approvals:     "{{ tower_organizations_item.notification_templates_approvals | default(tower_organizations_item.related.notification_templates_approvals | default([]) | map(attribute='name') | list ) }}"
     notification_templates_started:     "{{ tower_organizations_item.notification_templates_started | default(tower_organizations_item.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
     notification_templates_success:     "{{ tower_organizations_item.notification_templates_success | default(tower_organizations_item.related.notification_templates_success | default([]) | map(attribute='name') | list ) }}"
     notification_templates_error:       "{{ tower_organizations_item.notification_templates_error | default(tower_organizations_item.related.notification_templates_error | default([]) | map(attribute='name') | list ) }}"
