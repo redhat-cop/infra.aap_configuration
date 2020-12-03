@@ -15,6 +15,4 @@
   loop: "{{ tower_teams }}"
   loop_control:
     loop_var: team
-  when: tower_teams is defined
   no_log: "{{ tower_configuration_teams_secure_logging }}"
-...

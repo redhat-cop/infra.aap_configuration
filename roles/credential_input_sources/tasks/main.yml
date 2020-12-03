@@ -1,6 +1,5 @@
 ---
 
-# Create Job Template
 - name: Add Tower Credential Input Sources
   awx.awx.tower_credential_input_source:
     target_credential:              "{{ cred_input_src_item.target_credential }}"
@@ -19,4 +18,3 @@
   loop_control:
     loop_var: "cred_input_src_item"
   no_log: "{{ tower_configuration_credential_input_sources_secure_logging }}"
-  when: tower_credential_input_sources is defined

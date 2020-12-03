@@ -21,4 +21,3 @@
   loop_control:
     loop_var: "application_item"
   no_log: "{{ tower_configuration_applications_secure_logging }}"
-  when: tower_applications is defined
