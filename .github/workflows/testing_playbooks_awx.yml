@@ -45,6 +45,9 @@ jobs:
       - name: "Install dependencies"
         run: pip3 install -r .github/requirements.txt --user
 
+      - name: "Set path"
+        run: export PATH="/home/github/.local/bin:$PATH" >> ~/.bashrc 
+
       - name: Ansible Version
         run: ansible --version
 
