@@ -6,7 +6,7 @@ on: [push, pull_request]
 jobs:
   Integration-test:
 
-    runs-on: ubuntu-latest
+    runs-on: nothing
 
     steps:
       - name: "Checkout Project"

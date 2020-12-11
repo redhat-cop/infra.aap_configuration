@@ -1,0 +1,51 @@
+---
+name: Run Test Playbooks
+
+on: [push, pull_request]
+
+jobs:
+  Integration-test:
+
+    runs-on: [self-hosted, linux, awx]
+
+    steps:
+      - name: "Checkout Project"
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: "Clone AWX"
+        run: cd .github && git clone https://github.com/ansible/awx.git
+
+      - name: "Install dependencies"
+        run: pip install -r .github/requirements.txt
+
+      - name: Display Versions
+        run: which python && pip --version && ansible --version
+
+      - name: Install oc
+        uses: redhat-actions/oc-installer@v1
+        with:
+          version: '4.6'
+
+      - name: Authenticate and set context
+        uses: redhat-actions/oc-login@v1
+
+        with:
+          # URL to your OpenShift cluster.
+          # Refer to Step 2.
+          openshift_server_url: https://api.crc.testing:6443
+
+          # Credentials, if desired instead of token.
+          # Username and password override token if they are set.
+          openshift_username: ${{ secrets.OPENSHIFT_USER }}
+          openshift_password: ${{ secrets.OPENSHIFT_PASSWORD }}
+
+          # Disables SSL cert checking. Use this if you don't have the certificate authority data.
+          insecure_skip_tls_verify: true
+
+          # Optional - this sets your Kubernetes context's current namespace after logging in.
+          namespace: ${{ secrets.OPENSHIFT_AWX_NAMESPACE }}
