@@ -1,4 +1,4 @@
-FROM debian:buster-slim
+FROM myoung34/github-runner:latest
 
 ENV GITHUB_PAT ""
 ENV GITHUB_OWNER ""
