@@ -11,7 +11,7 @@
     tower_password:      "{{ tower_password | default(omit) }}"
     tower_username:      "{{ tower_username | default(omit) }}"
     tower_oauthtoken:    "{{ tower_oauthtoken | default(omit) }}"
-    validate_certs:      "{{ tower_validate_certs | default(omit) }}"
+    validate_certs:      "{{ tower_validate_certs | default('true') }}"
   loop: "{{ tower_teams }}"
   loop_control:
     loop_var: team
