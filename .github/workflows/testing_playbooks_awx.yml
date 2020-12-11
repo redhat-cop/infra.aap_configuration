@@ -45,6 +45,9 @@ jobs:
       - name: "Check dir for installer"
         run: ls .github/awx/installer/
 
+      - name: "Install dependencies"
+        run: pip3 install -r .github/requirements.txt
+
       - name: Ansible Version
         run: ansible --version
 
