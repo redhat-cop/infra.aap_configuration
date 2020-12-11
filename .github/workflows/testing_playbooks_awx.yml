@@ -54,12 +54,20 @@ jobs:
       - name: "Build AWX stack"
         run: cd .github/awx/installer && ansible-playbook -i openshift install.yml -e openshift_password=${{ secrets.OPENSHIFT_PASSWORD }} -e docker_registry_password=$(oc whoami -t)
 
+      - name: "Install Galaxy dependencies"
+        run: ansible-galaxy collection install -r .github/collections/requirements.yml
+
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '20s'
+
       - name: "Perform playbook tests"
         run: ansible-playbook playbooks/configure_tower.yml -e tower_hostname=http://https://awx-web-svc-awx-github.apps-crc.testing -e tower_username=admin -e tower_password=password
 
       - name: "Perform export model playbook tests"
         run: ansible-playbook playbooks/configure_tower_export_model.yml -e tower_hostname=http://localhost -e tower_username=admin -e tower_password=password
 
-      - name: "Delete Awx project"
-        run: oc delete project awx-github
-        if: ${{ always() }}
+#      - name: "Delete Awx project"
+#        run: oc delete project awx-github
+#        if: ${{ always() }}
