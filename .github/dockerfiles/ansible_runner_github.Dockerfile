@@ -12,6 +12,7 @@ RUN dnf makecache \
     python3-pip \
     sudo \
     which \
+    git \
     python3-dnf \
     curl jq passwd \
     openssh openssh-clients \

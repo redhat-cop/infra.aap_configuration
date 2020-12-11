@@ -49,4 +49,4 @@ jobs:
         run: ansible --version
 
       - name: "Build AWX stack"
-        run: cd .github/awx/installer && ansible-playbook -i openshift install.yml
+        run: cd .github/awx/installer && ansible-playbook -i openshift install.yml -e openshift_password=${{ secrets.OPENSHIFT_PASSWORD }} -e docker_registry_password=$(oc whoami -t)
