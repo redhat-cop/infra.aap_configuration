@@ -37,7 +37,7 @@ jobs:
           insecure_skip_tls_verify: true
 
       - name: "Create Awx project"
-        run: oc new-project ${{ secrets.OPENSHIFT_AWX_NAMESPACE }}
+        run: oc new-project awx-github
 
       - name: "Create Persistent Volume Claim"
         run: oc create -f .github/openshift_files/awx_pvc.yml
@@ -54,6 +54,12 @@ jobs:
       - name: "Build AWX stack"
         run: cd .github/awx/installer && ansible-playbook -i openshift install.yml -e openshift_password=${{ secrets.OPENSHIFT_PASSWORD }} -e docker_registry_password=$(oc whoami -t)
 
+      - name: "Perform playbook tests"
+        run: ansible-playbook playbooks/configure_tower.yml -e tower_hostname=http://https://awx-web-svc-awx-github.apps-crc.testing -e tower_username=admin -e tower_password=password
+
+      - name: "Perform export model playbook tests"
+        run: ansible-playbook playbooks/configure_tower_export_model.yml -e tower_hostname=http://localhost -e tower_username=admin -e tower_password=password
+
       - name: "Delete Awx project"
-        run: oc delete project ${{ secrets.OPENSHIFT_AWX_NAMESPACE }}
+        run: oc delete project awx-github
         if: ${{ always() }}
