@@ -43,10 +43,7 @@ jobs:
         run: cp .github/tower_install_inventories/openshift .github/awx/installer/openshift
 
       - name: "Install dependencies"
-        run: pip3 install -r .github/requirements.txt --user
-
-      - name: "Set path"
-        run: export PATH="/home/github/.local/bin:$PATH" >> ~/.bashrc 
+        run: pip3 install -r .github/requirements.txt
 
       - name: Ansible Version
         run: ansible --version
