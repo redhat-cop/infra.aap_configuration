@@ -23,9 +23,6 @@ jobs:
       - name: "Install dependencies"
         run: pip install -r .github/requirements.txt
 
-      - name: Display Versions
-        run: which python && pip --version && ansible --version
-
       - name: "Build AWX stack"
         run: cd .github/awx/installer && ansible-playbook -i inventory install.yml -e create_preload_data=false
 
