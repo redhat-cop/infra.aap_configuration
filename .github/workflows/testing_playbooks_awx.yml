@@ -56,3 +56,4 @@ jobs:
 
       - name: "Delete Awx project"
         run: oc delete project ${{ secrets.OPENSHIFT_AWX_NAMESPACE }}
+        if: ${{ always() }}
