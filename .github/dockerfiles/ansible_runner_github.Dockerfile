@@ -16,6 +16,7 @@ RUN apt-get update \
         git \
         jq \
         iputils-ping \
+        ansible \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && useradd -m github \
