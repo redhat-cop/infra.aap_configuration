@@ -12,19 +12,8 @@ jobs:
       - name: "Checkout Project"
         uses: actions/checkout@v2
 
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.8
-
       - name: "Clone AWX"
         run: cd .github && git clone https://github.com/ansible/awx.git
-
-      - name: "Install dependencies"
-        run: pip install -r .github/requirements.txt
-
-      - name: Display Versions
-        run: which python && pip --version && ansible --version
 
       - name: Install oc
         uses: redhat-actions/oc-installer@v1
