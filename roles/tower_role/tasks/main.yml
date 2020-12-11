@@ -26,7 +26,7 @@
     tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
     tower_host:                     "{{ tower_hostname }}"
     tower_config_file:              "{{ tower_config_file | default(omit) }}"
-    validate_certs:                 "{{ tower_validate_certs | default(omit) }}"
+    validate_certs:                 "{{ tower_validate_certs | default('true') }}"
   loop: "{{ tower_rbac }}"
   loop_control:
     loop_var: tower_rbac_item

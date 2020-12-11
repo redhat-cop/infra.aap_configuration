@@ -13,7 +13,7 @@
     tower_username:      "{{ tower_username | default('admin') }}"
     tower_password:      "{{ tower_password }}"
     tower_oauthtoken:    "{{ tower_oauthtoken | default(omit) }}"
-    tower_verify_ssl:    "{{ tower_verify_ssl | default('false') }}"
+    tower_verify_ssl:    "{{ tower_validate_certs | default('true') }}"
     tower_config_file:   "{{ tower_config_file | default(omit) }}"
   loop: "{{ tower_user_accounts }}"
   loop_control:

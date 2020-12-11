@@ -11,7 +11,7 @@
     tower_password:      "{{ tower_password | default(omit) }}"
     tower_username:      "{{ tower_username | default(omit) }}"
     tower_oauthtoken:    "{{ tower_oauthtoken | default(omit) }}"
-    validate_certs:      "{{ validate_certs | default('false') }}"
+    validate_certs:      "{{ tower_validate_certs | default('true') }}"
   # tower_settings must be either a dictionary/mapping or a list of dictionaries
   loop: "{{ tower_settings is mapping | ternary([tower_settings], tower_settings) }}"
   loop_control:
