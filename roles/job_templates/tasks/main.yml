@@ -58,4 +58,3 @@
   loop_control:
     loop_var: tower_templates_item
   no_log: "{{ tower_configuration_job_templates_secure_logging }}"
-  when: tower_templates is defined

@@ -41,9 +41,8 @@
     tower_password:                 "{{ tower_password | default(omit) }}"
     tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
     tower_config_file:              "{{ tower_config_file | default(omit) }}"
-    tower_verify_ssl:               "{{ tower_verify_ssl | default('false') }}"
+    validate_certs:                 "{{ validate_certs | default(tower_verify_ssl | default('false')) }}"
   loop: "{{ tower_notifications }}"
   loop_control:
     loop_var: tower_notifications_item
   no_log: "{{ tower_configuration_notifications_secure_logging }}"
-  when: tower_notifications is defined

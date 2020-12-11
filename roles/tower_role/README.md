@@ -37,12 +37,20 @@ The role defaults to False as normally the add rbac task does not include sensit
 |`team`|""|no|str|The team for which the role applies|
 |`role`|""|no|str (see note below)|The role which is applied to one of {`target_team`, `inventory`, `job_template`, `target_team`, `inventory`, `job_template`} for either `user` or `team` |
 |`target_team`|""|no|str|The team the role applies against|
+|`target_teams`|""|no|list|The teams the role applies against|
 |`inventory`|""|no|str|The inventory the role applies against|
+|`inventories`|""|no|list|The inventories the role applies against|
 |`job_template`|""|no|str|The job template the role applies against|
+|`job_templates`|""|no|list|The job templates the role applies against|
 |`workflow`|""|no|str|The workflow the role applies against|
+|`workflows`|""|no|list|The workflows the role applies against|
 |`credential`|""|no|str|The credential the role applies against|
+|`credentials`|""|no|list|The credentials the role applies against|
 |`organization`|""|no|str|The organization the role applies against|
+|`organizations`|""|no|list|The organizations the role applies against|
+|`lookup_organization`|""|no|str|Organization the inventories, job templates, projects, or workflows the items exists in.Used to help lookup the object, for organizaiton roles see organization. If not provided, will lookup by name only, which does not work with duplicates.|
 |`project`|""|no|str|The project the role applies against|
+|`projects`|""|no|list|The project the role applies against|
 |`state`|`present`|no|str|Desired state of the resource.|
 
 #### Role

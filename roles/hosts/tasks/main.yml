@@ -18,4 +18,3 @@
   loop_control:
     loop_var: tower_hosts_item
   no_log: "{{ tower_configuration_hosts_secure_logging }}"
-  when: tower_hosts is defined

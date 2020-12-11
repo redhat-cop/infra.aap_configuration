@@ -14,7 +14,8 @@
     verbosity:                      "{{ workflow_loop_node.verbosity | default (omit) }}"
     credentials:                    "{{ workflow_loop_node.credentials | default(workflow_loop_node.related.credentials | default([]) | map(attribute='name') | list ) }}"
     workflow_job_template:          "{{ workflow_loop_node.workflow_job_template.name | default( workflow_loop_node.workflow_job_template | default (omit) ) }}"
-    unified_job_template :          "{{ workflow_loop_node.unified_job_template.name | default( workflow_loop_node.unified_job_template ) }}"  # Run Job template
+    unified_job_template :          "{{ workflow_loop_node.unified_job_template.name | default( workflow_loop_node.unified_job_template | default (omit)) }}"  # Run Job template
+    approval_node:                  "{{ workflow_loop_node.approval_node | default (omit) }}"
     workflow :                      "{{ workflow_loop_var.name }}"        # Workflow job template name to associate with
     state:                          "{{ workflow_loop_node.state | default(tower_state | default('present')) }}"
     all_parents_must_converge :     "{{ workflow_loop_node.all_parents_must_converge | default (omit) }}"

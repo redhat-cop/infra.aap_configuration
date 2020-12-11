@@ -18,5 +18,4 @@
   loop: "{{ tower_inventories }}"
   loop_control:
     loop_var: inventory
-  when: tower_inventories is defined
-...
+  no_log: "{{ tower_configuration_inventories_secure_logging }}"
