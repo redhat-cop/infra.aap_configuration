@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: github-runner-awx
-        image: excalibrax/ansible_github_runner:v1
+        image: excalibrax/ansible_github_runner:latest
         imagePullPolicy: Always
         env:
         - name: GITHUB_OWNER
