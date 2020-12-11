@@ -42,9 +42,6 @@ jobs:
       - name: "Install dependencies"
         run: pip3 install -r .github/requirements.txt
 
-      - name: Display Versions
-        run: which python && pip3 --version && ansible --version
-
       - name: "Copy Awx inventory to install dir"
         run: cp .github/tower_install_inventories/openshift .github/awx/installer/openshift
 
