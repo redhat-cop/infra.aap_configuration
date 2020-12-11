@@ -43,7 +43,7 @@ jobs:
         run: cp .github/tower_install_inventories/openshift .github/awx/installer/openshift
 
       - name: "Install dependencies"
-        run: PYTHONUSERBASE=/usr/local/bin pip3 install -r .github/requirements.txt --user
+        run: pip3 install -r .github/requirements.txt --user
 
       - name: Ansible Version
         run: ansible --version
