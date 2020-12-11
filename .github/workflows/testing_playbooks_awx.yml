@@ -39,8 +39,8 @@ jobs:
           # Optional - this sets your Kubernetes context's current namespace after logging in.
           namespace: ${{ secrets.OPENSHIFT_AWX_NAMESPACE }}
 
-      - name: "Clone AWX"
-        run: cd .github && git clone https://github.com/ansible/awx.git
-
       - name: "Install dependencies"
         run: pip3 install -r .github/requirements.txt
+
+      - name: Display Versions
+        run: which python && pip --version && ansible --version
