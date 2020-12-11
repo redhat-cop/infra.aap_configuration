@@ -6,26 +6,21 @@ ENV GITHUB_REPOSITORY ""
 ENV RUNNER_WORKDIR "_work"
 ENV RUNNER_LABELS ""
 
-# Install pip and other requirements.
-RUN dnf makecache \
-  && dnf -y install \
-    python3-pip \
-    sudo \
-    which \
-    python3-dnf \
-    curl jq passwd \
-    openssh openssh-clients \
-  && dnf clean all
-
-RUN /usr/bin/python3 -m pip install ansible
-
-# Install Ansible inventory file.
-RUN mkdir -p /etc/ansible
-RUN echo -e '[local]\nlocalhost ansible_connection=local' > /etc/ansible/hosts
-
-RUN useradd -m github \
-    &&  usermod -aG wheel github \
-    &&  passwd -f -u github
+RUN apt-get update \
+    && apt-get install -y \
+        python3-pip \
+        sshpass \
+        openssh-client \
+        curl \
+        sudo \
+        git \
+        jq \
+        iputils-ping \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd -m github \
+    && usermod -aG sudo github \
+    && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER github
 WORKDIR /home/github
