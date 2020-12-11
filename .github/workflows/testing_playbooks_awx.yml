@@ -39,11 +39,14 @@ jobs:
           # Optional - this sets your Kubernetes context's current namespace after logging in.
           namespace: ${{ secrets.OPENSHIFT_AWX_NAMESPACE }}
 
-      - name: "Install dependencies"
-        run: pip3 install -r .github/requirements.txt
-
       - name: "Copy Awx inventory to install dir"
         run: cp .github/tower_install_inventories/openshift .github/awx/installer/openshift
+
+      - name: "Check dir for installer"
+        run: ls .github/awx/installer/
+
+      - name: Ansible Version
+        run: ansible --version
 
       - name: "Build AWX stack"
         run: cd .github/awx/installer && ansible-playbook -i openshift install.yml

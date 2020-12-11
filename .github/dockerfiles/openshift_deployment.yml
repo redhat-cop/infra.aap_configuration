@@ -29,4 +29,3 @@ spec:
             secretKeyRef:
               name: github-pat
               key: github-pat
-

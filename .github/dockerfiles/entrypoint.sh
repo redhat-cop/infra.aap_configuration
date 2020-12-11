@@ -38,4 +38,3 @@ trap 'remove; exit 143' TERM
 ./runsvc.sh "$*" &
 
 wait $!
-
