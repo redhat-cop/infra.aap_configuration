@@ -1,8 +1,8 @@
 ---
 name: Run AWX Openshift Test Playbooks
 
-on: published
-#on: [push, pull_request]
+on: [push, pull_request]
+
 jobs:
   Integration-test:
 
@@ -65,4 +65,8 @@ jobs:
 
       - name: "Delete Awx project"
         run: oc delete project awx-github
+        if: ${{ always() }}
+
+      - name: "Change project and delete this runner"
+        run: oc project ${{secrets.TOWER_VAULT_PASSWORD}} && POD=$(oc get pods -o custom-columns=POD:.metadata.name --no-headers | grep awx) && oc delete pod $POD
         if: ${{ always() }}
