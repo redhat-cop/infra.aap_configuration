@@ -46,7 +46,7 @@ jobs:
         run: ansible --version
 
       - name: "Install Galaxy dependencies"
-        run: ansible-galaxy collection install -r .github/collections/tower_requirements.yml
+        run: ansible-galaxy collection install -r .github/collections/requirements.yml
 
       - name: "Build Tower stack"
         run: ansible-playbook .github/playbooks/install_tower_ocp.yml -e openshift_project=tower-redhatcop-github
@@ -58,5 +58,5 @@ jobs:
         run: ansible-playbook playbooks/configure_tower_export_model.yml -e tower_hostname=https://awx-web-svc-tower-redhatcop-github.apps-crc.testing -e tower_username=admin -e tower_password=password
 
       - name: "Delete Tower project"
-        run: oc delete project tower-redhatcop
+        run: oc delete project tower-redhatcop-github
         if: ${{ always() }}

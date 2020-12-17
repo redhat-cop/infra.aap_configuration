@@ -1,8 +1,8 @@
 ---
 name: Run AWX Openshift Test Playbooks
 
-on: [push, pull_request]
-
+on: published
+#on: [push, pull_request]
 jobs:
   Integration-test:
 
