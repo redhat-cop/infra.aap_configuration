@@ -51,6 +51,9 @@ jobs:
         env:
           VAULT_KEY: ${{secrets.TOWER_VAULT_PASSWORD}}
 
+      - name: Decrypt manifest file
+        run: ansible-vault decrypt .github/openshift_files/manifest_redhat_cop_tower_configuration_manifest.zip --vault-password-file vault_id
+
       - name: "Build Tower stack"
         run: ansible-playbook .github/playbooks/install_tower_ocp.yml -e openshift_project=tower-redhatcop-github -e openshift_user=${{ secrets.OPENSHIFT_USER }} -e openshift_password=${{ secrets.OPENSHIFT_PASSWORD }} -e openshift_host=https://api.crc.testing:6443 -e openshift_skip_tls_verify=false -e tower_working_location=${{ github.workspace }} -e openshift_skip_tls_verify=true --vault-password-file vault_id
 
