@@ -49,7 +49,7 @@ jobs:
         run: ansible localhost -m shell -a 'type oc'
 
       - name: "Build Tower stack"
-        run: cd ${{ github.workspace }} && ls
+        run: ls
 
       - name: "Build Tower stack"
         run: cd ${{ github.workspace }} && ./setup_openshift.sh -e openshift_password=${{ secrets.OPENSHIFT_PASSWORD }} -- -v
