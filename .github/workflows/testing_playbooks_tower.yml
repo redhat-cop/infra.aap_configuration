@@ -45,6 +45,9 @@ jobs:
       - name: "Install Galaxy dependencies"
         run: ansible-galaxy collection install -r .github/collections/requirements.yml
 
+      - name: "Test OC command"
+        run: type oc
+
       - name: "Build Tower stack"
         run: ansible-playbook .github/playbooks/install_tower_ocp.yml -e openshift_project=tower-redhatcop-github -e openshift_user=${{ secrets.OPENSHIFT_USER }} -e openshift_password=${{ secrets.OPENSHIFT_PASSWORD }} -e openshift_host=https://api.crc.testing:6443 -e openshift_skip_tls_verify=false -e tower_working_location=/home/github
 
