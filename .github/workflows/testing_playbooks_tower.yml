@@ -49,7 +49,7 @@ jobs:
         run: 'echo "$VAULT_KEY" > vault_id'
         shell: bash
         env:
-          VAULT_KEY: ${{secrets.TOWER_VAULT_PASSWORD}}
+          VAULT_KEY: ${{ secrets.TOWER_VAULT_PASSWORD }}
 
       - name: Decrypt manifest file
         run: ansible-vault decrypt playbooks/tower_manifest/manifest_redhat_cop_tower_configuration_manifest.zip --vault-password-file vault_id
