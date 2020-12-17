@@ -13,6 +13,7 @@ RUN dnf makecache \
     sudo \
     which \
     git \
+    origin-clients \
     python3-dnf \
     curl jq passwd \
     openssh openssh-clients \

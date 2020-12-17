@@ -49,12 +49,6 @@ jobs:
         run: ansible localhost -m shell -a 'type oc'
 
       - name: "Build Tower stack"
-        run: ls
-
-      - name: "Build Tower stack"
-        run: cd ${{ github.workspace }} && ./setup_openshift.sh -e openshift_password=${{ secrets.OPENSHIFT_PASSWORD }} -- -v
-
-      - name: "Build Tower stack"
         run: ansible-playbook .github/playbooks/install_tower_ocp.yml -e openshift_project=tower-redhatcop-github -e openshift_user=${{ secrets.OPENSHIFT_USER }} -e openshift_password=${{ secrets.OPENSHIFT_PASSWORD }} -e openshift_host=https://api.crc.testing:6443 -e openshift_skip_tls_verify=false -e tower_working_location=${{ github.workspace }} -vvv
 
       - name: "Perform playbook tests"
