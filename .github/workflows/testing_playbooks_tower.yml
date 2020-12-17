@@ -57,6 +57,6 @@ jobs:
       - name: "Perform export model playbook tests"
         run: ansible-playbook playbooks/configure_tower_export_model.yml -e tower_hostname=https://awx-web-svc-tower-redhatcop-github.apps-crc.testing -e tower_username=admin -e tower_password=password
 
-      - name: "Delete Tower project"
-        run: oc delete project tower-redhatcop-github
-        if: ${{ always() }}
+#      - name: "Delete Tower project"
+#        run: oc delete project tower-redhatcop-github
+#        if: ${{ always() }}
