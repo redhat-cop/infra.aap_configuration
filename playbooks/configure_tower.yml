@@ -17,7 +17,7 @@
       tags:
         - always
   roles:
-    - {role: tower_license, when: tower_license is defined, tags: tower_license}
+    - {role: license, when: tower_license is defined, tags: tower_license}
     - {role: tower_settings, when: tower_settings is defined, tags: tower_settings}
     - {role: organizations, when: tower_organizations is defined, tags: organizations}
     - {role: labels, when: tower_labels is defined, tags: labels}
