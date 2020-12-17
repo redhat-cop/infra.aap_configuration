@@ -1,3 +1,4 @@
 ansible
 jmespath
 requests
+requests-oauthlib
