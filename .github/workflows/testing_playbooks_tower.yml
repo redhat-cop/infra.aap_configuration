@@ -46,10 +46,10 @@ jobs:
         run: ansible-galaxy collection install -r .github/collections/requirements.yml
 
       - name: "Test OC command"
-        run: echo $PATH
+        run: ansible localhost -m shell -a 'type oc'
 
       - name: "Build Tower stack"
-        run: ansible-playbook .github/playbooks/install_tower_ocp.yml -e openshift_project=tower-redhatcop-github -e openshift_user=${{ secrets.OPENSHIFT_USER }} -e openshift_password=${{ secrets.OPENSHIFT_PASSWORD }} -e openshift_host=https://api.crc.testing:6443 -e openshift_skip_tls_verify=false -e tower_working_location=/home/github
+        run: ansible-playbook .github/playbooks/install_tower_ocp.yml -e openshift_project=tower-redhatcop-github -e openshift_user=${{ secrets.OPENSHIFT_USER }} -e openshift_password=${{ secrets.OPENSHIFT_PASSWORD }} -e openshift_host=https://api.crc.testing:6443 -e openshift_skip_tls_verify=false -e tower_working_location=/home/github -vvv
 
       - name: "Perform playbook tests"
         run: ansible-playbook playbooks/configure_tower.yml -e tower_hostname=https://awx-web-svc-tower-redhatcop-github.apps-crc.testing -e tower_username=admin -e tower_password=password
