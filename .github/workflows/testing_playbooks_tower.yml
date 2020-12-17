@@ -45,7 +45,8 @@ jobs:
       - name: "Install Galaxy dependencies"
         run: ansible-galaxy collection install -r .github/collections/requirements.yml
 
-      - run: 'echo "$VAULT_KEY" > vault_id'
+      - name: Set ansible vault key
+        run: 'echo "$VAULT_KEY" > vault_id'
         shell: bash
         env:
           VAULT_KEY: ${{secrets.TOWER_VAULT_PASSWORD}}
