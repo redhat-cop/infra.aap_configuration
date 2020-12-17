@@ -20,7 +20,7 @@ spec:
         imagePullPolicy: Always
         env:
         - name: GITHUB_OWNER
-          value: redhat-cop
+          value: sean-m-sullivan
         - name: GITHUB_REPOSITORY
           value: tower_configuration
         - name: RUNNER_LABELS
