@@ -2,3 +2,4 @@ ansible
 jmespath
 requests
 requests-oauthlib
+openshift

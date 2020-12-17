@@ -36,9 +36,6 @@ jobs:
       - name: "Create Tower project"
         run: oc new-project tower-redhatcop-github
 
-      - name: "Create Persistent Volume Claim"
-        run: oc create -f .github/openshift_files/awx_pvc.yml
-
       - name: "Install dependencies"
         run: pip3 install -r .github/requirements.txt
 
