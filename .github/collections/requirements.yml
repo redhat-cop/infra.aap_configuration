@@ -2,3 +2,4 @@
 collections:
 - name: awx.awx
 - name: sean_m_sullivan.tower_utilities
+- name: redhat_cop.tower_utilities
