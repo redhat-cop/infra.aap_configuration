@@ -1,2 +1,3 @@
 ansible
 jmespath
+requests
