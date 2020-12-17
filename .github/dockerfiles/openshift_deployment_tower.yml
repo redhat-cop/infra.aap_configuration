@@ -1,30 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: github-runner-awx
+  name: github-runner-tower
   labels:
-    app: github-runner-awx
+    app: github-runner-tower
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: github-runner-awx
+      app: github-runner-tower
   template:
     metadata:
       labels:
-        app: github-runner-awx
+        app: github-runner-tower
     spec:
       containers:
-      - name: github-runner-awx
+      - name: github-runner-tower
         image: excalibrax/ansible_github_runner:latest
         imagePullPolicy: Always
         env:
         - name: GITHUB_OWNER
-          value: sean-m-sullivan
+          value: redhat-cop
         - name: GITHUB_REPOSITORY
           value: tower_configuration
         - name: RUNNER_LABELS
-          value: openshift,awx
+          value: openshift,tower
         - name: GITHUB_PAT # stored separately in a Kubernetes Secret
           valueFrom:
             secretKeyRef:

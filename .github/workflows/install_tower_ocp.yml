@@ -1,0 +1,10 @@
+---
+# Playbook to install Ansible Tower as a single node
+
+- name: Install Ansible Tower on OCP
+  hosts: localhost
+  become: true
+  vars:
+    tower_release_version: latest
+  roles:
+    - redhat_cop.tower_utilities.install_ocp
