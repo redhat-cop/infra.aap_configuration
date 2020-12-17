@@ -1,3 +1,3 @@
 tower_license:
-  manifest: "{{playbook_dir}}/.github/openshift_files/manifest_redhat_cop_tower_configuration_manifest.zip"
+  manifest: "{{playbook_dir}}/tower_manifest/manifest_redhat_cop_tower_configuration_manifest.zip"
   eula_accepted: true
