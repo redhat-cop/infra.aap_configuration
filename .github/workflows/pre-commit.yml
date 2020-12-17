@@ -3,7 +3,7 @@
 # See .github/workflow-config/.pre-commit-config.yml for what hooks are executed
 name: Yaml and Ansible Lint
 
- on: [push, pull_request]
+on: [push, pull_request]
 
 jobs:
   pre-commit:

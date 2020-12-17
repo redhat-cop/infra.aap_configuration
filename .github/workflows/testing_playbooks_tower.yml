@@ -68,5 +68,5 @@ jobs:
         if: ${{ always() }}
 
       - name: "Change project and delete this runner"
-        run: oc project ${{secrets.TOWER_VAULT_PASSWORD}} && POD=$(oc get pods -o custom-columns=POD:.metadata.name --no-headers | grep tower) && oc delete pod $POD
+        run: oc project ${{secrets.OPENSHIFT_RUNNER_PROJECT}} && POD=$(oc get pods -o custom-columns=POD:.metadata.name --no-headers | grep tower) && oc delete pod $POD
         if: ${{ always() }}
