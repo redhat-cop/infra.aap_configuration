@@ -8,4 +8,4 @@
   vars:
     tower_release_version: latest
   roles:
-    - sean_m_sullivan.tower_utilities.install_ocp
+    - redhat_cop.tower_utilities.install_ocp
