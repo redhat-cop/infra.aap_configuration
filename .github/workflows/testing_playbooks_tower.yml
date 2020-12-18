@@ -17,6 +17,18 @@ jobs:
         with:
           version: '4.6'
 
+      - name: Set ansible vault key
+        run: 'echo "$OPENSHIFT_PASSWORD" > openshift_password'
+        shell: bash
+        env:
+          OPENSHIFT_PASSWORD: ${{ secrets.OPENSHIFT_PASSWORD }}
+
+      - name: Set ansible vault key
+        run: 'echo "$OPENSHIFT_USER" > openshift_username'
+        shell: bash
+        env:
+          OPENSHIFT_USER: ${{ secrets.OPENSHIFT_USER }}
+
       - name: Authenticate and set context
         uses: redhat-actions/oc-login@v1
 
@@ -55,7 +67,7 @@ jobs:
         run: ansible-vault decrypt playbooks/tower_manifest/manifest_redhat_cop_tower_configuration_manifest.zip --vault-password-file vault_id
 
       - name: "Build Tower stack"
-        run: ansible-playbook .github/playbooks/install_tower_ocp.yml -e openshift_project=tower-redhatcop-github -e openshift_user=${{ secrets.OPENSHIFT_USER }} -e openshift_password=${{ secrets.OPENSHIFT_PASSWORD }} -e openshift_host=https://api.crc.testing:6443 -e openshift_skip_tls_verify=false -e tower_working_location=${{ github.workspace }} -e openshift_skip_tls_verify=true -e pre_tasks_install_packages=false --vault-password-file vault_id
+        run: ansible-playbook .github/playbooks/install_tower_ocp.yml -e openshift_project=tower-redhatcop-github -e openshift_user=${{ secrets.OPENSHIFT_USER }} -e openshift_password=${{ secrets.OPENSHIFT_PASSWORD }} -e openshift_host=https://api.crc.testing:6443 -e openshift_skip_tls_verify=false -e tower_working_location=${{ github.workspace }} -e openshift_skip_tls_verify=true -e pre_tasks_install_packages=false -vvv --vault-password-file vault_id 
 
       - name: "Perform playbook tests"
         run: ansible-playbook playbooks/configure_tower.yml -e tower_hostname=https://ansible-tower-web-svc-tower-redhatcop-github.apps-crc.testing -e tower_username=admin -e tower_password=password

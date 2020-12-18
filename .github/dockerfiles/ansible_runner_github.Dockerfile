@@ -13,6 +13,8 @@ RUN dnf makecache \
     sudo \
     which \
     git \
+    unzip \
+    tar \
     origin-clients \
     python3-dnf \
     curl jq passwd \
