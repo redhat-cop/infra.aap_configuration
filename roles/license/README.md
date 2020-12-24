@@ -32,7 +32,7 @@ tower_configuration_license_secure_logging defaults to the value of tower_config
 ### Variables
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`manifest`|""|yes|obj|file path to a Red Hat subscription manifest (a .zip file)|
+|`data`|""|yes|obj|The contents of the license file (Suggested usage with lookup plugin)|
 |`eula_accepted`|""|yes|bool|Whether to accept the End User License Agreement for Ansible Tower|
 
 For further details on fields see https://docs.ansible.com/ansible-tower/latest/html/userguide/credential_plugins.html
@@ -43,7 +43,7 @@ For further details on fields see https://docs.ansible.com/ansible-tower/latest/
 ---
 {
     "tower_license": {
-        "manifest": "{{ lookup('file', '/tmp/my_tower.license') }}",
+        "data": "{{ lookup('file', '/tmp/my_tower.license') }}",
         "eula_accepted": true
       }
 }
@@ -51,8 +51,8 @@ For further details on fields see https://docs.ansible.com/ansible-tower/latest/
 #### Yaml Example
 ```yaml
 ---
-tower_license:
-  manifest: "{{ lookup('file', '/tmp/my_tower.license') }}"
+tower_credential_input_sources:
+  data: "{{ lookup('file', '/tmp/my_tower.license') }}"
   eula_accepted: true
 ```
 
