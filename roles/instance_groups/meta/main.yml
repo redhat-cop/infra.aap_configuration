@@ -33,8 +33,8 @@ galaxy_info:
     - "ansibletower"
     - "tower"
     - "awx"
-    - instance_group
-    - instance_groups"
+    - instance
+    - instances
 
 dependencies: []
 # List your role dependencies here, one per line. Be sure to remove the '[]' above,
