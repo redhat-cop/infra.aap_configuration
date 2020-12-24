@@ -15,5 +15,5 @@ tower_configuration_license_secure_logging: "{{tower_configuration_secure_loggin
 
 # Example license datastructure but no sensible default.
 #tower_license:
-#  data: "{{ lookup('file', '/tmp/my_tower.license') }}"
+#  manifest: "{{ playbook_dir }}/tower_manifest/manifest_redhat_cop_tower_configuration_manifest.zip"
 #  eula_accepted: true  # must be true or role will fail

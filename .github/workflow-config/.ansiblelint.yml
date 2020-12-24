@@ -4,6 +4,8 @@
 # https://github.com/ansible/ansible-lint/issues/371
 # exclude_paths:
 #  - roles/master_role_example/
+exclude_paths:
+  - ${PWD}/roles/master_role_example/
 parseable: true
 use_default_rules: true
 # https://github.com/ansible/ansible-lint/issues/808
