@@ -1,0 +1,24 @@
+localhost ansible_connection=local ansible_python_interpreter="/usr/bin/env python3"
+
+[all:vars]
+
+dockerhub_base=ansible
+
+openshift_host=https://api.crc.testing:6443
+openshift_project=awx-github
+openshift_user=developer
+openshift_skip_tls_verify=True
+openshift_pg_pvc_name=awx-github-postgres
+
+pg_username=awx
+pg_password=awxpass
+pg_database=awx
+pg_port=5432
+
+
+admin_user=admin
+admin_password=password
+
+create_preload_data=false
+
+secret_key=awxsecret
