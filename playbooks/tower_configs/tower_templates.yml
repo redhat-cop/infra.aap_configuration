@@ -22,7 +22,7 @@ tower_templates:
     playbook: helloworld.yml
     ask_extra_vars: false
     concurrent_jobs_enabled: false
-    credentials: Demo Credential2
+    credentials: Demo Credential
     verbosity: 0
     inventory: localhost
 

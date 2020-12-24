@@ -4,7 +4,6 @@
   connection: local
   vars:
     workflow_job_templates_secure_logging: false
-    tower_validate_certs: false
   # Define following vars here, or in tower_configs/tower_auth.yml
   # tower_hostname: ansible-tower-web-svc-test-project.example.com
   # tower_username: admin

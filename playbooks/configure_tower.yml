@@ -2,8 +2,6 @@
 - name: Playbook to configure ansible tower post installation
   hosts: localhost
   connection: local
-  vars:
-    tower_validate_certs: false
   # Define following vars here, or in tower_configs/tower_auth.yml
   # tower_hostname: ansible-tower-web-svc-test-project.example.com
   # tower_username: admin
@@ -17,7 +15,6 @@
       tags:
         - always
   roles:
-    - {role: license, when: tower_license is defined, tags: tower_license}
     - {role: tower_settings, when: tower_settings is defined, tags: tower_settings}
     - {role: organizations, when: tower_organizations is defined, tags: organizations}
     - {role: labels, when: tower_labels is defined, tags: labels}
@@ -30,8 +27,8 @@
     - {role: inventories, when: tower_inventories is defined, tags: inventories}
     - {role: inventory_sources, when: tower_inventory_sources is defined, tags: inventory_sources}
     - {role: projects, when: tower_projects is defined, tags: projects}
-#    - {role: hosts, when: tower_hosts is defined, tags: hosts}
-#    - {role: groups, when: tower_groups is defined, tags: inventories}
+    - {role: hosts, when: tower_hosts is defined, tags: hosts}
+    - {role: groups, when: tower_groups is defined, tags: inventories}
     - {role: job_templates, when: tower_templates is defined, tags: job_templates}
     - {role: workflow_job_templates, when: tower_workflows is defined, tags: workflow_job_templates}
     - {role: schedules, when: tower_schedules is defined, tags: schedules}

@@ -1,0 +1,52 @@
+---
+name: Run Test Playbooks
+
+on: [push, pull_request]
+
+jobs:
+  Integration-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout Project"
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: "Clone AWX"
+        run: cd .github && git clone https://github.com/ansible/awx.git
+
+      - name: "Install dependencies"
+        run: pip install -r .github/requirements.txt
+
+      - name: Display Versions
+        run: which python && pip --version && ansible --version
+
+      - name: "Build AWX stack"
+        run: cd .github/awx/installer && ansible-playbook -i inventory install.yml -e create_preload_data=false
+
+      - name: "Wait for awx to be alive"
+        uses: nev7n/wait_for_response@v1
+        with:
+          url: 'http://localhost/api/v2/ping'
+          responseCode: 200
+          timeout: 300000  # Wait max 5 mins for response.
+          interval: 3000
+
+      - name: "Install Galaxy dependencies"
+        run: ansible-galaxy collection install -r .github/collections/requirements.yml
+
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '20s'
+
+      - name: "Perform playbook tests"
+        run: ansible-playbook playbooks/configure_tower.yml -e tower_hostname=http://localhost -e tower_username=admin -e tower_password=password
+
+      - name: "Perform export model playbook tests"
+        run: ansible-playbook playbooks/configure_tower_export_model.yml -e tower_hostname=http://localhost -e tower_username=admin -e tower_password=password

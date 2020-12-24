@@ -1,5 +1,4 @@
 ansible
+docker
+docker-compose
 jmespath
-requests
-requests-oauthlib
-openshift

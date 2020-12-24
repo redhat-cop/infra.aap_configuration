@@ -49,7 +49,7 @@ tower_templates:
       labels: []
       credentials:
         - organization: null
-          name: Demo Credential2
+          name: Demo Credential
           credential_type:
             name: Machine
             kind: ssh
@@ -124,7 +124,7 @@ tower_templates:
             type: organization
       credentials:
         - organization: null
-          name: Demo Credential2
+          name: Demo Credential
           credential_type:
             name: Machine
             kind: ssh
@@ -233,7 +233,7 @@ tower_templates:
       labels: []
       credentials:
         - organization: null
-          name: Demo Credential2
+          name: Demo Credential
           credential_type:
             name: Machine
             kind: ssh
