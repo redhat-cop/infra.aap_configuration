@@ -40,7 +40,7 @@ jobs:
         run: oc new-project awx-github
 
       - name: "Create Persistent Volume Claim"
-        run: oc create -f .github/openshift_files/awx_pvc.yml
+        run: oc create -f .github/openshift/awx_pvc.yml
 
       - name: "Copy Awx inventory to install dir"
         run: cp .github/tower_install_inventories/openshift_awx .github/awx/installer/openshift
