@@ -1,6 +1,6 @@
 ---
 - name: Add tower group
-  tower_group:
+  awx.awx.tower_group:
     name:                           "{{ tower_groups_item.name }}"
     new_name:                       "{{ tower_groups_item.new_name | default(omit) }}"
     description:                    "{{ tower_groups_item.description | default(omit) }}"

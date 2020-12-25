@@ -1,7 +1,7 @@
 ---
 
 - name: Add Tower Credential Input Sources
-  tower_credential_input_source:
+  awx.awx.tower_credential_input_source:
     target_credential:              "{{ cred_input_src_item.target_credential }}"
     input_field_name:               "{{ cred_input_src_item.input_field_name }}"
     source_credential:              "{{ cred_input_src_item.source_credential | default(omit) }}"

@@ -1,7 +1,7 @@
 ---
 
 - name: Create RBAC Entry
-  tower_role:
+  awx.awx.tower_role:
     user:                           "{{ tower_rbac_item.user | default(omit) }}"
     team:                           "{{ tower_rbac_item.team | default(omit) }}"
     role:                           "{{ tower_rbac_item.role }}"

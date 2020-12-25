@@ -1,6 +1,6 @@
 ---
 - name: Add an inventory source
-  tower_inventory_source:
+  awx.awx.tower_inventory_source:
     name:                                 "{{ source.name }}"  # REQUIRED
     new_name:                             "{{ source.new_name | default(omit) }}"
     description:                          "{{ source.description | default(omit) }}"
