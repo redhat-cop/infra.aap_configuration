@@ -1,7 +1,7 @@
 ---
 
 - name: Add Projects
-  tower_project:
+  awx.awx.tower_project:
     name:                           "{{ tower_projects_item.name }}"
     description:                    "{{ tower_projects_item.description | default(omit) }}"
     scm_type:                       "{{ tower_projects_item.scm_type }}"

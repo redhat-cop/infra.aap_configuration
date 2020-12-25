@@ -36,7 +36,7 @@ galaxy_info:
     - "configuration"
     - "application"
     - "applications"
-  
+
 collections:
   - awx.awx
   - ansible.tower

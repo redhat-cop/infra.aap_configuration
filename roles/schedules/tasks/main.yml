@@ -1,7 +1,7 @@
 ---
 
 - name: Add Tower Schedule
-  tower_schedule:
+  awx.awx.tower_schedule:
     name:                           "{{ schedule_item.name }}"
     new_name:                       "{{ schedule_item.new_name | default(omit) }}"
     description:                    "{{ schedule_item.description | default('') }}"

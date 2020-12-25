@@ -1,6 +1,6 @@
 ---
 - name: Add tower host
-  tower_host:
+  awx.awx.tower_host:
     name:              "{{ tower_hosts_item.name }}"
     new_name:          "{{ tower_hosts_item.new_name | default(omit) }}"
     description:       "{{ tower_hosts_item.description | default('') }}"
