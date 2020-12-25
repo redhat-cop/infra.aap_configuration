@@ -18,6 +18,11 @@
         extensions: ["yml"]
       tags:
         - always
+    - debug:
+        var: playbook_dir
+    - debug:
+        var: ansible_config_file
+
   roles:
     - {role: tower_settings, when: tower_settings is defined, tags: tower_settings}
     - {role: organizations, when: tower_organizations is defined, tags: organizations}
@@ -26,8 +31,8 @@
     - {role: teams, when: tower_teams is defined, tags: teams}
     - {role: credential_types, when: tower_credential_types is defined, tags: credential_types}
     - {role: credentials, when: tower_credentials is defined, tags: credentials}
-#    - {role: credential_input_sources, when: tower_credential_input_sources is defined, tags: credential_input_sources}
-#    - {role: applications, when: tower_applications is defined, tags: applications}
+    - {role: credential_input_sources, when: tower_credential_input_sources is defined, tags: credential_input_sources}
+    - {role: applications, when: tower_applications is defined, tags: applications}
     - {role: inventories, when: tower_inventories is defined, tags: inventories}
     - {role: inventory_sources, when: tower_inventory_sources is defined, tags: inventory_sources}
     - {role: projects, when: tower_projects is defined, tags: projects}
