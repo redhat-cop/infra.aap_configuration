@@ -23,17 +23,5 @@ repos:
         pass_filenames: false
         always_run: true
         entry: >-
-          ansible-config view -vvv
-  - repo: 'https://github.com/ansible/ansible-lint.git'
-    rev: v4.3.7
-    hooks:
-      # see discussions here about what arguments are used, and behavior
-      # https://github.com/ansible/ansible-lint/issues/649
-      # Roles will trigger an "unknown file type"
-      # https://github.com/ansible/ansible-lint/issues/808
-      - id: ansible-lint
-        pass_filenames: false
-        always_run: true
-        entry: >-
           ansible-lint -c .github/workflow-config/.ansiblelint.yml
           --exclude=roles/master_role_example
