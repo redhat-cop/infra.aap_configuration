@@ -17,6 +17,7 @@ jobs:
         sudo apt-add-repository --yes --update ppa:ansible/ansible
         sudo apt install ansible
         ansible-galaxy collection install -f -r .github/collections/requirements.yml
+        ansible-config view -vvv
     - name: Hack pre-commit
       # https://github.com/pre-commit/action/issues/44
       run: |
