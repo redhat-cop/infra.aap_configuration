@@ -13,7 +13,7 @@ repos:
         types:
           - yaml
   - repo: 'https://github.com/ansible/ansible-lint.git'
-    rev: v4.3.3
+    rev: v4.3.7
     hooks:
       # see discussions here about what arguments are used, and behavior
       # https://github.com/ansible/ansible-lint/issues/649
