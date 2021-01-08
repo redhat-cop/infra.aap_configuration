@@ -22,3 +22,7 @@ galaxy_info:
     - "inventory"
     - "inventories"
     - "source"
+
+collections:
+  - awx.awx
+  - ansible.tower
