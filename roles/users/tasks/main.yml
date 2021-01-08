@@ -8,6 +8,7 @@
     first_name:          "{{ tower_user_accounts_item.firstname | default(tower_user_accounts_item.first_name | default(omit)) }}"
     last_name:           "{{ tower_user_accounts_item.lastname | default(tower_user_accounts_item.last_name | default(omit)) }}"
     superuser:           "{{ tower_user_accounts_item.is_superuser | default('false') }}"
+    update_secrets:      "{{ tower_user_accounts_item.update_secrets | default('true') }}"
     state:               "{{ tower_user_accounts_item.state | default(tower_state | default('present')) }}"
     tower_host:          "{{ tower_hostname }}"
     tower_username:      "{{ tower_username | default('admin') }}"

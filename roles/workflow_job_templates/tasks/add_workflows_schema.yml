@@ -39,7 +39,7 @@
   awx.awx.tower_workflow_job_template_node:
     identifier:                     "{{ workflow_loop_node.identifier }}"
     workflow :                      "{{ workflow_loop_var.name }}"
-    always_nodes:                  "{{ workflow_loop_node.always_nodes | default( workflow_loop_node.related.always_nodes | json_query('[*].identifier') | default(omit) ) }}"  # Nodes to advance on success (green links) # noqa 204
+    always_nodes:                   "{{ workflow_loop_node.always_nodes | default( workflow_loop_node.related.always_nodes | json_query('[*].identifier') | default(omit) ) }}"  # Nodes to advance on success (green links) # noqa 204
     success_nodes:                  "{{ workflow_loop_node.success_nodes | default( workflow_loop_node.related.success_nodes | json_query('[*].identifier') | default(omit) ) }}"  # Nodes to advance on success (green links) # noqa 204
     failure_nodes:                  "{{ workflow_loop_node.failure_nodes | default( workflow_loop_node.related.failure_nodes | json_query('[*].identifier') | default(omit) ) }}"  # Nodes to advance on success (green links) # noqa 204
     state:                          "{{ workflow_loop_node.state | default(tower_state | default('present')) }}"

@@ -45,6 +45,7 @@ tower_configuration_credentials_secure_logging defaults to the value of tower_co
 |`user`|""|no|User that should own this credential. If provided, do not give either team or organization. |
 |`team`|""|no|Team that should own this credential. If provided, do not give either user or organization. |
 |`state`|`present`|no|Desired state of the resource.|
+|`update_secrets`|true|no|bool| True will always change password if user specifies password, even if API gives $encrypted$ for password. False will only set the password if other values change too.|
 
 ### Credential types
 |Credential types|

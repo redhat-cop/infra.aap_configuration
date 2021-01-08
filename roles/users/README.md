@@ -41,6 +41,7 @@ The role defaults to False as normally the add user task does not include sensit
 |`is_superuser`|false|no|bool|Whether the user is a superuser|
 |`is_auditor`|false|no|bool|Whether the user is an auditor|
 |`state`|`present`|no|str|Desired state of the resource.|
+|`update_secrets`|true|no|bool| True will always change password if user specifies password, even if API gives $encrypted$ for password. False will only set the password if other values change too.|
 
 ### Standard user Data Structure
 #### Json Example
