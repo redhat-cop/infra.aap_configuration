@@ -1,6 +1,6 @@
 # tower_configuration.credential_input_sources
 ## Description
-An Ansible Role to create Job Templates in Ansible Tower.
+An Ansible Role to create credential input sources in Ansible Tower, the below example is for Cyberark as an input source, change accordingly to match your input source type.
 
 ## Requirements
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
