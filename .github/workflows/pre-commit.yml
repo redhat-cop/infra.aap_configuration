@@ -18,10 +18,10 @@ jobs:
         sudo apt install ansible
         ansible-galaxy collection install -f -r .github/collections/requirements.yml
         ansible-config view -vvv
-        cp /home/runner/work/tower_configuration/tower_configuration/collections/ansible_collections/awx/awx/plugins /home/runner/work/tower_configuration/tower_configuration/
+        cp -r /home/runner/work/tower_configuration/tower_configuration/collections/ansible_collections/awx/awx/plugins /home/runner/work/tower_configuration/tower_configuration/
         tree /home/runner/work/tower_configuration/tower_configuration
     - name: Hack pre-commit
       # https://github.com/pre-commit/action/issues/44
       run: |
-        sudo cp -r .github/workflow-config/.pre-commit-config.yml .pre-commit-config.yaml
+        sudo cp .github/workflow-config/.pre-commit-config.yml .pre-commit-config.yaml
     - uses: pre-commit/action@v2.0.0
