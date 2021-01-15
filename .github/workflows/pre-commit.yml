@@ -23,5 +23,5 @@ jobs:
     - name: Hack pre-commit
       # https://github.com/pre-commit/action/issues/44
       run: |
-        sudo cp .github/workflow-config/.pre-commit-config.yml .pre-commit-config.yaml
+        sudo cp -r .github/workflow-config/.pre-commit-config.yml .pre-commit-config.yaml
     - uses: pre-commit/action@v2.0.0
