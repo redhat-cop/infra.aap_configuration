@@ -23,4 +23,8 @@ tower_user_accounts: []
 #  is_auditor: false  # optional, boolean
 #  state: present  # optional, choices: present, absent
 
+# if you're too lazy to give your users a password, this is the default they will get
+# set this variable to something false and there won't be a default password
+tower_user_default_password: "change_me"
+
 tower_configuration_users_secure_logging: "{{tower_configuration_secure_logging | default(false)}}"
