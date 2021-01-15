@@ -39,15 +39,6 @@ jobs:
       - name: "Create Awx project"
         run: oc new-project awx-github
 
-      - name: "Get Context"
-        run: kubectl config current-context
-
-      - name: "Get whoami"
-        run: oc whoami
-
-      - name: "Add Privledged user"
-        run: oc adm policy add-scc-to-user privileged system:serviceaccount:awx-github:awx
-
       - name: "Create Persistent Volume Claim"
         run: oc create -f .github/openshift/awx_pvc.yml
 
