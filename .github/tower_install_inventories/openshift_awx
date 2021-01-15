@@ -6,7 +6,7 @@ dockerhub_base=ansible
 
 openshift_host=https://api.crc.testing:6443
 openshift_project=awx-github
-openshift_user=developer
+openshift_user=kubeadmin
 openshift_skip_tls_verify=True
 openshift_pg_pvc_name=awx-github-postgres
 
