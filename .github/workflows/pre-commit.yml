@@ -16,7 +16,6 @@ jobs:
         sudo apt install software-properties-common
         sudo apt-add-repository --yes --update ppa:ansible/ansible
         sudo apt install ansible
-        sudo apt install tree
         ansible-galaxy collection install -f -r .github/collections/requirements.yml
         ansible-config view -vvv
         tree /home/runner/work/tower_configuration/tower_configuration
