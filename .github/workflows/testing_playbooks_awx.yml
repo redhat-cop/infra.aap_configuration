@@ -39,6 +39,9 @@ jobs:
       - name: "Create Awx project"
         run: oc new-project awx-github
 
+      - name: "Get Context"
+        run: kubectl config current-context
+
       - name: "Add Privledged user"
         run: oc adm policy add-scc-to-user privileged system:serviceaccount:awx-github:awx
 
