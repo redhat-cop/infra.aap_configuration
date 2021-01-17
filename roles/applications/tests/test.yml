@@ -3,6 +3,8 @@
   hosts: localhost
   connection: local
   gather_facts: false
+  collections:
+    - awx.awx
   pre_tasks:
     - name: Get token for use during play
       uri:

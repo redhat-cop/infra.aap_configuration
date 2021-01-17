@@ -1,5 +1,5 @@
 ---
-name: Run Test Playbooks
+name: Run Test Playbooks # noqa E911
 
 on: [push, pull_request]
 

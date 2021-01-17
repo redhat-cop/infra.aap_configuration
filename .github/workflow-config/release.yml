@@ -17,7 +17,7 @@
         src: "{{ repo_base_dir }}/galaxy.yml.j2"
         dest: "{{ repo_base_dir }}/galaxy.yml" # noqa 208
 
-    - name: Update changelog 
+    - name: Update changelog
       command:
         cmd: antsibull-changelog release --verbose --version {{ collection_version }} # noqa 301
         chdir: "{{ repo_base_dir }}"
@@ -31,13 +31,13 @@
 
     - name: install collection
       command:
-        cmd: "ansible-galaxy collection install {{ collection_namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz -p ~/.ansible/collections/" # noqa 301 
+        cmd: "ansible-galaxy collection install {{ collection_namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz -p ~/.ansible/collections/" # noqa 301
         chdir: "{{ repo_base_dir }}"
       tags: install
 
     - name: publish collection
       command:
-        cmd: "ansible-galaxy collection publish --api-key={{ api_key }} {{ collection_namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz"
+        cmd: "ansible-galaxy collection publish --api-key={{ api_key }} {{ collection_namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz" # noqa 301
         chdir: "{{ repo_base_dir }}"
       tags: publish
 
