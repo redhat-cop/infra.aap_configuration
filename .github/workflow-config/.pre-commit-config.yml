@@ -12,8 +12,8 @@ repos:
         entry: yamllint -c .github/workflow-config/.yamllint.yml
         types:
           - yaml
-  - repo: 'https://github.com/ansible/ansible-lint.git'
-    rev: v4.3.7
+  - repo: 'https://github.com/sean-m-sullivan/ansible-lint.git'
+    rev: v4.3.8
     hooks:
       # see discussions here about what arguments are used, and behavior
       # https://github.com/ansible/ansible-lint/issues/649
