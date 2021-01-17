@@ -3,7 +3,7 @@
 # Survey spec can be exported from existing job template using:
 # tower-cli job_template survey --name="my job template" -f yaml
 # https://github.com/ansible/tower-cli/blob/master/docs/source/cli_ref/usage/SURVEYS.rst
-tower_templates:
+tower_templates: # noqa 911
   - name: test-template-1
     description: created by Ansible Playbook
     job_type: run

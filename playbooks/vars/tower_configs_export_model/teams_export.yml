@@ -1,5 +1,5 @@
 ---
-tower_teams:
+tower_teams: # noqa 911
   - name: team1
     description: ''
     organization:

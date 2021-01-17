@@ -1,6 +1,6 @@
 ---
 # some sample SSH key
-ssh_private_key: |
+ssh_private_key: | # noqa 911
   -----BEGIN OPENSSH PRIVATE KEY-----
   b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn
   NhAAAAAwEAAQAAAYEAzt/4xDwWLbw1H1yTCmtgwVRiyW/XsFRULMGLhJADpFM4YsCQ10lV

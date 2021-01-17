@@ -1,6 +1,6 @@
 ---
 # Commented out content is serving as example for you to add new content.
-tower_inventories:
+tower_inventories: # noqa 911
   - name: localhost
     description: inventory for localhost
     organization: Satellite

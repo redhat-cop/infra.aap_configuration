@@ -1,5 +1,5 @@
 ---
-name: Run AWX Openshift Test Playbooks # noqa E911
+name: Run AWX Openshift Test Playbooks # noqa 911
 
 on: [push, pull_request]
 

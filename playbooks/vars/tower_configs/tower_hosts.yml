@@ -1,5 +1,5 @@
 ---
-tower_hosts:
+tower_hosts: # noqa 911
   - name: localhost
     inventory: localhost
     variables:

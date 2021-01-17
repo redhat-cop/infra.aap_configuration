@@ -1,5 +1,5 @@
 ---
-tower_projects:
+tower_projects: # noqa 911
   - name: Test Project
     scm_type: git
     scm_url: https://github.com/ansible/tower-example.git

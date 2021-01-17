@@ -1,5 +1,5 @@
 ---
-tower_workflows:
+tower_workflows: # noqa 911
   - name: Complicated workflow schema
     description: a complicated workflow
     extra_vars: {}

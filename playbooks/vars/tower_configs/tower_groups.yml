@@ -1,5 +1,5 @@
 ---
-tower_groups:
+tower_groups: # noqa 911
   - name: group1
     inventory: satlab-admin-inventory
     variables:

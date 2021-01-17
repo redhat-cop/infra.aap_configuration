@@ -1,5 +1,5 @@
 ---
-tower_projects:
+tower_projects: # noqa 911
 - name: Tower Config Testing
   description: ''
   local_path: _48__tower_config_testing

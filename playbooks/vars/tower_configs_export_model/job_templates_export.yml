@@ -1,5 +1,5 @@
 ---
-tower_templates:
+tower_templates: # noqa 911
   - name: No Survey Template no vars
     description: ''
     job_type: run

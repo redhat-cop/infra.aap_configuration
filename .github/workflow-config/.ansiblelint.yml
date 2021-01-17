@@ -16,6 +16,3 @@ skip_list:
   # (Disabled in June 2020)
   - '204'
   - YAML
-  - '911' # Ansible-lint confusing non playbooks with playbooks
-  - 911
-  - E911

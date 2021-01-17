@@ -1,5 +1,5 @@
 ---
-tower_applications:
+tower_applications: # noqa 911
   - name: tower_application-app1
     organization: Satellite
     authorization_grant_type: password

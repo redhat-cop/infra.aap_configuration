@@ -1,5 +1,5 @@
 ---
-tower_organizations:
+tower_organizations: # noqa 911
   - name: Satellite
     description: Satellite
     max_hosts: 0

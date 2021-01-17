@@ -1,5 +1,5 @@
 ---
-tower_notifications:
+tower_notifications: # noqa 911
   - name: irc-satqe-chat-notification
     description: Notify us on job in IRC!
     organization: Satellite
