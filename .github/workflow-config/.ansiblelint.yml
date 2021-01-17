@@ -6,6 +6,8 @@
 #  - roles/master_role_example/
 exclude_paths:
   - ${PWD}/roles/master_role_example/
+  - ${PWD}*requirements.yml
+  - ${PWD}/playbooks/vars/
 parseable: true
 use_default_rules: true
 # https://github.com/ansible/ansible-lint/issues/808
