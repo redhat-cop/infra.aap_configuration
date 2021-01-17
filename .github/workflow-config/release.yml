@@ -15,23 +15,23 @@
     - name: create galaxy.yml
       template:
         src: "{{ repo_base_dir }}/galaxy.yml.j2"
-        dest: "{{ repo_base_dir }}/galaxy.yml"
+        dest: "{{ repo_base_dir }}/galaxy.yml" # noqa 208
 
-    - name: Update changelog
+    - name: Update changelog 
       command:
-        cmd: antsibull-changelog release --verbose --version {{ collection_version }}
+        cmd: antsibull-changelog release --verbose --version {{ collection_version }} # noqa 301 
         chdir: "{{ repo_base_dir }}"
 
     - name: build collection
       command:
-        cmd: ansible-galaxy collection build
+        cmd: ansible-galaxy collection build # noqa 301 
         chdir: "{{ repo_base_dir }}"
         creates: "{{ repo_base_dir }}/{{ collection_namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz"
       tags: build
 
     - name: install collection
       command:
-        cmd: "ansible-galaxy collection install {{ collection_namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz -p ~/.ansible/collections/"
+        cmd: "ansible-galaxy collection install {{ collection_namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz -p ~/.ansible/collections/" # noqa 301 
         chdir: "{{ repo_base_dir }}"
       tags: install
 
