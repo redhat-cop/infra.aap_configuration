@@ -6,7 +6,7 @@
 
   # Bring in vaulted Ansible Tower secrets
   vars_files:
-    - "../var/tower-secrets.yml"
+    - ../tests/vars/tower-secrets.yml
 
   tasks:
 
