@@ -23,5 +23,5 @@ repos:
         pass_filenames: false
         always_run: true
         entry: >-
-          ansible-lint -c .github/workflow-config/.ansiblelint.yml
+          ansible-lint -vp -c .github/workflow-config/.ansiblelint.yml 
           --exclude=roles/master_role_example
