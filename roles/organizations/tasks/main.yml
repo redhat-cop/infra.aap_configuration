@@ -1,6 +1,6 @@
 ---
 - name: Add organizations
-  awx.awx.tower_organization:
+  tower_organization:
     name:                               "{{ tower_organizations_item.name }}"
     description:                        "{{ tower_organizations_item.description | default(omit) }}"
     custom_virtualenv:                  "{{ tower_organizations_item.custom_virtualenv | default(omit) }}"

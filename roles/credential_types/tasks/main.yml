@@ -1,6 +1,6 @@
 ---
 - name: Add Credential Types
-  awx.awx.tower_credential_type:
+  tower_credential_type:
     name:                           "{{ tower_credential_types_item.name }}"
     description:                    "{{ tower_credential_types_item.description | default(omit) }}"
     injectors:                      "{{ tower_credential_types_item.injectors | default(omit) | regex_replace('[ ]{2,}','') }}"
