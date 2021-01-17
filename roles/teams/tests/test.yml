@@ -25,4 +25,4 @@
         file: "configs/tower_teams.yml"
 
   roles:
-    - ../../tower_teams
+    - ../../teams

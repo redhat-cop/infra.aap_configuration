@@ -25,4 +25,4 @@
         file: "configs/tower-inventories.yml"
 
   roles:
-    - ../../tower_inventories
+    - ../../inventories
