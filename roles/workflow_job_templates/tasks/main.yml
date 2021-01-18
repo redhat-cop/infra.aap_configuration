@@ -20,7 +20,7 @@
     webhook_service:                    "{{ workflow_loop_var.webhook_service | default(omit) }}"
     webhook_credential:                 "{{ workflow_loop_var.webhook_credential.name | default(workflow_loop_var.webhook_credential | default(omit)) }}"
     survey_enabled:                     "{{ workflow_loop_var.survey_enabled | default('false') }}"
-    survey:                             "{{ workflow_loop_var.related.survey_spec | default( workflow_loop_var.survey_spec | default(omit)) }}"
+    survey:                             "{{ workflow_loop_var.related.survey_spec | default( workflow_loop_var.survey_spec | default( workflow_loop_var.survey | default(omit))) }}"
     state:                              "{{ workflow_loop_var.state | default(tower_state | default('present')) }}"
     notification_templates_started:     "{{ workflow_loop_var.notification_templates_started | default(workflow_loop_var.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
     notification_templates_success:     "{{ workflow_loop_var.notification_templates_success | default(workflow_loop_var.related.notification_templates_success | default([]) | map(attribute='name') | list ) }}"

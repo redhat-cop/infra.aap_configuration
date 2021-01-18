@@ -52,6 +52,7 @@ workflow_job_templates_secure_logging defaults to the value of tower_genie_secur
 |`state`|`present`|no|str|Desired state of the resource.|
 |`survey_enabled`|""|no|bool|Enable a survey on the job template.|
 |`survey_spec`|""|no|dict|JSON/YAML dict formatted survey definition.|
+|`survey`|""|no|dict|JSON/YAML dict formatted survey definition. Alias of survey_spec|
 |`webhook_service`|""|no|str|Service that webhook requests will be accepted from (github, gitlab)|
 |`webhook_credential`|""|no|str|Personal Access Token for posting back the status to the service API|
 
