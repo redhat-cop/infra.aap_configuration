@@ -65,7 +65,7 @@ tower_configuration_job_templates_secure_logging defaults to the value of tower_
 |`ask_credential_on_launch`|""|no|bool|Prompt user for credential on launch.|
 |`survey_enabled`|""|no|bool|Enable a survey on the job template.|
 |`survey_spec`|""|no|dict|JSON/YAML dict formatted survey definition.|
-|`survey_spec`|""|no|dict|JSON/YAML dict formatted survey definition. Alias of survey_spec|
+|`survey`|""|no|dict|JSON/YAML dict formatted survey definition. Alias of survey_spec|
 |`become_enabled`|""|no|bool|Activate privilege escalation.|
 |`allow_simultaneous`|""|no|bool|Allow simultaneous runs of the job template.|
 |`timeout`|""|no|int|Maximum time in seconds to wait for a job to finish (server-side).|
