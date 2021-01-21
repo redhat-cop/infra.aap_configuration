@@ -6,8 +6,66 @@
 #  - roles/master_role_example/
 exclude_paths:
   - ${PWD}/roles/master_role_example/
-  - ${PWD}*requirements.yml
-  - ${PWD}/playbooks/vars/
+  - ${PWD}/.github/workflows/testing_playbooks.yml
+  - ${PWD}/.github/workflows/testing_playbooks_awx.yml
+  - ${PWD}/playbooks/collections/requirements.yml
+  - ${PWD}/playbooks/vars/tower_configs/ssh_private_key.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_applications.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_auth.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_credential_input_sources.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_credential_types.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_credentials.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_groups.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_hosts.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_instance_groups.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_inventories.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_inventory_sources.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_labels.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_notifications.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_organizations.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_projects.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_rbac.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_schedule.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_settings.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_settings_individuale.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_teams.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_templates.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_user_accounts.yml
+  - ${PWD}/playbooks/vars/tower_configs/tower_workflows.yml
+  - ${PWD}/playbooks/vars/tower_configs_export_model/credential_types_export.yml
+  - ${PWD}/playbooks/vars/tower_configs_export_model/credentials_export.yml
+  - ${PWD}/playbooks/vars/tower_configs_export_model/inventory_export.yml
+  - ${PWD}/playbooks/vars/tower_configs_export_model/inventory_sources_export.yml
+  - ${PWD}/playbooks/vars/tower_configs_export_model/job_templates_export.yml
+  - ${PWD}/playbooks/vars/tower_configs_export_model/notifications_templates_export.yml
+  - ${PWD}/playbooks/vars/tower_configs_export_model/organizations_export.yml
+  - ${PWD}/playbooks/vars/tower_configs_export_model/projects_export.yml
+  - ${PWD}/playbooks/vars/tower_configs_export_model/teams_export.yml
+  - ${PWD}/playbooks/vars/tower_configs_export_model/tower_workflows.yml
+  - ${PWD}/playbooks/vars/tower_configs_export_model/users_export.yml
+  - ${PWD}/roles/applications/tests/collections/requirements.yml
+  - ${PWD}/roles/credential_input_sources/tests/collections/requirements.yml
+  - ${PWD}/roles/credential_types/tests/collections/requirements.yml
+  - ${PWD}/roles/credentials/tests/collections/requirements.yml
+  - ${PWD}/roles/groups/tests/collections/requirements.yml
+  - ${PWD}/roles/hosts/tests/collections/requirements.yml
+  - ${PWD}/roles/inventories/tests/configs/tower-inventories.yml
+  - ${PWD}/roles/inventory_sources/tests/configs/tower-inventory-sources.yml
+  - ${PWD}/roles/job_templates/tests/collections/requirements.yml
+  - ${PWD}/roles/labels/tests/configs/tower_labels.yml
+  - ${PWD}/roles/license/tests/collections/requirements.yml
+  - ${PWD}/roles/notification_templates/tests/collections/requirements.yml
+  - ${PWD}/roles/organizations/tests/collections/requirements.yml
+  - ${PWD}/roles/projects/tests/collections/requirements.yml
+  - ${PWD}/roles/schedules/tests/collections/requirements.yml
+  - ${PWD}/roles/teams/tests/configs/tower_teams.yml
+  - ${PWD}/roles/tower_role/tests/collections/requirements.yml
+  - ${PWD}/roles/tower_settings/tests/configs/tower_settings.yml
+  - ${PWD}/roles/users/tests/collections/requirements.yml
+  - ${PWD}/roles/workflow_job_templates/tests/collections/requirements.yml
+  - ${PWD}/roles/workflow_job_templates/tests/yaml/extra_vars.yaml
+  - ${PWD}/roles/workflow_job_templates/tests/yaml/tower_workflows.yml
+
 parseable: true
 use_default_rules: true
 # https://github.com/ansible/ansible-lint/issues/808
