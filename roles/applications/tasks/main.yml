@@ -2,7 +2,7 @@
 
 # Create Job Template
 - name: Add Tower Applications
-  tower_application:
+  tower_application: # noqa 998
     name:                           "{{ application_item.name }}"
     organization:                   "{{ application_item.organization }}"
     description:                    "{{ application_item.description | default('') }}"
