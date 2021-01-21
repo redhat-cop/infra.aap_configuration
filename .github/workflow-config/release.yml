@@ -25,9 +25,6 @@
       register: update_changelog
       changed_when: "update_changelog.rc != 2"
 
-    - debug:
-        var: update_changelog
-
     - name: build collection
       command:
         cmd: ansible-galaxy collection build
@@ -37,9 +34,6 @@
       changed_when: "build_result.rc != 2"
       tags: build
 
-    - debug:
-        var: build_result
-
     - name: install collection
       command:
         cmd: "ansible-galaxy collection install {{ collection_namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz -p ~/.ansible/collections/"
@@ -48,9 +42,6 @@
       changed_when: "install_result.rc != 2"
       tags: install
 
-    - debug:
-        var: install_result
-
     - name: publish collection
       command:
         cmd: "ansible-galaxy collection publish --api-key={{ api_key }} {{ collection_namespace }}-{{ collection_name }}-{{ collection_version }}.tar.gz"
@@ -58,9 +49,6 @@
       register: publish_result
       changed_when: "publish_result.rc != 2"
       tags: publish
-
-    - debug:
-        var: publish_result
 
     - name: remove galaxy.yml
       file:
