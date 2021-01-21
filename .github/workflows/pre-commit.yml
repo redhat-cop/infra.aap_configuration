@@ -16,11 +16,14 @@ jobs:
         sudo apt install software-properties-common
         sudo apt-add-repository --yes --update ppa:ansible/ansible
         pip install -Iv ansible==2.10.5
+        sudo apt install tree
         ansible-galaxy collection install -f -p .cache/collections -r .github/collections/requirements.yml
         ansible-config view -vvv
     - name: Hack pre-commit
       # https://github.com/pre-commit/action/issues/44
       run: |
         sudo cp .github/workflow-config/.pre-commit-config.yml .pre-commit-config.yaml
-        sudo apt install tree
-        tree
+    - name: Hack pre-commit
+      if: ${{ always() }}
+      run: |
+        tree .cache/collections
