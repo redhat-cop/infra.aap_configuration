@@ -23,3 +23,7 @@ jobs:
       run: |
         sudo cp .github/workflow-config/.pre-commit-config.yml .pre-commit-config.yaml
     - uses: pre-commit/action@v2.0.0
+    - name: Hack figure out files
+      run: |
+        sudo apt install tree
+        tree
