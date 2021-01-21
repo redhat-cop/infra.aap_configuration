@@ -1,4 +1,4 @@
----
+--- # noqa 911
 name: Run Test Playbooks # noqa 911
 
 # on: [push, pull_request]
