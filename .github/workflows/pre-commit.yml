@@ -19,7 +19,6 @@ jobs:
         ansible-galaxy collection install -f -r .github/collections/requirements.yml
         ansible-config view -vvv
         ANSIBLE_COLLECTIONS_PATHS='collections'
-        tree
     - name: Hack pre-commit
       # https://github.com/pre-commit/action/issues/44
       run: |
