@@ -16,7 +16,7 @@ jobs:
         sudo apt install software-properties-common
         sudo apt-add-repository --yes --update ppa:ansible/ansible
         pip install -Iv ansible==2.10.5
-        ansible-galaxy collection install -f -r .github/collections/requirements.yml
+        ansible-galaxy collection install -f -p .cache/collections -r .github/collections/requirements.yml
         ansible-config view -vvv
         ANSIBLE_COLLECTIONS_PATHS='build/lib/ansible_collections/'
     - name: Hack pre-commit
