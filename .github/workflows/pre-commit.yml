@@ -18,13 +18,14 @@ jobs:
         pip install -Iv ansible==2.10.5
         sudo apt install tree
         ansible-galaxy collection install -f -p .cache/collections -r .github/collections/requirements.yml
+        sudo cp .github/collections/requirements.yml requirements.yml
         ansible-config view -vvv
     - name: Hack pre-commit
       # https://github.com/pre-commit/action/issues/44
       run: |
         sudo cp .github/workflow-config/.pre-commit-config.yml .pre-commit-config.yaml
     - uses: pre-commit/action@v2.0.0
-    - name: Hack pre-commit
+    - name: Hack ansible-lint check
       if: ${{ always() }}
       run: |
         sudo tree .cache/collections
