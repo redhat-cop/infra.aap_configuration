@@ -9,40 +9,40 @@ exclude_paths:
   - .github/workflows/testing_playbooks.yml
   - .github/workflows/testing_playbooks_awx.yml
   - playbooks/collections/requirements.yml
-  - playbooks/vars/tower_configs/ssh_private_key.yml
-  - playbooks/vars/tower_configs/tower_applications.yml
-  - playbooks/vars/tower_configs/tower_auth.yml
-  - playbooks/vars/tower_configs/tower_credential_input_sources.yml
-  - playbooks/vars/tower_configs/tower_credential_types.yml
-  - playbooks/vars/tower_configs/tower_credentials.yml
-  - playbooks/vars/tower_configs/tower_groups.yml
-  - playbooks/vars/tower_configs/tower_hosts.yml
-  - playbooks/vars/tower_configs/tower_instance_groups.yml
-  - playbooks/vars/tower_configs/tower_inventories.yml
-  - playbooks/vars/tower_configs/tower_inventory_sources.yml
-  - playbooks/vars/tower_configs/tower_labels.yml
-  - playbooks/vars/tower_configs/tower_notifications.yml
-  - playbooks/vars/tower_configs/tower_organizations.yml
-  - playbooks/vars/tower_configs/tower_projects.yml
-  - playbooks/vars/tower_configs/tower_rbac.yml
-  - playbooks/vars/tower_configs/tower_schedule.yml
-  - playbooks/vars/tower_configs/tower_settings.yml
-  - playbooks/vars/tower_configs/tower_settings_individuale.yml
-  - playbooks/vars/tower_configs/tower_teams.yml
-  - playbooks/vars/tower_configs/tower_templates.yml
-  - playbooks/vars/tower_configs/tower_user_accounts.yml
-  - playbooks/vars/tower_configs/tower_workflows.yml
-  - playbooks/vars/tower_configs_export_model/credential_types_export.yml
-  - playbooks/vars/tower_configs_export_model/credentials_export.yml
-  - playbooks/vars/tower_configs_export_model/inventory_export.yml
-  - playbooks/vars/tower_configs_export_model/inventory_sources_export.yml
-  - playbooks/vars/tower_configs_export_model/job_templates_export.yml
-  - playbooks/vars/tower_configs_export_model/notifications_templates_export.yml
-  - playbooks/vars/tower_configs_export_model/organizations_export.yml
-  - playbooks/vars/tower_configs_export_model/projects_export.yml
-  - playbooks/vars/tower_configs_export_model/teams_export.yml
-  - playbooks/vars/tower_configs_export_model/tower_workflows.yml
-  - playbooks/vars/tower_configs_export_model/users_export.yml
+  - playbooks/tower_configs/ssh_private_key.yml
+  - playbooks/tower_configs/tower_applications.yml
+  - playbooks/tower_configs/tower_auth.yml
+  - playbooks/tower_configs/tower_credential_input_sources.yml
+  - playbooks/tower_configs/tower_credential_types.yml
+  - playbooks/tower_configs/tower_credentials.yml
+  - playbooks/tower_configs/tower_groups.yml
+  - playbooks/tower_configs/tower_hosts.yml
+  - playbooks/tower_configs/tower_instance_groups.yml
+  - playbooks/tower_configs/tower_inventories.yml
+  - playbooks/tower_configs/tower_inventory_sources.yml
+  - playbooks/tower_configs/tower_labels.yml
+  - playbooks/tower_configs/tower_notifications.yml
+  - playbooks/tower_configs/tower_organizations.yml
+  - playbooks/tower_configs/tower_projects.yml
+  - playbooks/tower_configs/tower_rbac.yml
+  - playbooks/tower_configs/tower_schedule.yml
+  - playbooks/tower_configs/tower_settings.yml
+  - playbooks/tower_configs/tower_settings_individuale.yml
+  - playbooks/tower_configs/tower_teams.yml
+  - playbooks/tower_configs/tower_templates.yml
+  - playbooks/tower_configs/tower_user_accounts.yml
+  - playbooks/tower_configs/tower_workflows.yml
+  - playbooks/tower_configs_export_model/credential_types_export.yml
+  - playbooks/tower_configs_export_model/credentials_export.yml
+  - playbooks/tower_configs_export_model/inventory_export.yml
+  - playbooks/tower_configs_export_model/inventory_sources_export.yml
+  - playbooks/tower_configs_export_model/job_templates_export.yml
+  - playbooks/tower_configs_export_model/notifications_templates_export.yml
+  - playbooks/tower_configs_export_model/organizations_export.yml
+  - playbooks/tower_configs_export_model/projects_export.yml
+  - playbooks/tower_configs_export_model/teams_export.yml
+  - playbooks/tower_configs_export_model/tower_workflows.yml
+  - playbooks/tower_configs_export_model/users_export.yml
   - roles/applications/tests/collections/requirements.yml
   - roles/credential_input_sources/tests/collections/requirements.yml
   - roles/credential_types/tests/collections/requirements.yml

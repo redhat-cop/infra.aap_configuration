@@ -13,7 +13,7 @@
   pre_tasks:
     - name: Include vars from tower_configs directory
       include_vars:
-        dir: ./vars/tower_configs
+        dir: ./tower_configs
         ignore_files: [tower_config.yml.template]
         extensions: ["yml"]
       tags:

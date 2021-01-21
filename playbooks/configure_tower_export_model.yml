@@ -14,7 +14,7 @@
   pre_tasks:
     - name: Include vars from tower_configs directory
       include_vars:
-        dir: ./vars/tower_configs_export_model
+        dir: ./tower_configs_export_model
         ignore_files: [README.md]
         extensions: ["yml"]
   roles:
