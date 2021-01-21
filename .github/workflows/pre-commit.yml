@@ -22,6 +22,5 @@ jobs:
       # https://github.com/pre-commit/action/issues/44
       run: |
         sudo cp .github/workflow-config/.pre-commit-config.yml .pre-commit-config.yaml
-      # Hack figure out where things are
         sudo apt install tree
         tree
