@@ -23,7 +23,8 @@ jobs:
       # https://github.com/pre-commit/action/issues/44
       run: |
         sudo cp .github/workflow-config/.pre-commit-config.yml .pre-commit-config.yaml
-#    - name: Hack pre-commit
-#      if: ${{ always() }}
-#      run: |
-#        tree .cache/collections
+    - uses: pre-commit/action@v2.0.0
+    - name: Hack pre-commit
+      if: ${{ always() }}
+      run: |
+        tree .cache/collections
