@@ -1,5 +1,5 @@
 ---
-tower_inventory_sources: # noqa 911
+tower_inventory_sources:
   - name: test
     description: ''
     source: scm

@@ -1,5 +1,5 @@
 ---
-tower_schedules: # noqa 911
+tower_schedules:
   - name: Demo Schedule
     description: A demonstration
     unified_job_template: test-template-1

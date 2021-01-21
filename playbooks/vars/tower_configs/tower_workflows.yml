@@ -1,5 +1,5 @@
 ---
-tower_workflows: # noqa 911
+tower_workflows:
   - name: Simple workflow schema
     description: a basic workflow
     extra_vars: {}

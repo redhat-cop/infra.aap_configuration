@@ -1,5 +1,5 @@
 ---
-tower_rbac: # noqa 911
+tower_rbac:
   - inventory:  RHVM-01
     team: satlab-admin
     role: admin

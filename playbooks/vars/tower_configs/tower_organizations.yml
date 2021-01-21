@@ -1,4 +1,4 @@
 ---
-tower_organizations: # noqa 911
+tower_organizations:
   - name: Satellite
   - name: Default

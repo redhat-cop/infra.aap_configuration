@@ -1,5 +1,5 @@
 ---
-tower_teams: # noqa 911
+tower_teams:
   - name: satellite-qe
     organization: Satellite
   - name: satlab-admin

@@ -1,5 +1,5 @@
 ---
-tower_settings_individuale: # noqa 911
+tower_settings_individuale:
   - name: AWX_TASK_ENV
     value: {'GIT_SSL_NO_VERIFY': 'True'}
   - name: AUTH_LDAP_SERVER_URI

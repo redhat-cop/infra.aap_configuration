@@ -77,3 +77,4 @@ skip_list:
   - '204'
   # YAML: Ansible lint doing yaml checks that we were already doing but without config.
   - YAML
+  - '998'

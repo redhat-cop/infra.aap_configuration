@@ -1,5 +1,5 @@
 ---
-tower_inventories: # noqa 911
+tower_inventories:
   - name: 2nd Testing Inventory
     description: ''
     kind: ''

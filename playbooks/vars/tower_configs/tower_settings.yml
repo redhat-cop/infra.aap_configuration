@@ -1,5 +1,5 @@
 ---
-tower_settings: # noqa 911
+tower_settings:
   settings:
     AUTH_LDAP_BIND_PASSWORD: "password"
     AWX_TASK_ENV: {'GIT_SSL_NO_VERIFY': 'True'}
