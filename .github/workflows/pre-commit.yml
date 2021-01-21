@@ -18,7 +18,6 @@ jobs:
         pip install -Iv ansible==2.10.5
         ansible-galaxy collection install -f -p .cache/collections -r .github/collections/requirements.yml
         ansible-config view -vvv
-        ANSIBLE_COLLECTIONS_PATHS='build/lib/ansible_collections/'
     - name: Hack pre-commit
       # https://github.com/pre-commit/action/issues/44
       run: |

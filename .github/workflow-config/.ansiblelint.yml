@@ -75,3 +75,5 @@ skip_list:
   # [E204]: "Lines should be no longer than 160 chars"
   # (Disabled in June 2020)
   - '204'
+  # YAML: Ansible lint doing yaml checks that we were already doing but without config.
+  - YAML
