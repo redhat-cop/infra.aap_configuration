@@ -18,6 +18,7 @@ jobs:
         pip install -Iv ansible==2.10.5
         sudo apt install tree
         sudo cp .github/collections/requirements.yml requirements.yml
+        ANSIBLE_COLLECTIONS_PATH=.cache/collections
         ansible-config view -vvv
     - name: Hack pre-commit
       # https://github.com/pre-commit/action/issues/44
@@ -28,3 +29,4 @@ jobs:
       if: ${{ always() }}
       run: |
         sudo tree .cache/collections
+        ansible-doc awx.awx.tower_application
