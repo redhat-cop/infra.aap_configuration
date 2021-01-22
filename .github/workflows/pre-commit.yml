@@ -12,12 +12,12 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
     - name: Install Collections
+      # cp is to make ansible-lint into thinking that awx.awx plugins are part of the collection so it lints properly.
       run: |
         sudo apt install software-properties-common
         sudo apt-add-repository --yes --update ppa:ansible/ansible
         pip install -Iv ansible==2.10.5
         ansible-galaxy collection install -f -r .github/collections/requirements.yml
-# Hack ansible-lint into thinking that awx.awx plugins are part of the collection so it lints properly.
         sudo cp -a collections/ansible_collections/awx/awx/plugins/. plugins/
         ansible-config view -vvv
     - name: Hack pre-commit
