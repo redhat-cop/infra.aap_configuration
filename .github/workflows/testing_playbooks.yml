@@ -18,7 +18,7 @@ jobs:
           python-version: 3.8
 
       - name: "Clone AWX"
-        run: cd .github && git clone https://github.com/ansible/awx.git
+        run: cd .github && git clone --depth 1 --branch 16.0.0 https://github.com/ansible/awx.git
 
       - name: "Install dependencies"
         run: pip install -r .github/requirements.txt
