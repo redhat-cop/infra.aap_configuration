@@ -16,8 +16,8 @@ jobs:
         sudo apt install software-properties-common
         sudo apt-add-repository --yes --update ppa:ansible/ansible
         pip install -Iv ansible==2.10.5
-        sudo apt install tree
         ansible-galaxy collection install -f -r .github/collections/requirements.yml
+      # Hack ansible-lint into thinking that awx.awx plugins are part of the collection so it lints properly.
         sudo cp -a collections/ansible_collections/awx/awx/plugins/. plugins/
         ansible-config view -vvv
     - name: Hack pre-commit
@@ -25,8 +25,3 @@ jobs:
       run: |
         sudo cp .github/workflow-config/.pre-commit-config.yml .pre-commit-config.yaml
     - uses: pre-commit/action@v2.0.0
-    - name: Hack ansible-lint check
-      if: ${{ always() }}
-      run: |
-        sudo tree plugins
-        ansible-doc awx.awx.tower_application
