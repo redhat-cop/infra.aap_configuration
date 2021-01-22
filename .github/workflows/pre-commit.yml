@@ -20,8 +20,8 @@ jobs:
         ansible-galaxy collection install -f -r .github/collections/requirements.yml
         sudo cp -a collections/ansible_collections/awx/awx/plugins/. plugins/
         ansible-config view -vvv
-    - name: Hack pre-commit
-      # https://github.com/pre-commit/action/issues/44
+    - name: Run pre-commit
+      # cp needed to load config properly https://github.com/pre-commit/action/issues/44
       run: |
         sudo cp .github/workflow-config/.pre-commit-config.yml .pre-commit-config.yaml
     - uses: pre-commit/action@v2.0.0
