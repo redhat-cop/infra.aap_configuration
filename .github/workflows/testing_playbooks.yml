@@ -28,7 +28,7 @@ jobs:
 
       - name: Fix awx permisions
         run: |
-          whoami
+          sudo mkhomedir_helper username
           chown -R runner ~/.awx/pgdocker
           chown -R runner ~/.awx/awxcompose
 
