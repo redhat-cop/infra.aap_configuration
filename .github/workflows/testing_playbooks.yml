@@ -18,7 +18,7 @@ jobs:
           python-version: 3.8
 
       - name: "Clone AWX"
-        run: cd .github && git clone --depth 1 --branch 16.0.0 https://github.com/ansible/awx.git
+        run: cd .github && git clone https://github.com/ansible/awx.git
 
       - name: "Install dependencies"
         run: pip install -r .github/requirements.txt
@@ -28,8 +28,8 @@ jobs:
 
       - name: Fix awx permisions
         run: |
-          chown -R ~/.awx/pgdocker
-          chown -R ~/.awx/awxcompose
+          chown -R $(whoami)" ~/.awx/pgdocker
+          chown -R $(whoami)" ~/.awx/awxcompose
 
       - name: "Build AWX stack"
         run: cd .github/awx/installer && ansible-playbook -i inventory install.yml -e create_preload_data=false -e admin_password=password
