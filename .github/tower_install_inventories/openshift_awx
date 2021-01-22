@@ -5,10 +5,10 @@ localhost ansible_connection=local ansible_python_interpreter="/usr/bin/env pyth
 dockerhub_base=ansible
 
 openshift_host=https://api.crc.testing:6443
-openshift_project=awx-github-ssulliva
+openshift_project=awx-github
 openshift_user=developer
 openshift_skip_tls_verify=True
-openshift_pg_pvc_name=awx-github-ssulliva-postgres
+openshift_pg_pvc_name=awx-github-postgres
 
 pg_username=awx
 pg_password=awxpass

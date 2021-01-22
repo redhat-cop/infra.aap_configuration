@@ -1,8 +1,7 @@
 ---
 name: Run Test Playbooks
 
-# on: [push, pull_request]
-on: [release]
+on: [push, pull_request]
 
 jobs:
   Integration-test:
