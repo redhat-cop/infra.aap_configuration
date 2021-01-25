@@ -141,7 +141,7 @@ tower_workflows:
         approval_node:
           name: Simple approval node name
           description: Approve this to proceed in workflow
-          timeout: 900 # 15 minutes     
+          timeout: 900 # 15 minutes
       - all_parents_must_converge: false
         identifier: node301
         unified_job_template: test-template-1
