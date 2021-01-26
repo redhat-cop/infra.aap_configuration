@@ -114,7 +114,7 @@ EXAMPLES = '''
 '''
 
 from ..module_utils.ah_module import AHModule
-import json
+
 
 def main():
     # Any additional arguments that are not fields of the item can be added here
@@ -140,7 +140,6 @@ def main():
     state = module.params.get('state')
 
     new_fields = {}
-    search_fields = {}
 
     # Attempt to look up an existing item based on the provided data
     existing_item = module.get_one('namespaces', name_or_id=name)

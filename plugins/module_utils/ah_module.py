@@ -10,14 +10,7 @@ from ansible.module_utils.six.moves.urllib.error import HTTPError
 from ansible.module_utils.six.moves.http_cookiejar import CookieJar
 from socket import gethostbyname
 import re
-from os.path import split
 from json import loads, dumps
-
-try:
-    import yaml
-    HAS_YAML = True
-except ImportError:
-    HAS_YAML = False
 
 
 class ItemNotDefined(Exception):
