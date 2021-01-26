@@ -10,33 +10,26 @@ from ansible.module_utils.six.moves.urllib.error import HTTPError
 from ansible.module_utils.six.moves.http_cookiejar import CookieJar
 from socket import gethostbyname
 import re
-from os.path import split
 from json import loads, dumps
-
-try:
-    import yaml
-    HAS_YAML = True
-except ImportError:
-    HAS_YAML = False
 
 
 class ItemNotDefined(Exception):
     pass
 
 
-class GalaxyModule(AnsibleModule):
+class AHModule(AnsibleModule):
     url = None
     session = None
     AUTH_ARGSPEC = dict(
-        galaxy_server=dict(required=False, fallback=(env_fallback, ['GALAXY_SERVER'])),
-        validate_certs=dict(type='bool', aliases=['galaxy_verify_ssl'], required=False, fallback=(env_fallback, ['GALAXY_VERIFY_SSL'])),
-        galaxy_token=dict(type='str', no_log=True, required=False, fallback=(env_fallback, ['GALAXY_API_TOKEN'])),
+        ah_server=dict(required=False, fallback=(env_fallback, ['GALAXY_SERVER'])),
+        validate_certs=dict(type='bool', aliases=['ah_verify_ssl'], required=False, fallback=(env_fallback, ['GALAXY_VERIFY_SSL'])),
+        ah_token=dict(type='str', no_log=True, required=False, fallback=(env_fallback, ['GALAXY_API_TOKEN'])),
     )
     ENCRYPTED_STRING = "$encrypted$"
     short_params = {
-        'host': 'galaxy_server',
+        'host': 'ah_server',
         'verify_ssl': 'validate_certs',
-        'oauth_token': 'galaxy_token',
+        'oauth_token': 'ah_token',
     }
     IDENTITY_FIELDS = {
     }
@@ -49,7 +42,7 @@ class GalaxyModule(AnsibleModule):
 
     def __init__(self, argument_spec=None, direct_params=None, error_callback=None, warn_callback=None, **kwargs):
         full_argspec = {}
-        full_argspec.update(GalaxyModule.AUTH_ARGSPEC)
+        full_argspec.update(AHModule.AUTH_ARGSPEC)
         full_argspec.update(argument_spec)
         kwargs['supports_check_mode'] = True
 
@@ -61,7 +54,7 @@ class GalaxyModule(AnsibleModule):
         if direct_params is not None:
             self.params = direct_params
 #        else:
-        super(GalaxyModule, self).__init__(argument_spec=full_argspec, **kwargs)
+        super(AHModule, self).__init__(argument_spec=full_argspec, **kwargs)
         self.session = Request(cookies=CookieJar(), validate_certs=self.verify_ssl)
 
         # Parameters specified on command line will override settings in any config
@@ -70,13 +63,13 @@ class GalaxyModule(AnsibleModule):
             if direct_value is not None:
                 setattr(self, short_param, direct_value)
 
-        # Perform magic checking whether galaxy_token is a string
-        if self.params.get('galaxy_token'):
-            token_param = self.params.get('galaxy_token')
+        # Perform magic checking whether ah_token is a string
+        if self.params.get('ah_token'):
+            token_param = self.params.get('ah_token')
             if isinstance(token_param, string_types):
-                self.oauth_token = self.params.get('galaxy_token')
+                self.oauth_token = self.params.get('ah_token')
             else:
-                error_msg = "The provided galaxy_token type was not valid ({0}). Valid options are str or dict.".format(type(token_param).__name__)
+                error_msg = "The provided ah_token type was not valid ({0}). Valid options are str or dict.".format(type(token_param).__name__)
                 self.fail_json(msg=error_msg)
 
         # Perform some basic validation
@@ -87,14 +80,14 @@ class GalaxyModule(AnsibleModule):
         try:
             self.url = urlparse(self.host)
         except Exception as e:
-            self.fail_json(msg="Unable to parse galaxy host as a URL ({1}): {0}".format(self.host, e))
+            self.fail_json(msg="Unable to parse ah host as a URL ({1}): {0}".format(self.host, e))
 
         # Try to resolve the hostname
         hostname = self.url.netloc.split(':')[0]
         try:
             gethostbyname(hostname)
         except Exception as e:
-            self.fail_json(msg="Unable to resolve galaxy host ({1}): {0}".format(hostname, e))
+            self.fail_json(msg="Unable to resolve ah host ({1}): {0}".format(hostname, e))
 
         if 'update_secrets' in self.params:
             self.update_secrets = self.params.pop('update_secrets')
@@ -123,21 +116,21 @@ class GalaxyModule(AnsibleModule):
         if self.error_callback:
             self.error_callback(**kwargs)
         else:
-            super(GalaxyModule, self).fail_json(**kwargs)
+            super(AHModule, self).fail_json(**kwargs)
 
     def exit_json(self, **kwargs):
         # Try to log out if we are authenticated
-        super(GalaxyModule, self).exit_json(**kwargs)
+        super(AHModule, self).exit_json(**kwargs)
 
     def warn(self, warning):
         if self.warn_callback is not None:
             self.warn_callback(warning)
         else:
-            super(GalaxyModule, self).warn(warning)
+            super(AHModule, self).warn(warning)
 
     @staticmethod
     def get_name_field_from_endpoint(endpoint):
-        return GalaxyModule.IDENTITY_FIELDS.get(endpoint, 'name')
+        return AHModule.IDENTITY_FIELDS.get(endpoint, 'name')
 
     def get_endpoint(self, endpoint, *args, **kwargs):
         return self.make_request('GET', endpoint, **kwargs)
@@ -287,8 +280,8 @@ class GalaxyModule(AnsibleModule):
         #   the on_delete parameter will be called as a method pasing in this object and the json from the response
         # This will return one of two things:
         #   1. None if the existing_item is not defined (so no delete needs to happen)
-        #   2. The response from Tower from calling the delete on the endpont. It's up to you to process the response and exit from the module
-        # Note: common error codes from the Tower API can cause the module to fail
+        #   2. The response from Automation Hub from calling the delete on the endpont. It's up to you to process the response and exit from the module
+        # Note: common error codes from the Automation Hub API can cause the module to fail
         if existing_item:
             # If we have an item, we can try to delete it
             try:
@@ -365,8 +358,8 @@ class GalaxyModule(AnsibleModule):
         #    the on_create parameter will be called as a method pasing in this object and the json from the response
         # This will return one of two things:
         #    1. None if the existing_item is already defined (so no create needs to happen)
-        #    2. The response from Tower from calling the patch on the endpont. It's up to you to process the response and exit from the module
-        # Note: common error codes from the Galaxy API can cause the module to fail
+        #    2. The response from Automation Hub from calling the patch on the endpont. It's up to you to process the response and exit from the module
+        # Note: common error codes from the Automation Hub API can cause the module to fail
 
         if not endpoint:
             self.fail_json(msg="Unable to create new {0} due to missing endpoint".format(item_type))
@@ -423,8 +416,8 @@ class GalaxyModule(AnsibleModule):
         #   the on_update parameter will be called as a method pasing in this object and the json from the response
         # This will return one of two things:
         #    1. None if the existing_item does not need to be updated
-        #    2. The response from Tower from patching to the endpoint. It's up to you to process the response and exit from the module.
-        # Note: common error codes from the Tower API can cause the module to fail
+        #    2. The response from Automation Hub from patching to the endpoint. It's up to you to process the response and exit from the module.
+        # Note: common error codes from the Automation Hub API can cause the module to fail
         response = None
         if existing_item:
             # If we have an item, we can see if it needs an update
@@ -584,13 +577,13 @@ class GalaxyModule(AnsibleModule):
         """
         if isinstance(obj, dict):
             for val in obj.values():
-                if GalaxyModule.has_encrypted_values(val):
+                if AHModule.has_encrypted_values(val):
                     return True
         elif isinstance(obj, list):
             for val in obj:
-                if GalaxyModule.has_encrypted_values(val):
+                if AHModule.has_encrypted_values(val):
                     return True
-        elif obj == GalaxyModule.ENCRYPTED_STRING:
+        elif obj == AHModule.ENCRYPTED_STRING:
             return True
         return False
 

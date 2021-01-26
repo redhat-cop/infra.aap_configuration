@@ -1,4 +1,4 @@
-- name: Testing Automation Hub
+- name: Testing Galaxy
   hosts: localhost
   connection: local
   gather_facts: false

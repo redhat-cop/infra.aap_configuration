@@ -12,12 +12,12 @@ class ModuleDocFragment(object):
     # Ansible Galaxy documentation fragment
     DOCUMENTATION = r'''
 options:
-  galaxy_server:
+  ah_server:
     description:
     - URL to Ansible Galaxy or Automation Hub instance.
     - If value not set, will try environment variable C(GALAXY_SERVER)
     type: str
-  galaxy_token:
+  ah_token:
     description:
     - The Ansible Galaxy or Automation Hub API token to use.
     - A string which is the token itself. (i.e. bqV5txm97wqJqtkxlMkhQz0pKhRMMX)
@@ -30,5 +30,5 @@ options:
     - This should only be used on personally controlled sites using self-signed certificates.
     - If value not set, will try environment variable C(GALAXY_VERIFY_SSL) and then config files
     type: bool
-    aliases: [ galaxy_verify_ssl ]
+    aliases: [ ah_verify_ssl ]
 '''
