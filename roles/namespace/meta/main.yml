@@ -30,8 +30,8 @@ galaxy_info:
         - "all"
 
   galaxy_tags:
-    - "automation_hub"
-    - "galaxy_ng"
+    - "automationhub"
+    - "galaxy"
     - "configuration"
     - "namespace"
     - "namespaces"
