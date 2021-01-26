@@ -1,0 +1,23 @@
+---
+
+# Create Job Template
+- name: Add Automation Hub Namespace
+  namespace:
+    name:             "{{ __namespace_item.name }}"
+    new_name:         "{{ __namespace_item.new_name | default('') }}"
+    description:      "{{ __namespace_item.description | default('') }}"
+    company:          "{{ __namespace_item.company | default('') }}"
+    email:            "{{ __namespace_item.email | default(omit) }}"
+    avatar_url:       "{{ __namespace_item.avatar_url | default('') }}"
+    resources:        "{{ __namespace_item.resources | default('') }}"
+    links:            "{{ __namespace_item.links | default([]) }}"
+    groups:           "{{ __namespace_item.groups | default([]) }}"
+    state:            "{{ __namespace_item.state | default(ah_state | default('present')) }}"
+    ah_token:         "{{ ah_token | default(omit) }}"
+    ah_server:        "{{ ah_server }}"
+    validate_certs:   "{{ ah_validate_certs | default('true') }}"
+  loop: "{{ ah_namespaces }}"
+  loop_control:
+    loop_var: "__namespace_item"
+  no_log: "{{ __ah_configuration_namespace_secure_logging }}"
+

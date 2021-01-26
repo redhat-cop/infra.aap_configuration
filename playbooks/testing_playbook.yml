@@ -5,7 +5,7 @@
             
   tasks:
     - name: set namespace collections
-      ansible.galaxy.galaxy_namespace:
+      redhat_cop.ah_configuration.namespace:
         name: abc15
         company: Redhat
         email: user@example.com

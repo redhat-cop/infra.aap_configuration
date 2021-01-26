@@ -1,0 +1,8 @@
+---
+- name: Add namespace to Automation Hub
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  roles:
+    - ../../namespace

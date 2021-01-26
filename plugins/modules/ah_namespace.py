@@ -15,7 +15,7 @@ ANSIBLE_METADATA = {'metadata_version': '1.1',
 
 DOCUMENTATION = '''
 ---
-module: galaxy_namespace
+module: ah_namespace
 author: "Sean Sullivan (@sean-m-sullivan)"
 short_description: create, update, or destroy Automation Hub Namespace.
 description:
@@ -96,7 +96,7 @@ extends_documentation_fragment: ansible.automation_hub.auth
 
 EXAMPLES = '''
 - name: Create Tower Ping job template
-  galaxy_namespace:
+  ah_namespace:
     name: Redhat
     company: Redhat
     email: user@example.com
@@ -113,7 +113,7 @@ EXAMPLES = '''
 
 '''
 
-from ..module_utils.galaxy_module import GalaxyModule
+from ..module_utils.ah_module import AHModule
 import json
 
 def main():
@@ -132,7 +132,7 @@ def main():
     )
 
     # Create a module for ourselves
-    module = GalaxyModule(argument_spec=argument_spec)
+    module = AHModule(argument_spec=argument_spec)
 
     # Extract our parameters
     name = module.params.get('name')
