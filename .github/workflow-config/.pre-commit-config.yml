@@ -35,7 +35,7 @@ repos:
       name: black
       language_version: python3.6
       entry: black
-      args: [--config=.github/workflow-config/black.cfg, --check]
+      args: [--config=.github/workflow-config/black.cfg, --check, --diff ]
       types: [python]
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.8.4
