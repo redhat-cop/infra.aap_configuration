@@ -56,5 +56,5 @@ GNU General Public License v3.0 or later.
 See [LICENCE](https://www.gnu.org/licenses/gpl-3.0.txt) to see the full text.
 
 All content in this folder is licensed under the same license as Ansible,
-which is the same as license that applied before when the base for this 
+which is the same as license that applied before when the base for this
 code was derived form the [AWX.AWX](https://galaxy.ansible.com/awx/awx) collection.

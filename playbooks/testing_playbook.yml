@@ -2,7 +2,7 @@
   hosts: localhost
   connection: local
   gather_facts: false
-            
+
   tasks:
     - name: set namespace collections
       redhat_cop.ah_configuration.namespace:
