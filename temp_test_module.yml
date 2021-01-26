@@ -23,7 +23,6 @@
         galaxy_server: http://192.168.122.239:8002
         galaxy_token: 1185cf5f4dfc8b2529fa27138778e9ac2b81bb89
         validate_certs: false
-#        state: absent
       register: test
       ignore_errors: true
 

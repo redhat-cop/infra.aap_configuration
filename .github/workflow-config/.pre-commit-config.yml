@@ -27,8 +27,6 @@ repos:
         entry: >-
           ansible-lint -vp -c .github/workflow-config/.ansiblelint.yml
           --exclude=temp_test_module.yml
-          --exclude=roles/namespace/tasks/main.yml
-          --exclude=playbooks/testing_playbook.yml
           --exclude=playbooks/ah_configs/ah_namespaces.yml
   - repo: https://github.com/ambv/black
     rev: stable

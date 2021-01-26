@@ -7,8 +7,6 @@
 exclude_paths:
   - roles/master_role_example/
   - temp_test_module.yml
-  - roles/namespace/tasks/main.yml
-  - playbooks/testing_playbook.yml
   - playbooks/ah_configs/ah_namespaces.yml
 
 parseable: true
