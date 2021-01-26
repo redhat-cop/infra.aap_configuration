@@ -1,4 +1,0 @@
----
-minor_changes:
-  - updated documentation on surveys for workflows and job templates
-  - added alias option for survey to survey_spec in workflows.

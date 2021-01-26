@@ -76,3 +76,11 @@ releases:
     - notif_update.yml
     - tower_export_update.yml
     release_date: '2020-10-22'
+  1.0.2:
+    changes:
+      minor_changes:
+      - added alias option for survey to survey_spec in workflows.
+      - updated documentation on surveys for workflows and job templates
+    fragments:
+    - survey_spec.yml
+    release_date: '2021-01-26'
