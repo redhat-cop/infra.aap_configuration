@@ -1,0 +1,16 @@
+---
+extends: default
+
+rules:
+  # 80 chars should be enough, but don't fail if a line is longer
+  line-length: disable
+  colons: disable
+  indentation:
+    level: warning
+    indent-sequences: consistent
+  truthy:
+    allowed-values:
+    - 'True'
+    - 'False'
+    - 'true'
+    - 'false'
