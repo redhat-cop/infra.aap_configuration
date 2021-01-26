@@ -20,4 +20,3 @@
   loop_control:
     loop_var: "__namespace_item"
   no_log: "{{ __ah_configuration_namespace_secure_logging }}"
-

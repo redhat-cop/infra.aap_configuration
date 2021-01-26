@@ -6,10 +6,10 @@
 #  - roles/master_role_example/
 exclude_paths:
   - roles/master_role_example/
-  - .github/workflows/testing_playbooks.yml
-  - .github/workflows/testing_playbooks_docker.yml
-  - .github/workflows/testing_playbooks_awx.yml
-  - playbooks/collections/requirements.yml
+  - temp_test_module.yml
+  - roles/namespace/tasks/main.yml
+  - playbooks/testing_playbook.yml
+  - playbooks/ah_configs/ah_namespaces.yml
 
 parseable: true
 use_default_rules: true
