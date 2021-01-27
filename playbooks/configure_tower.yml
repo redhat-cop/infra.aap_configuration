@@ -36,6 +36,7 @@
     - {role: inventories, when: tower_inventories is defined, tags: inventories}
     - {role: instance_groups, when: tower_instance_groups is defined, tags: instance_groups}
     - {role: inventory_sources, when: tower_inventory_sources is defined, tags: inventory_sources}
+    - {role: inventory_source_update, when: tower_inventory_sources is defined, tags: inventory_sources}
     - {role: projects, when: tower_projects is defined, tags: projects}
     - {role: hosts, when: tower_hosts is defined, tags: hosts}
     - {role: groups, when: tower_groups is defined, tags: inventories}
