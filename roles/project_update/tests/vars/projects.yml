@@ -13,8 +13,10 @@ tower_projects:
     scm_url: https://github.com/ansible/tower-example.git
     description: Test Project 2
     organization: Satellite
+    wait: true
   - name: Test Inventory source project
     scm_type: git
     scm_url: https://github.com/ansible/ansible-examples.git
     description: ansible-examples
     organization: Satellite
+    wait: true
