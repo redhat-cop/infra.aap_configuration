@@ -68,3 +68,15 @@
       include_role:
         name: job_launch
       when: tower_launch_jobs is defined
+
+    - name: Cancel Tower Jobs
+      include_role:
+        name: jobs_cancel
+      vars:
+        tower_cancel_jobs: "{{ launched_tower_jobs.results }}"
+      when: launched_tower_jobs is defined
+
+    - name: Launch Tower workflows
+      include_role:
+        name: workflow_launch
+      when: tower_workflow_launch_jobs is defined
