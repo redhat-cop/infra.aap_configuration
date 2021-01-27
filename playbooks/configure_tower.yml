@@ -63,3 +63,8 @@
     - name: Cancel Ad hoc commands
       include_tasks: "./tasks/ad_hoc_cancel.yml"
       when: tower_ad_hoc_commands is defined
+
+    - name: Launch Tower Jobs
+      include_role:
+        name: job_launch
+      when: tower_launch_jobs is defined

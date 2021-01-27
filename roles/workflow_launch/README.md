@@ -1,6 +1,6 @@
-# tower_configuration.inventory_source_update
+# tower_configuration.workflow_launch
 ## Description
-An Ansible Role to update a list of inventory sources in Ansible Tower.
+An Ansible Role to launch a job template in Ansible Tower.
 
 ## Requirements
 ansible-galaxy collectioninstall  -r tests/collections/requirements.yml to be installed
@@ -16,7 +16,7 @@ Currently:
 |`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
 |`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`tower_configuration_inventory_source_update_secure_logging`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
+|`tower_configuration_workflow_launch_secure_logging`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
 
 ### Secure Logging Variables
 The following Variables compliment each other.
@@ -26,16 +26,19 @@ tower_configuration_*******_secure_logging defaults to the value of tower_config
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`tower_configuration_inventory_source_update_secure_logging`|`False`|no|Whether or not to include the sensitive ad_hoc_command role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`tower_configuration_workflow_launch_secure_logging`|`False`|no|Whether or not to include the sensitive ad_hoc_command role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
 ### Variables
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|The name or id of the inventory source to update.|
-|`inventory`|""|yes|str|Name or id of the inventory that contains the inventory source(s) to update.|
-|`organization`|""|no|str|Name of the inventory source's inventory's organization.|
+|`name`|""|yes|str|The name or id of the project to update.|
+|`organization`|""|no|str|Organization the workflow job template exists in. Used for lookup|
+|`inventory`|""|no|str|Inventory to use for the job ran with this workflow, only used if prompt for inventory is set.|
+|`limit`|""|no|str|Limit to use for the job_template.|
+|`scm_branch`|""|no|str|A specific of the SCM project to run the template on.|
+|`extra_vars`|""|no|str|Any extra vars required to launch the job. ask_extra_vars needs to be set to True via tower_job_template module.|
 |`wait`|""|no|bool|Wait for the job to complete.|
 |`interval`|""|no|int|The interval to request an update from Tower.|
 |`timeout`|""|no|int|If waiting for the job to complete this will abort after this amount of seconds.|
@@ -44,20 +47,8 @@ tower_configuration_*******_secure_logging defaults to the value of tower_config
 #### Yaml Example
 ```yaml
 ---
-tower_inventory_sources:
-  - name: RHVM-01
-    source: scm
-    source_project: Test Inventory source project
-    source_path: phillips_hue/hosts
-    inventory: RHVM-01
-    organization: Satellite
-    credential: admin@internal-RHVM-01
-    overwrite: true
-    update_on_launch: true
-    update_cache_timeout: 0
-    wait: true
-
-
+tower_workflow_launch_jobs:
+  - name: test-workflow
 
 ```
 
@@ -79,7 +70,7 @@ tower_inventory_sources:
         ignore_files: [tower_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.tower_configuration.inventory_source_update, when: tower_ad_hoc_commands is defined}
+    - {role: redhat_cop.tower_configuration.workflow_launch, when: tower_ad_hoc_commands is defined}
 
 ```
 ## License

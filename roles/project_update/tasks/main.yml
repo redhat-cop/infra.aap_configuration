@@ -3,11 +3,11 @@
 # Create Job Template
 - name: Run Tower project update
   awx.awx.tower_project_update:
-    name:               "{{ __inventory_source_update_item.name }}"
-    organization:       "{{ __inventory_source_update_item.organization | default('') }}"
-    wait:               "{{ __inventory_source_update_item.wait | default(omit) }}"
-    interval:           "{{ __inventory_source_update_item.interval | default(omit) }}"
-    timeout:            "{{ __inventory_source_update_item.timeout | default(omit) }}"
+    name:               "{{ __project_update_update_item.name }}"
+    organization:       "{{ __project_update_update_item.organization | default('') }}"
+    wait:               "{{ __project_update_update_item.wait | default(omit) }}"
+    interval:           "{{ __project_update_update_item.interval | default(omit) }}"
+    timeout:            "{{ __project_update_update_item.timeout | default(omit) }}"
 
     # Role Standard Options
     tower_username:     "{{ tower_username | default(omit) }}"
@@ -18,6 +18,6 @@
     validate_certs:     "{{ tower_validate_certs | default('true') }}"
   loop: "{{ tower_projects }}"
   loop_control:
-    loop_var: "__inventory_source_update_item"
+    loop_var: "__project_update_update_item"
   no_log: "{{ tower_configuration_project_update_secure_logging }}"
   when: tower_projects is defined
