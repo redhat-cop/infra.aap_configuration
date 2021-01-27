@@ -3,7 +3,7 @@ tower_inventory_sources:
   - name: inventory_source_test
     source: scm
     source_project: Test Inventory source project
-    source_path: blob/master/phillips_hue/hosts
+    source_path: phillips_hue/hosts
     inventory: RHVM-01
     organization: Satellite
     credential: admin@internal-RHVM-01
