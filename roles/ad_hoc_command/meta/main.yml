@@ -1,16 +1,16 @@
 ---
 galaxy_info:
-  role_name: "ad_hoc_command"
-  author: "Tom Page"
-  description: "An Ansible Role to create Credential Input Sources in Ansible Tower."
+  role_name: "tower_configuration.ad_hoc_command"
+  author: "Sean Sullivan"
+  description: "An Ansible Role to run ad hoc commands in Ansible Tower."
   company: "Red Hat"
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
   # issue_tracker_url: http://example.com/issue/tracker
-  license: "MIT"
+  license: "GPLv3+"
 
-  min_ansible_version: "2.8"
+  min_ansible_version: "2.9"
 
   # Optionally specify the branch Galaxy will use when accessing the GitHub
   # repo for this role. During role install, if no tags are available,
@@ -33,13 +33,8 @@ galaxy_info:
     - "ansibletower"
     - "tower"
     - "awx"
-    - "configuration"
-    - "credential"
-    - "input"
-    - "sources"
-    - "credentials"
-    - "credentialinputsource"
-    - "credentialinputsources"
+    - "adhoc"
+    - "commands"
 
 collections:
   - awx.awx
