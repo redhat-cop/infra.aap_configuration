@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "tower_configuration.ad_hoc_command"
+  role_name: "tower_configuration_ad_hoc_command"
   author: "Sean Sullivan"
   description: "An Ansible Role to run ad hoc commands in Ansible Tower."
   company: "Red Hat"

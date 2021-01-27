@@ -33,12 +33,20 @@ tower_configuration_*******_secure_logging defaults to the value of tower_config
 ### Variables
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|Name of Job Template|
-|`new_name`|""|str|no|Setting this option will change the existing name (looked up via the name field).|
-|`description`|`False`|no|str|Description to use for the job template.|
-
-|`state`|`present`|no|str|Desired state of the resource.|
-
+|`job_type`|"run"|no|str|Job_type to use for the ad hoc command. Either run or check.|
+|`inventory`|""|str|yes|Inventory to use for the ad hoc command.|
+|`limit`|`False`|no|str|Limit to use for the ad hoc command.|
+|`credential`|""|yes|str|Credential to use for ad hoc command.|
+|`module_name`|""|str|yes|The Ansible module to execute.|
+|`module_args`|`False`|no|str|The arguments to pass to the module.|
+|`forks`|0|yes|int|The number of forks to use for this ad hoc execution.|
+|`verbosity`|0|no|int|Verbosity level for this ad hoc command run|
+|`extra_vars`|`False`|no|dict|Extra variables to use for the ad hoc command.|
+|`become_enabled`|""|no|bool|If the become flag should be set.|
+|`diff_mode`|""|no|bool|Show the changes made by Ansible tasks where supported|
+|`wait`|`False`|no|bool|Wait for the command to complete.|
+|`interval`|1|no|int|The interval to request an update from Tower.|
+|`timeout`|""|no|int|If waiting for the command to complete this will abort after this amount of seconds.|
 
 
 ### Standard Project Data Structure
