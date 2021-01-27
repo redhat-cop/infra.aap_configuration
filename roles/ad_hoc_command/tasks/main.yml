@@ -29,4 +29,5 @@
   loop_control:
     loop_var: "__ad_hoc_command_item"
   no_log: "{{ tower_configuration_ad_hoc_command_secure_logging }}"
+  register: tower_ad_hoc_commands_output
   when: tower_ad_hoc_commands is defined
