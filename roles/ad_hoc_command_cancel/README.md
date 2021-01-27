@@ -43,13 +43,15 @@ tower_configuration_*******_secure_logging defaults to the value of tower_config
 #### Yaml Example
 ```yaml
 ---
-tower_ad_hoc_command_defaults:
-  fail_if_not_running: false
-  interval: 1
-  timeout: 10
 tower_ad_hoc_commands_cancel:
   - id: 10
+    fail_if_not_running: false
+    interval: 1
+    timeout: 10
   - id: 12
+    fail_if_not_running: false
+    interval: 1
+    timeout: 10
 
 ```
 
