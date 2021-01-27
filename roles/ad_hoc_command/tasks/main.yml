@@ -1,6 +1,6 @@
 ---
 
-# Create Job Template
+# Run Ad Hoc Commands
 - name: Run Tower ad hoc command
   awx.awx.tower_ad_hoc_command:
     job_type:           "{{ __ad_hoc_command_item.job_type | default('run') }}"

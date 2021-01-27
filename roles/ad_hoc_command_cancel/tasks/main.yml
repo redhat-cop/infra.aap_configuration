@@ -1,7 +1,7 @@
 ---
 
-# Create Job Template
-- name: Run Tower ad hoc command
+# Cancel Ad Hoc COmmands
+- name: Cancel Tower ad hoc command
   awx.awx.tower_ad_hoc_command_cancel:
     command_id:             "{{ __ad_hoc_command_cancel_item.id }}"
     fail_if_not_running:    "{{ __ad_hoc_command_cancel_item.fail_if_not_running | default(omit) }}"

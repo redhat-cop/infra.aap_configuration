@@ -1,6 +1,6 @@
 ---
 
-# Create Job Template
+# Update Tower Projects
 - name: Run Tower project update
   awx.awx.tower_project_update:
     name:               "{{ __project_update_update_item.name }}"
