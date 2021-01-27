@@ -1,6 +1,10 @@
 - name: debug list of adhoc commands
   debug:
-    var: tower_ad_hoc_commands_output
+    var: tower_ad_hoc_commands_output.results
+
+- name: Set fact for ad hoc cancel
+  set_fact:
+    tower_ad_hoc_commands_cancel: "{{ tower_ad_hoc_commands_output.results }}"
 
 - name: Cancel ad hoc commands
   include_role:
