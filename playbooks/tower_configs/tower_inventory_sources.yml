@@ -1,6 +1,6 @@
 ---
 tower_inventory_sources:
-  - name: inventory_source_test
+  - name: RHVM-01
     source: scm
     source_project: Test Inventory source project
     source_path: phillips_hue/hosts
