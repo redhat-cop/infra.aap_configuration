@@ -1,0 +1,8 @@
+- name: debug list of adhoc commands
+  debug:
+    var: tower_ad_hoc_commands_output
+
+- name: Cancel ad hoc commands
+  include_role:
+    name: ad_hoc_command_cancel
+  when: tower_ad_hoc_commands is defined

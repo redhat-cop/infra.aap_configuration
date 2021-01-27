@@ -1,6 +1,6 @@
-# tower_configuration.ad_hoc_command
+# tower_configuration.ad_hoc_command_cancel
 ## Description
-An Ansible Role to run a list of ad hoc commands in Ansible Tower.
+An Ansible Role to cancel a list of ad hoc commands in Ansible Tower.
 
 ## Requirements
 ansible-galaxy collectioninstall  -r tests/collections/requirements.yml to be installed
@@ -16,7 +16,7 @@ Currently:
 |`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
 |`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`tower_configuration_ad_hoc_command_secure_logging`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
+|`tower_configuration_ad_hoc_command_cancel_secure_logging`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
 
 ### Secure Logging Variables
 The following Variables compliment each other.
@@ -33,32 +33,23 @@ tower_configuration_*******_secure_logging defaults to the value of tower_config
 ### Variables
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`job_type`|"run"|no|str|Job_type to use for the ad hoc command. Either run or check.|
-|`inventory`|""|str|yes|Inventory to use for the ad hoc command.|
-|`limit`|`False`|no|str|Limit to use for the ad hoc command.|
-|`credential`|""|yes|str|Credential to use for ad hoc command.|
-|`module_name`|""|str|yes|The Ansible module to execute.|
-|`module_args`|`False`|no|str|The arguments to pass to the module.|
-|`forks`|0|yes|int|The number of forks to use for this ad hoc execution.|
-|`verbosity`|0|no|int|Verbosity level for this ad hoc command run|
-|`extra_vars`|`False`|no|dict|Extra variables to use for the ad hoc command.|
-|`become_enabled`|""|no|bool|If the become flag should be set.|
-|`diff_mode`|""|no|bool|Show the changes made by Ansible tasks where supported|
-|`wait`|`False`|no|bool|Wait for the command to complete.|
-|`interval`|1|no|int|The interval to request an update from Tower.|
-|`timeout`|""|no|int|If waiting for the command to complete this will abort after this amount of seconds.|
+|`id`|""|no|int|ID of the command to cancel Recomended to be in a seperate list of ID's see example, defaults to output of ad_hoc_command_role of tower_ad_hoc_commands_output.|
+|`fail_if_not_running`|""|no|bool|Fail loudly if the I(command_id) can not be canceled.|
+|`interval`|1|no|int|Limit to use for the ad hoc command.|
+|`timeout`|""|yes|int|Credential to use for ad hoc command.|
 
 
 ### Standard Project Data Structure
 #### Yaml Example
 ```yaml
 ---
-tower_ad_hoc_commands:
-  - job_type: run
-    inventory: localhost
-    credential: Demo Credential
-    module_name: ping
-
+tower_ad_hoc_command_defaults:
+  fail_if_not_running: false
+  interval: 1
+  timeout: 10
+tower_ad_hoc_commands_output:
+  - id: 10
+  - id: 12
 
 ```
 
@@ -80,8 +71,7 @@ tower_ad_hoc_commands:
         ignore_files: [tower_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.tower_configuration.ad_hoc_command, when: tower_ad_hoc_commands is defined}
-
+    - {role: redhat_cop.tower_configuration.ad_hoc_command_cancel, when: tower_ad_hoc_commands is defined}
 ```
 ## License
 [MIT](LICENSE)

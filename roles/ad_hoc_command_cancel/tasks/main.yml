@@ -1,0 +1,22 @@
+---
+
+# Create Job Template
+- name: Run Tower ad hoc command
+  awx.awx.tower_ad_hoc_command_cancel:
+    command_id:             "{{ __ad_hoc_command_cancel_item.id }}"
+    fail_if_not_running:    "{{ tower_ad_hoc_command_defaults.fail_if_not_running | default(omit)}}"
+    interval:               "{{ tower_ad_hoc_command_defaults.interval | default(omit) }}"
+    timeout:                "{{ tower_ad_hoc_command_defaults.timeout | default(omit)}}"
+
+    # Role Standard Options
+    tower_username:         "{{ tower_username | default(omit) }}"
+    tower_password:         "{{ tower_password | default(omit) }}"
+    tower_oauthtoken:       "{{ tower_oauthtoken | default(omit) }}"
+    tower_host:             "{{ tower_hostname }}"
+    tower_config_file:      "{{ tower_config_file | default(omit) }}"
+    validate_certs:         "{{ tower_validate_certs | default('true') }}"
+  loop: "{{ tower_ad_hoc_commands_output }}"
+  loop_control:
+    loop_var: "__ad_hoc_command_cancel_item"
+  no_log: "{{ tower_configuration_ad_hoc_command_cancel_secure_logging }}"
+  when: tower_ad_hoc_command_cancels is defined

@@ -36,7 +36,6 @@
     - {role: inventories, when: tower_inventories is defined, tags: inventories}
     - {role: instance_groups, when: tower_instance_groups is defined, tags: instance_groups}
     - {role: inventory_sources, when: tower_inventory_sources is defined, tags: inventory_sources}
-    - {role: ad_hoc_command, when: tower_ad_hoc_commands is defined, tags: ad_hoc_commands}
     - {role: projects, when: tower_projects is defined, tags: projects}
     - {role: hosts, when: tower_hosts is defined, tags: hosts}
     - {role: groups, when: tower_groups is defined, tags: inventories}
@@ -53,3 +52,12 @@
         name: tower_settings
       vars:
         tower_settings: "{{ tower_settings_individuale }}"
+
+    - name: Run ad hoc commands
+      include_role:
+        name: ad_hoc_command
+      when: tower_ad_hoc_commands is defined
+
+    - name: Cancel Ad hoc commands
+      include_tasks: "./tasks/ad_hoc_cancel.yml"
+      when: tower_ad_hoc_commands is defined
