@@ -2,9 +2,19 @@
   debug:
     var: tower_ad_hoc_commands_output.results
 
-- name: Set fact for ad hoc cancel
-  set_fact:
-    tower_ad_hoc_commands_cancel: "{{ tower_ad_hoc_commands_output.results }}"
+- set_fact:
+    tmp_ad_hoc: "{{ item | combine( tower_ad_hoc_command_defaults ) }}"
+  with_items: "{{ tower_ad_hoc_commands_output.results }}"
+  register: tmp_ad_hocs
+
+- debug:
+    var: tmp_ad_hocs.results
+
+- set_fact:
+    tower_ad_hoc_commands_cancel: "{{ tmp_ad_hocs.results | map(attribute='ansible_facts.tmp_ad_hoc') | list }}"
+
+- debug:
+    msg: "{{ tower_ad_hoc_commands_cancel }}"
 
 - name: Cancel ad hoc commands
   include_role:
