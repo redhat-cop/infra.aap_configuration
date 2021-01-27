@@ -1,6 +1,6 @@
 ---
 
-# Create Job Template
+# Create Workflow
 - name: Create Workflow
   awx.awx.tower_workflow_job_template:
     name:                               "{{ workflow_loop_var.name }}"

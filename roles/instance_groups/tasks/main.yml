@@ -1,6 +1,6 @@
 ---
 
-# Create Job Template
+# Add Tower Instance Group
 - name: Add Tower Instance Group
   awx.awx.tower_instance_group:
     name:                           "{{ tower_instance_groups_item.name }}"

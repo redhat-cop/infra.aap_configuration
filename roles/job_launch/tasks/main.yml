@@ -1,10 +1,10 @@
 ---
 
-# Create Job Template
+# Launch Tower Job
 - name: Launch a Tower Job
   awx.awx.tower_job_launch:
     name:                     "{{ __job_launch_item.name }}"
-    job_type:                 "{{ __job_launch_item.job_type | default('run') }}"
+    job_type:                 "{{ __job_launch_item.job_type | default(omit) }}"
     inventory:                "{{ __job_launch_item.inventory | default(omit) }}"
     credentials:              "{{ __job_launch_item.credentials | default(omit) }}"
     extra_vars:               "{{ __job_launch_item.extra_vars | default(omit) }}"
