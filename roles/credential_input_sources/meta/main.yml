@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "ad_hoc_command"
+  role_name: "tower_configuration_credential_input_sources"
   author: "Tom Page"
   description: "An Ansible Role to create Credential Input Sources in Ansible Tower."
   company: "Red Hat"

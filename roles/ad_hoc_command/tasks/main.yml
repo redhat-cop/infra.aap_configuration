@@ -3,13 +3,13 @@
 # Create Job Template
 - name: Run Tower ad hoc command
   awx.awx.tower_ad_hoc_command:
-    job_type:           "{{ __ad_hoc_command_item.job_type | default('run')}}"
+    job_type:           "{{ __ad_hoc_command_item.job_type | default('run') }}"
     inventory:          "{{ __ad_hoc_command_item.inventory }}"
     limit:              "{{ __ad_hoc_command_item.limit | default('') }}"
     credential:         "{{ __ad_hoc_command_item.credential }}"
     module_name:        "{{ __ad_hoc_command_item.module_name }}"
     module_args:        "{{ __ad_hoc_command_item.module_args | default('') }}"
-    forks:              "{{ __ad_hoc_command_item.forks | default(0)}}"
+    forks:              "{{ __ad_hoc_command_item.forks | default(0) }}"
     verbosity:          "{{ __ad_hoc_command_item.verbosity | default(0) }}"
     extra_vars:         "{{ __ad_hoc_command_item.extra_vars | default(omit) }}"
     become_enabled:     "{{ __ad_hoc_command_item.become_enabled | default('false') }}"
@@ -19,7 +19,6 @@
     timeout:            "{{ __ad_hoc_command_item.timeout | default(omit) }}"
 
     # Role Standard Options
-    state:              "{{ __ad_hoc_command_item.state | default(tower_state | default('present')) }}"
     tower_username:     "{{ tower_username | default(omit) }}"
     tower_password:     "{{ tower_password | default(omit) }}"
     tower_oauthtoken:   "{{ tower_oauthtoken | default(omit) }}"
