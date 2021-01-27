@@ -47,7 +47,7 @@ tower_ad_hoc_command_defaults:
   fail_if_not_running: false
   interval: 1
   timeout: 10
-tower_ad_hoc_commands_output:
+tower_ad_hoc_commands_cancel:
   - id: 10
   - id: 12
 
