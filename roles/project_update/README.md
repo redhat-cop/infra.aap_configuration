@@ -43,13 +43,27 @@ tower_configuration_*******_secure_logging defaults to the value of tower_config
 #### Yaml Example
 ```yaml
 ---
-tower_inventory_sources:
-  - name: RHVM-01
-    inventory: RHVM-01
+tower_projects:
+  - name: Test Project
+    scm_type: git
+    scm_url: https://github.com/ansible/tower-example.git
+    scm_branch: master
+    scm_clean: true
+    description: Test Project 1
+    organization: Satellite
     wait: true
-    interval: 1
-    timeout: 0
-
+  - name: Test Project 2
+    scm_type: git
+    scm_url: https://github.com/ansible/tower-example.git
+    description: Test Project 2
+    organization: Satellite
+    wait: true
+  - name: Test Inventory source project
+    scm_type: git
+    scm_url: https://github.com/ansible/ansible-examples.git
+    description: ansible-examples
+    organization: Satellite
+    wait: true
 
 ```
 
@@ -71,7 +85,7 @@ tower_inventory_sources:
         ignore_files: [tower_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.tower_configuration.ad_hoc_command, when: tower_ad_hoc_commands is defined}
+    - {role: redhat_cop.tower_configuration.project_update, when: tower_ad_hoc_commands is defined}
 
 ```
 ## License
