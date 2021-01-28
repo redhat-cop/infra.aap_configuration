@@ -61,7 +61,8 @@ workflow_job_templates_secure_logging defaults to the value of tower_genie_secur
 |:---:|:---:|:---:|:---:|:---:|
 |`workflow_job_template`|""|yes|str|The workflow job template the node exists in. Used for looking up the node, cannot be modified after creation.|
 |`identifier`|""|yes|str|An identifier for this node that is unique within its workflow. It is copied to workflow job nodes corresponding to this node. This functions the same as the name field for other resources, however if it is not set, it will be set to a random UUID4 value. Recomended to use Column and row numbers for identifiers such as Node401. [Refer to this documentation for more](https://github.com/ansible/awx/blob/devel/docs/workflow.md)|
-|`unified_job_template`|""|no|str|Name of unified job template to run in the workflow. Can be a job template, project, inventory source, etc. Omit if creating an approval node (not yet implemented).|
+|`unified_job_template`|""|no|str|Name of unified job template to run in the workflow. Can be a job template, project, inventory source, etc. This parameter is mutually exclusive with approval_node.|
+|`approval_node`|""|no|str|A dictionary of Name, description, and timeout values for the approval node. This parameter is mutually exclusive with unified_job_template.|
 |`organization`|""|no|str|The organization of the workflow job template the node exists in. Used for looking up the workflow, not a direct model field.|
 |`all_parents_must_converge`|""|no|bool|If enabled then the node will only run if all of the parent nodes have met the criteria to reach this node|
 |`always_nodes`|""|no|list|Nodes that will run after this node completes.|
@@ -79,6 +80,11 @@ workflow_job_templates_secure_logging defaults to the value of tower_genie_secur
 |`scm_branch`|""|no|str|SCM branch applied as a prompt, if job template prompts for SCM branch|
 |`skip_tags`|""|no|str|Tags to skip, applied as a prompt, if job tempalte prompts for job tags|
 
+### Approval node dictionary
+|Variable Name|Default Value|Required|Type|Description|
+|`name`|""|yes|str|Name of this workflow approval template.|
+|`description`|""|no|str|Optional description of this workflow approval template.|
+|`timeout`|0|no|int|The amount of time (in seconds) before the approval node expires and fails.|
 
 ### Surveys
 Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Job_Templates/Job_Templates_job_templates_survey_spec_create) for more information about forming surveys
@@ -131,8 +137,13 @@ tower_workflows:
           - node201
         failure_nodes: []
         always_nodes: []
+      - identifier: node201
+        approval_node:
+          name: Simple approval node name
+          description: Approve this to proceed in workflow
+          timeout: 900 # 15 minutes
       - all_parents_must_converge: false
-        identifier: node201
+        identifier: node301
         unified_job_template: test-template-1
         credentials: []
         success_nodes: []
