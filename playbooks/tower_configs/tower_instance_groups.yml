@@ -1,3 +1,20 @@
 ---
 tower_instance_groups:
   - name: test_instance_group
+  
+  - name: Runner Ansible 2.8
+    credential: 61
+    is_containerized: true
+    pod_spec_override: "{'kind': 'Pod', 'spec': {'containers': [{'tty': True, 'stdin': True, 'image': 'image-registry.openshift-image-registry.svc:5000/projects-stes/ansible-runner-rhel7-ansible-2.8:2.4', 'args': ['sleep', 'infinity'], 'imagePullPolicy': 'Always', 'resources': {'limits': {'cpu': '500m', 'memory': '1Gi'}}}]}, 'apiVersion': 'v1', 'metadata': {'namespace': 'projects-stes'}}"
+    summary_fields: 
+      - credential:
+        id: 61
+        name: Container group token
+        description: ''
+        kind": kubernetes_bearer_token
+        cloud": false
+        kubernetes": true
+        credential_type_id: 17
+      - user_capabilities:
+        edit: true
+        delete: true
