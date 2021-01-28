@@ -16,13 +16,13 @@ Currently:
 |`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
 |`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`tower_configuration_workflow_launch_secure_logging`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
+|`tower_workflow_launch_jobs`|`see below`|yes|Data structure describing workflow or workflows to launch Described below.||
 
 ### Secure Logging Variables
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
-The role defaults to False as normally the add ******* task does not include sensitive information.
-tower_configuration_*******_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of tower configuration roles with a single variable, or for the user to selectively use it.
+The role defaults to False as normally the workflow launch task does not include sensitive information.
+tower_configuration_workflow_launch_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of tower configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
@@ -77,4 +77,4 @@ tower_workflow_launch_jobs:
 [MIT](LICENSE)
 
 ## Author
-[************](************)
+[Sean Sullivan](https://github.com/Wilk42)
