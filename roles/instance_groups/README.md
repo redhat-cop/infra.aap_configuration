@@ -1,6 +1,6 @@
-# tower_configuration_***********
+# tower_configuration_instance_groups
 ## Description
-An Ansible Role to create ******* in Ansible Tower.
+An Ansible Role to create instance groups in Ansible Tower.
 
 ## Requirements
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
@@ -33,13 +33,16 @@ tower_configuration_instance_groups_secure_logging defaults to the value of towe
 ### Variables
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|Name of Job Template|
+|`name`|""|yes|str|Name of this instance group.|
 |`new_name`|""|str|no|Setting this option will change the existing name (looked up via the name field).|
 |`description`|`False`|no|str|Description to use for the job template.|
-
+|`credential`|""|no|str|Credential to authenticate with Kubernetes or OpenShift.  Must be of type "Kubernetes/OpenShift API Bearer Token". Will make instance part of a Container Group. |
+|`policy_instance_percentage`|""|no|int|Minimum percentage of all instances that will be automatically assigned to this group when new instances come online.|
+|`policy_instance_minimum`|""|no|int|Static minimum number of Instances that will be automatically assign to this group when new instances come online.|
+|`policy_instance_list`|""|no|list|List of exact-match Instances that will be assigned to this group.|
+|`pod_spec_override`|""|no|str|A custom Kubernetes or OpenShift Pod specification.|
+|`instances`|""|no|list|The instances associated with this instance_group.|
 |`state`|`present`|no|str|Desired state of the resource.|
-
-
 
 ### Standard Project Data Structure
 #### Yaml Example
