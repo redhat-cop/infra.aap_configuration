@@ -12,6 +12,8 @@
     pod_spec_override:              "{{ tower_instance_groups_item.pod_spec_override | default(omit) }}"
     instances:                      "{{ tower_instance_groups_item.instances | default(omit) }}"
     state:                          "{{ tower_instance_groups_item.state | default(tower_state | default('present')) }}"
+    is_containerized:               "{{ tower_instance_groups_item.is_containerized | default('false') }}" 
+    summary_fields:                 "{{ tower_instance_groups_item.summary_fields | default(omit) }}"
     tower_username:                 "{{ tower_username | default(omit) }}"
     tower_password:                 "{{ tower_password | default(omit) }}"
     tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
