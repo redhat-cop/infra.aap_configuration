@@ -129,7 +129,7 @@ def main():
         resources=dict(),
         links=dict(type='list', elements='dict'),
         groups=dict(required=True, type='list', elements='dict'),
-        state=dict(choices=['present', 'absent'], default='present'),
+        state=dict(choices=['present'], default='present'),
     )
 
     # Create a module for ourselves
