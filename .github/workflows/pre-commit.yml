@@ -16,9 +16,6 @@ jobs:
       run: |
         sudo apt install software-properties-common
         sudo apt-add-repository --yes --update ppa:ansible/ansible
-        cp .github/workflow-config/galaxy.yml.tmp galaxy.yml
-        ansible-galaxy collection build
-        ansible-galaxy collection install redhat_cop-ah_configuration-0.0.1-devel.tar.gz
         pip install -Iv ansible==2.10.5
         ansible-config view -vvv
     - name: Run pre-commit
