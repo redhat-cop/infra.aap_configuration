@@ -21,9 +21,9 @@ class AHModule(AnsibleModule):
     url = None
     session = None
     AUTH_ARGSPEC = dict(
-        ah_server=dict(required=False, fallback=(env_fallback, ['GALAXY_SERVER'])),
-        validate_certs=dict(type='bool', aliases=['ah_verify_ssl'], required=False, fallback=(env_fallback, ['GALAXY_VERIFY_SSL'])),
-        ah_token=dict(type='str', no_log=True, required=False, fallback=(env_fallback, ['GALAXY_API_TOKEN'])),
+        ah_server=dict(required=False, fallback=(env_fallback, ['AH_SERVER'])),
+        validate_certs=dict(type='bool', aliases=['ah_verify_ssl'], required=False, fallback=(env_fallback, ['AH_VERIFY_SSL'])),
+        ah_token=dict(type='str', no_log=True, required=False, fallback=(env_fallback, ['AH_API_TOKEN'])),
     )
     ENCRYPTED_STRING = "$encrypted$"
     short_params = {

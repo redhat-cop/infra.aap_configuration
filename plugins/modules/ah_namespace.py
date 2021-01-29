@@ -54,7 +54,8 @@ options:
     state:
       description:
         - Desired state of the resource.
-      choices: ["present", "absent"]
+        - Currently the ability to delete objects in Automation Hub is not available, this option is included for when it is.
+      choices: ["present"]
       default: "present"
       type: str
     links:
