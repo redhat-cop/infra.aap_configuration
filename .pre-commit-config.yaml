@@ -14,8 +14,8 @@ repos:
           - yaml
   - repo: 'https://github.com/sean-m-sullivan/ansible-lint.git'
     rev: v5.0.0b
-  #  - repo: 'https://github.com/ansible-community/ansible-lint.git'
-  #    rev: v5.0.0a0
+#  - repo: 'https://github.com/ansible-community/ansyible-lint.git'
+#    rev: v5.0.0a0
     hooks:
       # see discussions here about what arguments are used, and behavior
       # https://github.com/ansible/ansible-lint/issues/649
@@ -31,17 +31,17 @@ repos:
   - repo: https://github.com/ambv/black
     rev: stable
     hooks:
-      - id: black
-        name: black
-        language_version: python3.6
-        entry: black
-        args: [--config=.github/workflow-config/black.cfg, --check, --diff]
-        types: [python]
+    - id: black
+      name: black
+      language_version: python3.7.9
+      entry: black
+      args: [--config=.github/workflow-config/black.cfg, --check, --diff ]
+      types: [python]
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.8.4
     hooks:
-      - id: flake8
-        name: flake8
-        entry: flake8
-        args: [--config=.github/workflow-config/flake8.cfg]
-        types: [python]
+    - id: flake8
+      name: flake8
+      entry: flake8
+      args: [--config=.github/workflow-config/flake8.cfg]
+      types: [python]
