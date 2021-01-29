@@ -21,3 +21,7 @@
     loop_var: "__project_update_update_item"
   no_log: "{{ tower_configuration_project_update_secure_logging }}"
   when: tower_projects is defined
+  when: 
+    - tower_projects is defined
+    - __project_update_update_item.update
+
