@@ -3,3 +3,4 @@ collections/*
 galaxy.yml
 *.tar.gz
 .pre-commit-config.yaml
+temp_test_module.yml
