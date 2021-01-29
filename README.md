@@ -1,5 +1,12 @@
 # Redhat Communties of Practice Automation Hub Configuration Collection
 
+![Ansible Lint](https://github.com/redhat-cop/ah_configuration/workflows/Yaml%20and%20Ansible%20Lint/badge.svg)
+![Yaml Lint](https://github.com/redhat-cop/ah_configuration/workflows/Yaml%20and%20Ansible%20Lint/badge.svg)
+![Flake8](https://github.com/redhat-cop/ah_configuration/workflows/Yaml%20and%20Ansible%20Lint/badge.svg)
+![Flake8 Lint](https://github.com/redhat-cop/ah_configuration/workflows/Yaml%20and%20Ansible%20Lint/badge.svg)
+![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
+<!-- Further CI badges go here as above -->
+
 This Ansible collection allows for easy interaction with an Ansible Automation Hub or Galaxy NG server via Ansible playbooks.
 
 ## Included content
