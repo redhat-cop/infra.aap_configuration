@@ -3,14 +3,15 @@
 # Copyright: (c) 2020, Sean Sullivan <@sean-m-sullivan>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-from __future__ import (absolute_import, division, print_function)
+from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
 class ModuleDocFragment(object):
 
     # Ansible Galaxy documentation fragment
-    DOCUMENTATION = r'''
+    DOCUMENTATION = r"""
 options:
   ah_server:
     description:
@@ -31,4 +32,4 @@ options:
     - If value not set, will try environment variable C(GALAXY_VERIFY_SSL) and then config files
     type: bool
     aliases: [ ah_verify_ssl ]
-'''
+"""
