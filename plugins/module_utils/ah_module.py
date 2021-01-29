@@ -99,11 +99,11 @@ class AHModule(AnsibleModule):
         try:
             # AH Check
             response = self.get_endpoint('/api/galaxy/', return_none_on_404=True, **kwargs)
-            if response != None and response['status_code'] == 200:
+            if response is not None and response['status_code'] == 200:
                 self.host_type = 'rh-automation-hub'
             else:
                 response = self.get_endpoint('/api/automation-hub/', return_none_on_404=True, **kwargs)
-                if response != None and response['status_code'] == 200:
+                if response is not None and response['status_code'] == 200:
                     self.host_type = 'upstream-automation-hub'
                 else:
                     self.fail_json(msg="Unable to determine if the host is a Galaxy or Automation Hub ({1}): {0}.".format(self.host, response))
