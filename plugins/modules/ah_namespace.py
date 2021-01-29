@@ -5,15 +5,14 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
-ANSIBLE_METADATA = {'metadata_version': '1.1',
-                    'status': ['preview'],
-                    'supported_by': 'community'}
+ANSIBLE_METADATA = {"metadata_version": "1.1", "status": ["preview"], "supported_by": "community"}
 
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
 module: ah_namespace
 author: "Sean Sullivan (@sean-m-sullivan)"
@@ -93,10 +92,10 @@ options:
           type: list
 
 extends_documentation_fragment: ansible.automation_hub.auth
-'''
+"""
 
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Create Tower Ping job template
   ah_namespace:
     name: Redhat
@@ -113,7 +112,7 @@ EXAMPLES = '''
           - "change_namespace"
           - "upload_to_namespace"
 
-'''
+"""
 
 from ..module_utils.ah_module import AHModule
 
@@ -128,34 +127,40 @@ def main():
         email=dict(),
         avatar_url=dict(),
         resources=dict(),
-        links=dict(type='list', elements='dict'),
-        groups=dict(required=True, type='list', elements='dict'),
-        state=dict(choices=['present'], default='present'),
+        links=dict(type="list", elements="dict"),
+        groups=dict(required=True, type="list", elements="dict"),
+        state=dict(choices=["present"], default="present"),
     )
 
     # Create a module for ourselves
     module = AHModule(argument_spec=argument_spec)
 
     # Extract our parameters
-    name = module.params.get('name')
+    name = module.params.get("name")
     new_name = module.params.get("new_name")
-    state = module.params.get('state')
+    state = module.params.get("state")
 
     new_fields = {}
 
     # Attempt to look up an existing item based on the provided data
-    existing_item = module.get_one('namespaces', name_or_id=name)
+    existing_item = module.get_one("namespaces", name_or_id=name)
 
-    if state == 'absent':
+    if state == "absent":
         # If the state was absent we can let the module delete it if needed, the module will handle exiting from this
         module.delete_if_needed(existing_item)
 
     # Create the data that gets sent for create and update
     # Remove these two comments for final
     # Check that Links and groups works with this.
-    new_fields['name'] = new_name if new_name else (module.get_item_name(existing_item) if existing_item else name)
+    new_fields["name"] = new_name if new_name else (module.get_item_name(existing_item) if existing_item else name)
     for field_name in (
-        'description', 'company', 'email', 'avatar_url', 'resources', 'links', 'groups',
+        "description",
+        "company",
+        "email",
+        "avatar_url",
+        "resources",
+        "links",
+        "groups",
     ):
         field_val = module.params.get(field_name)
         if field_val is not None:
@@ -163,10 +168,12 @@ def main():
 
     # If the state was present and we can let the module build or update the existing item, this will return on its own
     module.create_or_update_if_needed(
-        existing_item, new_fields,
-        endpoint='namespaces', item_type='namespaces',
+        existing_item,
+        new_fields,
+        endpoint="namespaces",
+        item_type="namespaces",
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
