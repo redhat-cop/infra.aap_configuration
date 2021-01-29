@@ -49,12 +49,13 @@ options:
       type: str
     resources:
       description:
-        - Namespace resource page in Markdown format..
+        - Namespace resource page in Markdown format.
       type: str
     state:
       description:
         - Desired state of the resource.
-      choices: ["present", "absent"]
+        - Currently the ability to delete objects in Automation Hub is not available, this option is included for when it is.
+      choices: ["present"]
       default: "present"
       type: str
     links:
@@ -72,6 +73,7 @@ options:
           description:
             - Link URL.
           type: str
+          required: True
     groups:
       description:
         - A list of dictionaries of the Names and object_permissions values for groups that control the Namespace.
@@ -128,7 +130,7 @@ def main():
         resources=dict(),
         links=dict(type='list', elements='dict'),
         groups=dict(required=True, type='list', elements='dict'),
-        state=dict(choices=['present', 'absent'], default='present'),
+        state=dict(choices=['present'], default='present'),
     )
 
     # Create a module for ourselves

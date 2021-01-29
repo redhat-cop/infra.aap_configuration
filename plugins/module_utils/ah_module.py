@@ -21,9 +21,9 @@ class AHModule(AnsibleModule):
     url = None
     session = None
     AUTH_ARGSPEC = dict(
-        ah_server=dict(required=False, fallback=(env_fallback, ['GALAXY_SERVER'])),
-        validate_certs=dict(type='bool', aliases=['ah_verify_ssl'], required=False, fallback=(env_fallback, ['GALAXY_VERIFY_SSL'])),
-        ah_token=dict(type='str', no_log=True, required=False, fallback=(env_fallback, ['GALAXY_API_TOKEN'])),
+        ah_server=dict(required=False, fallback=(env_fallback, ['AH_SERVER'])),
+        validate_certs=dict(type='bool', aliases=['ah_verify_ssl'], required=False, fallback=(env_fallback, ['AH_VERIFY_SSL'])),
+        ah_token=dict(type='str', no_log=True, required=False, fallback=(env_fallback, ['AH_API_TOKEN'])),
     )
     ENCRYPTED_STRING = "$encrypted$"
     short_params = {
@@ -35,6 +35,7 @@ class AHModule(AnsibleModule):
     }
     ENCRYPTED_STRING = "$encrypted$"
     host = '127.0.0.1'
+    host_type = ''
     verify_ssl = True
     oauth_token = None
     error_callback = None
@@ -94,12 +95,30 @@ class AHModule(AnsibleModule):
         else:
             self.update_secrets = True
 
+        # Determine if we are connecting to AH or Galaxy
+        try:
+            # AH Check
+            response = self.get_endpoint('/api/galaxy/', return_none_on_404=True, **kwargs)
+            if response != None and response['status_code'] == 200:
+                self.host_type = 'rh-automation-hub'
+            else:
+                response = self.get_endpoint('/api/automation-hub/', return_none_on_404=True, **kwargs)
+                if response != None and response['status_code'] == 200:
+                    self.host_type = 'upstream-automation-hub'
+                else:
+                    self.fail_json(msg="Unable to determine if the host is a Galaxy or Automation Hub ({1}): {0}.".format(self.host, response))
+        except(Exception) as e:
+            self.fail_json(msg="There was an unknown error when trying to connect to {2}: {0} {1}".format(type(e).__name__, e, self.host))
+
     def build_url(self, endpoint, query_params=None):
         # Make sure we start with /api/vX
         if not endpoint.startswith("/"):
             endpoint = "/{0}".format(endpoint)
         if not endpoint.startswith("/api/"):
-            endpoint = "api/automation-hub/v3{0}".format(endpoint)
+            if self.host_type == 'rh-automation-hub':
+                endpoint = "api/galaxy/v3{0}".format(endpoint)
+            else:
+                endpoint = "api/automation-hub/v3{0}".format(endpoint)
         if not endpoint.endswith('/') and '?' not in endpoint:
             endpoint = "{0}/".format(endpoint)
 
@@ -140,11 +159,6 @@ class AHModule(AnsibleModule):
         if not method:
             raise Exception("The HTTP method must be defined")
 
-        if method in ['POST', 'PUT', 'PATCH']:
-            url = self.build_url(endpoint)
-        else:
-            url = self.build_url(endpoint, query_params=kwargs.get('data'))
-
         # Extract the headers, this will be used in a couple of places
         headers = kwargs.get('headers', {})
 
@@ -156,6 +170,9 @@ class AHModule(AnsibleModule):
         if method in ['POST', 'PUT', 'PATCH']:
             headers.setdefault('Content-Type', 'application/json')
             kwargs['headers'] = headers
+            url = self.build_url(endpoint)
+        else:
+            url = self.build_url(endpoint, query_params=kwargs.get('data'))
 
         data = None  # Important, if content type is not JSON, this should not be dict type
         if headers.get('Content-Type', '') == 'application/json':

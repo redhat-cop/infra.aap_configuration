@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
-    - name: Install Collections
+    - name: Install Pre-reqs
       # cp is to make ansible-lint into thinking that awx.awx plugins are part of the collection so it lints properly.
       run: |
         sudo apt install software-properties-common
