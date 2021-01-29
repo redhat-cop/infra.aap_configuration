@@ -3,10 +3,11 @@
   hosts: localhost
   connection: local
   gather_facts: false
-
+  collections:
+    - redhat_cop.ah_configuration
   tasks:
     - name: set namespace collections
-      redhat_cop.ah_configuration.namespace:
+      namespace:
         name: abc15
         company: Redhat
         email: user@example.com

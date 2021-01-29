@@ -28,6 +28,7 @@ repos:
           ansible-lint -vp -c .github/workflow-config/.ansiblelint.yml
           --exclude=temp_test_module.yml
           --exclude=playbooks/ah_configs/ah_namespaces.yml
+          --exclude=playbooks/testing_playbook.yml
   - repo: https://github.com/ambv/black
     rev: stable
     hooks:
