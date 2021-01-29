@@ -1,8 +1,8 @@
 ---
 
-# Create Job Template
+# Create AH Namespace
 - name: Add Automation Hub Namespace
-  namespace:
+  ah_namespace:
     name:             "{{ __namespace_item.name }}"
     new_name:         "{{ __namespace_item.new_name | default('') }}"
     description:      "{{ __namespace_item.description | default('') }}"
@@ -19,4 +19,4 @@
   loop: "{{ ah_namespaces }}"
   loop_control:
     loop_var: "__namespace_item"
-  no_log: "{{ __ah_configuration_namespace_secure_logging }}"
+  no_log: "{{ ah_configuration_namespace_secure_logging }}"
