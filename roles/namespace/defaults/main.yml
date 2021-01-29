@@ -20,4 +20,4 @@ ah_namespace: []
 #  skip_authorization: false  # optional, boolean
 #  state: present  # optional, choices: absent, present
 
-__ah_configuration_namespace_secure_logging: "{{ah_configuration_secure_logging | default(false)}}"
+ah_configuration_namespace_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"

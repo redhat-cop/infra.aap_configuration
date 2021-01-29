@@ -49,7 +49,7 @@ options:
       type: str
     resources:
       description:
-        - Namespace resource page in Markdown format..
+        - Namespace resource page in Markdown format.
       type: str
     state:
       description:
@@ -73,6 +73,7 @@ options:
           description:
             - Link URL.
           type: str
+          required: True
     groups:
       description:
         - A list of dictionaries of the Names and object_permissions values for groups that control the Namespace.
