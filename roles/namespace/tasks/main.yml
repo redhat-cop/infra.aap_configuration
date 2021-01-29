@@ -2,7 +2,7 @@
 
 # Create Job Template
 - name: Add Automation Hub Namespace
-  namespace:
+  ah_namespace:
     name:             "{{ __namespace_item.name }}"
     new_name:         "{{ __namespace_item.new_name | default('') }}"
     description:      "{{ __namespace_item.description | default('') }}"
