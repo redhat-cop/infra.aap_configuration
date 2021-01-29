@@ -2,4 +2,4 @@ collections/*
 !collections/requirements.yml
 galaxy.yml
 *.tar.gz
-.pre-commit-config.yml
+.pre-commit-config.yaml

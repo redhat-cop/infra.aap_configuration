@@ -1,3 +1,4 @@
+---
 - name: Testing Galaxy
   hosts: localhost
   connection: local

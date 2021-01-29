@@ -1,3 +1,4 @@
+---
 - name: Testing Automation Hub
   hosts: localhost
   connection: local
