@@ -14,7 +14,7 @@
     groups:           "{{ __namespace_item.groups | default([]) }}"
     state:            "{{ __namespace_item.state | default(ah_state | default('present')) }}"
     ah_token:         "{{ ah_token | default(omit) }}"
-    ah_server:        "{{ ah_server }}"
+    ah_host:          "{{ ah_host }}"
     validate_certs:   "{{ ah_validate_certs | default('true') }}"
   loop: "{{ ah_namespaces }}"
   loop_control:
