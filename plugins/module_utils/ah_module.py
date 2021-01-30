@@ -459,7 +459,7 @@ class AHModule(AnsibleModule):
                 for key in ("name", "username", "identifier", "hostname"):
                     if key in response["json"]:
                         self.json_output["name"] = response["json"][key]
-                if item_type is not "token":
+                if item_type != "token":
                     self.json_output["id"] = response["json"]["id"]
                     item_url = "{0}{1}/".format(self.build_url(endpoint).geturl()[len(self.host) :], new_item["name"])
                 self.json_output["changed"] = True
