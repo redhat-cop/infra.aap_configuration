@@ -105,9 +105,11 @@ def main():
     # Delete an existing token
     if state == "absent":
         # If the state was absent we can let the module delete it if needed, the module will handle exiting from this
-        module.delete_endpoint(
-            endpoint="auth/token/",
-        )
+        existing_item = {}
+        existing_item["endpoint"] = "auth/token/"
+        existing_item["type"] = "token"
+        module.delete_if_needed(existing_item)
+
     # If the state was present and we can let the module build or update the existing item, this will return on its own
     module.create_or_update_if_needed(
         None,
