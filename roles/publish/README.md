@@ -1,27 +1,26 @@
 # ah_configuration_ah_namespace
 ## Description
-An Ansible Role to create Namespaces in Automation Hub.
+An Ansible Role to publish collections to Automation Hub or Galaxies.
+
 
 ## Variables
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`ah_host`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
-|`ah_username`|""|yes|Admin User on the Automation Hub Server.||
-|`ah_password`|""|yes|Automation Hub Admin User's password on the Automation Hub Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
+|`validate_certs`|`False`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
 |`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`validate_certs`|`False`|no|Whether or not to validate the Ansible Automation Hub Server's SSL certificate.||
 |`ah_namespaces`|`see below`|yes|Data structure describing your namespaces, described below.||
 
 
 ### Secure Logging Variables
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
-The role defaults to False as normally the add namespace task does not include sensitive information.
-ah_configuration_namespace_secure_logging defaults to the value of ah_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of automation hub configuration roles with a single variable, or for the user to selectively use it.
+The role defaults to False as normally the add publish collections task does not include sensitive information.
+ah_configuration_publish_secure_logging defaults to the value of ah_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of automation hub configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`ah_configuration_namespace_secure_logging`|`False`|no|Whether or not to include the sensitive Namepsace role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`ah_configuration_publish_secure_logging`|`False`|no|Whether or not to include the sensitive publish collections role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`ah_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 

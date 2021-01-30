@@ -13,10 +13,8 @@
     links:            "{{ __namespace_item.links | default([]) }}"
     groups:           "{{ __namespace_item.groups | default([]) }}"
     state:            "{{ __namespace_item.state | default(ah_state | default('present')) }}"
-    ah_host:          "{{ ah_host }}"
-    ah_username:      "{{ ah_username | default(omit) }}"
-    ah_password:      "{{ ah_password | default(omit) }}"
     ah_token:         "{{ ah_token | default(omit) }}"
+    ah_host:          "{{ ah_host }}"
     validate_certs:   "{{ ah_validate_certs | default('true') }}"
   loop: "{{ ah_namespaces }}"
   loop_control:
