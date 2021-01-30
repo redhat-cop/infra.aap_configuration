@@ -5,8 +5,8 @@ An Ansible Role to create Namespaces in Automation Hub.
 ## Variables
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`ah_host`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
-|`ah_username`|""|yes|Admin User on the Automation Hub Server.||
+|`ah_host`|""|yes|URL to the Automation Hub or Galaxy Server.|127.0.0.1|
+|`ah_username`|""|yes|Admin User on the Automation Hub or Galaxy Server.||
 |`ah_password`|""|yes|Automation Hub Admin User's password on the Automation Hub Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 |`validate_certs`|`False`|no|Whether or not to validate the Ansible Automation Hub Server's SSL certificate.||

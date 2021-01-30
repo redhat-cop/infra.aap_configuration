@@ -6,11 +6,13 @@ An Ansible Role to publish collections to Automation Hub or Galaxies.
 ## Variables
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`ah_host`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
+|`ah_host`|""|yes|URL to the Automation Hub or Galaxy Server.|127.0.0.1|
 |`validate_certs`|`False`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
-|`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`ah_namespaces`|`see below`|yes|Data structure describing your namespaces, described below.||
-
+|`ah_token`|""|no|Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`ah_collections`|`see below`|no|Data structure describing your collections, mutually exclusive to ah_collection_list, described below.||
+|`ah_collection_list`|`list`|no|Data structure file paths to pre built collections, mutually exclusive with ah_collections.||
+|`ah_configuration_working_dir`|`/var/tmp`|no|Data structure describing your namespaces, described below.||
+|`ansible_config_path`|`{{ ah_configuration_working_dir }}/ansible.cfg`|no|Data structure describing your namespaces, described below.||
 
 ### Secure Logging Variables
 The following Variables compliment each other.
@@ -25,52 +27,23 @@ ah_configuration_publish_secure_logging defaults to the value of ah_configuratio
 
 
 ## Data Structure
-### Variables
+### ah_collections Variables
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|Namespace name. Must be lower case containing only alphanumeric characters and underscores.|
-|`new_name`|""|yes|str|Setting this option will change the existing name (looked up via the name field.|
-|`description`|""|yes|str|Description to use for the Namespace.|
-|`company`|""|no|str|Namespace owner company name.|
-|`email`|"password"|yes|str|Namespace contact email.|
-|`avatar_url`|"public"|yes|str|Namespace logo URL.|
-|`resources`|""|no|str|Namespace resource page in Markdown format.|
-|`links`|[]|no|list|A list of dictionaries of Name and url values for links related the Namespace. See below for details.|
-|`groups`|[]|yes|list|A list of dictionaries of the Names and object_permissions values for groups that control the Namespace. See below for details.|
-|`state`|`present`|no|str|Desired state of the namespace.|
-
-#### Links
-|Variable Name|Default Value|Required|Type|Description|
-|:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|Link Text.|
-|`description`|""|yes|str|Link URL.|
-
-#### Groups
-|Variable Name|Default Value|Required|Type|Description|
-|:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|Group Name or ID.|
-|`object_permissions`|""|yes|list|List of Permisions granted to the group. Choices of 'change_namespace', 'upload_to_namespace'|
+|`repo_name`|""|yes|str|Name of repo, normally the last part before the / in a url.|
+|`git_url`|""|yes|str|Url to git repo.|
 
 ### Standard Project Data Structure
 
 #### Ymal Example
 ```yaml
 ---
-ah_namespace:
-  - name: abc15
-    company: Redhat
-    email: user@example.com
-    avatar_url: https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo.svg
-    description: string
-    resources: "# Redhat\nA Namespace test with changes"
-    links:
-      - name: "New_Google"
-        url: "http://www.google.com"
-    groups:
-      - name: system:partner-engineers
-        object_permissions:
-          - "change_namespace"
-          - "upload_to_namespace"
+ah_collections:
+  - repo_name: cisco.iosxr
+    git_url: https://github.com/ansible-collections/cisco.iosxr
+
+ansible_config_path: "{{ ah_configuration_working_dir }}/ansible.cfg"
+
 ```
 
 ## Playbook Examples
@@ -94,7 +67,7 @@ ah_namespace:
       tags:
         - always
   roles:
-    - ../../namespace
+    - ../../publish
 ```
 ## License
 [GPLv3+](LICENSE)

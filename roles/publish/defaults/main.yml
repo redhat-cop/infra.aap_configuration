@@ -14,7 +14,7 @@ ah_collection_list: []
 # a list of dictionaries describing collections to publish
 ah_collections: []
 # possible fields:
-# - repo_name:  "name of repo, normalyl the last part before the / in a url"  # mandatory
+# - repo_name:  "name of repo, normally the last part before the / in a url"  # mandatory
 #   git_url: "url to git repo."  # mandatory
 
 # The ansible configuration file path to use when publishing to a galaxy or Automation hub, this can be generated using the ansible_config role, or provided.
