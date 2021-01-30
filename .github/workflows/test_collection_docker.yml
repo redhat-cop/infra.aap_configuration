@@ -17,14 +17,14 @@ jobs:
         with:
           python-version: 3.8
 
+      # Follow the Development Setup guide here:
+      # https://github.com/ansible/galaxy_ng/wiki/Development-Setup
+
       - name: "Clone galaxy_ng"
         run: cd .github && git clone https://github.com/ansible/galaxy_ng.git
 
       - name: "Clone ansible-hub-ui"
         run: cd .github && git clone https://github.com/ansible/ansible-hub-ui.git
-
-      - name: "print working dir"
-        run: pwd
 
       - name: Create compose env
         run: |
@@ -35,4 +35,22 @@ jobs:
           EOT
 
       - name: Display Versions
-        run: cat .github/galaxy_ng/.compose.env
+        run: which python && pip --version && ansible --version
+
+      - name: Build docker image
+        run: cd .github/galaxy_ng && ./compose build
+
+      - name: Start database and redis services
+        run: cd .github/galaxy_ng && ./compose up -d postgres redis
+
+      - name: Run migrations
+        run: cd .github/galaxy_ng && ./compose run --rm api manage migrate
+
+      - name: Import initial data
+        run: cd .github/galaxy_ng && ./compose run --rm -e PULP_FIXTURE_DIRS='["/src/galaxy_ng/dev/automation-hub"]' api manage loaddata initial_data.json
+
+      - name: Import initial data
+        run: cd .github/galaxy_ng && ./compose up -d
+
+      - name: "Perform playbook tests"
+        run: ansible-playbook playbooks/testing_playbook.yml

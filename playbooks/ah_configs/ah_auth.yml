@@ -1,5 +1,5 @@
 # User may add tower auth creds to this file and encrypt it using `ansible-vault`
 ---
-ah_host: http://192.168.122.47:8002/
+ah_host: http://localhost:8002/
 ah_username: admin
 ah_password: admin
