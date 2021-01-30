@@ -1,22 +1,37 @@
 ---
-
-# Create AH Namespace
-- name: Add Automation Hub Namespace
-  ah_namespace:
-    name:             "{{ __namespace_item.name }}"
-    new_name:         "{{ __namespace_item.new_name | default('') }}"
-    description:      "{{ __namespace_item.description | default('') }}"
-    company:          "{{ __namespace_item.company | default('') }}"
-    email:            "{{ __namespace_item.email | default(omit) }}"
-    avatar_url:       "{{ __namespace_item.avatar_url | default('') }}"
-    resources:        "{{ __namespace_item.resources | default('') }}"
-    links:            "{{ __namespace_item.links | default([]) }}"
-    groups:           "{{ __namespace_item.groups | default([]) }}"
-    state:            "{{ __namespace_item.state | default(ah_state | default('present')) }}"
-    ah_token:         "{{ ah_token | default(omit) }}"
-    ah_host:          "{{ ah_host }}"
-    validate_certs:   "{{ ah_validate_certs | default('true') }}"
-  loop: "{{ ah_namespaces }}"
+- name: Git checkout
+  git:
+    repo:     "{{ __ah_collection_item.git_url }}"
+    dest:     "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.repo_name }}/"
+    version:  "{{ __ah_collection_item.version | default(omit) }}"
+  loop: "{{ ah_collections }}"
   loop_control:
-    loop_var: "__namespace_item"
-  no_log: "{{ ah_configuration_namespace_secure_logging }}"
+    loop_var: "__ah_collection_item"
+  no_log: "{{ ah_configuration_publish_secure_logging }}"
+  when: ah_publish_file_list is not defined
+
+- name: Build Collections
+  command:
+    cmd: ansible-galaxy collection build --output-path {{ ah_configuration_working_dir }}/ {{ ah_configuration_working_dir }}/{{ __ah_collection_item.repo_name }}/ -vf
+  changed_when: "__build_collection_results.rc != 2"
+  register: __build_collection_results
+  loop: "{{ ah_collections }}"
+  loop_control:
+    loop_var: "__ah_collection_item"
+  when: ah_publish_file_list is not defined
+
+- name: Find all relevant built collection files
+  find:
+    paths: "{{ ah_configuration_working_dir }}"
+    patterns: '*.tar.gz'
+  register: __ah_collections_find_results
+  when: ah_publish_file_list is not defined
+
+- name: Publish Collections with ansible-galaxy
+  shell: # noqa 305
+    cmd: ANSIBLE_CONFIG="{{ ansible_config_path }}" ansible-galaxy collection publish -v {{ __ah_collection_file }}
+  register: __publish_collection_results
+  changed_when: "__publish_collection_results.rc != 2"
+  loop: "{{ ah_publish_file_list }}"
+  loop_control:
+    loop_var: "__ah_collection_file"

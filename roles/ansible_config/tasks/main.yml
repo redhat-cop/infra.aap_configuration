@@ -3,7 +3,7 @@
 - name: Template config template
   ansible.builtin.template:
     src: ansible.cfg.j2
-    dest: "{{ ansible_config_dir }}/ansible.cfg"
+    dest:   "{{ ah_configuration_working_dir }}/ansible.cfg"
     owner:  "{{ ansible_config_owner | default(omit) }}"
     group:  "{{ ansible_config_group | default(omit) }}"
     mode:   "{{ ansible_config_mode }}"

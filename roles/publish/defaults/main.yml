@@ -8,16 +8,17 @@
 
 # These are the default variables specific to the license role
 
-# a list of dictionaries describing the Automation Hub publish
+# The following two lists are mutally exclusive, you need to provide at least one of them, and ah_collections will override the collection list.
+# A list of paths to collection tarballs to publish if you are not cloning from a git and building them.
 ah_collection_list: []
+# a list of dictionaries describing collections to publish
+ah_collections: []
 # possible fields:
-# - name:  "app_name"  # mandatory
-#   organization: "Default"  # mandatory
-#   description: "app description"  # optional
-#   authorization_grant_type: "password"  # optional, choices: password, authorization-code
-#   client_type: "public"  # optional, choices: public, confidential
-#   redirect_uris: []  # optional, list of allowed URLs
-#   skip_authorization: false  # optional, boolean
-#   state: present  # optional, choices: absent, present
+# - repo_name:  "name of repo, normalyl the last part before the / in a url"  # mandatory
+#   git_url: "url to git repo."  # mandatory
+
+# The ansible configuration file path to use when publishing to a galaxy or Automation hub, this can be generated using the ansible_config role, or provided.
+ah_configuration_working_dir: "/var/tmp"
+ansible_config_path: "{{ ah_configuration_working_dir }}/ansible.cfg"
 
 ah_configuration_publish_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
