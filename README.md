@@ -65,5 +65,5 @@ which is the same as license that applied before when the base for this
 code was derived form the [AWX.AWX](https://galaxy.ansible.com/awx/awx) collection.
 
 ## Documentation
-Documentation for Automation hub URI can be found at 
+Documentation for Automation hub URI can be found at
 [Documentation for Automation hub URI.](https://github.com/ansible/galaxy_ng/wiki/Automating-Collection-Uploads)
