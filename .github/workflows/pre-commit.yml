@@ -17,6 +17,7 @@ jobs:
         sudo apt install software-properties-common
         sudo apt-add-repository --yes --update ppa:ansible/ansible
         pip install -Iv ansible==2.10.5
+        cp .github/workflow-config/galaxy.yml galaxy.yml
         ansible-galaxy collection build
         ansible-galaxy collection install *.tar.gz -f
         ansible-config view -vvv
