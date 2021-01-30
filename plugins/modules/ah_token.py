@@ -7,14 +7,13 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 
-ANSIBLE_METADATA = {'metadata_version': '1.1',
-                    'status': ['preview'],
-                    'supported_by': 'community'}
+ANSIBLE_METADATA = {"metadata_version": "1.1", "status": ["preview"], "supported_by": "community"}
 
-DOCUMENTATION = '''
+DOCUMENTATION = """
 ---
 module: ah_token
 author: "John Westcott IV (@john-westcott-iv), Sean Sullivan (@sean-m-sullivan)"
@@ -39,9 +38,9 @@ options:
       default: "present"
       type: str
 extends_documentation_fragment: awx.awx.auth
-'''
+"""
 
-EXAMPLES = '''
+EXAMPLES = """
 - name: Create a new token using an existing token
   ah_token:
     ah_token: "{{ my_existing_token }}"
@@ -60,9 +59,9 @@ EXAMPLES = '''
 - name: Use our new token to make another call
   namespace:
     ah_token: "{{ ah_token }}"
-'''
+"""
 
-RETURN = '''
+RETURN = """
 ah_token:
   type: dict
   description: An Ansible Fact variable representing a Tower token object which can be used for auth in subsequent modules. See examples for usage.
@@ -74,18 +73,19 @@ ah_token:
       description: The numeric ID of the token created
       type: str
   returned: on successful create
-'''
+"""
 
 from ..module_utils.ah_module import AHModule
+
 
 def return_token(module, last_response):
     # A token is special because you can never get the actual token ID back from the API.
     # So the default module return would give you an ID but then the token would forever be masked on you.
     # This method will return the entire token object we got back so that a user has access to the token
 
-    module.json_output['ansible_facts'] = {
+    module.json_output["ansible_facts"] = {
         # 'ah_token': last_response['token'],
-        'ah_token': last_response,
+        "ah_token": last_response,
     }
     module.exit_json(**module.json_output)
 
@@ -93,29 +93,28 @@ def return_token(module, last_response):
 def main():
     # Any additional arguments that are not fields of the item can be added here
     argument_spec = dict(
-        state=dict(choices=['present', 'absent'], default='present'),
+        state=dict(choices=["present", "absent"], default="present"),
     )
 
     # Create a module for ourselves
     module = AHModule(argument_spec=argument_spec)
 
     # Extract our parameters
-    state = module.params.get('state')
+    state = module.params.get("state")
 
     # Delete an existing token
     if state == "absent":
         # If the state was absent we can let the module delete it if needed, the module will handle exiting from this
-        module.delete_endpoint(
-            None,
-            endpoint='auth/token/', item_type='token'
-        )
+        module.delete_endpoint(None, endpoint="auth/token/", item_type="token")
     # If the state was present and we can let the module build or update the existing item, this will return on its own
     module.create_or_update_if_needed(
-        None, None,
-        endpoint='auth/token/', item_type='token',
+        None,
+        None,
+        endpoint="auth/token/",
+        item_type="token",
         on_create=return_token,
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
