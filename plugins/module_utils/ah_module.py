@@ -356,8 +356,8 @@ class AHModule(AnsibleModule):
         #   1. None if the existing_item is not defined (so no delete needs to happen)
         #   2. The response from Automation Hub from calling the delete on the endpont. It's up to you to process the response and exit from the module
         # Note: common error codes from the Automation Hub API can cause the module to fail
-        if existing_item['type'] == 'token':
-            response = self.delete_endpoint(existing_item['endpoint'])
+        if existing_item["type"] == "token":
+            response = self.delete_endpoint(existing_item["endpoint"])
         elif existing_item:
             # If we have an item, we can try to delete it
             try:
@@ -379,10 +379,10 @@ class AHModule(AnsibleModule):
             if on_delete:
                 on_delete(self, response["json"])
             self.json_output["changed"] = True
-            if existing_item['type'] == 'token':
-                self.json_output["msg"] = 'Token Revoked'
+            if existing_item["type"] == "token":
+                self.json_output["msg"] = "Token Revoked"
                 self.exit_json(**self.json_output)
-            else:    
+            else:
                 self.json_output["id"] = item_id
                 self.exit_json(**self.json_output)
             if auto_exit:
@@ -465,7 +465,7 @@ class AHModule(AnsibleModule):
                 for key in ("name", "username", "identifier", "hostname"):
                     if key in response["json"]:
                         self.json_output["name"] = response["json"][key]
-                if item_type is not "token":
+                if item_type != "token":
                     self.json_output["id"] = response["json"]["id"]
                     item_url = "{0}{1}/".format(self.build_url(endpoint).geturl()[len(self.host) :], new_item["name"])
                 self.json_output["changed"] = True
