@@ -356,7 +356,9 @@ class AHModule(AnsibleModule):
         #   1. None if the existing_item is not defined (so no delete needs to happen)
         #   2. The response from Automation Hub from calling the delete on the endpont. It's up to you to process the response and exit from the module
         # Note: common error codes from the Automation Hub API can cause the module to fail
-        if existing_item:
+        if existing_item['type'] == 'token':
+            response = self.delete_endpoint(existing_item['endpoint'])
+        elif existing_item:
             # If we have an item, we can try to delete it
             try:
                 item_url = existing_item["url"]
@@ -367,33 +369,37 @@ class AHModule(AnsibleModule):
                 self.fail_json(msg="Unable to process delete of item due to missing data {0}".format(ke))
 
             response = self.delete_endpoint(item_url)
-
-            if response["status_code"] in [202, 204]:
-                if on_delete:
-                    on_delete(self, response["json"])
-                self.json_output["changed"] = True
-                self.json_output["id"] = item_id
-                self.exit_json(**self.json_output)
-                if auto_exit:
-                    self.exit_json(**self.json_output)
-                else:
-                    return self.json_output
-            else:
-                if "json" in response and "__all__" in response["json"]:
-                    self.fail_json(msg="Unable to delete {0} {1}: {2}".format(item_type, item_name, response["json"]["__all__"][0]))
-                elif "json" in response:
-                    # This is from a project delete (if there is an active job against it)
-                    if "error" in response["json"]:
-                        self.fail_json(msg="Unable to delete {0} {1}: {2}".format(item_type, item_name, response["json"]["error"]))
-                    else:
-                        self.fail_json(msg="Unable to delete {0} {1}: {2}".format(item_type, item_name, response["json"]))
-                else:
-                    self.fail_json(msg="Unable to delete {0} {1}: {2}".format(item_type, item_name, response["status_code"]))
         else:
             if auto_exit:
                 self.exit_json(**self.json_output)
             else:
                 return self.json_output
+
+        if response["status_code"] in [202, 204]:
+            if on_delete:
+                on_delete(self, response["json"])
+            self.json_output["changed"] = True
+            if existing_item['type'] == 'token':
+                self.json_output["msg"] = 'Token Revoked'
+                self.exit_json(**self.json_output)
+            else:    
+                self.json_output["id"] = item_id
+                self.exit_json(**self.json_output)
+            if auto_exit:
+                self.exit_json(**self.json_output)
+            else:
+                return self.json_output
+        else:
+            if "json" in response and "__all__" in response["json"]:
+                self.fail_json(msg="Unable to delete {0} {1}: {2}".format(item_type, item_name, response["json"]["__all__"][0]))
+            elif "json" in response:
+                # This is from a project delete (if there is an active job against it)
+                if "error" in response["json"]:
+                    self.fail_json(msg="Unable to delete {0} {1}: {2}".format(item_type, item_name, response["json"]["error"]))
+                else:
+                    self.fail_json(msg="Unable to delete {0} {1}: {2}".format(item_type, item_name, response["json"]))
+            else:
+                self.fail_json(msg="Unable to delete {0} {1}: {2}".format(item_type, item_name, response["status_code"]))
 
     def get_item_name(self, item, allow_unknown=False):
         if item:
@@ -459,7 +465,7 @@ class AHModule(AnsibleModule):
                 for key in ("name", "username", "identifier", "hostname"):
                     if key in response["json"]:
                         self.json_output["name"] = response["json"][key]
-                if item_type != "token":
+                if item_type is not "token":
                     self.json_output["id"] = response["json"]["id"]
                     item_url = "{0}{1}/".format(self.build_url(endpoint).geturl()[len(self.host) :], new_item["name"])
                 self.json_output["changed"] = True
