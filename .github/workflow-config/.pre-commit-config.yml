@@ -29,6 +29,7 @@ repos:
           --exclude=temp_test_module.yml
           --exclude=playbooks/testing_playbook.yml
           --exclude=playbooks/ah_configs/
+          --exclude=playbooks/test_collection/galaxy.yml
   - repo: https://github.com/ambv/black
     rev: stable
     hooks:

@@ -59,4 +59,3 @@ issues: http://example.com/issue/tracker
 # uses 'fnmatch' to match the files or directories. Some directories and files like 'galaxy.yml', '*.pyc', '*.retry',
 # and '.git' are always filtered
 build_ignore: []
-
