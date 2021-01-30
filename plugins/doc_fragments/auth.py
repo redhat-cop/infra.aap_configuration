@@ -13,23 +13,36 @@ class ModuleDocFragment(object):
     # Ansible Galaxy documentation fragment
     DOCUMENTATION = r"""
 options:
-  ah_server:
+  ah_host:
     description:
     - URL to Ansible Galaxy or Automation Hub instance.
-    - If value not set, will try environment variable C(GALAXY_SERVER)
+    - If value not set, will try environment variable C(AH_HOST)
+    - If value not specified by any means, the value of C(127.0.0.1) will be used
+    type: str
+  ah_username:
+    description:
+    - Username for your Ansible Galaxy or Automation Hub instance.
+    - If value not set, will try environment variable C(AH_USERNAME)
+    type: str
+  ah_password:
+    description:
+    - Password for your Ansible Galaxy or Automation Hub instance.
+    - If value not set, will try environment variable C(AH_PASSWORD)
     type: str
   ah_token:
     description:
     - The Ansible Galaxy or Automation Hub API token to use.
+    - This value can be in one of two formats.
     - A string which is the token itself. (i.e. bqV5txm97wqJqtkxlMkhQz0pKhRMMX)
-    - If value not set, will try environment variable C(GALAXY_API_TOKEN)
-    type: str
+    - A dictionary structure as returned by the ah_token module.
+    - If value not set, will try environment variable C(AH_API_TOKEN)
+    type: raw
   validate_certs:
     description:
     - Whether to allow insecure connections to Galaxy or Automation Hub Server.
     - If C(no), SSL certificates will not be validated.
     - This should only be used on personally controlled sites using self-signed certificates.
-    - If value not set, will try environment variable C(GALAXY_VERIFY_SSL) and then config files
+    - If value not set, will try environment variable C(AH_VERIFY_SSL)
     type: bool
     aliases: [ ah_verify_ssl ]
 """

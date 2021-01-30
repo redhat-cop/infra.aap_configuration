@@ -22,13 +22,17 @@ class AHModule(AnsibleModule):
     url = None
     session = None
     AUTH_ARGSPEC = dict(
-        ah_server=dict(required=False, fallback=(env_fallback, ["AH_SERVER"])),
+        ah_host=dict(required=False, fallback=(env_fallback, ["AH_HOST"])),
+        ah_username=dict(required=False, fallback=(env_fallback, ["AH_USERNAME"])),
+        ah_password=dict(no_log=True, required=False, fallback=(env_fallback, ["AH_PASSWORD"])),
         validate_certs=dict(type="bool", aliases=["ah_verify_ssl"], required=False, fallback=(env_fallback, ["AH_VERIFY_SSL"])),
-        ah_token=dict(type="str", no_log=True, required=False, fallback=(env_fallback, ["AH_API_TOKEN"])),
+        ah_token=dict(type="raw", no_log=True, required=False, fallback=(env_fallback, ["AH_API_TOKEN"])),
     )
     ENCRYPTED_STRING = "$encrypted$"
     short_params = {
-        "host": "ah_server",
+        "host": "ah_host",
+        "username": "ah_username",
+        "password": "ah_password",
         "verify_ssl": "validate_certs",
         "oauth_token": "ah_token",
     }
@@ -36,8 +40,11 @@ class AHModule(AnsibleModule):
     ENCRYPTED_STRING = "$encrypted$"
     host = "127.0.0.1"
     host_type = ""
+    username = None
+    password = None
     verify_ssl = True
     oauth_token = None
+    authenticated = False
     error_callback = None
     warn_callback = None
 
@@ -64,10 +71,15 @@ class AHModule(AnsibleModule):
             if direct_value is not None:
                 setattr(self, short_param, direct_value)
 
-        # Perform magic checking whether ah_token is a string
+        # Perform magic depending on whether ah_token is a string or a dict
         if self.params.get("ah_token"):
             token_param = self.params.get("ah_token")
-            if isinstance(token_param, string_types):
+            if type(token_param) is dict:
+                if "token" in token_param:
+                    self.oauth_token = self.params.get("ah_token")["token"]
+                else:
+                    self.fail_json(msg="The provided dict in ah_token did not properly contain the token entry")
+            elif isinstance(token_param, string_types):
                 self.oauth_token = self.params.get("ah_token")
             else:
                 error_msg = "The provided ah_token type was not valid ({0}). Valid options are str or dict.".format(type(token_param).__name__)
@@ -162,11 +174,13 @@ class AHModule(AnsibleModule):
         # Extract the headers, this will be used in a couple of places
         headers = kwargs.get("headers", {})
 
-        # Authenticate to Automation Hub
+        # Authenticate to Automation Hub (if we don't have a token and if not already done so)
+        if not self.oauth_token and not self.authenticated:
+            # This method will set a cookie in the cookie jar for us and also an oauth_token
+            self.authenticate(**kwargs)
         if self.oauth_token:
-            # If we have a oauth token, we just use a token header
-            headers["Authorization"] = "token {0}".format(self.oauth_token)
-
+            # If we have a oauth token, we just use a bearer header
+            headers["Authorization"] = "Token {0}".format(self.oauth_token)
         if method in ["POST", "PUT", "PATCH"]:
             headers.setdefault("Content-Type", "application/json")
             kwargs["headers"] = headers
@@ -285,6 +299,49 @@ class AHModule(AnsibleModule):
 
         return self.existing_item_add_url(response["json"]["data"][0], endpoint)
 
+    def authenticate(self, **kwargs):
+        if self.username and self.password:
+            # Attempt to get a token from /api/v2/tokens/ by giving it our username/password combo
+            # If we have a username and password, we need to get a session cookie
+
+            # Post to the tokens endpoint with baisc auth to try and get a token
+            if self.host_type == "rh-automation-hub":
+                api_token_url = (self.url._replace(path="/api/galaxy/v3/auth/token/")).geturl()
+            else:
+                api_token_url = (self.url._replace(path="/api/automation-hub/v3/auth/token/")).geturl()
+
+            try:
+                response = self.session.open(
+                    "POST",
+                    api_token_url,
+                    validate_certs=self.verify_ssl,
+                    follow_redirects=True,
+                    force_basic_auth=True,
+                    url_username=self.username,
+                    url_password=self.password,
+                    headers={"Content-Type": "application/json"},
+                )
+            except HTTPError as he:
+                try:
+                    resp = he.read()
+                except Exception as e:
+                    resp = "unknown {0}".format(e)
+                self.fail_json(msg="Failed to get token: {0}".format(he), response=resp)
+            except (Exception) as e:
+                # Sanity check: Did the server send back some kind of internal error?
+                self.fail_json(msg="Failed to get token: {0}".format(e))
+
+            token_response = None
+            try:
+                token_response = response.read()
+                response_json = loads(token_response)
+                self.oauth_token = response_json["token"]
+            except (Exception) as e:
+                self.fail_json(msg="Failed to extract token information from login response: {0}".format(e), **{"response": token_response})
+
+        # If we have neither of these, then we can try un-authenticated access
+        self.authenticated = True
+
     def existing_item_add_url(self, existing_item, endpoint):
         # Add url and type to response as its missing in current iteration of Automation Hub.
         existing_item["url"] = "{0}{1}/".format(self.build_url(endpoint).geturl()[len(self.host) :], existing_item["name"])
@@ -397,14 +454,15 @@ class AHModule(AnsibleModule):
 
             response = self.post_endpoint(endpoint, **{"data": new_item})
 
-            if response["status_code"] in [201]:
+            if response["status_code"] in [200, 201]:
                 self.json_output["name"] = "unknown"
                 for key in ("name", "username", "identifier", "hostname"):
                     if key in response["json"]:
                         self.json_output["name"] = response["json"][key]
-                self.json_output["id"] = response["json"]["id"]
+                if item_type != "token":
+                    self.json_output["id"] = response["json"]["id"]
+                    item_url = "{0}{1}/".format(self.build_url(endpoint).geturl()[len(self.host) :], new_item["name"])
                 self.json_output["changed"] = True
-                item_url = "{0}{1}/".format(self.build_url(endpoint).geturl()[len(self.host) :], new_item["name"])
             else:
                 if "json" in response and "__all__" in response["json"]:
                     self.fail_json(msg="Unable to create {0} {1}: {2}".format(item_type, item_name, response["json"]["__all__"][0]))

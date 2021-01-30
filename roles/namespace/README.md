@@ -12,7 +12,7 @@ Currently:
 ## Variables
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`ah_server`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
+|`ah_host`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
 |`validate_certs`|`False`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
 |`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 |`ah_namespaces`|`see below`|yes|Data structure describing your namespaces, described below.||
@@ -90,7 +90,7 @@ ah_namespace:
   vars:
     ah_validate_certs: false
   # Define following vars here, or in ah_configs/ah_auth.yml
-  # ah_server: ansible-ah-web-svc-test-project.example.com
+  # ah_host: ansible-ah-web-svc-test-project.example.com
   # ah_token: changeme
   pre_tasks:
     - name: Include vars from ah_configs directory
