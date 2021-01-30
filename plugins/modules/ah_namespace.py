@@ -90,6 +90,7 @@ options:
             - List of Permisions granted to the group.
           choices: ["change_namespace", "upload_to_namespace"]
           type: list
+          required: True
 
 extends_documentation_fragment: ansible.automation_hub.auth
 """

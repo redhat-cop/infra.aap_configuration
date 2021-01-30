@@ -1,0 +1,16 @@
+---
+ah_collection_list:
+  - name: abc15
+    company: Redhat
+    email: user@example.com
+    avatar_url: https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo.svg
+    description: string
+    resources: "# Redhat\nA Namespace test with changes"
+    links:
+      - name: "New_Google"
+        url: "http://www.google.com"
+    groups:
+      - name: system:partner-engineers
+        object_permissions:
+          - "change_namespace"
+          - "upload_to_namespace"

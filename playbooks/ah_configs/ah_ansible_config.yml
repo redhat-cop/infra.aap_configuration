@@ -1,0 +1,14 @@
+---
+automation_hub_list:
+  - name: automation_hub
+    url: "{{ah_host}}/api/automation-hub/"
+    username: "{{ ah_username }}"
+    password: "{{ ah_password }}"
+
+ansible_config_list:
+  - header: galaxy
+    keypairs:
+      - key: ignore_certs
+        value: "{{ validate_certs | bool }}"
+      - key: server_list
+        value: "automation_hub"
