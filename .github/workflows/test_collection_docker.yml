@@ -1,0 +1,40 @@
+---
+name: Test collection against galaxy_ng
+
+on: [push, pull_request]
+
+jobs:
+  Integration-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout Project"
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: "Clone galaxy_ng"
+        run: cd .github && git clone https://github.com/ansible/galaxy_ng.git
+
+      - name: "Clone ansible-hub-ui"
+        run: cd .github && git clone https://github.com/ansible/ansible-hub-ui.git
+
+      - name: "print working dir"
+        run: pwd
+
+      - name: Create compose env
+        run: |
+          cat <<EOT >> .github/galaxy_ng/.compose.env
+          COMPOSE_PROFILE=standalone
+          DEV_SOURCE_PATH='galaxy_ng'
+          ANSIBLE_HUB_UI_PATH='.github/ansible-hub-ui/'
+          EOT
+      - name: "Install dependencies"
+        run: pip install -r .github/requirements.txt
+
+      - name: Display Versions
+        run: cat .github/galaxy_ng/.compose.env
