@@ -21,7 +21,7 @@ ah_namespace: []
 #      - name: "Link Text"
 #        url: "url"
 #    groups: #both fields mandatory when using groups
-#      - name: "group_name" 
+#      - name: "group_name"
 #        object_permissions: #Possible options below
 #          - # mandatory, choices: change_namespace, upload_to_namespace
 
