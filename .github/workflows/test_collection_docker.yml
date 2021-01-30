@@ -31,10 +31,8 @@ jobs:
           cat <<EOT >> .github/galaxy_ng/.compose.env
           COMPOSE_PROFILE=standalone
           DEV_SOURCE_PATH='galaxy_ng'
-          ANSIBLE_HUB_UI_PATH='.github/ansible-hub-ui/'
+          ANSIBLE_HUB_UI_PATH='/home/runner/work/ah_configuration/ah_configuration/.github/ansible-hub-ui/'
           EOT
-      - name: "Install dependencies"
-        run: pip install -r .github/requirements.txt
 
       - name: Display Versions
         run: cat .github/galaxy_ng/.compose.env
