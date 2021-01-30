@@ -3,10 +3,10 @@ ansible_config_list:
   settings:
     - header: galaxy
       keypairs:
-      - key: ignore_certs
-        value: "{{ validate_certs | bool }}"
-      - key: server_list
-        value: "{{ automation_hub_list | map(attribute='name') | join(',') }}"
+        - key: ignore_certs
+          value: "{{ validate_certs | bool }}"
+        - key: server_list
+          value: "{{ automation_hub_list | map(attribute='name') | join(',') }}"
 
 automation_hub_list:
   - name: automation_hub

@@ -1,14 +1,14 @@
 ---
 ah_namespaces:
-  - name: example
-    company: Redhat
+  - name: cisco
+    company: Cisco
     email: user@example.com
-    avatar_url: https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo.svg
+    avatar_url: https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Cisco_logo.svg/320px-Cisco_logo.svg.png
     description: string
-    resources: "# Redhat\nA Namespace test with changes"
+    resources: "# Cisco\nA Namespace test with changes"
     links:
-      - name: "New_Google"
-        url: "http://www.google.com"
+      - name: "Cisco"
+        url: "https://www.cisco.com/"
     groups:
       - name: system:partner-engineers
         object_permissions:

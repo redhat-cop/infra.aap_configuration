@@ -37,7 +37,7 @@ ah_configuration_ansible_config_secure_logging defaults to the value of ah_confi
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`ansible_config_mode`|'0644'|no|int/str|The permissions the resulting ansible config file or directory should have.|
-|`new_ansible_config_dirname`|"/var/tmp"|no|path|Location to render the ansible config file to.|
+|`ah_configuration_working_dir`|"/var/tmp"|no|path|Location to render the ansible config file to.|
 |`automation_hub_list`|""|yes|list|A list of Automation hubs and galaxies to put in the ansible config, see below for details.|
 |`ansible_config_list`|""|no|list|A set of ansible config settings, a default is set, but can be overriden, see below for details.|
 |`validate_certs`|"false"|no|list|Set to determine if certificates should be validated.|

@@ -23,8 +23,10 @@
     - name: Create ansible config file
       include_role:
         name: ansible_config
-      vars:
-        ansible_config_dir: "{{ playbook_dir }}"
+
+    - name: Create namespace
+      include_role:
+        name: namespace
 
     - name: Deauthenticate
       ah_token:

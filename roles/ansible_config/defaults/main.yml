@@ -10,7 +10,7 @@
 # ansible_config_owner: # optional
 # ansible_config_group: # optional
 ansible_config_mode: 0644
-ansible_config_dir: "/var/tmp"
+ah_configuration_working_dir: "/var/tmp"
 validate_certs: false
 # a list of dictionaries describing the Automation Hub namespace
 automation_hub_list: []
