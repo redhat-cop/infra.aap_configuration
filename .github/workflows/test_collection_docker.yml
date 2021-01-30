@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python 3.8
         uses: actions/setup-python@v1
         with:
-          python-version: 3.8
+          python-version: 3.8.6
 
       # Follow the Development Setup guide here:
       # https://github.com/ansible/galaxy_ng/wiki/Development-Setup
@@ -49,7 +49,7 @@ jobs:
       - name: Import initial data
         run: cd .github/galaxy_ng && ./compose run --rm -e PULP_FIXTURE_DIRS='["/src/galaxy_ng/dev/automation-hub"]' api manage loaddata initial_data.json
 
-      - name: Import initial data
+      - name: Start services
         run: cd .github/galaxy_ng && ./compose up -d
 
       - name: "Perform playbook tests"
