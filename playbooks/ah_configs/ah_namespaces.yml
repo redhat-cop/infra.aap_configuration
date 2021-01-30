@@ -1,6 +1,6 @@
 ---
 ah_namespaces:
-  - name: abc15
+  - name: example
     company: Redhat
     email: user@example.com
     avatar_url: https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo.svg
