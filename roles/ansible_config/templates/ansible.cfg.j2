@@ -8,18 +8,12 @@
 {% for server in automation_hub_list %}
 [galaxy_server.{{ server.name }}]
 {% if server.url is defined %}
-url={{ server.url }}
-{% endif %}
-{% if server.auth_url is defined %}
-auth_url={{ server.auth_url }}
+url={{ server.url }}api/automation-hub/
 {% endif %}
 {% if server.token is defined %}
 token={{ server.token }}
 {% endif %}
-{% if server.username is defined %}
-username={{ server.username }}
-{% endif %}
-{% if server.password is defined %}
-password={{ server.password }}
+{% if ah_token.token is defined %}
+token={{ ah_token.token }}
 {% endif %}
 {% endfor %}

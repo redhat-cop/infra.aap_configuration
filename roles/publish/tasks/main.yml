@@ -8,7 +8,7 @@
   loop_control:
     loop_var: "__ah_collection_item"
   no_log: "{{ ah_configuration_publish_secure_logging }}"
-  when: ah_collection_list | length > 0
+  when: ah_collection_list | length >= 0
 
 - name: Build Collections
   command:
@@ -18,19 +18,19 @@
   loop: "{{ ah_collections }}"
   loop_control:
     loop_var: "__ah_collection_item"
-  when: ah_collection_list | length > 0
+  when: ah_collection_list | length >= 0
 
 - name: Find all relevant built collection files
   find:
     paths: "{{ ah_configuration_working_dir }}"
     patterns: '*.tar.gz'
   register: __ah_collections_find_results
-  when: ah_collection_list | length > 0
+  when: ah_collection_list | length >= 0
 
 - name: Set path for all collections found
   set_fact:
     ah_collection_list: "{{ __ah_collections_find_results.files | map(attribute='path') }}"
-  when: ah_collection_list | length > 0
+  when: ah_collection_list | length >= 0
 
 - name: Publish Collections with ansible-galaxy
   shell: # noqa 305
