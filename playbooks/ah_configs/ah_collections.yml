@@ -1,5 +1,5 @@
 ah_collections:
-  - repo_name: cisco.iosxr
-    git_url: https://github.com/ansible-collections/cisco.iosxr
+  - repo_name: community.network
+    git_url: https://github.com/ansible-collections/community.network
 
 ansible_config_path: "{{ ah_configuration_working_dir }}/ansible.cfg"
