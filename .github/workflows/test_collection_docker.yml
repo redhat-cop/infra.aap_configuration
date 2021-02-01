@@ -44,7 +44,7 @@ jobs:
         run: cd .github/galaxy_ng && ./compose up -d postgres redis
 
       - name: Run migrations
-        run: cd .github/galaxy_ng && ls - l
+        run: cd .github/galaxy_ng && ls -l
 
       - name: Run migrations
         run: grep -q ansible /etc/group
@@ -54,8 +54,6 @@ jobs:
 
       - name: Run migrations
         run: cd .github/galaxy_ng && sudo ./compose run --rm api manage migrate
-
-
 
       - name: Import initial data
         run: cd .github/galaxy_ng && ./compose run --rm -e PULP_FIXTURE_DIRS='["/src/galaxy_ng/dev/automation-hub"]' api manage loaddata initial_data.json
