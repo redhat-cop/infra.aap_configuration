@@ -1,0 +1,24 @@
+---
+
+# Update Inventory sources
+- name: Run Tower inventory source update
+  awx.awx.tower_inventory_source_update:
+    name:               "{{ __inventory_source_update_item.name }}"
+    inventory:          "{{ __inventory_source_update_item.inventory }}"
+    organization:       "{{ __inventory_source_update_item.organization | default('') }}"
+    wait:               "{{ __inventory_source_update_item.wait | default(omit) }}"
+    interval:           "{{ __inventory_source_update_item.interval | default(omit) }}"
+    timeout:            "{{ __inventory_source_update_item.timeout | default(omit) }}"
+
+    # Role Standard Options
+    tower_username:     "{{ tower_username | default(omit) }}"
+    tower_password:     "{{ tower_password | default(omit) }}"
+    tower_oauthtoken:   "{{ tower_oauthtoken | default(omit) }}"
+    tower_host:         "{{ tower_hostname }}"
+    tower_config_file:  "{{ tower_config_file | default(omit) }}"
+    validate_certs:     "{{ tower_validate_certs | default('true') }}"
+  loop: "{{ tower_inventory_sources }}"
+  loop_control:
+    loop_var: "__inventory_source_update_item"
+  no_log: "{{ tower_configuration_inventory_source_update_secure_logging }}"
+  when: tower_inventory_sources is defined
