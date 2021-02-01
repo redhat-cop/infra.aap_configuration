@@ -47,7 +47,7 @@ jobs:
         run: cd .github/galaxy_ng && ls -l
 
       - name: Run migrations
-        run: sudo groupadd ansible
+        run: sudo groupadd ansible && sudo useradd –G ansible runner
 
       - name: Run migrations
         run: cd .github/galaxy_ng && sudo ./compose run --rm api manage migrate
