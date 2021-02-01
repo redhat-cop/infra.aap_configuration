@@ -1,6 +1,6 @@
 ---
 ah_namespaces:
-  - name: cisco
+  - name: community
     company: Cisco
     email: user@example.com
     avatar_url: https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Cisco_logo.svg/320px-Cisco_logo.svg.png
