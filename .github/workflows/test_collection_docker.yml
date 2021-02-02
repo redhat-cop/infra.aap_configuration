@@ -34,6 +34,9 @@ jobs:
           ANSIBLE_HUB_UI_PATH='/home/runner/work/ah_configuration/ah_configuration/.github/ansible-hub-ui/'
           EOT
 
+      - name: Create compose env
+        run: cd .github/galaxy_ng && cat galaxy_ng/.compose.env
+
       - name: Display Versions
         run: which python && pip --version && ansible --version
 
@@ -44,7 +47,7 @@ jobs:
         run: cd .github/galaxy_ng && ./compose up -d postgres redis
 
       - name: Debug
-        run: cd .github/galaxy_ng && ls -l
+        run: cd .github/galaxy_ng && ll
 
       - name: Add group commands
         run: sudo groupadd ansible && sudo usermod -a -G ansible runner && groups
