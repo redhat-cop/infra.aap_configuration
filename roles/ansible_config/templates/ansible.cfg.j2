@@ -8,7 +8,11 @@
 {% for server in automation_hub_list %}
 [galaxy_server.{{ server.name }}]
 {% if server.url is defined %}
+{% if ah_server_type == 'automation_hub' %}
+url={{ server.url }}api/galaxy/
+{% else %}
 url={{ server.url }}api/automation-hub/
+{% endif %}
 {% endif %}
 {% if server.token is defined %}
 token={{ server.token }}
