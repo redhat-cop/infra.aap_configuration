@@ -5,28 +5,35 @@
   gather_facts: false
   collections:
     - redhat_cop.ah_configuration
-  tasks:
-    - name: set namespace collections
-      namespace:
-        name: abc15
-        company: Redhat
-        email: user@example.com
-        avatar_url: https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo.svg
-        description: string
-        resources: "# Redhat\nA Namespace test with changes"
-        links:
-          - name: "New_Google"
-            url: "http://www.google.com"
-        groups:
-          - name: system:partner-engineers
-            object_permissions:
-              - "change_namespace"
-              - "upload_to_namespace"
-        galaxy_server: http://192.168.122.239:8002
-        galaxy_token: 1185cf5f4dfc8b2529fa27138778e9ac2b81bb89
-        validate_certs: false
-      register: test
-      ignore_errors: true
+  pre_tasks:
+    - name: Include vars from ah_configs directory
+      include_vars:
+        dir: ./ah_configs
+        extensions: ["yml"]
+      tags:
+        - always
 
-    - debug:
-        var: test
+  tasks:
+    - name: Authenticate and get an API token
+      ah_token:
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+
+    - name: Create ansible config file
+      include_role:
+        name: ansible_config
+
+    - name: Create namespace
+      include_role:
+        name: namespace
+
+    - name: Publish Collections
+      include_role:
+        name: publish
+
+    - name: Deauthenticate
+      ah_token:
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ah_token }}"
+        state: absent

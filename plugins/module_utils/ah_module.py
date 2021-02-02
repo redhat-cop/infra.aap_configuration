@@ -39,7 +39,7 @@ class AHModule(AnsibleModule):
     IDENTITY_FIELDS = {}
     ENCRYPTED_STRING = "$encrypted$"
     host = "127.0.0.1"
-    host_type = ""
+    host_type = "rh-automation-hub"
     username = None
     password = None
     verify_ssl = True
@@ -301,7 +301,7 @@ class AHModule(AnsibleModule):
 
     def authenticate(self, **kwargs):
         if self.username and self.password:
-            # Attempt to get a token from /api/v2/tokens/ by giving it our username/password combo
+            # Attempt to get a token from /v3/auth/token/ by giving it our username/password combo
             # If we have a username and password, we need to get a session cookie
 
             # Post to the tokens endpoint with baisc auth to try and get a token

@@ -1,0 +1,7 @@
+# User may add tower auth creds to this file and encrypt it using `ansible-vault`
+---
+ah_host: https://192.168.122.200/ # http://192.168.122.47:8002/ http://localhost:8002/ https://192.168.122.200/
+ah_username: admin
+ah_password: password
+ah_validate_certs: false
+ah_server_type: galaxy # AH: automation_hub Galaxy: galaxy
