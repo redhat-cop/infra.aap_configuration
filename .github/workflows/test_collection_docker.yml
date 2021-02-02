@@ -54,13 +54,16 @@ jobs:
 
       - name: Run migrations
         run: |
+          echo $COMPOSE_PROFILE
+          echo $DEV_SOURCE_PATH
+          echo $ANSIBLE_HUB_UI_PATH
           COMPOSE_PROFILE=standalone
           DEV_SOURCE_PATH='galaxy_ng'
           ANSIBLE_HUB_UI_PATH='/home/runner/work/ah_configuration/ah_configuration/.github/ansible-hub-ui/'
           echo $COMPOSE_PROFILE
           echo $DEV_SOURCE_PATH
           echo $ANSIBLE_HUB_UI_PATH
-        run: cd .github/galaxy_ng && ./compose run --rm api manage migrate
+          cd .github/galaxy_ng && ./compose run --rm api manage migrate
 
       - name: Import initial data
         run: cd .github/galaxy_ng && ./compose run --rm -e PULP_FIXTURE_DIRS='["/src/galaxy_ng/dev/automation-hub"]' api manage loaddata initial_data.json
