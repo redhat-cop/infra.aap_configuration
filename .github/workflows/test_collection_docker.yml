@@ -21,7 +21,7 @@ jobs:
       # https://github.com/ansible/galaxy_ng/wiki/Development-Setup
 
       - name: "Clone galaxy_ng"
-        run: cd .github && git clone https://github.com/ansible/galaxy_ng.git
+        run: cd .github && git clone https://github.com/sean-m-sullivan/galaxy_ng.git
 
       - name: "Clone ansible-hub-ui"
         run: cd .github && git clone https://github.com/ansible/ansible-hub-ui.git
