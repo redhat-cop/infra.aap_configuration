@@ -43,11 +43,14 @@ jobs:
       - name: Start database and redis services
         run: cd .github/galaxy_ng && ./compose up -d postgres redis
 
-      - name: Run migrations
+      - name: Debug
         run: cd .github/galaxy_ng && ls -l
 
-      - name: Run migrations
-        run: sudo groupadd ansible && sudo usermod -a -G ansible runner
+      - name: Add group commands
+        run: sudo groupadd ansible && sudo usermod -a -G ansible runner && groups
+
+      - name: echo
+        run: cd .github/galaxy_ng && echo $DEV_SOURCE_PATH
 
       - name: Run migrations
         run: cd .github/galaxy_ng && sudo ./compose run --rm api manage migrate

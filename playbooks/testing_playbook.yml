@@ -19,6 +19,7 @@
         ah_host: "{{ ah_host }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
+        validate_certs: "{{ ah_validate_certs }}"
 
     - name: Create ansible config file
       include_role:
@@ -36,4 +37,5 @@
       ah_token:
         ah_host: "{{ ah_host }}"
         ah_token: "{{ ah_token }}"
+        validate_certs: "{{ ah_validate_certs }}"
         state: absent
