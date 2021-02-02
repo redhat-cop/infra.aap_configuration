@@ -10,7 +10,7 @@ ah_namespaces:
       - name: "Cisco"
         url: "https://www.cisco.com/"
     groups:
-      - name: system:partner-engineers
+      - name: system:partner-engineers # Galaxy: system:partner-engineers AH: admins
         object_permissions:
           - "change_namespace"
           - "upload_to_namespace"
