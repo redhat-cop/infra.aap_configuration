@@ -14,8 +14,8 @@ repos:
           - yaml
   - repo: 'https://github.com/sean-m-sullivan/ansible-lint.git'
     rev: v5.0.0b
-  #  - repo: 'https://github.com/ansible-community/ansible-lint.git'
-  #    rev: v5.0.0a0
+    #  - repo: 'https://github.com/ansible-community/ansible-lint.git'
+    #    rev: v5.0.0a0
     hooks:
       # see discussions here about what arguments are used, and behavior
       # https://github.com/ansible/ansible-lint/issues/649
@@ -27,8 +27,9 @@ repos:
         entry: >-
           ansible-lint -vp -c .github/workflow-config/.ansiblelint.yml
           --exclude=temp_test_module.yml
-          --exclude=playbooks/ah_configs/ah_namespaces.yml
           --exclude=playbooks/testing_playbook.yml
+          --exclude=playbooks/ah_configs/
+          --exclude=playbooks/test_collection/galaxy.yml
   - repo: https://github.com/ambv/black
     rev: stable
     hooks:
