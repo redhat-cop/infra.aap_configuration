@@ -35,7 +35,7 @@ jobs:
           EOT
 
       - name: Create compose env
-        run: cd .github/galaxy_ng && cat galaxy_ng/.compose.env
+        run: cd .github/galaxy_ng && cat .compose.env
 
       - name: Display Versions
         run: which python && pip --version && ansible --version
