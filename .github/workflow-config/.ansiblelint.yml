@@ -5,7 +5,7 @@
 # exclude_paths:
 #  - roles/master_role_example/
 exclude_paths:
-  - roles/master_role_example
+- .github/
 parseable: true
 use_default_rules: true
 # https://github.com/ansible/ansible-lint/issues/808
