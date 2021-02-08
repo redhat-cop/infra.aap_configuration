@@ -5,8 +5,8 @@
 # exclude_paths:
 #  - roles/master_role_example/
 exclude_paths:
-  - ${PWD}/roles/master_role_example/
-  - ${PWD}/.github/workflows/
+  - roles/master_role_example
+  - .github/workflows/
 parseable: true
 use_default_rules: true
 # https://github.com/ansible/ansible-lint/issues/808
