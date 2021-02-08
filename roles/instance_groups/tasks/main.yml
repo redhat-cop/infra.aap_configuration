@@ -2,7 +2,7 @@
 
 # Add Tower Instance Group
 - name: Add Tower Instance Group
-  awx.awx.tower_instance_group:
+  tower_instance_group:
     name:                           "{{ tower_instance_groups_item.name }}"
     new_name:                       "{{ tower_instance_groups_item.new_name | default(omit) }}"
     credential:                     "{{ tower_instance_groups_item.credential | default(omit) }}"

@@ -2,7 +2,7 @@
 
 # Update Tower Projects
 - name: Run Tower project update
-  awx.awx.tower_project_update:
+  tower_project_update:
     name:               "{{ __project_update_update_item.name }}"
     organization:       "{{ __project_update_update_item.organization | default('') }}"
     wait:               "{{ __project_update_update_item.wait | default(omit) }}"

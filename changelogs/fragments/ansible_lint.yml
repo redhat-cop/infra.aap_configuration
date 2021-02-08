@@ -1,0 +1,5 @@
+---
+major_changes:
+  - Updated collection to use and comply with ansible-lint v5
+breaking_changes:
+  - Updated to allow use of either awx.awx or ansible.tower

@@ -2,7 +2,7 @@
 
 # Launch Tower Job
 - name: Launch a Tower Job
-  awx.awx.tower_job_launch:
+  tower_job_launch:
     name:                     "{{ __job_launch_item.name }}"
     job_type:                 "{{ __job_launch_item.job_type | default(omit) }}"
     inventory:                "{{ __job_launch_item.inventory | default(omit) }}"

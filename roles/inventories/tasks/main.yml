@@ -1,6 +1,6 @@
 ---
 - name: Create inventory
-  awx.awx.tower_inventory:
+  tower_inventory:
     name:                 "{{ inventory.name }}"  # REQUIRED
     description:          "{{ inventory.description | default(omit) }}"
     organization:         "{{ inventory.organization.name | default( inventory.organization ) }}"

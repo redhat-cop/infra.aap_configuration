@@ -2,7 +2,7 @@
 
 # Create Job Template
 - name: Add Tower ***********
-  awx.awx.tower_***********:
+  tower_***********:
     name:                           "{{ ***********_item.name }}"
     new_name:                       "{{ ***********_item.new_name | default(omit) }}"
     description:                    "{{ ***********_item.description | default('') }}"
