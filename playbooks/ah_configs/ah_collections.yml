@@ -1,3 +1,4 @@
+---
 ah_collections:
   - repo_name: collection_test
     git_url: https://github.com/sean-m-sullivan/collection_test

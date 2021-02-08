@@ -10,7 +10,7 @@ rules:
     indent-sequences: consistent
   truthy:
     allowed-values:
-    - 'True'
-    - 'False'
-    - 'true'
-    - 'false'
+      - 'True'
+      - 'False'
+      - 'true'
+      - 'false'

@@ -1,7 +1,7 @@
 ---
 name: Test collection against galaxy_ng
 
-on: [push, pull_request]
+on: [push, pull_request]  # yamllint disable-line rule:truthy
 
 jobs:
   Integration-test:
@@ -35,7 +35,6 @@ jobs:
           ./compose build
           ./compose up -d postgres redis
           ls -al
-          echo $DEV_SOURCE_PATH
           echo $COMPOSE_PROFILE
           echo $DEV_SOURCE_PATH
           echo $ANSIBLE_HUB_UI_PATH

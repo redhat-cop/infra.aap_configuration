@@ -4,10 +4,10 @@
 # https://github.com/ansible/ansible-lint/issues/371
 # exclude_paths:
 #  - roles/master_role_example/
-exclude_paths:
-  - roles/master_role_example/
-  - temp_test_module.yml
-  - playbooks/ah_configs/ah_namespaces.yml
+# exclude_paths:
+#  - roles/master_role_example/
+#  - temp_test_module.yml
+#  - playbooks/ah_configs/ah_namespaces.yml
 
 parseable: true
 use_default_rules: true
@@ -19,4 +19,6 @@ skip_list:
   # (Disabled in June 2020)
   - '204'
   # YAML: Ansible lint doing yaml checks that we were already doing but without config.
-  - YAML
+  - yaml
+
+# ansible_collections_path:
