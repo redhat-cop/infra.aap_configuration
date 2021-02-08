@@ -1,6 +1,6 @@
 ---
 
-# Create Job Template
+# Create Tower applications
 - name: Add Tower Applications
   awx.awx.tower_application:
     name:                           "{{ application_item.name }}"

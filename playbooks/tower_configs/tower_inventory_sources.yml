@@ -1,11 +1,14 @@
 ---
 tower_inventory_sources:
   - name: RHVM-01
-    source: rhv
+    source: scm
+    source_project: Test Inventory source project
+    source_path: phillips_hue/hosts
     inventory: RHVM-01
+    organization: Satellite
     credential: admin@internal-RHVM-01
-    description: created by Ansible Tower
     overwrite: true
     update_on_launch: true
     update_cache_timeout: 0
-    # more options can be provided but for RHV source we are using, we need only this much.
+    wait: true
+    # more options can be provided but for scm source we are using, we need only this much.

@@ -15,7 +15,7 @@ Currently:
 |`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
 |`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`tower_projects`|`see below`|yes|Data structure describing your orgainzation or orgainzations Described below.||
+|`tower_projects`|`see below`|yes|Data structure describing your project or projects Described below.||
 
 ### Secure Logging Variables
 The following Variables compliment each other.

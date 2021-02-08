@@ -5,6 +5,15 @@ redhat_cop.tower_configuration Release Notes
 .. contents:: Topics
 
 
+v1.0.2
+======
+
+Minor Changes
+-------------
+
+- added alias option for survey to survey_spec in workflows.
+- updated documentation on surveys for workflows and job templates
+
 v1.0.0
 ======
 
