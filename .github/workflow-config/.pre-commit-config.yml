@@ -24,5 +24,3 @@ repos:
         always_run: true
         entry: >-
           ansible-lint -c .github/workflow-config/.ansiblelint.yml
-          --exclude=roles/master_role_example
-          --exclude=.github/workflows/
