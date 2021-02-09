@@ -1,10 +1,10 @@
 ---
 - name: Add tower group
   awx.awx.tower_group:
-    name:                           "{{ tower_groups_item.name }}"
+    name:                           "{{ tower_groups_item.name | mandatory }}"
     new_name:                       "{{ tower_groups_item.new_name | default(omit) }}"
     description:                    "{{ tower_groups_item.description | default(omit) }}"
-    inventory:                      "{{ tower_groups_item.inventory }}"
+    inventory:                      "{{ tower_groups_item.inventory | mandatory }}"
     variables:                      "{{ tower_groups_item.variables | default(omit) }}"
     hosts:                          "{{ tower_groups_item.hosts | default(omit) }}"
     children:                       "{{ tower_groups_item.children | default(omit) }}"

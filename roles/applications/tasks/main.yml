@@ -3,8 +3,8 @@
 # Create Tower applications
 - name: Add Tower Applications
   awx.awx.tower_application:
-    name:                           "{{ application_item.name }}"
-    organization:                   "{{ application_item.organization }}"
+    name:                           "{{ application_item.name | mandatory }}"
+    organization:                   "{{ application_item.organization | mandatory }}"
     description:                    "{{ application_item.description | default('') }}"
     authorization_grant_type:       "{{ application_item.authorization_grant_type | default('password') }}"
     client_type:                    "{{ application_item.client_type | default('public') }}"
