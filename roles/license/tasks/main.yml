@@ -8,8 +8,8 @@
 
 - name: Install the tower license
   awx.awx.tower_license:
-    manifest:                       "{{ tower_license.manifest }}"
-    eula_accepted:                  "{{ tower_license.eula_accepted }}"
+    manifest:                       "{{ tower_license.manifest | mandatory }}"
+    eula_accepted:                  "{{ tower_license.eula_accepted | mandatory }}"
     tower_username:                 "{{ tower_username | default(omit) }}"
     tower_password:                 "{{ tower_password | default(omit) }}"
     tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"

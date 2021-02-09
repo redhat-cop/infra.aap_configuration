@@ -1,7 +1,7 @@
 ---
 - name: Add ansible tower notifications
   awx.awx.tower_notification_template:
-    name:                           "{{ tower_notifications_item.name }}"
+    name:                           "{{ tower_notifications_item.name | mandatory }}"
     new_name:                       "{{ tower_notifications_item.new_name | default(omit) }}"
     description:                    "{{ tower_notifications_item.description | default(omit) }}"
     organization:                   "{{ tower_notifications_item.organization.name | default( tower_notifications_item.organization ) }}"
