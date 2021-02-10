@@ -17,8 +17,10 @@
     ah_username:      "{{ ah_username | default(omit) }}"
     ah_password:      "{{ ah_password | default(omit) }}"
     ah_token:         "{{ ah_token | default(omit) }}"
+    ah_path_prefix:   "{{ ah_path_prefix }}"
     validate_certs:   "{{ ah_validate_certs | default('true') }}"
   loop: "{{ ah_namespaces }}"
   loop_control:
     loop_var: "__namespace_item"
   no_log: "{{ ah_configuration_namespace_secure_logging }}"
+...

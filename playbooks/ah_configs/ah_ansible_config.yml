@@ -14,4 +14,5 @@ ansible_config_list:
       - key: server_list
         value: "automation_hub"
 
-ah_configuration_working_dir: "test/"
+ah_configuration_working_dir: "test"
+...

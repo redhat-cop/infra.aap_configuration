@@ -49,3 +49,4 @@ repos:
         entry: flake8
         args: [--config=.github/workflow-config/flake8.cfg]
         types: [python]
+...

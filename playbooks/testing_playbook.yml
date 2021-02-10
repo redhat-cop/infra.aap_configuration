@@ -13,12 +13,19 @@
       tags:
         - always
 
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: "{{ ah_configuration_working_dir }}"
+        state: directory
+        mode: '0755'
+
   tasks:
     - name: Authenticate and get an API token
       ah_token:
         ah_host: "{{ ah_host }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Create ansible config file
@@ -37,5 +44,7 @@
       ah_token:
         ah_host: "{{ ah_host }}"
         ah_token: "{{ ah_token }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
         state: absent
+...

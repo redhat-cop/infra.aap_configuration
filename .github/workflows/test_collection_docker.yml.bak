@@ -67,3 +67,4 @@ jobs:
 
       - name: "Perform playbook tests"
         run: ansible-playbook playbooks/testing_playbook.yml
+...

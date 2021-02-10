@@ -45,4 +45,10 @@ options:
     - If value not set, will try environment variable C(AH_VERIFY_SSL)
     type: bool
     aliases: [ ah_verify_ssl ]
+  ah_path_prefix:
+    description:
+    - API path used to access the api.
+    - For galaxy_ng this is either 'automation-hub' or the custom prefix used on install with GALAXY_API_PATH_PREFIX
+    - For Automation Hub this is 'galaxy'
+    type: str
 """

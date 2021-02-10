@@ -40,3 +40,4 @@
   loop: "{{ ah_collection_list }}"
   loop_control:
     loop_var: "__ah_collection_file"
+...
