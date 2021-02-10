@@ -55,3 +55,4 @@
         path: "{{ repo_base_dir }}/galaxy.yml"
         state: absent
       tags: cleanup
+...

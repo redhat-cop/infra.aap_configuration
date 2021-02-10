@@ -1,5 +1,7 @@
+---
 ah_collections:
-  - repo_name: community.network
-    git_url: https://github.com/ansible-collections/community.network
+  - repo_name: collection_test
+    git_url: https://github.com/sean-m-sullivan/collection_test
 
 ansible_config_path: "{{ ah_configuration_working_dir }}/ansible.cfg"
+...

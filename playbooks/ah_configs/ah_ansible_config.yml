@@ -2,7 +2,7 @@
 automation_hub_list:
   - name: automation_hub
     url: "{{ah_host}}"
-    auth_url: "{{ah_host}}api/automation-hub/" # {{ah_host}}api/galaxy/ for AH {{ah_host}}api/automation-hub/ for Galaxy
+    auth_url: "{{ah_host}}api/automation-hub/"  # {{ah_host}}api/galaxy/ for AH {{ah_host}}api/automation-hub/ for Galaxy
     username: "{{ ah_username }}"
     password: "{{ ah_password }}"
 
@@ -14,4 +14,5 @@ ansible_config_list:
       - key: server_list
         value: "automation_hub"
 
-ah_configuration_working_dir: "test/"
+ah_configuration_working_dir: "test"
+...
