@@ -22,3 +22,4 @@ ah_configuration_working_dir: "/var/tmp"
 ansible_config_path: "{{ ah_configuration_working_dir }}/ansible.cfg"
 
 ah_configuration_publish_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
+...

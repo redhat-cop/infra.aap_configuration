@@ -26,3 +26,4 @@ ah_namespace: []
 #          - # mandatory, choices: change_namespace, upload_to_namespace
 
 ah_configuration_namespace_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
+...
