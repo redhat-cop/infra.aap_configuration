@@ -1,7 +1,7 @@
 ---
 - name: Add organizations
   awx.awx.tower_organization:
-    name:                               "{{ tower_organizations_item.name }}"
+    name:                               "{{ tower_organizations_item.name | mandatory }}"
     description:                        "{{ tower_organizations_item.description | default(omit) }}"
     custom_virtualenv:                  "{{ tower_organizations_item.custom_virtualenv | default(omit) }}"
     max_hosts:                          "{{ tower_organizations_item.max_hosts | default(omit) }}"
