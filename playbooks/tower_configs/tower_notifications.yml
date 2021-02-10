@@ -32,3 +32,4 @@ tower_notifications:
       use_ssl: false
       password: ''  # this is required even if there's no password
       port: 25
+...

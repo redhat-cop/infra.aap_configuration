@@ -8,3 +8,4 @@ tower_schedules:
     description: Another demonstration
     unified_job_template: Demo Job Template
     rrule: "DTSTART:20200101T000000Z RRULE:FREQ=HOURLY;INTERVAL=3"
+...

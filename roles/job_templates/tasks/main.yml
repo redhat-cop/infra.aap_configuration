@@ -1,5 +1,4 @@
 ---
-
 # Create Job Template
 - name: Add Tower Job Templates
   awx.awx.tower_job_template:
@@ -58,3 +57,4 @@
   loop_control:
     loop_var: tower_templates_item
   no_log: "{{ tower_configuration_job_templates_secure_logging }}"
+...

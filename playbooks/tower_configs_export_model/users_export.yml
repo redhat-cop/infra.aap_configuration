@@ -32,3 +32,4 @@ tower_user_accounts:
     natural_key:
       username: AWX-Collection-tests-tower_role-user-ClPzjxrRTIwcOCvO
       type: user
+...

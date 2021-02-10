@@ -1,5 +1,4 @@
 ---
-
 # Create Workflow
 - name: Create Workflow
   awx.awx.tower_workflow_job_template:
@@ -43,3 +42,4 @@
   loop: "{{ tower_workflows }}"
   loop_control:
     loop_var: workflow_loop_var
+...

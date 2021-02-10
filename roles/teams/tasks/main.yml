@@ -16,3 +16,4 @@
   loop_control:
     loop_var: team
   no_log: "{{ tower_configuration_teams_secure_logging }}"
+...

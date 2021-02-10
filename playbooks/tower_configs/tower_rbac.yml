@@ -24,3 +24,4 @@ tower_rbac:
   - job_template: test-template-1
     team: satellite-qe
     role: execute
+...

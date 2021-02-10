@@ -80,3 +80,4 @@
       include_role:
         name: workflow_launch
       when: tower_workflow_launch_jobs is defined
+...

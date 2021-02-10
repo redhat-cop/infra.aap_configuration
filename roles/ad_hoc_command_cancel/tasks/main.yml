@@ -1,5 +1,4 @@
 ---
-
 # Cancel Ad Hoc COmmands
 - name: Cancel Tower ad hoc command
   awx.awx.tower_ad_hoc_command_cancel:
@@ -20,3 +19,4 @@
     loop_var: "__ad_hoc_command_cancel_item"
   no_log: "{{ tower_configuration_ad_hoc_command_cancel_secure_logging }}"
   when: tower_ad_hoc_commands_cancel is defined
+...

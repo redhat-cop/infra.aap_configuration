@@ -17,3 +17,4 @@
   loop_control:
     loop_var: tower_credential_types_item
   no_log: "{{ tower_configuration_credential_types_secure_logging }}"
+...

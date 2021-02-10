@@ -1,5 +1,4 @@
 ---
-
 - name: Add Tower Schedule
   awx.awx.tower_schedule:
     name:                           "{{ schedule_item.name | mandatory }}"
@@ -28,3 +27,4 @@
   loop_control:
     loop_var: "schedule_item"
   no_log: "{{ tower_configuration_schedules_secure_logging }}"
+...

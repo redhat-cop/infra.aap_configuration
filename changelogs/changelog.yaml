@@ -1,3 +1,4 @@
+---
 ancestor: null
 releases:
   0.1.0:
@@ -84,3 +85,4 @@ releases:
     fragments:
     - survey_spec.yml
     release_date: '2021-01-26'
+...

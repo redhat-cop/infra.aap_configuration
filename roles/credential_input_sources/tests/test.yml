@@ -1,11 +1,9 @@
 ---
 # based on method defined here: https://coderwall.com/p/8yfuva/how-to-develop-ansible-roles-w-unit-test-and-ci
-
 - name: Add credential input source to tower
   hosts: localhost
   gather_facts: false
   connection: local
-
 
   # Bring in vaulted Ansible Tower secrets
   vars_files:
@@ -39,3 +37,4 @@
         name: ../..
       vars:
         tower_credential_input_sources: "{{ cred_input_src_json.tower_credential_input_sources }}"
+...

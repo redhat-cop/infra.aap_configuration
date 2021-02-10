@@ -21,3 +21,4 @@
   loop_control:
     loop_var: tower_organizations_item
   no_log: "{{ tower_configuration_organizations_secure_logging }}"
+...

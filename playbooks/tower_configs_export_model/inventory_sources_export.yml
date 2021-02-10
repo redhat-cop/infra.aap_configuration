@@ -42,3 +42,4 @@ tower_inventory_sources:
         name: Testing Inventory
         type: inventory
       type: inventory_source
+...
