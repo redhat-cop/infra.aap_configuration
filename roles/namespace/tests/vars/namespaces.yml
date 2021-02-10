@@ -14,3 +14,4 @@ ah_namespace:
         object_permissions:
           - "change_namespace"
           - "upload_to_namespace"
+...

@@ -48,9 +48,9 @@ ah_configuration_ansible_config_secure_logging defaults to the value of ah_confi
 |`name`|""|yes|str|Name of the Automation Hub or Galaxy Server.|
 |`url`|""|yes|str|URL to the Automatin Hub or Galaxy Server|
 |`auth_url`|""|yes|str|URL to use for alternate authentication to the Automatin Hub or Galaxy Server.|
-|`token`|""|yes|str|Automatin Hub or Galaxy Server token.|
-|`username`|""|yes|str|Automatin Hub or Galaxy Server username.|
-|`password`|""|yes|str|Automatin Hub or Galaxy Server password.|
+|`ah_token`|""|yes|str|Automatin Hub or Galaxy Server token.|
+|`ah_username`|""|yes|str|Automatin Hub or Galaxy Server username.|
+|`ah_password`|""|yes|str|Automatin Hub or Galaxy Server password.|
 
 #### ansible_config_list
 |Variable Name|Default Value|Required|Type|Description|
