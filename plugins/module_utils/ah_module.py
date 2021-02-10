@@ -25,6 +25,7 @@ class AHModule(AnsibleModule):
         ah_host=dict(required=False, fallback=(env_fallback, ["AH_HOST"])),
         ah_username=dict(required=False, fallback=(env_fallback, ["AH_USERNAME"])),
         ah_password=dict(no_log=True, required=False, fallback=(env_fallback, ["AH_PASSWORD"])),
+        ah_path_prefix=dict(required=False, fallback=(env_fallback, ["GALAXY_API_PATH_PREFIX"])),
         validate_certs=dict(type="bool", aliases=["ah_verify_ssl"], required=False, fallback=(env_fallback, ["AH_VERIFY_SSL"])),
         ah_token=dict(type="raw", no_log=True, required=False, fallback=(env_fallback, ["AH_API_TOKEN"])),
     )
@@ -34,12 +35,13 @@ class AHModule(AnsibleModule):
         "username": "ah_username",
         "password": "ah_password",
         "verify_ssl": "validate_certs",
+        "path_prefix": "ah_path_prefix",
         "oauth_token": "ah_token",
     }
     IDENTITY_FIELDS = {}
     ENCRYPTED_STRING = "$encrypted$"
     host = "127.0.0.1"
-    host_type = "rh-automation-hub"
+    path_prefix = "galaxy"
     username = None
     password = None
     verify_ssl = True
@@ -107,30 +109,17 @@ class AHModule(AnsibleModule):
         else:
             self.update_secrets = True
 
-        # Determine if we are connecting to AH or Galaxy
-        try:
-            # AH Check
-            response = self.get_endpoint("/api/galaxy/", return_none_on_404=True, **kwargs)
-            if response is not None and response["status_code"] == 200:
-                self.host_type = "rh-automation-hub"
-            else:
-                response = self.get_endpoint("/api/automation-hub/", return_none_on_404=True, **kwargs)
-                if response is not None and response["status_code"] == 200:
-                    self.host_type = "upstream-automation-hub"
-                else:
-                    self.fail_json(msg="Unable to determine if the host is a Galaxy or Automation Hub ({1}): {0}.".format(self.host, response))
-        except (Exception) as e:
-            self.fail_json(msg="There was an unknown error when trying to connect to {2}: {0} {1}".format(type(e).__name__, e, self.host))
-
     def build_url(self, endpoint, query_params=None):
         # Make sure we start with /api/vX
         if not endpoint.startswith("/"):
             endpoint = "/{0}".format(endpoint)
         if not endpoint.startswith("/api/"):
-            if self.host_type == "rh-automation-hub":
+            if self.path_prefix == "galaxy":
                 endpoint = "api/galaxy/v3{0}".format(endpoint)
-            else:
+            elif self.path_prefix == "galaxy":
                 endpoint = "api/automation-hub/v3{0}".format(endpoint)
+            else:
+                endpoint = "api/{0}/v3{1}".format(self.path_prefix, endpoint)
         if not endpoint.endswith("/") and "?" not in endpoint:
             endpoint = "{0}/".format(endpoint)
 
@@ -305,10 +294,13 @@ class AHModule(AnsibleModule):
             # If we have a username and password, we need to get a session cookie
 
             # Post to the tokens endpoint with baisc auth to try and get a token
-            if self.host_type == "rh-automation-hub":
+            if self.path_prefix == "galaxy":
                 api_token_url = (self.url._replace(path="/api/galaxy/v3/auth/token/")).geturl()
-            else:
+            elif self.path_prefix == "automation-hub":
                 api_token_url = (self.url._replace(path="/api/automation-hub/v3/auth/token/")).geturl()
+            else:
+                token_path = "api/{0}/v3/auth/token/".format(self.path_prefix)
+                api_token_url = (self.url._replace(path=token_path)).geturl()
 
             try:
                 response = self.session.open(
