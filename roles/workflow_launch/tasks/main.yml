@@ -1,5 +1,4 @@
 ---
-
 # Launch tower Workflow
 - name: Launch a Tower Workflow
   awx.awx.tower_workflow_launch:
@@ -26,3 +25,4 @@
   no_log: "{{ tower_configuration_workflow_launch_secure_logging }}"
   register: launched_tower_workflows
   when: tower_workflow_launch_jobs is defined
+...

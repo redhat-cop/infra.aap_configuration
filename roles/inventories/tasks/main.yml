@@ -19,3 +19,4 @@
   loop_control:
     loop_var: inventory
   no_log: "{{ tower_configuration_inventories_secure_logging }}"
+...

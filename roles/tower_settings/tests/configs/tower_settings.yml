@@ -6,3 +6,4 @@ tower_settings:
     value: {'GIT_SSL_NO_VERIFY': 'false'}
   - name: AUTH_LDAP_SERVER_URI
     value: "ldap://ldap.example.com"
+...

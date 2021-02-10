@@ -1,5 +1,4 @@
 ---
-
 # Update Inventory sources
 - name: Run Tower inventory source update
   awx.awx.tower_inventory_source_update:
@@ -22,3 +21,4 @@
     loop_var: "__inventory_source_update_item"
   no_log: "{{ tower_configuration_inventory_source_update_secure_logging }}"
   when: tower_inventory_sources is defined
+...
