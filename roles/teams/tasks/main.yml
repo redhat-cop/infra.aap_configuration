@@ -1,6 +1,6 @@
 ---
 - name: Create Ansible Tower Team
-  awx.awx.tower_team:
+  tower_team:
     name:                "{{ team.name | mandatory }}"
     new_name:            "{{ team.new_name | default(omit) }}"
     description:         "{{ team.description | default(omit) }}"

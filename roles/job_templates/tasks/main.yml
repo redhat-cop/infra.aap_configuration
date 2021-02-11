@@ -1,7 +1,7 @@
 ---
 # Create Job Template
 - name: Add Tower Job Templates
-  awx.awx.tower_job_template:
+  tower_job_template:
     name:                           "{{ tower_templates_item.name | mandatory }}"
     new_name:                       "{{ tower_templates_item.new_name | default(omit) }}"
     description:                    "{{ tower_templates_item.description | default('') }}"

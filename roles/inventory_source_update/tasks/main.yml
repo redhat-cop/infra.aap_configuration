@@ -1,7 +1,7 @@
 ---
 # Update Inventory sources
 - name: Run Tower inventory source update
-  awx.awx.tower_inventory_source_update:
+  tower_inventory_source_update:
     name:               "{{ __inventory_source_update_item.name }}"
     inventory:          "{{ __inventory_source_update_item.inventory }}"
     organization:       "{{ __inventory_source_update_item.organization | default('') }}"

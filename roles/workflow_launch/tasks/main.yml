@@ -1,7 +1,7 @@
 ---
 # Launch tower Workflow
 - name: Launch a Tower Workflow
-  awx.awx.tower_workflow_launch:
+  tower_workflow_launch:
     name:                     "{{ __workflow_launch_item.name }}"
     organization:             "{{ __workflow_launch_item.organization | default(omit) }}"
     inventory:                "{{ __workflow_launch_item.inventory | default(omit) }}"
