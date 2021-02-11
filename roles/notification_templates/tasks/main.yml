@@ -46,3 +46,4 @@
   loop_control:
     loop_var: tower_notifications_item
   no_log: "{{ tower_configuration_notifications_secure_logging }}"
+...

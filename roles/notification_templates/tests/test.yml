@@ -38,3 +38,4 @@
         name: ../..
       vars:
         tower_notification_templates: "{{ notifications_json.tower_notification_templates }}"
+...

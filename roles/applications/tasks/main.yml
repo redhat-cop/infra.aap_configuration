@@ -1,5 +1,4 @@
 ---
-
 # Create Tower applications
 - name: Add Tower Applications
   awx.awx.tower_application:
@@ -21,3 +20,4 @@
   loop_control:
     loop_var: "application_item"
   no_log: "{{ tower_configuration_applications_secure_logging }}"
+...

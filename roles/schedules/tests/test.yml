@@ -38,3 +38,4 @@
         name: ../..
       vars:
         tower_schedules: "{{ schedules_json.tower_schedules }}"
+...

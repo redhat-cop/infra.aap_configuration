@@ -42,3 +42,4 @@ tower_notifications:
     organization:
       name: Satellite
       type: organization
+...

@@ -38,3 +38,4 @@
         name: ../..
       vars:
         tower_credential_types: "{{ credential_types_json.tower_credential_types }}"
+...

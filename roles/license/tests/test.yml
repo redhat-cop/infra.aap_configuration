@@ -36,3 +36,4 @@
         name: redhat_cop.tower_configuration.license
       vars:
         tower_credential_input_sources: "{{ license_json.tower_license }}"
+...

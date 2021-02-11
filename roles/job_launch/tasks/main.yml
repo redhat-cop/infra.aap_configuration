@@ -32,3 +32,4 @@
   no_log: "{{ tower_configuration_job_launch_secure_logging }}"
   register: launched_tower_jobs
   when: tower_launch_jobs is defined
+...

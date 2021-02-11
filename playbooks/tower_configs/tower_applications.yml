@@ -17,3 +17,4 @@ tower_applications:
     authorization_grant_type: password
     client_type: confidential
     skip_authorization: true
+...

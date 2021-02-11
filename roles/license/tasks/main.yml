@@ -18,3 +18,4 @@
     validate_certs:                 "{{ tower_validate_certs | default('true') }}"
   no_log: "{{ tower_configuration_license_secure_logging }}"
   when: tower_license is defined
+...
