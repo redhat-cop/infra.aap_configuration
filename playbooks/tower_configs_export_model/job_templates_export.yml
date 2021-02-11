@@ -255,3 +255,4 @@ tower_templates:
         type: organization
       name: workflow_test_template
       type: job_template
+...

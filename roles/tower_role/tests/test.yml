@@ -31,3 +31,4 @@
         name: ../..
       vars:
         tower_rbac: "{{ rbac_json.tower_rbac }}"
+...

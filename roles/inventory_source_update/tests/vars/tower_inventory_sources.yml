@@ -11,3 +11,4 @@ tower_inventory_sources:
     update_on_launch: true
     update_cache_timeout: 0
     wait: true
+...

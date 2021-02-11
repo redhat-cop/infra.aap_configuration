@@ -25,3 +25,4 @@ galaxy_info:
 collections:
   - awx.awx
   - ansible.tower
+...

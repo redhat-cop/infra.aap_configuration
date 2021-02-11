@@ -26,3 +26,4 @@ tower_inventories:
         type: organization
       name: Testing Inventory
       type: inventory
+...

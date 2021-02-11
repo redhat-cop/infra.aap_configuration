@@ -61,3 +61,4 @@
          ((workflow_loop_node.always_nodes is defined and workflow_loop_node.always_nodes | length > 0 ) or
          (workflow_loop_node.success_nodes is defined and workflow_loop_node.success_nodes | length > 0 ) or
          (workflow_loop_node.failure_nodes is defined and workflow_loop_node.failure_nodes | length > 0 ))
+...

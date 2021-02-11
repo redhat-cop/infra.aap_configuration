@@ -15,3 +15,4 @@ use_default_rules: true
 skip_list:
   # YAML: Ansible lint doing yaml checks that we were already doing but without config.
   - yaml
+...

@@ -1,9 +1,9 @@
 ---
 - name: Add a label to tower
   tower_label:
-    name:                                 "{{ label.name }}"  # REQUIRED
+    name:                                 "{{ label.name | mandatory }}"
     new_name:                             "{{ label.new_name | default(omit) }}"
-    organization:                         "{{ label.organization }}"  # REQUIRED
+    organization:                         "{{ label.organization | mandatory }}"
     state:                                "{{ label.state | default(tower_state | default('present')) }}"
     tower_config_file:                    "{{ tower_config_file | default(omit) }}"
     tower_host:                           "{{ tower_hostname | default(omit) }}"
@@ -15,3 +15,4 @@
   loop_control:
     loop_var: label
   no_log: "{{ tower_configuration_labels_secure_logging }}"
+...

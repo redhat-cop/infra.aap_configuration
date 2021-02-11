@@ -39,3 +39,4 @@ tower_settings:
       satlab-admin:
         organization: Satellite
         users: cn=sat-qe-infra,ou=adhoc,ou=managedGroups,dc=example,dc=com
+...

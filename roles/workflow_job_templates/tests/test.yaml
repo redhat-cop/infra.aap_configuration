@@ -14,3 +14,4 @@
         extensions: ["yml"]
   roles:
     - {role: ../.., when: workflow_job_templates is defined}
+...

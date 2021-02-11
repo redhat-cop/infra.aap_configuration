@@ -1,7 +1,7 @@
 ---
 - name: Add Credential Types
   tower_credential_type:
-    name:                           "{{ tower_credential_types_item.name }}"
+    name:                           "{{ tower_credential_types_item.name | mandatory }}"
     description:                    "{{ tower_credential_types_item.description | default(omit) }}"
     injectors:                      "{{ tower_credential_types_item.injectors | default(omit) | regex_replace('[ ]{2,}','') }}"
     inputs:                         "{{ tower_credential_types_item.inputs | default(omit) }}"
@@ -17,3 +17,4 @@
   loop_control:
     loop_var: tower_credential_types_item
   no_log: "{{ tower_configuration_credential_types_secure_logging }}"
+...

@@ -1,7 +1,7 @@
 ---
 - name: Add ansible tower notifications
   tower_notification_template:
-    name:                           "{{ tower_notifications_item.name }}"
+    name:                           "{{ tower_notifications_item.name | mandatory }}"
     new_name:                       "{{ tower_notifications_item.new_name | default(omit) }}"
     description:                    "{{ tower_notifications_item.description | default(omit) }}"
     organization:                   "{{ tower_notifications_item.organization.name | default( tower_notifications_item.organization ) }}"
@@ -46,3 +46,4 @@
   loop_control:
     loop_var: tower_notifications_item
   no_log: "{{ tower_configuration_notifications_secure_logging }}"
+...
