@@ -54,9 +54,9 @@ jobs:
 
       - name: Run migrations
         run: |
-          echo $COMPOSE_PROFILE
-          echo $DEV_SOURCE_PATH
-          echo $ANSIBLE_HUB_UI_PATH
+          echo '**** test space ****'
+          cat .compose.env
+          echo '**** test space ****'
           cd .github/galaxy_ng && ./compose run --rm api manage migrate
 
       - name: Import initial data
