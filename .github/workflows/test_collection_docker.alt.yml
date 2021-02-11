@@ -41,10 +41,10 @@ jobs:
         run: which python && pip --version && ansible --version
 
       - name: Build docker image
-        run: cd .github/galaxy_ng && ./compose build
+        run: cd .github/galaxy_ng && ./compose build && docker images
 
       - name: Start database and redis services
-        run: cd .github/galaxy_ng && ./compose up -d postgres redis
+        run: cd .github/galaxy_ng && ./compose up -d postgres redis && docker container ls
 
       - name: Debug
         run: cd .github/galaxy_ng && ls -al

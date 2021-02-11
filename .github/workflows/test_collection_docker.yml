@@ -33,7 +33,9 @@ jobs:
           EOT
           cat .compose.env
           ./compose build
+          docker images
           ./compose up -d postgres redis
+          docker container ls
           ls -al
           echo $COMPOSE_PROFILE
           echo $DEV_SOURCE_PATH
