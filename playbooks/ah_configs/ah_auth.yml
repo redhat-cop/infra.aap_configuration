@@ -3,6 +3,6 @@
 ah_host: http://192.168.122.47:8002/  # http://192.168.122.47:8002/ http://localhost:8002/ https://192.168.122.200/
 ah_username: admin
 ah_password: admin
-ah_validate_certs: false 
+ah_validate_certs: false
 ah_path_prefix: 'automation-hub' # AH: galaxy Galaxy: automation-hub
 ...
