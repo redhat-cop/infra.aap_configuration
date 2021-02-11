@@ -43,3 +43,4 @@
         name: ../..
       vars:
         tower_templates: "{{ templates_json.tower_templates }}"
+...

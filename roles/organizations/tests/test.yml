@@ -38,3 +38,4 @@
         name: ../..
       vars:
         tower_organizations: "{{ organizations_json.tower_organizations }}"
+...

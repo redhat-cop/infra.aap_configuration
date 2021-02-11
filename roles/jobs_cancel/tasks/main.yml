@@ -1,5 +1,4 @@
 ---
-
 # Cancel a Tower Job
 - name: Launch a Tower Workflow
   awx.awx.tower_job_cancel:
@@ -18,3 +17,4 @@
     loop_var: "__jobs_cancel_item"
   no_log: "{{ tower_configuration_jobs_cancel_secure_logging }}"
   when: tower_cancel_jobs is defined
+...

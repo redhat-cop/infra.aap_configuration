@@ -5,6 +5,7 @@ rules:
   # 80 chars should be enough, but don't fail if a line is longer
   line-length: disable
   colons: disable
+  document-end: {present: true}
   indentation:
     level: warning
     indent-sequences: consistent
@@ -14,3 +15,4 @@ rules:
     - 'False'
     - 'true'
     - 'false'
+...
