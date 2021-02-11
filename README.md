@@ -27,9 +27,9 @@ collections:
 ```
 
 ## Using this collection
-The awx.awx or ansible.tower collection must be invoked in the playbook in order for ansible to pick up the correct modules to use. 
+The awx.awx or ansible.tower collection must be invoked in the playbook in order for ansible to pick up the correct modules to use.
 
-Otherwise it will look for for the modules only in your base installation. If there are errors complaining about "counldn't resolve module/action' this is the most likely cause. 
+Otherwise it will look for for the modules only in your base installation. If there are errors complaining about "counldn't resolve module/action' this is the most likely cause.
 
 ```yaml
 - name: Playbook to configure ansible tower post installation
