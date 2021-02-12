@@ -1,8 +1,7 @@
 ---
-
 - name: Add Projects
-  awx.awx.tower_project:
-    name:                           "{{ tower_projects_item.name }}"
+  tower_project:
+    name:                           "{{ tower_projects_item.name | mandatory }}"
     description:                    "{{ tower_projects_item.description | default(omit) }}"
     scm_type:                       "{{ tower_projects_item.scm_type }}"
     scm_url:                        "{{ tower_projects_item.scm_url }}"
@@ -33,3 +32,4 @@
   loop_control:
     loop_var: tower_projects_item
   no_log: "{{ tower_configuration_projects_secure_logging }}"
+...

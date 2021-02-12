@@ -1,9 +1,8 @@
 ---
-
 # Cancel a Tower Job
-- name: Launch a Tower Workflow
-  awx.awx.tower_job_cancel:
-    job_id:                   "{{ __jobs_cancel_item.id }}"
+- name: Cancel a Tower Job
+  tower_job_cancel:
+    job_id:                   "{{ __jobs_cancel_item.id | mandatory }}"
     fail_if_not_running:      "{{ __jobs_cancel_item.fail_if_not_running | default(omit) }}"
 
     # Role Standard Options
@@ -18,3 +17,4 @@
     loop_var: "__jobs_cancel_item"
   no_log: "{{ tower_configuration_jobs_cancel_secure_logging }}"
   when: tower_cancel_jobs is defined
+...

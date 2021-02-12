@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "tower_configuration_application"
+  role_name: "tower_configuration_applications"
   author: "Mike Shriver"
   description: "An Ansible Role to create applications in Ansible Tower."
   company: "Red Hat"
@@ -44,3 +44,4 @@ collections:
 dependencies: []
 # List your role dependencies here, one per line. Be sure to remove the '[]' above,
 # if you add dependencies to this list.
+...

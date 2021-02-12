@@ -1,10 +1,9 @@
 ---
-
 - name: Create RBAC Entry
-  awx.awx.tower_role:
+  tower_role:
     user:                           "{{ tower_rbac_item.user | default(omit) }}"
     team:                           "{{ tower_rbac_item.team | default(omit) }}"
-    role:                           "{{ tower_rbac_item.role }}"
+    role:                           "{{ tower_rbac_item.role | mandatory }}"
     target_team:                    "{{ tower_rbac_item.target_team | default(omit) }}"
     target_teams:                   "{{ tower_rbac_item.target_teams | default(omit) }}"
     inventory:                      "{{ tower_rbac_item.inventory | default(omit) }}"
@@ -31,3 +30,4 @@
   loop_control:
     loop_var: tower_rbac_item
   no_log: "{{ tower_configuration_rbac_secure_logging }}"
+...

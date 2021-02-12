@@ -1,9 +1,8 @@
 ---
-
 # Add Tower Instance Group
 - name: Add Tower Instance Group
-  awx.awx.tower_instance_group:
-    name:                           "{{ tower_instance_groups_item.name }}"
+  tower_instance_group:
+    name:                           "{{ tower_instance_groups_item.name | mandatory }}"
     new_name:                       "{{ tower_instance_groups_item.new_name | default(omit) }}"
     credential:                     "{{ tower_instance_groups_item.credential | default(omit) }}"
     policy_instance_percentage:     "{{ tower_instance_groups_item.policy_instance_percentage | default(omit) }}"
@@ -23,3 +22,4 @@
     loop_var: tower_instance_groups_item
   no_log: "{{ tower_configuration_instance_groups_secure_logging }}"
   when: tower_instance_groups is defined
+...

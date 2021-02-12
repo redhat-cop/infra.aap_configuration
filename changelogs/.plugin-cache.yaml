@@ -1,3 +1,4 @@
+---
 plugins:
   become: {}
   cache: {}
@@ -13,3 +14,4 @@ plugins:
   strategy: {}
   vars: {}
 version: 1.0.2
+...

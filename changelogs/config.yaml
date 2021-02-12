@@ -31,3 +31,4 @@ sections:
 title: redhat_cop.tower_configuration
 trivial_section_name: trivial
 use_fqcn: true
+...

@@ -1,10 +1,10 @@
 ---
 - name: Create Ansible Tower Team
-  awx.awx.tower_team:
-    name:                "{{ team.name }}"
+  tower_team:
+    name:                "{{ team.name | mandatory }}"
     new_name:            "{{ team.new_name | default(omit) }}"
     description:         "{{ team.description | default(omit) }}"
-    organization:        "{{ team.organization.name | default( team.organization ) }}"
+    organization:        "{{ team.organization.name | default( team.organization ) | mandatory }}"
     state:               "{{ team.state | default(tower_state | default('present')) }}"
     tower_config_file:   "{{ team.tower_config_file | default(omit) }}"
     tower_host:          "{{ tower_hostname | default(omit) }}"
@@ -16,3 +16,4 @@
   loop_control:
     loop_var: team
   no_log: "{{ tower_configuration_teams_secure_logging }}"
+...

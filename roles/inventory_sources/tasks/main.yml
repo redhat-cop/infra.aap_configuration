@@ -1,12 +1,12 @@
 ---
 - name: Add an inventory source
-  awx.awx.tower_inventory_source:
-    name:                                 "{{ source.name }}"  # REQUIRED
+  tower_inventory_source:
+    name:                                 "{{ source.name | mandatory }}"
     new_name:                             "{{ source.new_name | default(omit) }}"
     description:                          "{{ source.description | default(omit) }}"
-    inventory:                            "{{ source.inventory.name | default( source.inventory ) }}" # REQUIRED
+    inventory:                            "{{ source.inventory.name | default( source.inventory ) | mandatory }}"
     organization:                         "{{ source.inventory.organization.name | default( source.organization | default(omit)) }}"
-    source:                               "{{ source.source }}"  # REQUIRED
+    source:                               "{{ source.source | mandatory }}"
     source_path:                          "{{ source.source_path | default(omit) }}"
     source_script:                        "{{ source.source_script | default(omit) }}"
     source_vars:                          "{{ source.source_vars | default(omit) }}"
@@ -37,3 +37,4 @@
   loop_control:
     loop_var: source
   no_log: "{{ tower_configuration_inventory_sources_secure_logging }}"
+...

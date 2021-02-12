@@ -1,19 +1,18 @@
 ---
-
 # These are the default variables common to most tower_configuration and _utilities roles
 # You shouldn't need to define them again and again but they should be defined
-#tower_hostname: "{{ inventory_hostname }}"
-#tower_username: "admin"
-#tower_password: ""
-#tower_oauthtoken: ""
-#tower_config_file: ""
-#tower_validate_certs: false
+# tower_hostname: "{{ inventory_hostname }}"
+# tower_username: "admin"
+# tower_password: ""
+# tower_oauthtoken: ""
+# tower_config_file: ""
+# tower_validate_certs: false
 
 # These are the default variables specific to the workflow_job_templates role
 
 # list of dicts describing Tower workflow templates
 tower_workflows: []
-#- name: "workflow_template_name"  # mandatory
+# - name: "workflow_template_name"  # mandatory
 #  new_name: "new_name"  # optional
 #  description: "some description"  # optional
 #  extra_vars:  # optional, dict
@@ -59,5 +58,5 @@ tower_workflows: []
 #    success_nodes: [] # optional, list, List of node identifiers
 #    failure_nodes: [] # optional, list, List of node identifiers
 
-
 workflow_job_templates_secure_logging: "{{tower_configuration_secure_logging | default(False)}}"
+...

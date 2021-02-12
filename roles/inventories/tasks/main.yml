@@ -1,9 +1,9 @@
 ---
 - name: Create inventory
-  awx.awx.tower_inventory:
-    name:                 "{{ inventory.name }}"  # REQUIRED
+  tower_inventory:
+    name:                 "{{ inventory.name | mandatory }}"
     description:          "{{ inventory.description | default(omit) }}"
-    organization:         "{{ inventory.organization.name | default( inventory.organization ) }}"
+    organization:         "{{ inventory.organization.name | default( inventory.organization ) | mandatory }}"
     variables:            "{{ inventory.variables | default(omit) }}"
     kind:                 "{{ inventory.kind | default(omit) }}"
     host_filter:          "{{ inventory.host_filter | default(omit) }}"
@@ -19,3 +19,4 @@
   loop_control:
     loop_var: inventory
   no_log: "{{ tower_configuration_inventories_secure_logging }}"
+...

@@ -1,8 +1,7 @@
 ---
 # tasks file for tower_settings
-
 - name: Update Ansible Tower Settings from dictionary or list of dictionaries
-  awx.awx.tower_settings:
+  tower_settings:
     settings:            "{{ tower_setting_item.settings | default(omit) }}"
     name:                "{{ tower_setting_item.name | default(omit) }}"
     value:               "{{ tower_setting_item.value | default(omit) }}"
@@ -17,3 +16,4 @@
   loop_control:
     loop_var: tower_setting_item
   no_log: "{{ tower_configuration_settings_secure_logging }}"
+...

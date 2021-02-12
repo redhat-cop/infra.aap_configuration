@@ -12,3 +12,4 @@ tower_inventory_sources:
     update_cache_timeout: 0
     wait: true
     # more options can be provided but for scm source we are using, we need only this much.
+...

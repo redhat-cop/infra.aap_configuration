@@ -1,8 +1,7 @@
 ---
-
 # Run Ad Hoc Commands
 - name: Run Tower ad hoc command
-  awx.awx.tower_ad_hoc_command:
+  tower_ad_hoc_command:
     job_type:           "{{ __ad_hoc_command_item.job_type | default('run') }}"
     inventory:          "{{ __ad_hoc_command_item.inventory }}"
     limit:              "{{ __ad_hoc_command_item.limit | default('') }}"
@@ -31,3 +30,4 @@
   no_log: "{{ tower_configuration_ad_hoc_command_secure_logging }}"
   register: tower_ad_hoc_commands_output
   when: tower_ad_hoc_commands is defined
+...

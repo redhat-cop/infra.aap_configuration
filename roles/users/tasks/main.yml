@@ -1,8 +1,8 @@
 ---
 - name: Add tower user
-  awx.awx.tower_user:
+  tower_user:
     auditor:             "{{ tower_user_accounts_item.is_auditor | default(tower_user_accounts_item.is_system_auditor | default('false')) }}"
-    username:            "{{ tower_user_accounts_item.user | default(tower_user_accounts_item.username) }}"
+    username:            "{{ tower_user_accounts_item.user | default(tower_user_accounts_item.username) | mandatory }}"
     # the 'true' in the second default leads to no password being set if the default password is empty
     password:            "{{ tower_user_accounts_item.password | default(tower_user_default_password | default(omit, true)) }}"
     email:               "{{ tower_user_accounts_item.email | default(omit) }}"
@@ -23,3 +23,4 @@
   no_log: "{{ tower_configuration_users_secure_logging }}"
   tags:
     - tower-user-create
+...

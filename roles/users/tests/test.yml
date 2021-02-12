@@ -38,3 +38,4 @@
         name: ../..
       vars:
         tower_user_accounts: "{{ user_json.tower_user }}"
+...
