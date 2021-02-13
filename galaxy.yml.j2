@@ -7,10 +7,12 @@ documentation: https://github.com/redhat-cop/ah_configuration/blob/master/README
 issues: https://github.com/redhat-cop/ah_configuration/issues
 license:
   - GPL-3.0-only
-name: ah_configuration
-namespace: redhat_cop
+namespace: {{ collection_namespace }}
+name: {{ collection_name }}
+version: {{ collection_version }}
 readme: README.md
-repository: https://github.com/redhat-cop/ah_configuration
+repository: {{ collection_repo }}
+issues: {{ collection_repo }}/issues
 tags:
   - cloud
   - infrastructure
@@ -18,7 +20,6 @@ tags:
   - ansible
   - galaxy
   - automation
-version: 0.0.1-devel
 build_ignore:
   - tools
   - setup.cfg
