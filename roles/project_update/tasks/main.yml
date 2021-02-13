@@ -3,17 +3,17 @@
 - name: Run Tower project update
   tower_project_update:
     name:               "{{ __project_update_update_item.name }}"
-    organization:       "{{ __project_update_update_item.organization | default('') }}"
-    wait:               "{{ __project_update_update_item.wait | default(omit) }}"
-    interval:           "{{ __project_update_update_item.interval | default(omit) }}"
-    timeout:            "{{ __project_update_update_item.timeout | default(omit) }}"
+    organization:       "{{ __project_update_update_item.organization | default(omit, true) }}"
+    wait:               "{{ __project_update_update_item.wait | default('true') }}"
+    interval:           "{{ __project_update_update_item.interval | default(1) }}"
+    timeout:            "{{ __project_update_update_item.timeout | default(omit, true) }}"
 
     # Role Standard Options
-    tower_username:     "{{ tower_username | default(omit) }}"
-    tower_password:     "{{ tower_password | default(omit) }}"
-    tower_oauthtoken:   "{{ tower_oauthtoken | default(omit) }}"
+    tower_username:     "{{ tower_username | default(omit, true) }}"
+    tower_password:     "{{ tower_password | default(omit, true) }}"
+    tower_oauthtoken:   "{{ tower_oauthtoken | default(omit, true) }}"
     tower_host:         "{{ tower_hostname }}"
-    tower_config_file:  "{{ tower_config_file | default(omit) }}"
+    tower_config_file:  "{{ tower_config_file | default(omit, true) }}"
     validate_certs:     "{{ tower_validate_certs | default('true') }}"
   loop: "{{ tower_projects }}"
   loop_control:
