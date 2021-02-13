@@ -3,7 +3,7 @@
   tower_project:
     name:                           "{{ tower_projects_item.name | mandatory }}"
     description:                    "{{ tower_projects_item.description | default(omit, true) }}"
-    scm_type:                       "{{ tower_projects_item.scm_type | default('manual')}}"
+    scm_type:                       "{{ tower_projects_item.scm_type | default('manual') }}"
     scm_url:                        "{{ tower_projects_item.scm_url | default(omit, true) }}"
     local_path:                     "{{ tower_projects_item.local_path | default(omit, true) }}"
     scm_branch:                     "{{ tower_projects_item.scm_branch | default(omit, true)  }}"
