@@ -92,7 +92,7 @@ options:
           type: list
           required: True
 
-extends_documentation_fragment: ansible.automation_hub.auth
+extends_documentation_fragment: redhat_cop.ah_configuration.auth
 """
 
 
