@@ -1,0 +1,10 @@
+ancestor: null
+releases:
+  0.1.0:
+    changes:
+      major_changes:
+      - Initial release of ansible_config, namespace, publish roles and ah_namespace,
+        ah_token modules
+    fragments:
+    - initial.yml
+    release_date: '2021-02-13'
