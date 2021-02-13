@@ -41,10 +41,10 @@ jobs:
         run: which python && pip --version && ansible --version
 
       - name: Build docker image
-        run: cd .github/galaxy_ng && ./compose build
+        run: cd .github/galaxy_ng && ./compose build && docker images
 
       - name: Start database and redis services
-        run: cd .github/galaxy_ng && ./compose up -d postgres redis
+        run: cd .github/galaxy_ng && ./compose up -d postgres redis && docker container ls
 
       - name: Debug
         run: cd .github/galaxy_ng && ls -al
@@ -54,10 +54,11 @@ jobs:
 
       - name: Run migrations
         run: |
-          echo $COMPOSE_PROFILE
-          echo $DEV_SOURCE_PATH
-          echo $ANSIBLE_HUB_UI_PATH
-          cd .github/galaxy_ng && ./compose run --rm api manage migrate
+          cd .github/galaxy_ng
+          echo '**** test space ****'
+          cat .compose.env
+          echo '**** test space ****'
+          bash -xv compose run --rm api manage migrate
 
       - name: Import initial data
         run: cd .github/galaxy_ng && ./compose run --rm -e PULP_FIXTURE_DIRS='["/src/galaxy_ng/dev/automation-hub"]' api manage loaddata initial_data.json

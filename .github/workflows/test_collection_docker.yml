@@ -33,12 +33,14 @@ jobs:
           EOT
           cat .compose.env
           ./compose build
+          docker images
           ./compose up -d postgres redis
+          docker container ls
           ls -al
-          echo $COMPOSE_PROFILE
-          echo $DEV_SOURCE_PATH
-          echo $ANSIBLE_HUB_UI_PATH
-          ./compose run --rm api manage migrate
+          echo '**** test space ****'
+          cat .compose.env
+          echo '**** test space ****'
+          bash -xv compose run --rm api manage migrate
           ./compose run --rm -e PULP_FIXTURE_DIRS='["/src/galaxy_ng/dev/automation-hub"]' api manage loaddata initial_data.json
           ./compose up -d
 
