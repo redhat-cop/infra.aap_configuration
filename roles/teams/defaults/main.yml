@@ -19,5 +19,5 @@ tower_teams: []
 #  description: "some description"  # optional
 #  state: present  # optional, choices: present, absent
 
-tower_configuration_teams_secure_logging: "{{tower_configuration_secure_logging | default('false')}}"
+tower_configuration_teams_secure_logging: "{{tower_configuration_secure_logging | default('false') }}"
 ...
