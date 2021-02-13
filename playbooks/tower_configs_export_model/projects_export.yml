@@ -43,6 +43,7 @@ tower_projects:
   scm_clean: false
   scm_delete_on_update: false
   timeout: 0
+  wait: true
   scm_update_on_launch: false
   scm_update_cache_timeout: 0
   allow_override: false
