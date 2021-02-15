@@ -8,7 +8,7 @@
     local_path:                     "{{ tower_projects_item.local_path | default(omit) }}"
     scm_branch:                     "{{ tower_projects_item.scm_branch | default(omit)  }}"
     scm_refspec:                    "{{ tower_projects_item.scm_refspec | default(omit) }}"
-    scm_credential:                 "{{ tower_projects_item.scm_credential | default(tower_projects_item.credential | default(omit)) }}"
+    scm_credential:                 "{{ tower_projects_item.scm_credential | default(tower_projects_item.credential.name | default(omit)) }}"
     scm_clean:                      "{{ tower_projects_item.scm_clean | default(omit) }}"
     scm_delete_on_update:           "{{ tower_projects_item.scm_delete_on_update | default(omit) }}"
     scm_update_on_launch:           "{{ tower_projects_item.scm_update_on_launch | default(omit) }}"
