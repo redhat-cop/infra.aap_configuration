@@ -26,6 +26,7 @@
     - {role: inventories, when: tower_inventories is defined, tags: inventories}
     - {role: inventory_sources, when: tower_inventory_sources is defined, tags: inventory_sources}
     - {role: projects, when: tower_projects is defined, tags: projects}
+    - {role: project_update, when: tower_projects is defined, tags: projects}
     - {role: job_templates, when: tower_templates is defined, tags: job_templates}
     - {role: workflow_job_templates, when: tower_workflows is defined}
     - {role: notification_templates, when: tower_notifications is defined, tags: notification_templates}
