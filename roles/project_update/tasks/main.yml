@@ -3,7 +3,7 @@
 - name: Run Tower project update
   tower_project_update:
     name:               "{{ __project_update_update_item.name }}"
-    organization:       "{{ __project_update_update_item.organization | default(omit, true) }}"
+    organization:       "{{ __project_update_update_item.organization.name | default(__project_update_update_item.organization | default(omit, true)) }}"
     wait:               "{{ __project_update_update_item.wait | default('true') }}"
     interval:           "{{ __project_update_update_item.interval | default(1) }}"
     timeout:            "{{ __project_update_update_item.timeout | default(omit, true) }}"
