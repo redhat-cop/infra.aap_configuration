@@ -19,5 +19,5 @@ tower_instance_groups: []
 #  state: # optional, choices: present, absent
 # These are the default variables specific to the **** role
 
-tower_configuration_instance_groups_secure_logging: "{{tower_configuration_secure_logging | default(false)}}"
+tower_configuration_instance_groups_secure_logging: "{{tower_configuration_secure_logging | default('false')}}"
 ...

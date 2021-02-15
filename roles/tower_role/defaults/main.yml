@@ -30,5 +30,5 @@ tower_rbac: []
 #  # other fields
 #  state: present  # optional, choices: present, absent
 
-tower_configuration_rbac_secure_logging: "{{tower_configuration_secure_logging | default(false)}}"
+tower_configuration_rbac_secure_logging: "{{tower_configuration_secure_logging | default('false')}}"
 ...
