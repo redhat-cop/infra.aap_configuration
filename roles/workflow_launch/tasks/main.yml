@@ -3,21 +3,21 @@
 - name: Launch a Tower Workflow
   tower_workflow_launch:
     name:                     "{{ __workflow_launch_item.name }}"
-    organization:             "{{ __workflow_launch_item.organization | default(omit) }}"
-    inventory:                "{{ __workflow_launch_item.inventory | default(omit) }}"
-    limit:                    "{{ __workflow_launch_item.limit | default(omit) }}"
-    scm_branch:               "{{ __workflow_launch_item.scm_branch | default(omit) }}"
-    extra_vars:               "{{ __workflow_launch_item.extra_vars | default(omit) }}"
-    wait:                     "{{ __workflow_launch_item.wait | default(omit) }}"
-    interval:                 "{{ __workflow_launch_item.interval | default(omit) }}"
-    timeout:                  "{{ __workflow_launch_item.timeout | default(omit) }}"
+    organization:             "{{ __workflow_launch_item.organization | default(omit, true) }}"
+    inventory:                "{{ __workflow_launch_item.inventory | default(omit, true) }}"
+    limit:                    "{{ __workflow_launch_item.limit | default(omit, true) }}"
+    scm_branch:               "{{ __workflow_launch_item.scm_branch | default(omit, true) }}"
+    extra_vars:               "{{ __workflow_launch_item.extra_vars | default(omit, true) }}"
+    wait:                     "{{ __workflow_launch_item.wait | default('false') }}"
+    interval:                 "{{ __workflow_launch_item.interval | default(1) }}"
+    timeout:                  "{{ __workflow_launch_item.timeout | default(omit, true) }}"
 
     # Role Standard Options
-    tower_username:     "{{ tower_username | default(omit) }}"
-    tower_password:     "{{ tower_password | default(omit) }}"
-    tower_oauthtoken:   "{{ tower_oauthtoken | default(omit) }}"
+    tower_username:     "{{ tower_username | default(omit, true) }}"
+    tower_password:     "{{ tower_password | default(omit, true) }}"
+    tower_oauthtoken:   "{{ tower_oauthtoken | default(omit, true) }}"
     tower_host:         "{{ tower_hostname }}"
-    tower_config_file:  "{{ tower_config_file | default(omit) }}"
+    tower_config_file:  "{{ tower_config_file | default(omit, true) }}"
     validate_certs:     "{{ tower_validate_certs | default('true') }}"
   loop: "{{ tower_workflow_launch_jobs }}"
   loop_control:

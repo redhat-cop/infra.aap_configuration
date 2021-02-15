@@ -14,8 +14,6 @@ tower_settings_individuale:
     value: "['OU=Users,DC=example,DC=com', 'SCOPE_SUBTREE', '(cn=%(user)s)']"
   - name: AUTH_LDAP_START_TLS
     value: true
-  - name: AUTH_LDAP_GROUP_TYPE_PARAMS
-    value: {}
   - name: AUTH_LDAP_REQUIRE_GROUP
     value: "cn=satellite-qe,ou=adhoc,ou=managedGroups,dc=example,dc=com"
   # Next name helps fetch Email addr and name from LDAP and save it in tower user.
