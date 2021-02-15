@@ -18,7 +18,7 @@ tower_projects:
       kind: scm
       name: Source Control
       type: credential_type
-    name: Example SCM credential
+    name: AWX-Collection-tests-tower_workflow_job_template-scm-cred
     organization:
       name: Default
       type: organization
