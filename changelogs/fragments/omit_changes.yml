@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Fixed default filters to use true when neccessary and changed a few defaults to omit rather then a value or empty string.
+...
