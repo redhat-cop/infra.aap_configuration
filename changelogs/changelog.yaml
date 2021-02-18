@@ -1,4 +1,3 @@
----
 ancestor: null
 releases:
   0.1.0:
@@ -85,4 +84,26 @@ releases:
     fragments:
     - survey_spec.yml
     release_date: '2021-01-26'
-...
+  1.1.0:
+    changes:
+      breaking_changes:
+      - Removed kind from to credentials role. This will be depreciated in a few months.
+        Kind arguments are replaced by the credential_type and inputs fields.
+      - Updated to allow use of either awx.awx or ansible.tower
+      bugfixes:
+      - Corrected README for tower_validate_certs variable defaults on all roles
+      major_changes:
+      - Added the following roles - ad_hoc_command, ad_hoc_command_cancel, inventory_source_update,
+        job_launch, job_cancel, project_update, workflow_launch
+      - Updated collection to use and comply with ansible-lint v5
+      minor_changes:
+      - Fixed default filters to use true when neccessary and changed a few defaults
+        to omit rather then a value or empty string.
+      - updated various Readmes to fix typos and missing information.
+    fragments:
+    - ansible_lint.yml
+    - credential_kind_deprecated.yml
+    - omit_changes.yml
+    - update_roles.yml
+    - validate_certs_readme_fix.yml
+    release_date: '2021-02-18'
