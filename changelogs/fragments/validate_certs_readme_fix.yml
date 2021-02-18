@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Corrected README for tower_validate_certs variable defaults on all roles
-...
