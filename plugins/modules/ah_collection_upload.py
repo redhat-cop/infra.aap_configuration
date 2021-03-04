@@ -14,7 +14,7 @@ ANSIBLE_METADATA = {"metadata_version": "1.1", "status": ["preview"], "supported
 
 DOCUMENTATION = """
 ---
-module: ah_collection
+module: ah_collection_upload
 author: "Tom Page (@Tompage1994)"
 short_description: Upload a collection artifact to Automation Hub.
 description:
@@ -33,7 +33,7 @@ extends_documentation_fragment: redhat_cop.ah_configuration.auth
 
 EXAMPLES = """
 - name: Create Tower Ping job template
-  ah_collection:
+  ah_collection_upload:
     path: /var/tmp/collections/awx_awx-15.0.0.tar.gz
 
 """
