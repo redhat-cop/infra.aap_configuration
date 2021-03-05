@@ -484,6 +484,34 @@ class AHModule(AnsibleModule):
             last_data = response["json"]
             return last_data
 
+    def approve(self, endpoint, auto_exit=True):
+
+        approvalEndpoint = "move/staging/published"
+
+        if not endpoint:
+            self.fail_json(msg="Unable to approve due to missing endpoint".format(item_type))
+
+        response = self.post_endpoint("{0}/{1}".format(endpoint, approvalEndpoint), None, **{"return_none_on_404": True})
+
+        if response and response["status_code"] in [202]:
+            self.json_output["changed"] = True
+        else:
+            # Do a check to see if the version exists
+            if not response:
+                self.fail_json(msg="Unable to approve at {0}: Awaiting approval not found".format(endpoint))
+            elif "json" in response and "__all__" in response["json"]:
+                self.fail_json(msg="Unable to approve at {0}: {1}".format(endpoint, response["json"]["__all__"][0]))
+            elif "json" in response:
+                self.fail_json(msg="Unable to create {0}: {1}".format(endpoint, response["json"]))
+            else:
+                self.fail_json(msg="Unable to create {0}: {1}".format(endpoint, response["status_code"]))
+
+        if auto_exit:
+            self.exit_json(**self.json_output)
+        else:
+            last_data = response["json"]
+            return last_data
+
     def update_if_needed(self, existing_item, new_item, on_update=None, auto_exit=True, associations=None):
         # This will exit from the module on its own
         # If the method successfully updates an item and on_update param is defined,
