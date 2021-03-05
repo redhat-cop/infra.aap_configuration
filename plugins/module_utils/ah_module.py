@@ -556,11 +556,11 @@ class AHModule(AnsibleModule):
             self.exit_json(**self.json_output)
         else:
             if "json" in response and "__all__" in response["json"]:
-                self.fail_json(msg="1Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]["__all__"][0]))
+                self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]["__all__"][0]))
             elif "json" in response:
-                self.fail_json(msg="2Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]))
+                self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]))
             else:
-                self.fail_json(msg="3Unable to create {0} from {1}: {2}".format(item_type, path, response["status_code"]))
+                self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["status_code"]))
 
     def update_if_needed(self, existing_item, new_item, on_update=None, auto_exit=True, associations=None):
         # This will exit from the module on its own
