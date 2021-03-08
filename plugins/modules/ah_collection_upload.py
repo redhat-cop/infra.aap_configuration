@@ -32,7 +32,7 @@ extends_documentation_fragment: redhat_cop.ah_configuration.auth
 
 
 EXAMPLES = """
-- name: Create Tower Ping job template
+- name: Upload collection to automation hub
   ah_collection_upload:
     path: /var/tmp/collections/awx_awx-15.0.0.tar.gz
 
