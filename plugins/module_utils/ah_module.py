@@ -5,13 +5,17 @@ __metaclass__ = type
 from ansible.module_utils.basic import AnsibleModule, env_fallback
 from ansible.module_utils.urls import Request, SSLValidationError, ConnectionError
 from ansible.module_utils.six import string_types
-from ansible.module_utils.six import PY2
+from ansible.module_utils.six import PY2, PY3
 from ansible.module_utils.six.moves.urllib.parse import urlparse, urlencode
 from ansible.module_utils.six.moves.urllib.error import HTTPError
 from ansible.module_utils.six.moves.http_cookiejar import CookieJar
+from ansible.module_utils._text import to_bytes, to_native
 from socket import gethostbyname
 import re
 from json import loads, dumps
+import os
+import email.mime.multipart
+import email.mime.application
 
 
 class ItemNotDefined(Exception):
@@ -178,8 +182,10 @@ class AHModule(AnsibleModule):
             url = self.build_url(endpoint, query_params=kwargs.get("data"))
 
         data = None  # Important, if content type is not JSON, this should not be dict type
-        if headers.get("Content-Type", "") == "application/json":
+        if (headers.get("Content-Type", "") == "application/json"):
             data = dumps(kwargs.get("data", {}))
+        elif (kwargs.get("binary", False)):
+            data = kwargs.get("data", None)
 
         try:
             response = self.session.open(method, url.geturl(), headers=headers, validate_certs=self.verify_ssl, follow_redirects=True, data=data)
@@ -483,6 +489,78 @@ class AHModule(AnsibleModule):
         else:
             last_data = response["json"]
             return last_data
+
+    def prepare_multipart(self, filename):
+        mime = "application/x-gzip"
+        m = email.mime.multipart.MIMEMultipart('form-data')
+
+        main_type, sep, sub_type = mime.partition('/')
+
+        with open(to_bytes(filename, errors='surrogate_or_strict'), 'rb') as f:
+            part = email.mime.application.MIMEApplication(f.read())
+            del part['Content-Type']
+            part.add_header('Content-Type', '%s/%s' % (main_type, sub_type))
+
+        part.add_header('Content-Disposition', 'form-data')
+        del part['MIME-Version']
+        part.set_param(
+            'name',
+            'file',
+            header='Content-Disposition'
+        )
+        if filename:
+            part.set_param(
+                'filename',
+                to_native(os.path.basename(filename)),
+                header='Content-Disposition'
+            )
+
+        m.attach(part)
+
+        if PY3:
+            # Ensure headers are not split over multiple lines
+            # The HTTP policy also uses CRLF by default
+            b_data = m.as_bytes(policy=email.policy.HTTP)
+        else:
+            # Py2
+            # We cannot just call ``as_string`` since it provides no way
+            # to specify ``maxheaderlen``
+            fp = cStringIO()  # cStringIO seems to be required here
+            # Ensure headers are not split over multiple lines
+            g = email.generator.Generator(fp, maxheaderlen=0)
+            g.flatten(m)
+            # ``fix_eols`` switches from ``\n`` to ``\r\n``
+            b_data = email.utils.fix_eols(fp.getvalue())
+        del m
+
+        headers, sep, b_content = b_data.partition(b'\r\n\r\n')
+        del b_data
+
+        if PY3:
+            parser = email.parser.BytesHeaderParser().parsebytes
+        else:
+            # Py2
+            parser = email.parser.HeaderParser().parsestr
+
+        return (
+            parser(headers)['content-type'],  # Message converts to native strings
+            b_content
+        )
+
+    def upload(self, path, endpoint, auto_exit=True, item_type="unknown"):
+        ct, body = self.prepare_multipart(path)
+        response = self.make_request("POST", endpoint, **{"data": body, "headers": {"Content-Type": str(ct)}, "binary": True})
+        if response["status_code"] in [202]:
+            self.json_output["path"] = path
+            self.json_output["changed"] = True
+            self.exit_json(**self.json_output)
+        else:
+            if "json" in response and "__all__" in response["json"]:
+                self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]["__all__"][0]))
+            elif "json" in response:
+                self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]))
+            else:
+                self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["status_code"]))
 
     def update_if_needed(self, existing_item, new_item, on_update=None, auto_exit=True, associations=None):
         # This will exit from the module on its own
