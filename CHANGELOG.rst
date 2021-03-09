@@ -5,6 +5,14 @@ redhat_cop.tower_configuration Release Notes
 .. contents:: Topics
 
 
+v1.2.0
+======
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- removed awx.awx implicit dependency, it will now be required to manually install awx.awx or ansible.tower collection
+
 v1.1.0
 ======
 
