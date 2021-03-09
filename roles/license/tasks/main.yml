@@ -7,14 +7,14 @@
     fail_msg: "You must accept the EULA by passing in the param eula_accepted as true"
 
 - name: Install the tower license
-  awx.awx.tower_license:
+  tower_license:
     manifest:                       "{{ tower_license.manifest | mandatory }}"
     eula_accepted:                  "{{ tower_license.eula_accepted | mandatory }}"
-    tower_username:                 "{{ tower_username | default(omit) }}"
-    tower_password:                 "{{ tower_password | default(omit) }}"
-    tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
+    tower_username:                 "{{ tower_username | default(omit, true) }}"
+    tower_password:                 "{{ tower_password | default(omit, true) }}"
+    tower_oauthtoken:               "{{ tower_oauthtoken | default(omit, true) }}"
     tower_host:                     "{{ tower_hostname }}"
-    tower_config_file:              "{{ tower_config_file | default(omit) }}"
+    tower_config_file:              "{{ tower_config_file | default(omit, true) }}"
     validate_certs:                 "{{ tower_validate_certs | default('true') }}"
   no_log: "{{ tower_configuration_license_secure_logging }}"
   when: tower_license is defined

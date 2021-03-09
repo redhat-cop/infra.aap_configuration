@@ -1,18 +1,18 @@
 ---
 # Cancel Ad Hoc COmmands
 - name: Cancel Tower ad hoc command
-  awx.awx.tower_ad_hoc_command_cancel:
+  tower_ad_hoc_command_cancel:
     command_id:             "{{ __ad_hoc_command_cancel_item.id }}"
-    fail_if_not_running:    "{{ __ad_hoc_command_cancel_item.fail_if_not_running | default(omit) }}"
-    interval:               "{{ __ad_hoc_command_cancel_item.interval | default(omit) }}"
-    timeout:                "{{ __ad_hoc_command_cancel_item.timeout | default(omit) }}"
+    fail_if_not_running:    "{{ __ad_hoc_command_cancel_item.fail_if_not_running | default('false') }}"
+    interval:               "{{ __ad_hoc_command_cancel_item.interval | default(1) }}"
+    timeout:                "{{ __ad_hoc_command_cancel_item.timeout | default(omit, true) }}"
 
     # Role Standard Options
-    tower_username:         "{{ tower_username | default(omit) }}"
-    tower_password:         "{{ tower_password | default(omit) }}"
-    tower_oauthtoken:       "{{ tower_oauthtoken | default(omit) }}"
+    tower_username:         "{{ tower_username | default(omit, true) }}"
+    tower_password:         "{{ tower_password | default(omit, true) }}"
+    tower_oauthtoken:       "{{ tower_oauthtoken | default(omit, true) }}"
     tower_host:             "{{ tower_hostname }}"
-    tower_config_file:      "{{ tower_config_file | default(omit) }}"
+    tower_config_file:      "{{ tower_config_file | default(omit, true) }}"
     validate_certs:         "{{ tower_validate_certs | default('true') }}"
   loop: "{{ tower_ad_hoc_commands_cancel }}"
   loop_control:

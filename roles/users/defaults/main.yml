@@ -26,5 +26,5 @@ tower_user_accounts: []
 # set this variable to something false and there won't be a default password
 tower_user_default_password: "change_me"
 
-tower_configuration_users_secure_logging: "{{tower_configuration_secure_logging | default(false)}}"
+tower_configuration_users_secure_logging: "{{tower_configuration_secure_logging | default('false')}}"
 ...

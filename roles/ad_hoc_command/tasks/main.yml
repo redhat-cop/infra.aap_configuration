@@ -1,28 +1,28 @@
 ---
 # Run Ad Hoc Commands
 - name: Run Tower ad hoc command
-  awx.awx.tower_ad_hoc_command:
+  tower_ad_hoc_command:
     job_type:           "{{ __ad_hoc_command_item.job_type | default('run') }}"
     inventory:          "{{ __ad_hoc_command_item.inventory }}"
-    limit:              "{{ __ad_hoc_command_item.limit | default('') }}"
+    limit:              "{{ __ad_hoc_command_item.limit | default(omit, true) }}"
     credential:         "{{ __ad_hoc_command_item.credential }}"
     module_name:        "{{ __ad_hoc_command_item.module_name }}"
-    module_args:        "{{ __ad_hoc_command_item.module_args | default('') }}"
-    forks:              "{{ __ad_hoc_command_item.forks | default(0) }}"
-    verbosity:          "{{ __ad_hoc_command_item.verbosity | default(omit) }}"
-    extra_vars:         "{{ __ad_hoc_command_item.extra_vars | default(omit) }}"
+    module_args:        "{{ __ad_hoc_command_item.module_args | default(omit, true) }}"
+    forks:              "{{ __ad_hoc_command_item.forks | default(omit, true) }}"
+    verbosity:          "{{ __ad_hoc_command_item.verbosity | default(omit, true) }}"
+    extra_vars:         "{{ __ad_hoc_command_item.extra_vars | default(omit, true) }}"
     become_enabled:     "{{ __ad_hoc_command_item.become_enabled | default('false') }}"
     diff_mode:          "{{ __ad_hoc_command_item.diff_mode | default('false') }}"
     wait:               "{{ __ad_hoc_command_item.wait | default('false') }}"
     interval:           "{{ __ad_hoc_command_item.interval | default(1) }}"
-    timeout:            "{{ __ad_hoc_command_item.timeout | default(omit) }}"
+    timeout:            "{{ __ad_hoc_command_item.timeout | default(omit, true) }}"
 
     # Role Standard Options
-    tower_username:     "{{ tower_username | default(omit) }}"
-    tower_password:     "{{ tower_password | default(omit) }}"
-    tower_oauthtoken:   "{{ tower_oauthtoken | default(omit) }}"
+    tower_username:     "{{ tower_username | default(omit, true) }}"
+    tower_password:     "{{ tower_password | default(omit, true) }}"
+    tower_oauthtoken:   "{{ tower_oauthtoken | default(omit, true) }}"
     tower_host:         "{{ tower_hostname }}"
-    tower_config_file:  "{{ tower_config_file | default(omit) }}"
+    tower_config_file:  "{{ tower_config_file | default(omit, true) }}"
     validate_certs:     "{{ tower_validate_certs | default('true') }}"
   loop: "{{ tower_ad_hoc_commands }}"
   loop_control:

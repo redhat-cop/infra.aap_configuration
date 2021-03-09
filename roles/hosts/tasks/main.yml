@@ -1,19 +1,19 @@
 ---
 - name: Add tower host
-  awx.awx.tower_host:
+  tower_host:
     name:              "{{ tower_hosts_item.name | mandatory }}"
-    new_name:          "{{ tower_hosts_item.new_name | default(omit) }}"
-    description:       "{{ tower_hosts_item.description | default('') }}"
+    new_name:          "{{ tower_hosts_item.new_name | default(omit, true) }}"
+    description:       "{{ tower_hosts_item.description | default(omit, true) }}"
     inventory:         "{{ tower_hosts_item.inventory | mandatory }}"
     enabled:           "{{ tower_hosts_item.enabled | default(true) }}"
     state:             "{{ tower_hosts_item.state | default(tower_state | default('present')) }}"
-    variables:         "{{ tower_hosts_item.variables | default(omit) }}"
+    variables:         "{{ tower_hosts_item.variables | default(omit, true) }}"
     tower_host:        "{{ tower_hostname }}"
-    tower_username:    "{{ tower_username | default(omit) }}"
-    tower_password:    "{{ tower_password | default(omit) }}"
-    tower_oauthtoken:  "{{ tower_oauthtoken | default(omit) }}"
-    tower_config_file: "{{ tower_config_file | default(omit) }}"
-    tower_verify_ssl:  "{{ tower_verify_ssl | default(false) }}"
+    tower_username:    "{{ tower_username | default(omit, true) }}"
+    tower_password:    "{{ tower_password | default(omit, true) }}"
+    tower_oauthtoken:  "{{ tower_oauthtoken | default(omit, true) }}"
+    tower_config_file: "{{ tower_config_file | default(omit, true) }}"
+    validate_certs:    "{{ tower_verify_ssl | default(true) }}"
   loop: "{{ tower_hosts }}"
   loop_control:
     loop_var: tower_hosts_item

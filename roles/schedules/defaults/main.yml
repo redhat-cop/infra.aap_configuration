@@ -30,5 +30,5 @@ tower_schedules:
 #  enabled: true  # optional, boolean
 #  state: present  # optional, choices: present, absent
 
-tower_configuration_schedules_secure_logging: "{{tower_configuration_secure_logging | default(false)}}"
+tower_configuration_schedules_secure_logging: "{{tower_configuration_secure_logging | default('false')}}"
 ...

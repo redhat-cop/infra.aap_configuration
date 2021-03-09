@@ -1,6 +1,0 @@
----
-major_changes:
-  - Added the following roles - ad_hoc_command, ad_hoc_command_cancel, inventory_source_update, job_launch, job_cancel, project_update, workflow_launch
-minor_changes:
-  - updated various Readmes to fix typos and missing information.
-...

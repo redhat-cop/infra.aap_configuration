@@ -1,17 +1,17 @@
 ---
 - name: Create Ansible Tower Team
-  awx.awx.tower_team:
+  tower_team:
     name:                "{{ team.name | mandatory }}"
-    new_name:            "{{ team.new_name | default(omit) }}"
-    description:         "{{ team.description | default(omit) }}"
+    new_name:            "{{ team.new_name | default(omit, true) }}"
+    description:         "{{ team.description | default(omit, true) }}"
     organization:        "{{ team.organization.name | default( team.organization ) | mandatory }}"
     state:               "{{ team.state | default(tower_state | default('present')) }}"
-    tower_config_file:   "{{ team.tower_config_file | default(omit) }}"
-    tower_host:          "{{ tower_hostname | default(omit) }}"
-    tower_password:      "{{ tower_password | default(omit) }}"
-    tower_username:      "{{ tower_username | default(omit) }}"
-    tower_oauthtoken:    "{{ tower_oauthtoken | default(omit) }}"
-    validate_certs:      "{{ tower_validate_certs | default(omit) }}"
+    tower_config_file:   "{{ team.tower_config_file | default(omit, true) }}"
+    tower_host:          "{{ tower_hostname | default(omit, true) }}"
+    tower_password:      "{{ tower_password | default(omit, true) }}"
+    tower_username:      "{{ tower_username | default(omit, true) }}"
+    tower_oauthtoken:    "{{ tower_oauthtoken | default(omit, true) }}"
+    validate_certs:      "{{ tower_validate_certs | default('true') }}"
   loop: "{{ tower_teams }}"
   loop_control:
     loop_var: team

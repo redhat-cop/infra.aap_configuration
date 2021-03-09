@@ -1,17 +1,17 @@
 ---
 - name: Add Tower Credential Input Sources
-  awx.awx.tower_credential_input_source:
+  tower_credential_input_source:
     target_credential:              "{{ cred_input_src_item.target_credential | mandatory }}"
     input_field_name:               "{{ cred_input_src_item.input_field_name | mandatory }}"
-    source_credential:              "{{ cred_input_src_item.source_credential | default(omit) }}"
-    description:                    "{{ cred_input_src_item.description | default('') }}"
-    metadata:                       "{{ cred_input_src_item.metadata | default(omit) }}"
+    source_credential:              "{{ cred_input_src_item.source_credential | default(omit, true) }}"
+    description:                    "{{ cred_input_src_item.description | default(omit, true) }}"
+    metadata:                       "{{ cred_input_src_item.metadata | default(omit, true) }}"
     state:                          "{{ cred_input_src_item.state | default(tower_state | default('present')) }}"
-    tower_username:                 "{{ tower_username | default(omit) }}"
-    tower_password:                 "{{ tower_password | default(omit) }}"
-    tower_oauthtoken:               "{{ tower_oauthtoken | default(omit) }}"
+    tower_username:                 "{{ tower_username | default(omit, true) }}"
+    tower_password:                 "{{ tower_password | default(omit, true) }}"
+    tower_oauthtoken:               "{{ tower_oauthtoken | default(omit, true) }}"
     tower_host:                     "{{ tower_hostname }}"
-    tower_config_file:              "{{ tower_config_file | default(omit) }}"
+    tower_config_file:              "{{ tower_config_file | default(omit, true) }}"
     validate_certs:                 "{{ tower_validate_certs | default('true') }}"
   loop: "{{ tower_credential_input_sources }}"
   loop_control:
