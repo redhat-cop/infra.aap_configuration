@@ -1,4 +1,0 @@
----
-breaking_changes:
-  - removed awx.awx implicit dependency, it will now be required to manually install awx.awx or ansible.tower collection
-...
