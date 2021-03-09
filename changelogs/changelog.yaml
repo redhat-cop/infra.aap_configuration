@@ -107,3 +107,11 @@ releases:
     - update_roles.yml
     - validate_certs_readme_fix.yml
     release_date: '2021-02-18'
+  1.2.0:
+    changes:
+      breaking_changes:
+      - removed awx.awx implicit dependency, it will now be required to manually install
+        awx.awx or ansible.tower collection
+    fragments:
+    - remove_dependency.yml
+    release_date: '2021-03-09'
