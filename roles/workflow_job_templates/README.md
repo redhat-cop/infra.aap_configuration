@@ -37,6 +37,7 @@ workflow_job_templates_secure_logging defaults to the value of tower_genie_secur
 |`new_name`|""|str|no|Setting this option will change the existing name (looked up via the name field).|
 |`description`|""|no|str|Description to use for the job template.|
 |`organization`|""|""|no|list|Organization the workflow job template exists in. Used to lookup the object, cannot be changed with this module|
+|`execution_environment`|""|""|no|str|Execution environment to use for the workflow|
 |`ask_inventory_on_launch`|""|no|bool|Prompt user for inventory on launch.|
 |`ask_limit_on_launch`|""|no|bool|Prompt user for a limit on launch.|
 |`ask_scm_branch_on_launch`|""|no|bool|Prompt user for scm branch on launch.|

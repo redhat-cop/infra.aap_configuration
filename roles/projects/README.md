@@ -37,6 +37,8 @@ tower_configuration_projects_secure_logging defaults to the value of tower_confi
 |`organization`|`False`|yes|Name of organization for project.|
 |`scm_type`|""|no|Type of SCM resource.|
 |`scm_url`|""|no|URL of SCM resource.|
+|`execution_environment`|""|no|Execution Environment to use for project updates.|
+|`default_environment`|""|no|Default Execution Environment to use for jobs relating to the project.|
 |`local_path`|""|no|The server playbook directory for manual projects.|
 |`scm_branch`|""|no|The branch to use for the SCM resource.|
 |`scm_refspec`|""|no|The refspec to use for the SCM resource.|
