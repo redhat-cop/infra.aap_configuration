@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Fixed an issue where certain roles were not taking in tower_validate_certs
+...
