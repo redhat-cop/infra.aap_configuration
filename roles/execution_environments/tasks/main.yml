@@ -1,0 +1,25 @@
+---
+# Create Job Template
+- name: Add Tower Execution Environments
+  tower_execution_environment:
+    name:                           "{{ __execution_environments_item.name | mandatory }}"
+    description:                    "{{ __execution_environments_item.description | default(omit, true) }}"
+    image:                          "{{ __execution_environments_item.image | mandatory }}"
+    organization:                   "{{ __execution_environments_item.organization.name | default( __execution_environments_item.organization | default(omit, true)) }}"
+    credential:                     "{{ __execution_environments_item.credential | default(omit, true) }}"
+    pull:                           "{{ __execution_environments_item.pull | default(omit, true) }}"
+
+    # Role specific options
+    state:                          "{{ __execution_environments_item.state | default(tower_state | default('present')) }}"
+    tower_username:                 "{{ tower_username | default(omit, true) }}"
+    tower_password:                 "{{ tower_password | default(omit, true) }}"
+    tower_oauthtoken:               "{{ tower_oauthtoken | default(omit, true) }}"
+    tower_host:                     "{{ tower_hostname | default(omit, true) }}"
+    tower_config_file:              "{{ tower_config_file | default(omit, true) }}"
+    validate_certs:                 "{{ tower_validate_certs | default('true') }}"
+  loop: "{{ tower_execution_environments }}"
+  loop_control:
+    loop_var: "__execution_environments_item"
+  no_log: "{{ tower_configuration_execution_environments_secure_logging }}"
+  when: tower_execution_environments is defined
+...
