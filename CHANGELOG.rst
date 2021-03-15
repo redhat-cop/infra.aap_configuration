@@ -5,6 +5,14 @@ redhat_cop.tower_configuration Release Notes
 .. contents:: Topics
 
 
+v1.3.0
+======
+
+Bugfixes
+--------
+
+- Fixed an issue where certain roles were not taking in tower_validate_certs
+
 v1.2.0
 ======
 
