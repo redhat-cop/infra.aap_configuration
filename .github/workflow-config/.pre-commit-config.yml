@@ -37,7 +37,7 @@ repos:
     hooks:
       - id: black
         name: black
-        language_version: python3.6
+        language_version: python3.9
         entry: black
         args: [--config=.github/workflow-config/black.cfg, --check, --diff]
         types: [python]
