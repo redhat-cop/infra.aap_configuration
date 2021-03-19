@@ -9,7 +9,10 @@ from ansible.module_utils.six import PY2, PY3
 from ansible.module_utils.six.moves.urllib.parse import urlparse, urlencode
 from ansible.module_utils.six.moves.urllib.error import HTTPError
 from ansible.module_utils.six.moves.http_cookiejar import CookieJar
-from ansible.module_utils._text import to_bytes, to_native
+from ansible.galaxy.collection import build_collection
+from ansible.module_utils._text import to_bytes, to_native, to_text
+from ansible.module_utils.compat.importlib import import_module
+import os.path
 from socket import gethostbyname
 import re
 from json import loads, dumps
@@ -54,9 +57,10 @@ class AHModule(AnsibleModule):
     error_callback = None
     warn_callback = None
 
-    def __init__(self, argument_spec=None, direct_params=None, error_callback=None, warn_callback=None, **kwargs):
+    def __init__(self, argument_spec=None, direct_params=None, error_callback=None, warn_callback=None, require_auth=True, **kwargs):
         full_argspec = {}
-        full_argspec.update(AHModule.AUTH_ARGSPEC)
+        if require_auth:
+            full_argspec.update(AHModule.AUTH_ARGSPEC)
         full_argspec.update(argument_spec)
         kwargs["supports_check_mode"] = True
 
@@ -747,6 +751,38 @@ class AHModule(AnsibleModule):
                     self._encrypted_changed_warning(field, old, warning=warning)
                     return True
         return False
+
+    def execute_build(self, path, force, output_path):
+        path = self._resolve_path(path)
+        output_path = self._resolve_path(output_path)
+        b_output_path = to_bytes(output_path, errors='surrogate_or_strict')
+
+        if not os.path.exists(b_output_path):
+            os.makedirs(b_output_path)
+        elif os.path.isfile(b_output_path):
+            self.fail_json(msg="the output collection directory {0} is a file - aborting".format(to_native(output_path)))
+
+        try:
+            out = build_collection(
+                to_text(path, errors='surrogate_or_strict'),
+                to_text(output_path, errors='surrogate_or_strict'),
+                force,
+            )
+            self.json_output["path"] = out
+            self.json_output["changed"] = True
+            self.exit_json(**self.json_output)
+        except Exception as e:
+            err = "{0}".format(e)
+            if "You can use --force to re-create the collection artifact." in err:
+                self.json_output["path"] = err[10:-75]
+                self.json_output["changed"] = False
+                self.exit_json(**self.json_output)
+            else:
+                self.fail_json(msg=err)
+
+    @staticmethod
+    def _resolve_path(path):
+        return os.path.abspath(os.path.expanduser(os.path.expandvars(path)))
 
     @staticmethod
     def has_encrypted_values(obj):
