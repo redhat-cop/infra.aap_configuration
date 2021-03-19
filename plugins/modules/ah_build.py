@@ -24,8 +24,9 @@ options:
     path:
       description:
         - Path to the collection(s) directory to build. This should be the directory that contains the galaxy.yml file. The default is the current working directory.
-      required: True
+      required: False
       type: str
+      default: "."
     force:
       description:
         - Whether to force the build to take place.
@@ -56,7 +57,7 @@ from ..module_utils.ah_module import AHModule
 def main():
     # Any additional arguments that are not fields of the item can be added here
     argument_spec = dict(
-        path=dict(required=True),
+        path=dict(required=False, default="."),
         force=dict(type="bool"),
         output_path=dict(required=False, default=".")
     )
