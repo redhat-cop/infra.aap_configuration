@@ -20,8 +20,6 @@ short_description: Build a collection tar.
 description:
     - Build a collection tar ready for Automation Hub. See
       U(https://www.ansible.com/) for an overview.
-requirements:
-  - "ansible-galaxy >= 2.10.0"
 options:
     path:
       description:

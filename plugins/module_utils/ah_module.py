@@ -768,7 +768,8 @@ class AHModule(AnsibleModule):
                 to_text(output_path, errors='surrogate_or_strict'),
                 force,
             )
-            self.json_output["path"] = out
+            # path output is correct in ansible-galaxy >= 2.10.0 but in earlier versions the value is not returned so we can just return the output_path
+            self.json_output["path"] = out or output_path
             self.json_output["changed"] = True
             self.exit_json(**self.json_output)
         except Exception as e:
