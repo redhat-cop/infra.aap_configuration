@@ -495,7 +495,7 @@ class AHModule(AnsibleModule):
         approvalEndpoint = "move/staging/published"
 
         if not endpoint:
-            self.fail_json(msg="Unable to approve due to missing endpoint".format(item_type))
+            self.fail_json(msg="Unable to approve due to missing endpoint")
 
         response = self.post_endpoint("{0}/{1}".format(endpoint, approvalEndpoint), None, **{"return_none_on_404": True})
 
@@ -545,7 +545,8 @@ class AHModule(AnsibleModule):
             # Py2
             # We cannot just call ``as_string`` since it provides no way
             # to specify ``maxheaderlen``
-            fp = cStringIO()  # cStringIO seems to be required here
+            # cStringIO seems to be required here
+            fp = cStringIO()  # noqa: F821
             # Ensure headers are not split over multiple lines
             g = email.generator.Generator(fp, maxheaderlen=0)
             g.flatten(m)
