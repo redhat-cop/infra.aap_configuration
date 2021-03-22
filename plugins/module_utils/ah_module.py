@@ -182,9 +182,9 @@ class AHModule(AnsibleModule):
             url = self.build_url(endpoint, query_params=kwargs.get("data"))
 
         data = None  # Important, if content type is not JSON, this should not be dict type
-        if (headers.get("Content-Type", "") == "application/json"):
+        if headers.get("Content-Type", "") == "application/json":
             data = dumps(kwargs.get("data", {}))
-        elif (kwargs.get("binary", False)):
+        elif kwargs.get("binary", False):
             data = kwargs.get("data", None)
 
         try:
@@ -490,7 +490,6 @@ class AHModule(AnsibleModule):
             last_data = response["json"]
             return last_data
 
-
     def approve(self, endpoint, auto_exit=True):
 
         approvalEndpoint = "move/staging/published"
@@ -521,28 +520,20 @@ class AHModule(AnsibleModule):
 
     def prepare_multipart(self, filename):
         mime = "application/x-gzip"
-        m = email.mime.multipart.MIMEMultipart('form-data')
+        m = email.mime.multipart.MIMEMultipart("form-data")
 
-        main_type, sep, sub_type = mime.partition('/')
+        main_type, sep, sub_type = mime.partition("/")
 
-        with open(to_bytes(filename, errors='surrogate_or_strict'), 'rb') as f:
+        with open(to_bytes(filename, errors="surrogate_or_strict"), "rb") as f:
             part = email.mime.application.MIMEApplication(f.read())
-            del part['Content-Type']
-            part.add_header('Content-Type', '%s/%s' % (main_type, sub_type))
+            del part["Content-Type"]
+            part.add_header("Content-Type", "%s/%s" % (main_type, sub_type))
 
-        part.add_header('Content-Disposition', 'form-data')
-        del part['MIME-Version']
-        part.set_param(
-            'name',
-            'file',
-            header='Content-Disposition'
-        )
+        part.add_header("Content-Disposition", "form-data")
+        del part["MIME-Version"]
+        part.set_param("name", "file", header="Content-Disposition")
         if filename:
-            part.set_param(
-                'filename',
-                to_native(os.path.basename(filename)),
-                header='Content-Disposition'
-            )
+            part.set_param("filename", to_native(os.path.basename(filename)), header="Content-Disposition")
 
         m.attach(part)
 
@@ -562,7 +553,7 @@ class AHModule(AnsibleModule):
             b_data = email.utils.fix_eols(fp.getvalue())
         del m
 
-        headers, sep, b_content = b_data.partition(b'\r\n\r\n')
+        headers, sep, b_content = b_data.partition(b"\r\n\r\n")
         del b_data
 
         if PY3:
@@ -571,10 +562,7 @@ class AHModule(AnsibleModule):
             # Py2
             parser = email.parser.HeaderParser().parsestr
 
-        return (
-            parser(headers)['content-type'],  # Message converts to native strings
-            b_content
-        )
+        return (parser(headers)["content-type"], b_content)  # Message converts to native strings
 
     def upload(self, path, endpoint, auto_exit=True, item_type="unknown"):
         ct, body = self.prepare_multipart(path)
