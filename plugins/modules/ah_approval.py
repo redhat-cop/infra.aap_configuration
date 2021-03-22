@@ -52,6 +52,7 @@ EXAMPLES = """
 
 from ..module_utils.ah_module import AHModule
 
+
 def main():
     # Any additional arguments that are not fields of the item can be added here
     argument_spec = dict(
@@ -68,7 +69,7 @@ def main():
     name = module.params.get("name")
     version = module.params.get("version")
 
-    endpoint="collections/{0}/{1}/versions/{2}".format(namespace, name, version)
+    endpoint = "collections/{0}/{1}/versions/{2}".format(namespace, name, version)
 
     # Attempt to look up an existing item based on the provided data
     existing_item = module.get_endpoint(endpoint, **{"return_none_on_404": True})
@@ -80,6 +81,7 @@ def main():
     module.approve(
         endpoint=endpoint,
     )
+
 
 if __name__ == "__main__":
     main()
