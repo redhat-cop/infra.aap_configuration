@@ -1,0 +1,9 @@
+---
+breaking_changes:
+  - Publish role - repo_name variable renamed to collection_name.
+
+major_changes:
+  - Publish role - rewritten to use internal modules
+  - Publish role - Ability to approve role added
+
+...
