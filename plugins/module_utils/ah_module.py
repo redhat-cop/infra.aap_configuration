@@ -11,7 +11,6 @@ from ansible.module_utils.six.moves.urllib.error import HTTPError
 from ansible.module_utils.six.moves.http_cookiejar import CookieJar
 from ansible.galaxy.collection import build_collection
 from ansible.module_utils._text import to_bytes, to_native, to_text
-from ansible.module_utils.compat.importlib import import_module
 import os.path
 from socket import gethostbyname
 import re
@@ -755,7 +754,7 @@ class AHModule(AnsibleModule):
     def execute_build(self, path, force, output_path):
         path = self._resolve_path(path)
         output_path = self._resolve_path(output_path)
-        b_output_path = to_bytes(output_path, errors='surrogate_or_strict')
+        b_output_path = to_bytes(output_path, errors="surrogate_or_strict")
 
         if not os.path.exists(b_output_path):
             os.makedirs(b_output_path)
@@ -764,8 +763,8 @@ class AHModule(AnsibleModule):
 
         try:
             out = build_collection(
-                to_text(path, errors='surrogate_or_strict'),
-                to_text(output_path, errors='surrogate_or_strict'),
+                to_text(path, errors="surrogate_or_strict"),
+                to_text(output_path, errors="surrogate_or_strict"),
                 force,
             )
             # path output is correct in ansible-galaxy >= 2.10.0 but in earlier versions the value is not returned so we can just return the output_path

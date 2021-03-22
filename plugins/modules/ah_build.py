@@ -23,7 +23,9 @@ description:
 options:
     path:
       description:
-        - Path to the collection(s) directory to build. This should be the directory that contains the galaxy.yml file. The default is the current working directory.
+        - Path to the collection(s) directory to build.
+          This should be the directory that contains the galaxy.yml file.
+          The default is the current working directory.
       required: False
       type: str
       default: "."
