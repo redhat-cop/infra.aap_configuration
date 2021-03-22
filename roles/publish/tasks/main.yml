@@ -37,14 +37,24 @@
   no_log: "{{ ah_configuration_publish_secure_logging }}"
   when: ah_collection_list is not defined
 
+- name: Find if variable contains file or dir
+  stat:
+    path: "{{ __ah_build_result_item.path }}"
+  register: ah_build_stat_results
+  no_log: "{{ ah_configuration_publish_secure_logging }}"
+  loop: "{{ ah_build_results.results }}"
+  loop_control:
+    loop_var: "__ah_build_result_item"
+  when: ah_collection_list is not defined
+
 # __ah_build_result_item.results.path will be the output_path in ansible<2.10 but the actual built path in ansible>=2.10
 - name: Find all relevant built collection files
   find:
-    paths: "{{ __ah_build_result_item.path }}"
-    patterns: '*.tar.gz'
+    paths: "{{ (__ah_build_result_item.stat.isdir) | ternary(__ah_build_result_item.stat.path, (__ah_build_result_item.stat.path | dirname)) }}"
+    patterns: "{{ (__ah_build_result_item.stat.isdir) | ternary('*.tar.gz', (__ah_build_result_item.stat.path | basename)) }}"
   register: __ah_collections_find_results
   no_log: "{{ ah_configuration_publish_secure_logging }}"
-  loop: "{{ ah_build_results.results }}"
+  loop: "{{ ah_build_stat_results.results }}"
   loop_control:
     loop_var: "__ah_build_result_item"
   when: ah_collection_list is not defined
@@ -54,12 +64,6 @@
     ah_collection_list: "{{ __ah_collections_find_results.results | map(attribute='files') | flatten | map(attribute='path') | flatten }}"
   no_log: "{{ ah_configuration_publish_secure_logging }}"
   when: ah_collection_list is not defined
-
-- debug:
-    msg: "{{ (__ah_collection_file | basename ).split('-')[2:] | join('-') | splitext | first | splitext | first }}"
-  loop: "{{ ah_collection_list }}"
-  loop_control:
-    loop_var: "__ah_collection_file"
 
 - name: Publish Collections
   redhat_cop.ah_configuration.ah_collection_upload:
