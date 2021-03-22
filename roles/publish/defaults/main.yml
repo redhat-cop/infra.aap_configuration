@@ -10,16 +10,16 @@
 
 # The following two lists are mutally exclusive, you need to provide at least one of them, and ah_collections will override the collection list.
 # A list of paths to collection tarballs to publish if you are not cloning from a git and building them.
-ah_collection_list: []
+# ah_collection_list: []
 # a list of dictionaries describing collections to publish
-ah_collections: []
+# ah_collections: []
 # possible fields:
-# - repo_name:  "name of repo, normally the last part before the / in a url"  # mandatory
-#   git_url: "url to git repo."  # mandatory
+# - collection_name:  "name of collection, normally the last part before the / in a git url"  # mandatory
+#   git_url: "url to git repo."  # mandatory when type=git
 
-# The ansible configuration file path to use when publishing to a galaxy or Automation hub, this can be generated using the ansible_config role, or provided.
 ah_configuration_working_dir: "/var/tmp"
-ansible_config_path: "{{ ah_configuration_working_dir }}/ansible.cfg"
+
+ah_auto_approve: false
 
 ah_configuration_publish_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
 ...
