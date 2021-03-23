@@ -5,6 +5,48 @@ redhat_cop.tower_configuration Release Notes
 .. contents:: Topics
 
 
+v1.3.0
+======
+
+Bugfixes
+--------
+
+- Fixed an issue where certain roles were not taking in tower_validate_certs
+
+v1.2.0
+======
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- removed awx.awx implicit dependency, it will now be required to manually install awx.awx or ansible.tower collection
+
+v1.1.0
+======
+
+Major Changes
+-------------
+
+- Added the following roles - ad_hoc_command, ad_hoc_command_cancel, inventory_source_update, job_launch, job_cancel, project_update, workflow_launch
+- Updated collection to use and comply with ansible-lint v5
+
+Minor Changes
+-------------
+
+- Fixed default filters to use true when neccessary and changed a few defaults to omit rather then a value or empty string.
+- updated various Readmes to fix typos and missing information.
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Removed kind from to credentials role. This will be depreciated in a few months. Kind arguments are replaced by the credential_type and inputs fields.
+- Updated to allow use of either awx.awx or ansible.tower
+
+Bugfixes
+--------
+
+- Corrected README for tower_validate_certs variable defaults on all roles
+
 v1.0.2
 ======
 

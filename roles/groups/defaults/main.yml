@@ -21,5 +21,5 @@ tower_groups: []
 #  children: []  # optional, list of groups in the group
 #  state: present  # optional, choices: present, absent
 
-tower_configuration_group_secure_logging: "{{tower_configuration_secure_logging | default(false)}}"
+tower_configuration_group_secure_logging: "{{tower_configuration_secure_logging | default('false')}}"
 ...

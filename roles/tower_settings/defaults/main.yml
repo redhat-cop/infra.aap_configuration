@@ -18,5 +18,5 @@ tower_settings: []
 # - name: "SETTING_NAME"
 #  value: SETTING_VALUE
 
-tower_configuration_settings_secure_logging: "{{tower_configuration_secure_logging | default(false)}}"
+tower_configuration_settings_secure_logging: "{{tower_configuration_secure_logging | default('false')}}"
 ...

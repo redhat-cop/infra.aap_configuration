@@ -22,5 +22,5 @@ tower_applications: []
 #  skip_authorization: false  # optional, boolean
 #  state: present  # optional, choices: absent, present
 
-tower_configuration_applications_secure_logging: "{{tower_configuration_secure_logging | default(false)}}"
+tower_configuration_applications_secure_logging: "{{tower_configuration_secure_logging | default('false')}}"
 ...

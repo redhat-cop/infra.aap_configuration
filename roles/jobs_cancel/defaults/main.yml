@@ -10,5 +10,5 @@
 
 # These are the default variables specific to the **** role
 
-tower_configuration_jobs_cancel_secure_logging: "{{tower_configuration_secure_logging | default(false)}}"
+tower_configuration_jobs_cancel_secure_logging: "{{tower_configuration_secure_logging | default('false')}}"
 ...

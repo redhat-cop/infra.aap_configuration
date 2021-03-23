@@ -13,6 +13,16 @@ tower_projects:
   scm_update_on_launch: false
   scm_update_cache_timeout: 0
   allow_override: false
+  credential:
+    credential_type:
+      kind: scm
+      name: Source Control
+      type: credential_type
+    name: AWX-Collection-tests-tower_workflow_job_template-scm-cred
+    organization:
+      name: Default
+      type: organization
+    type: credential
   custom_virtualenv:
   organization:
     name: Satellite
@@ -43,6 +53,7 @@ tower_projects:
   scm_clean: false
   scm_delete_on_update: false
   timeout: 0
+  wait: true
   scm_update_on_launch: false
   scm_update_cache_timeout: 0
   allow_override: false
