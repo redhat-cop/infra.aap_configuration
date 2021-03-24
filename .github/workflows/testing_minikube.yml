@@ -40,7 +40,7 @@ jobs:
           command: minikube service awx-service --url
 
       - name: Set service url
-        run: echo '::set-output name=SERVICEURL::$(minikube service awx-service --url")'
+        run: echo '::set-output name=SERVICEURL::$(minikube service awx-service --url)'
         id: service-url
 
       - name: Get service url
