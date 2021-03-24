@@ -74,14 +74,14 @@ jobs:
       - name: "Wait for awx to be alive"
         uses: nev7n/wait_for_response@v1
         with:
-          url: 'http://awx.redhat_cop.com:80/api/v2/ping'
+          url: '${{ steps.service-url.outputs.SERVICEURL }}/api/v2/ping'
           responseCode: 200
           timeout: 300000  # Wait max 5 mins for response.
           interval: 3000
 
       - name: "Perform playbook tests"
-        run: ansible-playbook playbooks/configure_tower.yml -e tower_hostname=http://awx.redhat_cop.com:80 -e tower_username=admin -e tower_password=${{ steps.service-password.outputs.SERVICEPASSWORD }}
+        run: ansible-playbook playbooks/configure_tower.yml -e tower_hostname=${{ steps.service-url.outputs.SERVICEURL }} -e tower_username=admin -e tower_password=${{ steps.service-password.outputs.SERVICEPASSWORD }}
 
       - name: "Perform export model playbook tests"
-        run: ansible-playbook playbooks/configure_tower_export_model.yml -e tower_hostname=http://awx.redhat_cop.com:80 -e tower_username=admin -e tower_password=${{ steps.service-password.outputs.SERVICEPASSWORD }}
+        run: ansible-playbook playbooks/configure_tower_export_model.yml -e tower_hostname=${{ steps.service-url.outputs.SERVICEURL }} -e tower_username=admin -e tower_password=${{ steps.service-password.outputs.SERVICEPASSWORD }}
 ...

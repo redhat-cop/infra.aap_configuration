@@ -11,6 +11,18 @@
   # tower_username: admin
   # tower_password: changeme
   pre_tasks:
+    - name: Create variable from command
+      command: "minikube service awx-service --url"
+      register: command_output
+
+    - debug: 
+        var: command_output.stdout
+
+    - name: Set Facts
+      set_fact:
+        tower_hostname: "{{ command_output.stdout }}"
+        tower_password: password
+
     - name: Include vars from tower_configs directory
       include_vars:
         dir: ./tower_configs
