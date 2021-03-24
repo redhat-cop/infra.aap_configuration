@@ -30,7 +30,7 @@ jobs:
         run: minikube kubectl get nodes
 
       - name: Deploy AWX
-        run: minikube kubectl apply -f .github/workflow-config/awx_def.yml
+        run: minikube kubectl apply -- -f .github/workflow-config/awx_def.yml
 
       - name: Check service URL
         run: minikube service awx-service --url
