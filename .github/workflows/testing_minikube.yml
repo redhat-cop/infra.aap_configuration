@@ -35,7 +35,7 @@ jobs:
       - name: Wait / Sleep
         uses: jakejarvis/wait-action@v0.1.0
         with:
-          time: '20s'
+          time: '60s'
 
       - name: Check service list
         run: minikube service list
