@@ -1,0 +1,28 @@
+name: Run Test Playbooks
+
+on: [push, pull_request]
+
+jobs:
+  Integration-test:
+    name: Example Minikube-Kubernetes Cluster interaction
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Minikube
+        uses: manusa/actions-setup-minikube@v2.3.1
+        with:
+          minikube version: 'v1.18.1'
+          kubernetes version: 'v1.20.5'
+      - name: Interact with the cluster
+        run: kubectl get nodes
+      - name: Start AWX operator
+        run: kubectl -- apply -f https://raw.githubusercontent.com/ansible/awx-operator/devel/deploy/awx-operator.yaml
+      - name: minikube kubectl get pods
+        run: kubectl get nodes
+      - name: Deploy AWX
+        run: kubectl apply -- -f myawx.yml
+      - name: Deploy AWX
+        run: minikube service awx-service --url
+      - name: Deploy AWX
+        run: minikube kubectl -- get secret awx-admin-password -o jsonpath='{.data.password}' | base64 --decode
