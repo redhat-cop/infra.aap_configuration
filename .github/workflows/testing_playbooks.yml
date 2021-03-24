@@ -1,7 +1,7 @@
 ---
 name: Run Test Playbooks
 
-on: [never]
+on: [gollum]
 
 jobs:
   Integration-test:

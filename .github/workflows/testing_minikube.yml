@@ -32,16 +32,15 @@ jobs:
       - name: Deploy AWX
         run: minikube kubectl apply -- -f .github/workflow-config/awx_def.yml
 
-      - name: Wait / Sleep
-        uses: jakejarvis/wait-action@v0.1.0
+      - name: Check service URL
+        uses: nick-invision/retry@v2
         with:
-          time: '60s'
+          timeout_minutes: 10
+          retry_wait_seconds: 30
+          command: minikube service awx-service --url
 
       - name: Check service list
         run: minikube service list
-
-      - name: Check service URL
-        run: minikube service awx-service --url
 
       - name: Get password
         run: minikube kubectl -- get secret awx-admin-password -o jsonpath='{.data.password}' | base64 --decode
