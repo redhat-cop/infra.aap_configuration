@@ -32,6 +32,14 @@ jobs:
       - name: Deploy AWX
         run: minikube kubectl apply -- -f .github/workflow-config/awx_def.yml
 
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '20s'
+
+      - name: Check service list
+        run: minikube service list
+
       - name: Check service URL
         run: minikube service awx-service --url
 
