@@ -2,17 +2,7 @@ apiVersion: awx.ansible.com/v1beta1
 kind: AWX
 metadata:
   name: awx
-  labels:
-    app: awx
 spec:
   tower_ingress_type: Ingress
   tower_admin_password_secret: password
-spec:
-  type: NodePort
-  ports:
-  - port: 80
-    targetPort: 80
-    nodePort: 80
-    protocol: TCP
-  selector:
-    app: awx
+  tower_hostname: awx.redhat_cop.com
