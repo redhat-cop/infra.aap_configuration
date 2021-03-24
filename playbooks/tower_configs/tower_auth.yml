@@ -3,4 +3,5 @@
 tower_hostname: ansible-tower-web-svc-test-project.example.com
 tower_username: admin
 tower_password: changeme
+validate_certs: false
 ...
