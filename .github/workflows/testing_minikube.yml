@@ -1,4 +1,4 @@
-name: Run Test Playbooks
+name: Run Test Playbooks Minikube
 
 on: [push, pull_request]
 
@@ -14,15 +14,26 @@ jobs:
         with:
           minikube version: 'v1.18.1'
           kubernetes version: 'v1.20.5'
+
       - name: Interact with the cluster
         run: kubectl get nodes
+
       - name: Start AWX operator
         run: kubectl -- apply -f https://raw.githubusercontent.com/ansible/awx-operator/devel/deploy/awx-operator.yaml
+
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '20s'
+
       - name: minikube kubectl get pods
         run: kubectl get nodes
+
       - name: Deploy AWX
-        run: kubectl apply -- -f myawx.yml
-      - name: Deploy AWX
+        run: kubectl apply -- -f .github/workflow-config/awx_def.yml
+
+      - name: Check service URL
         run: minikube service awx-service --url
-      - name: Deploy AWX
+
+      - name: Get password
         run: minikube kubectl -- get secret awx-admin-password -o jsonpath='{.data.password}' | base64 --decode
