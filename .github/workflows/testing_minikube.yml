@@ -72,11 +72,11 @@ jobs:
           time: '20s'
 
       - name: "Wait for awx to be alive"
-        uses: nev7n/wait_for_response@v1
+        uses: ifaxity/wait-on-action
         with:
-          url: ${{ steps.service-url.outputs.SERVICEURL }}/api/v2/ping
-          responseCode: 200
-          timeout: 300000  # Wait max 5 mins for response.
+          resource: ${{ steps.service-url.outputs.SERVICEURL }}/api/v2/ping
+          verbose: True
+          timeout: 300000
           interval: 3000
 
       - name: "Perform playbook tests"
