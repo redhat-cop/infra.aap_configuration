@@ -72,7 +72,7 @@ jobs:
           time: '20s'
 
       - name: "Wait for awx to be alive"
-        uses: ifaxity/wait-on-action
+        uses: iFaxity/wait-on-action@v1
         with:
           resource: ${{ steps.service-url.outputs.SERVICEURL }}/api/v2/ping
           verbose: True
