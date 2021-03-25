@@ -19,7 +19,7 @@ jobs:
         run: minikube kubectl get nodes
 
       - name: Start AWX operator
-        run: minikube kubectl -- apply -f https://raw.githubusercontent.com/ansible/awx-operator/devel/deploy/awx-operator.yaml
+        run: minikube kubectl -- apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.6.0/deploy/awx-operator.yaml
 
       - name: Wait / Sleep
         uses: jakejarvis/wait-action@v0.1.0
