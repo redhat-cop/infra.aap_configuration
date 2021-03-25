@@ -12,7 +12,7 @@
   # tower_password: changeme
   pre_tasks:
     - debug: 
-        var: command_output.stdout
+        var: tower_hostname
 
     - name: Create variable from command
       command: "minikube service awx-service --url"
