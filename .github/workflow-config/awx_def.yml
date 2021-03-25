@@ -1,8 +1,13 @@
+---
 apiVersion: awx.ansible.com/v1beta1
 kind: AWX
 metadata:
   name: awx
 spec:
+  deployment_type: awx
+  tower_replicas: 1
+  tower_admin_user: admin
+  tower_admin_password: password
+  tower_broadcast_websocket_secret: password
   tower_ingress_type: Ingress
-  tower_admin_password_secret: password
-  tower_hostname: awx.redhat_cop.com
+  tower_image: ansible/awx:17.1.0 # replace this with desired image

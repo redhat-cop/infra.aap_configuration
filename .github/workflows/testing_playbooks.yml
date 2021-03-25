@@ -31,10 +31,11 @@ jobs:
 
       - name: "Wait for awx to be alive"
         uses: nev7n/wait_for_response@v1
+        continue-on-error: true
         with:
           url: 'http://localhost/api/v2/ping'
           responseCode: 200
-          timeout: 300000  # Wait max 5 mins for response.
+          timeout: 600000  # Wait max 5 mins for response.
           interval: 3000
 
       - name: "Install Galaxy dependencies"
