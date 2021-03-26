@@ -5,6 +5,7 @@
     name:                           "{{ tower_templates_item.name | mandatory }}"
     new_name:                       "{{ tower_templates_item.new_name | default(omit, true) }}"
     description:                    "{{ tower_templates_item.description | default(omit, true) }}"
+    execution_environment:          "{{ tower_templates_item.execution_environment | default(omit, true) }}"
     job_type:                       "{{ tower_templates_item.job_type | default('run') }}"
     inventory:                      "{{ tower_templates_item.inventory.name | default( tower_templates_item.inventory | default(omit, true)) }}"
     organization:                   "{{ tower_templates_item.organization.name | default( tower_templates_item.organization | default(omit, true)) }}"
