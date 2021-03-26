@@ -39,6 +39,7 @@ This role accepts two data models. A simple straightforward easy to maintain mod
 |`description`|`False`|no|Description of  of Organization.|
 |`custom_virtualenv`|""|no|Local absolute file path containing a custom Python virtualenv to use.|
 |`max_hosts`|""|no|The max hosts allowed in this organization.|
+|`default_environment`|""|no|Default Execution Environment to use for jobs owned by the Organization.|
 |`notification_templates_started`|""|no|The notifications on started to use for this organization in a list.|
 |`notification_templates_success`|""|no|The notifications on success to use for this organization in a list.|
 |`notification_templates_error`|""|no|The notifications on error to use for this organization in a list.|
