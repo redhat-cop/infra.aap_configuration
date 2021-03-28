@@ -39,6 +39,8 @@
     - name: Publish Collections
       include_role:
         name: publish
+      vars:
+        ah_auto_approve: true
 
     - name: Deauthenticate
       ah_token:
