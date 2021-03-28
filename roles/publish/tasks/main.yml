@@ -2,42 +2,99 @@
 - name: Git checkout
   git:
     repo:     "{{ __ah_collection_item.git_url }}"
-    dest:     "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.repo_name }}/"
+    dest:     "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}/"
     version:  "{{ __ah_collection_item.version | default(omit) }}"
   loop: "{{ ah_collections }}"
   loop_control:
     loop_var: "__ah_collection_item"
   no_log: "{{ ah_configuration_publish_secure_logging }}"
-  when: ah_collection_list | length >= 0
+  when:
+    - ah_collection_list is not defined
+    - __ah_collection_item.collection_local_path is not defined
 
-- name: Build Collections
-  command:
-    cmd: ansible-galaxy collection build --output-path {{ ah_configuration_working_dir }}/ {{ ah_configuration_working_dir }}/{{ __ah_collection_item.repo_name }}/ -vf
-  changed_when: "__build_collection_results.rc != 2"
-  register: __build_collection_results
+- name: Copy local collection to working dir
+  copy:
+    src:         "{{ __ah_collection_item.collection_local_path }}/"
+    dest:         "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}"
+    remote_src:   true
   loop: "{{ ah_collections }}"
   loop_control:
     loop_var: "__ah_collection_item"
-  when: ah_collection_list | length >= 0
+  no_log: "{{ ah_configuration_publish_secure_logging }}"
+  when:
+    - ah_collection_list is not defined
+    - __ah_collection_item.collection_local_path is defined
 
+- name: Build Collections
+  redhat_cop.ah_configuration.ah_build:
+    path:             "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}"
+    output_path:      "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}"
+    force:            true
+  register: ah_build_results
+  loop: "{{ ah_collections }}"
+  loop_control:
+    loop_var: "__ah_collection_item"
+  no_log: "{{ ah_configuration_publish_secure_logging }}"
+  when: ah_collection_list is not defined
+
+- name: Find if variable contains file or dir
+  stat:
+    path: "{{ __ah_build_result_item.path }}"
+  register: ah_build_stat_results
+  no_log: "{{ ah_configuration_publish_secure_logging }}"
+  loop: "{{ ah_build_results.results }}"
+  loop_control:
+    loop_var: "__ah_build_result_item"
+  when: ah_collection_list is not defined
+
+# __ah_build_result_item.results.path will be the output_path in ansible<2.10 but the actual built path in ansible>=2.10
 - name: Find all relevant built collection files
   find:
-    paths: "{{ ah_configuration_working_dir }}"
-    patterns: '*.tar.gz'
+    paths: "{{ (__ah_build_result_item.stat.isdir) | ternary(__ah_build_result_item.stat.path, (__ah_build_result_item.stat.path | dirname)) }}"
+    patterns: "{{ (__ah_build_result_item.stat.isdir) | ternary('*.tar.gz', (__ah_build_result_item.stat.path | basename)) }}"
   register: __ah_collections_find_results
-  when: ah_collection_list | length >= 0
+  no_log: "{{ ah_configuration_publish_secure_logging }}"
+  loop: "{{ ah_build_stat_results.results }}"
+  loop_control:
+    loop_var: "__ah_build_result_item"
+  when: ah_collection_list is not defined
 
 - name: Set path for all collections found
   set_fact:
-    ah_collection_list: "{{ __ah_collections_find_results.files | map(attribute='path') }}"
-  when: ah_collection_list | length >= 0
+    ah_collection_list: "{{ __ah_collections_find_results.results | map(attribute='files') | flatten | map(attribute='path') | flatten }}"
+  no_log: "{{ ah_configuration_publish_secure_logging }}"
+  when: ah_collection_list is not defined
 
-- name: Publish Collections with ansible-galaxy
-  shell:  # noqa 305
-    cmd: ANSIBLE_CONFIG="{{ ansible_config_path }}" ansible-galaxy collection publish -v {{ __ah_collection_file }}
-  register: __publish_collection_results
-  changed_when: "__publish_collection_results.rc != 2"
+- name: Publish Collections
+  redhat_cop.ah_configuration.ah_collection_upload:
+    path: "{{ __ah_collection_file }}"
+    ah_host:          "{{ ah_host }}"
+    ah_username:      "{{ ah_username | default(omit) }}"
+    ah_password:      "{{ ah_password | default(omit) }}"
+    ah_token:         "{{ ah_token | default(omit) }}"
+    ah_path_prefix:   "{{ ah_path_prefix }}"
+    validate_certs:   "{{ ah_validate_certs | default('true') }}"
   loop: "{{ ah_collection_list }}"
   loop_control:
     loop_var: "__ah_collection_file"
+  no_log: "{{ ah_configuration_publish_secure_logging }}"
+
+- name: Approve Collections
+  redhat_cop.ah_configuration.ah_approval:
+    namespace:        "{{ (__ah_collection_file | basename).split('-')[0] }}"
+    name:             "{{ (__ah_collection_file | basename).split('-')[1] }}"
+    version:          "{{ (__ah_collection_file | basename).split('-')[2:] | join('-') | splitext | first | splitext | first }}"
+    ah_host:          "{{ ah_host }}"
+    ah_username:      "{{ ah_username | default(omit) }}"
+    ah_password:      "{{ ah_password | default(omit) }}"
+    ah_token:         "{{ ah_token | default(omit) }}"
+    ah_path_prefix:   "{{ ah_path_prefix }}"
+    validate_certs:   "{{ ah_validate_certs | default('true') }}"
+  loop: "{{ ah_collection_list }}"
+  loop_control:
+    loop_var: "__ah_collection_file"
+  no_log: "{{ ah_configuration_publish_secure_logging }}"
+  when: ah_auto_approve
+
+
 ...

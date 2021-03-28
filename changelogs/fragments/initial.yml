@@ -1,4 +1,0 @@
----
-major_changes:
-  - Initial release of ansible_config, namespace, publish roles and ah_namespace, ah_token modules
-...

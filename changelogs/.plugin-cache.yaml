@@ -1,4 +1,3 @@
----
 plugins:
   become: {}
   cache: {}
@@ -8,10 +7,19 @@ plugins:
   httpapi: {}
   inventory: {}
   lookup: {}
-  module: {}
+  module:
+    ah_namespace:
+      description: create, update, or destroy Automation Hub Namespace.
+      name: ah_namespace
+      namespace: ''
+      version_added: null
+    ah_token:
+      description: create, update, or destroy Automation Hub tokens.
+      name: ah_token
+      namespace: ''
+      version_added: '2.10'
   netconf: {}
   shell: {}
   strategy: {}
   vars: {}
-version: 1.0.2
-...
+version: 0.1.0

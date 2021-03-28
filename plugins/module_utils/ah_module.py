@@ -5,13 +5,20 @@ __metaclass__ = type
 from ansible.module_utils.basic import AnsibleModule, env_fallback
 from ansible.module_utils.urls import Request, SSLValidationError, ConnectionError
 from ansible.module_utils.six import string_types
-from ansible.module_utils.six import PY2
+from ansible.module_utils.six import PY2, PY3
 from ansible.module_utils.six.moves.urllib.parse import urlparse, urlencode
 from ansible.module_utils.six.moves.urllib.error import HTTPError
 from ansible.module_utils.six.moves.http_cookiejar import CookieJar
+from ansible.galaxy.collection import build_collection
+from ansible.module_utils._text import to_bytes, to_native, to_text
+from ansible.module_utils.compat.importlib import import_module  # noqa F401
+import os.path
 from socket import gethostbyname
 import re
 from json import loads, dumps
+import os
+import email.mime.multipart
+import email.mime.application
 
 
 class ItemNotDefined(Exception):
@@ -50,9 +57,10 @@ class AHModule(AnsibleModule):
     error_callback = None
     warn_callback = None
 
-    def __init__(self, argument_spec=None, direct_params=None, error_callback=None, warn_callback=None, **kwargs):
+    def __init__(self, argument_spec=None, direct_params=None, error_callback=None, warn_callback=None, require_auth=True, **kwargs):
         full_argspec = {}
-        full_argspec.update(AHModule.AUTH_ARGSPEC)
+        if require_auth:
+            full_argspec.update(AHModule.AUTH_ARGSPEC)
         full_argspec.update(argument_spec)
         kwargs["supports_check_mode"] = True
 
@@ -180,6 +188,8 @@ class AHModule(AnsibleModule):
         data = None  # Important, if content type is not JSON, this should not be dict type
         if headers.get("Content-Type", "") == "application/json":
             data = dumps(kwargs.get("data", {}))
+        elif kwargs.get("binary", False):
+            data = kwargs.get("data", None)
 
         try:
             response = self.session.open(method, url.geturl(), headers=headers, validate_certs=self.verify_ssl, follow_redirects=True, data=data)
@@ -484,6 +494,96 @@ class AHModule(AnsibleModule):
             last_data = response["json"]
             return last_data
 
+    def approve(self, endpoint, auto_exit=True):
+
+        approvalEndpoint = "move/staging/published"
+
+        if not endpoint:
+            self.fail_json(msg="Unable to approve due to missing endpoint")
+
+        response = self.post_endpoint("{0}/{1}".format(endpoint, approvalEndpoint), None, **{"return_none_on_404": True})
+
+        if response and response["status_code"] in [202]:
+            self.json_output["changed"] = True
+        else:
+            # Do a check to see if the version exists
+            if not response:
+                self.fail_json(msg="Unable to approve at {0}: Awaiting approval not found".format(endpoint))
+            elif "json" in response and "__all__" in response["json"]:
+                self.fail_json(msg="Unable to approve at {0}: {1}".format(endpoint, response["json"]["__all__"][0]))
+            elif "json" in response:
+                self.fail_json(msg="Unable to create {0}: {1}".format(endpoint, response["json"]))
+            else:
+                self.fail_json(msg="Unable to create {0}: {1}".format(endpoint, response["status_code"]))
+
+        if auto_exit:
+            self.exit_json(**self.json_output)
+        else:
+            last_data = response["json"]
+            return last_data
+
+    def prepare_multipart(self, filename):
+        mime = "application/x-gzip"
+        m = email.mime.multipart.MIMEMultipart("form-data")
+
+        main_type, sep, sub_type = mime.partition("/")
+
+        with open(to_bytes(filename, errors="surrogate_or_strict"), "rb") as f:
+            part = email.mime.application.MIMEApplication(f.read())
+            del part["Content-Type"]
+            part.add_header("Content-Type", "%s/%s" % (main_type, sub_type))
+
+        part.add_header("Content-Disposition", "form-data")
+        del part["MIME-Version"]
+        part.set_param("name", "file", header="Content-Disposition")
+        if filename:
+            part.set_param("filename", to_native(os.path.basename(filename)), header="Content-Disposition")
+
+        m.attach(part)
+
+        if PY3:
+            # Ensure headers are not split over multiple lines
+            # The HTTP policy also uses CRLF by default
+            b_data = m.as_bytes(policy=email.policy.HTTP)
+        else:
+            # Py2
+            # We cannot just call ``as_string`` since it provides no way
+            # to specify ``maxheaderlen``
+            # cStringIO seems to be required here
+            fp = cStringIO()  # noqa: F821
+            # Ensure headers are not split over multiple lines
+            g = email.generator.Generator(fp, maxheaderlen=0)
+            g.flatten(m)
+            # ``fix_eols`` switches from ``\n`` to ``\r\n``
+            b_data = email.utils.fix_eols(fp.getvalue())
+        del m
+
+        headers, sep, b_content = b_data.partition(b"\r\n\r\n")
+        del b_data
+
+        if PY3:
+            parser = email.parser.BytesHeaderParser().parsebytes
+        else:
+            # Py2
+            parser = email.parser.HeaderParser().parsestr
+
+        return (parser(headers)["content-type"], b_content)  # Message converts to native strings
+
+    def upload(self, path, endpoint, auto_exit=True, item_type="unknown"):
+        ct, body = self.prepare_multipart(path)
+        response = self.make_request("POST", endpoint, **{"data": body, "headers": {"Content-Type": str(ct)}, "binary": True})
+        if response["status_code"] in [202]:
+            self.json_output["path"] = path
+            self.json_output["changed"] = True
+            self.exit_json(**self.json_output)
+        else:
+            if "json" in response and "__all__" in response["json"]:
+                self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]["__all__"][0]))
+            elif "json" in response:
+                self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]))
+            else:
+                self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["status_code"]))
+
     def update_if_needed(self, existing_item, new_item, on_update=None, auto_exit=True, associations=None):
         # This will exit from the module on its own
         # If the method successfully updates an item and on_update param is defined,
@@ -640,6 +740,39 @@ class AHModule(AnsibleModule):
                     self._encrypted_changed_warning(field, old, warning=warning)
                     return True
         return False
+
+    def execute_build(self, path, force, output_path):
+        path = self._resolve_path(path)
+        output_path = self._resolve_path(output_path)
+        b_output_path = to_bytes(output_path, errors="surrogate_or_strict")
+
+        if not os.path.exists(b_output_path):
+            os.makedirs(b_output_path)
+        elif os.path.isfile(b_output_path):
+            self.fail_json(msg="the output collection directory {0} is a file - aborting".format(to_native(output_path)))
+
+        try:
+            out = build_collection(
+                to_text(path, errors="surrogate_or_strict"),
+                to_text(output_path, errors="surrogate_or_strict"),
+                force,
+            )
+            # path output is correct in ansible-galaxy >= 2.10.0 but in earlier versions the value is not returned so we can just return the output_path
+            self.json_output["path"] = out or output_path
+            self.json_output["changed"] = True
+            self.exit_json(**self.json_output)
+        except Exception as e:
+            err = "{0}".format(e)
+            if "You can use --force to re-create the collection artifact." in err:
+                self.json_output["path"] = err[10:-75]
+                self.json_output["changed"] = False
+                self.exit_json(**self.json_output)
+            else:
+                self.fail_json(msg=err)
+
+    @staticmethod
+    def _resolve_path(path):
+        return os.path.abspath(os.path.expanduser(os.path.expandvars(path)))
 
     @staticmethod
     def has_encrypted_values(obj):
