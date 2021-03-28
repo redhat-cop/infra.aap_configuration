@@ -37,6 +37,7 @@ tower_configuration_ad_hoc_command_secure_logging defaults to the value of tower
 |`inventory`|""|str|yes|Inventory to use for the ad hoc command.|
 |`limit`|`False`|no|str|Limit to use for the ad hoc command.|
 |`credential`|""|yes|str|Credential to use for ad hoc command.|
+|`execution_environment`|""|no|str|Execution Environment to use for ad hoc command.|
 |`module_name`|""|str|yes|The Ansible module to execute.|
 |`module_args`|`False`|no|str|The arguments to pass to the module.|
 |`forks`|0|yes|int|The number of forks to use for this ad hoc execution.|

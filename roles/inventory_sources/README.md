@@ -44,6 +44,7 @@ tower_configuration_inventory_sources_secure_logging defaults to the value of to
 |`enabled_value`|""|no|Value when the host is considered enabled, e.g., "powered_on".|
 |`host_filter`|""|no|If specified, Tower will only import hosts that match this regular expression.|
 |`credential`|""|no|Credential to use for the source.|
+|`execution_environment`|""|no|Execution Environment to use for the source.|
 |`source_regions`|""|no|Regions for cloud provider.|
 |`instance_filters`|""|no|Comma-separated list of filter expressions for matching hosts.|
 |`group_by`|""|no|Limit groups automatically created from inventory source.|

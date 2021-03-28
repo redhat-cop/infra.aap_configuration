@@ -5,6 +5,7 @@
     description:                        "{{ tower_organizations_item.description | default(omit, true) }}"
     custom_virtualenv:                  "{{ tower_organizations_item.custom_virtualenv | default(omit, true) }}"
     max_hosts:                          "{{ tower_organizations_item.max_hosts | default(omit, true) }}"
+    default_environment:                "{{ tower_organizations_item.default_environment | default(omit, true) }}"
     galaxy_credentials:                 "{{ tower_organizations_item.galaxy_credentials | default(omit, true) }}"
     notification_templates_approvals:     "{{ tower_organizations_item.notification_templates_approvals | default(tower_organizations_item.related.notification_templates_approvals | default([]) | map(attribute='name') | list ) }}"
     notification_templates_started:     "{{ tower_organizations_item.notification_templates_started | default(tower_organizations_item.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
