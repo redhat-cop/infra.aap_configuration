@@ -18,6 +18,14 @@
     - debug: 
         var: tower_password
 
+    - name: Check status of Rollout
+      command: "minikube kubectl rollout status deployment/awx"
+      register: command_output
+      ignore_errors: true
+
+    - debug: 
+        var: command_output.stdout
+
     - name: Create a new token using username/password
       awx.awx.tower_token:
         description: 'Tower Config Token'
