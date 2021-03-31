@@ -1,6 +1,6 @@
 ---
 # Create Workflow
-- name: Create Workflow
+- name: Manage Workflows
   tower_workflow_job_template:
     name:                               "{{ workflow_loop_var.name | mandatory }}"
     new_name:                           "{{ workflow_loop_var.new_name | default(omit, true) }}"
