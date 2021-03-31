@@ -32,7 +32,7 @@ jobs:
       - name: Deploy AWX
         run: |
           minikube kubectl apply -- -f .github/workflow-config/namespace.yml
-          minikube kubectl create secret generic awx-admin-password --from-literal=password=password
+          minikube kubectl create secret generic awx-admin-password -- --from-literal=password=password
           minikube kubectl apply -- -f .github/workflow-config/awx_def.yml
 
       - name: Check service URL
