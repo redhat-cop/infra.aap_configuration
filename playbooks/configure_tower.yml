@@ -26,6 +26,51 @@
     - debug: 
         var: command_output.stdout
 
+    - name: Check status of app
+      command: "minikube kubectl describe awx"
+      register: command_output
+      ignore_errors: true
+
+    - debug: 
+        var: command_output.stdout
+
+    - name: Check status of app
+      command: |
+        minikube kubectl get pods -- --selector=app=awx --no-headers -o custom-columns=":metadata.name"
+      register: command_output
+      ignore_errors: true
+
+    - set_fact:
+        podname: "{{command_output.stdout}}"
+
+    - debug: 
+        var: podname
+
+
+    - name: Check status of app
+      command: "minikube kubectl logs {{podname}} awx-web"
+      register: command_output
+      ignore_errors: true
+
+    - debug: 
+        var: command_output.stdout
+
+    - name: Check status of app
+      command: "minikube kubectl logs {{podname}} redis"
+      register: command_output
+      ignore_errors: true
+
+    - debug: 
+        var: command_output.stdout
+
+    - name: Check status of app
+      command: "minikube kubectl logs {{podname}} awx-task"
+      register: command_output
+      ignore_errors: true
+
+    - debug: 
+        var: command_output.stdout
+
     - name: Create a new token using username/password
       awx.awx.tower_token:
         description: 'Tower Config Token'
