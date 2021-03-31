@@ -27,7 +27,7 @@
         var: command_output.stdout
 
     - name: Check status of app
-      command: "minikube kubectl describe awx"
+      command: "kubectl logs deployment/awx-operator"
       register: command_output
       ignore_errors: true
 
