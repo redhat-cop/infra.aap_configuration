@@ -12,7 +12,7 @@
   # tower_password: changeme
   pre_tasks:
 
-    - name: Create variable from command
+    - name: Get Hostname
       command: "minikube service awx-service --url"
       register: command_output
 
@@ -22,14 +22,28 @@
     - name: Set Facts
       set_fact:
         tower_hostname: "{{ command_output.stdout }}"
-        tower_password: password
 
-    - name: Check status of Rollout
-      command: "minikube kubectl rollout status deployment/awx"
+    - name: Get password
+      command: "minikube kubectl get secret awx-admin-password -- -o jsonpath="{.data.password}" | base64 --decode"
       register: command_output
 
     - debug: 
         var: command_output.stdout
+
+    - name: Set Facts
+      set_fact:
+        tower_password: "{{ command_output.stdout }}"
+
+    - name: Create a new token using username/password
+      awx.awx.tower_token:
+        description: 'Tower Config Token'
+        scope:                "write"
+        state:                 present
+        tower_host:           "{{ tower_hostname }}"
+        tower_username:        admin
+        tower_password:       "{{ tower_password }}"
+        tower_verify_ssl:     "{{ tower_verify_ssl | default('no') }}"
+      ignore_errors: true
 
     - name: Wait for Tower to come up
       uri:
@@ -39,6 +53,18 @@
       until: result.status == 200
       retries: 20
       delay: 30
+      ignore_errors: true
+
+    - name: Create a new token using username/password
+      awx.awx.tower_token:
+        description: 'Tower Config Token'
+        scope:                "write"
+        state:                 present
+        tower_host:           "{{ tower_hostname }}"
+        tower_username:        admin
+        tower_password:       "{{ tower_password }}"
+        tower_verify_ssl:     "{{ tower_verify_ssl | default('no') }}"
+      ignore_errors: true
 
     - name: Include vars from tower_configs directory
       include_vars:
