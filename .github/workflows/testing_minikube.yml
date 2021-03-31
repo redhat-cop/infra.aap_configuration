@@ -32,7 +32,6 @@ jobs:
       - name: Deploy AWX
         run: |
           minikube kubectl apply -- -f .github/workflow-config/namespace.yml
-          minikube kubectl apply -- -f .github/workflow-config/awx_password.yml
           minikube kubectl apply -- -f .github/workflow-config/awx_def.yml
 
       - name: Check service URL
