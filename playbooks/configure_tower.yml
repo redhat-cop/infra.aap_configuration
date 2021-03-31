@@ -24,7 +24,8 @@
         tower_hostname: "{{ command_output.stdout }}"
 
     - name: Get password
-      command: "minikube kubectl get secret awx-admin-password -- -o jsonpath="{.data.password}" | base64 --decode"
+      command: |
+        minikube kubectl get secret awx-admin-password -- -o jsonpath="{.data.password}" | base64 --decode
       register: command_output
 
     - debug: 
