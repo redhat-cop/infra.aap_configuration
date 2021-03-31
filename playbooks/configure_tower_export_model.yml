@@ -17,6 +17,28 @@
         dir: ./tower_configs_export_model
         ignore_files: [README.md]
         extensions: ["yml"]
+
+    - name: Create variable from command
+      command: "minikube service awx-service --url"
+      register: command_output
+
+    - debug: 
+        var: command_output.stdout
+
+    - name: Set Facts
+      set_fact:
+        tower_hostname: "{{ command_output.stdout }}"
+        tower_password: password
+
+    - name: Wait for Tower to come up
+      uri:
+        url: "{{ tower_hostname }}/api/v2/ping"
+        status_code: 200
+      register: result
+      until: result.status == 200
+      retries: 20
+      delay: 30
+
   roles:
     - {role: organizations, when: tower_organizations is defined, tags: organizations}
     - {role: users, when: tower_user_accounts is defined, tags: users}

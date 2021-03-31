@@ -11,8 +11,6 @@
   # tower_username: admin
   # tower_password: changeme
   pre_tasks:
-    - debug: 
-        var: tower_hostname
 
     - name: Create variable from command
       command: "minikube service awx-service --url"
@@ -25,6 +23,13 @@
       set_fact:
         tower_hostname: "{{ command_output.stdout }}"
         tower_password: password
+
+    - name: Check status of Rollout
+      command: "minikube kubectl rollout status deployment/awx"
+      register: command_output
+
+    - debug: 
+        var: command_output.stdout
 
     - name: Wait for Tower to come up
       uri:
