@@ -7,6 +7,7 @@ spec:
   deployment_type: awx
   tower_replicas: 1
   tower_admin_user: admin
+  tower_admin_password_secret: password
   tower_broadcast_websocket_secret: password
   tower_ingress_type: Ingress
-#  tower_image: ansible/awx:17.1.0 # replace this with desired image
+  tower_image: ansible/awx:18.0.0 # replace this with desired image

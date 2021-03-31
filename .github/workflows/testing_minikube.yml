@@ -13,7 +13,7 @@ jobs:
         uses: manusa/actions-setup-minikube@v2.3.1
         with:
           minikube version: 'v1.18.1'
-          kubernetes version: 'v1.20.5'
+          kubernetes version: 'v1.20.2'
 
       - name: Interact with the cluster
         run: minikube kubectl get nodes
@@ -30,7 +30,10 @@ jobs:
         run: minikube kubectl get nodes
 
       - name: Deploy AWX
-        run: minikube kubectl apply -- -f .github/workflow-config/awx_def.yml
+      run: |
+        minikube kubectl apply -- -f .github/workflow-config/namespace.yml
+        minikube kubectl apply -- -f .github/workflow-config/awx_password.yml
+        minikube kubectl apply -- -f .github/workflow-config/awx_def.yml
 
       - name: Check service URL
         uses: nick-invision/retry@v2
@@ -50,13 +53,6 @@ jobs:
       - name: Check service list
         run: minikube service list
 
-      - name: Set service password
-        run: echo '::set-output name=SERVICEPASSWORD::$(minikube kubectl -- get secret awx-admin-password -o jsonpath='{.data.password}' | base64 --decode)'
-        id: service-password
-
-      - name: Get service password
-        run: echo "Service password is ${{ steps.service-password.outputs.SERVICEPASSWORD }}"
-
       - name: "Install dependencies"
         run: pip install -r .github/requirements.txt
 
@@ -67,8 +63,8 @@ jobs:
         run: ansible-galaxy collection install -r .github/collections/requirements.yml
 
       - name: "Perform playbook tests"
-        run: ansible-playbook playbooks/configure_tower.yml -e tower_hostname=${{ steps.service-url.outputs.SERVICEURL }} -e tower_username=admin -e tower_password=${{ steps.service-password.outputs.SERVICEPASSWORD }}
+        run: ansible-playbook playbooks/configure_tower.yml -e tower_hostname=${{ steps.service-url.outputs.SERVICEURL }} -e tower_username=admin -e tower_password=password
 
       - name: "Perform export model playbook tests"
-        run: ansible-playbook playbooks/configure_tower_export_model.yml -e tower_hostname=${{ steps.service-url.outputs.SERVICEURL }} -e tower_username=admin -e tower_password=${{ steps.service-password.outputs.SERVICEPASSWORD }}
+        run: ansible-playbook playbooks/configure_tower_export_model.yml -e tower_hostname=${{ steps.service-url.outputs.SERVICEURL }} -e tower_username=admin -e tower_password=password
 ...
