@@ -12,28 +12,11 @@
   # tower_password: changeme
   pre_tasks:
 
-    - name: Get Hostname
-      command: "minikube service awx-service --url"
-      register: command_output
+    - debug: 
+        var: tower_hostname
 
     - debug: 
-        var: command_output.stdout
-
-    - name: Set Facts
-      set_fact:
-        tower_hostname: "{{ command_output.stdout }}"
-
-    - name: Get password
-      command: |
-        minikube kubectl get secret awx-admin-password -- -o jsonpath="{.data.password}" | base64 --decode
-      register: command_output
-
-    - debug: 
-        var: command_output.stdout
-
-    - name: Set Facts
-      set_fact:
-        tower_password: "{{ command_output.stdout }}"
+        var: tower_password
 
     - name: Create a new token using username/password
       awx.awx.tower_token:
