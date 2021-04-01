@@ -34,6 +34,9 @@ jobs:
           minikube kubectl apply -- -f .github/workflow-config/namespace.yml
           minikube kubectl create secret generic awx-admin-password -- --from-literal=password=password
           minikube kubectl apply -- -f .github/workflow-config/awx_def.yml
+          minikube addons enable ingress
+          ansible-playbook ansible/deploy-operator.yml
+          ansible-playbook ansible/instantiate-awx-deployment.yml -e tower_namespace=awx
 
       - name: Check service URL
         uses: nick-invision/retry@v2
