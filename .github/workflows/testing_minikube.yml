@@ -75,6 +75,9 @@ jobs:
       - name: Check logs
         run: minikube kubectl logs deployment/awx-operator
 
+      - name: Check Resources
+        run: minikube kubectl describe nodes | grep "Allocated resources" -A 9
+
       - name: "Perform playbook tests"
         run: ansible-playbook playbooks/configure_tower.yml -e tower_hostname=${{ steps.service-url.outputs.SERVICEURL }} -e tower_username=admin -e tower_password=password
 

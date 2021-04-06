@@ -26,13 +26,13 @@
     - debug: 
         var: command_output.stdout
 
-    - name: Check status of app awx operator logs
-      command: "kubectl logs deployment/awx-operator"
-      register: command_output
-      ignore_errors: true
+#    - name: Check status of app awx operator logs
+#      command: "kubectl logs deployment/awx-operator"
+#      register: command_output
+#      ignore_errors: true
 
-    - debug: 
-        var: command_output.stdout
+#    - debug: 
+#        var: command_output.stdout
 
     - name: Check status of app awx
       command: |
