@@ -1,7 +1,7 @@
 ---
 name: Run Test Playbooks
 
-on: [gollum]
+on: [push, pull_request]
 
 jobs:
   Integration-test:
@@ -26,8 +26,14 @@ jobs:
       - name: Display Versions
         run: which python && pip --version && ansible --version
 
-      - name: "Build AWX stack"
-        run: cd .github/awx/installer && ansible-playbook -i inventory install.yml -e create_preload_data=false -e admin_password=password
+      - name: "Build AWX docker build"
+        run: cd .github/awx && make docker-compose-build
+
+      - name: "see AWX docker images"
+        run: cd .github/awx && docker images
+
+      - name: "Build AWX docker build compose"
+        run: cd .github/awx && make docker-compose
 
       - name: "Wait for awx to be alive"
         uses: nev7n/wait_for_response@v1

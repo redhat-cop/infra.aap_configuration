@@ -13,28 +13,28 @@ spec:
   tower_image: ansible/awx:18.0.0 # replace this with desired image
   tower_web_resource_requirements:
     requests:
-      cpu: 700m
-      memory: 2Gi
+      cpu: 1000m
+      memory: 3Gi
       storage: 2Gi
     limits:
-      cpu: 1000m
+      cpu: 1500m
       memory: 4Gi
       storage: 4Gi
   tower_task_resource_requirements:
     requests:
-      cpu: 700m
-      memory: 2Gi
-      storage: 2Gi
-    limits:
       cpu: 1000m
       memory: 3Gi
+      storage: 2Gi
+    limits:
+      cpu: 1500m
+      memory: 4Gi
       storage: 4Gi
   tower_postgres_resource_requirements:
     requests:
-      cpu: 800m
-      memory: 2Gi
+      cpu: 1200m
+      memory: 3Gi
       storage: 2Gi
     limits:
-      cpu: 1000m
-      memory: 3Gi
+      cpu: 1600m
+      memory: 4Gi
       storage: 5Gi
