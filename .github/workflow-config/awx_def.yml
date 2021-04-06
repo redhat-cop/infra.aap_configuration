@@ -10,11 +10,31 @@ spec:
   tower_broadcast_websocket_secret: password
   tower_ingress_type: Ingress
   development_mode: true
-#  tower_image: ansible/awx:17.1.0 # replace this with desired image
-  tower_postgres_resource_requirements:
+  tower_image: ansible/awx:18.0.0 # replace this with desired image
+  tower_web_resource_requirements:
     requests:
+      cpu: 500m
+      memory: 1Gi
+      storage: 1Gi
+    limits:
+      cpu: 1000m
+      memory: 2Gi
+      storage: 2Gi
+  tower_task_resource_requirements:
+    requests:
+      cpu: 500m
+      memory: .5Gi
+      storage: 1Gi
+    limits:
+      cpu: 1000m
       memory: 1Gi
       storage: 2Gi
+  tower_postgres_resource_requirements:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+      storage: 1Gi
     limits:
+      cpu: 1000m
       memory: 2Gi
-      storage: 5Gi
+      storage: 3Gi
