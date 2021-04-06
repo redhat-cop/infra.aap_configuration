@@ -11,3 +11,10 @@ spec:
   tower_ingress_type: Ingress
   development_mode: true
 #  tower_image: ansible/awx:17.1.0 # replace this with desired image
+  tower_postgres_resource_requirements:
+    requests:
+      memory: 1Gi
+      storage: 2Gi
+    limits:
+      memory: 2Gi
+      storage: 5Gi
