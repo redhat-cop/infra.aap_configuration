@@ -1,4 +1,4 @@
-# ah_configuration_ah_namespace
+# redhat_cop.ah_configuration.namespace
 ## Description
 An Ansible Role to create Namespaces in Automation Hub.
 

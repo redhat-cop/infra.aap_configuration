@@ -1,7 +1,6 @@
-# ah_configuration_ah_namespace
+# redhat_cop.ah_configuration.publish
 ## Description
 An Ansible Role to publish collections to Automation Hub or Galaxies.
-
 
 ## Variables
 |Variable Name|Default Value|Required|Description|Example|
@@ -11,8 +10,8 @@ An Ansible Role to publish collections to Automation Hub or Galaxies.
 |`ah_token`|""|no|Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 |`ah_collections`|`see below`|no|Data structure describing your collections, mutually exclusive to ah_collection_list, described below.||
 |`ah_collection_list`|`list`|no|Data structure file paths to pre built collections, mutually exclusive with ah_collections.||
-|`ah_configuration_working_dir`|`/var/tmp`|no|Data structure describing your namespaces, described below.||
-|`ansible_config_path`|`{{ ah_configuration_working_dir }}/ansible.cfg`|no|Data structure describing your namespaces, described below.||
+|`ah_configuration_working_dir`|`/var/tmp`|no|The working directory where the built artifacts live, or where the artifacts will be built.||
+|`ah_auto_approve`|`False`|no|Whether the collection will be automatically approved in Automation Hub. This will only work if the account being used has correct privileges.||
 
 ### Secure Logging Variables
 The following Variables compliment each other.
@@ -30,8 +29,10 @@ ah_configuration_publish_secure_logging defaults to the value of ah_configuratio
 ### ah_collections Variables
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`repo_name`|""|yes|str|Name of repo, normally the last part before the / in a url.|
-|`git_url`|""|yes|str|Url to git repo.|
+|`collection_name`|""|yes|str|Name of collection, normally the last part before the / in a git url.|
+|`git_url`|""|no|str|Url to git repo. Required if collection_local_path not set|
+|`version`|""|no|str|Git ref to pull. Will default to default branch if unset. Can specify tag, branch or commit ref here.|
+|`collection_local_path`|""|no|str|Path to collection stored locally. Required if git_url not set. This value will be used rather than git_url if set|
 
 ### Standard Project Data Structure
 
@@ -39,11 +40,10 @@ ah_configuration_publish_secure_logging defaults to the value of ah_configuratio
 ```yaml
 ---
 ah_collections:
-  - repo_name: cisco.iosxr
+  - collection_name: cisco.iosxr
     git_url: https://github.com/ansible-collections/cisco.iosxr
 
-ansible_config_path: "{{ ah_configuration_working_dir }}/ansible.cfg"
-
+ah_auto_approve: true
 ```
 
 ## Playbook Examples
