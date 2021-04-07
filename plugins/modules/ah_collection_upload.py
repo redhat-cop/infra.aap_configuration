@@ -40,6 +40,7 @@ EXAMPLES = """
 
 from ..module_utils.ah_module import AHModule
 
+
 def main():
     # Any additional arguments that are not fields of the item can be added here
     argument_spec = dict(
@@ -53,6 +54,7 @@ def main():
     path = module.params.get("path")
 
     module.upload(path, "artifacts/collections", item_type="collections")
+
 
 if __name__ == "__main__":
     main()
