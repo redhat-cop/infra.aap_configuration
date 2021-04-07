@@ -46,9 +46,9 @@ options:
 
 
 EXAMPLES = """
-- name: Approve redhat_cop.ah_configuration:v1.0.0
-  ah_approval:
-    path: /path/to/collection
+- name: Build redhat_cop.ah_configuration:v1.0.0
+  ah_build:
+    path: /home/ansible/ah_configuration
     force: true
     output_path: /var/tmp
 
