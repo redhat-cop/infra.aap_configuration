@@ -84,21 +84,21 @@ tower_configuration_job_templates_secure_logging defaults to the value of tower_
 
 ### Surveys
 Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Job_Templates/Job_Templates_job_templates_survey_spec_create) for more information about forming surveys
-|Variable Name|
-|:---:|:---:|:---:|:---:|
-|`name`|
-|`description`|
-|`spec`|
-|`question_description`|""|
-|`min`|""|
-|`default`|""|
-|`max`|""|
-|`required`|""|
-|`choices`|""|
-|`new_question`|""|
-|`variable`|""|
-|`question_name`|""|
-|`type`|""|
+|Variable Name|Variable Description|
+|:---:|:---:|
+|`name`|Name of the survey|
+|`description`|Description of the survey|
+|`spec`|List of survey items, each a dictionary containing the following fields|
+|`question_name`|Name of the field/item|
+|`question_description`|Longer description|
+|`required`|Boolean expressing if an answer is required|
+|`type`|One of `text`, `password`, `integer`, `float`, `multiplechoice`or `multiselect`|
+|`variable`|Name of Ansible Variable where to put the answer|
+|`default`|Default value for the variable|
+|`min`|Minimum value for a number type|
+|`max`|Maximum value for a number type|
+|`choices`|List of choices for a "multi" type|
+|`new_question`|Boolean???|
 
 ### Standard Project Data Structure
 #### Json Example
