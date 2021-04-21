@@ -11,7 +11,7 @@
 # These are the default variables specific to the job_templates role
 
 # list of dict describing Tower job templates:
-tower_job_templates: []
+tower_templates: []
 # possible fields:
 # - name: "job_template_name"  # mandatory
 #  new_name: "new_name"  # optional
