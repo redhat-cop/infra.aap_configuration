@@ -122,3 +122,14 @@ releases:
     fragments:
     - validate-certs.yml
     release_date: '2021-03-15'
+  1.4.1:
+    changes:
+      bugfixes:
+      - Fix tower_templates default
+      major_changes:
+      - Added execution environments option for multiple roles.
+      - Added execution environments role.
+    fragments:
+    - exec_env.yml
+    - jt_bug_fix.yml
+    release_date: '2021-04-21'
