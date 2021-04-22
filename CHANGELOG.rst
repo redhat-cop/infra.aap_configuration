@@ -5,6 +5,20 @@ redhat_cop.tower_configuration Release Notes
 .. contents:: Topics
 
 
+v1.4.1
+======
+
+Major Changes
+-------------
+
+- Added execution environments option for multiple roles.
+- Added execution environments role.
+
+Bugfixes
+--------
+
+- Fix tower_templates default
+
 v1.3.0
 ======
 
