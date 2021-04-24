@@ -1,21 +1,20 @@
 name: Run Test Playbooks Minikube
 
-on: [push, pull_request]
+on: [gollum]
 
 jobs:
   Integration-test:
-    name: Example Minikube-Kubernetes Cluster interaction
+    name: Deploy Tower to Minikube and run tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Checkout ansible operator
-        uses: actions/checkout@v2
-        with:
-          repository: ansible/awx-operator
-          path: awx-operator
-
+#      - name: Checkout ansible operator
+#        uses: actions/checkout@v2
+#        with:
+#          repository: ansible/awx-operator
+#          path: awx-operator
 
       - name: "Install dependencies"
         run: pip install -r .github/requirements.txt
@@ -25,6 +24,7 @@ jobs:
         with:
           minikube version: 'v1.18.1'
           kubernetes version: 'v1.20.2'
+          start args: '--addons=ingress' 
 
       - name: Interact with the cluster
         run: minikube kubectl get nodes

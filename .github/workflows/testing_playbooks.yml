@@ -39,7 +39,7 @@ jobs:
         uses: nev7n/wait_for_response@v1
         continue-on-error: true
         with:
-          url: 'http://localhost/api/v2/ping'
+          url: 'http://localhost:8043/api/v2/ping'
           responseCode: 200
           timeout: 600000  # Wait max 5 mins for response.
           interval: 3000

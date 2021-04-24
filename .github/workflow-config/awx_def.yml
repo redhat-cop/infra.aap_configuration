@@ -10,4 +10,4 @@ spec:
   tower_broadcast_websocket_secret: password
   tower_ingress_type: Ingress
   development_mode: true
-  tower_image: ansible/awx:18.0.0 # replace this with desired image
+#  tower_image: ansible/awx:19.0.0 # replace this with desired image
