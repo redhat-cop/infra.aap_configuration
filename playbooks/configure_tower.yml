@@ -6,10 +6,7 @@
     tower_validate_certs: false
   collections:
     - awx.awx
-  # Define following vars here, or in tower_configs/tower_auth.yml
-  # tower_hostname: ansible-tower-web-svc-test-project.example.com
-  # tower_username: admin
-  # tower_password: changeme
+
   pre_tasks:
 
     - debug: 
@@ -18,79 +15,28 @@
     - debug: 
         var: tower_password
 
-    - name: Check status of Rollout
-      command: "minikube kubectl rollout status deployment/awx"
-      register: command_output
-      ignore_errors: true
-
-    - debug: 
-        var: command_output.stdout
-
-#    - name: Check status of app awx operator logs
-#      command: "kubectl logs deployment/awx-operator"
-#      register: command_output
-#      ignore_errors: true
-
-#    - debug: 
-#        var: command_output.stdout
-
-    - name: Check status of app awx
-      command: |
-        minikube kubectl get pods -- --selector=app=awx --no-headers -o custom-columns=":metadata.name"
-      register: command_output
-      ignore_errors: true
-
-    - set_fact:
-        podname: "{{command_output.stdout}}"
-
-    - debug: 
-        var: podname
-
-
-    - name: Check status of app awx-web
-      command: "minikube kubectl logs {{podname}} awx-web"
-      register: command_output
-      ignore_errors: true
-
-    - debug: 
-        var: command_output.stdout
-
-    - name: Check status of app redis
-      command: "minikube kubectl logs {{podname}} redis"
-      register: command_output
-      ignore_errors: true
-
-    - debug: 
-        var: command_output.stdout
-
-    - name: Check status of app awx-task
-      command: "minikube kubectl logs {{podname}} awx-task"
-      register: command_output
-      ignore_errors: true
-
-    - debug: 
-        var: command_output.stdout
-
-    - name: Create a new token using username/password
-      awx.awx.tower_token:
-        description: 'Tower Config Token'
-        scope:                "write"
-        state:                 present
-        tower_host:           "{{ tower_hostname }}"
-        tower_username:        admin
-        tower_password:       "{{ tower_password }}"
-        tower_verify_ssl:     "{{ tower_verify_ssl | default('no') }}"
-      ignore_errors: true
-
     - name: Wait for Tower to come up
       uri:
         url: "{{ tower_hostname }}/api/v2/ping"
         status_code: 200
       register: result
       until: result.status == 200
-      retries: 20
+      retries: 80
       delay: 30
       ignore_errors: true
+
+    - debug:
+        var: result
+
+    - name: Check status of pods
+      command: "minikube kubectl get pods"
+      register: command_output
+      ignore_errors: true
+    - debug:
+        var: command_output
+
+    - debug:
+        var: command_output
 
     - name: Create a new token using username/password
       awx.awx.tower_token:
