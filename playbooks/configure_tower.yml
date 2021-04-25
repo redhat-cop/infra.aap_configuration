@@ -6,14 +6,11 @@
     tower_validate_certs: false
   collections:
     - awx.awx
-
+  # Define following vars here, or in tower_configs/tower_auth.yml
+  # tower_hostname: ansible-tower-web-svc-test-project.example.com
+  # tower_username: admin
+  # tower_password: changeme
   pre_tasks:
-
-    - debug:
-        var: tower_hostname
-
-    - debug:
-        var: tower_password
 
     - name: Wait for Tower to come up
       uri:
@@ -25,19 +22,10 @@
       delay: 30
       ignore_errors: true
 
-    - debug:
-        var: result
-
-    - name: Create a new token using username/password
-      awx.awx.tower_token:
-        description: 'Tower Config Token'
-        scope:                "write"
-        state:                 present
-        tower_host:           "{{ tower_hostname }}"
-        tower_username:        admin
-        tower_password:       "{{ tower_password }}"
-        tower_verify_ssl:     "{{ tower_verify_ssl | default('no') }}"
-      ignore_errors: true
+    - name: Sleep for 60 seconds and allow awx to come up.
+      wait_for:
+        timeout: 60
+      delegate_to: localhost
 
     - name: Include vars from tower_configs directory
       include_vars:
@@ -97,6 +85,9 @@
       include_role:
         name: job_launch
       when: tower_launch_jobs is defined
+
+    - debug:
+        var: launched_tower_jobs
 
     - name: Cancel Tower Jobs
       include_role:

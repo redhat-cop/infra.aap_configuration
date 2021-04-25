@@ -3,6 +3,7 @@ tower_workflows:
   - name: Complicated workflow schema
     description: a complicated workflow
     extra_vars: {}
+    state: present
     survey_enabled: true
     allow_simultaneous: false
     ask_variables_on_launch: false
@@ -284,6 +285,7 @@ tower_workflows:
     description: a basic workflow
     extra_vars: {}
     survey_enabled: false
+    state: present
     allow_simultaneous: false
     ask_variables_on_launch: false
     inventory:
