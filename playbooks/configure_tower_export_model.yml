@@ -7,28 +7,14 @@
     tower_validate_certs: false
   collections:
     - awx.awx
-  # Define following vars here, or in tower_configs/tower_auth.yml
-  # tower_hostname: ansible-tower-web-svc-test-project.example.com
-  # tower_username: admin
-  # tower_password: changeme
+
   pre_tasks:
-    - name: Include vars from tower_configs directory
-      include_vars:
-        dir: ./tower_configs_export_model
-        ignore_files: [README.md]
-        extensions: ["yml"]
 
-    - name: Create variable from command
-      command: "minikube service awx-service --url"
-      register: command_output
+    - debug:
+        var: tower_hostname
 
-    - debug: 
-        var: command_output.stdout
-
-    - name: Set Facts
-      set_fact:
-        tower_hostname: "{{ command_output.stdout }}"
-        tower_password: password
+    - debug:
+        var: tower_password
 
     - name: Wait for Tower to come up
       uri:
@@ -38,6 +24,12 @@
       until: result.status == 200
       retries: 20
       delay: 30
+
+    - name: Include vars from tower_configs directory
+      include_vars:
+        dir: ./tower_configs_export_model
+        ignore_files: [README.md]
+        extensions: ["yml"]
 
   roles:
     - {role: organizations, when: tower_organizations is defined, tags: organizations}

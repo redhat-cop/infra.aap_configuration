@@ -9,10 +9,10 @@
 
   pre_tasks:
 
-    - debug: 
+    - debug:
         var: tower_hostname
 
-    - debug: 
+    - debug:
         var: tower_password
 
     - name: Wait for Tower to come up
@@ -27,16 +27,6 @@
 
     - debug:
         var: result
-
-    - name: Check status of pods
-      command: "minikube kubectl get pods"
-      register: command_output
-      ignore_errors: true
-    - debug:
-        var: command_output
-
-    - debug:
-        var: command_output
 
     - name: Create a new token using username/password
       awx.awx.tower_token:

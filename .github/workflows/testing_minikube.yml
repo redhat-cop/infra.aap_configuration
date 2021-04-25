@@ -1,3 +1,4 @@
+---
 name: Run Test Playbooks Minikube
 
 on: [push, pull_request]
@@ -18,7 +19,7 @@ jobs:
         with:
           minikube version: 'v1.18.1'
           kubernetes version: 'v1.20.2'
-          start args: '--addons=ingress' 
+          start args: '--addons=ingress'
 
       - name: Interact with the cluster
         run: minikube kubectl get nodes
@@ -58,7 +59,6 @@ jobs:
           retry_wait_seconds: 30
           command: minikube service awx-service --url
 
-
       - name: minikube kubectl get pods
         run: minikube kubectl get pods
 
@@ -72,7 +72,6 @@ jobs:
       - name: Check service list
         run: minikube service list
 
-
       - name: Display Versions
         run: which python && pip --version && ansible --version
 
@@ -84,15 +83,6 @@ jobs:
 
       - name: Check Resources
         run: minikube kubectl describe nodes | grep "Allocated resources" -A 9
-
-      - name: minikube kubectl rollout status deployment/awx
-        run: minikube kubectl rollout status deployment/awx
-
-      - name: minikube kubectl logs deployment/awx-operator
-        run: minikube kubectl logs deployment/awx-operator
-
-#      - name: minikube kubectl describe pods awx-postgres-0
-#        run: minikube kubectl describe pods awx-postgres-0 
 
       - name: "Perform playbook tests"
         run: ansible-playbook playbooks/configure_tower.yml -e tower_hostname=${{ steps.service-url.outputs.SERVICEURL }} -e tower_username=admin -e tower_password=password

@@ -5,4 +5,4 @@ jmespath
 requests
 requests-oauthlib
 openshift
-kubernetes 
+kubernetes
