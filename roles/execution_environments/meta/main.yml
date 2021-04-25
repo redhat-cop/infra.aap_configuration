@@ -34,9 +34,8 @@ galaxy_info:
     - "tower"
     - "awx"
     - "execution"
+    - "environment"
     - "environments"
-    - "execution_environment"
-    - "execution_environments"
 
 collections:
   - awx.awx

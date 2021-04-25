@@ -6,11 +6,39 @@
     tower_validate_certs: false
   collections:
     - awx.awx
-  # Define following vars here, or in tower_configs/tower_auth.yml
-  # tower_hostname: ansible-tower-web-svc-test-project.example.com
-  # tower_username: admin
-  # tower_password: changeme
+
   pre_tasks:
+
+    - debug:
+        var: tower_hostname
+
+    - debug:
+        var: tower_password
+
+    - name: Wait for Tower to come up
+      uri:
+        url: "{{ tower_hostname }}/api/v2/ping"
+        status_code: 200
+      register: result
+      until: result.status == 200
+      retries: 80
+      delay: 30
+      ignore_errors: true
+
+    - debug:
+        var: result
+
+    - name: Create a new token using username/password
+      awx.awx.tower_token:
+        description: 'Tower Config Token'
+        scope:                "write"
+        state:                 present
+        tower_host:           "{{ tower_hostname }}"
+        tower_username:        admin
+        tower_password:       "{{ tower_password }}"
+        tower_verify_ssl:     "{{ tower_verify_ssl | default('no') }}"
+      ignore_errors: true
+
     - name: Include vars from tower_configs directory
       include_vars:
         dir: ./tower_configs

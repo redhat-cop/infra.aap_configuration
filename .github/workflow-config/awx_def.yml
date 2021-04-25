@@ -1,0 +1,24 @@
+---
+apiVersion: awx.ansible.com/v1beta1
+kind: AWX
+metadata:
+  name: awx
+spec:
+  deployment_type: awx
+  tower_replicas: 1
+  tower_admin_user: admin
+  tower_broadcast_websocket_secret: password
+  tower_ingress_type: Ingress
+  development_mode: true
+  # tower_image: ansible/awx:19.0.0 # replace this with desired image
+  tower_web_resource_requirements:
+    requests:
+      cpu: 250m
+    limits:
+      cpu: 300m
+  tower_task_resource_requirements:
+    requests:
+      cpu: 250m
+    limits:
+      cpu: 300m
+...

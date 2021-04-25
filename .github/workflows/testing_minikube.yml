@@ -1,0 +1,92 @@
+---
+name: Run Test Playbooks Minikube
+
+on: [push, pull_request]
+
+jobs:
+  Integration-test:
+    name: Deploy Tower to Minikube and run tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: "Install dependencies"
+        run: pip install -r .github/requirements.txt
+
+      - name: Setup Minikube
+        uses: manusa/actions-setup-minikube@v2.3.1
+        with:
+          minikube version: 'v1.18.1'
+          kubernetes version: 'v1.20.2'
+          start args: '--addons=ingress'
+
+      - name: Interact with the cluster
+        run: minikube kubectl get nodes
+
+      - name: Start AWX operator
+        run: minikube kubectl -- apply -f https://raw.githubusercontent.com/ansible/awx-operator/devel/deploy/awx-operator.yaml
+
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '20s'
+
+      - name: minikube kubectl get pods
+        run: minikube kubectl get nodes
+
+      - name: Deploy AWX
+        run: |
+          minikube kubectl get deployments
+          minikube kubectl apply -- -f .github/workflow-config/namespace.yml
+          minikube kubectl create secret generic awx-admin-password -- --from-literal=password=password
+          minikube addons enable ingress
+          minikube kubectl apply -- -f .github/workflow-config/awx_def.yml --wait
+
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '180s'
+
+      - name: minikube kubectl get pods
+        run: minikube kubectl get pods
+
+      - name: Check service URL
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 10
+          max_attempts: 25
+          retry_wait_seconds: 30
+          command: minikube service awx-service --url
+
+      - name: minikube kubectl get pods
+        run: minikube kubectl get pods
+
+      - name: Set service url
+        run: echo '::set-output name=SERVICEURL::$(minikube service awx-service --url)'
+        id: service-url
+
+      - name: Get service url
+        run: echo "Service URL is ${{ steps.service-url.outputs.SERVICEURL }}"
+
+      - name: Check service list
+        run: minikube service list
+
+      - name: Display Versions
+        run: which python && pip --version && ansible --version
+
+      - name: "Install Galaxy dependencies"
+        run: ansible-galaxy collection install -r .github/collections/requirements.yml
+
+      - name: Check logs
+        run: minikube kubectl logs deployment/awx-operator
+
+      - name: Check Resources
+        run: minikube kubectl describe nodes | grep "Allocated resources" -A 9
+
+      - name: "Perform playbook tests"
+        run: ansible-playbook playbooks/configure_tower.yml -e tower_hostname=${{ steps.service-url.outputs.SERVICEURL }} -e tower_username=admin -e tower_password=password
+
+      - name: "Perform export model playbook tests"
+        run: ansible-playbook playbooks/configure_tower_export_model.yml -e tower_hostname=${{ steps.service-url.outputs.SERVICEURL }} -e tower_username=admin -e tower_password=password
+...
