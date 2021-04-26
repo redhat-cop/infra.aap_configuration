@@ -1,6 +1,6 @@
 ---
 # Create Workflow
-- name: Create Workflow
+- name: Manage Workflows
   tower_workflow_job_template:
     name:                               "{{ workflow_loop_var.name | mandatory }}"
     new_name:                           "{{ workflow_loop_var.new_name | default(omit, true) }}"
@@ -10,6 +10,7 @@
     organization:                       "{{ workflow_loop_var.organization.name | default( workflow_loop_var.organization | default(omit, true)) }}"
     ask_variables_on_launch:            "{{ workflow_loop_var.ask_variables_on_launch | default('false') }}"  # only supported starting from Ansible 2.9
     inventory:                          "{{ workflow_loop_var.inventory | default(omit, true) }}"
+    execution_environment:              "{{ workflow_loop_var.execution_environment | default(omit, true) }}"
     limit:                              "{{ workflow_loop_var.limit | default(omit, true) }}"
     labels:                             "{{ workflow_loop_var.labels | default(workflow_loop_var.related.labels | default([]) | map(attribute='name') | list ) }}"
     scm_branch:                         "{{ workflow_loop_var.scm_branch | default(omit, true) }}"
