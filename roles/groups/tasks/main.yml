@@ -5,7 +5,7 @@
     new_name:                       "{{ tower_groups_item.new_name | default(omit, true) }}"
     description:                    "{{ tower_groups_item.description | default(omit, true) }}"
     inventory:                      "{{ tower_groups_item.inventory | mandatory }}"
-    variables:                      "{{ tower_groups_item.variables | default(omit, true) }}"
+    variables:                      "{{ tower_groups_item.variables | default(omit, true) | regex_replace('[ ]{2,}','') }}"
     hosts:                          "{{ tower_groups_item.hosts | default(omit, true) }}"
     children:                       "{{ tower_groups_item.children | default(omit, true) }}"
     state:                          "{{ tower_groups_item.state | default('present') }}"

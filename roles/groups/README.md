@@ -32,6 +32,22 @@ tower_configuration_groups_secure_logging defaults to the value of tower_configu
 |`tower_configuration_groups_secure_logging`|`False`|no|Whether or not to include the sensitive Group role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
+### Formating Variables
+Variables can use a standard Jinja templating format to describe the resource.
+
+Example:
+```json
+{{ variable }}
+```
+
+Because of this it is difficult to provide tower with the required format for these fields.
+
+The workaround is to use the following format:
+```json
+{  { variable }}
+```
+The role will strip the double space between the curly bracket in order to provide tower with the correct format for the Variables.
+
 ## Data Structure
 ### Variables
 |Variable Name|Default Value|Required|Description|

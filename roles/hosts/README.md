@@ -29,6 +29,22 @@ The role defaults to False as normally the add host task does not include sensit
 |`tower_configuration_host_secure_logging`|`False`|no|Whether or not to include the sensitive host role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
+### Formating Variables
+Variables can use a standard Jinja templating format to describe the resource.
+
+Example:
+```json
+{{ variable }}
+```
+
+Because of this it is difficult to provide tower with the required format for these fields.
+
+The workaround is to use the following format:
+```json
+{  { variable }}
+```
+The role will strip the double space between the curly bracket in order to provide tower with the correct format for the Variables.
+
 ## Data Structure
 ### Variables
 |Variable Name|Default Value|Required|Type|Description|

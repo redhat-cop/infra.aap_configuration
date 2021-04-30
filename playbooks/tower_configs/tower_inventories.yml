@@ -10,6 +10,9 @@ tower_inventories:
   - name: RHVM-01
     organization: Satellite
     description: created by Ansible Playbook - for RHVM-01
+    variables:
+      site_subnet: "{% raw %}{  % if site == 'SITE-2' %}10.200.{% else %}10.100.{% endif%}{% endraw %}"
+      remote_subnet: "{% raw %}{  % if site == 'SITE-2' %}10.100.{% else %}10.200.{% endif%}{% endraw %}"
   - name: RHVM-02
     organization: Satellite
     description: created by Ansible Playbook - for RHVM-02
