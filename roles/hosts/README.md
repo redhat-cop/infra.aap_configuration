@@ -100,7 +100,7 @@ tower_hosts:
 
     - name: Add Projects
       include_role:
-        name: tower_host
+        name: redhat_cop.tower_configuration.hosts
       vars:
         tower_host: "{{ host_json.tower_host }}"
 ```

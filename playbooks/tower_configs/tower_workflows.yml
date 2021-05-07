@@ -7,6 +7,7 @@ tower_workflows:
     allow_simultaneous: false
     ask_variables_on_launch: false
     inventory:
+    state: present
     limit:
     labels:
       - Prod
@@ -40,6 +41,7 @@ tower_workflows:
   - name: Simple workflow schema2
     description: a basic workflow
     extra_vars: {}
+    state: present
     allow_simultaneous: false
     ask_variables_on_launch: false
     inventory:
