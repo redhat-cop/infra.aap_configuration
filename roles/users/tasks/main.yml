@@ -11,11 +11,11 @@
     is_superuser:        "{{ tower_user_accounts_item.is_superuser | default(tower_user_accounts_item.superuser | default('false')) }}"
     update_secrets:      "{{ tower_user_accounts_item.update_secrets | default('false') }}"
     state:               "{{ tower_user_accounts_item.state | default(tower_state | default(omit, true)) }}"
-    tower_host:          "{{ tower_hostname }}"
+    tower_host:          "{{ tower_hostname | default(omit, true) }}"
     tower_username:      "{{ tower_username | default(omit, true) }}"
     tower_password:      "{{ tower_password | default(omit, true) }}"
     tower_oauthtoken:    "{{ tower_oauthtoken | default(omit, true) }}"
-    validate_certs:      "{{ tower_validate_certs | default('true') }}"
+    validate_certs:      "{{ tower_validate_certs | default(omit, true) }}"
     tower_config_file:   "{{ tower_config_file | default(omit, true) }}"
   loop: "{{ tower_user_accounts }}"
   loop_control:
