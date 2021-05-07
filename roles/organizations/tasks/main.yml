@@ -15,9 +15,9 @@
     tower_username:                     "{{ tower_username | default(omit, true) }}"
     tower_password:                     "{{ tower_password | default(omit, true) }}"
     tower_oauthtoken:                   "{{ tower_oauthtoken | default(omit, true) }}"
-    tower_host:                         "{{ tower_hostname }}"
+    tower_host:                         "{{ tower_hostname | default(omit, true) }}"
     tower_config_file:                  "{{ tower_config_file | default(omit, true) }}"
-    validate_certs:                     "{{ tower_validate_certs | default('true') }}"
+    validate_certs:                     "{{ tower_validate_certs | default(omit, true) }}"
   loop: "{{ tower_organizations }}"
   loop_control:
     loop_var: tower_organizations_item
