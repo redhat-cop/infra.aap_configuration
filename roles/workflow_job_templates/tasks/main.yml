@@ -21,6 +21,8 @@
     webhook_credential:                 "{{ workflow_loop_var.webhook_credential.name | default(workflow_loop_var.webhook_credential | default(omit, true)) }}"
     survey_enabled:                     "{{ workflow_loop_var.survey_enabled | default('false') }}"
     survey:                             "{{ workflow_loop_var.related.survey_spec | default( workflow_loop_var.survey_spec | default( workflow_loop_var.survey | default(omit, true))) }}"
+    schema:                             "{{ workflow_loop_var.related.workflow_nodes | default( workflow_loop_var.workflow_nodes | default(omit, true) ) }}"
+    destroy_current_schema:             "{{ workflow_loop_var.destroy_current_schema | default('false') }}"
     state:                              "{{ workflow_loop_var.state | default(tower_state | default('present')) }}"
     notification_templates_started:     "{{ workflow_loop_var.notification_templates_started | default(workflow_loop_var.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
     notification_templates_success:     "{{ workflow_loop_var.notification_templates_success | default(workflow_loop_var.related.notification_templates_success | default([]) | map(attribute='name') | list ) }}"
@@ -29,9 +31,9 @@
     tower_username:                     "{{ tower_username | default(omit, true) }}"
     tower_password:                     "{{ tower_password | default(omit, true) }}"
     tower_oauthtoken:                   "{{ tower_oauthtoken | default(omit, true) }}"
-    tower_host:                         "{{ tower_hostname }}"
+    tower_host:                         "{{ tower_hostname | default(omit, true) }}"
     tower_config_file:                  "{{ tower_config_file | default(omit, true) }}"
-    validate_certs:                     "{{ tower_validate_certs | default('true') }}"
+    validate_certs:                     "{{ tower_validate_certs | default(omit, true) }}"
   loop: "{{ tower_workflows }}"
   loop_control:
     loop_var: workflow_loop_var
@@ -43,5 +45,7 @@
   loop: "{{ tower_workflows }}"
   loop_control:
     loop_var: workflow_loop_var
-  when: workflow_loop_var.state == "present"
+  when:
+    - workflow_loop_var.simplified_workflow_nodes is defined
+
 ...
