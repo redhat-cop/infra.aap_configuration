@@ -8,3 +8,17 @@ releases:
     fragments:
     - initial.yml
     release_date: '2021-02-13'
+  0.2.0:
+    changes:
+      breaking_changes:
+      - Publish role - repo_name variable renamed to collection_name.
+      major_changes:
+      - Added ah_approval module to approve a colelction which has been uploaded.
+      - Added ah_collection_uploads module
+      - Publish role - Ability to approve role added
+      - Publish role - rewritten to use internal modules
+    fragments:
+    - ah_approval.yml
+    - ah_collection.yaml
+    - publish_role.yaml
+    release_date: '2021-05-13'
