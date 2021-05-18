@@ -106,9 +106,14 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
 |`type`|""|
 
 ### Workflow Data Structures
-This role accepts two data models. A simple starightforward easy to maintain model, and another based on the tower api. The 2nd one is more complicated and includes more detail, and is compatiable with tower import/export.
+This role accepts two data models.
+#### Simplified Workflow nodes
+A simple starightforward easy to maintain model using the var simplified_workflow_nodes.
+However this is, not compatable with the schema option on the tower_workflow_job_template module and will result in errors.
+Uses the variable 'simplified_workflow_nodes' to describe nodes as shown below.
 
-#### Standard Data structure model
+#### Simplified Workflow Node Data structure model
+##### Yaml Example
 ```yaml
 ---
 ---
@@ -129,7 +134,7 @@ tower_workflows:
     webhook_credential:
     organization: Default
     schedules: []
-    workflow_nodes:
+    simplified_workflow_nodes:
       - all_parents_must_converge: false
         identifier: node101
         unified_job_template: RHVM-01
@@ -157,6 +162,12 @@ tower_workflows:
     survey_spec: {}
 
 ```
+
+#### Tower Export Model
+This model is based off of the output from tower_export, that is based on the API.
+This is more complicated, However it allows the user to use the schema input on the role which runs much faster compared to the simplified model.
+This can be under the subvariable 'workflow_nodes' or under the subvariable 'related.workflow_nodes' which is the output of tower_export.
+
 #### Tower Export Data structure model
 ##### Yaml Example
 ```yaml
@@ -178,30 +189,20 @@ tower_workflows:
     webhook_credential:
     organization:
       name: Default
-    related:
-      schedules: []
-      workflow_nodes:
-        - all_parents_must_converge: false
-          identifier: node101
-          unified_job_template:
-            name: RHVM-01
-          related:
-            credentials: []
-            success_nodes:
-              - workflow_job_template:
-                  name: Simple workflow schema
-                identifier: node201
-            failure_nodes: []
-            always_nodes: []
-        - all_parents_must_converge: false
-          identifier: node201
-          unified_job_template:
-            name: test-template-1
-          related:
-            credentials: []
-            success_nodes: []
-            failure_nodes: []
-            always_nodes: []
+    workflow_nodes:
+      - all_parents_must_converge: false
+        identifier: node101
+        unified_job_template:
+          name: RHVM-01
+        related:
+          success_nodes:
+            - workflow_job_template:
+                name: Simple workflow schema
+              identifier: node201
+      - all_parents_must_converge: false
+        identifier: node201
+        unified_job_template:
+          name: test-template-1
       notification_templates_started: []
       notification_templates_success: []
       notification_templates_error: []

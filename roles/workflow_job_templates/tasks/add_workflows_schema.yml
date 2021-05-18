@@ -26,12 +26,9 @@
     tower_host:                     "{{ tower_hostname | default(omit, true) }}"
     tower_config_file:              "{{ tower_config_file | default(omit, true) }}"
     validate_certs:                 "{{ tower_validate_certs | default(omit, true) }}"
-  loop: "{{ workflow_loop_var.related.workflow_nodes | default( workflow_loop_var.workflow_nodes ) }}"
+  loop: "{{ workflow_loop_var.simplified_workflow_nodes }}"
   loop_control:
     loop_var: workflow_loop_node
-  when:
-    - workflow_loop_var.related.workflow_nodes is defined or workflow_loop_var.workflow_nodes is defined
-    - workflow_loop_node is iterable
   no_log: "{{ workflow_job_templates_secure_logging }}"
 
 # Create links between workflow node
@@ -50,15 +47,12 @@
     tower_host:                     "{{ tower_hostname | default(omit, true) }}"
     tower_config_file:              "{{ tower_config_file | default(omit, true) }}"
     validate_certs:                 "{{ tower_validate_certs | default(omit, true) }}"
-  loop: "{{ workflow_loop_var.related.workflow_nodes | default( workflow_loop_var.workflow_nodes ) }}"
+  loop: "{{ workflow_loop_var.simplified_workflow_nodes }}"
   loop_control:
     loop_var: workflow_loop_node
   no_log: "{{ workflow_job_templates_secure_logging }}"
   # Execute only the nodes that define links to the following
-  when: ((workflow_loop_node.related.always_nodes is defined and workflow_loop_node.related.always_nodes | length > 0 ) or
-        (workflow_loop_node.related.success_nodes is defined and workflow_loop_node.related.success_nodes | length > 0 ) or
-        (workflow_loop_node.related.failure_nodes is defined and workflow_loop_node.related.failure_nodes | length > 0 )) or
-        ((workflow_loop_node.always_nodes is defined and workflow_loop_node.always_nodes | length > 0 ) or
+  when: ((workflow_loop_node.always_nodes is defined and workflow_loop_node.always_nodes | length > 0 ) or
         (workflow_loop_node.success_nodes is defined and workflow_loop_node.success_nodes | length > 0 ) or
         (workflow_loop_node.failure_nodes is defined and workflow_loop_node.failure_nodes | length > 0 ))
 ...

@@ -22,7 +22,7 @@ jobs:
           start args: '--addons=ingress'
 
       - name: Start AWX operator
-        run: minikube kubectl -- apply -f .github/workflow-config/kube/awx-operator.yaml
+        run: minikube kubectl -- apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.9.0/deploy/awx-operator.yaml
 
       - name: Wait / Sleep
         uses: jakejarvis/wait-action@v0.1.0
