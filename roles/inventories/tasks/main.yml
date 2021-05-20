@@ -4,7 +4,7 @@
     name:                 "{{ inventory.name | mandatory }}"
     description:          "{{ inventory.description | default(omit, true) }}"
     organization:         "{{ inventory.organization.name | default( inventory.organization ) | mandatory }}"
-    variables:            "{{ inventory.variables | default(omit, true) }}"
+    variables:            "{{ inventory.variables | default(omit, true) | regex_replace('[ ]{2,}','') }}"
     kind:                 "{{ inventory.kind | default(omit, true) }}"
     host_filter:          "{{ inventory.host_filter | default(omit, true) }}"
     insights_credential:  "{{ inventory.insights_credential | default(omit, true) }}"
