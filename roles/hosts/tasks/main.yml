@@ -7,7 +7,7 @@
     inventory:         "{{ tower_hosts_item.inventory | mandatory }}"
     enabled:           "{{ tower_hosts_item.enabled | default(true) }}"
     state:             "{{ tower_hosts_item.state | default(tower_state | default('present')) }}"
-    variables:         "{{ tower_hosts_item.variables | default(omit, true) }}"
+    variables:         "{{ tower_hosts_item.variables | default(omit, true) | regex_replace('[ ]{2,}','') }}"
     tower_host:        "{{ tower_hostname | default(omit, true) }}"
     tower_username:    "{{ tower_username | default(omit, true) }}"
     tower_password:    "{{ tower_password | default(omit, true) }}"
