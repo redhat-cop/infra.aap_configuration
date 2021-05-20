@@ -1,4 +1,4 @@
-# Redhat Communties of Practice Tower Configuration Collection
+# Red Hat Communties of Practice Tower Configuration Collection
 
 ![Ansible Lint](https://github.com/redhat-cop/tower_configuration/workflows/Ansible%20Lint/badge.svg)
 ![Galaxy Release](https://github.com/redhat-cop/tower_configuration/workflows/galaxy-release/badge.svg)
