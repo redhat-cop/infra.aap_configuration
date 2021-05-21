@@ -1,0 +1,3 @@
+---
+major_changes:
+  - Added ah_repository module to configure the remote repositories for Automation Hub.
