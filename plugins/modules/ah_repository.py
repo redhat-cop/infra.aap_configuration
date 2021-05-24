@@ -137,7 +137,7 @@ def main():
 
     # If the state was present and we can let the module build or update the existing item, this will return on its own
     endpoint = "api/galaxy/content/{0}/v3/sync/config".format(name)
-    existing_item = module.get_only(endpoint, name_or_id=name)
+    existing_item = module.get_only(endpoint, name_or_id=name, key="req_url")
     module.create_or_update_if_needed(existing_item, new_fields, endpoint, "repository config", require_id=False, fixed_url=endpoint)
 
 

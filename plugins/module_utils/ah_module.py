@@ -298,7 +298,7 @@ class AHModule(AnsibleModule):
 
         return self.existing_item_add_url(response["json"]["data"][0], endpoint)
 
-    def get_only(self, endpoint, name_or_id=None, allow_none=True, **kwargs):
+    def get_only(self, endpoint, name_or_id=None, allow_none=True, key="url", **kwargs):
         new_kwargs = kwargs.copy()
         if name_or_id:
             name_field = self.get_name_field_from_endpoint(endpoint)
@@ -321,7 +321,7 @@ class AHModule(AnsibleModule):
                 fail_msg += ", detail: {0}".format(response["json"]["detail"])
             self.fail_json(msg=fail_msg)
 
-        return self.existing_item_add_url(response["json"], endpoint)
+        return self.existing_item_add_url(response["json"], endpoint, key=key)
 
     def authenticate(self, **kwargs):
         if self.username and self.password:
@@ -369,9 +369,9 @@ class AHModule(AnsibleModule):
         # If we have neither of these, then we can try un-authenticated access
         self.authenticated = True
 
-    def existing_item_add_url(self, existing_item, endpoint):
+    def existing_item_add_url(self, existing_item, endpoint, key="url"):
         # Add url and type to response as its missing in current iteration of Automation Hub.
-        existing_item["url"] = "{0}{1}/".format(self.build_url(endpoint).geturl()[len(self.host) :], existing_item["name"])
+        existing_item[key] = "{0}{1}/".format(self.build_url(endpoint).geturl()[len(self.host) :], existing_item["name"])
         existing_item["type"] = endpoint
         return existing_item
 
