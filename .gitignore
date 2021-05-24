@@ -6,3 +6,4 @@ collections/*
 temp_test_module.yml
 test_playbook.yml
 test/
+.vscode
