@@ -118,7 +118,7 @@ def main():
 
     requirements_file = "\n  - ".join(requirements)
     new_fields = {}
-    new_fields['requirements_file'] = "---\ncollections:\n  - " + requirements_file
+    new_fields["requirements_file"] = "---\ncollections:\n  - " + requirements_file
 
     for field_name in (
         "url",

@@ -450,10 +450,22 @@ class AHModule(AnsibleModule):
         return self.make_request("DELETE", endpoint, **kwargs)
 
     def create_or_update_if_needed(
-        self, existing_item, new_item, endpoint=None, item_type="unknown", on_create=None, on_update=None, auto_exit=True, associations=None, require_id=True, fixed_url=None,
+        self,
+        existing_item,
+        new_item,
+        endpoint=None,
+        item_type="unknown",
+        on_create=None,
+        on_update=None,
+        auto_exit=True,
+        associations=None,
+        require_id=True,
+        fixed_url=None,
     ):
         if existing_item:
-            return self.update_if_needed(existing_item, new_item, on_update=on_update, auto_exit=auto_exit, associations=associations, require_id=require_id, fixed_url=fixed_url)
+            return self.update_if_needed(
+                existing_item, new_item, on_update=on_update, auto_exit=auto_exit, associations=associations, require_id=require_id, fixed_url=fixed_url
+            )
         else:
             return self.create_if_needed(
                 existing_item, new_item, endpoint, on_create=on_create, item_type=item_type, auto_exit=auto_exit, associations=associations
