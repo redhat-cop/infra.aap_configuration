@@ -5,6 +5,14 @@ redhat_cop.ah_configuration Release Notes
 .. contents:: Topics
 
 
+v0.3.0
+======
+
+Major Changes
+-------------
+
+- Added ah_repository module to configure the remote repositories for Automation Hub.
+
 v0.2.0
 ======
 
