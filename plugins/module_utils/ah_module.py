@@ -298,6 +298,31 @@ class AHModule(AnsibleModule):
 
         return self.existing_item_add_url(response["json"]["data"][0], endpoint)
 
+    def get_only(self, endpoint, name_or_id=None, allow_none=True, key="url", **kwargs):
+        new_kwargs = kwargs.copy()
+        if name_or_id:
+            name_field = self.get_name_field_from_endpoint(endpoint)
+            new_data = kwargs.get("data", {}).copy()
+            if name_field in new_data:
+                self.fail_json(msg="You can't specify the field {0} in your search data if using the name_or_id field".format(name_field))
+
+            try:
+                new_data["or__id"] = int(name_or_id)
+                new_data["or__{0}".format(name_field)] = name_or_id
+            except ValueError:
+                # If we get a value error, then we didn't have an integer so we can just pass and fall down to the fail
+                new_data[name_field] = name_or_id
+            new_kwargs["data"] = new_data
+
+        response = self.get_endpoint(endpoint, **new_kwargs)
+        if response["status_code"] != 200:
+            fail_msg = "Got a {0} response when trying to get from {1}".format(response["status_code"], endpoint)
+            if "detail" in response.get("json", {}):
+                fail_msg += ", detail: {0}".format(response["json"]["detail"])
+            self.fail_json(msg=fail_msg)
+
+        return self.existing_item_add_url(response["json"], endpoint, key=key)
+
     def authenticate(self, **kwargs):
         if self.username and self.password:
             # Attempt to get a token from /v3/auth/token/ by giving it our username/password combo
@@ -344,9 +369,9 @@ class AHModule(AnsibleModule):
         # If we have neither of these, then we can try un-authenticated access
         self.authenticated = True
 
-    def existing_item_add_url(self, existing_item, endpoint):
+    def existing_item_add_url(self, existing_item, endpoint, key="url"):
         # Add url and type to response as its missing in current iteration of Automation Hub.
-        existing_item["url"] = "{0}{1}/".format(self.build_url(endpoint).geturl()[len(self.host) :], existing_item["name"])
+        existing_item[key] = "{0}{1}/".format(self.build_url(endpoint).geturl()[len(self.host) :], existing_item["name"])
         existing_item["type"] = endpoint
         return existing_item
 
@@ -425,10 +450,22 @@ class AHModule(AnsibleModule):
         return self.make_request("DELETE", endpoint, **kwargs)
 
     def create_or_update_if_needed(
-        self, existing_item, new_item, endpoint=None, item_type="unknown", on_create=None, on_update=None, auto_exit=True, associations=None
+        self,
+        existing_item,
+        new_item,
+        endpoint=None,
+        item_type="unknown",
+        on_create=None,
+        on_update=None,
+        auto_exit=True,
+        associations=None,
+        require_id=True,
+        fixed_url=None,
     ):
         if existing_item:
-            return self.update_if_needed(existing_item, new_item, on_update=on_update, auto_exit=auto_exit, associations=associations)
+            return self.update_if_needed(
+                existing_item, new_item, on_update=on_update, auto_exit=auto_exit, associations=associations, require_id=require_id, fixed_url=fixed_url
+            )
         else:
             return self.create_if_needed(
                 existing_item, new_item, endpoint, on_create=on_create, item_type=item_type, auto_exit=auto_exit, associations=associations
@@ -584,7 +621,7 @@ class AHModule(AnsibleModule):
             else:
                 self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["status_code"]))
 
-    def update_if_needed(self, existing_item, new_item, on_update=None, auto_exit=True, associations=None):
+    def update_if_needed(self, existing_item, new_item, on_update=None, auto_exit=True, associations=None, require_id=True, fixed_url=None):
         # This will exit from the module on its own
         # If the method successfully updates an item and on_update param is defined,
         #   the on_update parameter will be called as a method pasing in this object and the json from the response
@@ -596,10 +633,10 @@ class AHModule(AnsibleModule):
         if existing_item:
             # If we have an item, we can see if it needs an update
             try:
-                item_url = existing_item["url"]
+                item_url = fixed_url or existing_item["url"]
                 item_type = existing_item["type"]
                 item_name = existing_item["name"]
-                item_id = existing_item["id"]
+                item_id = require_id and existing_item["id"]
             except KeyError as ke:
                 self.fail_json(msg="Unable to process update of item due to missing data {0}".format(ke))
 
@@ -619,7 +656,7 @@ class AHModule(AnsibleModule):
                 elif "json" in response and "__all__" in response["json"]:
                     self.fail_json(msg=response["json"]["__all__"])
                 else:
-                    self.fail_json(**{"msg": "Unable to update {0} {1}, see response".format(item_type, item_name), "response": response})
+                    self.fail_json(**{"msg": "Unable to update {0} {1}, see response".format(item_type, item_name), "response": response, "input": new_item})
 
         else:
             raise RuntimeError("update_if_needed called incorrectly without existing_item")
