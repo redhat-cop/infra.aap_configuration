@@ -82,13 +82,13 @@ def main():
     interval = module.params.get("interval")
     timeout = module.params.get("timeout")
 
-    sync_endpoint  = "api/galaxy/content/{0}/v3/sync".format(name)
+    sync_endpoint = "api/galaxy/content/{0}/v3/sync".format(name)
     config_endpoint = "{0}/config".format(sync_endpoint)
 
     repository = module.get_only(config_endpoint, name_or_id=name, key="req_url")
 
     if repository is None:
-      module.fail_json(msg="Unable to find repository")
+        module.fail_json(msg="Unable to find repository")
 
     result = module.post_endpoint(sync_endpoint)
     if result["status_code"] != 200:
@@ -124,6 +124,7 @@ def main():
     module.wait_sync_output(result)
 
     module.exit_json(**module.json_output)
+
 
 if __name__ == "__main__":
     main()
