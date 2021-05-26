@@ -22,3 +22,11 @@ releases:
     - ah_collection.yaml
     - publish_role.yaml
     release_date: '2021-05-13'
+  0.3.0:
+    changes:
+      major_changes:
+      - Added ah_repository module to configure the remote repositories for Automation
+        Hub.
+    fragments:
+    - ah_repository.yml
+    release_date: '2021-05-25'
