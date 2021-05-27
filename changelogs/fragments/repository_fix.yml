@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Fixes issue in ah_repository where not specifying a requirements list causedd a failure.
+...
