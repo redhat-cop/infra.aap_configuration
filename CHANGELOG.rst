@@ -5,6 +5,14 @@ redhat_cop.ah_configuration Release Notes
 .. contents:: Topics
 
 
+v0.3.1
+======
+
+Bugfixes
+--------
+
+- Fixes issue in ah_repository where not specifying a requirements list causedd a failure.
+
 v0.3.0
 ======
 
