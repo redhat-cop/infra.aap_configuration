@@ -1,0 +1,4 @@
+---
+major_changes:
+  - Added ah_repository_sync module to sync remote repositories for Automation Hub.
+...

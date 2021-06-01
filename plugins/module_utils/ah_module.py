@@ -807,6 +807,10 @@ class AHModule(AnsibleModule):
             else:
                 self.fail_json(msg=err)
 
+    def wait_sync_output(self, response):
+        for k in ("task_id", "state", "started_at", "finished_at"):
+            self.json_output[k] = response["last_sync_task"].get(k)
+
     @staticmethod
     def _resolve_path(path):
         return os.path.abspath(os.path.expanduser(os.path.expandvars(path)))

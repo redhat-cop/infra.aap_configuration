@@ -14,7 +14,7 @@ ANSIBLE_METADATA = {"metadata_version": "1.1", "status": ["preview"], "supported
 
 DOCUMENTATION = """
 ---
-module: ah_namespace
+module: ah_repository
 author: "Tom Page (@Tompage1994)"
 short_description: Configure a repository.
 description:
