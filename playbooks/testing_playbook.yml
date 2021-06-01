@@ -62,4 +62,12 @@
       ah_repository_sync:
         name: community
         wait: true
+
+    - name: Configure community repo
+      ah_repository:
+        name: rh-certified
+        url: https://cloud.redhat.com/api/automation-hub/
+        auth_url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+        token: aabbcc
+
 ...

@@ -114,11 +114,12 @@ def main():
 
     # Extract our parameters
     name = module.params.get("name")
-    requirements = module.params.get("requirements")
-
-    requirements_file = "\n  - ".join(requirements)
     new_fields = {}
-    new_fields["requirements_file"] = "---\ncollections:\n  - " + requirements_file
+
+    requirements = module.params.get("requirements")
+    if requirements:
+        requirements_file = "\n  - ".join(requirements)
+        new_fields["requirements_file"] = "---\ncollections:\n  - " + requirements_file
 
     for field_name in (
         "url",

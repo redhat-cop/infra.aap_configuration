@@ -30,3 +30,11 @@ releases:
     fragments:
     - ah_repository.yml
     release_date: '2021-05-25'
+  0.3.1:
+    changes:
+      bugfixes:
+      - Fixes issue in ah_repository where not specifying a requirements list causedd
+        a failure.
+    fragments:
+    - repository_fix.yml
+    release_date: '2021-05-27'
