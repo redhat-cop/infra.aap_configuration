@@ -33,6 +33,11 @@ plugins:
       name: ah_repository
       namespace: ''
       version_added: null
+    ah_repository_sync:
+      description: Configure a repository.
+      name: ah_repository_sync
+      namespace: ''
+      version_added: null
     ah_token:
       description: create, update, or destroy Automation Hub tokens.
       name: ah_token
@@ -42,4 +47,4 @@ plugins:
   shell: {}
   strategy: {}
   vars: {}
-version: 0.3.1
+version: 0.4.0
