@@ -5,6 +5,14 @@ redhat_cop.ah_configuration Release Notes
 .. contents:: Topics
 
 
+v0.4.0
+======
+
+Major Changes
+-------------
+
+- Added ah_repository_sync module to sync remote repositories for Automation Hub.
+
 v0.3.1
 ======
 

@@ -38,3 +38,11 @@ releases:
     fragments:
     - repository_fix.yml
     release_date: '2021-05-27'
+  0.4.0:
+    changes:
+      major_changes:
+      - Added ah_repository_sync module to sync remote repositories for Automation
+        Hub.
+    fragments:
+    - ah_repo_sync.yml
+    release_date: '2021-06-01'
