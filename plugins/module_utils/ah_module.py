@@ -212,7 +212,14 @@ class AHModule(AnsibleModule):
             elif he.code == 404:
                 if kwargs.get("return_none_on_404", False):
                     return None
-                self.fail_json(msg="The requested object could not be found at {0}.".format(url.path))
+                if kwargs.get("return_errors_on_404", False):
+                    page_data = he.read()
+                    try:
+                        return {"status_code": he.code, "json": loads(page_data)}
+                    # JSONDecodeError only available on Python 3.5+
+                    except ValueError:
+                        return {"status_code": he.code, "text": page_data}
+                self.fail_json(msg="The requested object could not be found at {0}.".format(url.path), response=he)
             # Sanity check: Did we get a 405 response?
             # A 405 means we used a method that isn't allowed. Usually this is a bad request, but it requires special treatment because the
             # API sends it as a logic error in a few situations (e.g. trying to cancel a job that isn't running).
@@ -608,7 +615,7 @@ class AHModule(AnsibleModule):
 
     def upload(self, path, endpoint, auto_exit=True, item_type="unknown"):
         ct, body = self.prepare_multipart(path)
-        response = self.make_request("POST", endpoint, **{"data": body, "headers": {"Content-Type": str(ct)}, "binary": True})
+        response = self.make_request("POST", endpoint, **{"data": body, "headers": {"Content-Type": str(ct)}, "binary": True, "return_errors_on_404": True})
         if response["status_code"] in [202]:
             self.json_output["path"] = path
             self.json_output["changed"] = True
@@ -616,6 +623,8 @@ class AHModule(AnsibleModule):
         else:
             if "json" in response and "__all__" in response["json"]:
                 self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]["__all__"][0]))
+            elif "json" in response and "errors" in response["json"] and "detail" in response["json"]["errors"][0]:
+                self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]["errors"][0]["detail"]))
             elif "json" in response:
                 self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]))
             else:
