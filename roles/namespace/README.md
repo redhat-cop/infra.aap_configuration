@@ -58,7 +58,7 @@ ah_configuration_namespace_secure_logging defaults to the value of ah_configurat
 #### Ymal Example
 ```yaml
 ---
-ah_namespace:
+ah_namespaces:
   - name: abc15
     company: Redhat
     email: user@example.com
