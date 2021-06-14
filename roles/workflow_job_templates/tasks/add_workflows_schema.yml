@@ -10,7 +10,7 @@
     job_tags:                       "{{ workflow_loop_node.job_tags | default(omit, true) }}"
     skip_tags:                      "{{ workflow_loop_node.skip_tags | default(omit, true) }}"
     limit:                          "{{ workflow_loop_node.limit | default(omit, true) }}"
-    diff_mode:                      "{{ workflow_loop_node.diff_mode | default ('false') }}"
+    diff_mode:                      "{{ workflow_loop_node.diff_mode | default (omit) }}"
     verbosity:                      "{{ workflow_loop_node.verbosity | default(omit, true) }}"
     credentials:                    "{{ workflow_loop_node.credentials | default(workflow_loop_node.related.credentials | default([]) | map(attribute='name') | list ) }}"
     workflow_job_template:          "{{ workflow_loop_node.workflow_job_template.name | default( workflow_loop_node.workflow_job_template | default(omit, true) ) }}"
@@ -25,7 +25,7 @@
     tower_oauthtoken:               "{{ tower_oauthtoken | default(omit, true) }}"
     tower_host:                     "{{ tower_hostname | default(omit, true) }}"
     tower_config_file:              "{{ tower_config_file | default(omit, true) }}"
-    validate_certs:                 "{{ tower_validate_certs | default(omit, true) }}"
+    validate_certs:                 "{{ tower_validate_certs | default(omit) }}"
   loop: "{{ workflow_loop_var.simplified_workflow_nodes }}"
   loop_control:
     loop_var: workflow_loop_node
@@ -49,7 +49,7 @@
     validate_certs:                 "{{ tower_validate_certs | default(omit, true) }}"
   loop: "{{ workflow_loop_var.simplified_workflow_nodes }}"
   loop_control:
-    loop_var: workflow_loop_node
+    loop_var: workflow_loop_node"{{ tower_validate_certs | default(omit) }}"
   no_log: "{{ workflow_job_templates_secure_logging }}"
   # Execute only the nodes that define links to the following
   when: ((workflow_loop_node.always_nodes is defined and workflow_loop_node.always_nodes | length > 0 ) or
