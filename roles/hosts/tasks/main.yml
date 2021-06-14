@@ -5,7 +5,7 @@
     new_name:          "{{ tower_hosts_item.new_name | default(omit, true) }}"
     description:       "{{ tower_hosts_item.description | default(omit, true) }}"
     inventory:         "{{ tower_hosts_item.inventory | mandatory }}"
-    enabled:           "{{ tower_hosts_item.enabled | default(true) }}"
+    enabled:           "{{ tower_hosts_item.enabled | default(omit) }}"
     state:             "{{ tower_hosts_item.state | default(tower_state | default('present')) }}"
     variables:         "{{ tower_hosts_item.variables | default(omit, true) | regex_replace('[ ]{2,}','') }}"
     tower_host:        "{{ tower_hostname | default(omit, true) }}"
@@ -13,7 +13,7 @@
     tower_password:    "{{ tower_password | default(omit, true) }}"
     tower_oauthtoken:  "{{ tower_oauthtoken | default(omit, true) }}"
     tower_config_file: "{{ tower_config_file | default(omit, true) }}"
-    validate_certs:    "{{ tower_validate_certs | default(omit, true) }}"
+    validate_certs:    "{{ tower_validate_certs | default(omit) }}"
   loop: "{{ tower_hosts }}"
   loop_control:
     loop_var: tower_hosts_item
