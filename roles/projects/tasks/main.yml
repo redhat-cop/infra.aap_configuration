@@ -31,8 +31,8 @@
     tower_oauthtoken:               "{{ tower_oauthtoken | default(omit, true) }}"
     tower_host:                     "{{ tower_hostname | default(omit, true) }}"
     tower_config_file:              "{{ tower_config_file | default(omit, true) }}"
-    validate_certs:                 "{{ tower_validate_certs | default(omit, true) }}"
-  loop: "{{ tower_projects }}""{{ tower_validate_certs | default(omit) }}"
+    validate_certs:                 "{{ tower_validate_certs | default(omit) }}"
+  loop: "{{ tower_projects }}"
   loop_control:
     loop_var: tower_projects_item
   no_log: "{{ tower_configuration_projects_secure_logging }}"
