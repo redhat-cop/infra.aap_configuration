@@ -39,6 +39,7 @@ This role accepts two data models. A simple straightforward easy to maintain mod
 |`description`|`False`|no|Description of  of Organization.|
 |`custom_virtualenv`|""|no|Local absolute file path containing a custom Python virtualenv to use.|
 |`max_hosts`|""|no|The max hosts allowed in this organization.|
+|`galaxy_credentials`|""|no|The credentials to use with private automationhub.|
 |`default_environment`|""|no|Default Execution Environment to use for jobs owned by the Organization.|
 |`notification_templates_started`|""|no|The notifications on started to use for this organization in a list.|
 |`notification_templates_success`|""|no|The notifications on success to use for this organization in a list.|
@@ -61,6 +62,7 @@ This role accepts two data models. A simple straightforward easy to maintain mod
         "description": "This is the Automation Group",
         "custom_virtualenv": "/opt/cust/enviroment/",
         "max_hosts": 10,
+        "galaxy_credentials": "Automation Hub",
         "notification_templates_error": [
           "Slack_for_testing"
         ]
@@ -98,7 +100,9 @@ tower_organizations:
 - name: Default
   description: Default
   max_hosts: 0
-  custom_virtualenv:
+  custom_virtualenv:  
+  galaxy_credentials:
+    - Automation Hub  
   related:
     notification_templates_started: []
     notification_templates_success: []
