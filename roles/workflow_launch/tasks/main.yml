@@ -8,7 +8,7 @@
     limit:                    "{{ __workflow_launch_item.limit | default(omit, true) }}"
     scm_branch:               "{{ __workflow_launch_item.scm_branch | default(omit, true) }}"
     extra_vars:               "{{ __workflow_launch_item.extra_vars | default(omit, true) }}"
-    wait:                     "{{ __workflow_launch_item.wait | default('false') }}"
+    wait:                     "{{ __workflow_launch_item.wait | default(omit) }}"
     interval:                 "{{ __workflow_launch_item.interval | default(1) }}"
     timeout:                  "{{ __workflow_launch_item.timeout | default(omit, true) }}"
 
@@ -18,7 +18,7 @@
     tower_oauthtoken:   "{{ tower_oauthtoken | default(omit, true) }}"
     tower_host:         "{{ tower_hostname | default(omit, true) }}"
     tower_config_file:  "{{ tower_config_file | default(omit, true) }}"
-    validate_certs:     "{{ tower_validate_certs | default(omit, true) }}"
+    validate_certs:     "{{ tower_validate_certs | default(omit) }}"
   loop: "{{ tower_workflow_launch_jobs }}"
   loop_control:
     loop_var: "__workflow_launch_item"
