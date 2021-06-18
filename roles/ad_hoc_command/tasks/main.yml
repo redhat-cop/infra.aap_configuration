@@ -12,9 +12,9 @@
     forks:                  "{{ __ad_hoc_command_item.forks | default(omit, true) }}"
     verbosity:              "{{ __ad_hoc_command_item.verbosity | default(omit, true) }}"
     extra_vars:             "{{ __ad_hoc_command_item.extra_vars | default(omit, true) }}"
-    become_enabled:         "{{ __ad_hoc_command_item.become_enabled | default('false') }}"
-    diff_mode:              "{{ __ad_hoc_command_item.diff_mode | default('false') }}"
-    wait:                   "{{ __ad_hoc_command_item.wait | default('false') }}"
+    become_enabled:         "{{ __ad_hoc_command_item.become_enabled | default(omit) }}"
+    diff_mode:              "{{ __ad_hoc_command_item.diff_mode | default(omit) }}"
+    wait:                   "{{ __ad_hoc_command_item.wait | default(omit) }}"
     interval:               "{{ __ad_hoc_command_item.interval | default(1) }}"
     timeout:                "{{ __ad_hoc_command_item.timeout | default(omit, true) }}"
 
@@ -24,7 +24,7 @@
     tower_oauthtoken:       "{{ tower_oauthtoken | default(omit, true) }}"
     tower_host:             "{{ tower_hostname | default(omit, true) }}"
     tower_config_file:      "{{ tower_config_file | default(omit, true) }}"
-    validate_certs:         "{{ tower_validate_certs | default(omit, true) }}"
+    validate_certs:         "{{ tower_validate_certs | default(omit) }}"
   loop: "{{ tower_ad_hoc_commands }}"
   loop_control:
     loop_var: "__ad_hoc_command_item"
