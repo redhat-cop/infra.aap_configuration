@@ -13,12 +13,6 @@
   # tower_password: changeme
   pre_tasks:
 
-    - debug:
-        var: tower_hostname
-
-    - debug:
-        var: tower_password
-
     - name: Wait for Tower to come up
       uri:
         url: "{{ tower_hostname }}/api/v2/ping"
