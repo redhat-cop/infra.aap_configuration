@@ -100,9 +100,9 @@ tower_organizations:
 - name: Default
   description: Default
   max_hosts: 0
-  custom_virtualenv:  
+  custom_virtualenv:
   galaxy_credentials:
-    - Automation Hub  
+    - Automation Hub
   related:
     notification_templates_started: []
     notification_templates_success: []
