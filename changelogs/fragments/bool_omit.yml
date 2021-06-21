@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Changes all boolean variables to have their default values omitted rather than using the value 'default(omit, true)' which prevents a falsy value being supplied.
-...
