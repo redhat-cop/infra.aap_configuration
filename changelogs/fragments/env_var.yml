@@ -1,2 +1,0 @@
-bugfixes:
-  - Allow tower_hostname and tower_validate_certs to not be set in favour of environment variables being set as per module defaults.
