@@ -49,7 +49,7 @@
     validate_certs:                 "{{ tower_validate_certs | default(omit, true) }}"
   loop: "{{ workflow_loop_var.simplified_workflow_nodes }}"
   loop_control:
-    loop_var: workflow_loop_node"{{ tower_validate_certs | default(omit) }}"
+    loop_var: workflow_loop_node
   no_log: "{{ workflow_job_templates_secure_logging }}"
   # Execute only the nodes that define links to the following
   when: ((workflow_loop_node.always_nodes is defined and workflow_loop_node.always_nodes | length > 0 ) or

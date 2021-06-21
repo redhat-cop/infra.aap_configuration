@@ -34,10 +34,6 @@
         extensions: ["yml"]
       tags:
         - always
-    - debug:
-        var: playbook_dir
-    - debug:
-        var: ansible_config_file
 
   roles:
     - {role: tower_settings, when: tower_settings is defined, tags: tower_settings}
@@ -48,11 +44,12 @@
     - {role: credential_types, when: tower_credential_types is defined, tags: credential_types}
     - {role: credentials, when: tower_credentials is defined, tags: credentials}
     - {role: credential_input_sources, when: tower_credential_input_sources is defined, tags: credential_input_sources}
+    - {role: notification_templates, when: tower_notifications is defined, tags: notification_templates}
+    - {role: projects, when: tower_projects is defined, tags: projects}
     - {role: execution_environments, when: tower_execution_environments is defined, tags: execution_environments}
     - {role: applications, when: tower_applications is defined, tags: applications}
     - {role: inventories, when: tower_inventories is defined, tags: inventories}
     - {role: instance_groups, when: tower_instance_groups is defined, tags: instance_groups}
-    - {role: projects, when: tower_projects is defined, tags: projects}
     - {role: project_update, when: tower_projects is defined, tags: projects}
     - {role: inventory_sources, when: tower_inventory_sources is defined, tags: inventory_sources}
     - {role: inventory_source_update, when: tower_inventory_sources is defined, tags: inventory_sources}
@@ -61,7 +58,6 @@
     - {role: job_templates, when: tower_templates is defined, tags: job_templates}
     - {role: workflow_job_templates, when: tower_workflows is defined, tags: workflow_job_templates}
     - {role: schedules, when: tower_schedules is defined, tags: schedules}
-    - {role: notification_templates, when: tower_notifications is defined, tags: notification_templates}
     - {role: tower_role, when: tower_rbac is defined, tags: tower_role}
 
   tasks:
@@ -86,7 +82,8 @@
         name: job_launch
       when: tower_launch_jobs is defined
 
-    - debug:
+    - name: Show launched tower jobs
+      debug:
         var: launched_tower_jobs
 
     - name: Cancel Tower Jobs
