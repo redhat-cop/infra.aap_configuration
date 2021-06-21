@@ -1,5 +1,0 @@
----
-major_changes:
-  - Removed testing via playbook install that was removed in awx 18.0.0.
-  - Updated testing via playbook to use minikube + operator install.
-...

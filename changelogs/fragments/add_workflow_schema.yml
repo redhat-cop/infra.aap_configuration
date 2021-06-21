@@ -1,9 +1,0 @@
----
-breaking_changes:
-  - Workflow Schemas to describe Workflow nodes have changed.
-  - If you do not change the data model, change the variable 'workflow_nodes' to 'simplified_workflow_nodes'.
-  - The Tower export model is now the default to use under workflow nodes. This is documented in the workflow job templates Readme.
-  - Examples can also be found in the playbooks/tower_configs_export_model/tower_workflows.yml
-  - Users using the tower export model previously, do not need to make any changes.
-  - More information can be found either in the Workflow Job Template Readme or on the awx.awx.tower_workflow_job_template Documentation.
-...
