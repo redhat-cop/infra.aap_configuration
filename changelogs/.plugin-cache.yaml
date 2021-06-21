@@ -1,3 +1,5 @@
+objects:
+  role: {}
 plugins:
   become: {}
   cache: {}
@@ -12,4 +14,4 @@ plugins:
   shell: {}
   strategy: {}
   vars: {}
-version: 1.4.1
+version: 1.5.0
