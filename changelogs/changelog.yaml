@@ -133,3 +133,30 @@ releases:
     - exec_env.yml
     - jt_bug_fix.yml
     release_date: '2021-04-21'
+  1.5.0:
+    changes:
+      breaking_changes:
+      - Examples can also be found in the playbooks/tower_configs_export_model/tower_workflows.yml
+      - If you do not change the data model, change the variable 'workflow_nodes'
+        to 'simplified_workflow_nodes'.
+      - More information can be found either in the Workflow Job Template Readme or
+        on the awx.awx.tower_workflow_job_template Documentation.
+      - The Tower export model is now the default to use under workflow nodes. This
+        is documented in the workflow job templates Readme.
+      - Users using the tower export model previously, do not need to make any changes.
+      - Workflow Schemas to describe Workflow nodes have changed.
+      bugfixes:
+      - Allow tower_hostname and tower_validate_certs to not be set in favour of environment
+        variables being set as per module defaults.
+      - Changes all boolean variables to have their default values omitted rather
+        than using the value 'default(omit, true)' which prevents a falsy value being
+        supplied.
+      major_changes:
+      - Removed testing via playbook install that was removed in awx 18.0.0.
+      - Updated testing via playbook to use minikube + operator install.
+    fragments:
+    - add_workflow_schema.yml
+    - bool_omit.yml
+    - env_var.yml
+    - update_testing.yml
+    release_date: '2021-06-21'

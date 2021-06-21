@@ -5,6 +5,31 @@ redhat_cop.tower_configuration Release Notes
 .. contents:: Topics
 
 
+v1.5.0
+======
+
+Major Changes
+-------------
+
+- Removed testing via playbook install that was removed in awx 18.0.0.
+- Updated testing via playbook to use minikube + operator install.
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Examples can also be found in the playbooks/tower_configs_export_model/tower_workflows.yml
+- If you do not change the data model, change the variable 'workflow_nodes' to 'simplified_workflow_nodes'.
+- More information can be found either in the Workflow Job Template Readme or on the awx.awx.tower_workflow_job_template Documentation.
+- The Tower export model is now the default to use under workflow nodes. This is documented in the workflow job templates Readme.
+- Users using the tower export model previously, do not need to make any changes.
+- Workflow Schemas to describe Workflow nodes have changed.
+
+Bugfixes
+--------
+
+- Allow tower_hostname and tower_validate_certs to not be set in favour of environment variables being set as per module defaults.
+- Changes all boolean variables to have their default values omitted rather than using the value 'default(omit, true)' which prevents a falsy value being supplied.
+
 v1.4.1
 ======
 
