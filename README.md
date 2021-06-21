@@ -6,6 +6,20 @@
 
 This Ansible collection allows for easy interaction with an AWX or Ansible Tower server via Ansible roles using the AWX/Tower collection modules.
 
+# REQUIREMENTS
+The AWX.AWX OR ANSIBLE.TOWER collections MUST be installed in order for this collection to work. It is recomended they be invoked in the playbook in the following way. 
+
+```yaml
+---
+- name: Playbook to configure ansible tower post installation
+  hosts: localhost
+  connection: local
+  vars:
+    tower_validate_certs: false
+  collections:
+    - ansible.tower
+```
+
 ## Included content
 
 Click the `Content` button to see the list of content included in this collection.
