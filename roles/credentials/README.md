@@ -98,6 +98,13 @@ tower_credentials:
   inputs:
     username: person
     password: password
+- name: localuser
+  description: Machine Credential example with become_method input
+  credential_type: Machine
+  inputs:
+    username: localuser
+    password: password
+    become_method: sudo
 ```
 ## Playbook Examples
 ### Standard Role Usage
