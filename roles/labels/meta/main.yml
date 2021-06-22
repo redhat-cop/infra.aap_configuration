@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: "labels"
   author: "Andrew J. Huffman, Kedar Kulkarni"
-  description: "An Ansible role to create inventory sources."
+  description: "An Ansible role to create labels in Ansible Controller.."
   company: "Red Hat"
 
   license: "MIT"
@@ -15,8 +15,8 @@ galaxy_info:
         - "all"
 
   galaxy_tags:
-    - "ansibletower"
-    - "tower"
+    - "controller"
+    - "AAP"
     - "awx"
     - "configuration"
     - "label"

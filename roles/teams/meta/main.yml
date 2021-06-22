@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: "teams"
   author: "Andrew J. Huffman"
-  description: "An Ansible Role to create Teams in Ansible Tower."
+  description: "An Ansible Role to create Teams in Ansible Controller."
   company: "Red Hat"
 
   # If the issue tracker for your role is not on github, uncomment the
@@ -51,8 +51,8 @@ galaxy_info:
   #   - 99.99
 
   galaxy_tags:
-    - "ansibletower"
-    - "tower"
+    - "controller"
+    - "AAP"
     - "awx"
     - "configuration"
     - "team"

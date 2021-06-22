@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: "tower_role"
+  role_name: "roles"
   author: "Tom Page"
-  description: "An Ansible role to assign role based access controls on Ansible Tower objects to a given team."
+  description: "An Ansible role to assign role based access controls on Ansible Controller objects to a given team."
   company: "Red Hat"
 
   # If the issue tracker for your role is not on github, uncomment the
@@ -50,8 +50,8 @@ galaxy_info:
   #   - 99.99
 
   galaxy_tags:
-    - "ansibletower"
-    - "tower"
+    - "controller"
+    - "AAP"
     - "awx"
     - "configuration"
     - "rbac"

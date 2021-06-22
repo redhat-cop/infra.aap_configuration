@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: "tower_inventory_sources"
+  role_name: "inventory_sources"
   author: "Andrew J. Huffman, Kedar Kulkarni"
-  description: "An Ansible role to create inventory sources."
+  description: "An Ansible role to create inventory sources in Ansible Controller."
   company: "Red Hat"
 
   license: "MIT"
@@ -15,8 +15,8 @@ galaxy_info:
         - "all"
 
   galaxy_tags:
-    - "ansibletower"
-    - "tower"
+    - "controller"
+    - "AAP"
     - "awx"
     - "configuration"
     - "inventory"

@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: "tower_configuration_project_update"
+  role_name: "project_update"
   author: "Sean Sullivan"
-  description: "An Ansible Role to update projects in Ansible Tower."
+  description: "An Ansible Role to update projects in Ansible Controller."
   company: "Red Hat"
 
   # If the issue tracker for your role is not on github, uncomment the
@@ -30,11 +30,11 @@ galaxy_info:
         - "all"
 
   galaxy_tags:
-    - "ansibletower"
-    - "tower"
+    - "controller"
+    - "AAP"
     - "awx"
-    - "project"
-    - "projects"
+    - "project_update"
+    - "projects_updates"
 
 collections:
   - awx.awx
