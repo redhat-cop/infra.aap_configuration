@@ -1,34 +1,22 @@
 ---
-
-- name: Add RBAC entry to Tower
+- name: Add roles to Controller
   hosts: localhost
   connection: local
   gather_facts: false
-  tasks:
-    - name: Get token for use during play
-      uri:
-        url: "https://{{ tower_hostname }}/api/v2/tokens/"
-        method: POST
-        user: "{{ tower_username }}"
-        password: "{{ tower_password }}"
-        force_basic_auth: True
-        status_code: 201
-        validate_certs: False
-      register: user_token
-      no_log: True
+  vars:
+    controller_validate_certs: false
+    controller_hostname: controller.example.com
+    controller_username: admin
+    controller_password: changeme
 
-    - name: Set Tower oath Token
-      set_fact:
-        tower_oauthtoken: "{{ user_token.json.token }}"
+  collections:
+    - awx.awx
 
-    - name: Import JSON
+  pre_tasks:
+    - name: Include vars from controller_configs directory
       include_vars:
-        file: "configs/rbac.json"
-        name: rbac_json
+        dir: ./configs
+        extensions: ["yml"]
 
-    - name: Add RBAC
-      include_role:
-        name: ../..
-      vars:
-        tower_rbac: "{{ rbac_json.tower_rbac }}"
-...
+  roles:
+    - {role: ../.., when: controller_roles is defined}
