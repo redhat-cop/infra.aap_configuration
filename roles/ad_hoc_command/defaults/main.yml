@@ -8,7 +8,7 @@
 # controller_config_file: ""
 # controller_validate_certs: false
 
-# These are the default variables specific to the **** role
+# These are the default variables specific to the ad_hoc_command role
 
 controller_configuration_ad_hoc_command_secure_logging: "{{controller_configuration_secure_logging | default('false')}}"
 ...

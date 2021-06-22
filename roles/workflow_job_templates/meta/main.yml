@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: "workflow_templates"
   author: "Sean Sulivan"
-  description: "An Ansible Role to create Workflow Templates in Ansible Tower."
+  description: "An Ansible Role to create Workflow Templates in Ansible Controller."
   company: "Red Hat"
 
   # If the issue tracker for your role is not on github, uncomment the
@@ -29,8 +29,8 @@ galaxy_info:
         - "all"
 
   galaxy_tags:
-    - "ansibletower"
-    - "tower"
+    - "controller"
+    - "AAP"
     - "awx"
     - "configuration"
     - "organization"

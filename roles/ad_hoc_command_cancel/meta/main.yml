@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: "controller_configuration_ad_hoc_command_cancel"
+  role_name: "ad_hoc_command_cancel"
   author: "Sean Sullivan"
-  description: "An Ansible Role to cancel ad hoc commands in Ansible Tower."
+  description: "An Ansible Role to cancel ad hoc commands in Ansible Controller."
   company: "Red Hat"
 
   # If the issue tracker for your role is not on github, uncomment the
