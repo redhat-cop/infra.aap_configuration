@@ -28,7 +28,7 @@ sections:
   - Bugfixes
 - - known_issues
   - Known Issues
-title: redhat_cop.tower_configuration
+title: redhat_cop.controller_configuration
 trivial_section_name: trivial
 use_fqcn: true
 ...

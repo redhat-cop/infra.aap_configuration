@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "tower_configuration_ad_hoc_command"
+  role_name: "controller_configuration_ad_hoc_command"
   author: "Sean Sullivan"
   description: "An Ansible Role to run ad hoc commands in Ansible Tower."
   company: "Red Hat"
@@ -30,15 +30,14 @@ galaxy_info:
         - "all"
 
   galaxy_tags:
-    - "ansibletower"
-    - "tower"
+    - "controller"
+    - "AAP"
     - "awx"
     - "adhoc"
     - "commands"
 
 collections:
   - awx.awx
-  - ansible.tower
 
 dependencies: []
 # List your role dependencies here, one per line. Be sure to remove the '[]' above,

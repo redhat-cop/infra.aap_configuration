@@ -1,4 +1,4 @@
-# tower_configuration_applications
+# controller_configuration_applications
 ## Description
 An Ansible Role to create Applications in Ansible Tower.
 
@@ -13,24 +13,24 @@ Currently:
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
-|`tower_hostname`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
-|`tower_validate_certs`|`True`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
-|`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
-|`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
-|`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`tower_applications`|`see below`|yes|Data structure describing your applications, described below.||
+|`controller_hostname`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
+|`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
+|`controller_username`|""|yes|Admin User on the Ansible Tower Server.||
+|`controller_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
+|`controller_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`controller_applications`|`see below`|yes|Data structure describing your applications, described below.||
 
 
 ### Secure Logging Variables
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add application task does not include sensitive information.
-tower_configuration_applications_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of tower configuration roles with a single variable, or for the user to selectively use it.
+controller_configuration_applications_secure_logging defaults to the value of controller_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of tower configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`tower_configuration_applications_secure_logging`|`False`|no|Whether or not to include the sensitive Application role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
+|`controller_configuration_applications_secure_logging`|`False`|no|Whether or not to include the sensitive Application role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 
 ## Data Structure
@@ -53,7 +53,7 @@ tower_configuration_applications_secure_logging defaults to the value of tower_c
 ```json
 ---
  {
-    "tower_applications": [
+    "controller_applications": [
       {
         "name": "Tower Config Default Application",
         "description": "Generic application, which can be used for oauth tokens",
@@ -68,7 +68,7 @@ tower_configuration_applications_secure_logging defaults to the value of tower_c
 #### Ymal Example
 ```yaml
 ---
-tower_applications:
+controller_applications:
   - name: "Tower Config Default Application"
     description: "Generic application, which can be used for oauth tokens"
     organization: "Default"
@@ -80,7 +80,7 @@ tower_applications:
 ## Playbook Examples
 ### Standard Role Usage
 ```yaml
-tower_applications:
+controller_applications:
   - name: MyCustomApplication
     description: For user personal access tokens generated for use within CustomApplication.
     organization: Satellite

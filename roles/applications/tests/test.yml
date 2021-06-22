@@ -6,10 +6,10 @@
   pre_tasks:
     - name: Get token for use during play
       uri:
-        url: "https://{{ tower_hostname }}/api/v2/tokens/"
+        url: "https://{{ controller_hostname }}/api/v2/tokens/"
         method: POST
-        user: "{{ tower_username }}"
-        password: "{{ tower_password }}"
+        user: "{{ controller_username }}"
+        password: "{{ controller_password }}"
         force_basic_auth: true
         status_code: 201
         validate_certs: false
@@ -18,11 +18,11 @@
 
     - name: Set Tower oath Token
       set_fact:
-        tower_oauthtoken: "{{ user_token.json.token }}"
+        controller_oauthtoken: "{{ user_token.json.token }}"
 
     - name: Import Inventory sources
       include_vars:
-        file: "configs/tower_applications.yml"
+        file: "configs/controller_applications.yml"
 
   roles:
     - ../../applications

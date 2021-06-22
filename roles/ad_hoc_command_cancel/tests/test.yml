@@ -2,16 +2,16 @@
 - name: Playbook to configure ansible tower post installation
   hosts: localhost
   connection: local
-  # Define following vars here, or in tower_configs/tower_auth.yml
-  # tower_hostname: ansible-tower-web-svc-test-project.example.com
-  # tower_username: admin
-  # tower_password: changeme
+  # Define following vars here, or in controller_configs/controller_auth.yml
+  # controller_hostname: ansible-tower-web-svc-test-project.example.com
+  # controller_username: admin
+  # controller_password: changeme
   pre_tasks:
-    - name: Include vars from tower_configs directory
+    - name: Include vars from controller_configs directory
       include_vars:
         dir: ./yaml
-        ignore_files: [tower_config.yml.template]
+        ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: ../.., when: tower_ad_hoc_commands is defined}
+    - {role: ../.., when: controller_ad_hoc_commands is defined}
 ...
