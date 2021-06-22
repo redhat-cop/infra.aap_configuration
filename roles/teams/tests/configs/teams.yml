@@ -1,5 +1,5 @@
 ---
-tower_teams:
+controller_teams:
   - name: "team1"
     desc: "My first team"
     organization: "Default"

@@ -1,5 +1,5 @@
 ---
-tower_inventory_sources:
+controller_inventory_sources:
   - name: test-source1
     inventory: Demo Inventory
     source: scm

@@ -1,5 +1,5 @@
 ---
-tower_settings:
+controller_settings:
   - name: TOWER_URL_BASE
     value: "https://localhost"
   - name: AWX_TASK_ENV

@@ -1,4 +1,4 @@
 ---
-tower_workflow_launch_jobs:
+controller_launch_jobs:
   - name: test-template-1
 ...
