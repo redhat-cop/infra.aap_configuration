@@ -1,7 +1,7 @@
-# Red Hat Communties of Practice Tower Configuration Collection
+# Red Hat Communties of Practice Controller Configuration Collection
 
-![Ansible Lint](https://github.com/redhat-cop/tower_configuration/workflows/Ansible%20Lint/badge.svg)
-![Galaxy Release](https://github.com/redhat-cop/tower_configuration/workflows/galaxy-release/badge.svg)
+![Ansible Lint](https://github.com/redhat-cop/controller_configuration/workflows/Ansible%20Lint/badge.svg)
+![Galaxy Release](https://github.com/redhat-cop/controller_configuration/workflows/galaxy-release/badge.svg)
 <!-- Further CI badges go here as above -->
 
 This Ansible collection allows for easy interaction with an AWX or Ansible Tower server via Ansible roles using the AWX/Tower collection modules.
@@ -11,13 +11,13 @@ The AWX.AWX OR ANSIBLE.TOWER collections MUST be installed in order for this col
 
 ```yaml
 ---
-- name: Playbook to configure ansible tower post installation
+- name: Playbook to configure ansible controller post installation
   hosts: localhost
   connection: local
   vars:
-    tower_validate_certs: false
+    controller_validate_certs: false
   collections:
-    - ansible.tower
+    - awx.awx
 ```
 
 ## Included content
@@ -26,44 +26,44 @@ Click the `Content` button to see the list of content included in this collectio
 
 ## Installing this collection
 
-You can install the redhat_cop tower_configuration collection with the Ansible Galaxy CLI:
+You can install the redhat_cop controller_configuration collection with the Ansible Galaxy CLI:
 
-    ansible-galaxy collection install redhat_cop.tower_configuration
+    ansible-galaxy collection install redhat_cop.controller_configuration
 
 You can also include it in a `requirements.yml` file and install it with `ansible-galaxy collection install -r requirements.yml`, using the format:
 
 ```yaml
 ---
 collections:
-  - name: redhat_cop.tower_configuration
+  - name: redhat_cop.controller_configuration
     # If you need a specific version of the collection, you can specify like this:
     # version: ...
 ```
 
 ## Using this collection
-The awx.awx or ansible.tower collection must be invoked in the playbook in order for ansible to pick up the correct modules to use.
+The awx.awx or ansible.controller collection must be invoked in the playbook in order for ansible to pick up the correct modules to use.
 
 Otherwise it will look for the modules only in your base installation. If there are errors complaining about "couldn't resolve module/action" this is the most likely cause.
 
 ```yaml
-- name: Playbook to configure ansible tower post installation
+- name: Playbook to configure ansible controller post installation
   hosts: localhost
   connection: local
   vars:
-    tower_validate_certs: false
+    controller_validate_certs: false
   collections:
     - awx.awx
 ```
 
-Define following vars here, or in `tower_configs/tower_auth.yml`
-`tower_hostname: ansible-tower-web-svc-test-project.example.com`
+Define following vars here, or in `controller_configs/controller_auth.yml`
+`controller_hostname: ansible-controller-web-svc-test-project.example.com`
 
 You can also specify authentication by a combination of either:
 
- - `tower_hostname`, `tower_username`, `tower_password`
- - `tower_hostname`, `tower_oauthtoken`
+ - `controller_hostname`, `controller_username`, `controller_password`
+ - `controller_hostname`, `controller_oauthtoken`
 
-The OAuth2 token is the preferred method. You can obtain the token through the prefered `tower_token` module, or through the
+The OAuth2 token is the preferred method. You can obtain the token through the prefered `controller_token` module, or through the
 AWX CLI [login](https://docs.ansible.com/ansible-tower/latest/html/towercli/reference.html#awx-login)
 command.
 
@@ -71,7 +71,7 @@ These can be specified via (from highest to lowest precedence):
 
  - direct role variables as mentioned above
  - environment variables (most useful when running against localhost)
- - a config file path specified by the `tower_config_file` parameter
+ - a config file path specified by the `controller_config_file` parameter
  - a config file at `~/.tower_cli.cfg`
  - a config file at `/etc/tower/tower_cli.cfg`
 
@@ -86,20 +86,20 @@ oauth_token = LEdCpKVKc4znzffcpQL5vLG8oyeku6
 
 Tower token module would be invoked with this code:
 ```yaml
-    - name: Create a new token using tower username/password
-      awx.awx.tower_token:
-        description: 'Creating token to test tower jobs'
+    - name: Create a new token using controller username/password
+      awx.awx.token:
+        description: 'Creating token to test controller jobs'
         scope: "write"
         state: present
-        tower_host: "{{ tower_hostname }}"
-        tower_username: "{{ tower_username }}"
-        tower_password: "{{ tower_password }}"
+        controller_host: "{{ controller_hostname }}"
+        controller_username: "{{ controller_username }}"
+        controller_password: "{{ controller_password }}"
 
 ```
 
 ### Tower Export
 The awx command line can export json that is compatable with this collection.
-More details can be found [here](playbooks/tower_configs_export_model/README.md)
+More details can be found [here](playbooks/controller_configs_export_model/README.md)
 
 ### See Also:
 
@@ -113,8 +113,8 @@ Adding the ability to use direct output from the awx export command in the roles
 
 ## Contributing to this collection
 
-We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [Tower Configuration collection repository](https://github.com/redhat-cop/tower_configuration).
-More information about contributing can be found in our [Contribution Guidelines.](https://github.com/redhat-cop/tower_configuration/blob/devel/.github/CONTRIBUTING.md)
+We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [Tower Configuration collection repository](https://github.com/redhat-cop/controller_configuration).
+More information about contributing can be found in our [Contribution Guidelines.](https://github.com/redhat-cop/controller_configuration/blob/devel/.github/CONTRIBUTING.md)
 
 ## Licensing
 

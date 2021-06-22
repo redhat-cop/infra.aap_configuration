@@ -1,5 +1,5 @@
 ---
-tower_ad_hoc_commands:
+controller_ad_hoc_commands:
   - job_type: run
     inventory: localhost
     credential: Demo Credential

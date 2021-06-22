@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "tower_configuration_applications"
+  role_name: "controller_configuration_applications"
   author: "Mike Shriver"
   description: "An Ansible Role to create applications in Ansible Tower."
   company: "Red Hat"
@@ -30,8 +30,8 @@ galaxy_info:
         - "all"
 
   galaxy_tags:
-    - "ansibletower"
-    - "tower"
+    - "controller"
+    - "AAP"
     - "awx"
     - "configuration"
     - "application"
