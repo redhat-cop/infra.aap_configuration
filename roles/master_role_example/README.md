@@ -1,33 +1,37 @@
-# tower_configuration_***********
+# controller_configuration.***********
 ## Description
-An Ansible Role to create ******* in Ansible Tower.
+An Ansible Role to create ******* on Ansible Controller.
 
 ## Requirements
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
+ansible-galaxy collection install  -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
+  or
+  ansible.tower
 
 ## Variables
+
+### Authentication
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`tower_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
-|`tower_hostname`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
-|`tower_validate_certs`|`True`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
-|`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
-|`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
-|`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`tower_************`|`see below`|yes|Data structure describing your organization or organizations Described below.||
+|`controller_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
+|`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
+|`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
+|`controller_username`|""|yes|Admin User on the Ansible Controller Server.||
+|`controller_password`|""|yes|Controller Admin User's password on the Ansible Controller Server.  This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
+|`controller_oauthtoken`|""|yes|Controller Admin User's token on the Ansible Controller Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`controller_************`|`see below`|yes|Data structure describing your organization or organizations Described below.||
 
 ### Secure Logging Variables
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add ******* task does not include sensitive information.
-tower_configuration_*******_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of tower configuration roles with a single variable, or for the user to selectively use it.
+controller_configuration_*******_secure_logging defaults to the value of controller_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`tower_configuration_*******_secure_logging`|`False`|no|Whether or not to include the sensitive ******* role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
+|`controller_configuration_*******_secure_logging`|`False`|no|Whether or not to include the sensitive ******* role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
 ### Variables
@@ -56,7 +60,22 @@ tower_configuration_*******_secure_logging defaults to the value of tower_config
 ## Playbook Examples
 ### Standard Role Usage
 ```yaml
-
+---
+- name: Playbook to configure ansible controller post installation
+  hosts: localhost
+  connection: local
+  # Define following vars here, or in controller_configs/controller_auth.yml
+  # controller_hostname: ansible-controller-web-svc-test-project.example.com
+  # controller_username: admin
+  # controller_password: changeme
+  pre_tasks:
+    - name: Include vars from controller_configs directory
+      include_vars:
+        dir: ./yaml
+        ignore_files: [controller_config.yml.template]
+        extensions: ["yml"]
+  roles:
+    - {role: redhat_cop.controller_configuration.license, when: controller_license is defined}
 ```
 ## License
 [MIT](LICENSE)

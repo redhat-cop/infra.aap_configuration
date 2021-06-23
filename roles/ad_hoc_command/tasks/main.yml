@@ -1,6 +1,6 @@
 ---
 # Run Ad Hoc Commands
-- name: Run Tower ad hoc command
+- name: Run Controller ad hoc command
   ad_hoc_command:
     job_type:               "{{ __ad_hoc_command_item.job_type | default('run') }}"
     inventory:              "{{ __ad_hoc_command_item.inventory }}"

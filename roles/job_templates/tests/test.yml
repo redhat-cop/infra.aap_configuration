@@ -20,3 +20,4 @@
 
   roles:
     - {role: ../.., when: controller_templates is defined}
+...

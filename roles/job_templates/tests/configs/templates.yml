@@ -21,3 +21,4 @@ controller_templates:
     credentials: Demo Credential
     verbosity: 0
     inventory: localhost
+...

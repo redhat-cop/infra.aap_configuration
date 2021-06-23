@@ -4,7 +4,7 @@
 ![Galaxy Release](https://github.com/redhat-cop/controller_configuration/workflows/galaxy-release/badge.svg)
 <!-- Further CI badges go here as above -->
 
-This Ansible collection allows for easy interaction with an AWX or Ansible Tower server via Ansible roles using the AWX/Tower collection modules.
+This Ansible collection allows for easy interaction with an AWX or Ansible Controller server via Ansible roles using the AWX/Controller collection modules.
 
 # REQUIREMENTS
 The AWX.AWX OR ANSIBLE.TOWER collections MUST be installed in order for this collection to work. It is recomended they be invoked in the playbook in the following way.
@@ -72,8 +72,8 @@ These can be specified via (from highest to lowest precedence):
  - direct role variables as mentioned above
  - environment variables (most useful when running against localhost)
  - a config file path specified by the `controller_config_file` parameter
- - a config file at `~/.tower_cli.cfg`
- - a config file at `/etc/tower/tower_cli.cfg`
+ - a config file at `~/.controller_cli.cfg`
+ - a config file at `/etc/controller/controller_cli.cfg`
 
 Config file syntax looks like this:
 
@@ -84,7 +84,7 @@ verify_ssl = true
 oauth_token = LEdCpKVKc4znzffcpQL5vLG8oyeku6
 ```
 
-Tower token module would be invoked with this code:
+Controller token module would be invoked with this code:
 ```yaml
     - name: Create a new token using controller username/password
       awx.awx.token:
@@ -97,7 +97,7 @@ Tower token module would be invoked with this code:
 
 ```
 
-### Tower Export
+### Controller Export
 The awx command line can export json that is compatable with this collection.
 More details can be found [here](playbooks/controller_configs_export_model/README.md)
 
@@ -113,7 +113,7 @@ Adding the ability to use direct output from the awx export command in the roles
 
 ## Contributing to this collection
 
-We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [Tower Configuration collection repository](https://github.com/redhat-cop/controller_configuration).
+We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [Controller Configuration collection repository](https://github.com/redhat-cop/controller_configuration).
 More information about contributing can be found in our [Contribution Guidelines.](https://github.com/redhat-cop/controller_configuration/blob/devel/.github/CONTRIBUTING.md)
 
 ## Licensing

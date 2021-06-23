@@ -20,3 +20,4 @@
 
   roles:
     - {role: ../.., when: controller_launch_jobs is defined}
+...

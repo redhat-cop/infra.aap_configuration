@@ -1,25 +1,28 @@
 ---
 - name: Add organizations
-  tower_organization:
-    name:                               "{{ tower_organizations_item.name | mandatory }}"
-    description:                        "{{ tower_organizations_item.description | default(omit, true) }}"
-    custom_virtualenv:                  "{{ tower_organizations_item.custom_virtualenv | default(omit, true) }}"
-    max_hosts:                          "{{ tower_organizations_item.max_hosts | default(omit, true) }}"
-    default_environment:                "{{ tower_organizations_item.default_environment | default(omit, true) }}"
-    galaxy_credentials:                 "{{ tower_organizations_item.galaxy_credentials | default(omit, true) }}"
-    notification_templates_approvals:     "{{ tower_organizations_item.notification_templates_approvals | default(tower_organizations_item.related.notification_templates_approvals | default([]) | map(attribute='name') | list ) }}"
-    notification_templates_started:     "{{ tower_organizations_item.notification_templates_started | default(tower_organizations_item.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
-    notification_templates_success:     "{{ tower_organizations_item.notification_templates_success | default(tower_organizations_item.related.notification_templates_success | default([]) | map(attribute='name') | list ) }}"
-    notification_templates_error:       "{{ tower_organizations_item.notification_templates_error | default(tower_organizations_item.related.notification_templates_error | default([]) | map(attribute='name') | list ) }}"
-    state:                              "{{ tower_organizations_item.state | default(tower_state | default('present')) }}"
-    tower_username:                     "{{ tower_username | default(omit, true) }}"
-    tower_password:                     "{{ tower_password | default(omit, true) }}"
-    tower_oauthtoken:                   "{{ tower_oauthtoken | default(omit, true) }}"
-    tower_host:                         "{{ tower_hostname | default(omit, true) }}"
-    tower_config_file:                  "{{ tower_config_file | default(omit, true) }}"
-    validate_certs:                     "{{ tower_validate_certs | default(omit) }}"
-  loop: "{{ tower_organizations }}"
+  organization:
+    name:                               "{{ __controller_organizations_item.name | mandatory }}"
+    description:                        "{{ __controller_organizations_item.description | default(omit, true) }}"
+    custom_virtualenv:                  "{{ __controller_organizations_item.custom_virtualenv | default(omit, true) }}"
+    max_hosts:                          "{{ __controller_organizations_item.max_hosts | default(omit, true) }}"
+    instance_groups:                    "{{ __controller_organizations_item.instance_groups | default(omit, true) }}"
+    default_environment:                "{{ __controller_organizations_item.default_environment | default(omit, true) }}"
+    galaxy_credentials:                 "{{ __controller_organizations_item.galaxy_credentials | default(omit, true) }}"
+    notification_templates_approvals:   "{{ __controller_organizations_item.notification_templates_approvals | default(__controller_organizations_item.related.notification_templates_approvals | default([]) | map(attribute='name') | list ) }}"
+    notification_templates_started:     "{{ __controller_organizations_item.notification_templates_started | default(__controller_organizations_item.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
+    notification_templates_success:     "{{ __controller_organizations_item.notification_templates_success | default(__controller_organizations_item.related.notification_templates_success | default([]) | map(attribute='name') | list ) }}"
+    notification_templates_error:       "{{ __controller_organizations_item.notification_templates_error | default(__controller_organizations_item.related.notification_templates_error | default([]) | map(attribute='name') | list ) }}"
+    state:                              "{{ __controller_organizations_item.state | default(controller_state | default('present')) }}"
+
+    # Role Standard Options
+    controller_username:                "{{ controller_username | default(omit, true) }}"
+    controller_password:                "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:              "{{ controller_oauthtoken | default(omit, true) }}"
+    controller_host:                    "{{ controller_hostname | default(omit, true) }}"
+    controller_config_file:             "{{ controller_config_file | default(omit, true) }}"
+    validate_certs:                     "{{ controller_validate_certs | default(omit) }}"
+  loop: "{{ controller_organizations }}"
   loop_control:
-    loop_var: tower_organizations_item
-  no_log: "{{ tower_configuration_organizations_secure_logging }}"
+    loop_var: __controller_organizations_item
+  no_log: "{{ controller_configuration_organizations_secure_logging }}"
 ...

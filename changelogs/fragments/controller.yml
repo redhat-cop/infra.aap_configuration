@@ -1,0 +1,10 @@
+---
+breaking_changes:
+  - All references to tower have been changed to Controller.
+  - Changed all module names to be in line with changes to awx.awx as of 19.2.1.
+  - Removed depreciated module options for notification Templates.
+  - Changed variable names for all objects from tower_* to controller_*.
+minor_changes:
+  - All role tests have been converted to use one format.
+  - Additional module options have been added such as instance_groups and copy_from where applicable.
+...

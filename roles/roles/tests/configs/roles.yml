@@ -6,3 +6,4 @@ controller_roles:
 - inventory: Demo Inventory
   user: admin
   role: read
+...

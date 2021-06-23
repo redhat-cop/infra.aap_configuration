@@ -12,3 +12,4 @@ controller_notification_templates:
     port: '25'
     username: ''
     password: ''
+...

@@ -20,3 +20,4 @@
 
   roles:
     - {role: ../.., when: tower_credential_input_sources is defined}
+...

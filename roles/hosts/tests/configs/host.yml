@@ -4,3 +4,4 @@ controller_host:
   inventory: My Inv
   variables:
     my_var: true
+...
