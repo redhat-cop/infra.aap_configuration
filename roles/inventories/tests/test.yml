@@ -20,3 +20,4 @@
 
   roles:
     - {role: ../.., when: controller_inventories is defined}
+...

@@ -4,3 +4,4 @@ controller_groups:
   inventory: My Inv
   variables:
     my_var: true
+...

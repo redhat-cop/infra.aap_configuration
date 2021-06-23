@@ -1,49 +1,25 @@
 ---
-- name: Add ansible tower notifications
-  tower_notification_template:
-    name:                           "{{ tower_notifications_item.name | mandatory }}"
-    new_name:                       "{{ tower_notifications_item.new_name | default(omit, true) }}"
-    description:                    "{{ tower_notifications_item.description | default(omit, true) }}"
-    organization:                   "{{ tower_notifications_item.organization.name | default( tower_notifications_item.organization ) }}"
-    notification_type:              "{{ tower_notifications_item.notification_type }}"
-    notification_configuration:     "{{ tower_notifications_item.notification_configuration }}"
-    messages:                       "{{ tower_notifications_item.messages | default(omit, true) | regex_replace('[ ]{2,}','') }}"
-    # Depreciated Options
-    username:                       "{{ tower_notifications_item.username | default(omit, true) }}"
-    sender:                         "{{ tower_notifications_item.sender| default(omit, true) }}"
-    recipients:                     "{{ tower_notifications_item.recipients | default(omit, true) }}"
-    use_tls:                        "{{ tower_notifications_item.use_tls | default(omit)   }}"
-    host:                           "{{ tower_notifications_item.host | default(omit, true) }}"
-    use_ssl:                        "{{ tower_notifications_item.use_ssl | default(omit) }}"
-    password:                       "{{ tower_notifications_item.password | default(omit, true) }}"
-    port:                           "{{ tower_notifications_item.port | default(omit, true) }}"
-    channels:                       "{{ tower_notifications_item.channels | default(omit, true) }}"
-    token:                          "{{ tower_notifications_item.token | default(omit, true) }}"
-    account_token:                  "{{ tower_notifications_item.account_token | default(omit, true) }}"
-    from_number:                    "{{ tower_notifications_item.from_number | default(omit, true) }}"
-    to_numbers:                     "{{ tower_notifications_item.to_numbers | default(omit, true) }}"
-    account_sid:                    "{{ tower_notifications_item.account_sid | default(omit, true) }}"
-    subdomain:                      "{{ tower_notifications_item.subdomain | default(omit, true) }}"
-    service_key:                    "{{ tower_notifications_item.service_key | default(omit, true) }}"
-    client_name:                    "{{ tower_notifications_item.client_name | default(omit, true) }}"
-    message_from:                   "{{ tower_notifications_item.message_from | default(omit, true) }}"
-    color:                          "{{ tower_notifications_item.color | default(omit, true) }}"
-    notify:                         "{{ tower_notifications_item.notify | default(omit) }}"
-    url:                            "{{ tower_notifications_item.url | default(omit, true) }}"
-    headers:                        "{{ tower_notifications_item.headers | default(omit, true) }}"
-    server:                         "{{ tower_notifications_item.server| default(omit, true) }}"
-    nickname:                       "{{ tower_notifications_item.nickname | default(omit, true) }}"
-    targets:                        "{{ tower_notifications_item.targets | default(omit, true) }}"
-    # Tower Default Options
-    state:                          "{{ tower_notifications_item.state | default(tower_state | default('present')) }}"
-    tower_host:                     "{{ tower_hostname | default(omit, true) }}"
-    tower_username:                 "{{ tower_username | default(omit, true) }}"
-    tower_password:                 "{{ tower_password | default(omit, true) }}"
-    tower_oauthtoken:               "{{ tower_oauthtoken | default(omit, true) }}"
-    tower_config_file:              "{{ tower_config_file | default(omit, true) }}"
-    validate_certs:                 "{{ tower_validate_certs | default(omit) }}"
-  loop: "{{ tower_notifications }}"
+- name: Add Controller notifications
+  notification_template:
+    name:                           "{{ __controller_notification_item.name | mandatory }}"
+    new_name:                       "{{ __controller_notification_item.new_name | default(omit, true) }}"
+    copy_from:                      "{{ __controller_notification_item.copy_from | default(omit, true) }}"
+    description:                    "{{ __controller_notification_item.description | default(omit, true) }}"
+    organization:                   "{{ __controller_notification_item.organization.name | default( __controller_notification_item.organization ) }}"
+    notification_type:              "{{ __controller_notification_item.notification_type }}"
+    notification_configuration:     "{{ __controller_notification_item.notification_configuration }}"
+    messages:                       "{{ __controller_notification_item.messages | default(omit, true) | regex_replace('[ ]{2,}','') }}"
+    state:                          "{{ __controller_notification_item.state | default(controller_state | default('present')) }}"
+
+    # Role Standard Options
+    controller_host:                "{{ controller_hostname | default(omit, true) }}"
+    controller_username:            "{{ controller_username | default(omit, true) }}"
+    controller_password:            "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:          "{{ controller_oauthtoken | default(omit, true) }}"
+    controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
+    validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
+  loop: "{{ controller_notifications }}"
   loop_control:
-    loop_var: tower_notifications_item
-  no_log: "{{ tower_configuration_notifications_secure_logging }}"
+    loop_var: __controller_notification_item
+  no_log: "{{ controller_configuration_notifications_secure_logging }}"
 ...

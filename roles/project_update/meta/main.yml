@@ -31,10 +31,10 @@ galaxy_info:
 
   galaxy_tags:
     - "controller"
-    - "AAP"
+    - "aap"
     - "awx"
-    - "project_update"
-    - "projects_updates"
+    - "project"
+    - "projects"
 
 collections:
   - awx.awx

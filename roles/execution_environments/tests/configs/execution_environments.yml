@@ -4,3 +4,4 @@ controller_execution_environments:
   organization: Default
   image: quay.io/ansible/awx-ee
   pull: always
+...

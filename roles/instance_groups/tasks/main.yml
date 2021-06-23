@@ -1,25 +1,28 @@
 ---
-# Add Tower Instance Group
-- name: Add Tower Instance Group
-  tower_instance_group:
-    name:                           "{{ tower_instance_groups_item.name | mandatory }}"
-    new_name:                       "{{ tower_instance_groups_item.new_name | default(omit, true) }}"
-    credential:                     "{{ tower_instance_groups_item.credential | default(omit, true) }}"
-    policy_instance_percentage:     "{{ tower_instance_groups_item.policy_instance_percentage | default(omit, true) }}"
-    policy_instance_minimum:        "{{ tower_instance_groups_item.policy_instance_minimum | default(omit, true) }}"
-    policy_instance_list:           "{{ tower_instance_groups_item.policy_instance_list | default(omit, true) }}"
-    pod_spec_override:              "{{ tower_instance_groups_item.pod_spec_override | default(omit, true) }}"
-    instances:                      "{{ tower_instance_groups_item.instances | default(omit, true) }}"
-    state:                          "{{ tower_instance_groups_item.state | default(tower_state | default('present')) }}"
-    tower_username:                 "{{ tower_username | default(omit, true) }}"
-    tower_password:                 "{{ tower_password | default(omit, true) }}"
-    tower_oauthtoken:               "{{ tower_oauthtoken | default(omit, true) }}"
-    tower_host:                     "{{ tower_hostname | default(omit, true) }}"
-    tower_config_file:              "{{ tower_config_file | default(omit, true) }}"
-    validate_certs:                 "{{ tower_validate_certs | default(omit) }}"
-  loop: "{{ tower_instance_groups }}"
+# Add Controller Instance Group
+- name: Add Controller Instance Group
+  instance_group:
+    name:                           "{{ __controller_instance_group_item.name | mandatory }}"
+    new_name:                       "{{ __controller_instance_group_item.new_name | default(omit, true) }}"
+    credential:                     "{{ __controller_instance_group_item.credential | default(omit, true) }}"
+    is_container_group:             "{{ __controller_instance_group_item.is_container_group | default(omit, true) }}"
+    policy_instance_percentage:     "{{ __controller_instance_group_item.policy_instance_percentage | default(omit, true) }}"
+    policy_instance_minimum:        "{{ __controller_instance_group_item.policy_instance_minimum | default(omit, true) }}"
+    policy_instance_list:           "{{ __controller_instance_group_item.policy_instance_list | default(omit, true) }}"
+    pod_spec_override:              "{{ __controller_instance_group_item.pod_spec_override | default(omit, true) }}"
+    instances:                      "{{ __controller_instance_group_item.instances | default(omit, true) }}"
+    state:                          "{{ __controller_instance_group_item.state | default(controller_state | default('present')) }}"
+
+    # Role Standard Options
+    controller_username:            "{{ controller_username | default(omit, true) }}"
+    controller_password:            "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:          "{{ controller_oauthtoken | default(omit, true) }}"
+    controller_host:                "{{ controller_hostname | default(omit, true) }}"
+    controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
+    validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
+  loop: "{{ controller_instance_groups }}"
   loop_control:
-    loop_var: tower_instance_groups_item
-  no_log: "{{ tower_configuration_instance_groups_secure_logging }}"
-  when: tower_instance_groups is defined
+    loop_var: __controller_instance_group_item
+  no_log: "{{ controller_configuration_instance_groups_secure_logging }}"
+  when: controller_instance_groups is defined
 ...

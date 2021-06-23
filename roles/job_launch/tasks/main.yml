@@ -1,11 +1,12 @@
 ---
 
-# Launch Tower Job
-- name: Launch a Tower Job
-  tower_job_launch:
+# Launch Controller Job
+- name: Launch a Controller Job
+  job_launch:
     name:                     "{{ __job_launch_item.name | mandatory }}"
     job_type:                 "{{ __job_launch_item.job_type | default(omit, true) }}"
     inventory:                "{{ __job_launch_item.inventory | default(omit, true) }}"
+    organization:             "{{ __job_launch_item.organization.name | default( __job_launch_item.organization | default(omit, true)) }}"
     credentials:              "{{ __job_launch_item.credentials | default(omit, true) }}"
     extra_vars:               "{{ __job_launch_item.extra_vars | default(omit, true) }}"
     limit:                    "{{ __job_launch_item.limit | default(omit, true) }}"
@@ -20,16 +21,16 @@
     timeout:                  "{{ __job_launch_item.timeout | default(omit, true) }}"
 
     # Role Standard Options
-    tower_username:     "{{ tower_username | default(omit, true) }}"
-    tower_password:     "{{ tower_password | default(omit, true) }}"
-    tower_oauthtoken:   "{{ tower_oauthtoken | default(omit, true) }}"
-    tower_host:         "{{ tower_hostname | default(omit, true) }}"
-    tower_config_file:  "{{ tower_config_file | default(omit, true) }}"
-    validate_certs:     "{{ tower_validate_certs | default(omit) }}"
-  loop: "{{ tower_launch_jobs }}"
+    controller_username:     "{{ controller_username | default(omit, true) }}"
+    controller_password:     "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:   "{{ controller_oauthtoken | default(omit, true) }}"
+    controller_host:         "{{ controller_hostname | default(omit, true) }}"
+    controller_config_file:  "{{ controller_config_file | default(omit, true) }}"
+    validate_certs:     "{{ controller_validate_certs | default(omit) }}"
+  loop: "{{ controller_launch_jobs }}"
   loop_control:
     loop_var: "__job_launch_item"
-  no_log: "{{ tower_configuration_job_launch_secure_logging }}"
-  register: launched_tower_jobs
-  when: tower_launch_jobs is defined
+  no_log: "{{ controller_configuration_job_launch_secure_logging }}"
+  register: launched_controller_jobs
+  when: controller_launch_jobs is defined
 ...

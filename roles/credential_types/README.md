@@ -1,45 +1,45 @@
-# tower_configuration.credential_types
+# controller_configuration.credential_types
 ## Description
-An Ansible Role to create Credential Types in Ansible Tower.
+An Ansible Role to create Credential Types on Ansible Controller.
 
 ## Requirements
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
-
-| Required collections |
-|:---:|
-|awx.awx|
+ansible-galaxy collection install  -r tests/collections/requirements.yml to be installed
+Currently:
+  awx.awx
+  or
+  ansible.tower
 
 ## Variables
+
+### Authentication
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`tower_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
-|`tower_hostname`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
-|`tower_validate_certs`|`True`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
-|`tower_config_file`|""|no|Path to the Tower or AWX config file.||
-|`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
-|`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
-|`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`tower_credential_types`|`see below`|yes|Data structure describing your credential types Described below.||
+|`controller_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
+|`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
+|`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
+|`controller_username`|""|yes|Admin User on the Ansible Controller Server.||
+|`controller_password`|""|yes|Controller Admin User's password on the Ansible Controller Server.  This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
+|`controller_oauthtoken`|""|yes|Controller Admin User's token on the Ansible Controller Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`controller_credential_types`|`see below`|yes|Data structure describing your credential types Described below.||
 
 ### Secure Logging Variables
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add credential type task does not include sensitive information.
-tower_configuration_credential_types_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
+controller_configuration_credential_types_secure_logging defaults to the value of controller_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
 |:---:|:---:|:---:|:---:|
-|`tower_configuration_credential_types_secure_logging`|`False`|no|Whether or not to include the sensitive Credential Type role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
+|`controller_configuration_secure_logging`|`False`|no|Whether or not to include the sensitive Credential Type role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`controller_configuration_credential_types_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
 ### Variables
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`name`|""|yes|Name of Credential Type|
-|`new_name`|""|yes|Name of Credential Type, used in updating a Credential Type.|
 |`description`|`False`|no|The description of the credential type to give more detail about it.|
-|`injectors`|""|no|Enter injectors using either JSON or YAML syntax. Refer to the Ansible Tower documentation for example syntax. See not below on proper formating.|
-|`inputs`|""|no|Enter inputs using either JSON or YAML syntax. Refer to the Ansible Tower documentation for example syntax.|
+|`injectors`|""|no|Enter injectors using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax. See not below on proper formating.|
+|`inputs`|""|no|Enter inputs using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax.|
 |`kind`|""|no|The type of credential type being added. Note that only cloud and net can be used for creating credential types.|
 |`state`|`present`|no|Desired state of the resource.|
 
@@ -51,13 +51,13 @@ Example:
 {{ variable }}
 ```
 
-Because of this it is difficult to provide tower with the required format for these fields.
+Because of this it is difficult to provide controller with the required format for these fields.
 
 The workaround is to use the following format:
 ```json
 {  { variable }}
 ```
-The role will strip the double space between the curly bracket in order to provide tower with the correct format for the Injectors.
+The role will strip the double space between the curly bracket in order to provide controller with the correct format for the Injectors.
 
 ### Input and Injector Schema
 The following detais the data format to use for inputs and injectors. These can be in either YAML or JSON For the most up to date information and more details see [Custom Credential Types - Ansible Tower Documentation](https://docs.ansible.com/ansible-tower/latest/html/userguide/credential_types.html)
@@ -96,7 +96,7 @@ required:
 ```json
 ---
 {
-    "tower_credential_types": [
+    "controller_credential_types": [
       {
         "name": "REST API Credential",
         "description": "REST API Credential",
@@ -137,7 +137,7 @@ required:
 #### Yaml Example
 ```yaml
 ---
-tower_credential_types:
+controller_credential_types:
 - name: REST API Credential
   description: REST API Credential
   inputs:
@@ -163,48 +163,24 @@ tower_credential_types:
 ## Playbook Examples
 ### Standard Role Usage
 ```yaml
----
-
-- name: Add Credential Types to Tower
+- name: Playbook to configure ansible controller post installation
   hosts: localhost
   connection: local
-  gather_facts: false
-
-#Bring in vaulted Ansible Tower secrets
-  vars_files:
-    - ../tests/vars/tower_secrets.yml
-
-  tasks:
-
-    - name: Get token for use during play
-      uri:
-        url: "https://{{ tower_hostname }}/api/v2/tokens/"
-        method: POST
-        user: "{{ tower_username }}"
-        password: "{{ tower_passname }}"
-        force_basic_auth: yes
-        status_code: 201
-        validate_certs: no
-      register: user_token
-      no_log: True
-
-    - name: Set Tower oath Token
-      set_fact:
-        tower_oauthtoken: "{{ user_token.json.token }}"
-
-    - name: Import JSON
+  # Define following vars here, or in controller_configs/controller_auth.yml
+  # controller_hostname: ansible-controller-web-svc-test-project.example.com
+  # controller_username: admin
+  # controller_password: changeme
+  pre_tasks:
+    - name: Include vars from controller_configs directory
       include_vars:
-        file: "json/credential_types.json"
-        name: credential_types_json
-
-    - name: Add Credential Types
-      include_role:
-        name: redhat_cop.tower_configuration.credential_types
-      vars:
-        tower_credential_types: "{{ credential_types_json.tower_credential_types }}"
+        dir: ./yaml
+        ignore_files: [controller_config.yml.template]
+        extensions: ["yml"]
+  roles:
+    - {role: redhat_cop.controller_configuration.credential_types, when: controller_credential_types is defined}
 ```
 ## License
 [MIT](LICENSE)
 
 ## Author
-[Sean Sullivan](https://github.com/Wilk42)
+[Sean Sullivan](https://github.com/sean-m-sullivan)

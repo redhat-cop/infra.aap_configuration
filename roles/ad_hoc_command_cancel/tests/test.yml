@@ -20,3 +20,4 @@
 
   roles:
     - {role: ../.., when: controller_ad_hoc_commands is defined}
+...

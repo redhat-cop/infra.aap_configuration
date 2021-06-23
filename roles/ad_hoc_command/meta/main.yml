@@ -31,7 +31,7 @@ galaxy_info:
 
   galaxy_tags:
     - "controller"
-    - "AAP"
+    - "aap"
     - "awx"
     - "adhoc"
     - "commands"

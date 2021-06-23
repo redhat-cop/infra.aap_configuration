@@ -30,5 +30,5 @@ controller_roles: []
 #  # other fields
 #  state: present  # optional, choices: present, absent
 
-controller_configuration_rbac_secure_logging: "{{controller_configuration_secure_logging | default('false')}}"
+controller_configuration_role_secure_logging: "{{controller_configuration_secure_logging | default('false')}}"
 ...

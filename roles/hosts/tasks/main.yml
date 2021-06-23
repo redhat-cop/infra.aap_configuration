@@ -1,21 +1,23 @@
 ---
-- name: Add tower host
-  tower_host:
-    name:              "{{ tower_hosts_item.name | mandatory }}"
-    new_name:          "{{ tower_hosts_item.new_name | default(omit, true) }}"
-    description:       "{{ tower_hosts_item.description | default(omit, true) }}"
-    inventory:         "{{ tower_hosts_item.inventory | mandatory }}"
-    enabled:           "{{ tower_hosts_item.enabled | default(omit) }}"
-    state:             "{{ tower_hosts_item.state | default(tower_state | default('present')) }}"
-    variables:         "{{ tower_hosts_item.variables | default(omit, true) | regex_replace('[ ]{2,}','') }}"
-    tower_host:        "{{ tower_hostname | default(omit, true) }}"
-    tower_username:    "{{ tower_username | default(omit, true) }}"
-    tower_password:    "{{ tower_password | default(omit, true) }}"
-    tower_oauthtoken:  "{{ tower_oauthtoken | default(omit, true) }}"
-    tower_config_file: "{{ tower_config_file | default(omit, true) }}"
-    validate_certs:    "{{ tower_validate_certs | default(omit) }}"
-  loop: "{{ tower_hosts }}"
+- name: Add Controller host
+  host:
+    name:                   "{{ __controller_host_item.name | mandatory }}"
+    new_name:               "{{ __controller_host_item.new_name | default(omit, true) }}"
+    description:            "{{ __controller_host_item.description | default(omit, true) }}"
+    inventory:              "{{ __controller_host_item.inventory | mandatory }}"
+    enabled:                "{{ __controller_host_item.enabled | default(omit) }}"
+    state:                  "{{ __controller_host_item.state | default(controller_state | default('present')) }}"
+    variables:              "{{ __controller_host_item.variables | default(omit, true) | regex_replace('[ ]{2,}','') }}"
+
+    # Role Standard Options
+    controller_host:        "{{ controller_hostname | default(omit, true) }}"
+    controller_username:    "{{ controller_username | default(omit, true) }}"
+    controller_password:    "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:  "{{ controller_oauthtoken | default(omit, true) }}"
+    controller_config_file: "{{ controller_config_file | default(omit, true) }}"
+    validate_certs:         "{{ controller_validate_certs | default(omit) }}"
+  loop: "{{ controller_hosts }}"
   loop_control:
-    loop_var: tower_hosts_item
-  no_log: "{{ tower_configuration_hosts_secure_logging }}"
+    loop_var: __controller_host_item
+  no_log: "{{ controller_configuration_hosts_secure_logging }}"
 ...
