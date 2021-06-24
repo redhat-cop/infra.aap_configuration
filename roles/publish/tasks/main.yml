@@ -95,6 +95,9 @@
     loop_var: "__ah_collection_file"
   no_log: "{{ ah_configuration_publish_secure_logging }}"
   when: ah_auto_approve
-
+  register: approval
+  retries: 3
+  delay: 2
+  until: not approval is failed
 
 ...
