@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Now retries auto-approving on the publish role in case there is a delay in the collection making it to be ready for approval.
-...
