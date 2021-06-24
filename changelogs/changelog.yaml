@@ -46,3 +46,11 @@ releases:
     fragments:
     - ah_repo_sync.yml
     release_date: '2021-06-01'
+  0.4.1:
+    changes:
+      bugfixes:
+      - Now retries auto-approving on the publish role in case there is a delay in
+        the collection making it to be ready for approval.
+    fragments:
+    - publish_approval_retry.yml
+    release_date: '2021-06-24'

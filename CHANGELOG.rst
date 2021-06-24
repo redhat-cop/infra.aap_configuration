@@ -5,6 +5,14 @@ redhat_cop.ah_configuration Release Notes
 .. contents:: Topics
 
 
+v0.4.1
+======
+
+Bugfixes
+--------
+
+- Now retries auto-approving on the publish role in case there is a delay in the collection making it to be ready for approval.
+
 v0.4.0
 ======
 
