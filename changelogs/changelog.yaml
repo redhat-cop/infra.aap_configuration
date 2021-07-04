@@ -1,0 +1,56 @@
+ancestor: null
+releases:
+  0.1.0:
+    changes:
+      major_changes:
+      - Initial release of ansible_config, namespace, publish roles and ah_namespace,
+        ah_token modules
+    fragments:
+    - initial.yml
+    release_date: '2021-02-13'
+  0.2.0:
+    changes:
+      breaking_changes:
+      - Publish role - repo_name variable renamed to collection_name.
+      major_changes:
+      - Added ah_approval module to approve a colelction which has been uploaded.
+      - Added ah_collection_uploads module
+      - Publish role - Ability to approve role added
+      - Publish role - rewritten to use internal modules
+    fragments:
+    - ah_approval.yml
+    - ah_collection.yaml
+    - publish_role.yaml
+    release_date: '2021-05-13'
+  0.3.0:
+    changes:
+      major_changes:
+      - Added ah_repository module to configure the remote repositories for Automation
+        Hub.
+    fragments:
+    - ah_repository.yml
+    release_date: '2021-05-25'
+  0.3.1:
+    changes:
+      bugfixes:
+      - Fixes issue in ah_repository where not specifying a requirements list causedd
+        a failure.
+    fragments:
+    - repository_fix.yml
+    release_date: '2021-05-27'
+  0.4.0:
+    changes:
+      major_changes:
+      - Added ah_repository_sync module to sync remote repositories for Automation
+        Hub.
+    fragments:
+    - ah_repo_sync.yml
+    release_date: '2021-06-01'
+  0.4.1:
+    changes:
+      bugfixes:
+      - Now retries auto-approving on the publish role in case there is a delay in
+        the collection making it to be ready for approval.
+    fragments:
+    - publish_approval_retry.yml
+    release_date: '2021-06-24'

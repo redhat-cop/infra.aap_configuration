@@ -1,4 +1,5 @@
----
+objects:
+  role: {}
 plugins:
   become: {}
   cache: {}
@@ -8,10 +9,44 @@ plugins:
   httpapi: {}
   inventory: {}
   lookup: {}
-  module: {}
+  module:
+    ah_approval:
+      description: Approve a collection in Automation Hub.
+      name: ah_approval
+      namespace: ''
+      version_added: null
+    ah_build:
+      description: Build a collection tar.
+      name: ah_build
+      namespace: ''
+      version_added: null
+    ah_collection_upload:
+      description: Upload a collection artifact to Automation Hub.
+      name: ah_collection_upload
+      namespace: ''
+      version_added: null
+    ah_namespace:
+      description: create, update, or destroy Automation Hub Namespace.
+      name: ah_namespace
+      namespace: ''
+      version_added: null
+    ah_repository:
+      description: Configure a repository.
+      name: ah_repository
+      namespace: ''
+      version_added: null
+    ah_repository_sync:
+      description: Configure a repository.
+      name: ah_repository_sync
+      namespace: ''
+      version_added: null
+    ah_token:
+      description: create, update, or destroy Automation Hub tokens.
+      name: ah_token
+      namespace: ''
+      version_added: '2.10'
   netconf: {}
   shell: {}
   strategy: {}
   vars: {}
-version: 1.0.2
-...
+version: 0.4.1
