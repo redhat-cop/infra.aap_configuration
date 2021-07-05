@@ -1,18 +1,20 @@
 ---
-- name: Add a label to tower
-  tower_label:
-    name:                                 "{{ label.name | mandatory }}"
-    new_name:                             "{{ label.new_name | default(omit, true) }}"
-    organization:                         "{{ label.organization | mandatory }}"
-    state:                                "{{ label.state | default(tower_state | default('present')) }}"
-    tower_config_file:                    "{{ tower_config_file | default(omit, true) }}"
-    tower_host:                           "{{ tower_hostname | default(omit, true) }}"
-    tower_username:                       "{{ tower_username | default(omit, true) }}"
-    tower_password:                       "{{ tower_password | default(omit, true) }}"
-    tower_oauthtoken:                     "{{ tower_oauthtoken | default(omit, true) }}"
-    validate_certs:                       "{{ tower_validate_certs | default(omit) }}"
-  loop: "{{ tower_labels }}"
+- name: Add a label to Controller
+  label:
+    name:                                 "{{ __controller_label_item.name | mandatory }}"
+    new_name:                             "{{ __controller_label_item.new_name | default(omit, true) }}"
+    organization:                         "{{ __controller_label_item.organization | mandatory }}"
+    state:                                "{{ __controller_label_item.state | default(controller_state | default('present')) }}"
+
+    # Role Standard Options
+    controller_config_file:               "{{ controller_config_file | default(omit, true) }}"
+    controller_host:                      "{{ controller_hostname | default(omit, true) }}"
+    controller_username:                  "{{ controller_username | default(omit, true) }}"
+    controller_password:                  "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:                "{{ controller_oauthtoken | default(omit, true) }}"
+    validate_certs:                       "{{ controller_validate_certs | default(omit) }}"
+  loop: "{{ controller_labels }}"
   loop_control:
-    loop_var: label
-  no_log: "{{ tower_configuration_labels_secure_logging }}"
+    loop_var: __controller_label_item
+  no_log: "{{ controller_configuration_labels_secure_logging }}"
 ...

@@ -1,17 +1,23 @@
 ---
-- name: Playbook to configure ansible tower post installation
+- name: Launch Controller Workflow
   hosts: localhost
   connection: local
-  # Define following vars here, or in tower_configs/tower_auth.yml
-  # tower_hostname: ansible-tower-web-svc-test-project.example.com
-  # tower_username: admin
-  # tower_password: changeme
+  gather_facts: false
+  vars:
+    controller_validate_certs: false
+    controller_hostname: controller.example.com
+    controller_username: admin
+    controller_password: changeme
+
+  collections:
+    - awx.awx
+
   pre_tasks:
-    - name: Include vars from tower_configs directory
+    - name: Include vars from controller_configs directory
       include_vars:
-        dir: ./yaml
-        ignore_files: [tower_config.yml.template]
+        dir: ./configs
         extensions: ["yml"]
+
   roles:
-    - {role: ../.., when: tower_ad_hoc_commands is defined}
+    - {role: ../.., when: controller_workflow_launch_jobs is defined}
 ...

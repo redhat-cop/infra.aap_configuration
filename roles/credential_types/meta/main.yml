@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: "credential_types"
   author: "Sean Sulivan"
-  description: "An Ansible Role to create Credential Types in Ansible Tower."
+  description: "An Ansible Role to create Credential Types in Ansible Controller."
   company: "Red Hat"
 
   # If the issue tracker for your role is not on github, uncomment the
@@ -29,8 +29,8 @@ galaxy_info:
         - "all"
 
   galaxy_tags:
-    - "ansibletower"
-    - "tower"
+    - "controller"
+    - "aap"
     - "awx"
     - "configuration"
     - "credentialtype"

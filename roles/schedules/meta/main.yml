@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: "schedules"
   author: "Tom Page"
-  description: "An Ansible Role to create Schedules in Ansible Tower."
+  description: "An Ansible Role to create Schedules in Ansible Controller."
   company: "Red Hat"
 
   # If the issue tracker for your role is not on github, uncomment the
@@ -30,8 +30,8 @@ galaxy_info:
         - "all"
 
   galaxy_tags:
-    - "ansibletower"
-    - "tower"
+    - "controller"
+    - "aap"
     - "awx"
     - "schedule"
     - "schedules"

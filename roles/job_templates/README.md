@@ -1,33 +1,37 @@
-# tower_configuration.job_templates
+# controller_configuration.job_templates
 ## Description
-An Ansible Role to create Job Templates in Ansible Tower.
+An Ansible Role to create Job Templates on Ansible Controller.
 
 ## Requirements
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
+ansible-galaxy collection install  -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
+  or
+  ansible.tower
 
 ## Variables
+
+### Authentication
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`tower_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
-|`tower_hostname`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
-|`tower_validate_certs`|`True`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
-|`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
-|`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
-|`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`tower_templates`|`see below`|yes|Data structure describing your job template or job templates Described below.||
+|`controller_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
+|`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
+|`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
+|`controller_username`|""|yes|Admin User on the Ansible Controller Server.||
+|`controller_password`|""|yes|Controller Admin User's password on the Ansible Controller Server.  This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
+|`controller_oauthtoken`|""|yes|Controller Admin User's token on the Ansible Controller Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`controller_templates`|`see below`|yes|Data structure describing your job template or job templates Described below.||
 
 ### Secure Logging Variables
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add job_template task does not include sensitive information.
-tower_configuration_job_templates_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
+controller_configuration_job_templates_secure_logging defaults to the value of controller_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`tower_configuration_job_templates_secure_logging`|`False`|no|Whether or not to include the sensitive Job Template role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
+|`controller_configuration_job_templates_secure_logging`|`False`|no|Whether or not to include the sensitive Job Template role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
 ### Variables
@@ -35,14 +39,15 @@ tower_configuration_job_templates_secure_logging defaults to the value of tower_
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of Job Template|
 |`new_name`|""|str|no|Setting this option will change the existing name (looked up via the name field).|
+|`copy_from`|""|no|str|Name or id to copy the job template from. This will copy an existing credential and change any parameters supplied.|
 |`description`|`False`|no|str|Description to use for the job template.|
+|`execution_environment`|""|no|str|Execution Environment to use for the job template.|
 |`job_type`|`run`|no|str|The job type to use for the job template(run, check).|
 |`inventory`|""|no|str|Name of the inventory to use for the job template.|
 |`organization`|""|no|str|Organization the job template exists in. Used to help lookup the object, cannot be modified using this module. The Organization is inferred from the associated project|
 |`project`|""|no|str|Name of the project to use for the job template.|
 |`playbook`|""|no|str|Path to the playbook to use for the job template within the project provided.|
 |`credentials`|""|no|list|List of credentials to use for the job template.|
-|`execution_environment`|""|no|str|Execution Environment to use for the job template.|
 |`forks`|""|no|int|The number of parallel or simultaneous processes to use while executing the playbook.|
 |`limit`|""|no|str|A host pattern to further constrain the list of hosts managed or affected by the playbook|
 |`verbosity`|""|no|int|Control the output level Ansible produces as the playbook runs. 0 - Normal, 1 - Verbose, 2 - More Verbose, 3 - Debug, 4 - Connection Debug .|
@@ -70,6 +75,7 @@ tower_configuration_job_templates_secure_logging defaults to the value of tower_
 |`become_enabled`|""|no|bool|Activate privilege escalation.|
 |`allow_simultaneous`|""|no|bool|Allow simultaneous runs of the job template.|
 |`timeout`|""|no|int|Maximum time in seconds to wait for a job to finish (server-side).|
+|`instance_groups`|""|no|list|list of Instance Groups for this Job Template to run on.|
 |`job_slice_count`|""|no|int|The number of jobs to slice into at runtime. Will cause the Job Template to launch a workflow if value is greater than 1.|
 |`webhook_service`|""|no|str|Service that webhook requests will be accepted from (github, gitlab)|
 |`webhook_credential`|""|no|str|Personal Access Token for posting back the status to the service API|
@@ -83,7 +89,7 @@ tower_configuration_job_templates_secure_logging defaults to the value of tower_
 
 
 ### Surveys
-Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Job_Templates/Job_Templates_job_templates_survey_spec_create) for more information about forming surveys
+Refer to the [controller Api Guide](https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Job_Templates/Job_Templates_job_templates_survey_spec_create) for more information about forming surveys
 |Variable Name|Variable Description|
 |:---:|:---:|
 |`name`|Name of the survey|
@@ -112,7 +118,7 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
             "inventory": "Demo Inventory",
             "survey_enabled": true,
             "survey": "{{ lookup('template', 'template_surveys/basic_survey.json') | regex_replace('\\n', '') }}",
-            "project": "Tower Config",
+            "project": "controller Config",
             "playbook": "helloworld.yml",
             "credentials": [
                 "Demo Credential"
@@ -126,7 +132,7 @@ Refer to the [Tower Api Guide](https://docs.ansible.com/ansible-tower/latest/htm
             "name": "No Survey Template no vars",
             "job_type": "run",
             "inventory": "Demo Inventory",
-            "project": "Tower Config",
+            "project": "controller Config",
             "playbook": "helloworld.yml",
             "credentials": [
                 "Demo Credential"
@@ -149,7 +155,7 @@ templates:
   inventory: Demo Inventory
   survey_enabled: true
   survey: "{{ lookup('template', 'template_surveys/basic_survey.json') | regex_replace('\\n', '') }}"
-  project: Tower Config
+  project: controller Config
   playbook: helloworld.yml
   credentials:
   - Demo Credential
@@ -159,7 +165,7 @@ templates:
 - name: No Survey Template no vars
   job_type: run
   inventory: Demo Inventory
-  project: Tower Config
+  project: controller Config
   playbook: helloworld.yml
   credentials:
   - Demo Credential
@@ -218,47 +224,24 @@ templates:
 ### Standard Role Usage
 ```yaml
 ---
-
-- name: Add Job Templates to Tower
+- name: Playbook to configure ansible controller post installation
   hosts: localhost
   connection: local
-  gather_facts: false
-
-#Bring in vaulted Ansible Tower secrets
-  vars_files:
-    - ../tests/vars/tower_secrets.yml
-
-  tasks:
-
-    - name: Get token for use during play
-      uri:
-        url: "https://{{ tower_hostname }}/api/v2/tokens/"
-        method: POST
-        user: "{{ tower_username }}"
-        password: "{{ tower_passname }}"
-        force_basic_auth: yes
-        status_code: 201
-        validate_certs: no
-      register: user_token
-      no_log: True
-
-    - name: Set Tower oath Token
-      set_fact:
-        tower_oauthtoken: "{{ user_token.json.token }}"
-
-    - name: Import JSON
+  # Define following vars here, or in controller_configs/controller_auth.yml
+  # controller_hostname: ansible-controller-web-svc-test-project.example.com
+  # controller_username: admin
+  # controller_password: changeme
+  pre_tasks:
+    - name: Include vars from controller_configs directory
       include_vars:
-        file: "json/templates.json"
-        name: job_templates_json
-
-    - name: Add Projects
-      include_role:
-        name: redhat_cop.tower_configuration.job_templates
-      vars:
-        tower_templates: "{{ job_templates_json.tower_templates }}"
+        dir: ./yaml
+        ignore_files: [controller_config.yml.template]
+        extensions: ["yml"]
+  roles:
+    - {role: redhat_cop.controller_configuration.job_templates, when: controller_templates is defined}
 ```
 ## License
 [MIT](LICENSE)
 
 ## Author
-[Sean Sullivan](https://github.com/Wilk42)
+[Sean Sullivan](https://github.com/sean-m-sullivan)
