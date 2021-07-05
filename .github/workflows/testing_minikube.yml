@@ -15,14 +15,14 @@ jobs:
         run: pip install -r .github/requirements.txt
 
       - name: Setup Minikube
-        uses: manusa/actions-setup-minikube@v2.3.1
+        uses: manusa/actions-setup-minikube@v2.4.2
         with:
-          minikube version: 'v1.18.1'
-          kubernetes version: 'v1.20.2'
+          minikube version: 'v1.21.0'
+          kubernetes version: 'v1.20.7'
           start args: '--addons=ingress'
 
       - name: Start AWX operator
-        run: minikube kubectl -- apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.9.0/deploy/awx-operator.yaml
+        run: minikube kubectl -- apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.12.0/deploy/awx-operator.yaml
 
       - name: Wait / Sleep
         uses: jakejarvis/wait-action@v0.1.0
@@ -76,8 +76,8 @@ jobs:
         run: echo "Service password is ${{ steps.service-password.outputs.SERVICEPASSWORD }}"
 
       - name: "Perform playbook tests"
-        run: ansible-playbook playbooks/configure_tower.yml -e tower_hostname=${{ steps.service-url.outputs.SERVICEURL }}
+        run: ansible-playbook playbooks/configure_controller.yml -e controller_hostname=${{ steps.service-url.outputs.SERVICEURL }}
 
       - name: "Perform export model playbook tests"
-        run: ansible-playbook playbooks/configure_tower_export_model.yml -e tower_hostname=${{ steps.service-url.outputs.SERVICEURL }}
+        run: ansible-playbook playbooks/configure_controller_export_model.yml -e controller_hostname=${{ steps.service-url.outputs.SERVICEURL }}
 ...

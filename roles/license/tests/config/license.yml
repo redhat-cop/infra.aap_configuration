@@ -1,0 +1,5 @@
+---
+controller_license:
+  data: "{{ lookup('file', '/tmp/my_tower.license') }}"
+  eula_accepted: true
+...

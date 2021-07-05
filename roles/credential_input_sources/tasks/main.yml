@@ -1,20 +1,22 @@
 ---
-- name: Add Tower Credential Input Sources
-  tower_credential_input_source:
-    target_credential:              "{{ cred_input_src_item.target_credential | mandatory }}"
-    input_field_name:               "{{ cred_input_src_item.input_field_name | mandatory }}"
-    source_credential:              "{{ cred_input_src_item.source_credential | default(omit, true) }}"
-    description:                    "{{ cred_input_src_item.description | default(omit, true) }}"
-    metadata:                       "{{ cred_input_src_item.metadata | default(omit, true) }}"
-    state:                          "{{ cred_input_src_item.state | default(tower_state | default('present')) }}"
-    tower_username:                 "{{ tower_username | default(omit, true) }}"
-    tower_password:                 "{{ tower_password | default(omit, true) }}"
-    tower_oauthtoken:               "{{ tower_oauthtoken | default(omit, true) }}"
-    tower_host:                     "{{ tower_hostname | default(omit, true) }}"
-    tower_config_file:              "{{ tower_config_file | default(omit, true) }}"
-    validate_certs:                 "{{ tower_validate_certs | default(omit) }}"
-  loop: "{{ tower_credential_input_sources }}"
+- name: Add Controller Credential Input Sources
+  credential_input_source:
+    target_credential:              "{{ __cred_input_src_item.target_credential | mandatory }}"
+    input_field_name:               "{{ __cred_input_src_item.input_field_name | mandatory }}"
+    source_credential:              "{{ __cred_input_src_item.source_credential | default(omit, true) }}"
+    description:                    "{{ __cred_input_src_item.description | default(omit, true) }}"
+    metadata:                       "{{ __cred_input_src_item.metadata | default(omit, true) }}"
+    state:                          "{{ __cred_input_src_item.state | default(controller_state | default('present')) }}"
+
+    # Role specific options
+    controller_username:            "{{ controller_username | default(omit, true) }}"
+    controller_password:            "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:          "{{ controller_oauthtoken | default(omit, true) }}"
+    controller_host:                "{{ controller_hostname | default(omit, true) }}"
+    controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
+    validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
+  loop: "{{ controller_credential_input_sources }}"
   loop_control:
-    loop_var: "cred_input_src_item"
-  no_log: "{{ tower_configuration_credential_input_sources_secure_logging }}"
+    loop_var: "__cred_input_src_item"
+  no_log: "{{ controller_configuration_credential_input_sources_secure_logging }}"
 ...

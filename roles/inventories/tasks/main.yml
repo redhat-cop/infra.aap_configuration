@@ -1,22 +1,25 @@
 ---
 - name: Create inventory
-  tower_inventory:
-    name:                 "{{ inventory.name | mandatory }}"
-    description:          "{{ inventory.description | default(omit, true) }}"
-    organization:         "{{ inventory.organization.name | default( inventory.organization ) | mandatory }}"
-    variables:            "{{ inventory.variables | default(omit, true) | regex_replace('[ ]{2,}','') }}"
-    kind:                 "{{ inventory.kind | default(omit, true) }}"
-    host_filter:          "{{ inventory.host_filter | default(omit, true) }}"
-    insights_credential:  "{{ inventory.insights_credential | default(omit, true) }}"
-    state:                "{{ inventory.state | default(tower_state | default('present')) }}"
-    tower_config_file:    "{{ tower_config_file | default(omit, true) }}"
-    tower_host:           "{{ tower_hostname | default(omit, true) }}"
-    tower_username:       "{{ tower_username | default(omit, true) }}"
-    tower_password:       "{{ tower_password | default(omit, true) }}"
-    tower_oauthtoken:     "{{ tower_oauthtoken | default(omit, true) }}"
-    validate_certs:       "{{ tower_validate_certs | default(omit) }}"
-  loop: "{{ tower_inventories }}"
+  inventory:
+    name:                       "{{ __controller_inventory_item.name | mandatory }}"
+    copy_from:                  "{{ __controller_inventory_item.copy_from | default(omit, true) }}"
+    description:                "{{ __controller_inventory_item.description | default(omit, true) }}"
+    organization:               "{{ __controller_inventory_item.organization.name | default( __controller_inventory_item.organization ) | mandatory }}"
+    instance_groups:            "{{ __controller_inventory_item.instance_groups | default(omit, true) }}"
+    variables:                  "{{ __controller_inventory_item.variables | default(omit, true) | regex_replace('[ ]{2,}','') }}"
+    kind:                       "{{ __controller_inventory_item.kind | default(omit, true) }}"
+    host_filter:                "{{ __controller_inventory_item.host_filter | default(omit, true) }}"
+    state:                      "{{ __controller_inventory_item.state | default(controller_state | default('present')) }}"
+
+    # Role Standard Options
+    controller_config_file:     "{{ controller_config_file | default(omit, true) }}"
+    controller_host:            "{{ controller_hostname | default(omit, true) }}"
+    controller_username:        "{{ controller_username | default(omit, true) }}"
+    controller_password:        "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:      "{{ controller_oauthtoken | default(omit, true) }}"
+    validate_certs:             "{{ controller_validate_certs | default(omit) }}"
+  loop: "{{ controller_inventories }}"
   loop_control:
-    loop_var: inventory
-  no_log: "{{ tower_configuration_inventories_secure_logging }}"
+    loop_var: __controller_inventory_item
+  no_log: "{{ controller_configuration_inventories_secure_logging }}"
 ...

@@ -1,7 +1,7 @@
 ---
 # Run Ad Hoc Commands
-- name: Run Tower ad hoc command
-  tower_ad_hoc_command:
+- name: Run Controller ad hoc command
+  ad_hoc_command:
     job_type:               "{{ __ad_hoc_command_item.job_type | default('run') }}"
     inventory:              "{{ __ad_hoc_command_item.inventory }}"
     limit:                  "{{ __ad_hoc_command_item.limit | default(omit, true) }}"
@@ -19,16 +19,16 @@
     timeout:                "{{ __ad_hoc_command_item.timeout | default(omit, true) }}"
 
     # Role Standard Options
-    tower_username:         "{{ tower_username | default(omit, true) }}"
-    tower_password:         "{{ tower_password | default(omit, true) }}"
-    tower_oauthtoken:       "{{ tower_oauthtoken | default(omit, true) }}"
-    tower_host:             "{{ tower_hostname | default(omit, true) }}"
-    tower_config_file:      "{{ tower_config_file | default(omit, true) }}"
-    validate_certs:         "{{ tower_validate_certs | default(omit) }}"
-  loop: "{{ tower_ad_hoc_commands }}"
+    controller_username:    "{{ controller_username | default(omit, true) }}"
+    controller_password:    "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:  "{{ controller_oauthtoken | default(omit, true) }}"
+    controller_host:        "{{ controller_hostname | default(omit, true) }}"
+    controller_config_file: "{{ controller_config_file | default(omit, true) }}"
+    validate_certs:         "{{ controller_validate_certs | default(omit) }}"
+  loop: "{{ controller_ad_hoc_commands }}"
   loop_control:
     loop_var: "__ad_hoc_command_item"
-  no_log: "{{ tower_configuration_ad_hoc_command_secure_logging }}"
-  register: tower_ad_hoc_commands_output
-  when: tower_ad_hoc_commands is defined
+  no_log: "{{ controller_configuration_ad_hoc_command_secure_logging }}"
+  register: controller_ad_hoc_commands_output
+  when: controller_ad_hoc_commands is defined
 ...

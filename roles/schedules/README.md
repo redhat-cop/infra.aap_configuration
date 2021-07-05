@@ -1,33 +1,37 @@
-# tower_configuration.schedules
+# controller_configuration.schedules
 ## Description
-An Ansible Role to create Schedules in Ansible Tower.
+An Ansible Role to create Schedules on Ansible Controller.
 
 ## Requirements
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
+ansible-galaxy collection install  -r tests/collections/requirements.yml to be installed
 Currently:
-  awx.awx>12.0
+  awx.awx
+  or
+  ansible.tower
 
 ## Variables
+
+### Authentication
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`tower_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
-|`tower_hostname`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
-|`tower_validate_certs`|`True`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
-|`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
-|`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
-|`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`tower_schedules`|`see below`|yes|Data structure describing your schedule or schedules Described below.||
+|`controller_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
+|`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
+|`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
+|`controller_username`|""|yes|Admin User on the Ansible Controller Server.||
+|`controller_password`|""|yes|Controller Admin User's password on the Ansible Controller Server.  This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
+|`controller_oauthtoken`|""|yes|Controller Admin User's token on the Ansible Controller Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`controller_schedules`|`see below`|yes|Data structure describing your schedule or schedules Described below.||
 
 ### Secure Logging Variables
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add schedules task does not include sensitive information.
-tower_configuration_schedules_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of tower configuration roles with a single variable, or for the user to selectively use it.
+controller_configuration_schedules_secure_logging defaults to the value of controller_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`tower_configuration_schedules_secure_logging`|`False`|no|Whether or not to include the sensitive Schedules role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
+|`controller_configuration_schedules_secure_logging`|`False`|no|Whether or not to include the sensitive Schedules role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
 ### Variables
@@ -36,7 +40,7 @@ tower_configuration_schedules_secure_logging defaults to the value of tower_conf
 |`name`|""|yes|str|Name of Job Template|
 |`new_name`|""|str|no|Setting this option will change the existing name (looked up via the name field).|
 |`description`|`False`|no|str|Description to use for the job template.|
-|`rrule`|""|yes|str|A value representing the schedules iCal recurrence rule. See the awx.awx.tower_schedule_rrule plugin for help constructing this value|
+|`rrule`|""|yes|str|A value representing the schedules iCal recurrence rule. See the awx.awx.schedule plugin for help constructing this value|
 |`extra_data`|`{}`|no|dict|Extra vars for the job template. Only allowed if prompt on launch|
 |`inventory`|""|no|str|Inventory applied to job template, assuming the job template prompts for an inventory.|
 |`scm_branch`|Project default|no|str|Branch to use in the job run. Project default used if not set. Only allowed if `allow_override` set to true on project|
@@ -55,7 +59,7 @@ tower_configuration_schedules_secure_logging defaults to the value of tower_conf
 ### Standard Schedule Data Structure
 #### Json Example
 ```json
-"tower_schedules": [
+"controller_schedules": [
     {
       "name": "Demo Schedule",
       "description": "A demonstration",
@@ -72,7 +76,7 @@ tower_configuration_schedules_secure_logging defaults to the value of tower_conf
 #### Yaml Example
 ```yaml
 ---
-tower_schedules:
+controller_schedules:
   - name: Demo Schedule
     description: A demonstration
     unified_job_template: Demo Job Template
@@ -85,21 +89,22 @@ tower_schedules:
 ## Playbook Examples
 ### Standard Role Usage
 ```yaml
-- name: Add schedules to Tower
+---
+- name: Playbook to configure ansible controller post installation
   hosts: localhost
   connection: local
-  gather_facts: false
-  vars:
-    tower_schedules:
-      - name: Demo Schedule
-        description: A demonstration
-        unified_job_template: Demo Job Template
-        rrule: "DTSTART:20191219T130551Z RRULE:FREQ=DAILY;INTERVAL=1;COUNT=1"
-        extra_data:
-          scheduled: true
-        verbosity: 1
+  # Define following vars here, or in controller_configs/controller_auth.yml
+  # controller_hostname: ansible-controller-web-svc-test-project.example.com
+  # controller_username: admin
+  # controller_password: changeme
+  pre_tasks:
+    - name: Include vars from controller_configs directory
+      include_vars:
+        dir: ./yaml
+        ignore_files: [controller_config.yml.template]
+        extensions: ["yml"]
   roles:
-    - schedules
+    - {role: redhat_cop.controller_configuration.schedules, when: controller_schedules is defined}
 ```
 ## License
 [MIT](LICENSE)

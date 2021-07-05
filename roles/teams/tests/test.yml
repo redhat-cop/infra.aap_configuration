@@ -1,29 +1,23 @@
 ---
-- name: Add Projects to Inventories
+- name: Add teams to Controller
   hosts: localhost
   connection: local
   gather_facts: false
+  vars:
+    controller_validate_certs: false
+    controller_hostname: controller.example.com
+    controller_username: admin
+    controller_password: changeme
+
+  collections:
+    - awx.awx
+
   pre_tasks:
-    - name: Get token for use during play
-      uri:
-        url: "https://{{ tower_hostname }}/api/v2/tokens/"
-        method: POST
-        user: "{{ tower_username }}"
-        password: "{{ tower_password }}"
-        force_basic_auth: true
-        status_code: 201
-        validate_certs: false
-      register: user_token
-      no_log: true
-
-    - name: Set Tower oath Token
-      set_fact:
-        tower_oauthtoken: "{{ user_token.json.token }}"
-
-    - name: Import Inventories
+    - name: Include vars from controller_configs directory
       include_vars:
-        file: "configs/tower_teams.yml"
+        dir: ./configs
+        extensions: ["yml"]
 
   roles:
-    - ../../tower_teams
+    - {role: ../.., when: controller_teams is defined}
 ...

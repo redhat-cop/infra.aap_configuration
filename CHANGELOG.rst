@@ -1,5 +1,5 @@
 ============================================
-redhat_cop.tower_configuration Release Notes
+redhat_cop.controller_configuration Release Notes
 ============================================
 
 .. contents:: Topics

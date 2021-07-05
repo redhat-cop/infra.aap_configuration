@@ -1,39 +1,23 @@
 ---
-- name: Add License to Ttower
+- name: Add License to Controller
   hosts: localhost
-  gather_facts: false
   connection: local
+  gather_facts: false
+  vars:
+    controller_validate_certs: false
+    controller_hostname: controller.example.com
+    controller_username: admin
+    controller_password: changeme
 
-  # Bring in vaulted Ansible Tower secrets
-  vars_files:
-    - "../var/tower-secrets.yml"
+  collections:
+    - awx.awx
 
-  tasks:
-
-    - name: Get token for use during play
-      uri:
-        url: "https://{{ tower_hostname }}/api/v2/tokens/"
-        method: POST
-        user: "{{ tower_username }}"
-        password: "{{ tower_passname }}"
-        force_basic_auth: true
-        status_code: 201
-        validate_certs: false
-      register: user_token
-      no_log: true
-
-    - name: Set Tower oath Token
-      set_fact:
-        tower_oauthtoken: "{{ user_token.json.token }}"
-
-    - name: Import JSON
+  pre_tasks:
+    - name: Include vars from controller_configs directory
       include_vars:
-        file: "json/license.json"
-        name: "license_json"
+        dir: ./configs
+        extensions: ["yml"]
 
-    - name: Add License
-      include_role:
-        name: redhat_cop.tower_configuration.license
-      vars:
-        tower_credential_input_sources: "{{ license_json.tower_license }}"
+  roles:
+    - {role: ../.., when: controller_license is defined}
 ...

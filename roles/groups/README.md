@@ -1,36 +1,37 @@
-# tower_configuration.groups
+# controller_configuration.groups
 ## Description
-An Ansible Role to create Groups in Ansible Tower.
+An Ansible Role to create Groups on Ansible Controller.
 
 ## Requirements
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
-
-| Requiremed collections |
-|:---:|
-|awx.awx|
+ansible-galaxy collection install  -r tests/collections/requirements.yml to be installed
+Currently:
+  awx.awx
+  or
+  ansible.tower
 
 ## Variables
+
+### Authentication
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`tower_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
-|`tower_hostname`|""|yes|URL to the Ansible Tower Server.|127.0.0.1|
-|`tower_validate_certs`|`True`|no|Whether or not to validate the Ansible Tower Server's SSL certificate.||
-|`tower_config_file`|""|no|Path to the Tower or AWX config file.||
-|`tower_username`|""|yes|Admin User on the Ansible Tower Server.||
-|`tower_password`|""|yes|Tower Admin User's password on the Ansible Tower Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
-|`tower_oauthtoken`|""|yes|Tower Admin User's token on the Ansible Tower Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`tower_groups`|`see below`|yes|Data structure describing your group or groups Described below.||
+|`controller_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
+|`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
+|`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
+|`controller_username`|""|yes|Admin User on the Ansible Controller Server.||
+|`controller_password`|""|yes|Controller Admin User's password on the Ansible Controller Server.  This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
+|`controller_oauthtoken`|""|yes|Controller Admin User's token on the Ansible Controller Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`controller_groups`|`see below`|yes|Data structure describing your group or groups Described below.||
 
 ### Secure Logging Variables
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add groups task does not include sensitive information.
-tower_configuration_groups_secure_logging defaults to the value of tower_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
+controller_configuration_groups_secure_logging defaults to the value of controller_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`tower_configuration_groups_secure_logging`|`False`|no|Whether or not to include the sensitive Group role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`tower_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
+|`controller_configuration_groups_secure_logging`|`False`|no|Whether or not to include the sensitive Group role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ### Formating Variables
 Variables can use a standard Jinja templating format to describe the resource.
@@ -40,13 +41,13 @@ Example:
 {{ variable }}
 ```
 
-Because of this it is difficult to provide tower with the required format for these fields.
+Because of this it is difficult to provide controller with the required format for these fields.
 
 The workaround is to use the following format:
 ```json
 {  { variable }}
 ```
-The role will strip the double space between the curly bracket in order to provide tower with the correct format for the Variables.
+The role will strip the double space between the curly bracket in order to provide controller with the correct format for the Variables.
 
 ## Data Structure
 ### Variables
@@ -67,7 +68,7 @@ The role will strip the double space between the curly bracket in order to provi
 ```json
 ---
 {
-    "tower_group": [
+    "controller_groups": [
       {
         "name": "PSQL_Servers",
         "description": "Default",
@@ -82,7 +83,7 @@ The role will strip the double space between the curly bracket in order to provi
 #### Yaml Example
 ```yaml
 ---
-tower_group:
+controller_groups:
 - name: PSQL_Servers
   description: Group for Postgres SQL Servers
   inventory: Default
@@ -102,44 +103,21 @@ tower_group:
 ### Standard Role Usage
 ```yaml
 ---
-
-- name: Add Groups to Tower
+- name: Playbook to configure ansible controller post installation
   hosts: localhost
   connection: local
-  gather_facts: false
-
-#Bring in vaulted Ansible Tower secrets
-  vars_files:
-    - ../tests/vars/tower_secrets.yml
-
-  tasks:
-
-    - name: Get token for use during play
-      uri:
-        url: "https://{{ tower_hostname }}/api/v2/tokens/"
-        method: POST
-        user: "{{ tower_username }}"
-        password: "{{ tower_passname }}"
-        force_basic_auth: yes
-        status_code: 201
-        validate_certs: no
-      register: user_token
-      no_log: True
-
-    - name: Set Tower oath Token
-      set_fact:
-        tower_oauthtoken: "{{ user_token.json.token }}"
-
-    - name: Import JSON
+  # Define following vars here, or in controller_configs/controller_auth.yml
+  # controller_hostname: ansible-controller-web-svc-test-project.example.com
+  # controller_username: admin
+  # controller_password: changeme
+  pre_tasks:
+    - name: Include vars from controller_configs directory
       include_vars:
-        file: "json/groups.json"
-        name: groups_json
-
-    - name: Add Groups
-      include_role:
-        name: redhat_cop.tower_configuration.groups
-      vars:
-        tower_groups: "{{ groups_json.tower_groups }}"
+        dir: ./yaml
+        ignore_files: [controller_config.yml.template]
+        extensions: ["yml"]
+  roles:
+    - {role: redhat_cop.controller_configuration.groups, when: controller_groups is defined}
 ```
 ## License
 [MIT](LICENSE)
