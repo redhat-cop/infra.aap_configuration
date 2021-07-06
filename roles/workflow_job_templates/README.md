@@ -194,6 +194,9 @@ tower_workflows:
         identifier: node101
         unified_job_template:
           name: RHVM-01
+          type: job_template
+          organization:
+            name: Default
         related:
           success_nodes:
             - workflow_job_template:
@@ -203,6 +206,9 @@ tower_workflows:
         identifier: node201
         unified_job_template:
           name: test-template-1
+          type: job_template
+          organization:
+            name: Default
       notification_templates_started: []
       notification_templates_success: []
       notification_templates_error: []
@@ -243,7 +249,9 @@ tower_workflows:
             "all_parents_must_converge": false,
             "identifier": "node101",
             "unified_job_template": {
-              "name": "RHVM-01"
+              "name": "RHVM-01",
+              "type": "job_template",
+              "organization": { "name": "Default" }
             },
             "related": {
               "credentials": [
@@ -269,7 +277,9 @@ tower_workflows:
             "all_parents_must_converge": false,
             "identifier": "node201",
             "unified_job_template": {
-              "name": "test-template-1"
+              "name": "test-template-1",
+              "type": "job_template",
+              "organization": { "name": "Default" }
             },
             "related": {
               "credentials": [
