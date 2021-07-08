@@ -21,8 +21,6 @@
     webhook_credential:                 "{{ workflow_loop_var.webhook_credential.name | default(workflow_loop_var.webhook_credential | default(omit, true)) }}"
     survey_enabled:                     "{{ workflow_loop_var.survey_enabled | default(omit) }}"
     survey:                             "{{ workflow_loop_var.related.survey_spec | default( workflow_loop_var.survey_spec | default( workflow_loop_var.survey | default(omit, true))) }}"
-    schema:                             "{{ workflow_loop_var.related.workflow_nodes | default( workflow_loop_var.workflow_nodes | default(omit, true) ) }}"
-    destroy_current_schema:             "{{ workflow_loop_var.destroy_current_schema | default(omit) }}"
     state:                              "{{ workflow_loop_var.state | default(tower_state | default('present')) }}"
     notification_templates_started:     "{{ workflow_loop_var.notification_templates_started | default(workflow_loop_var.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
     notification_templates_success:     "{{ workflow_loop_var.notification_templates_success | default(workflow_loop_var.related.notification_templates_success | default([]) | map(attribute='name') | list ) }}"
