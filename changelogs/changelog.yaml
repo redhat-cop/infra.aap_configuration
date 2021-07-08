@@ -160,3 +160,5 @@ releases:
     - env_var.yml
     - update_testing.yml
     release_date: '2021-06-21'
+  1.5.1-3.8.2:
+    release_date: '2021-07-08'

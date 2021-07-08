@@ -5,6 +5,9 @@ redhat_cop.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v1.5.1-3.8.2
+============
+
 v1.5.0
 ======
 
