@@ -49,5 +49,5 @@
     loop_var: __workflow_loop_item
   when:
     - __workflow_loop_item.simplified_workflow_nodes is defined
-
+    - __workflow_loop_item.state == "present"
 ...
