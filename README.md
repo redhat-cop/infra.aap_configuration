@@ -39,6 +39,8 @@ collections:
     # If you need a specific version of the collection, you can specify like this:
     # version: ...
 ```
+## Conversion from Tower_configuration
+If you were using a version of redhat_cop.tower_configuration, please refer to our Conversion Guide here: [Conversion Guide](docs/CONVERSION_GUIDE.md)
 
 ## Using this collection
 The awx.awx or ansible.controller collection must be invoked in the playbook in order for ansible to pick up the correct modules to use.
