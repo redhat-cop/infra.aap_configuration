@@ -45,5 +45,6 @@
     loop_var: workflow_loop_var
   when:
     - workflow_loop_var.simplified_workflow_nodes is defined
+    - workflow_loop_var.state != "absent"
 
 ...
