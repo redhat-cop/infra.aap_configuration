@@ -160,3 +160,17 @@ releases:
     - env_var.yml
     - update_testing.yml
     release_date: '2021-06-21'
+  2.0.0:
+    changes:
+      breaking_changes:
+      - All references to tower have been changed to Controller.
+      - Changed all module names to be in line with changes to awx.awx as of 19.2.1.
+      - Changed variable names for all objects from tower_* to controller_*.
+      - Removed depreciated module options for notification Templates.
+      minor_changes:
+      - Additional module options have been added such as instance_groups and copy_from
+        where applicable.
+      - All role tests have been converted to use one format.
+    fragments:
+    - controller.yml
+    release_date: '2021-07-15'
