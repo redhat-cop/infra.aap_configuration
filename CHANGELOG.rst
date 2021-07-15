@@ -1,9 +1,26 @@
-============================================
+=================================================
 redhat_cop.controller_configuration Release Notes
-============================================
+=================================================
 
 .. contents:: Topics
 
+
+v2.0.0
+======
+
+Minor Changes
+-------------
+
+- Additional module options have been added such as instance_groups and copy_from where applicable.
+- All role tests have been converted to use one format.
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- All references to tower have been changed to Controller.
+- Changed all module names to be in line with changes to awx.awx as of 19.2.1.
+- Changed variable names for all objects from tower_* to controller_*.
+- Removed depreciated module options for notification Templates.
 
 v1.5.0
 ======
