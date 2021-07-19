@@ -613,6 +613,11 @@ class AHModule(AnsibleModule):
 
         return (parser(headers)["content-type"], b_content)  # Message converts to native strings
 
+    def getFileContent(self, path):
+        with open(to_bytes(path, errors="surrogate_or_strict"), "rb") as f:
+            b_file_data = f.read()
+        return to_text(b_file_data)
+
     def upload(self, path, endpoint, auto_exit=True, item_type="unknown"):
         ct, body = self.prepare_multipart(path)
         response = self.make_request("POST", endpoint, **{"data": body, "headers": {"Content-Type": str(ct)}, "binary": True, "return_errors_on_404": True})
