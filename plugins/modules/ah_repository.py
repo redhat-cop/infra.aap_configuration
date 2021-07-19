@@ -51,6 +51,10 @@ options:
       description:
         - Requirements to download from remote.
       type: list
+    requirements_file:
+      description:
+        - A yaml requirements file to download from remote.
+      type: str
     proxy_url:
       description:
         - Proxy URL to use for the connection
@@ -88,6 +92,12 @@ EXAMPLES = """
     requirements:
       - redhat_cop.ah_configuration
       - redhat_cop.tower_configuration
+
+- name: Configure community repo from a file
+  ah_repository:
+    name: community
+    url: https://galaxy.ansible.com/api/
+    requirements_file: "/tmp/requirements.yml"
 """
 
 from ..module_utils.ah_module import AHModule
@@ -103,14 +113,17 @@ def main():
         username=dict(),
         password=dict(),
         requirements=dict(type="list", elements="str"),
+        requirements_file=dict(),
         proxy_url=dict(),
         proxy_username=dict(),
         proxy_password=dict(),
         download_concurrency=dict(default="10"),
     )
 
+    mutually_exclusive=[('requirements','requirements_file')]
+
     # Create a module for ourselves
-    module = AHModule(argument_spec=argument_spec)
+    module = AHModule(argument_spec=argument_spec, mutually_exclusive=mutually_exclusive)
 
     # Extract our parameters
     name = module.params.get("name")
@@ -118,8 +131,12 @@ def main():
 
     requirements = module.params.get("requirements")
     if requirements:
-        requirements_file = "\n  - ".join(requirements)
-        new_fields["requirements_file"] = "---\ncollections:\n  - " + requirements_file
+        requirements_content = "\n  - ".join(requirements)
+        new_fields["requirements_file"] = "---\ncollections:\n  - " + requirements_content
+
+    requirements_file = module.params.get("requirements_file")
+    if requirements_file:
+        new_fields["requirements_file"] = module.getFileContent(requirements_file)
 
     for field_name in (
         "url",
