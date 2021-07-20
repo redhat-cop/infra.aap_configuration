@@ -62,7 +62,7 @@
       ah_repository:
         name: community
         url: https://galaxy.ansible.com/api/
-        requirements_file: collection_requirement_file.yml
+        requirements_file: files/collection_requirement_file.yml
 
     - name: Sync community repo
       ah_repository_sync:
