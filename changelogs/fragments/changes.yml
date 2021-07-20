@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Added requirements_file option to ah_repository module
+  - Added meta/runtime.yml file which is now a requirement for collections to be released on Galaxy
