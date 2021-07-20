@@ -120,7 +120,7 @@ def main():
         download_concurrency=dict(default="10"),
     )
 
-    mutually_exclusive = [('requirements', 'requirements_file')]
+    mutually_exclusive = [("requirements", "requirements_file")]
 
     # Create a module for ourselves
     module = AHModule(argument_spec=argument_spec, mutually_exclusive=mutually_exclusive)
