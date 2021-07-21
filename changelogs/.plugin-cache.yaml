@@ -49,4 +49,4 @@ plugins:
   shell: {}
   strategy: {}
   vars: {}
-version: 0.4.1
+version: 0.4.3

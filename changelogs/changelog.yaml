@@ -54,3 +54,12 @@ releases:
     fragments:
     - publish_approval_retry.yml
     release_date: '2021-06-24'
+  0.4.3:
+    changes:
+      minor_changes:
+      - Added meta/runtime.yml file which is now a requirement for collections to
+        be released on Galaxy
+      - Added requirements_file option to ah_repository module
+    fragments:
+    - changes.yml
+    release_date: '2021-07-21'

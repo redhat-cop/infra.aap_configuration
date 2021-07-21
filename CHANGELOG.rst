@@ -5,6 +5,15 @@ redhat_cop.ah_configuration Release Notes
 .. contents:: Topics
 
 
+v0.4.3
+======
+
+Minor Changes
+-------------
+
+- Added meta/runtime.yml file which is now a requirement for collections to be released on Galaxy
+- Added requirements_file option to ah_repository module
+
 v0.4.1
 ======
 
