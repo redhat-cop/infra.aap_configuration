@@ -3,30 +3,33 @@
   hosts: localhost
   connection: local
   vars:
-    controller_validate_certs: false
+    controller_validate_certs: "{{ lookup('env', 'CONTROLLER_VERIFY_SSL') | default('true') }}"
+    controller_hostname: "{{ lookup('env', 'CONTROLLER_HOSTNAME') | default(omit) }}"
+    controller_username: "{{ lookup('env', 'CONTROLLER_USERNAME') | default(omit) }}"
+    controller_password: "{{ lookup('env', 'CONTROLLER_PASSWORD') | default(omit) }}"
   collections:
-    - awx.awx
+    - "{{ lookup('env', 'CONTROLLER_COLLECTION_VARIANT') | default('awx.awx') }}"
     - redhat_cop.controller_configuration
-  # Define following vars here, or in configs/controller_auth.yml
-  # controller_hostname: controller.example.com
-  # controller_username: admin
-  # controller_password: changeme
   pre_tasks:
 
     - name: Wait for Controller to come up
-      uri:
-        url: "{{ controller_hostname }}/api/v2/ping"
-        status_code: 200
-      register: result
-      until: result.status == 200
-      retries: 80
-      delay: 30
-      ignore_errors: true
+      block:
+      - name: Ensure controller is responding
+        uri:
+          url: "{{ controller_hostname }}/api/v2/ping"
+          status_code: 200
+        register: result
+        until: result.status == 200
+        retries: 80
+        delay: 30
+        ignore_errors: true
 
-    - name: Sleep for 60 seconds and allow awx to come up.
-      wait_for:
-        timeout: 60
-      delegate_to: localhost
+      - name: Sleep for 60 seconds and allow awx to come up.
+        wait_for:
+          timeout: 60
+        delegate_to: localhost
+      
+      when: lookup('env', 'CONTROLLER_WAIT_FOR_AVAILABILITY') in ['true', 'True', 'yes', 'Yes', '1']
 
     - name: Include vars from configs directory
       include_vars:
@@ -68,6 +71,7 @@
         name: settings
       vars:
         controller_settings: "{{ controller_settings_individuale }}"
+      when: controller_settings_individuale is defined
 
     - name: Run ad hoc commands
       include_role:
