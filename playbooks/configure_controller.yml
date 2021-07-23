@@ -3,7 +3,7 @@
   hosts: localhost
   connection: local
   vars:
-    controller_validate_certs: "{{ lookup('env', 'CONTROLLER_VERIFY_SSL') | default('true') }}"
+    controller_validate_certs: "{{ lookup('env', 'CONTROLLER_VALIDATE_CERTS') | default('true') }}"
     controller_hostname: "{{ lookup('env', 'CONTROLLER_HOSTNAME') | default(omit) }}"
     controller_username: "{{ lookup('env', 'CONTROLLER_USERNAME') | default(omit) }}"
     controller_password: "{{ lookup('env', 'CONTROLLER_PASSWORD') | default(omit) }}"
