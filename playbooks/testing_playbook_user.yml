@@ -1,0 +1,203 @@
+---
+- name: Tests for the user and group management modules
+  hosts: localhost
+  connection: local
+  become: false
+  gather_facts: false
+  vars:
+    ah_host: hub.lab.example.com
+    ah_username: admin
+    ah_password: redhat
+    ah_path_prefix: galaxy
+    ah_validate_certs: false
+
+  tasks:
+    - name: Authenticate and get an API token
+      redhat_cop.ah_configuration.ah_token:
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    # Testing group creation
+    - name: Ensure group operators exists
+      redhat_cop.ah_configuration.ah_group:
+        name: operators
+        state: present
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure group administrators exists
+      redhat_cop.ah_configuration.ah_group:
+        name: administrators
+        state: present
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure group managers exists
+      redhat_cop.ah_configuration.ah_group:
+        name: managers
+        state: present
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    # Testing permission assignment
+    - name: Ensure group operators has perms view
+      redhat_cop.ah_configuration.ah_group_perm:
+        name: operators
+        state: present
+        perms:
+          - view_user
+          - view_group
+          - view_collectionremote
+          - upload_to_namespace
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure group administrators has all perms
+      redhat_cop.ah_configuration.ah_group_perm:
+        name: administrators
+        state: present
+        perms: "*"
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    # Testing permission removal
+    - name: Ensure group administrators has no perms on collection remote
+      redhat_cop.ah_configuration.ah_group_perm:
+        name: administrators
+        state: absent
+        perms:
+          - change_collectionremote
+          - view_collectionremote
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    # Testing user creation
+    - name: Ensure user operator1 exists (no group, no details)
+      redhat_cop.ah_configuration.ah_user:
+        username: operator1
+        state: present
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure user admin1 exists (all details, two groups)
+      redhat_cop.ah_configuration.ah_user:
+        username: admin1
+        first_name: Lena
+        last_name: Vasquez
+        email: lvasquez@example.com
+        password: vs9mrD55NP
+        groups:
+          - operators
+          - administrators
+        state: present
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    # Testing user update
+    - name: Ensure user admin1 first name is Jean
+      redhat_cop.ah_configuration.ah_user:
+        username: admin1
+        first_name: Jean
+        state: present
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    # Testing group membership
+    - name: Ensure operator1 is member of group operators
+      redhat_cop.ah_configuration.ah_user:
+        username: operator1
+        groups: operators
+        state: present
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure operator1 is member of group operators and managers
+      redhat_cop.ah_configuration.ah_user:
+        username: operator1
+        groups:
+          - managers
+        append: true
+        state: present
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure operator1 is member of group administrators only
+      redhat_cop.ah_configuration.ah_user:
+        username: operator1
+        groups:
+          - administrators
+        append: false
+        state: present
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure operator1 is member of no group
+      redhat_cop.ah_configuration.ah_user:
+        username: operator1
+        groups: []
+        append: false
+        state: present
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    # Testing password change
+    - name: Ensure operator1 password is test123456
+      redhat_cop.ah_configuration.ah_user:
+        username: operator1
+        password: test123456
+        state: present
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    # Testing deletion
+    - name: Ensure the administrators group is deleted
+      redhat_cop.ah_configuration.ah_group:
+        name: administrators
+        state: absent
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure the users are deleted
+      redhat_cop.ah_configuration.ah_user:
+        username: "{{ item }}"
+        state: absent
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+      loop:
+        - operator1
+        - admin1
+        - test123
+
+    - name: Ensure the groups are deleted
+      redhat_cop.ah_configuration.ah_group:
+        name: "{{ item }}"
+        state: absent
+        ah_host: "{{ ah_host }}"
+        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        validate_certs: "{{ ah_validate_certs }}"
+      loop:
+        - foobar
+        - test123
+        - administrators
+        - operators
+        - managers
+...
