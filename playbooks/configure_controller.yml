@@ -1,14 +1,53 @@
 ---
+### Variables
+#
+# Set the following variables on host_vars/localhost or group_vars/all
+#
+# - awx_validate_certs:
+#     description: |
+#                  Wether to trust self-signed or invalid certificates
+#                  Falls back to env AWX_VALIDATE_CERTS. If nothing
+#                  provided defaults to true.
+#
+# - awx_hostname:
+#     description: |
+#                  Hostname of AWX or Red Hat Ansible Automation Platform Controller.
+#                  Falls back to env AWX_HOSTNAME. Omitted otherwise.
+#
+# - awx_username:
+#     description: |
+#                  Username for AWX or Red Hat Ansible Automation Platform Controller.
+#                  Falls back to env AWX_USERNAME. Omitted otherwise.
+#
+# - awx_password:
+#     description: |
+#                  Password for AWX or Red Hat Ansible Automation Platform Controller.
+#                  Falls back to env AWX_PASSWORD. Omitted otherwise.
+#
+# - awx_wait_for_availability:
+#     description: |
+#                  Wether to check & wait for controller availability.
+#                  Falls back to env AWX_WAIT_FOR_AVAILABILITY.
+#                  Will wait if one of: true (boolean), 'true', 'True', 'yes', 'Yes', '1'
+#                  Otherwise skip availability check.
+#
+# - awx_configs_dir:
+#     description: |
+#                  Directory with Controller configs.
+#                  Falls back to env AWX_CONFIGS_DIR.
+#                  Defaults to $PWD/configs
+#     
+
 - name: Playbook to configure ansible Controller post installation
   hosts: localhost
   connection: local
   vars:
-    controller_validate_certs: "{{ lookup('env', 'CONTROLLER_VALIDATE_CERTS') | default('true') }}"
-    controller_hostname: "{{ lookup('env', 'CONTROLLER_HOSTNAME') | default(omit) }}"
-    controller_username: "{{ lookup('env', 'CONTROLLER_USERNAME') | default(omit) }}"
-    controller_password: "{{ lookup('env', 'CONTROLLER_PASSWORD') | default(omit) }}"
+    controller_validate_certs: "{{ awx_validate_certs | default(lookup('env', 'AWX_VALIDATE_CERTS')) | default('true') }}"
+    controller_hostname: "{{ awx_hostname | default(lookup('env', 'AWX_HOSTNAME')) | default(omit) }}"
+    controller_username: "{{ awx_username | default(lookup('env', 'AWX_USERNAME')) | default(omit) }}"
+    controller_password: "{{ awx_password | default(lookup('env', 'AWX_PASSWORD')) | default(omit) }}"
   collections:
-    - "{{ lookup('env', 'CONTROLLER_COLLECTION_VARIANT') | default('awx.awx') }}"
+    - awx.awx
     - redhat_cop.controller_configuration
   pre_tasks:
 
@@ -24,16 +63,16 @@
         delay: 30
         ignore_errors: true
 
-      - name: Sleep for 60 seconds and allow awx to come up.
+      - name: Sleep for 60 seconds and allow Controller to come up.
         wait_for:
           timeout: 60
         delegate_to: localhost
       
-      when: lookup('env', 'CONTROLLER_WAIT_FOR_AVAILABILITY') in ['true', 'True', 'yes', 'Yes', '1']
+      when: awx_wait_for_availability | default(lookup('env', 'AWX_WAIT_FOR_AVAILABILITY')) in [true, 'true', 'True', 'yes', 'Yes', '1']
 
     - name: Include vars from configs directory
       include_vars:
-        dir: "{{ lookup('env','PWD') }}/configs"
+        dir: "{{ awx_configs_dir | default(lookup('env','AWX_CONFIGS_DIR')) | default(lookup('env', 'PWD') + '/configs') }}"
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
       tags:
