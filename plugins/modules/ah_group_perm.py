@@ -36,14 +36,18 @@ options:
       - For collection namespace management, C(add_namespace), C(change_namespace), and C(upload_to_namespace).
       - For collection content management, C(modify_ansible_repo_content)
       - For remote repository configuration, C(change_collectionremote) and C(view_collectionremote).
-      - For container image management, C(change_containernamespace_perms), C(change_container), C(change_image_tag), C(create_container), and C(push_container).
+      - For container image management, C(change_containernamespace_perms),
+        C(change_container), C(change_image_tag), C(create_container), and
+        C(push_container).
       - You can also grant or revoke all permissions with C(*) or C(all).
     type: list
     elements: str
     required: true
   state:
     description:
-      - If C(absent), then the module removes the listed permissions from the group. If the group has permissions that are not listed in C(perms), then the module does not remove those pre-existing permissions.
+      - If C(absent), then the module removes the listed permissions from the
+        group. If the group has permissions that are not listed in C(perms),
+        then the module does not remove those pre-existing permissions.
       - If C(present), then the module adds the listed permissions to the group. The module does not remove the permissions that the group already has.
     type: str
     default: present

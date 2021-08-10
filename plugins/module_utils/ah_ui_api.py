@@ -19,9 +19,7 @@ class AHUIAPIModule(AHModule):
 
     def __init__(self, argument_spec, supports_check_mode=False):
         """Initialize the module."""
-        super(AHUIAPIModule, self).__init__(
-            argument_spec=argument_spec, supports_check_mode=supports_check_mode
-        )
+        super(AHUIAPIModule, self).__init__(argument_spec=argument_spec, supports_check_mode=supports_check_mode)
         # The API endpoint is the last component of the URL and allows access
         # to the object API:
         #   https://hub.example.com/api/galaxy/_ui/v1/<endpoint>/
@@ -85,13 +83,9 @@ class AHUIAPIModule(AHModule):
         # In that case, the returned URL points the the API endpoint that can
         # be used to manage the object (used by PUT, POST, DELETE)
         if self.id is not None:
-            url_path = "{base}{endpoint}/{id}/".format(
-                base=self.url_base_path, endpoint=endpoint.strip("/"), id=self.id
-            )
+            url_path = "{base}{endpoint}/{id}/".format(base=self.url_base_path, endpoint=endpoint.strip("/"), id=self.id)
         else:
-            url_path = "{base}{endpoint}/".format(
-                base=self.url_base_path, endpoint=endpoint.strip("/")
-            )
+            url_path = "{base}{endpoint}/".format(base=self.url_base_path, endpoint=endpoint.strip("/"))
         url = self.url._replace(path=url_path)
         if query_params:
             url = url._replace(query=urlencode(query_params))
@@ -132,12 +126,7 @@ class AHUIAPIModule(AHModule):
         """
         # {"errors":[{"status":"400","code":"invalid","title":"Invalid input.","detail":"Permission matching query does not exist."}]}
         # {"errors":[{"status":"404","code":"not_found","title":"Not found."}]}
-        if (
-            response
-            and "json" in response
-            and "errors" in response["json"]
-            and len(response["json"]["errors"])
-        ):
+        if response and "json" in response and "errors" in response["json"] and len(response["json"]["errors"]):
             if "detail" in response["json"]["errors"][0]:
                 return response["json"]["errors"][0]["detail"]
             if "title" in response["json"]["errors"][0]:
@@ -168,21 +157,13 @@ class AHUIAPIModule(AHModule):
         if response["status_code"] != 200:
             error_msg = self.extract_error_msg(response)
             if error_msg:
-                fail_msg = "Unable to get {0} {1}: {2}: {3}".format(
-                    object_type, name, response["status_code"], error_msg
-                )
+                fail_msg = "Unable to get {0} {1}: {2}: {3}".format(object_type, name, response["status_code"], error_msg)
             else:
-                fail_msg = "Unable to get {0} {1}: {2}".format(
-                    object_type, name, response["status_code"]
-                )
+                fail_msg = "Unable to get {0} {1}: {2}".format(object_type, name, response["status_code"])
             self.fail_json(msg=fail_msg)
 
         if "count" not in response["json"]["meta"] or "data" not in response["json"]:
-            self.fail_json(
-                msg="Unable to get {0} {1}: the endpoint did not provide count and results".format(
-                    object_type, name
-                )
-            )
+            self.fail_json(msg="Unable to get {0} {1}: the endpoint did not provide count and results".format(object_type, name))
 
         if response["json"]["meta"]["count"] == 0:
             return None
@@ -210,9 +191,7 @@ class AHUIAPIModule(AHModule):
                  does not exist.
         :rtype: bool
         """
-        response = self.get_one_object(
-            self.endpoint, name, self.name_field, self.object_type
-        )
+        response = self.get_one_object(self.endpoint, name, self.name_field, self.object_type)
         if response is None:
             self.exists = False
             self.data = {}
@@ -255,11 +234,7 @@ class AHUIAPIModule(AHModule):
                     error_msg,
                 )
             )
-        self.fail_json(
-            msg="Unable to delete {0} {1}: {2}".format(
-                self.object_type, self.name, response["status_code"]
-            )
-        )
+        self.fail_json(msg="Unable to delete {0} {1}: {2}".format(self.object_type, self.name, response["status_code"]))
 
     def create_or_update(self, new_item, auto_exit=True):
         """Create or update the current object in Ansible automation hub.
@@ -325,11 +300,7 @@ class AHUIAPIModule(AHModule):
                     error_msg,
                 )
             )
-        self.fail_json(
-            msg="Unable to update {0} {1}: {2}".format(
-                self.object_type, self.name, response["status_code"]
-            )
-        )
+        self.fail_json(msg="Unable to update {0} {1}: {2}".format(self.object_type, self.name, response["status_code"]))
 
     def create(self, new_item, auto_exit=True):
         """Perform an POST API call to create a new object.
@@ -363,11 +334,7 @@ class AHUIAPIModule(AHModule):
                     error_msg,
                 )
             )
-        self.fail_json(
-            msg="Unable to create {0} {1}: {2}".format(
-                self.object_type, self.name, response["status_code"]
-            )
-        )
+        self.fail_json(msg="Unable to create {0} {1}: {2}".format(self.object_type, self.name, response["status_code"]))
 
 
 class AHUser(AHUIAPIModule):
@@ -375,9 +342,7 @@ class AHUser(AHUIAPIModule):
 
     def __init__(self, argument_spec, supports_check_mode=False):
         """Initialize the module."""
-        super(AHUser, self).__init__(
-            argument_spec=argument_spec, supports_check_mode=supports_check_mode
-        )
+        super(AHUser, self).__init__(argument_spec=argument_spec, supports_check_mode=supports_check_mode)
         self.endpoint = "users"
         self.name_field = "username"
         self.object_type = "user"
@@ -450,11 +415,7 @@ class AHUser(AHUIAPIModule):
         for k in new.keys():
             if k in self.password_fields:
                 if warning:
-                    self.warn(
-                        "The field {0} of {1} {2} has encrypted data and may inaccurately report task is changed.".format(
-                            k, self.object_type, self.name
-                        )
-                    )
+                    self.warn("The field {0} of {1} {2} has encrypted data and may inaccurately report task is changed.".format(k, self.object_type, self.name))
                 return True
 
             if k not in old:
@@ -476,9 +437,7 @@ class AHGroup(AHUIAPIModule):
 
     def __init__(self, argument_spec, supports_check_mode=False):
         """Initialize the object."""
-        super(AHGroup, self).__init__(
-            argument_spec=argument_spec, supports_check_mode=supports_check_mode
-        )
+        super(AHGroup, self).__init__(argument_spec=argument_spec, supports_check_mode=supports_check_mode)
         self.endpoint = "groups"
         self.name_field = "name"
         self.object_type = "group"
@@ -505,9 +464,7 @@ class AHPerm(AHUIAPIModule):
 
     def __init__(self, argument_spec, supports_check_mode=False):
         """Initialize the object."""
-        super(AHPerm, self).__init__(
-            argument_spec=argument_spec, supports_check_mode=supports_check_mode
-        )
+        super(AHPerm, self).__init__(argument_spec=argument_spec, supports_check_mode=supports_check_mode)
         # The group permission API uses a "nested" endpoint under the "groups"
         # endpoint:
         #   https://.../api/galaxy/_ui/v1/groups/<GR_ID#>/model-permissions/<PERM_ID#>/
@@ -561,9 +518,7 @@ class AHPerm(AHUIAPIModule):
         # If the group ID is not yet available, then build a URL to access the
         # "groups" endpoint (where the group can be retrieved)
         else:
-            url_path = "{base}{endpoint}/".format(
-                base=self.url_base_path, endpoint=endpoint.strip("/")
-            )
+            url_path = "{base}{endpoint}/".format(base=self.url_base_path, endpoint=endpoint.strip("/"))
         url = self.url._replace(path=url_path)
         if query_params:
             url = url._replace(query=urlencode(query_params))

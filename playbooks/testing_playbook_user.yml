@@ -4,6 +4,8 @@
   connection: local
   become: false
   gather_facts: false
+  collections:
+    - redhat_cop.ah_configuration
   vars:
     ah_host: hub.lab.example.com
     ah_username: admin
@@ -13,7 +15,7 @@
 
   tasks:
     - name: Authenticate and get an API token
-      redhat_cop.ah_configuration.ah_token:
+      ah_token:
         ah_host: "{{ ah_host }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
@@ -22,7 +24,7 @@
 
     # Testing group creation
     - name: Ensure group operators exists
-      redhat_cop.ah_configuration.ah_group:
+      ah_group:
         name: operators
         state: present
         ah_host: "{{ ah_host }}"
@@ -30,7 +32,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure group administrators exists
-      redhat_cop.ah_configuration.ah_group:
+      ah_group:
         name: administrators
         state: present
         ah_host: "{{ ah_host }}"
@@ -38,7 +40,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure group managers exists
-      redhat_cop.ah_configuration.ah_group:
+      ah_group:
         name: managers
         state: present
         ah_host: "{{ ah_host }}"
@@ -47,7 +49,7 @@
 
     # Testing permission assignment
     - name: Ensure group operators has perms view
-      redhat_cop.ah_configuration.ah_group_perm:
+      ah_group_perm:
         name: operators
         state: present
         perms:
@@ -60,7 +62,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure group administrators has all perms
-      redhat_cop.ah_configuration.ah_group_perm:
+      ah_group_perm:
         name: administrators
         state: present
         perms: "*"
@@ -70,7 +72,7 @@
 
     # Testing permission removal
     - name: Ensure group administrators has no perms on collection remote
-      redhat_cop.ah_configuration.ah_group_perm:
+      ah_group_perm:
         name: administrators
         state: absent
         perms:
@@ -82,7 +84,7 @@
 
     # Testing user creation
     - name: Ensure user operator1 exists (no group, no details)
-      redhat_cop.ah_configuration.ah_user:
+      ah_user:
         username: operator1
         state: present
         ah_host: "{{ ah_host }}"
@@ -90,7 +92,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure user admin1 exists (all details, two groups)
-      redhat_cop.ah_configuration.ah_user:
+      ah_user:
         username: admin1
         first_name: Lena
         last_name: Vasquez
@@ -106,7 +108,7 @@
 
     # Testing user update
     - name: Ensure user admin1 first name is Jean
-      redhat_cop.ah_configuration.ah_user:
+      ah_user:
         username: admin1
         first_name: Jean
         state: present
@@ -116,7 +118,7 @@
 
     # Testing group membership
     - name: Ensure operator1 is member of group operators
-      redhat_cop.ah_configuration.ah_user:
+      ah_user:
         username: operator1
         groups: operators
         state: present
@@ -125,7 +127,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure operator1 is member of group operators and managers
-      redhat_cop.ah_configuration.ah_user:
+      ah_user:
         username: operator1
         groups:
           - managers
@@ -136,7 +138,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure operator1 is member of group administrators only
-      redhat_cop.ah_configuration.ah_user:
+      ah_user:
         username: operator1
         groups:
           - administrators
@@ -147,7 +149,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure operator1 is member of no group
-      redhat_cop.ah_configuration.ah_user:
+      ah_user:
         username: operator1
         groups: []
         append: false
@@ -158,7 +160,7 @@
 
     # Testing password change
     - name: Ensure operator1 password is test123456
-      redhat_cop.ah_configuration.ah_user:
+      ah_user:
         username: operator1
         password: test123456
         state: present
@@ -168,7 +170,7 @@
 
     # Testing deletion
     - name: Ensure the administrators group is deleted
-      redhat_cop.ah_configuration.ah_group:
+      ah_group:
         name: administrators
         state: absent
         ah_host: "{{ ah_host }}"
@@ -176,7 +178,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure the users are deleted
-      redhat_cop.ah_configuration.ah_user:
+      ah_user:
         username: "{{ item }}"
         state: absent
         ah_host: "{{ ah_host }}"
@@ -188,7 +190,7 @@
         - test123
 
     - name: Ensure the groups are deleted
-      redhat_cop.ah_configuration.ah_group:
+      ah_group:
         name: "{{ item }}"
         state: absent
         ah_host: "{{ ah_host }}"
