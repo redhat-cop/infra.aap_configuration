@@ -494,6 +494,8 @@ class AHPerm(AHUIAPIModule):
         :return: The URL object.
         :rtype: :class:`urllib.parse.ParseResult`
         """
+        if endpoint == "version":
+            return self.url._replace(path="/api/{0}/".format(self.path_prefix))
         # If the group ID and the permission ID are already kwown, then build
         # a URL to access that specifig permsission for the group.
         # /api/galaxy/_ui/v1/groups/<GR_ID#>/model-permissions/<PERM_ID#>/
@@ -523,6 +525,23 @@ class AHPerm(AHUIAPIModule):
         if query_params:
             url = url._replace(query=urlencode(query_params))
         return url
+
+    def get_server_version(self):
+        """Return the automation hub/galaxy server version.
+
+        :return: the server version ("4.2.5" for example) or an empty string if
+                 that information is not available.
+        :rtype: str
+        """
+        response = self.get_endpoint("version")
+        if response["status_code"] != 200:
+            error_msg = self.extract_error_msg(response)
+            if error_msg:
+                fail_msg = "Unable to get server version: {0}: {1}".format(response["status_code"], error_msg)
+            else:
+                fail_msg = "Unable to get server version: {0}".format(response["status_code"])
+            self.fail_json(msg=fail_msg)
+        return response["json"]["server_version"] if "server_version" in response["json"] else ""
 
     def get_group_perms(self, name):
         """Retrieve the group details and its permissions.

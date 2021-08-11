@@ -36,9 +36,9 @@ options:
       - For collection namespace management, C(add_namespace), C(change_namespace), and C(upload_to_namespace).
       - For collection content management, C(modify_ansible_repo_content)
       - For remote repository configuration, C(change_collectionremote) and C(view_collectionremote).
-      - For container image management, C(change_containernamespace_perms),
-        C(change_container), C(change_image_tag), C(create_container), and
-        C(push_container).
+      - For container image management, only with private automation hub v4.3.2
+        or later, C(change_containernamespace_perms), C(change_container),
+        C(change_image_tag), C(create_container), and C(push_container).
       - You can also grant or revoke all permissions with C(*) or C(all).
     type: list
     elements: str
@@ -57,6 +57,10 @@ seealso:
   - module: redhat_cop.ah_configuration.ah_user
 notes:
   - Supports C(check_mode).
+  - The container permissions (C(change_containernamespace_perms),
+    C(change_container), C(change_image_tag), C(create_container), and
+    C(push_container)) are only available with private automation hub v4.3.2 or
+    later.
 extends_documentation_fragment: redhat_cop.ah_configuration.auth
 """
 
@@ -150,6 +154,14 @@ def main():
     name = module.params.get("name")
     perms = module.params.get("perms")
     state = module.params.get("state")
+
+    vers = module.get_server_version()
+    if vers < "4.3.2":
+        del FRIENDLY_PERM_NAMES["change_containernamespace_perms"]
+        del FRIENDLY_PERM_NAMES["change_container"]
+        del FRIENDLY_PERM_NAMES["change_image_tag"]
+        del FRIENDLY_PERM_NAMES["create_container"]
+        del FRIENDLY_PERM_NAMES["push_container"]
 
     # Convert the given permission list to a list of internal names
     group_perms = []
