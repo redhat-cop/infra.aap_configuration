@@ -21,7 +21,7 @@ controller_projects: []
 #  local_path:  # optional, URI
 #  scm_branch:  # optional, str
 #  scm_refspec:  # optional, str
-#  scm_credential: "credential_name"  # optional
+#  credential: "credential_name"  # optional
 #  scm_clean: false  # optional, boolean
 #  scm_delete_on_update: false  # optional, boolean
 #  scm_update_on_launch: false  # optional, boolean
