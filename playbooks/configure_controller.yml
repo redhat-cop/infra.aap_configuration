@@ -35,7 +35,7 @@
 #                  Directory with Controller configs.
 #                  Falls back to env CONTROLLER_CONFIGS_DIR.
 #                  Defaults to $PWD/configs
-#     
+#
 
 
 - name: Playbook to configure ansible Controller post installation
@@ -48,21 +48,20 @@
 
     - name: Wait for Controller to come up
       block:
-      - name: Ensure controller is responding
-        uri:
-          url: "{{ controller_hostname }}/api/v2/ping"
-          status_code: 200
-        register: result
-        until: result.status == 200
-        retries: 80
-        delay: 30
-        ignore_errors: true
+        - name: Ensure controller is responding
+          uri:
+            url: "{{ controller_hostname }}/api/v2/ping"
+            status_code: 200
+          register: result
+          until: result.status == 200
+          retries: 80
+          delay: 30
+          ignore_errors: true
 
-      - name: Sleep for 60 seconds and allow Controller to come up.
-        wait_for:
-          timeout: 60
-        delegate_to: localhost
-      
+        - name: Sleep for 60 seconds and allow Controller to come up.
+          wait_for:
+            timeout: 60
+          delegate_to: localhost
       when: controller_wait_for_availability | default(lookup('env', 'CONTROLLER_WAIT_FOR_AVAILABILITY')) in [true, 'true', 'True', 'yes', 'Yes', '1']
 
     - name: Include vars from configs directory
