@@ -8,7 +8,7 @@
 #                  Wether to trust self-signed or invalid certificates
 #                  Falls back to env CONTROLLER_VERIFY_SSL and then to awx-cli config.
 #
-# - controller_hostname: |
+# - controller_hostname:
 #     description: |
 #                  Hostname of AWX or Red Hat Ansible Automation Platform Controller.
 #                  Falls back to env CONTROLLER_HOST and then to awx-cli config.
@@ -66,7 +66,7 @@
 
     - name: Include vars from configs directory
       include_vars:
-        dir: "{{ controller_configs_dir | default(lookup('env','CONTROLLER_CONFIGS_DIR')) | default(lookup('env', 'PWD') + '/configs') }}"
+        dir: "{{ controller_configs_dir | default((lookup('env','CONTROLLER_CONFIGS_DIR') == '') | ternary('./configs', lookup('env','CONTROLLER_CONFIGS_DIR'))) }}"
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
       tags:
