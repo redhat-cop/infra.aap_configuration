@@ -4,7 +4,7 @@
 # Copyright: (c) 2021, Herve Quatremain <hquatrem@redhat.com>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-# You can consult the UI API documentation directly on a running Ansible
+# You can consult the UI API documentation directly on a running private
 # automation hub at https://hub.example.com/pulp/api/v3/docs/
 
 
@@ -16,9 +16,9 @@ __metaclass__ = type
 DOCUMENTATION = r"""
 ---
 module: ah_user
-short_description: Manage Ansible automation hub users
+short_description: Manage private automation hub users
 description:
-  - Create, delete, and update user accounts in Ansible automation hub.
+  - Create, delete, and update user accounts in private automation hub.
 version_added: '0.4.3'
 author: Herve Quatremain (@herve4m)
 options:
@@ -67,7 +67,7 @@ options:
       - If C(absent), then the module deletes the user.
       - The module does not fail if the user does not exist because the state is already as expected.
       - If C(present), then the module creates the user if it does not already exist.
-        If the user account already item_exists, then the module updates it state.
+        If the user account already exists, then the module updates its state.
     type: str
     default: present
     choices: [absent, present]
@@ -76,11 +76,11 @@ seealso:
   - module: redhat_cop.ah_configuration.ah_group
 notes:
   - Supports C(check_mode).
-extends_documentation_fragment: redhat_cop.ah_configuration.auth
+extends_documentation_fragment: redhat_cop.ah_configuration.auth_ui
 """
 
 EXAMPLES = r"""
-- name: Ensure the user item_exists
+- name: Ensure the user exists
   redhat_cop.ah_configuration.ah_user:
     username: lvasquez
     first_name: Lena
@@ -146,8 +146,8 @@ EXAMPLES = r"""
 
 RETURN = r""" # """
 
-
-from ..module_utils.ah_ui_api import AHUser
+from ..module_utils.ah_api_module import AHAPIModule
+from ..module_utils.ah_ui_object import AHUIUser, AHUIGroup
 
 
 def main():
@@ -164,7 +164,7 @@ def main():
     )
 
     # Create a module for ourselves
-    module = AHUser(argument_spec=argument_spec, supports_check_mode=True)
+    module = AHAPIModule(argument_spec=argument_spec, supports_check_mode=True)
 
     # Extract our parameters
     username = module.params.get("username")
@@ -177,35 +177,36 @@ def main():
     append = module.params.get("append")
     state = module.params.get("state")
 
-    # Confirm that all the given groups exist and retrieve their details
-    group_ids = []
-    if groups is not None:
-        error_groups = []
-        for group_name in groups:
-            existing_group = module.get_one_object("groups", group_name)
-            if existing_group is not None:
-                group_ids.append(existing_group)
-            else:
-                error_groups.append(group_name)
-        if error_groups:
-            module.fail_json(msg="unknown groups: %s" % ", ".join(error_groups))
+    # Authenticate
+    module.authenticate()
+    user = AHUIUser(module)
 
-    # Get the user details from its name. The method returns None if the given
-    # user does not exist.
+    # Get the user details from its name.
     # API (GET): /api/galaxy/_ui/v1/users/?username=<user_name>
-    item_exists = module.get_one(username)
+    user.get_object(username)
 
     # Removing the user
     if state == "absent":
         # Cannot delete an account that has the super user flag.
         # First, remove that super user status from the account.
-        if item_exists and module.superuser:
+        if user.superuser:
             new_fields = {"username": username, "is_superuser": False}
-            module.update(new_fields, auto_exit=False)
+            user.update(new_fields, auto_exit=False)
+        user.delete()
 
-        # This method automatically calls module.exit_json() when done
-        # API (DELETE): /api/galaxy/_ui/v1/users/<USER_ID#>/
-        module.delete()
+    # Confirm that all the given groups exist and retrieve their details
+    group = AHUIGroup(module)
+    group_ids = []
+    if groups is not None:
+        error_groups = []
+        for group_name in groups:
+            group.get_object(group_name)
+            if group.exists:
+                group_ids.append(group.data)
+            else:
+                error_groups.append(group_name)
+        if error_groups:
+            module.fail_json(msg="unknown groups: %s" % ", ".join(error_groups))
 
     # Create the data that gets sent for create and update
     new_fields = {}
@@ -222,16 +223,16 @@ def main():
     if password is not None:
         new_fields["password"] = password
 
-    if append and item_exists:
+    if append and user.exists:
         ids = [v["id"] for v in group_ids]
-        for g in module.groups:
+        for g in user.groups:
             if "id" in g and g["id"] not in ids:
                 group_ids.append(g)
     new_fields["groups"] = group_ids
 
     # API (POST): /api/galaxy/_ui/v1/users/
     # API (PUT): /api/galaxy/_ui/v1/users/<USER_ID#>/
-    module.create_or_update(new_fields)
+    user.create_or_update(new_fields)
 
 
 if __name__ == "__main__":

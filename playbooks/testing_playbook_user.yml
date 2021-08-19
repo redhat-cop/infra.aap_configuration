@@ -1,5 +1,5 @@
 ---
-- name: Tests for the user and group management modules
+- name: Test the user and group management modules
   hosts: localhost
   connection: local
   become: false
@@ -14,21 +14,15 @@
     ah_validate_certs: false
 
   tasks:
-    - name: Authenticate and get an API token
-      ah_token:
-        ah_host: "{{ ah_host }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
     # Testing group creation
     - name: Ensure group operators exists
       ah_group:
         name: operators
         state: present
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure group administrators exists
@@ -36,7 +30,9 @@
         name: administrators
         state: present
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure group managers exists
@@ -44,7 +40,9 @@
         name: managers
         state: present
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
     # Testing permission assignment
@@ -58,7 +56,9 @@
           - view_collectionremote
           - upload_to_namespace
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure group administrators has all perms
@@ -67,7 +67,9 @@
         state: present
         perms: "*"
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
     # Testing permission removal
@@ -79,7 +81,9 @@
           - change_collectionremote
           - view_collectionremote
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
     # Testing user creation
@@ -88,32 +92,39 @@
         username: operator1
         state: present
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure user admin1 exists (all details, two groups)
       ah_user:
         username: admin1
-        first_name: Lena
-        last_name: Vasquez
-        email: lvasquez@example.com
+        # Testing with UTF-8 characters
+        first_name: Czesława
+        last_name: Dąbrowski
+        email: cdabrowski@example.com
         password: vs9mrD55NP
         groups:
           - operators
           - administrators
         state: present
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
     # Testing user update
     - name: Ensure user admin1 first name is Jean
       ah_user:
         username: admin1
-        first_name: Jean
+        first_name: Róża
         state: present
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
     # Testing group membership
@@ -123,7 +134,9 @@
         groups: operators
         state: present
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure operator1 is member of group operators and managers
@@ -134,7 +147,9 @@
         append: true
         state: present
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure operator1 is member of group administrators only
@@ -145,7 +160,9 @@
         append: false
         state: present
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure operator1 is member of no group
@@ -155,7 +172,9 @@
         append: false
         state: present
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
     # Testing password change
@@ -165,7 +184,9 @@
         password: test123456
         state: present
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
     # Testing deletion
@@ -174,7 +195,9 @@
         name: administrators
         state: absent
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure the users are deleted
@@ -182,7 +205,9 @@
         username: "{{ item }}"
         state: absent
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
       loop:
         - operator1
@@ -194,7 +219,9 @@
         name: "{{ item }}"
         state: absent
         ah_host: "{{ ah_host }}"
-        ah_token: "{{ ansible_facts['ah_token']['token'] }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
       loop:
         - foobar

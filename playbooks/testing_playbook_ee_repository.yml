@@ -1,0 +1,97 @@
+---
+# These tests require a repository to exist in private automation hub.
+# The `repository' variable defines that repository and is set to
+# `ansible-automation-platform-20-early-access/ee-minimal-rhel8` by default.
+#
+# You can create the repository by pushing a container image with podman.
+# For example:
+#
+#  $ podman login registry.redhat.io
+#
+#  $ podman pull registry.redhat.io/ansible-automation-platform-20-early-access/ee-minimal-rhel8:2.0.0-10
+#
+#  $ podman tag registry.redhat.io/ansible-automation-platform-20-early-access/ee-minimal-rhel8:2.0.0-10 hub.lab.example.com/ansible-automation-platform-20-early-access/ee-minimal-rhel8:2.0.0-10
+#
+#  $ podman login --tls-verify=false hub.lab.example.com
+#
+#  $ podman push --tls-verify=false --remove-signatures hub.lab.example.com/ansible-automation-platform-20-early-access/ee-minimal-rhel8:2.0.0-10
+#
+# Warning: the test removes the repository at the end.
+
+- name: Test the execution environment (EE) repository module
+  hosts: localhost
+  connection: local
+  become: false
+  gather_facts: false
+  collections:
+    - redhat_cop.ah_configuration
+  vars:
+    ah_host: hub.lab.example.com
+    ah_username: admin
+    ah_password: redhat
+    ah_path_prefix: galaxy
+    ah_validate_certs: false
+    repository: ansible-automation-platform-20-early-access/ee-minimal-rhel8
+
+  tasks:
+    # Adding a description and a README file to the repository
+    - name: Ensure the repository has a description and a README file
+      ah_ee_repository:
+        name: "{{ repository }}"
+        # Testing with UTF-8 characters
+        description: To jest jakiś opis
+        readme: |
+          # Min avrättningsmiljö
+
+          * bullet 1
+          * bullet 2
+        state: updated
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    # Preparing a README file
+    - name: Ensure a temporary file exists
+      tempfile:
+      register: tempfile
+
+    - name: Ensure some contents are stored in the temporary file
+      copy:
+        dest: "{{ tempfile['path'] }}"
+        mode: 0600
+        content: |
+          # Mi entorno de ejecución
+
+          * bullet 1
+          * bullet 2
+
+    # Testing updating the repository README file from a local file
+    - name: Ensure the repository README file it set from a local file
+      ah_ee_repository:
+        name: "{{ repository }}"
+        readme_file: "{{ tempfile['path'] }}"
+        state: updated
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure the temporary file is removed
+      file:
+        path: "{{ tempfile['path'] }}"
+        state: absent
+
+    # Testing repository deletion
+    - name: Ensure the repository does not exist
+      ah_ee_repository:
+        name: "{{ repository }}"
+        state: absent
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+...

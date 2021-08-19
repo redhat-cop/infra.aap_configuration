@@ -4,7 +4,7 @@
 # Copyright: (c) 2021, Herve Quatremain <hquatrem@redhat.com>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-# You can consult the UI API documentation directly on a running Ansible
+# You can consult the UI API documentation directly on a running private
 # automation hub at https://hub.example.com/pulp/api/v3/docs/
 
 
@@ -16,9 +16,9 @@ __metaclass__ = type
 DOCUMENTATION = r"""
 ---
 module: ah_group
-short_description: Manage Ansible automation hub user groups
+short_description: Manage private automation hub user groups
 description:
-  - Create and delete groups in Ansible automation hub.
+  - Create and delete groups in private automation hub.
 version_added: '0.4.3'
 author: Herve Quatremain (@herve4m)
 options:
@@ -40,7 +40,7 @@ seealso:
   - module: redhat_cop.ah_configuration.ah_user
 notes:
   - Supports C(check_mode).
-extends_documentation_fragment: redhat_cop.ah_configuration.auth
+extends_documentation_fragment: redhat_cop.ah_configuration.auth_ui
 """
 
 EXAMPLES = r"""
@@ -63,8 +63,8 @@ EXAMPLES = r"""
 
 RETURN = r""" # """
 
-
-from ..module_utils.ah_ui_api import AHGroup
+from ..module_utils.ah_api_module import AHAPIModule
+from ..module_utils.ah_ui_object import AHUIGroup
 
 
 def main():
@@ -74,25 +74,28 @@ def main():
     )
 
     # Create a module for ourselves
-    module = AHGroup(argument_spec=argument_spec, supports_check_mode=True)
+    module = AHAPIModule(argument_spec=argument_spec, supports_check_mode=True)
 
     # Extract our parameters
     name = module.params.get("name")
     state = module.params.get("state")
 
-    # Get the group details from its name. The method returns None if the given
-    # group does not exist.
+    # Authenticate
+    module.authenticate()
+    group = AHUIGroup(module)
+
+    # Get the group details from its name.
     # API (GET): /api/galaxy/_ui/v1/groups/?name=<group_name>
-    module.get_one(name)
+    group.get_object(name)
 
     # Removing the group
     if state == "absent":
-        module.delete()
+        group.delete()
 
     # Creating the group. The group can never be updated (name change) because
     # the API does not allow it.
     # API (POST): /api/galaxy/_ui/v1/groups/
-    module.create_or_update({"name": name})
+    group.create_or_update({"name": name})
 
 
 if __name__ == "__main__":

@@ -1,0 +1,135 @@
+---
+- name: Test the execution environment (EE) namespace module
+  hosts: localhost
+  connection: local
+  become: false
+  gather_facts: false
+  collections:
+    - redhat_cop.ah_configuration
+  vars:
+    ah_host: hub.lab.example.com
+    ah_username: admin
+    ah_password: redhat
+    ah_path_prefix: galaxy
+    ah_validate_certs: false
+
+  tasks:
+    # Creating supporting groups
+    - name: Ensure group operators exists
+      ah_group:
+        name: operators
+        state: present
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure group administrators exists
+      ah_group:
+        name: administrators
+        state: present
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure group operators has some perms
+      ah_group_perm:
+        name: operators
+        state: present
+        perms:
+          - view_user
+          - view_group
+          - change_image_tag
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure group administrators has all perms
+      ah_group_perm:
+        name: administrators
+        state: present
+        perms: "*"
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    # Testing namespace creation
+    - name: Ensure namespace1 EE namespace exists
+      ah_ee_namespace:
+        name: namespace1
+        state: present
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    # Testing permissions assignment
+    - name: Ensure group administrators has perms on namespace1
+      ah_ee_namespace:
+        name: namespace1
+        state: present
+        groups:
+          - administrators
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure group operators has also perms on namespace1
+      ah_ee_namespace:
+        name: namespace1
+        state: present
+        groups:
+          - operators
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure only group operators has perms on namespace1
+      ah_ee_namespace:
+        name: namespace1
+        state: present
+        append: false
+        groups:
+          - operators
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    # Testing namespace deletion
+    - name: Ensure namespace1 EE namespace does not exist
+      ah_ee_namespace:
+        name: namespace1
+        state: absent
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure the groups are deleted
+      ah_group:
+        name: "{{ item }}"
+        state: absent
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+      loop:
+        - administrators
+        - operators
+...

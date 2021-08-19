@@ -4,7 +4,7 @@
 # Copyright: (c) 2021, Herve Quatremain <hquatrem@redhat.com>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
-# You can consult the UI API documentation directly on a running Ansible
+# You can consult the UI API documentation directly on a running private
 # automation hub at https://hub.example.com/pulp/api/v3/docs/
 
 
@@ -61,7 +61,7 @@ notes:
     C(change_container), C(change_image_tag), C(create_container), and
     C(push_container)) are only available with private automation hub v4.3.2 or
     later.
-extends_documentation_fragment: redhat_cop.ah_configuration.auth
+extends_documentation_fragment: redhat_cop.ah_configuration.auth_ui
 """
 
 
@@ -106,10 +106,12 @@ EXAMPLES = r"""
 
 RETURN = r""" # """
 
-from ..module_utils.ah_ui_api import AHPerm
+from ..module_utils.ah_api_module import AHAPIModule
+from ..module_utils.ah_ui_object import AHUIGroup
+
 
 # Mapping between the permission names that the user provides in perms and the
-# Ansible automation hub internal names.
+# private automation hub internal names.
 FRIENDLY_PERM_NAMES = {
     "*": "all",
     # Namespaces
@@ -148,12 +150,15 @@ def main():
     )
 
     # Create a module for ourselves
-    module = AHPerm(argument_spec=argument_spec, supports_check_mode=True)
+    module = AHAPIModule(argument_spec=argument_spec, supports_check_mode=True)
 
     # Extract our parameters
     name = module.params.get("name")
     perms = module.params.get("perms")
     state = module.params.get("state")
+
+    # Authenticate
+    module.authenticate()
 
     vers = module.get_server_version()
     if vers < "4.3.2":
@@ -175,22 +180,27 @@ def main():
         elif perm in perm_ah_names:
             group_perms.append(perm)
         else:
-            module.fail_json(msg="unknown perm (%s) defined" % perm)
+            module.fail_json(msg="Unknown perm ({perm}) defined".format(perm=perm))
 
-    # Retrieving the current permissions associated with the given group
-    existing_perms = module.get_group_perms(name)
+    group = AHUIGroup(module)
+    group.get_object(name)
+    if not group.exists:
+        module.fail_json(msg="Unknown group: {group}".format(group=name))
+
+    # Retrieve the group permissions
+    group.load_perms()
 
     # Removing the permissions
     if state == "absent":
         # Which permissions should be removed?
-        to_delete = list(set(group_perms) & set(existing_perms.keys()))
+        to_delete = list(set(group_perms) & set(group.get_perms()))
         # API (DELETE): /api/galaxy/_ui/v1/groups/<GR_ID#>/model-permissions/<PERM_ID#>/
-        module.delete_perms(to_delete)
+        group.delete_perms(to_delete)
 
     # Adding the permissions not yet associated with the group
     # API (POST): /api/galaxy/_ui/v1/groups/<GR_ID#>/model-permissions/
-    to_create = list(set(group_perms) - set(existing_perms.keys()))
-    module.create_perms(to_create)
+    to_create = list(set(group_perms) - set(group.get_perms()))
+    group.create_perms(to_create)
 
 
 if __name__ == "__main__":
