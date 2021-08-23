@@ -23,6 +23,7 @@ galaxy_info:
     - "labels"
 
 collections:
-  - awx.awx
+  - ansible.controller
   - ansible.tower
+  - awx.awx
 ...
