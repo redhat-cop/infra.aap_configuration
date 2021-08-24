@@ -24,6 +24,7 @@ galaxy_info:
     - "source"
 
 collections:
-  - awx.awx
+  - ansible.controller
   - ansible.tower
+  - awx.awx
 ...
