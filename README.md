@@ -45,6 +45,15 @@ If you were using a version of redhat_cop.tower_configuration, please refer to o
 ## Using this collection
 The awx.awx or ansible.controller collection must be invoked in the playbook in order for ansible to pick up the correct modules to use.
 
+The following command will invoke the playbook with the awx collection
+```console
+ansible-playbook redhat_cop.controller_configuration.configure_awx.yml
+```
+The following command will invoke the playbook with the ansible.controller collection
+```console
+ansible-playbook redhat_cop.controller_configuration.configure_controller.yml
+```
+
 Otherwise it will look for the modules only in your base installation. If there are errors complaining about "couldn't resolve module/action" this is the most likely cause.
 
 ```yaml

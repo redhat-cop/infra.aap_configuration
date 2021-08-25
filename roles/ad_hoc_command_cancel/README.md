@@ -7,7 +7,7 @@ ansible-galaxy collection install  -r tests/collections/requirements.yml to be i
 Currently:
   awx.awx
   or
-  ansible.tower
+  ansible.controller
 
 ## Variables
 
