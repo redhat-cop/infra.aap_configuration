@@ -1,7 +1,0 @@
----
-controller_labels:
-  - name: Dev
-    organization: Satellite
-  - name: Prod
-    organization: Default
-...

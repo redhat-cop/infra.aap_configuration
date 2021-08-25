@@ -50,7 +50,6 @@ galaxy_info:
 
 collections:
   - ansible.controller
-  - ansible.tower
   - awx.awx
 
 dependencies: []
