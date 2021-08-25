@@ -6,7 +6,7 @@ ansible-galaxy collection install  -r tests/collections/requirements.yml to be i
 Currently:
   awx.awx
   or
-  ansible.tower
+  ansible.controller
 
 ## Variables
 
@@ -19,7 +19,7 @@ Currently:
 |`controller_username`|""|yes|Admin User on the Ansible Controller Server.||
 |`controller_password`|""|yes|Controller Admin User's password on the Ansible Controller Server.  This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
 |`controller_oauthtoken`|""|yes|Controller Admin User's token on the Ansible Controller Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`controller_projects`|`see below`|yes|Data structure describing your label or labels Described below.||
+|`controller_labels`|`see below`|yes|Data structure describing your label or labels Described below.||
 
 ### Secure Logging Variables
 The following Variables compliment each other.

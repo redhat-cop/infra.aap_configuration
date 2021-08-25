@@ -1,4 +1,0 @@
----
-controller_instance_groups:
-  - name: test_instance_group
-...
