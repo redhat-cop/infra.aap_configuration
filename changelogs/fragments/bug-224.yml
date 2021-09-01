@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - Fixed issue where `credential` was not working for project and instead the old `scm_credential` option remained.
