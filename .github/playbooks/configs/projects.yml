@@ -19,4 +19,11 @@ controller_projects:
     scm_url: https://github.com/ansible/ansible-examples.git
     description: ansible-examples
     organization: Satellite
+  - name: Test Inventory source project with credential
+    scm_type: git
+    scm_url: https://github.com/ansible/ansible-examples.git
+    description: ansible-examples
+    organization: Satellite
+    credential: gitlab-personal-access-token for satqe_auto_droid
+    wait: false
 ...
