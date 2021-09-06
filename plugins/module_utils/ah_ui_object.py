@@ -700,7 +700,7 @@ class AHUIEENamespace(AHUIObject):
                 "container.namespace_add_containerdistribution",
                 "container.namespace_change_containerdistribution",
                 "container.namespace_delete_containerdistribution",
-                "container.            namespace_modify_content_containerpushrepository",
+                "container.namespace_modify_content_containerpushrepository",
                 "container.namespace_pull_containerdistribution",
                 "container.namespace_push_containerdistribution",
                 "container.namespace_view_containerdistribution",
@@ -863,13 +863,13 @@ class AHUIEERepository(AHUIObject):
                       "pulp_id": "8be51c84-e14c-4b84-8db1-8db4737ca9ff",
                       "pulp_type": "container.container-push",
                       "version": 7,
-                      "name": "ansible-automation-platform-20-early-access/            ee-supported-rhel8",
+                      "name": "ansible-automation-platform-20-early-access/ee-supported-rhel8",
                       "description": null
                     },
                     "distribution": {
                       "pulp_id": "61b6c7de-a19b-4976-89c2-15d665781e20",
-                      "name": "ansible-automation-platform-20-early-access/            ee-supported-rhel8",
-                      "base_path": "ansible-automation-platform-20-early-access/            ee-supported-rhel8"
+                      "name": "ansible-automation-platform-20-early-access/ee-supported-rhel8",
+                      "base_path": "ansible-automation-platform-20-early-access/ee-supported-rhel8"
                     }
                   },
                   "namespace": {
@@ -990,3 +990,123 @@ class AHUIEERepository(AHUIObject):
                 object_type=self.object_type, name=self.name, code=response["status_code"]
             )
         )
+
+
+class AHUIEEImage(AHUIObject):
+    """Manage execution environment images.
+
+    A repository (or container for Pulp) represents a container image and is
+    stored inside a namespace.
+
+    You manage execution environment images through two APIs:
+
+    * The Pulp API can delete images, and add or remove tags.
+      See the :py:class:``AHPulpEERepository`` class.
+    * The UI API can retrieve the SHA256 digests for the tagging operations.
+      That current class manages that API.
+
+    Getting the list of images for a repository:
+        ``GET /api/galaxy/_ui/v1/execution-environments/repositories/<name>/_content/images/`` ::
+
+            {
+              "meta": {
+                "count": 2
+              },
+              "links": {
+                ...
+              },
+              "data": [
+                {
+                  "pulp_id": "a7d13a94-cd12-4fee-9d7f-665f0b083382",
+                  "digest": "sha256:a4ebd33ba78252a3c17bf951ff82ac39a6e1020d25031            eb42a8c0d2a0f673c9e",
+                  "schema_version": 2,
+                  "media_type": "application/vnd.docker.distribution.manifest.v2+json",
+                  "config_blob": {
+                    "digest": "sha256:54993dbce43b6d346b7840cde5ab44c3001d4751deaf8ac4a9592d56638e062f",
+                    "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip"
+                  },
+                  "tags": [
+                    "test123",
+                    "2.0.0-10"
+                  ],
+                  "pulp_created": "2021-08-16T09:22:45.136729Z",
+                  "layers": [
+                    ...
+                  ]
+                },
+                {
+                  "pulp_id": "1fcf4d3e-15ef-44c3-87f0-2037aaefd249",
+                  "digest": "sha256:902643fa5de3ce478dccd7a7182e6b91469a8a9539043e788d315ecc557d792a",
+                  "schema_version": 2,
+                  "media_type": "application/vnd.docker.distribution.manifest.v2+json",
+                  "config_blob": {
+                    "digest": "sha256:078c7d4aca51b39cf0dc6dfdf8efb9953216cb1502a9ec935d5973b7afdfbdb7",
+                    "media_type": "application/vnd.docker.image.rootfs.diff.tar.gzip"
+                  },
+                  "tags": [
+                    "2.0.0-15"
+                  ],
+                  "pulp_created": "2021-08-18T08:31:38.919872Z",
+                  "layers": [
+                    ...
+                  ]
+                }
+              ]
+            }
+    """
+
+    def __init__(self, API_object, data={}):
+        """Initialize the object."""
+        super(AHUIEEImage, self).__init__(API_object, data)
+        self.endpoint = "execution-environments/repositories"
+        self.object_type = "image"
+        self.name_field = "name"
+
+    @property
+    def id_endpoint(self):
+        """Return the object's endpoint."""
+        name = self.image_name
+        if name is None:
+            return self.endpoint
+        return "{endpoint}/{name}/_content/images/".format(endpoint=self.endpoint, name=name)
+
+    def get_tag(self, name, tag):
+        """Retrieve the image associated with the given repository and tag.
+
+        Upon completion, if the object exists, then :py:attr:``self.digest`` is
+        set to the SHA256 image digest and :py:attr:``self.tags`` is set to the
+        list of tags.
+        If the object does not exist, then :py:attr:``self.digest`` is set to
+        ``None``.
+
+        :param name: Name of the image (or repository name).
+        :type name: str
+        :param tag: Name of the tag to retrieve.
+        :type tag: str
+        """
+        self.image_name = name
+        self.tag = tag
+        url = self.api.build_ui_url(self.id_endpoint, query_params={"limit": 1000})
+        response = self.api.make_request("GET", url)
+        if response["status_code"] != 200:
+            error_msg = self.api.extract_error_msg(response)
+            if error_msg:
+                fail_msg = "Unable to get {object_type} {name}: {code}: {error}".format(
+                    object_type=self.object_type, name=name, code=response["status_code"], error=error_msg
+                )
+            else:
+                fail_msg = "Unable to get {object_type} {name}: {code}".format(object_type=self.object_type, name=name, code=response["status_code"])
+            self.api.fail_json(msg=fail_msg)
+
+        if "meta" not in response["json"] or "count" not in response["json"]["meta"] or "data" not in response["json"]:
+            self.api.fail_json(
+                msg="Unable to get {object_type} {name}: the endpoint did not provide count and results".format(object_type=self.object_type, name=name)
+            )
+
+        self.digest = None
+        self.tags = []
+        for asset in response["json"]["data"]:
+            if "tags" in asset and tag in asset["tags"] and "digest" in asset:
+                self.digest = asset["digest"]
+                self.tags = asset["tags"]
+                break

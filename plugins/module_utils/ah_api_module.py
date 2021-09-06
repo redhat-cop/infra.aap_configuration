@@ -13,6 +13,7 @@ __metaclass__ = type
 import re
 import socket
 import json
+import time
 
 from ansible.module_utils.basic import AnsibleModule, env_fallback
 
@@ -182,12 +183,7 @@ class AHAPIModule(AnsibleModule):
             # Sanity check: Did we get some other kind of error?  If so, write an appropriate error message.
             elif he.code >= 400:
                 # We are going to return a 400 so the module can decide what to do with it
-                page_data = he.read()
-                try:
-                    return {"status_code": he.code, "json": json.loads(page_data)}
-                # JSONDecodeError only available on Python 3.5+
-                except ValueError:
-                    return {"status_code": he.code, "text": page_data}
+                pass
             elif he.code == 204 and method == "DELETE":
                 # A 204 is a normal response for a delete function
                 pass
@@ -228,6 +224,23 @@ class AHAPIModule(AnsibleModule):
                 response_json = json.loads(response_body)
             except (Exception) as e:
                 self.fail_json(msg="Failed to parse the response json: {0}".format(e))
+
+        # A background task has been triggered. Check if the task is completed
+        if response.status == 202 and "task" in response_json:
+            url = url._replace(path=response_json["task"], query="")
+            for _ in range(5):
+                time.sleep(3)
+                bg_task = self.make_request("GET", url)
+                if "state" in bg_task["json"] and bg_task["json"]["state"].lower().startswith("complete"):
+                    break
+            else:
+                if "state" in bg_task["json"]:
+                    self.fail_json(
+                        msg="Failed to get the status of the remote task: {task}: last status: {status}".format(
+                            task=response_json["task"], status=bg_task["json"]["state"]
+                        )
+                    )
+                self.fail_json(msg="Failed to get the status of the remote task: {task}".format(task=response_json["task"]))
 
         return {"status_code": response.status, "json": response_json}
 

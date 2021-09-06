@@ -326,15 +326,15 @@ class AHPulpEERepository(AHPulpObject):
               "previous": null,
               "results": [
                 {
-                  "name": "ansible-automation-platform-20-early-access/            ee-minimal-rhel8",
-                  "base_path":             "ansible-automation-platform-20-early-access/            ee-minimal-rhel8",
+                  "name": "ansible-automation-platform-20-early-access/ee-minimal-rhel8",
+                  "base_path": "ansible-automation-platform-20-early-access/ee-minimal-rhel8",
                   "pulp_created": "2021-08-17T08:22:24.338660Z",
                   "pulp_href": "/pulp/api/v3/distributions/container/container/d610ec76-ec86-427e-89d4-4d28c37515e1/",
                   "pulp_labels": {},
                   "content_guard": "/pulp/api/v3/contentguards/container/content_redirect/2406a920-5821-432c-9c86-3ed36f2c87ef/",
                   "repository_version": null,
                   "repository": "/pulp/api/v3/repositories/container/container-push/7f926cb2-1cc7-4043-b0f2-da6c5cd7caa0/",
-                  "registry_path": "hub.lab.example.com/            ansible-automation-platform-20-early-access/            ee-minimal-rhel8",
+                  "registry_path": "hub.lab.example.com/ansible-automation-platform-20-early-access/ee-minimal-rhel8",
                   "namespace": "/pulp/api/v3/pulp_container/namespaces/88c3275f-72be-405d-83e2-d4a49cb444d9/",
                   "private": false,
                   "description": null
@@ -352,3 +352,154 @@ class AHPulpEERepository(AHPulpObject):
         self.endpoint = "distributions/container/container"
         self.object_type = "repository"
         self.name_field = "name"
+
+    @property
+    def repository_endpoint(self):
+        """Return the repository endpoint."""
+        if self.exists and "repository" in self.data:
+            return self.data["repository"]
+        return ""
+
+    def delete_image(self, digest, auto_exit=True):
+        """Perform a POST API call to delete the image with the given digest.
+
+        :param digest: Digest (SHA256) of the image to delete.
+        :type digest: str
+        :param auto_exit: Exit the module when the API call is done.
+        :type auto_exit: bool
+        """
+        if not self.exists:
+            if auto_exit:
+                json_output = {"digest": digest, "type": "image", "changed": False}
+                self.api.exit_json(changed=False)
+            return
+
+        if self.api.check_mode:
+            if auto_exit:
+                json_output = {"name": self.name, "digest": digest, "type": "image", "changed": True}
+                self.api.exit_json(**json_output)
+            return
+
+        url = self.api.host_url._replace(path="{endpoint}remove_image/".format(endpoint=self.repository_endpoint))
+        response = self.api.make_request("POST", url, data={"digest": digest})
+
+        if response["status_code"] in [202, 204]:
+            if auto_exit:
+                json_output = {"name": self.name, "digest": digest, "type": "image", "changed": True}
+                self.api.exit_json(**json_output)
+            return
+
+        error_msg = self.api.extract_error_msg(response)
+        if error_msg:
+            self.api.fail_json(
+                msg="Unable to delete image from {object_type} {name}: {digest}: {error}".format(
+                    object_type=self.object_type, name=self.name, digest=digest, error=error_msg
+                )
+            )
+        self.api.fail_json(
+            msg="Unable to delete image from {object_type} {name}: {digest}: {code}".format(
+                object_type=self.object_type, name=self.name, digest=digest, code=response["status_code"]
+            )
+        )
+
+    def delete_tag(self, digest, tag, auto_exit=True):
+        """Perform a POST API call to delete the tag for the image with the given digest.
+
+        :param digest: Digest (SHA256) of the image to update.
+        :type digest: str
+        :param tag: Tag to remove from the image.
+        :type tag: str
+        :param auto_exit: Exit the module when the API call is done.
+        :type auto_exit: bool
+
+        :return: Do not return if ``auto_exit`` is ``True``. Otherwise, return
+                 ``True`` if object has been updated (change state) or ``False``
+                 if the object do not need updating.
+        """
+        if not self.exists:
+            if auto_exit:
+                json_output = {"digest": digest, "tag": tag, "type": "image", "changed": False}
+                self.api.exit_json(**json_output)
+            return False
+
+        if self.api.check_mode:
+            if auto_exit:
+                json_output = {"name": self.name, "digest": digest, "tag": tag, "type": "image", "changed": True}
+                self.api.exit_json(**json_output)
+            return True
+
+        url = self.api.host_url._replace(path="{endpoint}untag/".format(endpoint=self.repository_endpoint))
+        response = self.api.make_request("POST", url, data={"digest": digest, "tag": tag})
+
+        if response["status_code"] in [202, 204]:
+            if auto_exit:
+                json_output = {"name": self.name, "digest": digest, "tag": tag, "type": "image", "changed": True}
+                self.api.exit_json(**json_output)
+            return True
+
+        if response["status_code"] >= 400:
+            if auto_exit:
+                json_output = {"name": self.name, "digest": digest, "tag": tag, "type": "image", "changed": False}
+                self.api.exit_json(**json_output)
+            return False
+
+        error_msg = self.api.extract_error_msg(response)
+        if error_msg:
+            self.api.fail_json(
+                msg="Unable to delete image tag {tag} from {object_type} {name}: {digest}: {error}".format(
+                    tag=tag, object_type=self.object_type, name=self.name, digest=digest, error=error_msg
+                )
+            )
+        self.api.fail_json(
+            msg="Unable to delete image tag {tag} from {object_type} {name}: {digest}: {code}".format(
+                tag=tag, object_type=self.object_type, name=self.name, digest=digest, code=response["status_code"]
+            )
+        )
+
+    def create_tag(self, digest, tag, auto_exit=True):
+        """Perform a POST API call to add a tag to the image with the given digest.
+
+        :param digest: Digest (SHA256) of the image to update.
+        :type digest: str
+        :param tag: Tag to add to the image.
+        :type tag: str
+        :param auto_exit: Exit the module when the API call is done.
+        :type auto_exit: bool
+
+        :return: Do not return if ``auto_exit`` is ``True``. Otherwise, return
+                 ``True`` if object has been updated (change state) or ``False``
+                 if the object do not need updating.
+        """
+        if not self.exists:
+            if auto_exit:
+                json_output = {"digest": digest, "tag": tag, "type": "image", "changed": False}
+                self.api.exit_json(**json_output)
+            return False
+
+        if self.api.check_mode:
+            if auto_exit:
+                json_output = {"name": self.name, "digest": digest, "tag": tag, "type": "image", "changed": True}
+                self.api.exit_json(**json_output)
+            return True
+
+        url = self.api.host_url._replace(path="{endpoint}tag/".format(endpoint=self.repository_endpoint))
+        response = self.api.make_request("POST", url, data={"digest": digest, "tag": tag})
+
+        if response["status_code"] in [202, 204]:
+            if auto_exit:
+                json_output = {"name": self.name, "digest": digest, "tag": tag, "type": "image", "changed": True}
+                self.api.exit_json(**json_output)
+            return True
+
+        error_msg = self.api.extract_error_msg(response)
+        if error_msg:
+            self.api.fail_json(
+                msg="Unable to add image tag {tag} to {object_type} {name}: {digest}: {error}".format(
+                    tag=tag, object_type=self.object_type, name=self.name, digest=digest, error=error_msg
+                )
+            )
+        self.api.fail_json(
+            msg="Unable to add image tag {tag} to {object_type} {name}: {digest}: {code}".format(
+                tag=tag, object_type=self.object_type, name=self.name, digest=digest, code=response["status_code"]
+            )
+        )
