@@ -2,19 +2,20 @@
 # These tests require a repository to exist in private automation hub.
 # The `repository' variable defines that repository and is set to
 # `ansible-automation-platform-20-early-access/ee-minimal-rhel8` by default.
+# The `tag' variable defines the image tag and is set to `latest` by default.
 #
 # You can create the repository by pushing a container image with podman.
 # For example:
 #
 #  $ podman login registry.redhat.io
 #
-#  $ podman pull registry.redhat.io/ansible-automation-platform-20-early-access/ee-minimal-rhel8:2.0.0-10
+#  $ podman pull registry.redhat.io/ansible-automation-platform-20-early-access/ee-minimal-rhel8:latest
 #
-#  $ podman tag registry.redhat.io/ansible-automation-platform-20-early-access/ee-minimal-rhel8:2.0.0-10 hub.lab.example.com/ansible-automation-platform-20-early-access/ee-minimal-rhel8:2.0.0-10
+#  $ podman tag registry.redhat.io/ansible-automation-platform-20-early-access/ee-minimal-rhel8:latest hub.lab.example.com/ansible-automation-platform-20-early-access/ee-minimal-rhel8:latest
 #
 #  $ podman login --tls-verify=false hub.lab.example.com
 #
-#  $ podman push --tls-verify=false --remove-signatures hub.lab.example.com/ansible-automation-platform-20-early-access/ee-minimal-rhel8:2.0.0-10
+#  $ podman push --tls-verify=false --remove-signatures hub.lab.example.com/ansible-automation-platform-20-early-access/ee-minimal-rhel8:latest
 #
 # Warning: the test removes the repository at the end.
 
@@ -32,6 +33,7 @@
     ah_path_prefix: galaxy
     ah_validate_certs: false
     repository: ansible-automation-platform-20-early-access/ee-minimal-rhel8
+    tag: latest
 
   tasks:
     # Adding a description and a README file to the repository
@@ -83,6 +85,57 @@
       file:
         path: "{{ tempfile['path'] }}"
         state: absent
+
+    # Testing adding tags to the image
+    - name: Ensure the repository image has the additionnal required tags
+      ah_ee_image:
+        name: "{{ repository }}:{{ tag }}"
+        state: updated
+        tags:
+          - v2
+          - "2.0"
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure the repository image has a defined set of tags
+      ah_ee_image:
+        name: "{{ repository }}:{{ tag }}"
+        state: updated
+        append: false
+        tags:
+          - prod2
+          - prod2.0
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Reset the original tag
+      ah_ee_image:
+        name: "{{ repository }}:prod2"
+        state: updated
+        append: false
+        tags: "{{ tag }}"
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure the image does not exist
+      ah_ee_image:
+        name: "{{ repository }}:{{ tag }}"
+        state: absent
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
 
     # Testing repository deletion
     - name: Ensure the repository does not exist
