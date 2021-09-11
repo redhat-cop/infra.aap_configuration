@@ -8,11 +8,18 @@ redhat_cop.controller_configuration Release Notes
 v2.0.0
 ======
 
+Major Changes
+-------------
+
+- Created awx and controller playbook that users can invoke for using the collection
+
 Minor Changes
 -------------
 
 - Additional module options have been added such as instance_groups and copy_from where applicable.
 - All role tests have been converted to use one format.
+- Created Readme for playbook in the playbooks directory
+- Removed the playbook configs folder, it was previously moved to the .github/playbooks directory
 
 Breaking Changes / Porting Guide
 --------------------------------
@@ -21,6 +28,12 @@ Breaking Changes / Porting Guide
 - Changed all module names to be in line with changes to awx.awx as of 19.2.1.
 - Changed variable names for all objects from tower_* to controller_*.
 - Removed depreciated module options for notification Templates.
+
+Bugfixes
+--------
+
+- Changed all references for ansible.tower to ansible.controller
+- Fixed issue where `credential` was not working for project and instead the old `scm_credential` option remained.
 
 v1.5.0
 ======
