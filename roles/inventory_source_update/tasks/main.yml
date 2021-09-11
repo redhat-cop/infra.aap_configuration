@@ -20,5 +20,7 @@
   loop_control:
     loop_var: "__inventory_source_update_item"
   no_log: "{{ tower_configuration_inventory_source_update_secure_logging }}"
-  when: tower_inventory_sources is defined
+  when:
+    - controller_inventory_sources is defined
+    - __inventory_source_update_item.state | default('present') != "absent"
 ...
