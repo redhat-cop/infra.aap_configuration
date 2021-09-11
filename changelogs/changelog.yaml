@@ -174,3 +174,19 @@ releases:
     fragments:
     - controller.yml
     release_date: '2021-07-15'
+  2.0.0-1:
+    changes:
+      bugfixes:
+      - Changed all references for ansible.tower to ansible.controller
+      - Fixed issue where `credential` was not working for project and instead the
+        old `scm_credential` option remained.
+      major_changes:
+      - Created awx and controller playbook that users can invoke for using the collection
+      minor_changes:
+      - Created Readme for playbook in the playbooks directory
+      - Removed the playbook configs folder, it was previously moved to the .github/playbooks
+        directory
+    fragments:
+    - bug-224.yml
+    - playbook.yml
+    release_date: '2021-09-01'
