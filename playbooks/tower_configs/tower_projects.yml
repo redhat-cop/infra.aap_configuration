@@ -19,4 +19,6 @@ tower_projects:
     scm_url: https://github.com/ansible/ansible-examples.git
     description: ansible-examples
     organization: Satellite
+  - name: Test Project 3
+    state: absent
 ...

@@ -22,4 +22,5 @@
   when:
     - tower_projects is defined
     - __project_update_update_item.update
+    - __project_update_update_item.state | default('present') != "absent"
 ...
