@@ -19,7 +19,7 @@
     allow_override:                       "{{ __controller_project_item.allow_override | default(omit) }}"
     timeout:                              "{{ __controller_project_item.job_timeout | default(__controller_project_item.timeout | default(omit, true)) }}"
     custom_virtualenv:                    "{{ __controller_project_item.custom_virtualenv | default(omit, true) }}"
-    organization:                         "{{ __controller_project_item.organization.name | default( __controller_project_item.organization ) }}"
+    organization:                         "{{ __controller_project_item.organization.name | default( __controller_project_item.organization | default(omit) ) }}"
     state:                                "{{ __controller_project_item.state | default(controller_state | default('present')) }}"
     wait:                                 "{{ __controller_project_item.wait | default(omit) }}"
     update_project:                       "{{ __controller_project_item.update_project | default(omit) }}"
