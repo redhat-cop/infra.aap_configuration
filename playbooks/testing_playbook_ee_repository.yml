@@ -1,24 +1,4 @@
 ---
-# These tests require a repository to exist in private automation hub.
-# The `repository' variable defines that repository and is set to
-# `ansible-automation-platform-20-early-access/ee-minimal-rhel8` by default.
-# The `tag' variable defines the image tag and is set to `latest` by default.
-#
-# You can create the repository by pushing a container image with podman.
-# For example:
-#
-#  $ podman login registry.redhat.io
-#
-#  $ podman pull registry.redhat.io/ansible-automation-platform-20-early-access/ee-minimal-rhel8:latest
-#
-#  $ podman tag registry.redhat.io/ansible-automation-platform-20-early-access/ee-minimal-rhel8:latest hub.lab.example.com/ansible-automation-platform-20-early-access/ee-minimal-rhel8:latest
-#
-#  $ podman login --tls-verify=false hub.lab.example.com
-#
-#  $ podman push --tls-verify=false --remove-signatures hub.lab.example.com/ansible-automation-platform-20-early-access/ee-minimal-rhel8:latest
-#
-# Warning: the test removes the repository at the end.
-
 - name: Test the execution environment (EE) repository module
   hosts: localhost
   connection: local
@@ -34,8 +14,38 @@
     ah_validate_certs: false
     repository: ansible-automation-platform-20-early-access/ee-minimal-rhel8
     tag: latest
+    fake_image: quay.io/ansible/http-test-container:latest
 
   tasks:
+    # Preparing an image:
+    # - Pulling a small image from Quay (does not matter what image it is)
+    # - Tagging it so that it can be pushed to private automation hub
+    # - Pushing the image
+    # - Deleting the images from the local system
+    # The tasks do not use the podman collection because it may not be
+    # available on the testing system.
+    - name: Ensure a small container image is available
+      command:
+        cmd: "podman pull {{ fake_image }}"
+      changed_when: true
+
+    - name: Ensure the image has the correct tag
+      command:
+        cmd: "podman tag {{ fake_image }} {{ ah_host }}/{{ repository }}:{{ tag }}"
+      changed_when: true
+
+    - name: Ensure the image is pushed in private automation hub
+      command:
+        cmd: "podman push --tls-verify=false --remove-signatures
+              --creds={{ ah_username }}:{{ ah_password }}
+              {{ ah_host }}/{{ repository }}:{{ tag }}"
+      changed_when: true
+
+    - name: Ensure the images are removed
+      command:
+        cmd: "podman rmi {{ fake_image }} {{ ah_host }}/{{ repository }}:{{ tag }}"
+      changed_when: true
+
     # Adding a description and a README file to the repository
     - name: Ensure the repository has a description and a README file
       ah_ee_repository:
