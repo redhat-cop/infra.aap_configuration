@@ -5,7 +5,7 @@
   vars:
     tower_validate_certs: false
   collections:
-    - ansible.tower
+    - awx.awx
     - redhat_cop.tower_configuration
 
   pre_tasks:
