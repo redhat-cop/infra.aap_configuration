@@ -1,0 +1,16 @@
+---
+- name: Combine id output with defaults temp
+  set_fact:
+    tmp_ad_hoc: "{{ item | combine( tower_ad_hoc_command_defaults ) }}"
+  with_items: "{{ tower_ad_hoc_commands_output.results }}"
+  register: tmp_ad_hocs
+
+- name: Combine id output with defaults
+  set_fact:
+    tower_ad_hoc_commands_cancel: "{{ tmp_ad_hocs.results | map(attribute='ansible_facts.tmp_ad_hoc') | list }}"
+
+- name: Cancel ad hoc commands
+  include_role:
+    name: ad_hoc_command_cancel
+  when: tower_ad_hoc_commands is defined
+...

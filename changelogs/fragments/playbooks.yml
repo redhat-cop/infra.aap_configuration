@@ -1,0 +1,6 @@
+---
+major_changes:
+  - Created awx and controller playbook that users can invoke for using the collection
+minor_changes:
+  - Created Readme for playbook in the playbooks directory
+...
