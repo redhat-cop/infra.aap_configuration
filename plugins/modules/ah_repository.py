@@ -111,12 +111,12 @@ def main():
         auth_url=dict(),
         token=dict(),
         username=dict(),
-        password=dict(),
+        password=dict(no_log=True),
         requirements=dict(type="list", elements="str"),
         requirements_file=dict(),
         proxy_url=dict(),
         proxy_username=dict(),
-        proxy_password=dict(),
+        proxy_password=dict(no_log=True),
         download_concurrency=dict(default="10"),
     )
 
