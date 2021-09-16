@@ -55,7 +55,7 @@ ah_configuration_namespace_secure_logging defaults to the value of ah_configurat
 
 ### Standard Project Data Structure
 
-#### Ymal Example
+#### Yaml Example
 ```yaml
 ---
 ah_namespaces:

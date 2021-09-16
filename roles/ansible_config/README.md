@@ -66,7 +66,7 @@ ah_configuration_ansible_config_secure_logging defaults to the value of ah_confi
 
 ### Standard Project Data Structure
 
-#### Ymal Example
+#### Yaml Example
 ```yaml
 ---
 ansible_config_list:
