@@ -1,0 +1,25 @@
+---
+
+# Create AH Users
+- name: Add Automation Hub User
+  ah_user:
+    username:         "{{ __user.username | default(omit) }}"
+    # new_name:         "{{ __user.new_name | default(omit) }}"  <-- Needs adding once new_name option added to module
+    groups:           "{{ __user.groups | default(omit) }}"
+    append:           "{{ __user.append | default(omit) }}"
+    first_name:       "{{ __user.first_name | default(omit) }}"
+    last_name:        "{{ __user.last_name | default(omit) }}"
+    email:            "{{ __user.email | default(omit) }}"
+    is_superuser:     "{{ __user.is_superuser | default(omit) }}"
+    password:         "{{ __user.password | default(omit) }}"
+    state:            "{{ __user.state | default(ah_state | default('present')) }}"
+    ah_host:          "{{ ah_host }}"
+    ah_username:      "{{ ah_username | default(omit) }}"
+    ah_password:      "{{ ah_password | default(omit) }}"
+    ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:   "{{ ah_validate_certs | default(omit) }}"
+  loop: "{{ ah_users }}"
+  loop_control:
+    loop_var: "__user"
+  no_log: "{{ ah_configuration_user_secure_logging }}"
+...

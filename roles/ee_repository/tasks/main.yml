@@ -1,7 +1,7 @@
 ---
 
-# Create AH Namespace
-- name: Add Automation Hub Namespace
+# Create AH EE repository
+- name: Add Automation Hub EE repository
   ah_ee_repository:
     name:             "{{ __ee_repository_item.name }}"
     # new_name:         "{{ __ee_repository_item.new_name | default(omit) }}"  <-- Needs adding once new_name option added to module

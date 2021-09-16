@@ -8,7 +8,7 @@
 
 # These are the default variables specific to the license role
 
-# a list of dictionaries describing the Automation Hub namespace
+# a list of dictionaries describing the Automation Hub ee repository
 ah_ee_repositories: []
 # possible fields:
 #  - name: "namespace_name" # mandatory
