@@ -8,14 +8,12 @@
 
 # These are the default variables specific to the license role
 
-# a list of dictionaries describing the Automation Hub ee namespace
-ah_ee_namespaces: []
+# a list of dictionaries describing the Automation Hub groups
+ah_groups: []
 # possible fields:
-#  - name: "namespace_name" # mandatory
-#    append: true
-#    groups:
-#      - "group1"
-#      - "group2"
+#  - name
+#  - perms
+#  - state
 
-ah_configuration_ee_namespace_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
+ah_configuration_group_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
 ...

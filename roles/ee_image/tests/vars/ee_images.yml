@@ -1,5 +1,5 @@
 ---
-ah_ee_image:
+ah_ee_images:
   - name: ansible-automation-platform-20-early-access/ee-supported-rhel8:2.0.0-15
     state: updated
     append: false
