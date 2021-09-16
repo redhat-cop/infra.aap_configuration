@@ -1,0 +1,6 @@
+---
+major_changes:
+  - Added user, group and group_perm plugins
+  - Added execution_environment plugins
+
+...
