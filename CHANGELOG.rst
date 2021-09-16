@@ -5,6 +5,15 @@ redhat_cop.ah_configuration Release Notes
 .. contents:: Topics
 
 
+v0.5.0
+======
+
+Major Changes
+-------------
+
+- Added execution_environment plugins
+- Added user, group and group_perm plugins
+
 v0.4.3
 ======
 
