@@ -1,0 +1,8 @@
+---
+ah_ee_namespaces:
+  - name: abc15
+    append: true
+    groups:
+      - administrators
+      - operators
+...

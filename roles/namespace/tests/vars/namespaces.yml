@@ -1,5 +1,5 @@
 ---
-ah_namespace:
+ah_namespaces:
   - name: abc15
     company: Redhat
     email: user@example.com
