@@ -23,6 +23,22 @@ from ansible.module_utils.six.moves.urllib.error import HTTPError
 from ansible.module_utils.urls import Request, SSLValidationError
 
 
+class AHAPIModuleError(Exception):
+    """API request error exception.
+
+    :param error_message: Error message.
+    :type error_message: str
+    """
+
+    def __init__(self, error_message):
+        """Initialize the object."""
+        self.error_message = error_message
+
+    def __str__(self):
+        """Return the error message."""
+        return self.error_message
+
+
 class AHAPIModule(AnsibleModule):
     """Ansible module for managing private automation hub servers."""
 
@@ -142,6 +158,8 @@ class AHAPIModule(AnsibleModule):
         :param kwargs: Additionnal parameter to pass to the API (headers, data
                        for PUT and POST requests, ...)
 
+        :raises AHAPIModuleError: The API request failed.
+
         :return: The reponse from the API call
         :rtype: :py:class:``http.client.HTTPResponse``
         """
@@ -156,30 +174,30 @@ class AHAPIModule(AnsibleModule):
         try:
             response = self.session.open(method, url.geturl(), headers=headers, data=data)
         except SSLValidationError as ssl_err:
-            self.fail_json(msg="Could not establish a secure connection to {host}: {error}.".format(host=url.netloc, error=ssl_err))
+            raise AHAPIModuleError("Could not establish a secure connection to {host}: {error}.".format(host=url.netloc, error=ssl_err))
         except ConnectionError as con_err:
-            self.fail_json(msg="Network error when trying to connect to {host}: {error}.".format(host=url.netloc, error=con_err))
+            raise AHAPIModuleError("Network error when trying to connect to {host}: {error}.".format(host=url.netloc, error=con_err))
         except HTTPError as he:
             # Sanity check: Did the server send back some kind of internal error?
             if he.code >= 500:
-                self.fail_json(
-                    msg="The host sent back a server error: {path}: {error}. Please check the logs and try again later".format(path=url.path, error=he)
+                raise AHAPIModuleError(
+                    "The host sent back a server error: {path}: {error}. Please check the logs and try again later".format(path=url.path, error=he)
                 )
             # Sanity check: Did we fail to authenticate properly?  If so, fail out now; this is always a failure.
             elif he.code == 401:
-                self.fail_json(msg="Invalid authentication credentials for {path} (HTTP 401).".format(path=url.path))
+                raise AHAPIModuleError("Invalid authentication credentials for {path} (HTTP 401).".format(path=url.path))
             # Sanity check: Did we get a forbidden response, which means that the user isn't allowed to do this? Report that.
             elif he.code == 403:
-                self.fail_json(msg="You do not have permission to {method} {path} (HTTP 403).".format(method=method, path=url.path))
+                raise AHAPIModuleError("You do not have permission to {method} {path} (HTTP 403).".format(method=method, path=url.path))
             # Sanity check: Did we get a 404 response?
             # Requests with primary keys will return a 404 if there is no response, and we want to consistently trap these.
             elif he.code == 404:
-                self.fail_json(msg="The requested object could not be found at {path}.".format(path=url.path))
+                raise AHAPIModuleError("The requested object could not be found at {path}.".format(path=url.path))
             # Sanity check: Did we get a 405 response?
             # A 405 means we used a method that isn't allowed. Usually this is a bad request, but it requires special treatment because the
             # API sends it as a logic error in a few situations (e.g. trying to cancel a job that isn't running).
             elif he.code == 405:
-                self.fail_json(msg="Cannot make a {method} request to this endpoint {path}".format(method=method, path=url.path))
+                raise AHAPIModuleError("Cannot make a {method} request to this endpoint {path}".format(method=method, path=url.path))
             # Sanity check: Did we get some other kind of error?  If so, write an appropriate error message.
             elif he.code >= 400:
                 # We are going to return a 400 so the module can decide what to do with it
@@ -188,10 +206,10 @@ class AHAPIModule(AnsibleModule):
                 # A 204 is a normal response for a delete function
                 pass
             else:
-                self.fail_json(msg="Unexpected return code when calling {url}: {error}".format(url=url.geturl(), error=he))
+                raise AHAPIModuleError("Unexpected return code when calling {url}: {error}".format(url=url.geturl(), error=he))
         except Exception as e:
-            self.fail_json(
-                msg="There was an unknown error when trying to connect to {name}: {error} {url}".format(name=type(e).__name__, error=e, url=url.geturl())
+            raise AHAPIModuleError(
+                "There was an unknown error when trying to connect to {name}: {error} {url}".format(name=type(e).__name__, error=e, url=url.geturl())
             )
 
         return response
@@ -206,6 +224,8 @@ class AHAPIModule(AnsibleModule):
         :param kwargs: Additionnal parameter to pass to the API (headers, data
                        for PUT and POST requests, ...)
 
+        :raises AHAPIModuleError: The API request failed.
+
         :return: A dictionnary with two entries: ``status_code`` provides the
                  API call returned code and ``json`` provides the returned data
                  in JSON format.
@@ -216,14 +236,14 @@ class AHAPIModule(AnsibleModule):
         try:
             response_body = response.read()
         except Exception as e:
-            self.fail_json(msg="Failed to read response body: {error}".format(error=e))
+            raise AHAPIModuleError("Failed to read response body: {error}".format(error=e))
 
         response_json = {}
         if response_body:
             try:
                 response_json = json.loads(response_body)
-            except (Exception) as e:
-                self.fail_json(msg="Failed to parse the response json: {0}".format(e))
+            except Exception as e:
+                raise AHAPIModuleError("Failed to parse the response json: {0}".format(e))
 
         # A background task has been triggered. Check if the task is completed
         if response.status == 202 and "task" in response_json:
@@ -235,12 +255,12 @@ class AHAPIModule(AnsibleModule):
                     break
             else:
                 if "state" in bg_task["json"]:
-                    self.fail_json(
-                        msg="Failed to get the status of the remote task: {task}: last status: {status}".format(
+                    raise AHAPIModuleError(
+                        "Failed to get the status of the remote task: {task}: last status: {status}".format(
                             task=response_json["task"], status=bg_task["json"]["state"]
                         )
                     )
-                self.fail_json(msg="Failed to get the status of the remote task: {task}".format(task=response_json["task"]))
+                raise AHAPIModuleError("Failed to get the status of the remote task: {task}".format(task=response_json["task"]))
 
         return {"status_code": response.status, "json": response_json}
 
@@ -311,7 +331,10 @@ class AHAPIModule(AnsibleModule):
         # Strict-Transport-Security: max-age=15768000
 
         url = self.build_ui_url("auth/login")
-        response = self.make_request_raw_reponse("GET", url)
+        try:
+            response = self.make_request_raw_reponse("GET", url)
+        except AHAPIModuleError as e:
+            self.fail_json(msg="Authentication error: {error}".format(error=e))
         # Set-Cookie: csrftoken=jvdb...kKHo; expires=Tue, 09 Aug 2022 07:33:37 GMT
         for h in response.getheaders():
             if h[0].lower() == "set-cookie":
@@ -338,7 +361,10 @@ class AHAPIModule(AnsibleModule):
         # Set-Cookie: sessionid=87b0iw12wyvy0353rk5fwci0loy5s615; expires=Tue, 24 Aug 2021 07:35:33 GMT; HttpOnly; Max-Age=1209600; Path=/; SameSite=Lax
         # Strict-Transport-Security: max-age=15768000
 
-        response = self.make_request_raw_reponse("POST", url, data={"username": self.username, "password": self.password}, headers=header)
+        try:
+            response = self.make_request_raw_reponse("POST", url, data={"username": self.username, "password": self.password}, headers=header)
+        except AHAPIModuleError as e:
+            self.fail_json(msg="Authentication error: {error}".format(error=e))
         for h in response.getheaders():
             if h[0].lower() == "set-cookie":
                 k, v = h[1].split("=", 1)
@@ -355,7 +381,10 @@ class AHAPIModule(AnsibleModule):
             return
 
         url = self.build_ui_url("auth/logout")
-        self.make_request_raw_reponse("POST", url)
+        try:
+            self.make_request_raw_reponse("POST", url)
+        except AHAPIModuleError:
+            pass
         self.headers = {"referer": self.host, "Content-Type": "application/json", "Accept": "application/json"}
         self.session = Request(validate_certs=self.verify_ssl, headers=self.headers)
         self.authenticated = False
@@ -376,7 +405,10 @@ class AHAPIModule(AnsibleModule):
         :rtype: str
         """
         url = self._build_url(self.galaxy_path_prefix)
-        response = self.make_request("GET", url)
+        try:
+            response = self.make_request("GET", url)
+        except AHAPIModuleError as e:
+            self.fail_json(msg="Error while getting server version: {error}".format(error=e))
         if response["status_code"] != 200:
             error_msg = self.extract_error_msg(response)
             if error_msg:
