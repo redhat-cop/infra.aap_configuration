@@ -26,4 +26,6 @@ controller_projects:
     organization: Satellite
     credential: gitlab-personal-access-token for satqe_auto_droid
     wait: false
+  - name: Test Project 3
+    state: absent
 ...

@@ -11,5 +11,9 @@ controller_inventory_sources:
     update_on_launch: true
     update_cache_timeout: 0
     wait: true
+  - name: RHVM-02
+    inventory: RHVM-01
+    source: scm
+    state: absent
     # more options can be provided but for scm source we are using, we need only this much.
 ...
