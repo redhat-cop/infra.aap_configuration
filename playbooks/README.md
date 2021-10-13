@@ -19,6 +19,9 @@ The following command will invoke the playbook with the ansible.controller colle
 ansible-playbook redhat_cop.controller_configuration.configure_controller.yml
 ```
 
+## Examples
+Examples of the playbooks in use can be found in the examples folder.
+
 ## Variables
 
 ### Standard Tower Variables
