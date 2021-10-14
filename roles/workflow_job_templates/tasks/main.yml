@@ -10,7 +10,7 @@
     allow_simultaneous:                 "{{ __workflow_loop_item.allow_simultaneous | default(omit) }}"
     organization:                       "{{ __workflow_loop_item.organization.name | default( __workflow_loop_item.organization | default(omit, true)) }}"
     ask_variables_on_launch:            "{{ __workflow_loop_item.ask_variables_on_launch | default(omit) }}"  # only supported starting from Ansible 2.9
-    inventory:                          "{{ __workflow_loop_item.inventory | default(omit, true) }}"
+    inventory:                          "{{ __workflow_loop_item.inventory.name | default( __workflow_loop_item.inventory | default(omit, true)) }}"
     limit:                              "{{ __workflow_loop_item.limit | default(omit, true) }}"
     labels:                             "{{ __workflow_loop_item.labels | default(__workflow_loop_item.related.labels | default([]) | map(attribute='name') | list ) }}"
     scm_branch:                         "{{ __workflow_loop_item.scm_branch | default(omit, true) }}"
