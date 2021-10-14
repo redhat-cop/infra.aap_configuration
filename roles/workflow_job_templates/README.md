@@ -91,6 +91,7 @@ workflow_job_templates_secure_logging defaults to the value of controller_config
 
 ### Approval node dictionary
 |Variable Name|Default Value|Required|Type|Description|
+|:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of this workflow approval template.|
 |`description`|""|no|str|Optional description of this workflow approval template.|
 |`timeout`|0|no|int|The amount of time (in seconds) before the approval node expires and fails.|
@@ -221,7 +222,20 @@ controller_workflows:
       notification_templates_success: []
       notification_templates_error: []
       notification_templates_approvals: []
-      survey_spec: {}
+      survey_spec:
+        name: ''
+        description: ''
+        spec:
+          - question_name: Basic Name
+            question_description: Name
+            required: true
+            type: text
+            variable: basic_name
+            min: 0
+            max: 1024
+            default: ''
+            choices: ''
+            new_question: true
 
 ```
 
