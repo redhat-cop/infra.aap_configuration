@@ -110,7 +110,7 @@ Controller token module would be invoked with this code:
 
 ### Controller Export
 The awx command line can export json that is compatable with this collection.
-More details can be found [here](playbooks/controller_configs_export_model/README.md)
+More details can be found [here](examples/configs_export_model/README.md)
 
 ### See Also:
 
