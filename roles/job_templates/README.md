@@ -111,7 +111,7 @@ Refer to the [controller Api Guide](https://docs.ansible.com/ansible-tower/lates
 ```json
 ---
 {
-    "templates": [
+    "controller_templates": [
         {
             "name": "Survey Template with vars",
             "job_type": "run",
@@ -149,7 +149,7 @@ Refer to the [controller Api Guide](https://docs.ansible.com/ansible-tower/lates
 #### Yaml Example
 ```yaml
 ---
-templates:
+controller_templates:
 - name: Survey Template with vars
   job_type: run
   inventory: Demo Inventory
