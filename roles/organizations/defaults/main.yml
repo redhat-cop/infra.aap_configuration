@@ -7,7 +7,7 @@
 # controller_oauthtoken: ""
 # controller_config_file: ""
 # controller_validate_certs: false
-
+organizations_auto_remove_old: False
 # These are the default variables specific to the organizations role
 controller_organizations: []
 # possible fields

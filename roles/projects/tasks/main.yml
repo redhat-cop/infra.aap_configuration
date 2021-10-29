@@ -1,4 +1,35 @@
 ---
+- name: Block for removing old content
+  ansible.builtin.block:
+
+    - name: Pull Current Projects
+      ansible.builtin.uri:
+        url: "{{ controller_hostname | default(omit, true) }}/api/v2/projects/"
+        method: GET
+        return_content: true
+        body_format: json
+        status_code: [200, 202]
+        force_basic_auth: true
+        user: "{{ controller_username | default(omit, true) }}"
+        password: "{{ controller_password | default(omit, true) }}"
+        validate_certs: "{{ controller_validate_certs | default(omit) }}"
+      register: r_current_projects
+
+    - name: Get differences
+      ansible.builtin.set_fact:
+        projects_difference: "{{ _projects_in_controller | difference(_projects_in_code) }}"
+      vars:
+        _projects_in_controller: "{{ r_current_projects.json.results | json_query(_query2) }}"
+        _query2: "[].name"
+        _projects_in_code: "{{ controller_projects | json_query(_query1) }}"
+        _query1: "[].name"
+
+    - name: Temp add items to list with state absent
+      ansible.builtin.set_fact:
+        controller_projects: "{{ (controller_projects | default([])) + [{'name': item, 'state': 'absent'}] }}"
+      loop: "{{ projects_difference }}"
+  when: projects_auto_remove_old
+
 - name: Add Projects
   project:
     name:                                 "{{ __controller_project_item.name | mandatory }}"

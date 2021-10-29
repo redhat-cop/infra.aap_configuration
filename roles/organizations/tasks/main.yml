@@ -1,4 +1,49 @@
 ---
+- name: Block for removing old content
+  ansible.builtin.block:
+    - name: Pull Current Organizations
+      ansible.builtin.uri:
+        url: "{{ controller_hostname | mandatory }}/api/v2/organizations/"
+        method: GET
+        return_content: true
+        body_format: json
+        status_code: [200, 202]
+        force_basic_auth: true
+        user: "{{ controller_username | default(omit, true) }}"
+        password: "{{ controller_password | default(omit, true) }}"
+        validate_certs: "{{ controller_validate_certs | default(omit) }}"
+      register: r_current_organizations
+
+    - name: Print pulled output
+      ansible.builtin.debug:
+        var: r_current_organizations
+        verbosity: 2
+
+    - name: Create lists
+      ansible.builtin.set_fact:
+        organizations_in_controller: "{{ organizations_in_controller | default([]) + [item.name] }}"
+        organizations_in_code: "{{ _organizations_in_code }}"
+      loop: "{{ r_current_organizations.json.results }}"
+      vars:
+        _organizations_in_code: "{{ controller_templates | json_query(_query2) }}"
+        _query2: "[].name"
+
+    - name: Print lists
+      ansible.builtin.debug:
+        msg: "organizations_in_controller: {{ organizations_in_controller }}, organizations_in_code: {{ organizations_in_code }}"
+        verbosity: 2
+
+    - name: Create list of items to remove
+      ansible.builtin.set_fact:
+        organizations_to_delete: "{{ organizations_in_code | difference(organizations_in_controller) }}"
+
+    - name: Delete old Organizations
+      ansible.controller.job_template:
+        name: "{{ item }}"
+        status: "absent"
+      loop: "{{ organizations_to_delete }}"
+  when: organizations_auto_remove_old
+
 - name: Add organizations
   organization:
     name:                               "{{ __controller_organizations_item.name | mandatory }}"

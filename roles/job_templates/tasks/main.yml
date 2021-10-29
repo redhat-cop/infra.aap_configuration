@@ -1,4 +1,35 @@
 ---
+- name: Block for removing old content
+  ansible.builtin.block:
+    - name: Pull Current Job Templates
+      ansible.builtin.uri:
+        url: "{{ controller_hostname | mandatory }}/api/v2/job_templates/"
+        method: GET
+        return_content: true
+        body_format: json
+        status_code: [200, 202]
+        force_basic_auth: true
+        user: "{{ controller_username | default(omit, true) }}"
+        password: "{{ controller_password | default(omit, true) }}"
+        validate_certs: "{{ controller_validate_certs | default(omit) }}"
+      register: r_current_job_templates
+
+    - name: Get differences
+      ansible.builtin.set_fact:
+        job_templates_to_delete: "{{ _jobs_in_code | difference(_jobs_in_controller) }}"
+      vars:
+        _jobs_in_controller: "{{ r_current_jobs.json.results | json_query(_query2) }}"
+        _query2: "[].name"
+        _jobs_in_code: "{{ controller_jobs | json_query(_query1) }}"
+        _query1: "[].name"
+
+    - name: Delete old job templates
+      ansible.controller.job_template:
+        name: "{{ item }}"
+        status: "absent"
+      loop: "{{ job_templates_to_delete }}"
+  when: job_templates_auto_remove_old
+
 # Create Controller Template
 - name: Add Controller Job Templates
   job_template:

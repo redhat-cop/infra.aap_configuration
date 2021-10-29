@@ -1,4 +1,49 @@
 ---
+- name: Block for removing old content
+  ansible.builtin.block:
+    - name: Pull Current Credential Types
+      ansible.builtin.uri:
+        url: "{{ controller_hostname | mandatory }}/api/v2/credential_types/"
+        method: GET
+        return_content: true
+        body_format: json
+        status_code: [200, 202]
+        force_basic_auth: true
+        user: "{{ controller_username | default(omit, true) }}"
+        password: "{{ controller_password | default(omit, true) }}"
+        validate_certs: "{{ controller_validate_certs | default(omit) }}"
+      register: r_current_credential_types
+
+    - name: Print pulled output
+      ansible.builtin.debug:
+        var: r_current_credential_types
+        verbosity: 2
+
+    - name: Create lists
+      ansible.builtin.set_fact:
+        cred_type_in_controller: "{{ cred_type_in_controller | default([]) + [item.name] }}"
+        cred_type_in_code: "{{ _cred_type_in_code }}"
+      loop: "{{ r_current_credential_types.json.results }}"
+      vars:
+        _cred_type_in_code: "{{ controller_templates | json_query(_query2) }}"
+        _query2: "[].name"
+
+    - name: Print lists
+      ansible.builtin.debug:
+        msg: "cred_type_in_controller: {{ cred_type_in_controller }}, cred_type_in_code: {{ cred_type_in_code }}"
+        verbosity: 2
+
+    - name: Create list of items to remove
+      ansible.builtin.set_fact:
+        credential_types_to_delete: "{{ cred_type_in_code | difference(cred_type_in_controller) }}"
+
+    - name: Delete old Credential Types
+      ansible.controller.job_template:
+        name: "{{ item }}"
+        status: "absent"
+      loop: "{{ credential_types_to_delete }}"
+  when: credential_types_auto_remove_old
+
 - name: Add Credential Types
   credential_type:
     name:                           "{{ __controller_credential_type_item.name | mandatory }}"
