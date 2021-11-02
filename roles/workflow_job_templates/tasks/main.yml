@@ -1,4 +1,34 @@
 ---
+- name: Block for removing old content
+  ansible.builtin.block:
+    - name: Pull Current workflow_job_templates
+      ansible.builtin.uri:
+        url: "{{ controller_hostname | default(omit, true) }}/api/v2/workflow_job_templates/"
+        method: GET
+        return_content: true
+        body_format: json
+        status_code: [200, 202]
+        force_basic_auth: true
+        user: "{{ controller_username | default(omit, true) }}"
+        password: "{{ controller_password | default(omit, true) }}"
+        validate_certs: "{{ controller_validate_certs | default(omit) }}"
+      register: r_current_workflow_job_templates
+
+    - name: Get differences
+      ansible.builtin.set_fact:
+        workflow_job_templates_difference: "{{ _workflow_job_templates_in_controller | difference(_workflow_job_templates_in_code) }}"
+      vars:
+        _workflow_job_templates_in_controller: "{{ r_current_workflow_job_templates.json.results | json_query(_query2) }}"
+        _query2: "[].name"
+        _workflow_job_templates_in_code: "{{ controller_workflow_job_templates | json_query(_query1) }}"
+        _query1: "[].name"
+
+    - name: Temp add items to list with state absent
+      ansible.builtin.set_fact:
+        controller_workflow_job_templates: "{{ (controller_workflow_job_templates | default([])) + [{'name': item, 'state': 'absent'}] }}"
+      loop: "{{ workflow_job_templates_difference }}"
+  when: workflow_job_templates_auto_remove_old
+
 # Create Workflow
 - name: Manage Workflows
   workflow_job_template:

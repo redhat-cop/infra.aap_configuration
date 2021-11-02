@@ -1,9 +1,9 @@
 ---
 - name: Block for removing old content
   ansible.builtin.block:
-    - name: Pull Current Credential Types
+    - name: Pull Current credential_types
       ansible.builtin.uri:
-        url: "{{ controller_hostname | mandatory }}/api/v2/credential_types/"
+        url: "{{ controller_hostname | default(omit, true) }}/api/v2/credential_types/"
         method: GET
         return_content: true
         body_format: json
@@ -14,34 +14,19 @@
         validate_certs: "{{ controller_validate_certs | default(omit) }}"
       register: r_current_credential_types
 
-    - name: Print pulled output
-      ansible.builtin.debug:
-        var: r_current_credential_types
-        verbosity: 2
-
-    - name: Create lists
+    - name: Get differences
       ansible.builtin.set_fact:
-        cred_type_in_controller: "{{ cred_type_in_controller | default([]) + [item.name] }}"
-        cred_type_in_code: "{{ _cred_type_in_code }}"
-      loop: "{{ r_current_credential_types.json.results }}"
+        credential_types_difference: "{{ _credential_types_in_controller | difference(_credential_types_in_code) }}"
       vars:
-        _cred_type_in_code: "{{ controller_templates | json_query(_query2) }}"
+        _credential_types_in_controller: "{{ r_current_credential_types.json.results | json_query(_query2) }}"
         _query2: "[].name"
+        _credential_types_in_code: "{{ controller_credential_types | json_query(_query1) }}"
+        _query1: "[].name"
 
-    - name: Print lists
-      ansible.builtin.debug:
-        msg: "cred_type_in_controller: {{ cred_type_in_controller }}, cred_type_in_code: {{ cred_type_in_code }}"
-        verbosity: 2
-
-    - name: Create list of items to remove
+    - name: Temp add items to list with state absent
       ansible.builtin.set_fact:
-        credential_types_to_delete: "{{ cred_type_in_code | difference(cred_type_in_controller) }}"
-
-    - name: Delete old Credential Types
-      ansible.controller.job_template:
-        name: "{{ item }}"
-        status: "absent"
-      loop: "{{ credential_types_to_delete }}"
+        controller_credential_types: "{{ (controller_credential_types | default([])) + [{'name': item, 'state': 'absent'}] }}"
+      loop: "{{ credential_types_difference }}"
   when: credential_types_auto_remove_old
 
 - name: Add Credential Types

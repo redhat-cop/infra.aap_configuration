@@ -8,6 +8,7 @@
 # controller_config_file: ""
 # controller_validate_certs: false
 inventories_auto_remove_old: False
+
 # These are the default variables specific to the license role
 
 # list of dicts to describe Tower inventories

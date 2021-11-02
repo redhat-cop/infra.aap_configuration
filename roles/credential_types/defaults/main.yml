@@ -8,6 +8,7 @@
 # controller_config_file: ""
 # controller_validate_certs: false
 credential_types_auto_remove_old: False
+
 # These are the default variables specific to the license role
 # list of dict to define Tower credential types
 controller_credential_types: []

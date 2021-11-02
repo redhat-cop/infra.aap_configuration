@@ -1,9 +1,9 @@
 ---
 - name: Block for removing old content
   ansible.builtin.block:
-    - name: Pull Current Job Templates
+    - name: Pull Current job_templates
       ansible.builtin.uri:
-        url: "{{ controller_hostname | mandatory }}/api/v2/job_templates/"
+        url: "{{ controller_hostname | default(omit, true) }}/api/v2/job_templates/"
         method: GET
         return_content: true
         body_format: json
@@ -16,18 +16,17 @@
 
     - name: Get differences
       ansible.builtin.set_fact:
-        job_templates_to_delete: "{{ _jobs_in_code | difference(_jobs_in_controller) }}"
+        job_templates_difference: "{{ _job_templates_in_controller | difference(_job_templates_in_code) }}"
       vars:
-        _jobs_in_controller: "{{ r_current_jobs.json.results | json_query(_query2) }}"
+        _job_templates_in_controller: "{{ r_current_job_templates.json.results | json_query(_query2) }}"
         _query2: "[].name"
-        _jobs_in_code: "{{ controller_jobs | json_query(_query1) }}"
+        _job_templates_in_code: "{{ controller_job_templates | json_query(_query1) }}"
         _query1: "[].name"
 
-    - name: Delete old job templates
-      ansible.controller.job_template:
-        name: "{{ item }}"
-        status: "absent"
-      loop: "{{ job_templates_to_delete }}"
+    - name: Temp add items to list with state absent
+      ansible.builtin.set_fact:
+        controller_job_templates: "{{ (controller_job_templates | default([])) + [{'name': item, 'state': 'absent'}] }}"
+      loop: "{{ job_templates_difference }}"
   when: job_templates_auto_remove_old
 
 # Create Controller Template

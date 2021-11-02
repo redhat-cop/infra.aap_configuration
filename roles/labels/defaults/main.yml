@@ -15,6 +15,7 @@ controller_labels: []
 #  new_name: "new_name"  # optional
 #  organization: "organization name"  # mandatory
 #  state: present  # optional, choices: present, absent
+labels_auto_remove_old: False
 
 controller_configuration_labels_secure_logging: "{{controller_configuration_secure_logging | default('false')}}"
 ...

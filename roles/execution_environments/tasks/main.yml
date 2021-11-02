@@ -1,4 +1,34 @@
 ---
+- name: Block for removing old content
+  ansible.builtin.block:
+    - name: Pull Current execution_environment
+      ansible.builtin.uri:
+        url: "{{ controller_hostname | default(omit, true) }}/api/v2/execution_environment/"
+        method: GET
+        return_content: true
+        body_format: json
+        status_code: [200, 202]
+        force_basic_auth: true
+        user: "{{ controller_username | default(omit, true) }}"
+        password: "{{ controller_password | default(omit, true) }}"
+        validate_certs: "{{ controller_validate_certs | default(omit) }}"
+      register: r_current_execution_environment
+
+    - name: Get differences
+      ansible.builtin.set_fact:
+        execution_environment_difference: "{{ _execution_environment_in_controller | difference(_execution_environment_in_code) }}"
+      vars:
+        _execution_environment_in_controller: "{{ r_current_execution_environment.json.results | json_query(_query2) }}"
+        _query2: "[].name"
+        _execution_environment_in_code: "{{ controller_execution_environment | json_query(_query1) }}"
+        _query1: "[].name"
+
+    - name: Temp add items to list with state absent
+      ansible.builtin.set_fact:
+        controller_execution_environment: "{{ (controller_execution_environment | default([])) + [{'name': item, 'state': 'absent'}] }}"
+      loop: "{{ execution_environment_difference }}"
+  when: execution_environment_auto_remove_old
+
 # Create Controller Execution Environments
 - name: Add Controller Execution Environments
   execution_environment:

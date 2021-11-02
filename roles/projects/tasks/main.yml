@@ -1,7 +1,6 @@
 ---
 - name: Block for removing old content
   ansible.builtin.block:
-
     - name: Pull Current Projects
       ansible.builtin.uri:
         url: "{{ controller_hostname | default(omit, true) }}/api/v2/projects/"

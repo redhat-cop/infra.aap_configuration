@@ -1,4 +1,34 @@
 ---
+- name: Block for removing old content
+  ansible.builtin.block:
+    - name: Pull Current hosts
+      ansible.builtin.uri:
+        url: "{{ controller_hostname | default(omit, true) }}/api/v2/hosts/"
+        method: GET
+        return_content: true
+        body_format: json
+        status_code: [200, 202]
+        force_basic_auth: true
+        user: "{{ controller_username | default(omit, true) }}"
+        password: "{{ controller_password | default(omit, true) }}"
+        validate_certs: "{{ controller_validate_certs | default(omit) }}"
+      register: r_current_hosts
+
+    - name: Get differences
+      ansible.builtin.set_fact:
+        hosts_difference: "{{ _hosts_in_controller | difference(_hosts_in_code) }}"
+      vars:
+        _hosts_in_controller: "{{ r_current_hosts.json.results | json_query(_query2) }}"
+        _query2: "[].name"
+        _hosts_in_code: "{{ controller_hosts | json_query(_query1) }}"
+        _query1: "[].name"
+
+    - name: Temp add items to list with state absent
+      ansible.builtin.set_fact:
+        controller_hosts: "{{ (controller_hosts | default([])) + [{'name': item, 'state': 'absent'}] }}"
+      loop: "{{ hosts_difference }}"
+  when: hosts_auto_remove_old
+
 - name: Add Controller host
   host:
     name:                   "{{ __controller_host_item.name | mandatory }}"
