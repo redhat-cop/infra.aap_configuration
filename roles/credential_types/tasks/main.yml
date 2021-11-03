@@ -1,8 +1,8 @@
 ---
 - name: Block for removing old content
-  ansible.builtin.block:
+  block:
     - name: Pull Current credential_types
-      ansible.builtin.uri:
+      uri:
         url: "{{ controller_hostname | default(omit, true) }}/api/v2/credential_types/"
         method: GET
         return_content: true
@@ -15,7 +15,7 @@
       register: r_current_credential_types
 
     - name: Get differences
-      ansible.builtin.set_fact:
+      set_fact:
         credential_types_difference: "{{ _credential_types_in_controller | difference(_credential_types_in_code) }}"
       vars:
         _credential_types_in_controller: "{{ r_current_credential_types.json.results | json_query(_query2) }}"
@@ -24,7 +24,7 @@
         _query1: "[].name"
 
     - name: Temp add items to list with state absent
-      ansible.builtin.set_fact:
+      set_fact:
         controller_credential_types: "{{ (controller_credential_types | default([])) + [{'name': item, 'state': 'absent'}] }}"
       loop: "{{ credential_types_difference }}"
   when: credential_types_auto_remove_old or auto_remove_all_old

@@ -1,8 +1,8 @@
 ---
 - name: Block for removing old content
-  ansible.builtin.block:
+  block:
     - name: Pull Current labels
-      ansible.builtin.uri:
+      uri:
         url: "{{ controller_hostname | default(omit, true) }}/api/v2/labels/"
         method: GET
         return_content: true
@@ -15,7 +15,7 @@
       register: r_current_labels
 
     - name: Get differences
-      ansible.builtin.set_fact:
+      set_fact:
         labels_difference: "{{ _labels_in_controller | difference(_labels_in_code) }}"
       vars:
         _labels_in_controller: "{{ r_current_labels.json.results | json_query(_query2) }}"
@@ -24,7 +24,7 @@
         _query1: "[].name"
 
     - name: Temp add items to list with state absent
-      ansible.builtin.set_fact:
+      set_fact:
         controller_labels: "{{ (controller_labels | default([])) + [{'name': item, 'state': 'absent'}] }}"
       loop: "{{ labels_difference }}"
   when: labels_auto_remove_old or auto_remove_all_old

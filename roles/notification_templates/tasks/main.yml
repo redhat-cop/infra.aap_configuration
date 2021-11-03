@@ -1,8 +1,8 @@
 ---
 - name: Block for removing old content
-  ansible.builtin.block:
+  block:
     - name: Pull Current notification_templates
-      ansible.builtin.uri:
+      uri:
         url: "{{ controller_hostname | default(omit, true) }}/api/v2/notification_templates/"
         method: GET
         return_content: true
@@ -15,7 +15,7 @@
       register: r_current_notification_templates
 
     - name: Get differences
-      ansible.builtin.set_fact:
+      set_fact:
         notification_templates_difference: "{{ _notification_templates_in_controller | difference(_notification_templates_in_code) }}"
       vars:
         _notification_templates_in_controller: "{{ r_current_notification_templates.json.results | json_query(_query2) }}"
@@ -24,7 +24,7 @@
         _query1: "[].name"
 
     - name: Temp add items to list with state absent
-      ansible.builtin.set_fact:
+      set_fact:
         controller_notification_templates: "{{ (controller_notification_templates | default([])) + [{'name': item, 'state': 'absent'}] }}"
       loop: "{{ notification_templates_difference }}"
   when: notification_templates_auto_remove_old or auto_remove_all_old

@@ -1,8 +1,8 @@
 ---
 - name: Block for removing old content
-  ansible.builtin.block:
+  block:
     - name: Pull Current teams
-      ansible.builtin.uri:
+      uri:
         url: "{{ controller_hostname | default(omit, true) }}/api/v2/teams/"
         method: GET
         return_content: true
@@ -15,7 +15,7 @@
       register: r_current_teams
 
     - name: Get differences
-      ansible.builtin.set_fact:
+      set_fact:
         teams_difference: "{{ _teams_in_controller | difference(_teams_in_code) }}"
       vars:
         _teams_in_controller: "{{ r_current_teams.json.results | json_query(_query2) }}"
@@ -24,7 +24,7 @@
         _query1: "[].name"
 
     - name: Temp add items to list with state absent
-      ansible.builtin.set_fact:
+      set_fact:
         controller_teams: "{{ (controller_teams | default([])) + [{'name': item, 'state': 'absent'}] }}"
       loop: "{{ teams_difference }}"
   when: teams_auto_remove_old or auto_remove_all_old

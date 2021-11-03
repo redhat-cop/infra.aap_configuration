@@ -1,8 +1,8 @@
 ---
 - name: Block for removing old content
-  ansible.builtin.block:
+  block:
     - name: Pull Current organizations
-      ansible.builtin.uri:
+      uri:
         url: "{{ controller_hostname | default(omit, true) }}/api/v2/organizations/"
         method: GET
         return_content: true
@@ -15,7 +15,7 @@
       register: r_current_organizations
 
     - name: Get differences
-      ansible.builtin.set_fact:
+      set_fact:
         organizations_difference: "{{ _organizations_in_controller | difference(_organizations_in_code) }}"
       vars:
         _organizations_in_controller: "{{ r_current_organizations.json.results | json_query(_query2) }}"
