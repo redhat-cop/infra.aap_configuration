@@ -1,7 +1,4 @@
 ---
 collections:
 - name: ansible.controller
-- name: https://github.com/djdanielsson/tower_configuration.git
-  type: git
-  version: auto_remove
 ...
