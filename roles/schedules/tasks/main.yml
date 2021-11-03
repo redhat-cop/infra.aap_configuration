@@ -27,7 +27,7 @@
       ansible.builtin.set_fact:
         controller_schedules: "{{ (controller_schedules | default([])) + [{'name': item, 'state': 'absent'}] }}"
       loop: "{{ schedules_difference }}"
-  when: schedules_auto_remove_old
+  when: schedules_auto_remove_old or auto_remove_all_old
 
 - name: Add Controller Schedule
   schedule:

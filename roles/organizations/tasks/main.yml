@@ -28,7 +28,7 @@
         name: "{{ item }}"
         status: "absent"
       loop: "{{ organizations_to_delete }}"
-  when: organizations_auto_remove_old
+  when: organizations_auto_remove_old or auto_remove_all_old
 
 - name: Add organizations
   organization:

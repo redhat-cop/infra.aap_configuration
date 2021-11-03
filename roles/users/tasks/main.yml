@@ -27,7 +27,7 @@
       ansible.builtin.set_fact:
         controller_users: "{{ (controller_users | default([])) + [{'name': item, 'state': 'absent'}] }}"
       loop: "{{ users_difference }}"
-  when: users_auto_remove_old
+  when: users_auto_remove_old or auto_remove_all_old
 
 - name: Add controller user
   user:

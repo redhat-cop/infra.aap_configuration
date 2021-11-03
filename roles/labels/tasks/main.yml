@@ -27,7 +27,7 @@
       ansible.builtin.set_fact:
         controller_labels: "{{ (controller_labels | default([])) + [{'name': item, 'state': 'absent'}] }}"
       loop: "{{ labels_difference }}"
-  when: labels_auto_remove_old
+  when: labels_auto_remove_old or auto_remove_all_old
 
 - name: Add a label to Controller
   label:

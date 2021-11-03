@@ -27,7 +27,7 @@
       ansible.builtin.set_fact:
         controller_groups: "{{ (controller_groups | default([])) + [{'name': item, 'state': 'absent'}] }}"
       loop: "{{ groups_difference }}"
-  when: groups_auto_remove_old
+  when: groups_auto_remove_old or auto_remove_all_old
 
 - name: Add controller group
   group:

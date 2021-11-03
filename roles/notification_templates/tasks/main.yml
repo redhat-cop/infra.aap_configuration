@@ -27,7 +27,7 @@
       ansible.builtin.set_fact:
         controller_notification_templates: "{{ (controller_notification_templates | default([])) + [{'name': item, 'state': 'absent'}] }}"
       loop: "{{ notification_templates_difference }}"
-  when: notification_templates_auto_remove_old
+  when: notification_templates_auto_remove_old or auto_remove_all_old
 
 - name: Add Controller notifications
   notification_template:

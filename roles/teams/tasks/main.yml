@@ -27,7 +27,7 @@
       ansible.builtin.set_fact:
         controller_teams: "{{ (controller_teams | default([])) + [{'name': item, 'state': 'absent'}] }}"
       loop: "{{ teams_difference }}"
-  when: teams_auto_remove_old
+  when: teams_auto_remove_old or auto_remove_all_old
 
 - name: Create Ansible Controller Team
   team:

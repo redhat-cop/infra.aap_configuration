@@ -27,7 +27,7 @@
       ansible.builtin.set_fact:
         controller_inventories: "{{ (controller_inventories | default([])) + [{'name': item, 'state': 'absent'}] }}"
       loop: "{{ inventories_difference }}"
-  when: inventories_auto_remove_old
+  when: inventories_auto_remove_old or auto_remove_all_old
 
 - name: Create inventory
   inventory:

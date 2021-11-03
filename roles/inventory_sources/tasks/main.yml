@@ -27,7 +27,7 @@
       ansible.builtin.set_fact:
         controller_inventory_source: "{{ (controller_inventory_source | default([])) + [{'name': item, 'state': 'absent'}] }}"
       loop: "{{ inventory_source_difference }}"
-  when: inventory_source_auto_remove_old
+  when: inventory_source_auto_remove_old or auto_remove_all_old
 
 - name: Add an inventory source
   inventory_source:

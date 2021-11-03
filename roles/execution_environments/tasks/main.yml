@@ -27,7 +27,7 @@
       ansible.builtin.set_fact:
         controller_execution_environment: "{{ (controller_execution_environment | default([])) + [{'name': item, 'state': 'absent'}] }}"
       loop: "{{ execution_environment_difference }}"
-  when: execution_environment_auto_remove_old
+  when: execution_environment_auto_remove_old or auto_remove_all_old
 
 # Create Controller Execution Environments
 - name: Add Controller Execution Environments

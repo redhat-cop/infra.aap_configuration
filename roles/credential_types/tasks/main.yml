@@ -27,7 +27,7 @@
       ansible.builtin.set_fact:
         controller_credential_types: "{{ (controller_credential_types | default([])) + [{'name': item, 'state': 'absent'}] }}"
       loop: "{{ credential_types_difference }}"
-  when: credential_types_auto_remove_old
+  when: credential_types_auto_remove_old or auto_remove_all_old
 
 - name: Add Credential Types
   credential_type:

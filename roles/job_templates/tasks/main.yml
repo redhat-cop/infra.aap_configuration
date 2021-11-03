@@ -27,7 +27,7 @@
       ansible.builtin.set_fact:
         controller_job_templates: "{{ (controller_job_templates | default([])) + [{'name': item, 'state': 'absent'}] }}"
       loop: "{{ job_templates_difference }}"
-  when: job_templates_auto_remove_old
+  when: job_templates_auto_remove_old or auto_remove_all_old
 
 # Create Controller Template
 - name: Add Controller Job Templates
