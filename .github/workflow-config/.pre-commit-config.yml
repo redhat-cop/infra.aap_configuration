@@ -27,4 +27,20 @@ repos:
           --exclude=roles/master_role_example
           --exclude=.github/workflows/
           --exclude=changelogs/
+  - repo: https://github.com/ambv/black
+    rev: stable
+    hooks:
+      - id: black
+        name: black
+        entry: black
+        args: [--config=.github/workflow-config/black.cfg, --check, --diff]
+        types: [python]
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.8.4
+    hooks:
+      - id: flake8
+        name: flake8
+        entry: flake8
+        args: [--config=.github/workflow-config/flake8.cfg]
+        types: [python]
 ...

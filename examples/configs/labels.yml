@@ -4,4 +4,8 @@ controller_labels:
     organization: Satellite
   - name: Prod
     organization: Default
+  - name: differential
+    organization: Default
+  - name: differential2
+    organization: Default
 ...
