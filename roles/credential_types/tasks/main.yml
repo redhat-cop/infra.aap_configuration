@@ -5,7 +5,7 @@
     description:                    "{{ __controller_credential_type_item.description | default(omit, true) }}"
     injectors:                      "{{ __controller_credential_type_item.injectors | default(omit, true) | regex_replace('[ ]{2,}','') }}"
     inputs:                         "{{ __controller_credential_type_item.inputs | default(omit, true) }}"
-    kind:                           "{{ __controller_credential_type_item.kind | default(omit, true) }}"
+    kind:                           "{{ __controller_credential_type_item.kind | default('cloud') }}"
     state:                          "{{ __controller_credential_type_item.state | default(controller_state | default('present')) }}"
 
     # Role specific options
