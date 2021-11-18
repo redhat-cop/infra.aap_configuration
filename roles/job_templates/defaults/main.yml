@@ -56,7 +56,7 @@ controller_templates: []
 #  webhook_credential:   # optional, str
 #  labels:  # optional, str
 #  state: present  # optional, choices: present, absent
-#  instance_groups: # optional, str 
+#  instance_groups: # optional, str
 #  notification_templates_started: []  # optional, notification template names
 #  notification_templates_success: []  # optional, notification template names
 #  notification_templates_error: []  # optional, notification template names
