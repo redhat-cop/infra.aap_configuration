@@ -1,18 +1,18 @@
 ---
 - name: Get list of organizations from Tower
   uri:
-    force_basic_auth: yes
+    force_basic_auth: true
     method: GET
     password: "{{ controller_password }}"
-    return_content: yes
-    url:  "https://{{ controller_hostname }}/api/v2/organizations/"
+    return_content: true
+    url: "https://{{ controller_hostname }}/api/v2/organizations/"
     user: "{{ controller_username }}"
     validate_certs: "{{ controller_validate_certs }}"
   register: existing_organizations
 
 - name: Set fact when organization is present
   set_fact:
-    org_exists: yes
+    org_exists: true
   when: org_names.name == which_org
   loop: "{{ existing_organizations.json.results }}"
   loop_control:
