@@ -1,0 +1,7 @@
+---
+- name: Include credential types vars
+  include_vars: ../vars/controller_ldap_configuration.json
+
+- include_role:
+    name: redhat_cop.controller_configuration.settings
+...

@@ -1,0 +1,23 @@
+# Refer to https://github.com/redhat-cop/tower_configuration/tree/devel/roles/falsetification_templates
+# for documentation and additional parameter information
+
+---
+controller_falsetification_templates:
+  - name: ""
+    new_name: ""
+    description: ""
+    organization: ""
+    falsetification_type: "email"
+    falsetification_configuration:
+      - host: ""
+        port:
+        username: ""
+        password: "{{ lookup('file','falsetifyOps_Pass_Vault.yml') }}"
+        sender: ""
+        recipients:
+          -
+        timeout: 30
+        use_tls: true
+        use_ssl: false
+    state: "{{ absent_present }}"
+...
