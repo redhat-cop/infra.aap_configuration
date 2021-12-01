@@ -1,0 +1,6 @@
+---
+controller_hostname: ''
+controller_password: ''
+controller_username: ''
+controller_validate_certs: false
+...
