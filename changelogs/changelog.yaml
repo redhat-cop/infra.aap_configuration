@@ -71,3 +71,11 @@ releases:
     fragments:
     - new_changes.yml
     release_date: '2021-09-16'
+  0.5.5:
+    changes:
+      bugfixes:
+      - Add the `no_log` attribute to the `password` and `proxy_password` fields of
+        the `ah_repository` module (Resolves
+    fragments:
+    - changes.yml
+    release_date: '2021-12-02'
