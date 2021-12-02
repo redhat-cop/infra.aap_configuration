@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Add the `no_log` attribute to the `password` and `proxy_password` fields
-    of the `ah_repository` module (Resolves #47).
