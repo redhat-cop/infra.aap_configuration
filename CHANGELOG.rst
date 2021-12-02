@@ -5,6 +5,14 @@ redhat_cop.ah_configuration Release Notes
 .. contents:: Topics
 
 
+v0.5.5
+======
+
+Bugfixes
+--------
+
+- Add the `no_log` attribute to the `password` and `proxy_password` fields of the `ah_repository` module (Resolves
+
 v0.5.0
 ======
 
