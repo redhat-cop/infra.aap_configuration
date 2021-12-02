@@ -1,0 +1,5 @@
+---
+- name: redhat_cop.ah_configuration
+- name: redhat_cop.tower_configuration
+- name: ansible.windows
+...

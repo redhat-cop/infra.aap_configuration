@@ -1,0 +1,5 @@
+---
+ah_groups:
+  - name: group1
+    state: present
+...

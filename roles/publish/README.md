@@ -36,7 +36,7 @@ ah_configuration_publish_secure_logging defaults to the value of ah_configuratio
 
 ### Standard Project Data Structure
 
-#### Ymal Example
+#### Yaml Example
 ```yaml
 ---
 ah_collections:

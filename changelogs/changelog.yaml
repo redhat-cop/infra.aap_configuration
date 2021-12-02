@@ -54,3 +54,28 @@ releases:
     fragments:
     - publish_approval_retry.yml
     release_date: '2021-06-24'
+  0.4.3:
+    changes:
+      minor_changes:
+      - Added meta/runtime.yml file which is now a requirement for collections to
+        be released on Galaxy
+      - Added requirements_file option to ah_repository module
+    fragments:
+    - changes.yml
+    release_date: '2021-07-21'
+  0.5.0:
+    changes:
+      major_changes:
+      - Added execution_environment plugins
+      - Added user, group and group_perm plugins
+    fragments:
+    - new_changes.yml
+    release_date: '2021-09-16'
+  0.5.5:
+    changes:
+      bugfixes:
+      - Add the `no_log` attribute to the `password` and `proxy_password` fields of
+        the `ah_repository` module (Resolves
+    fragments:
+    - changes.yml
+    release_date: '2021-12-02'

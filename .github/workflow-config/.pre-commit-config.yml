@@ -1,23 +1,19 @@
 ---
 repos:
   - repo: 'https://github.com/pre-commit/pre-commit-hooks'
-    rev: v3.2.0
+    rev: v4.0.1
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: 'https://github.com/adrienverge/yamllint.git'
-    rev: v1.26.0
+    rev: v1.26.1
     hooks:
       - id: yamllint
         entry: yamllint -c .github/workflow-config/.yamllint.yml
         types:
           - yaml
   - repo: 'https://github.com/ansible-community/ansible-lint.git'
-    rev: v5.0.0
-    #  - repo: 'https://github.com/ansible-community/ansible-lint.git'
-    #    rev: v5.0.0a0
-    #  - repo: 'https://github.com/sean-m-sullivan/ansible-lint.git'
-    #    rev: v5.0.0b
+    rev: v5.0.12
     hooks:
       # see discussions here about what arguments are used, and behavior
       # https://github.com/ansible/ansible-lint/issues/649
@@ -28,10 +24,6 @@ repos:
         always_run: true
         entry: >-
           ansible-lint -vp -c .github/workflow-config/.ansiblelint.yml
-#          --exclude=temp_test_module.yml
-#          --exclude=playbooks/testing_playbook.yml
-#          --exclude=playbooks/ah_configs/
-#          --exclude=playbooks/test_collection/galaxy.yml
   - repo: https://github.com/ambv/black
     rev: stable
     hooks:
