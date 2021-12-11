@@ -40,7 +40,7 @@ controller_configuration_credential_types_secure_logging defaults to the value o
 |`description`|`False`|no|The description of the credential type to give more detail about it.|
 |`injectors`|""|no|Enter injectors using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax. See not below on proper formating.|
 |`inputs`|""|no|Enter inputs using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax.|
-|`kind`|""|no|The type of credential type being added. Note that only cloud and net can be used for creating credential types.|
+|`kind`|"cloud"|no|The type of credential type being added. Note that only cloud and net can be used for creating credential types.|
 |`state`|`present`|no|Desired state of the resource.|
 
 ### Formating Injectors
@@ -122,12 +122,12 @@ required:
         },
         "injectors": {
           "extra_vars": {
-            "rest_password": "{% raw %}{  { rest_password }}{% endraw %}",
-            "rest_username": "{% raw %}{  { rest_username }}{% endraw %}"
+            "rest_password": "{  { rest_password }}",
+            "rest_username": "{  { rest_username }}"
           },
           "env": {
-            "rest_username_env": "{% raw %}{  { rest_username }}{% endraw %}",
-            "rest_password_env": "{% raw %}{  { rest_password }}{% endraw %}"
+            "rest_username_env": "{  { rest_username }}",
+            "rest_password_env": "{  { rest_password }}"
           }
         }
       }
@@ -154,11 +154,11 @@ controller_credential_types:
     - rest_password
   injectors:
     extra_vars:
-      rest_password: "{% raw %}{  { rest_password }}{% endraw %}"
-      rest_username: "{% raw %}{  { rest_username }}{% endraw %}"
+      rest_password: "{  { rest_password }}"
+      rest_username: "{  { rest_username }}"
     env:
-      rest_username_env: "{% raw %}{  { rest_username }}{% endraw %}"
-      rest_password_env: "{% raw %}{  { rest_password }}{% endraw %}"
+      rest_username_env: "{  { rest_username }}"
+      rest_password_env: "{  { rest_password }}"
 ```
 ## Playbook Examples
 ### Standard Role Usage

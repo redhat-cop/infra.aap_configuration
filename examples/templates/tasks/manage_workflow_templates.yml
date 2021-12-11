@@ -1,0 +1,7 @@
+---
+- name: Include workflows vars
+  include_vars: ../vars/controller_workflows.yml
+
+- include_role:
+    name: redhat_cop.controller_configuration.workflow_job_templates
+...

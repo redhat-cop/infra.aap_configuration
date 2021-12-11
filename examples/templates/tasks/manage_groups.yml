@@ -1,0 +1,7 @@
+---
+- name: Include groups vars
+  include_vars: ../vars/controller_groups.yml
+
+- include_role:
+    name: redhat_cop.controller_configuration.groups
+...
