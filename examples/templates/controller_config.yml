@@ -1,0 +1,127 @@
+---
+- name: Playbook to configure a Tower cluster
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  collections:
+    - ansible.tower
+    - redhat_cop.controller_configuration
+
+  vars:
+    absent_present: "present"
+
+  environment:
+    CONTROLLER_VERIFY_SSL: false
+
+  pre_tasks:
+    - name: Include Vars
+      include_vars: "vars/controller_vars.yml"
+
+  tasks:
+    - name: Include task for managing LDAP settings
+      include_tasks: tasks/manage_controller_settings.yml
+      tags:
+        - all
+        - never
+        - settings
+
+    - name: Include task for managing credential types
+      include_tasks: tasks/manage_credential_types.yml
+      tags:
+        - all
+        - never
+        - credtypes
+
+    - name: Include task for managing organizations
+      include_tasks: tasks/manage_organizations.yml
+      tags:
+        - all
+        - never
+        - orgs
+
+    - name: Include task for managing users
+      include_tasks: tasks/manage_users.yml
+      tags:
+        - all
+        - never
+        - users
+
+    - name: Include task for managing credentials
+      include_tasks: tasks/manage_credentials.yml
+      tags:
+        - all
+        - never
+        - credentials
+
+    # Add Orgs a second time to associate the Galaxy /
+    # Automation Hub credentials with the Org for project sync
+    - name: Include task for managing organizations
+      include_tasks: tasks/manage_organizations.yml
+      tags:
+        - all
+        - never
+        - orgs
+
+    - name: Include task for managing projects
+      include_tasks: tasks/manage_projects.yml
+      tags:
+        - all
+        - never
+        - projects
+
+    - name: Include task for managing labels
+      include_tasks: tasks/manage_labels.yml
+      tags:
+        - all
+        - never
+        - labels
+
+    - name: Include task for managing inventories
+      include_tasks: tasks/manage_inventories.yml
+      tags:
+        - all
+        - never
+        - inventory
+
+    - name: Include task for managing inventories
+      include_tasks: tasks/manage_inventory_sources.yml
+      tags:
+        - all
+        - never
+        - inventorysources
+
+    - name: Include task for managing hosts
+      include_tasks: tasks/manage_hosts.yml
+      tags:
+        - all
+        - never
+        - hosts
+
+    - name: Include task for managing groups
+      include_tasks: tasks/manage_groups.yml
+      tags:
+        - all
+        - never
+        - groups
+
+    - name: Include task for managing job templates
+      include_tasks: tasks/manage_job_templates.yml
+      tags:
+        - all
+        - never
+        - jobtemplates
+
+    - name: Include task for managing workflow templates
+      include_tasks: tasks/manage_workflow_templates.yml
+      tags:
+        - all
+        - never
+        - workflows
+
+    - name: Include task for managing schedules
+      include_tasks: tasks/manage_schedules.yml
+      tags:
+        - all
+        - never
+        - schedules
+...
