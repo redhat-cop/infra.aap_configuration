@@ -18,7 +18,7 @@ DOCUMENTATION = r"""
 module: ah_ee_namespace
 short_description: Manage private automation hub execution environment namespaces
 description:
-  - Create and delete execution environment namespaces.
+  - Create, rename, and delete execution environment namespaces.
   - Grant group access to namespaces.
 version_added: '0.4.3'
 author: Herve Quatremain (@herve4m)
@@ -27,6 +27,10 @@ options:
     description:
       - Name of the namespace to create, remove, or modify.
     required: true
+    type: str
+  new_name:
+    description:
+      - New name for the namespace. Setting this option changes the name of the namespace which current name is provided in C(name).
     type: str
   groups:
     description:
@@ -67,6 +71,15 @@ EXAMPLES = r"""
     ah_username: admin
     ah_password: Sup3r53cr3t
 
+- name: Ensure the namespace has a new name
+  redhat_cop.ah_configuration.ah_ee_namespace:
+    name: ansible-automation-platform-20-early-access
+    new_name: custom-ee-01
+    state: present
+    ah_host: hub.example.com
+    ah_username: admin
+    ah_password: Sup3r53cr3t
+
 - name: Ensure the namespace is removed
   redhat_cop.ah_configuration.ah_ee_namespace:
     name: custom-ee-01
@@ -100,9 +113,9 @@ EXAMPLES = r"""
 
 RETURN = r""" # """
 
-from ..module_utils.ah_api_module import AHAPIModule
+from ..module_utils.ah_api_module import AHAPIModule, AHAPIModuleError
 from ..module_utils.ah_ui_object import AHUIGroup, AHUIEENamespace
-from ..module_utils.ah_pulp_object import AHPulpEENamespace
+from ..module_utils.ah_pulp_object import AHPulpEENamespace, AHPulpEERepository
 
 
 # Name of the permissions
@@ -115,9 +128,73 @@ PERM_NAMES = [
 ]
 
 
+def rename_namespace(module, src_namespace_pulp, dest_namespace_pulp, dest_namespace_name):
+    """Rename the given namespace.
+
+    The Pulp API does not provide a method to rename namespaces. That function
+    provides that functionnality.
+    It creates the destination namespace, copies over the access rights from the
+    source namespace, renames all the repositories that references the source
+    namespace, and then delete the source namespace.
+
+    :param module: The API object that the function uses to access the API.
+    :type module: :py:class:``ah_api_module.AHAPIModule``
+    :param src_namespace_pulp: The Pulp object that represents the source
+                               namespace to rename.
+    :type src_namespace_pulp: :py:class:``ah_pulp_object.AHPulpEENamespace``
+    :param dest_namespace_pulp: The Pulp object that represents the destination
+                                namespace. The function creates that namespace.
+    :type dest_namespace_pulp: :py:class:``ah_pulp_object.AHPulpEENamespace``
+    :param dest_namespace_name: Name of the destination namespace.
+    :type dest_namespace_name: str
+    """
+    # Get the source namespace details (groups) that are needed to create
+    # a similar destination namespace.
+    src_namespace_ui = AHUIEENamespace(module)
+    src_namespace_ui.get_object(src_namespace_pulp.name)
+
+    # Create the destination namespace (Pulp)
+    dest_namespace_pulp.create({"name": dest_namespace_name}, auto_exit=False)
+
+    # Duplicate the group details
+    if "groups" in src_namespace_ui.data and len(src_namespace_ui.data["groups"]):
+        dest_namespace_ui = AHUIEENamespace(module)
+        try:
+            dest_namespace_ui.get_object(dest_namespace_name, exit_on_error=False)
+            dest_namespace_ui.update_groups({"groups": src_namespace_ui.data["groups"]}, auto_exit=False, exit_on_error=False)
+        except AHAPIModuleError as e:
+            # Roll back
+            try:
+                dest_namespace_pulp.delete(exit_on_error=False)
+            except AHAPIModuleError:
+                pass
+            module.fail_json(msg=str(e))
+
+    # Get all the repositories in the source namespace
+    try:
+        repos = AHPulpEERepository.get_repositories_in_namespace(module, src_namespace_pulp.name, exit_on_error=False)
+    except AHAPIModuleError as e:
+        # Roll back
+        try:
+            dest_namespace_pulp.delete(exit_on_error=False)
+        except AHAPIModuleError:
+            pass
+        module.fail_json(msg=str(e))
+
+    # Replace the namespace part of the repository names by the name of the
+    # destination namespace
+    for repo in repos:
+        new_name = repo.name.replace(src_namespace_pulp.name, dest_namespace_name, 1)
+        repo.update({"name": new_name, "base_path": new_name}, auto_exit=False)
+
+    # Delete the source namespace
+    src_namespace_pulp.delete(auto_exit=False)
+
+
 def main():
     argument_spec = dict(
         name=dict(required=True),
+        new_name=dict(),
         groups=dict(type="list", elements="str"),
         append=dict(type="bool", default=True),
         state=dict(choices=["present", "absent"], default="present"),
@@ -128,6 +205,7 @@ def main():
 
     # Extract our parameters
     name = module.params.get("name")
+    new_name = module.params.get("new_name")
     groups = module.params.get("groups")
     append = module.params.get("append")
     state = module.params.get("state")
@@ -172,12 +250,56 @@ def main():
         if error_groups:
             module.fail_json(msg="unknown groups: %s" % ", ".join(error_groups))
 
-    # Creating the namespace if it does not exist
-    if not namespace_pulp.exists:
+    # The API does not provide a method to rename a namespace. The module
+    # performs that operation by creating a namespace with the new name and then
+    # copying over all the source namespace details. Finally, the original
+    # namespace is deleted.
+    #
+    # Matrix that defines the operation to perform depending on the provided
+    # parameters and the current state.
+    # +-----------------------------+---+---+---+---+---+---+
+    # |                        Case | 1 | 2 | 3 | 4 | 5 | 6 |
+    # +-----------------------------+---+---+---+---+---+---+
+    # |         `new_name` provided | N | N | Y | Y | Y | Y |
+    # |     `name` namespace exists | N | Y | N | N | Y | Y |
+    # | `new_name` namespace exists |   |   | N | Y | N | Y |
+    # +-----------------------------+---+---+---+---+---+---+
+    #
+    # 1. Create the namespace which name is given in `name`.
+    # 2. Do not create any namespace.
+    # 3. Create the new namespace and use it for the remaining of the Ansible module.
+    # 4. Use the new namespace name for the remaining of the module.
+    # 5. Rename the namespace and then use it for the remaining of the module.
+    # 6. Error. Cannot rename to an existing destination.
+    changed = False
+    if new_name:
+        new_namespace_pulp = AHPulpEENamespace(module)
+        new_namespace_pulp.get_object(new_name)
+
+        if namespace_pulp.exists:
+            if new_namespace_pulp.exists:
+                # Case 6
+                module.fail_json(msg="The namespace {namespace} (`new_name') already exists".format(namespace=new_name))
+            else:
+                # Case 5
+                rename_namespace(module, namespace_pulp, new_namespace_pulp, new_name)
+                namespace_pulp = new_namespace_pulp
+                name = new_name
+                changed = True
+
+        else:
+            # Cases 3 and 4
+            namespace_pulp = new_namespace_pulp
+            name = new_name
+            if not namespace_pulp.exists:
+                # Case 3
+                namespace_pulp.create({"name": name}, auto_exit=False)
+                changed = True
+
+    elif not namespace_pulp.exists:
+        # Case 1
         namespace_pulp.create({"name": name}, auto_exit=False)
         changed = True
-    else:
-        changed = False
 
     # Process the object from the UI API
     namespace_ui = AHUIEENamespace(module)

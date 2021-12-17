@@ -8,6 +8,8 @@
 
 from __future__ import absolute_import, division, print_function
 
+from .ah_api_module import AHAPIModuleError
+
 __metaclass__ = type
 
 
@@ -153,7 +155,7 @@ class AHUIObject(object):
                 return True
         return False
 
-    def get_object(self, name):
+    def get_object(self, name, exit_on_error=True):
         """Retrieve a single object from a GET API call.
 
         Upon completion, :py:attr:``self.exists`` is set to ``True`` if the
@@ -163,10 +165,24 @@ class AHUIObject(object):
 
         :param name: Name of the object to retrieve.
         :type name: str
+        :param exit_on_error: If ``True`` (the default), exit the module on API
+                              error. Otherwise, raise the
+                              :py:class:``AHAPIModuleError`` exception.
+        :type exit_on_error: bool
+
+        :raises AHAPIModuleError: An API error occured. That exception is only
+                                  raised when ``exit_on_error`` is ``False``.
         """
         query = {self.name_field: name}
         url = self.api.build_ui_url(self.endpoint, query_params=query)
-        response = self.api.make_request("GET", url)
+        try:
+            response = self.api.make_request("GET", url)
+        except AHAPIModuleError as e:
+            if exit_on_error:
+                self.api.fail_json(msg="GET error: {error}".format(error=e))
+            else:
+                raise
+
         if response["status_code"] != 200:
             error_msg = self.api.extract_error_msg(response)
             if error_msg:
@@ -175,12 +191,17 @@ class AHUIObject(object):
                 )
             else:
                 fail_msg = "Unable to get {object_type} {name}: {code}".format(object_type=self.object_type, name=name, code=response["status_code"])
-            self.api.fail_json(msg=fail_msg)
+            if exit_on_error:
+                self.api.fail_json(msg=fail_msg)
+            else:
+                raise AHAPIModuleError(fail_msg)
 
         if "meta" not in response["json"] or "count" not in response["json"]["meta"] or "data" not in response["json"]:
-            self.api.fail_json(
-                msg="Unable to get {object_type} {name}: the endpoint did not provide count and results".format(object_type=self.object_type, name=name)
-            )
+            fail_msg = "Unable to get {object_type} {name}: the endpoint did not provide count and results".format(object_type=self.object_type, name=name)
+            if exit_on_error:
+                self.api.fail_json(msg=fail_msg)
+            else:
+                raise AHAPIModuleError(fail_msg)
 
         if response["json"]["meta"]["count"] == 0:
             self.data = {}
@@ -224,7 +245,10 @@ class AHUIObject(object):
             return
 
         url = self.api.build_ui_url(self.id_endpoint)
-        response = self.api.make_request("DELETE", url)
+        try:
+            response = self.api.make_request("DELETE", url)
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Delete error: {error}".format(error=e))
 
         if response["status_code"] in [202, 204]:
             if auto_exit:
@@ -262,7 +286,10 @@ class AHUIObject(object):
             return True
 
         url = self.api.build_ui_url(self.endpoint)
-        response = self.api.make_request("POST", url, data=new_item)
+        try:
+            response = self.api.make_request("POST", url, data=new_item)
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Create error: {error}".format(error=e))
 
         if response["status_code"] in [200, 201]:
             self.exists = True
@@ -317,7 +344,10 @@ class AHUIObject(object):
             return True
 
         url = self.api.build_ui_url(self.id_endpoint)
-        response = self.api.make_request("PUT", url, data=new_item)
+        try:
+            response = self.api.make_request("PUT", url, data=new_item)
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Update error: {error}".format(error=e))
 
         if response["status_code"] == 200:
             self.exists = True
@@ -540,7 +570,11 @@ class AHUIGroup(AHUIObject):
             return
 
         url = self.api.build_ui_url(AHUIGroupPerm.perm_endpoint(self.id), query_params={"limit": 100})
-        response = self.api.make_request("GET", url)
+        try:
+            response = self.api.make_request("GET", url)
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Getting permissions error: {error}".format(error=e))
+
         if response["status_code"] != 200:
             error_msg = self.api.extract_error_msg(response)
             if error_msg:
@@ -679,7 +713,7 @@ class AHUIEENamespace(AHUIObject):
     Execution Environment namespaces are managed through the Pulp API for
     creation and deletion, and through the UI API for assigning groups and
     permission.
-    Altough the UI API and the web UI cannot create nor delete namespaces, the
+    Although the UI API and the web UI cannot create nor delete namespaces, the
     module provides that feature.
     Normally, a namespace is automatically created when an image is pushed by
     using ``podman push``.
@@ -775,7 +809,7 @@ class AHUIEENamespace(AHUIObject):
                     return True
         return False
 
-    def update_groups(self, new_item, auto_exit=True):
+    def update_groups(self, new_item, auto_exit=True, exit_on_error=True):
         """Update the existing object in private automation hub.
 
         :param new_item: The data to pass to the API call. This provides the
@@ -783,6 +817,13 @@ class AHUIEENamespace(AHUIObject):
         :type new_item: dict
         :param auto_exit: Exit the module when the API call is done.
         :type auto_exit: bool
+        :param exit_on_error: If ``True`` (the default), exit the module on API
+                              error. Otherwise, raise the
+                              :py:class:``AHAPIModuleError`` exception.
+        :type exit_on_error: bool
+
+        :raises AHAPIModuleError: An API error occured. That exception is only
+                                  raised when ``exit_on_error`` is ``False``.
 
         :return: Do not return if ``auto_exit`` is ``True``. Otherwise, return
                  ``True`` if object has been updated (change state) or ``False``
@@ -808,7 +849,13 @@ class AHUIEENamespace(AHUIObject):
             return True
 
         url = self.api.build_ui_url(self.id_endpoint)
-        response = self.api.make_request("PUT", url, data=new_item)
+        try:
+            response = self.api.make_request("PUT", url, data=new_item)
+        except AHAPIModuleError as e:
+            if exit_on_error:
+                self.api.fail_json(msg="Updating groups error: {error}".format(error=e))
+            else:
+                raise
 
         if response["status_code"] == 200:
             self.exists = True
@@ -823,8 +870,13 @@ class AHUIEENamespace(AHUIObject):
 
         error_msg = self.api.extract_error_msg(response)
         if error_msg:
-            self.fail_json(msg="Unable to update {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg))
-        self.fail_json(msg="Unable to update {object_type} {name}: {code}".format(object_type=self.object_type, name=self.name, code=response["status_code"]))
+            fail_msg = "Unable to update {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg)
+        else:
+            fail_msg = "Unable to update {object_type} {name}: {code}".format(object_type=self.object_type, name=self.name, code=response["status_code"])
+        if exit_on_error:
+            self.api.fail_json(msg=fail_msg)
+        else:
+            raise AHAPIModuleError(fail_msg)
 
 
 class AHUIEERepository(AHUIObject):
@@ -930,7 +982,11 @@ class AHUIEERepository(AHUIObject):
             return ""
 
         url = self.api.build_ui_url("{endpoint}/_content/readme".format(endpoint=self.id_endpoint))
-        response = self.api.make_request("GET", url)
+        try:
+            response = self.api.make_request("GET", url)
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Error while getting the README: {error}".format(error=e))
+
         if response["status_code"] == 200:
             return response["json"]["text"] if "text" in response["json"] else ""
         error_msg = self.api.extract_error_msg(response)
@@ -972,7 +1028,10 @@ class AHUIEERepository(AHUIObject):
             return True
 
         url = self.api.build_ui_url("{endpoint}/_content/readme".format(endpoint=self.id_endpoint))
-        response = self.api.make_request("PUT", url, data={"text": readme})
+        try:
+            response = self.api.make_request("PUT", url, data={"text": readme})
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Unable to update the README: {error}".format(error=e))
 
         if response["status_code"] == 200:
             if auto_exit:
@@ -1087,7 +1146,11 @@ class AHUIEEImage(AHUIObject):
         self.image_name = name
         self.tag = tag
         url = self.api.build_ui_url(self.id_endpoint, query_params={"limit": 1000})
-        response = self.api.make_request("GET", url)
+        try:
+            response = self.api.make_request("GET", url)
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Unable to get tag: {error}".format(error=e))
+
         if response["status_code"] != 200:
             error_msg = self.api.extract_error_msg(response)
             if error_msg:
