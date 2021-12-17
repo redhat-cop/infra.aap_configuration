@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Removes json_query which is not in a RH Certified collection so does not receive support and replaced with native ansible filters
-...

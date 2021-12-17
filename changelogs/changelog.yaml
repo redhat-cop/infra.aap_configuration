@@ -190,3 +190,30 @@ releases:
     - bug-224.yml
     - playbook.yml
     release_date: '2021-09-01'
+  2.1.0:
+    changes:
+      bugfixes:
+      - Fixed readme's to point in right direction for workflows and the export model
+        in examples
+      - Moved Example playbooks to the example directory
+      - Removes json_query which is not in a RH Certified collection so does not receive
+        support and replaced with native ansible filters
+      - Updated workflow inventory option to be able to use workflows from the export
+        model.
+      - added default to organization as null on project as it is not required for
+        the module, but it is highly recommended.
+      - added when to skip inventory source update when item is absent
+      - added when to skip project update when item is absent
+      major_changes:
+      - added diff plugin and tests for diff plugin to aid in removal tasks
+      minor_changes:
+      - Added new options for adding manifest to Ansible Controller inc. from a URL
+        and from b64 encoded content
+      - added tests for the project and inventory source skips
+    fragments:
+    - doc_fix.yml
+    - license.yml
+    - removal_tasks.yml
+    - remove_json_query.yml
+    - update_fix.yml
+    release_date: '2021-12-17'

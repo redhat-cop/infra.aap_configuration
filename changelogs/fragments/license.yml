@@ -1,4 +1,0 @@
----
-minor_changes:
-  - Added new options for adding manifest to Ansible Controller inc. from a URL and from b64 encoded content
-...
