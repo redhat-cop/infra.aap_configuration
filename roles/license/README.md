@@ -37,8 +37,13 @@ controller_configuration_license_secure_logging defaults to the value of control
 ### Variables
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`manifest`|""|yes|obj|File path to a Red Hat subscription manifest (a .zip file)|
-|`eula_accepted`|""|yes|bool|Whether to accept the End User License Agreement for Ansible controller|
+|`manifest_file`|""|no|obj|File path to a Red Hat subscription manifest (a .zip file)|
+|`manifest_url`|""|no|obj|URL containing a Red Hat subscription manifest (a .zip file)|
+|`manifest_content`|""|no|obj|Base64 encoded content of Red Hat subscription manifest|
+|`manifest`|""|no|obj|DEPRECATED - changed to `manifest_file` (still works as an alias)|
+|`manifest_username`|""|no|obj|Optional username for access to `manifest_url`|
+|`manifest_password`|""|no|obj|Optional password for access to `manifest_url`|
+|`eula_accepted`|""|yes|bool|DEPRECATED since Tower 3.8 - Whether to accept the End User License Agreement for Ansible controller|
 |`force`|`False`|no|bool|By default, the license manifest will only be applied if controller is currentlyunlicensed or trial licensed.  When force=true, the license is always applied.|
 
 For further details on fields see https://docs.ansible.com/ansible-tower/latest/html/userguide/credential_plugins.html
@@ -49,7 +54,7 @@ For further details on fields see https://docs.ansible.com/ansible-tower/latest/
 ---
 {
     "controller_license": {
-        "data": "{{ lookup('file', '/tmp/my_controller.license') }}",
+        "manifest_file": "/tmp/my_controller.license",
         "force": true
       }
 }
@@ -58,7 +63,9 @@ For further details on fields see https://docs.ansible.com/ansible-tower/latest/
 ```yaml
 ---
 controller_license:
-  data: "{{ lookup('file', '/tmp/my_controller.license') }}"
+  manifest_url: "https://fileserver.internal/controller_license.zip"
+  manifest_username: admin
+  manifest_password: password
   force: false
 ```
 
