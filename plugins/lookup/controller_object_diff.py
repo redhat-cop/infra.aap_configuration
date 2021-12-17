@@ -103,12 +103,12 @@ class LookupModule(LookupBase):
         for item in compare_list:
             for key in keys_to_keep:
                 if key not in item.keys():
-                    self.handle_error(msg="Key: '{0}' missing from item in compare_list".format(key))
+                    self.handle_error(msg="Key: '{0}' missing from item in compare_list item: {1}".format(key, item))
 
         for item in api_list:
             for key in api_keys_to_keep:
                 if key not in item.keys():
-                    self.handle_error(msg="Key: '{0}' missing from item in api_list. Does this object come from the api?".format(key))
+                    self.handle_error(msg="Key: '{0}' missing from item in api_list. Does this object come from the api? item: {1}".format(key, item))
 
         # Reduce list to name and organization
         compare_list_reduced = [{key: item[key] for key in keys_to_keep} for item in compare_list]
