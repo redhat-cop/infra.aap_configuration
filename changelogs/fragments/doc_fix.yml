@@ -1,6 +1,0 @@
----
-bugfixes:
-  - Fixed readme's to point in right direction for workflows and the export model in examples
-  - Moved Example playbooks to the example directory
-  - Updated workflow inventory option to be able to use workflows from the export model.
-...
