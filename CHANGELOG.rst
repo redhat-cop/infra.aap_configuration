@@ -5,6 +5,31 @@ redhat_cop.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v2.1.0
+======
+
+Major Changes
+-------------
+
+- added diff plugin and tests for diff plugin to aid in removal tasks
+
+Minor Changes
+-------------
+
+- Added new options for adding manifest to Ansible Controller inc. from a URL and from b64 encoded content
+- added tests for the project and inventory source skips
+
+Bugfixes
+--------
+
+- Fixed readme's to point in right direction for workflows and the export model in examples
+- Moved Example playbooks to the example directory
+- Removes json_query which is not in a RH Certified collection so does not receive support and replaced with native ansible filters
+- Updated workflow inventory option to be able to use workflows from the export model.
+- added default to organization as null on project as it is not required for the module, but it is highly recommended.
+- added when to skip inventory source update when item is absent
+- added when to skip project update when item is absent
+
 v2.0.0
 ======
 

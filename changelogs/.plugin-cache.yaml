@@ -8,10 +8,14 @@ plugins:
   connection: {}
   httpapi: {}
   inventory: {}
-  lookup: {}
+  lookup:
+    controller_object_diff:
+      description: Return difference for objects from Controller API
+      name: controller_object_diff
+      version_added: null
   module: {}
   netconf: {}
   shell: {}
   strategy: {}
   vars: {}
-version: 2.0.0-1
+version: 2.1.0
