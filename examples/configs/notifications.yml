@@ -20,7 +20,21 @@ controller_notifications:
           job.name }} {  { job.id }} {  {url}}","issuetype": {"id": "1"}}}'
   - name: Email notification
     description: Send out emails for tower jobs
-    organization: Satellite
+    organization: Default
+    notification_type: email
+    notification_configuration:
+      username: ''  # this is required even if there's no username
+      sender: tower0@example.com
+      recipients:
+        - admin@example.com
+      use_tls: false
+      host: smtp.example.com
+      use_ssl: false
+      password: ''  # this is required even if there's no password
+      port: 25
+  - name: Email notification differential
+    description: Send out emails for tower jobs
+    organization: Default
     notification_type: email
     notification_configuration:
       username: ''  # this is required even if there's no username

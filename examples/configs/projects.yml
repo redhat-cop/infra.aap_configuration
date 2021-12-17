@@ -6,14 +6,14 @@ controller_projects:
     scm_branch: master
     scm_clean: true
     description: Test Project 1
-    organization: Satellite
+    organization: Default
     wait: true
     update: true
   - name: Test Project 2
     scm_type: git
-    scm_url: https://github.com/ansible/tower-example.git
+    scm_url: https://github.com/ansible/ansible-examples.git
     description: Test Project 2
-    organization: Satellite
+    organization: Default
   - name: Test Inventory source project
     scm_type: git
     scm_url: https://github.com/ansible/ansible-examples.git
@@ -27,5 +27,6 @@ controller_projects:
     credential: gitlab-personal-access-token for satqe_auto_droid
     wait: false
   - name: Test Project 3
+    organization: Default
     state: absent
 ...
