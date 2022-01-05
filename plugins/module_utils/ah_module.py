@@ -17,6 +17,7 @@ from socket import gethostbyname
 import re
 from json import loads, dumps
 import os
+import time
 import email.mime.multipart
 import email.mime.application
 
@@ -618,12 +619,27 @@ class AHModule(AnsibleModule):
             b_file_data = f.read()
         return to_text(b_file_data)
 
-    def upload(self, path, endpoint, auto_exit=True, item_type="unknown"):
+    def wait_for_complete(self, task_url):
+        endpoint = task_url
+        state = 'running'
+        while state == 'running':
+            response = self.get_endpoint(endpoint)
+            state = response['json']['state']
+            time.sleep(1)
+        self.json_output["state"] = state
+        if state == 'failed':
+            self.fail_json(msg="Upload of collection failed: {0}".format(response["json"]["error"]["description"]))
+        else:
+            self.exit_json(**self.json_output)
+
+    def upload(self, path, endpoint, wait=True, item_type="unknown"):
         ct, body = self.prepare_multipart(path)
         response = self.make_request("POST", endpoint, **{"data": body, "headers": {"Content-Type": str(ct)}, "binary": True, "return_errors_on_404": True})
         if response["status_code"] in [202]:
             self.json_output["path"] = path
             self.json_output["changed"] = True
+            if wait:
+                self.wait_for_complete(response["json"]["task"])
             self.exit_json(**self.json_output)
         else:
             if "json" in response and "__all__" in response["json"]:
