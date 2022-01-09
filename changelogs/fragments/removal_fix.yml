@@ -1,0 +1,4 @@
+minor_changes:
+  - Changed default to omit for several fields for notification templates and inventor sources.
+  - These changes are in line with the modules required fields.
+  - Allows for using the roles for deletion to only use required fields.
