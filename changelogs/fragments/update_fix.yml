@@ -1,8 +1,0 @@
----
-bugfixes:
-  - added when to skip project update when item is absent
-  - added when to skip inventory source update when item is absent
-  - added default to organization as null on project as it is not required for the module, but it is highly recommended.
-minor_changes:
-  - added tests for the project and inventory source skips
-...

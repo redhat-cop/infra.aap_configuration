@@ -98,4 +98,14 @@
       include_role:
         name: workflow_launch
       when: controller_workflow_launch_jobs is defined
+
+    - name: Get the organization ID
+      set_fact:
+        controller_organization_id: "{{ lookup('awx.awx.controller_api', 'organizations', query_params={ 'name': 'Default' } ,host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
+
+    - name: Differential Testing
+      include_tasks: "./tasks/differential.yml"
+      loop: "{{ differential_items }}"
+      loop_control:
+        loop_var: differential_item
 ...

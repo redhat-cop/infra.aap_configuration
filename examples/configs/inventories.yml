@@ -6,7 +6,7 @@ controller_inventories:
     organization: Satellite
   - name: satlab-admin-inventory
     description: Load inventory from satlab-admin hosts file
-    organization: Satellite
+    organization: Default
   - name: RHVM-01
     organization: Satellite
     description: created by Ansible Playbook - for RHVM-01
