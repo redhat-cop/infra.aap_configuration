@@ -15,7 +15,7 @@
   pre_tasks:
     - name: Include vars from controller_configs directory
       include_vars:
-        dir: ./configs
+        dir: ./config
         extensions: ["yml"]
 
   roles:

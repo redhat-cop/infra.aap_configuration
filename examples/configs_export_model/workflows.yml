@@ -91,7 +91,7 @@ controller_workflows:
             type: workflow_job_template
           unified_job_template:
             organization:
-              name: Satellite
+              name: Default
               type: organization
             name: test-template-1
             type: job_template
@@ -140,7 +140,7 @@ controller_workflows:
             type: workflow_job_template
           unified_job_template:
             organization:
-              name: Satellite
+              name: Default
               type: organization
             name: test-template-1
             type: job_template
@@ -173,7 +173,7 @@ controller_workflows:
             type: workflow_job_template
           unified_job_template:
             organization:
-              name: Satellite
+              name: Default
               type: organization
             name: Demo Job Template
             type: job_template
@@ -206,7 +206,7 @@ controller_workflows:
             type: workflow_job_template
           unified_job_template:
             organization:
-              name: Satellite
+              name: Default
               type: organization
             name: Demo Job Template
             type: job_template
@@ -368,7 +368,7 @@ controller_workflows:
             type: workflow_job_template
           unified_job_template:
             organization:
-              name: Satellite
+              name: Default
               type: organization
             name: test-template-1
             type: job_template
