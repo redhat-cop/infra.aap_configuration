@@ -32,6 +32,13 @@ differential_items:
         organization: Default
         credential: gitlab-personal-access-token for satqe_auto_droid
         wait: false
+      - name: Test Project
+        scm_type: git
+        scm_url: https://github.com/ansible/tower-example.git
+        scm_branch: master
+        scm_clean: true
+        description: Test Project 1
+        organization: Default
     expected_test_result:
       - description: Test Project 2
         name: Test Project 2
@@ -50,21 +57,38 @@ differential_items:
         scm_type: git
         scm_url: https://github.com/ansible/ansible-examples.git
         wait: false
-      - name: Demo Project
+      - description: Test Project 1
+        name: Test Project
         organization: Default
-        state: absent
-      - name: Test Project
+        scm_branch: master
+        scm_clean: true
+        scm_type: git
+        scm_url: https://github.com/ansible/tower-example.git
+      - name: Demo Project
         organization: Default
         state: absent
   - name: credentials
     with_present: false
     differential_test_items:
       - name: "cyberark"
-        credential_type: CyberArk AIM Central Credential Provider Lookup
+        credential_type: 19
         organization: Default
     expected_test_result:
       - name: gitlab
         organization: Default
+        credential_type: 2
+        state: absent
+  - name: inventory_sources
+    with_present: false
+    differential_test_items:
+      - name:  RHVM-02
+        organization: Default
+        inventory: 3
+        state: absent
+    expected_test_result:
+      - name: RHVM-01-Default
+        organization: Default
+        inventory: 3
         state: absent
   - name: inventories
     with_present: false
@@ -76,26 +100,6 @@ differential_items:
         organization: Default
         state: absent
       - name: Test Inventory - Smart
-        organization: Default
-        state: absent
-  - name: inventory_sources
-    with_present: false
-    differential_test_items:
-      - name:  RHVM-02
-        organization: Default
-    expected_test_result:
-      - name: RHVM-01-Default
-        organization: Default
-        state: absent
-  - name: labels
-    with_present: false
-    differential_test_items:
-      - name: Prod
-        organization: Default
-      - name: differential2
-        organization: Default
-    expected_test_result:
-      - name: differential
         organization: Default
         state: absent
   - name: teams
