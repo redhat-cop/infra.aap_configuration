@@ -91,9 +91,9 @@ controller_workflows:
             type: workflow_job_template
           unified_job_template:
             organization:
-              name: Default
+              name: Satellite
               type: organization
-            name: test-template-1
+            name: workflow_test_template
             type: job_template
           related:
             credentials: []
@@ -140,9 +140,9 @@ controller_workflows:
             type: workflow_job_template
           unified_job_template:
             organization:
-              name: Default
+              name: Satellite
               type: organization
-            name: test-template-1
+            name: workflow_test_template
             type: job_template
           related:
             credentials: []
@@ -368,9 +368,9 @@ controller_workflows:
             type: workflow_job_template
           unified_job_template:
             organization:
-              name: Default
+              name: Satellite
               type: organization
-            name: test-template-1
+            name: workflow_test_template
             type: job_template
           related:
             credentials: []
