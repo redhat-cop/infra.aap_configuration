@@ -26,6 +26,11 @@ options:
         - Collection artifact file path.
       required: True
       type: str
+    wait
+      description:
+        - Waits for the collection to be uploaded
+      type: bool
+      default: true
 
 extends_documentation_fragment: redhat_cop.ah_configuration.auth
 """
@@ -45,6 +50,7 @@ def main():
     # Any additional arguments that are not fields of the item can be added here
     argument_spec = dict(
         path=dict(required=True),
+        wait=dict(type="bool", default=True),
     )
 
     # Create a module for ourselves
@@ -52,9 +58,9 @@ def main():
 
     # Extract our parameters
     path = module.params.get("path")
+    wait = module.params.get("wait")
 
-    module.upload(path, "artifacts/collections", item_type="collections")
-
+    module.upload(path, "artifacts/collections", wait, item_type="collections")
 
 if __name__ == "__main__":
     main()

@@ -12,7 +12,7 @@
     ah_password: redhat
     ah_path_prefix: galaxy
     ah_validate_certs: false
-    repository: ansible-automation-platform-20-early-access/ee-minimal-rhel8
+    repository: test-namespace/ee-minimal-rhel8
     tag: latest
     fake_image: quay.io/ansible/http-test-container:latest
 
@@ -83,6 +83,60 @@
     - name: Ensure the repository README file it set from a local file
       ah_ee_repository:
         name: "{{ repository }}"
+        readme_file: "{{ tempfile['path'] }}"
+        state: updated
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    # Testing renaming
+    - name: Ensure the repository is renamed
+      ah_ee_repository:
+        name: "{{ repository }}"
+        new_name: test-namespace-rename/image
+        delete_namespace_if_empty: false
+        description: Repository renamed
+        readme: Repository renamed
+        state: updated
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure the repository is renamed in the same namespace
+      ah_ee_repository:
+        name: test-namespace-rename/image
+        new_name: test-namespace-rename/image2
+        description: Repository renamed
+        readme: Repository renamed
+        state: updated
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure the repository is renamed with no explicit namespace name
+      ah_ee_repository:
+        name: test-namespace-rename/image2
+        new_name: test-namespace-image
+        description: Repository renamed
+        readme: Repository renamed
+        state: updated
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
+    - name: Ensure the repository is renamed back to its original name
+      ah_ee_repository:
+        name: test-namespace-image
+        new_name: "{{ repository }}"
+        description: To jest jakiś opis
         readme_file: "{{ tempfile['path'] }}"
         state: updated
         ah_host: "{{ ah_host }}"

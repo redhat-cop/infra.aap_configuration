@@ -8,6 +8,8 @@
 
 from __future__ import absolute_import, division, print_function
 
+from .ah_api_module import AHAPIModuleError
+
 __metaclass__ = type
 
 
@@ -83,7 +85,11 @@ class AHPulpObject(object):
         """
         query = {self.name_field: name}
         url = self.api.build_pulp_url(self.endpoint, query_params=query)
-        response = self.api.make_request("GET", url)
+        try:
+            response = self.api.make_request("GET", url)
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="GET error: {error}".format(error=e))
+
         if response["status_code"] != 200:
             error_msg = self.api.extract_error_msg(response)
             if error_msg:
@@ -122,26 +128,44 @@ class AHPulpObject(object):
             self.data[self.name_field] = name
         self.exists = True
 
-    def delete(self, auto_exit=True):
+    def delete(self, auto_exit=True, exit_on_error=True):
         """Perform a DELETE API call to delete the object.
 
         :param auto_exit: Exit the module when the API call is done.
         :type auto_exit: bool
+        :param exit_on_error: If ``True`` (the default), exit the module on API
+                              error. Otherwise, raise the
+                              :py:class:``AHAPIModuleError`` exception.
+        :type exit_on_error: bool
+
+        :raises AHAPIModuleError: An API error occured. That exception is only
+                                  raised when ``exit_on_error`` is ``False``.
+
+        :return: Do not return if ``auto_exit`` is ``True``. Otherwise, return
+                 ``True`` if object has been deleted (change state) or ``False``
+                 if the object do not need updating (already removed).
+        :rtype: bool
         """
         if not self.exists:
             if auto_exit:
                 self.api.exit_json(changed=False)
-            return
+            return False
 
         if self.api.check_mode:
             if auto_exit:
                 self.api.exit_json(changed=True)
             self.exists = False
             self.data = {}
-            return
+            return True
 
         url = self.api.host_url._replace(path=self.href)
-        response = self.api.make_request("DELETE", url)
+        try:
+            response = self.api.make_request("DELETE", url)
+        except AHAPIModuleError as e:
+            if exit_on_error:
+                self.api.fail_json(msg="Delete error: {error}".format(error=e))
+            else:
+                raise
 
         if response["status_code"] in [202, 204]:
             if auto_exit:
@@ -149,19 +173,22 @@ class AHPulpObject(object):
                 self.api.exit_json(**json_output)
             self.exists = False
             self.data = {}
-            return
+            return True
 
         error_msg = self.api.extract_error_msg(response)
         if error_msg:
-            self.api.fail_json(msg="Unable to delete {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg))
-        self.api.fail_json(
-            msg="Unable to delete {object_type} {name}: {code}".format(object_type=self.object_type, name=self.name, code=response["status_code"])
-        )
+            fail_msg = "Unable to delete {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg)
+        else:
+            fail_msg = "Unable to delete {object_type} {name}: {code}".format(object_type=self.object_type, name=self.name, code=response["status_code"])
+        if exit_on_error:
+            self.api.fail_json(msg=fail_msg)
+        else:
+            raise AHAPIModuleError(fail_msg)
 
     def create(self, new_item, auto_exit=True):
         """Perform an POST API call to create a new object.
 
-        :param new_item: Tha data to pass to the API call. This provides the
+        :param new_item: The data to pass to the API call. This provides the
                          object details ({"name": "test123"} for example)
         :type new_item: dict
         :param auto_exit: Exit the module when the API call is done.
@@ -179,7 +206,10 @@ class AHPulpObject(object):
             return True
 
         url = self.api.build_pulp_url(self.endpoint)
-        response = self.api.make_request("POST", url, data=new_item)
+        try:
+            response = self.api.make_request("POST", url, data=new_item)
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Create error: {error}".format(error=e))
 
         if response["status_code"] in [200, 201]:
             self.exists = True
@@ -249,7 +279,10 @@ class AHPulpObject(object):
             return True
 
         url = self.api.host_url._replace(path=self.href)
-        response = self.api.make_request("PUT", url, data=new_item)
+        try:
+            response = self.api.make_request("PUT", url, data=new_item)
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Update error: {error}".format(error=e))
 
         if response["status_code"] in [200, 202, 204]:
             self.exists = True
@@ -360,6 +393,60 @@ class AHPulpEERepository(AHPulpObject):
             return self.data["repository"]
         return ""
 
+    @classmethod
+    def get_repositories_in_namespace(cls, API_object, namespace_name, exit_on_error=True):
+        """Return all the repositories in a namespace.
+
+        :param API_object: A :py:class:``ah_api_module.AHAPIModule`` object.
+        :type API_object: :py:class:``ah_api_module.AHAPIModule``
+        :param namespace_name: The name of the namespace to search.
+        :param exit_on_error: If ``True`` (the default), exit the module on API
+                              error. Otherwise, raise the
+                              :py:class:``AHAPIModuleError`` exception.
+        :type exit_on_error: bool
+
+        :raises AHAPIModuleError: An API error occured. That exception is only
+                                  raised when ``exit_on_error`` is ``False``.
+
+        :return: A list of :py:class:``AHPulpEERepository`` objects.
+        """
+        tmp_obj = cls(API_object)
+
+        query = {"namespace__name": namespace_name}
+        url = tmp_obj.api.build_pulp_url(tmp_obj.endpoint, query_params=query)
+        try:
+            response = tmp_obj.api.make_request("GET", url)
+        except AHAPIModuleError as e:
+            if exit_on_error:
+                tmp_obj.api.fail_json(msg="GET error: {error}".format(error=e))
+            else:
+                raise
+
+        if response["status_code"] != 200:
+            error_msg = tmp_obj.api.extract_error_msg(response)
+            if error_msg:
+                fail_msg = "Unable to get repositories in namespace {name}: {code}: {error}".format(
+                    name=namespace_name, code=response["status_code"], error=error_msg
+                )
+            else:
+                fail_msg = "Unable to get repositories in namespace {name}: {code}".format(name=namespace_name, code=response["status_code"])
+            if exit_on_error:
+                tmp_obj.api.fail_json(msg=fail_msg)
+            else:
+                raise AHAPIModuleError(fail_msg)
+
+        if "count" not in response["json"] or "results" not in response["json"]:
+            fail_msg = "Unable to get repositories in namespace {name}: the endpoint did not provide count and results".format(name=namespace_name)
+            if exit_on_error:
+                tmp_obj.api.fail_json(msg=fail_msg)
+            else:
+                raise AHAPIModuleError(fail_msg)
+
+        repo_list = []
+        for repo in response["json"]["results"]:
+            repo_list.append(cls(API_object, repo))
+        return repo_list
+
     def delete_image(self, digest, auto_exit=True):
         """Perform a POST API call to delete the image with the given digest.
 
@@ -381,7 +468,10 @@ class AHPulpEERepository(AHPulpObject):
             return
 
         url = self.api.host_url._replace(path="{endpoint}remove_image/".format(endpoint=self.repository_endpoint))
-        response = self.api.make_request("POST", url, data={"digest": digest})
+        try:
+            response = self.api.make_request("POST", url, data={"digest": digest})
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Delete error: {error}".format(error=e))
 
         if response["status_code"] in [202, 204]:
             if auto_exit:
@@ -429,7 +519,10 @@ class AHPulpEERepository(AHPulpObject):
             return True
 
         url = self.api.host_url._replace(path="{endpoint}untag/".format(endpoint=self.repository_endpoint))
-        response = self.api.make_request("POST", url, data={"digest": digest, "tag": tag})
+        try:
+            response = self.api.make_request("POST", url, data={"digest": digest, "tag": tag})
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Untag error: {error}".format(error=e))
 
         if response["status_code"] in [202, 204]:
             if auto_exit:
@@ -483,7 +576,10 @@ class AHPulpEERepository(AHPulpObject):
             return True
 
         url = self.api.host_url._replace(path="{endpoint}tag/".format(endpoint=self.repository_endpoint))
-        response = self.api.make_request("POST", url, data={"digest": digest, "tag": tag})
+        try:
+            response = self.api.make_request("POST", url, data={"digest": digest, "tag": tag})
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Tag error: {error}".format(error=e))
 
         if response["status_code"] in [202, 204]:
             if auto_exit:
