@@ -100,6 +100,14 @@ class LookupModule(LookupBase):
         keys_to_keep = ["name", "organization"]
         api_keys_to_keep = ["name", "summary_fields"]
 
+        # Depending on type, keep additional keys
+        if api_list[0]["type"] == "credential":
+            keys_to_keep.append("credential_type")
+            api_keys_to_keep.append("credential_type")
+        if api_list[0]["type"] == "inventory_source":
+            keys_to_keep.append("inventory")
+            api_keys_to_keep.append("inventory")
+
         for item in compare_list:
             for key in keys_to_keep:
                 if key not in item.keys():

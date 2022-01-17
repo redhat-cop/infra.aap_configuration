@@ -26,4 +26,17 @@ controller_inventories:
         type: organization
       name: Testing Inventory
       type: inventory
+  - name: satlab-admin-inventory
+    description: Load inventory from satlab-admin hosts file
+    kind: ''
+    host_filter: null
+    organization:
+      name: Default
+      type: organization
+    natural_key:
+      organization:
+        name: Default
+        type: organization
+      name: satlab-admin-inventory
+      type: inventory
 ...
