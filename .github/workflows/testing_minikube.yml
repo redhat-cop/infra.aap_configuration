@@ -8,11 +8,18 @@ jobs:
     name: Deploy Tower to Minikube and run tests
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout awx operator
+        uses: actions/checkout@v2
+        with:
+          repository: ansible/awx-operator
+
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          path: controller_configuration
 
       - name: "Install dependencies"
-        run: pip install -r .github/requirements.txt
+        run: pip install -r controller_configuration/.github/requirements.txt
 
       - name: Setup Minikube
         uses: manusa/actions-setup-minikube@v2.4.2
@@ -21,21 +28,19 @@ jobs:
           kubernetes version: 'v1.20.7'
           start args: '--addons=ingress'
 
-      - name: Start AWX operator
-        run: minikube kubectl -- apply -f https://raw.githubusercontent.com/ansible/awx-operator/0.12.0/deploy/awx-operator.yaml
-
       - name: Wait / Sleep
         uses: jakejarvis/wait-action@v0.1.0
         with:
           time: '20s'
 
-      - name: Deploy AWX
+      - name: Setup awx operator
         run: |
           minikube kubectl get deployments
-          minikube kubectl apply -- -f .github/workflow-config/kube/namespace.yml
           minikube kubectl create secret generic awx-admin-password -- --from-literal=password=password
           minikube addons enable ingress
-          minikube kubectl apply -- -f .github/workflow-config/kube/awx_def.yml --wait
+          alias kubectl="minikube kubectl --"
+          make deploy NAMESPACE=default
+          kubectl apply -f controller_configuration/.github/workflow-config/kube/awx_def.yml
 
       - name: Wait / Sleep
         uses: jakejarvis/wait-action@v0.1.0
@@ -63,14 +68,11 @@ jobs:
       - name: Display Versions
         run: which python && pip --version && ansible --version
 
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: "Install Galaxy dependencies"
         run: ansible-galaxy collection install -r .github/collections/requirements.yml
-
-      - name: Check logs
-        run: minikube kubectl logs deployment/awx-operator
-
-      - name: Check Resources
-        run: minikube kubectl describe nodes | grep "Allocated resources" -A 9
 
       - name: Check service password
         run: echo "Service password is ${{ steps.service-password.outputs.SERVICEPASSWORD }}"
