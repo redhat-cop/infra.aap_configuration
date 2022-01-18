@@ -1,19 +1,19 @@
 ---
 repos:
   - repo: 'https://github.com/pre-commit/pre-commit-hooks'
-    rev: v4.0.1
+    rev: v4.1.0
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: 'https://github.com/adrienverge/yamllint.git'
-    rev: v1.26.1
+    rev: v1.26.3
     hooks:
       - id: yamllint
         entry: yamllint -c .github/workflow-config/.yamllint.yml
         types:
           - yaml
   - repo: 'https://github.com/ansible-community/ansible-lint.git'
-    rev: v5.0.12
+    rev: v5.3.2
     hooks:
       # see discussions here about what arguments are used, and behavior
       # https://github.com/ansible/ansible-lint/issues/649
@@ -34,7 +34,7 @@ repos:
         args: [--config=.github/workflow-config/black.cfg, --check, --diff]
         types: [python]
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.8.4
+    rev: 4.0.1
     hooks:
       - id: flake8
         name: flake8

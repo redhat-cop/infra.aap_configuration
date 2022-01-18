@@ -621,13 +621,13 @@ class AHModule(AnsibleModule):
 
     def wait_for_complete(self, task_url):
         endpoint = task_url
-        state = 'running'
-        while state == 'running':
+        state = "running"
+        while state == "running":
             response = self.get_endpoint(endpoint)
-            state = response['json']['state']
+            state = response["json"]["state"]
             time.sleep(1)
         self.json_output["state"] = state
-        if state == 'failed':
+        if state == "failed":
             self.fail_json(msg="Upload of collection failed: {0}".format(response["json"]["error"]["description"]))
         else:
             self.exit_json(**self.json_output)

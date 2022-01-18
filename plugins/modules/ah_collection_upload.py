@@ -62,5 +62,6 @@ def main():
 
     module.upload(path, "artifacts/collections", wait, item_type="collections")
 
+
 if __name__ == "__main__":
     main()
