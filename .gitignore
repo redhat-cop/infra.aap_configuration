@@ -2,7 +2,6 @@ collections/*
 !collections/requirements.yml
 /galaxy.yml
 /*.tar.gz
-.pre-commit-config.yaml
 temp_test_module.yml
 test_playbook.yml
 test/
