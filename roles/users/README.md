@@ -38,7 +38,8 @@ The role defaults to False as normally the add user task does not include sensit
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`username`|""|yes|str|The username of the user|
-|`password`|""|yes|str|The password of the user|
+|`password`|""|no|str|The password of the user|
+|`controller_user_default_password`|""|no|str|Global variable to set the password for all users.|
 |`email`|""|yes|str|The email of the user|
 |`first_name`|""|no|str|The first name of the user|
 |`last_name`|""|no|str|The last name of the user|

@@ -99,6 +99,20 @@
         name: workflow_launch
       when: controller_workflow_launch_jobs is defined
 
+    - debug:
+        var: launched_controller_workflows
+
+    - name: Wait for workflow to finish
+      job_wait:
+        job_id: "{{ launched_controller_workflows.results[0].id }}"
+        job_type: workflow_jobs
+        timeout: 180
+        controller_username:     "{{ controller_username }}"
+        controller_password:     "{{ controller_password }}"
+        controller_host:         "{{ controller_hostname }}"
+        validate_certs:          "{{ controller_validate_certs }}"
+      ignore_errors: true
+
     - name: Get the organization ID
       set_fact:
         controller_organization_id: "{{ lookup('awx.awx.controller_api', 'organizations', query_params={ 'name': 'Default' } ,host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
