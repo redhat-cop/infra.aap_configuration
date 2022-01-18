@@ -36,6 +36,13 @@ options:
       - Include items in the original compare list in the output, and set state: present
     type: boolean
     default: True
+  warn_on_empty_api:
+    description:
+      - If the API list is empty, issue an ansible warning and return the empty list.
+      - This allows the module to be idempotent.
+      - Setting to false will make the lookup error and fail when there is an empty list.
+    type: boolean
+    default: True
 """
 
 EXAMPLES = """
@@ -75,7 +82,7 @@ _raw:
 """
 
 from ansible.plugins.lookup import LookupBase
-from ansible.errors import AnsibleError
+from ansible.errors import AnsibleError, AnsibleLookupError
 from ansible.module_utils._text import to_native
 from ansible.utils.display import Display
 
@@ -95,6 +102,13 @@ class LookupModule(LookupBase):
         # Set Variables for user input
         api_list = self.get_option("api_list")
         compare_list = self.get_option("compare_list")
+        warn_on_empty_api = self.get_option("warn_on_empty_api")
+        if not api_list:
+            if warn_on_empty_api:
+                self._display.warning("Skipping, did not find items in api_list")
+            else:
+                raise AnsibleLookupError("Unable to find items in api_list")
+            return [api_list]
 
         # Set Keys to keep for each list.
         keys_to_keep = ["name", "organization"]
