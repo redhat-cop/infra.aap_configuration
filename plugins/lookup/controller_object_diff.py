@@ -105,9 +105,9 @@ class LookupModule(LookupBase):
         warn_on_empty_api = self.get_option("warn_on_empty_api")
         if not api_list:
             if warn_on_empty_api:
-                self._display.warning('Skipping, did not find items in api_list')
+                self._display.warning("Skipping, did not find items in api_list")
             else:
-                raise AnsibleLookupError('Unable to find items in api_list')
+                raise AnsibleLookupError("Unable to find items in api_list")
             return [api_list]
 
         # Set Keys to keep for each list.

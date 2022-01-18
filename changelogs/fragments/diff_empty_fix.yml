@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - warn on default if the api list fed to controller_object_diff lookup is empty
+...
