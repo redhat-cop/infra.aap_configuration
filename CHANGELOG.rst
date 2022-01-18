@@ -5,6 +5,21 @@ redhat_cop.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v2.1.1
+======
+
+Minor Changes
+-------------
+
+- Allows for using the roles for deletion to only use required fields.
+- Changed default to omit for several fields for notification templates and inventor sources.
+- These changes are in line with the modules required fields.
+
+Bugfixes
+--------
+
+- warn on default if the api list fed to controller_object_diff lookup is empty
+
 v2.1.0
 ======
 
