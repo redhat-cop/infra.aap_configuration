@@ -1,7 +1,7 @@
 # Red Hat Communties of Practice Controller Configuration Collection
 
-![Ansible Lint](https://github.com/redhat-cop/controller_configuration/workflows/Ansible%20Lint/badge.svg)
-![Galaxy Release](https://github.com/redhat-cop/controller_configuration/workflows/galaxy-release/badge.svg)
+![Ansible Lint](https://github.com/redhat-cop/tower_configuration/workflows/Ansible%20Lint/badge.svg)
+![Galaxy Release](https://github.com/redhat-cop/tower_configuration/workflows/galaxy-release/badge.svg)
 <!-- Further CI badges go here as above -->
 
 This Ansible collection allows for easy interaction with an AWX or Ansible Controller server via Ansible roles using the AWX/Controller collection modules.
@@ -124,8 +124,8 @@ Adding the ability to use direct output from the awx export command in the roles
 
 ## Contributing to this collection
 
-We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [Controller Configuration collection repository](https://github.com/redhat-cop/controller_configuration).
-More information about contributing can be found in our [Contribution Guidelines.](https://github.com/redhat-cop/controller_configuration/blob/devel/.github/CONTRIBUTING.md)
+We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [Controller Configuration collection repository](https://github.com/redhat-cop/tower_configuration).
+More information about contributing can be found in our [Contribution Guidelines.](https://github.com/redhat-cop/tower_configuration/blob/devel/.github/CONTRIBUTING.md)
 
 ## Licensing
 
