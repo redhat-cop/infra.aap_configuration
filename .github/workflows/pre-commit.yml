@@ -16,7 +16,7 @@ jobs:
         run: |
           sudo apt install software-properties-common
           sudo apt-add-repository --yes --update ppa:ansible/ansible
-          pip install -Iv ansible==2.10.5
+          pip install -Iv ansible
           cp .github/workflow-config/galaxy.yml galaxy.yml
           ansible-config view -vvv
   #        ansible-galaxy collection build
@@ -24,6 +24,6 @@ jobs:
       - name: Run pre-commit
         # cp needed to load config properly https://github.com/pre-commit/action/issues/44
         run: |
-          sudo cp .github/workflow-config/.pre-commit-config.yml .pre-commit-config.yaml
-      - uses: pre-commit/action@v2.0.0
+          sudo cp .github/workflow-config/.pre-commit-config.yaml .pre-commit-config.yaml
+      - uses: pre-commit/action@v2.0.3
 ...
