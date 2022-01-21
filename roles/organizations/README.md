@@ -55,7 +55,6 @@ This role accepts two data models. A simple straightforward easy to maintain mod
 ### Standard Organization Data Structure model
 #### Json Example
 ```json
----
 {
     "controller_organizations": [
       {

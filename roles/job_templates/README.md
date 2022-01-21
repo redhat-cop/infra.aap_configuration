@@ -104,12 +104,11 @@ Refer to the [controller Api Guide](https://docs.ansible.com/ansible-tower/lates
 |`min`|Minimum value for a number type|
 |`max`|Maximum value for a number type|
 |`choices`|List of choices for a "multi" type|
-|`new_question`|Boolean???|
+|`new_question`|Boolean|
 
 ### Standard Project Data Structure
 #### Json Example
 ```json
----
 {
     "controller_templates": [
         {

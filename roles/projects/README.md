@@ -66,7 +66,6 @@ controller_configuration_projects_secure_logging defaults to the value of contro
 ### Standard Project Data Structure
 #### Json Example
 ```json
----
 {
     "controller_projects": [
       {
