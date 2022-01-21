@@ -68,7 +68,6 @@ controller_configuration_inventory_sources_secure_logging defaults to the value 
 ### Standard Inventory Source Data Structure
 #### Json Example
 ```json
----
 {
   "controller_inventory_sources": [
     {

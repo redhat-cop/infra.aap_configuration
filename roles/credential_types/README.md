@@ -94,7 +94,6 @@ required:
 ### Standard Organization Data Structure
 #### Json Example
 ```json
----
 {
     "controller_credential_types": [
       {
