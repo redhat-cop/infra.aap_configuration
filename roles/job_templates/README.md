@@ -109,7 +109,6 @@ Refer to the [controller Api Guide](https://docs.ansible.com/ansible-tower/lates
 ### Standard Project Data Structure
 #### Json Example
 ```json
----
 {
     "controller_templates": [
         {

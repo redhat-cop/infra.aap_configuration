@@ -53,7 +53,6 @@ controller_configuration_applications_secure_logging defaults to the value of co
 ### Standard Project Data Structure
 #### Json Example
 ```json
----
  {
     "controller_applications": [
       {

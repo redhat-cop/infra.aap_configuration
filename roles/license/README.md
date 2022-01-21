@@ -51,7 +51,6 @@ For further details on fields see https://docs.ansible.com/ansible-tower/latest/
 ### Standard Project Data Structure
 #### Json Example
 ```json
----
 {
     "controller_license": {
         "manifest_file": "/tmp/my_controller.license",
