@@ -26,5 +26,5 @@ controller_user_accounts: []
 # set this variable to something false and there won't be a default password
 controller_user_default_password: "change_me"
 
-controller_configuration_users_secure_logging: "{{controller_configuration_secure_logging | default('false')}}"
+controller_configuration_users_secure_logging: "{{controller_configuration_secure_logging | default('true')}}"
 ...
