@@ -48,7 +48,8 @@ controller_configuration_*******_secure_logging defaults to the value of control
 ### Standard Project Data Structure
 #### Json Example
 ```json
----
+{
+}
 
 ```
 #### Yaml Example

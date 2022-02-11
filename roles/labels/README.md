@@ -44,7 +44,6 @@ controller_configuration_labels_secure_logging defaults to the value of controll
 ### Standard Label Data Structure
 #### Json Example
 ```json
----
 {
   "controller_labels": [
     {

@@ -67,7 +67,6 @@ The role will strip the double space between the curly bracket in order to provi
 ### Standard Inventory Data Structure
 #### Json Example
 ```json
----
 {
   "controller_inventories": [
     {
