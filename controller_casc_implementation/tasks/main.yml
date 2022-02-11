@@ -1,0 +1,16 @@
+---
+# tasks file for controller_casc_implementation
+- name: Include Tasks to config Organizations
+  include_tasks: organizations.yml
+  args:
+    apply:
+      tags: organizations
+  tags: organizations
+
+- name: Include Tasks to config Credentials
+  include_tasks: credentials.yml
+  args:
+    apply:
+      tags: credentials
+  tags: credentials
+...

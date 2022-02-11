@@ -1,0 +1,45 @@
+---
+- name: "DESIRED STATE: configure_controller_organizations"
+  include_vars:
+    file: "{{ item }}"
+  loop:
+    - "{{ dir_orgs_vars }}/env/common/configure_controller_organizations.yml"
+  when: dir_orgs_vars is defined
+
+- name: Get the 'test' organization ID
+  set_fact:
+    #controller_organization_id: "{{ lookup('awx.awx.controller_api', 'organizations', query_params={ 'name': 'test' }, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
+    controller_api_organizations: "{{ lookup('ansible.controller.controller_api', 'organizations', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
+- debug:
+    msg: "{{ item }}"
+  loop:
+    - "{{ controller_api_organizations }}"
+
+#- name: "Get the API list of all Projects and Inventories in the 'test' Organization"
+#  set_fact:
+#    controller_api_projects: "{{ query('awx.awx.controller_api', 'projects', query_params={ 'organization':
+#      controller_organization_id.id } ,host=controller_hostname, username=controller_username,
+#      password=controller_password, verify_ssl=false) }}"
+#    controller_api_inventories: "{{ query('awx.awx.controller_api', 'inventories', query_params={ 'organization':
+#      controller_organization_id.id } ,host=controller_hostname, username=controller_username,
+#      password=controller_password, verify_ssl=false) }}"
+#
+- name: "Find the difference of Project between what is on the Controller versus curated list."
+  set_fact:
+#    project_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
+#      api_list=controller_api_projects, compare_list=controller_projects,
+#      with_present=true, set_absent=true ) }}"
+#    inventory_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
+#      api_list=controller_api_inventories, compare_list=controller_inventories,
+#      with_present=true, set_absent=true ) }}"
+    organizations_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
+      api_list=controller_api_organizations, compare_list=controller_organizations,
+      with_present=true, set_absent=true ) }}"
+#
+- debug:
+    var: "{{ item }}"
+  loop:
+      - organizations_difference
+#      - project_difference
+#      - inventory_difference
+

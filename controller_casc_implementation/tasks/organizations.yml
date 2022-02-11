@@ -1,0 +1,12 @@
+---
+- name: Include Organizations list
+  include_vars:
+    file: "{{ item }}"
+  loop:
+    - "{{ dir_orgs_vars }}/env/common/configure_controller_organizations.yml"
+  when: dir_orgs_vars is defined
+
+- name: "Configure Controller Organizations"
+  import_role:
+    name: redhat_cop.controller_configuration.organizations
+...

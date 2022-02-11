@@ -1,0 +1,19 @@
+---
+# tasks file for controller_casc_desired_state
+- name: Include Tasks to config DESIRED STATE credentials
+  include_tasks: credentials_desired_state.yml
+  args:
+    apply:
+      tags: desired_state_credentials
+  tags:
+    - desired_state
+    - desired_state_credentials
+
+- name: Include Tasks to config DESIRED STATE Organizations
+  include_tasks: organizations_desired_state.yml
+  args:
+    apply:
+      tags: desired_state_organizations
+  tags:
+    - desired_state
+    - desired_state_organizations
