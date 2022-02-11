@@ -66,7 +66,6 @@ The role will strip the double space between the curly bracket in order to provi
 ### Standard Organization Data Structure
 #### Json Example
 ```json
----
 {
     "controller_groups": [
       {

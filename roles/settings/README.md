@@ -45,7 +45,6 @@ There are two choices for entering settings. Either provide as a single dict und
 ### Standard Setting Data Structure - as a dict
 #### Json Example
 ```json
----
 {
   "controller_settings": {
     "settings": {
@@ -69,7 +68,6 @@ controller_settings:
 ### Standard Setting Data Structure - as a list
 #### Json Example
 ```json
----
 {
   "controller_settings": [
     {

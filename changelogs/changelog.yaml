@@ -217,3 +217,16 @@ releases:
     - remove_json_query.yml
     - update_fix.yml
     release_date: '2021-12-17'
+  2.1.1:
+    changes:
+      bugfixes:
+      - warn on default if the api list fed to controller_object_diff lookup is empty
+      minor_changes:
+      - Allows for using the roles for deletion to only use required fields.
+      - Changed default to omit for several fields for notification templates and
+        inventor sources.
+      - These changes are in line with the modules required fields.
+    fragments:
+    - diff_empty_fix.yml
+    - removal_fix.yml
+    release_date: '2022-01-18'
