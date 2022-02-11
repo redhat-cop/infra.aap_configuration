@@ -132,7 +132,7 @@ controller_organizations:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.license, when: controller_license is defined}
+    - {role: redhat_cop.controller_configuration.organizations, when: controller_organizations is defined}
 ```
 ## License
 [MIT](LICENSE)
