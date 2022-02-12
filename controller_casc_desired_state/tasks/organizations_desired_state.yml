@@ -12,7 +12,7 @@
 
 - name: "DESIRED STATE: Find the difference of Organizations between what is on the Controller versus curated list."
   set_fact:
-    __organizations_difference: "{{ lookup('redhat_cop.controller_casc.controller_object_diff_tem',
+    __organizations_difference: "{{ lookup('redhat_cop.controller_casc.controller_object_diff_temp',
       api_list=__controller_api_organizations, compare_list=controller_organizations,
       with_present=true, set_absent=true ) }}"
 
