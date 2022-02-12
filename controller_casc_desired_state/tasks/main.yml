@@ -1,5 +1,12 @@
 ---
 # tasks file for controller_casc_desired_state
+- name: Include Tasks to configure Controller Inventories
+  include_tasks: inventories_desired_state.yml
+  args:
+    apply:
+      tags: inventories_desired_state
+  tags: inventories_desired_state
+
 - name: Include Tasks to config DESIRED STATE Projects
   block:
     - name: Get all organizations name from API

@@ -24,7 +24,7 @@
 - set_fact:
     controller_organizations: "{{ __organizations_difference }}"
 
-- name: Configure Controller Projects | Launch project creation
+- name: "DESIRED STATE: Configure Controller Projects | Launch project creation"
   import_role:
     name: redhat_cop.controller_configuration.organizations
 ...
