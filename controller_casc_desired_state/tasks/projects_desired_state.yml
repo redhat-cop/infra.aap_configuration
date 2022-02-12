@@ -8,24 +8,24 @@
 
 - name: "DESIRED STATE: Get the organization's Name"
   set_fact:
-    controller_organization_id: "{{ lookup('ansible.controller.controller_api', 'organizations', query_params={ 'name': __controller_organizations_name_item },
+    __controller_organization_id: "{{ lookup('ansible.controller.controller_api', 'organizations', query_params={ 'name': __controller_organizations_name_item },
       host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
 
 - name: "Get the API list of all Projects and Inventories in the 'test' Organization"
   set_fact:
-    controller_api_projects: "{{ query('ansible.controller.controller_api', 'projects', query_params={ 'organization':
-      controller_organization_id.id } ,host=controller_hostname, username=controller_username,
+    __controller_api_projects: "{{ query('ansible.controller.controller_api', 'projects', query_params={ 'organization':
+      __controller_organization_id.id } ,host=controller_hostname, username=controller_username,
       password=controller_password, verify_ssl=false) }}"
 
 - debug:
     var: "{{ item }}"
   loop:
-      - controller_api_projects
+      - __controller_api_projects
 
 - name: "DESIRED STATE: Find the difference of Project between what is on the Controller versus CasC on SCM"
   set_fact:
-    project_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
-      api_list=controller_api_projects, compare_list=controller_projects,
+    __projects_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
+      api_list=__controller_api_projects, compare_list=controller_projects,
       with_present=true, set_absent=true ) }}"
 
 - debug:
@@ -35,8 +35,9 @@
 
 - name: "DESIRED STATE: Set project's list to be configured"
   set_fact:
-    controller_projects: "{{ project_difference }}"
+    controller_projects: "{{ __projects_difference }}"
 
 - name: "DESIRED STATE: Configure Controller Projects"
   import_role:
     name: redhat_cop.controller_configuration.projects
+...

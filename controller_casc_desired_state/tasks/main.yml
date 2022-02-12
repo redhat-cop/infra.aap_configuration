@@ -4,19 +4,19 @@
   block:
     - name: Get all organizations name from API
       set_fact:
-        controller_organizations_name: "{{ lookup('ansible.controller.controller_api', 'organizations',
+        __controller_organizations_name: "{{ lookup('ansible.controller.controller_api', 'organizations',
           host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) | map(attribute='name') | list}}"
 
     - name: Show all organizations name taken from API
       debug:
-        var: "{{ controller_organizations_name_item }}"
+        var: "{{ __controller_organizations_name_item }}"
       loop:
-          - controller_organizations_name
+          - __controller_organizations_name
       loop_control:
         loop_var: __controller_organizations_name_item
 
     - include_tasks: projects_desired_state.yml
-      loop: "{{ controller_organizations_name }}"
+      loop: "{{ __controller_organizations_name }}"
       loop_control:
         loop_var: __controller_organizations_name_item
   tags:
