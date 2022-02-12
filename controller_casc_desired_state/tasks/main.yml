@@ -1,11 +1,28 @@
 ---
 # tasks file for controller_casc_desired_state
 - name: Include Tasks to configure Controller Inventories
-  include_tasks: inventories_desired_state.yml
-  args:
-    apply:
-      tags: desired_state_inventories
-  tags: desired_state_inventories
+  block:
+    - name: Get all organizations name from API
+      set_fact:
+        __controller_organizations_name: "{{ lookup('ansible.controller.controller_api', 'organizations',
+          host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) | map(attribute='name') | list}}"
+
+    - name: Show all organizations name taken from API
+      debug:
+        var: "{{ __controller_organizations_name_item }}"
+      loop:
+          - __controller_organizations_name
+      loop_control:
+        loop_var: __controller_organizations_name_item
+
+    - include_tasks: inventories_desired_state.yml
+      loop: "{{ __controller_organizations_name }}"
+      loop_control:
+        loop_var: __controller_organizations_name_item
+  tags:
+    - desired_state
+    - desired_state_inventories
+
 
 - name: Include Tasks to config DESIRED STATE Projects
   block:
