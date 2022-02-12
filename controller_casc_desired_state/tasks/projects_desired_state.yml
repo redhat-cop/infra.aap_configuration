@@ -24,7 +24,7 @@
 
 - name: "DESIRED STATE: Find the difference of Project between what is on the Controller versus CasC on SCM"
   set_fact:
-    __projects_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
+    __projects_difference: "{{ lookup('redhat_cop.controller_casc.controller_object_diff_tem',
       api_list=__controller_api_projects, compare_list=controller_projects,
       with_present=true, set_absent=true ) }}"
 
