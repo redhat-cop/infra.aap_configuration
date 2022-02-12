@@ -4,8 +4,8 @@
   include_tasks: inventories_desired_state.yml
   args:
     apply:
-      tags: inventories_desired_state
-  tags: inventories_desired_state
+      tags: desired_state_inventories
+  tags: desired_state_inventories
 
 - name: Include Tasks to config DESIRED STATE Projects
   block:
