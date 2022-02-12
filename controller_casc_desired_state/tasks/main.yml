@@ -1,6 +1,5 @@
 ---
 # tasks file for controller_casc_desired_state
-
 - name: Include Tasks to config DESIRED STATE Projects
   block:
     - name: Get all organizations name from API
@@ -14,12 +13,12 @@
       loop:
           - controller_organizations_name
       loop_control:
-        loop_var: controller_organizations_name_item
+        loop_var: __controller_organizations_name_item
 
     - include_tasks: projects_desired_state.yml
       loop: "{{ controller_organizations_name }}"
       loop_control:
-        loop_var: controller_organizations_name_item
+        loop_var: __controller_organizations_name_item
   tags:
     - desired_state
     - desired_state_projects

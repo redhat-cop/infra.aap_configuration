@@ -6,9 +6,9 @@
      - "{{ dir_orgs_vars }}/{{ orgs }}/env/common/configure_controller_projects.yml"
   when: dir_orgs_vars is defined
 
-- name: Get the 'test' organization ID
+- name: "DESIRED STATE: Get the organization's Name"
   set_fact:
-    controller_organization_id: "{{ lookup('ansible.controller.controller_api', 'organizations', query_params={ 'name': controller_organizations_name_item },
+    controller_organization_id: "{{ lookup('ansible.controller.controller_api', 'organizations', query_params={ 'name': __controller_organizations_name_item },
       host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
 
 - name: "Get the API list of all Projects and Inventories in the 'test' Organization"
@@ -33,7 +33,8 @@
   loop:
       - project_difference
 
-- set_fact:
+- name: "DESIRED STATE: Set project's list to be configured"
+  set_fact:
     controller_projects: "{{ project_difference }}"
 
 - name: "DESIRED STATE: Configure Controller Projects"
