@@ -168,3 +168,4 @@ class LookupModule(LookupBase):
             difference = compare_list
 
         return [difference]
+
