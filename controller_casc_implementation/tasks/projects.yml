@@ -1,0 +1,12 @@
+---
+- name: Include Projects list
+  include_vars:
+    file: "{{ item }}"
+  loop:
+    - "{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/configure_controller_projects.yml"
+  when: dir_orgs_vars is defined and orgs is defined and env is defined
+
+- name: Configure Controller Projects | Launch project creation
+  import_role:
+    name: redhat_cop.controller_configuration.projects
+...
