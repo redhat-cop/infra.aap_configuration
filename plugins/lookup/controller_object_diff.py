@@ -116,17 +116,21 @@ class LookupModule(LookupBase):
                 raise AnsibleLookupError("Unable to find items in api_list")
             return [api_list]
 
-        # Set Keys to keep for each list.
-        keys_to_keep = ["name", "organization"]
-        api_keys_to_keep = ["name", "summary_fields"]
+        # Set Keys to keep for each list. Depending on type
+        if api_list[0]["type"] == "organization":
+            keys_to_keep = ["name"]
+            api_keys_to_keep = ["name"]
+        else:
+            keys_to_keep = ["name", "organization"]
+            api_keys_to_keep = ["name", "summary_fields"]
 
-        # Depending on type, keep additional keys
-        if api_list[0]["type"] == "credential":
-            keys_to_keep.append("credential_type")
-            api_keys_to_keep.append("credential_type")
-        if api_list[0]["type"] == "inventory_source":
-            keys_to_keep.append("inventory")
-            api_keys_to_keep.append("inventory")
+            # Depending on type, keep additional keys
+            if api_list[0]["type"] == "credential":
+                keys_to_keep.append("credential_type")
+                api_keys_to_keep.append("credential_type")
+            if api_list[0]["type"] == "inventory_source":
+                keys_to_keep.append("inventory")
+                api_keys_to_keep.append("inventory")
 
         for item in compare_list:
             for key in keys_to_keep:
@@ -142,10 +146,11 @@ class LookupModule(LookupBase):
         compare_list_reduced = [{key: item[key] for key in keys_to_keep} for item in compare_list]
         api_list_reduced = [{key: item[key] for key in api_keys_to_keep} for item in api_list]
 
-        # Convert summary field name into org name
-        for item in api_list_reduced:
-            item.update({"organization": item["summary_fields"]["organization"]["name"]})
-            item.pop("summary_fields")
+        # Convert summary field name into org name Only if not type organization
+        if api_list[0]["type"] != "organization":
+            for item in api_list_reduced:
+                item.update({"organization": item["summary_fields"]["organization"]["name"]})
+                item.pop("summary_fields")
 
         # Find difference between lists
         difference = [i for i in api_list_reduced if i not in compare_list_reduced]
