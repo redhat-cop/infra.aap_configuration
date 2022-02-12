@@ -13,4 +13,11 @@
     apply:
       tags: credentials
   tags: credentials
+
+- name: Include Tasks to config Projects
+  include_tasks: projects.yml
+  args:
+    apply:
+      tags: projects
+  tags: projects
 ...
