@@ -7,7 +7,7 @@
     max_hosts:                          "{{ __controller_organizations_item.max_hosts | default(omit, true) }}"
     instance_groups:                    "{{ __controller_organizations_item.instance_groups | default(omit, true) }}"
     default_environment:                "{{ __controller_organizations_item.default_environment | default(omit, true) }}"
-    galaxy_organizations:                 "{{ (__controller_organizations_item.galaxy_organizations | default(omit)) if (assign_galaxy_organizations_to_org is defined and assign_galaxy_organizations_to_org) else omit }}"
+    galaxy_credentials:                 "{{ (__controller_organizations_item.galaxy_organizations | default(omit)) if (assign_galaxy_organizations_to_org is defined and assign_galaxy_organizations_to_org) else omit }}"
     notification_templates_approvals:   "{{ __controller_organizations_item.notification_templates_approvals | default(__controller_organizations_item.related.notification_templates_approvals | default([]) | map(attribute='name') | list ) }}"
     notification_templates_started:     "{{ __controller_organizations_item.notification_templates_started | default(__controller_organizations_item.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
     notification_templates_success:     "{{ __controller_organizations_item.notification_templates_success | default(__controller_organizations_item.related.notification_templates_success | default([]) | map(attribute='name') | list ) }}"
