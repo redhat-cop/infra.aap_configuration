@@ -119,7 +119,7 @@ FRIENDLY_PERM_NAMES = {
     "add_namespace": "galaxy.add_namespace",
     "change_namespace": "galaxy.change_namespace",
     "upload_to_namespace": "galaxy.upload_to_namespace",
-    "delete_namespace":	"galaxy.delete_namespace",
+    "delete_namespace": "galaxy.delete_namespace",
     # Collections
     "modify_ansible_repo_content": "ansible.modify_ansible_repo_content",
     "delete_collection": "ansible.delete_collection",

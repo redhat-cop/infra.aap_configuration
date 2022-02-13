@@ -53,8 +53,7 @@ options:
     state:
       description:
         - Desired state of the resource.
-        - Currently the ability to delete objects in Automation Hub is not available, this option is included for when it is.
-      choices: ["present"]
+      choices: ["present", "absent"]
       default: "present"
       type: str
     links:
@@ -76,8 +75,8 @@ options:
     groups:
       description:
         - A list of dictionaries of the Names and object_permissions values for groups that control the Namespace.
+        - Required if state is present
       type: list
-      required: True
       elements: dict
       suboptions:
         name:
@@ -129,8 +128,8 @@ def main():
         avatar_url=dict(),
         resources=dict(),
         links=dict(type="list", elements="dict"),
-        groups=dict(required=True, type="list", elements="dict"),
-        state=dict(choices=["present"], default="present"),
+        groups=dict(type="list", elements="dict"),
+        state=dict(choices=["present", "absent"], default="present"),
     )
 
     # Create a module for ourselves
