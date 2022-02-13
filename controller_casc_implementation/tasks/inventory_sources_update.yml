@@ -1,0 +1,14 @@
+---
+- name: Include Inventory Sources list
+  include_vars:
+    file: "{{ __inventory_sources_variables_file_item }}"
+  loop:
+    - "{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/configure_controller_inventory_sources.yml"
+  loop_control:
+    loop_var: __inventory_sources_variables_file_item
+  when: dir_orgs_vars is defined and orgs is defined and env is defined
+
+- name: Update Controller Inventory Sources | Launch inventory Source Update
+  import_role:
+    name: redhat_cop.controller_configuration.inventory_sources_update
+...
