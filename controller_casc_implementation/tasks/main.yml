@@ -48,4 +48,11 @@
     apply:
       tags: inventory_source_update
   tags: inventory_source_update
+
+- name: Include Tasks to config Hosts
+  include_tasks: hosts.yml
+  args:
+    apply:
+      tags: hosts
+  tags: hosts
 ...
