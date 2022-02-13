@@ -69,4 +69,11 @@
     apply:
       tags: teams
   tags: teams
+
+- name: Include Tasks to config Roles
+  include_tasks: roles.yml
+  args:
+    apply:
+      tags: roles
+  tags: roles
 ...
