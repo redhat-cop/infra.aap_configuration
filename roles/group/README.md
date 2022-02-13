@@ -40,12 +40,13 @@ ah_configuration_group_secure_logging defaults to the value of ah_configuration_
 The module accepts the following roles:
 - For user management, `add_user`, `change_user`, `delete_user`, and `view_user`.
 - For group management, `add_group`, `change_group`, `delete_group`, and `view_group`.
-- For collection namespace management, `add_namespace`, `change_namespace`, and `upload_to_namespace`.
-- For collection content management, `modify_ansible_repo_content`
+- For collection namespace management, `add_namespace`, `change_namespace`, `upload_to_namespace`, and `delete_namespace`.
+- For collection content management, `modify_ansible_repo_content`, and `delete_collection`.
 - For remote repository configuration, `change_collectionremote` and `view_collectionremote`.
 - For container image management, only with private automation hub v4.3.2
   or later, `change_containernamespace_perms`, `change_container`,
-  `change_image_tag`, `create_container`, and `push_container`.
+  `change_image_tag`, `create_container`, `push_container`, and `delete_containerrepository`.
+- For task management, `change_task`, `view_task`, and `delete_task`.
 - You can also grant or revoke all permissions with `*` or `all`.
 
 ### Standard Project Data Structure
