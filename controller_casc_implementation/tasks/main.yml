@@ -55,4 +55,11 @@
     apply:
       tags: hosts
   tags: hosts
+
+- name: Include Tasks to config Local Users
+  include_tasks: local_users.yml
+  args:
+    apply:
+      tags: local_users
+  tags: local_users
 ...
