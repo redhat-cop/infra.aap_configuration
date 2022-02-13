@@ -76,4 +76,11 @@
     apply:
       tags: roles
   tags: roles
+
+- name: Include Tasks to config Job_Templates
+  include_tasks: job_templates.yml
+  args:
+    apply:
+      tags: job_templates
+  tags: job_templates
 ...
