@@ -1,0 +1,14 @@
+---
+- name: Include Projects list
+  include_vars:
+    file: "{{ __projects_variables_file_item }}"
+  loop:
+    - "{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/configure_controller_projects.yml"
+  loop_control:
+    loop_var: __projects_variables_file_item
+  when: dir_orgs_vars is defined and orgs is defined and env is defined
+
+- name: Update Controller Projects | Launch Project Update
+  import_role:
+    name: redhat_cop.controller_configuration.project_update
+...

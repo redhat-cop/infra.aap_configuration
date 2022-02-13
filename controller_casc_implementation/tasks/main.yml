@@ -28,6 +28,13 @@
       tags: projects
   tags: projects
 
+- name: Include Tasks to config Project Update
+  include_tasks: project_update.yml
+  args:
+    apply:
+      tags: project_update
+  tags: project_update
+
 - name: Include Tasks to config Inventories
   include_tasks: inventories.yml
   args:
