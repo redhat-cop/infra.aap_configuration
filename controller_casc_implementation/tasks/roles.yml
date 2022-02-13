@@ -23,7 +23,7 @@
     credentials:                    "{{ __controller_role_item.0.credentials | default(omit, true) }}"
     organization:                   "{{ __controller_role_item.0.organization | default(omit, true) }}"
     #organizations:                  "{{ __controller_role_item.0.organizations | default(omit, true) }}"
-    organizations:                  "{{ (__controller_role_item.0.organizations | default([orgs])) if (__controller_role_item.0.state | default(controller_state)) is not match('absent') else omit }}"
+    organizations:                  "{{ (__controller_role_item.0.organizations | default([orgs])) if (__controller_role_item.0.state | default(controller_state | default('present'))) is not match('absent') else omit }}"
     lookup_organization:            "{{ __controller_role_item.0.lookup_organization | default(omit, true) }}"
     project:                        "{{ __controller_role_item.0.project | default(omit, true) }}"
     projects:                       "{{ __controller_role_item.0.projects | default(omit, true) }}"
