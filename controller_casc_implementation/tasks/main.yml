@@ -27,4 +27,11 @@
     apply:
       tags: inventories
   tags: inventories
+
+- name: Include Tasks to config Inventory Sources
+  include_tasks: inventory_sources.yml
+  args:
+    apply:
+      tags: inventory_sources
+  tags: inventory_sources
 ...
