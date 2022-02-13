@@ -33,12 +33,13 @@ options:
       - The module accepts the following roles.
       - For user management, C(add_user), C(change_user), C(delete_user), and C(view_user).
       - For group management, C(add_group), C(change_group), C("delete_group"), and C(view_group).
-      - For collection namespace management, C(add_namespace), C(change_namespace), and C(upload_to_namespace).
-      - For collection content management, C(modify_ansible_repo_content)
-      - For remote repository configuration, C(change_collectionremote) and C(view_collectionremote).
+      - For collection namespace management, C(add_namespace), C(change_namespace), C(upload_to_namespace), and C(delete_namespace).
+      - For collection content management, C(modify_ansible_repo_content), and C(delete_collection).
+      - For remote repository configuration, C(change_collectionremote), and C(view_collectionremote).
       - For container image management, only with private automation hub v4.3.2
         or later, C(change_containernamespace_perms), C(change_container),
-        C(change_image_tag), C(create_container), and C(push_container).
+        C(change_image_tag), C(create_container), and C(push_container), and C(delete_containerrepository).
+      - For task management, C(change_task), C(view_task), and C(delete_task).
       - You can also grant or revoke all permissions with C(*) or C(all).
     type: list
     elements: str
@@ -118,8 +119,10 @@ FRIENDLY_PERM_NAMES = {
     "add_namespace": "galaxy.add_namespace",
     "change_namespace": "galaxy.change_namespace",
     "upload_to_namespace": "galaxy.upload_to_namespace",
+    "delete_namespace":	"galaxy.delete_namespace",
     # Collections
     "modify_ansible_repo_content": "ansible.modify_ansible_repo_content",
+    "delete_collection": "ansible.delete_collection",
     # Users
     "add_user": "galaxy.add_user",
     "change_user": "galaxy.change_user",
@@ -139,6 +142,11 @@ FRIENDLY_PERM_NAMES = {
     "change_image_tag": "container.namespace_modify_content_containerpushrepository",
     "create_container": "container.add_containernamespace",
     "push_container": "container.namespace_push_containerdistribution",
+    "delete_containerrepository": "container.delete_containerrepository",
+    # Tasks
+    "change_task": "core.change_task",
+    "delete_task": "core.delete_task",
+    "view_task": "core.view_task",
 }
 
 
