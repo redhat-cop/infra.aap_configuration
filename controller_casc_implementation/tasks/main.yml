@@ -62,4 +62,11 @@
     apply:
       tags: local_users
   tags: local_users
+
+- name: Include Tasks to config Teams
+  include_tasks: teams.yml
+  args:
+    apply:
+      tags: teams
+  tags: teams
 ...
