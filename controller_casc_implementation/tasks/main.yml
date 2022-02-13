@@ -7,6 +7,13 @@
       tags: organizations
   tags: organizations
 
+- name: Include Tasks to config Execution Environments
+  include_tasks: execution_environments.yml
+  args:
+    apply:
+      tags: execution_environments
+  tags: execution_environments
+
 - name: Include Tasks to config Credentials
   include_tasks: credentials.yml
   args:
