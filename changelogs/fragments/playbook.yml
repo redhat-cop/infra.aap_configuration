@@ -1,0 +1,7 @@
+---
+breaking_changes:
+  - galaxy credentials in the organization role now require assign_galaxy_organizations_to_org to be true.
+minor_changes:
+  - Added asynchronous to organization task to speed up creation.
+  - Update to controller_object_diff lookup plugin to better handle organizations.
+...
