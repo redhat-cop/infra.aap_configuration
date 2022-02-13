@@ -62,4 +62,17 @@
   loop_control:
     loop_var: __controller_template_item
   no_log: "{{ controller_configuration_job_templates_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __job_temaplates_job_async
+
+- name: "Configure Controller Job Templates | Wait for finish the job templates creation"
+  async_status:
+    jid: "{{ __job_temaplates_job_async_result_item.ansible_job_id }}"
+  register: __job_temaplates_job_async_result
+  until: __job_temaplates_job_async_result.finished
+  retries: 30
+  loop: "{{ __job_temaplates_job_async.results }}"
+  when: __job_temaplates_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ controller_configuration_job_templates_secure_logging }}"
 ...

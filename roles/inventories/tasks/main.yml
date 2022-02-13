@@ -22,4 +22,18 @@
   loop_control:
     loop_var: __controller_inventory_item
   no_log: "{{ controller_configuration_inventories_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __inventories_job_async
+
+- name: "Create Controller inventories | Wait for finish the inventories creation"
+  async_status:
+    jid: "{{ __inventories_job_async_result_item.ansible_job_id }}"
+  register: __inventories_job_async_result
+  until: __inventories_job_async_result.finished
+  retries: 10
+  loop: "{{ __inventories_job_async.results }}"
+  when: __inventories_job_async_result_item.ansible_job_id is defined
+  delegate_to: "{{ 'localhost' if controller_local else omit }}"
+  no_log: true
 ...
