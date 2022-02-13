@@ -10,5 +10,5 @@
 
 - name: Update Controller Inventory Sources | Launch inventory Source Update
   import_role:
-    name: redhat_cop.controller_configuration.inventory_sources_update
+    name: redhat_cop.controller_configuration.inventory_source_update
 ...

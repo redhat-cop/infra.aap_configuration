@@ -42,10 +42,10 @@
       tags: inventory_sources
   tags: inventory_sources
 
-- name: Include Tasks to config Inventory Sources Update
-  include_tasks: inventory_sources_update.yml
+- name: Include Tasks to config Inventory Source Update
+  include_tasks: inventory_source_update.yml
   args:
     apply:
-      tags: inventory_sources_update
-  tags: inventory_sources_update
+      tags: inventory_source_update
+  tags: inventory_source_update
 ...
