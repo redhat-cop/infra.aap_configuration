@@ -39,4 +39,19 @@
   loop_control:
     loop_var: __controller_project_item
   no_log: "{{ controller_configuration_projects_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __projects_job_async
+
+- name: "Configure Controller Projects | Wait for finish the projects creation"
+  async_status:
+    jid: "{{ __projects_job_async_results_item.ansible_job_id }}"
+  register: __projects_job_async_result
+  until: __projects_job_async_result.finished
+  retries: 10
+  loop: "{{ __projects_job_async.results }}"
+  loop_control:
+    loop_var: __projects_job_async_results_item
+  when: __projects_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ controller_configuration_projects_secure_logging }}"
 ...

@@ -19,4 +19,17 @@
   loop_control:
     loop_var: __controller_credential_type_item
   no_log: "{{ controller_configuration_credential_types_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __credentialTypes_job_async
+
+- name: "Configure Controller Credential Types | Wait for finish the credential types creation"
+  async_status:
+    jid: "{{ __credentialTypes_job_async_result_item.ansible_job_id }}"
+  register: __credentialTypes_job_async_result
+  until: __credentialTypes_job_async_result.finished
+  retries: 10
+  loop: "{{ __credentialTypes_job_async.results }}"
+  when: __credentialTypes_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ controller_configuration_credential_types_secure_logging }}"
 ...
