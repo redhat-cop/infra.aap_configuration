@@ -802,8 +802,8 @@ class AHModule(AnsibleModule):
             self.fail_json(msg="the output collection directory {0} is a file - aborting".format(to_native(output_path)))
 
         output_build = self.run_command(["ansible-galaxy", "collection", "build", path, "--output-path", output_path, (None, "--force")[force]])
-        if (output_build[0] == 0):
-            self.json_output["path"] = '/' + '/'.join(output_build[1].split('/')[1:])[:-1]
+        if output_build[0] == 0:
+            self.json_output["path"] = "/" + "/".join(output_build[1].split("/")[1:])[:-1]
             self.json_output["changed"] = True
             self.exit_json(**self.json_output)
         else:
