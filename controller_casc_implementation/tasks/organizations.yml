@@ -1,12 +1,21 @@
----
-- name: Include Organizations list
-  include_vars:
-    file: "{{ item }}"
-  loop:
-    - "{{ dir_orgs_vars }}/env/common/configure_controller_organizations.yml"
-  when: dir_orgs_vars is defined
+ ---
+ - name: Include Organizations list
+   block:
+   - name: "Read Organization definitions"
+     include_vars:
+       file: "{{ item.src }}"
+     with_filetree: "{{ dir_orgs_vars }}/env/common/controller_organizations.d/"
+     when: item.state == 'file'
+     register: contents
 
-- name: "Configure Controller Organizations"
-  import_role:
-    name: redhat_cop.controller_configuration.organizations
-...
+   - name: "Populate Organizations list"
+     set_fact:
+       controller_organizations: "{{ (controller_organizations | default([])) + item.ansible_facts.controller_organizations }}"
+     loop: "{{ contents.results }}"
+     when: contents.results is defined and item.ansible_facts is defined
+
+   when: orgs is defined and dir_orgs_vars is defined
+ - name: "Configure Controller Organizations"
+   import_role:
+     name: redhat_cop.controller_configuration.organizations
+ ...
