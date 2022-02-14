@@ -22,4 +22,19 @@
   loop_control:
     loop_var: "__application_item"
   no_log: "{{ controller_configuration_applications_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __applications_job_async
+
+- name: "Create Applications | Wait for finish the Applications creation"
+  async_status:
+    jid: "{{ __applications_job_async_results_item.ansible_job_id }}"
+  register: __applications_job_async_result
+  until: __applications_job_async_result.finished
+  retries: 10
+  loop: "{{ __applications_job_async.results }}"
+  loop_control:
+    loop_var: __applications_job_async_results_item
+  when: __applications_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ controller_configuration_applications_secure_logging }}"
 ...

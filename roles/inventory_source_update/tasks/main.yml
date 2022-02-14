@@ -23,4 +23,19 @@
   when:
     - controller_inventory_sources is defined
     - __inventory_source_update_item.state | default('present') != "absent"
+  async: 1000
+  poll: 0
+  register: __inventory_source_update_async
+
+- name: "Configure Inventory Source | Wait for finish the Inventory Source creation"
+  async_status:
+    jid: "{{ __inventory_source_update_async_results_item.ansible_job_id }}"
+  register: __inventory_source_update_async_result
+  until: __inventory_source_update_async_result.finished
+  retries: 10
+  loop: "{{ __inventory_source_update_async.results }}"
+  loop_control:
+    loop_var: __inventory_source_update_async_results_item
+  when: __inventory_source_update_async_results_item.ansible_job_id is defined
+  no_log: "{{ controller_configuration_inventory_source_update_secure_logging }}"
 ...

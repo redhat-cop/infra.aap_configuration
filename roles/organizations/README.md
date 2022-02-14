@@ -51,7 +51,7 @@ This role accepts two data models. A simple straightforward easy to maintain mod
 |`notification_templates_error`|""|no|The notifications on error to use for this organization in a list.|
 |`notification_templates_approvals`|""|no|The notifications for approval to use for this organization in a list.|
 |`state`|`present`|no|Desired state of the resource.|
-|`assign_galaxy_credentials_to_org`|""|no|Boolean to indicate whether credentials should be assigned or not. It should be noted that credentials must exist before add it. |
+|`assign_galaxy_credentials_to_org`|`True`|no|Boolean to indicate whether credentials should be assigned or not. It should be noted that credentials must exist before adding it. |
 
 ### Standard Organization Data Structure model
 #### Json Example
