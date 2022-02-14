@@ -1,12 +1,19 @@
 ---
-- name: Include Projects list
-  include_vars:
-    file: "{{ __project_variables_file_item }}"
-  loop:
-    - "{{ dir_orgs_vars }}/{{ orgs }}/env/common/configure_controller_projects.yml"
-  loop_control:
-    loop_var: __project_variables_file_item
-  when: dir_orgs_vars is defined and orgs is defined
+- block:
+  - name: "Read Projects definitions"
+    include_vars:
+      file: "{{ item.src }}"
+    with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_projects.d/"
+    when: item.state == 'file'
+    register: contents
+
+  - name: "Populate Projects list"
+    set_fact:
+      controller_projects: "{{ (controller_projects | default([])) + item.ansible_facts.controller_projects }}"
+    loop: "{{ contents.results }}"
+    when: contents.results is defined and item.ansible_facts is defined
+
+  when: orgs is defined and dir_orgs_vars is defined
 
 - name: Configure Controller Projects | Launch project creation
   import_role:
