@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - removed dependency for ansible.galaxy module which wasn't accessible in 2.12 Ansible
+...
