@@ -1,4 +1,4 @@
- ---
+---
 - block:
   - name: "Read Organization definitions"
     include_vars:
@@ -19,6 +19,7 @@
     when: populate_controller_organizations is defined
 
   when: orgs is defined and dir_orgs_vars is defined
+
 - name: "Configure Controller Organizations"
   import_role:
     name: redhat_cop.controller_configuration.organizations
