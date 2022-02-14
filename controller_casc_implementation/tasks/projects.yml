@@ -9,9 +9,14 @@
 
   - name: "Populate Projects list"
     set_fact:
-      controller_projects: "{{ (controller_projects | default([])) + item.ansible_facts.controller_projects }}"
+      populate_controller_projects: "{{ (populate_controller_projects | default([])) + item.ansible_facts.controller_projects }}"
     loop: "{{ contents.results }}"
     when: contents.results is defined and item.ansible_facts is defined
+
+  - name: "Set Projects Data Structure"
+    set_fact:
+      controller_projects: "{{ populate_controller_projects }}"
+    when: populate_controller_projects is defined
 
   when: orgs is defined and dir_orgs_vars is defined
 
