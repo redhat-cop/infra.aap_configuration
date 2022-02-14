@@ -22,5 +22,5 @@
 
 - name: Update Controller Projects | Launch Project Update
   import_role:
-    name: redhat_cop.controller_configuration.project_updat
+    name: redhat_cop.controller_configuration.project_update
 ...
