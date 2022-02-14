@@ -23,4 +23,19 @@
   loop_control:
     loop_var: controller_groups_item
   no_log: "{{ controller_configuration_group_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __group_job_async
+
+- name: "Create Controller Group | Wait for finish the Controller Group creation"
+  async_status:
+    jid: "{{ __group_job_async_results_item.ansible_job_id }}"
+  register: __group_job_async_result
+  until: __group_job_async_result.finished
+  retries: 10
+  loop: "{{ __group_job_async.results }}"
+  loop_control:
+    loop_var: __group_job_async_results_item
+  when: __group_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ controller_configuration_group_secure_logging }}"
 ...

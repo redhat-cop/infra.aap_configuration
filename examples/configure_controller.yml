@@ -4,13 +4,14 @@
   connection: local
   vars:
     controller_validate_certs: false
-  collections:
-    - awx.awx
-    - redhat_cop.controller_configuration
   # Define following vars here, or in configs/controller_auth.yml
   # controller_hostname: controller.example.com
   # controller_username: admin
   # controller_password: changeme
+  collections:
+    - awx.awx
+    - redhat_cop.controller_configuration
+
   pre_tasks:
 
     - name: Wait for Controller to come up

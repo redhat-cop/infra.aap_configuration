@@ -32,6 +32,21 @@
   loop_control:
     loop_var: __workflow_loop_node_item
   no_log: "{{ workflow_job_templates_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __workflows_node_async
+
+- name: "Manage Workflows | Wait for finish the workflow creation"
+  async_status:
+    jid: "{{ __workflows_node_async_results_item.ansible_job_id }}"
+  register: __workflows_node_async_result
+  until: __workflows_node_async_result.finished
+  retries: 10
+  loop: "{{ __workflows_node_async.results }}"
+  loop_control:
+    loop_var: __workflows_node_async_results_item
+  when: __workflows_node_async_results_item.ansible_job_id is defined
+  no_log: "{{ workflow_job_templates_secure_logging }}"
 
 # Create links between workflow node
 - name: Create links between Workflow Nodes
@@ -57,4 +72,19 @@
   when: ((__workflow_loop_node_item.always_nodes is defined and __workflow_loop_node_item.always_nodes | length > 0 ) or
         (__workflow_loop_node_item.success_nodes is defined and __workflow_loop_node_item.success_nodes | length > 0 ) or
         (__workflow_loop_node_item.failure_nodes is defined and __workflow_loop_node_item.failure_nodes | length > 0 ))
+  async: 1000
+  poll: 0
+  register: __workflows_link_async
+
+- name: "Manage Workflows | Wait for finish the workflow creation"
+  async_status:
+    jid: "{{ __workflows_link_async_results_item.ansible_job_id }}"
+  register: __workflows_link_async_result
+  until: __workflows_link_async_result.finished
+  retries: 10
+  loop: "{{ __workflows_link_async.results }}"
+  loop_control:
+    loop_var: __workflows_link_async_results_item
+  when: __workflows_link_async_results_item.ansible_job_id is defined
+  no_log: "{{ workflow_job_templates_secure_logging }}"
 ...
