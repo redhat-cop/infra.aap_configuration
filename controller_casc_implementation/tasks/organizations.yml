@@ -1,6 +1,5 @@
  ---
-- name: Include Organizations list
-  block:
+- block:
   - name: "Read Organization definitions"
     include_vars:
       file: "{{ item.src }}"
