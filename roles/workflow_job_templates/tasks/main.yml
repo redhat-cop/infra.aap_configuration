@@ -49,7 +49,8 @@
     jid: "{{ __workflows_job_async_results_item.ansible_job_id }}"
   register: __workflows_job_async_result
   until: __workflows_job_async_result.finished
-  retries: 10
+  retries: "{{ controller_configuration_workflow_async_retries }}"
+  delay: "{{ controller_configuration_workflow_async_delay }}"
   loop: "{{ __workflows_job_async.results }}"
   loop_control:
     loop_var: __workflows_job_async_results_item

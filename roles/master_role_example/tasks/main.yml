@@ -19,7 +19,7 @@
     loop_var: "__controller_***********_item"
   no_log: "{{ controller_configuration_*******_secure_logging }}"
   when: controller_************ is defined
-    async: 1000
+  async: 1000
   poll: 0
   register: __controller_***********_job_async
 
