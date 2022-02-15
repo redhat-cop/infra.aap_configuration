@@ -9,7 +9,6 @@ from ansible.module_utils.six import PY2, PY3
 from ansible.module_utils.six.moves.urllib.parse import urlparse, urlencode
 from ansible.module_utils.six.moves.urllib.error import HTTPError
 from ansible.module_utils.six.moves.http_cookiejar import CookieJar
-from ansible.galaxy.collection import build_collection
 from ansible.module_utils._text import to_bytes, to_native, to_text
 from ansible.module_utils.compat.importlib import import_module  # noqa F401
 import os.path
@@ -792,6 +791,13 @@ class AHModule(AnsibleModule):
             response=sample,
             total_results=response["json"]["meta"]["count"],
         )
+
+
+    def get_exactly_one(self, endpoint, name_or_id=None, **kwargs):
+        return self.get_one(endpoint, name_or_id=name_or_id, allow_none=False, **kwargs)
+
+    def resolve_name_to_id(self, endpoint, name_or_id):
+        return self.get_exactly_one(endpoint, name_or_id)['id']
 
     def objects_could_be_different(self, old, new, field_set=None, warning=False):
         if field_set is None:
