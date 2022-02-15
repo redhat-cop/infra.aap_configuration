@@ -93,9 +93,9 @@ def main():
     new_fields = {}
 
     # Attempt to look up an existing item based on the provided data
-    namespace_id = module.resolve_name_to_id('namespaces', name_or_id=namespace)
-    existing_item = module.get_one("collections/{1}/".format(namespace), name_or_id=name)
-    module.fail_json(msg="{existing_item}".format(existing_item=existing_item))
+    existing_item = module.get_endpoint("collections/{0}/".format(namespace), name_or_id=name)
+    module.fail_json(msg="Unknown perm ({existing_item}) defined".format(existing_item=existing_item))
+
     if state == "absent":
         # If the state was absent we can let the module delete it if needed, the module will handle exiting from this
         module.delete_if_needed(existing_item)
