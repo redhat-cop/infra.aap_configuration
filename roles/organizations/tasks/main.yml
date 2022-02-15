@@ -7,7 +7,7 @@
     max_hosts:                          "{{ __controller_organizations_item.max_hosts | default(omit, true) }}"
     instance_groups:                    "{{ __controller_organizations_item.instance_groups | default(omit, true) }}"
     default_environment:                "{{ __controller_organizations_item.default_environment | default(omit, true) }}"
-    galaxy_credentials:                 "{{ __controller_organizations_item.galaxy_credentials | default(omit, true) }}"
+    galaxy_credentials:                 "{{ (__controller_organizations_item.galaxy_credentials | default(omit)) if (assign_galaxy_credentials_to_org is defined and assign_galaxy_credentials_to_org) else omit }}"
     notification_templates_approvals:   "{{ __controller_organizations_item.notification_templates_approvals | default(__controller_organizations_item.related.notification_templates_approvals | default([]) | map(attribute='name') | list ) }}"
     notification_templates_started:     "{{ __controller_organizations_item.notification_templates_started | default(__controller_organizations_item.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
     notification_templates_success:     "{{ __controller_organizations_item.notification_templates_success | default(__controller_organizations_item.related.notification_templates_success | default([]) | map(attribute='name') | list ) }}"
@@ -24,5 +24,20 @@
   loop: "{{ controller_organizations }}"
   loop_control:
     loop_var: __controller_organizations_item
+  async: 1000
+  poll: 0
+  register: __organizations_job_async
+  no_log: "{{ controller_configuration_organizations_secure_logging }}"
+
+- name: "Configure Controller Organizations | Wait for finish the organization creation"
+  async_status:
+    jid: "{{ __organizations_job_async_results_item.ansible_job_id }}"
+  register: __organizations_job_async_result
+  until: __organizations_job_async_result.finished
+  retries: 10
+  loop: "{{ __organizations_job_async.results }}"
+  loop_control:
+    loop_var: __organizations_job_async_results_item
+  when: __organizations_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_organizations_secure_logging }}"
 ...

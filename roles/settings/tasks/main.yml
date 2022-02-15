@@ -18,4 +18,19 @@
   loop_control:
     loop_var: __controller_setting_item
   no_log: "{{ controller_configuration_settings_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __controller_setting_job_async
+
+- name: "Configure Settings | Wait for finish the Settings creation"
+  async_status:
+    jid: "{{ __controller_setting_job_async_results_item.ansible_job_id }}"
+  register: __controller_setting_job_async_result
+  until: __controller_setting_job_async_result.finished
+  retries: 10
+  loop: "{{ __controller_setting_job_async.results }}"
+  loop_control:
+    loop_var: __controller_setting_job_async_results_item
+  when: __controller_setting_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ controller_configuration_settings_secure_logging }}"
 ...
