@@ -38,8 +38,8 @@ options:
     state:
       description:
         - Desired state of the resource.
-        - If present will return data on collection.
-        - If present with version, will return data on collection version.
+        - If present will return data on a collection.
+        - If present with version, will return data on a collection version.
         - If absent without version, will delete the collection and all versions.
         - If absent with version, will delete only specified version.
       choices: ["present", "absent"]
@@ -51,22 +51,12 @@ extends_documentation_fragment: redhat_cop.ah_configuration.auth
 
 
 EXAMPLES = """
-- name: Create Tower Ping job template
-  ah_namespace:
-    name: Redhat
-    company: Redhat
-    email: user@example.com
-    avatar_url: https://pnt.redhat.com/pnt/d-11633955/LogoRedHatHatColorRGB.png
-    description: This is the Redhat Namespace
-    links:
-      - name: "homepage"
-        url: "http://www.redhat.com"
-    groups:
-      - name: system:partner-engineers
-        object_permissions:
-          - "change_namespace"
-          - "upload_to_namespace"
-
+- name: Remove collection
+  ah_collection_manage:
+    namespace: test_collection
+    name: test
+    version: 4.1.2
+    state: absent
 """
 
 from ..module_utils.ah_module import AHModule
@@ -93,22 +83,32 @@ def main():
     new_fields = {}
 
     # Attempt to look up an existing item based on the provided data
-    existing_item = module.get_endpoint("collections/{0}/".format(namespace), name_or_id=name)
-    module.fail_json(msg="Unknown perm ({existing_item}) defined".format(existing_item=existing_item))
+    if version:
+      #existing_item = module.get_endpoint("collections/{0}/{1}/versions/{2}".format(namespace, name, version), None, **{"return_none_on_404": True})
+      collection_endpoint = "collections/{0}/{1}/versions/{2}".format(namespace, name, version)
+    else:
+      collection_endpoint = "collections/{0}/{1}".format(namespace, name)
+      #existing_item = module.get_endpoint("collections/{0}/{1}".format(namespace, name), None, **{"return_none_on_404": True})
+
+
+    existing_item = module.get_endpoint(collection_endpoint, **{"return_none_on_404": True})
+    if existing_item is None:
+        if version:
+              module.fail_json(msg='Could not find Collection {0}.{1} with_version {2}'.format(namespace, name, version))
+        else:
+              module.fail_json(msg='Could not find Collection {0}.{1}'.format(namespace, name))
+    else:
+        response = existing_item['json']
 
     if state == "absent":
         # If the state was absent we can let the module delete it if needed, the module will handle exiting from this
-        module.delete_if_needed(existing_item)
+        response["task"] = module.delete_endpoint(existing_item['json']['href'])['json']['task']
+        response["deleted"] = True
+        response["changed"] = True
 
 
-
-    # If the state was present and we can let the module build or update the existing item, this will return on its own
-    module.create_or_update_if_needed(
-        existing_item,
-        new_fields,
-        endpoint="namespaces",
-        item_type="namespaces",
-    )
+    # If the state was present and we can Return information about the collection
+    module.exit_json(**response)
 
 
 if __name__ == "__main__":
