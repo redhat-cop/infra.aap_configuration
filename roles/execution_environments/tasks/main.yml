@@ -22,4 +22,19 @@
     loop_var: "__execution_environments_item"
   no_log: "{{ controller_configuration_execution_environments_secure_logging }}"
   when: controller_execution_environments is defined
+  async: 1000
+  poll: 0
+  register: __execution_environments_job_async
+
+- name: "Create Controller Execution Environments | Wait for finish the Controller Execution Environments creation"
+  async_status:
+    jid: "{{ __execution_environments_job_async_results_item.ansible_job_id }}"
+  register: __execution_environments_job_async_result
+  until: __execution_environments_job_async_result.finished
+  retries: 10
+  loop: "{{ __execution_environments_job_async.results }}"
+  loop_control:
+    loop_var: __execution_environments_job_async_results_item
+  when: __execution_environments_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ controller_configuration_execution_environments_secure_logging }}"
 ...

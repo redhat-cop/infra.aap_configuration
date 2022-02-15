@@ -20,4 +20,19 @@
   loop_control:
     loop_var: __controller_host_item
   no_log: "{{ controller_configuration_hosts_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __host_job_async
+
+- name: "Configure Controller Hosts | Wait for finish the Hosts creation"
+  async_status:
+    jid: "{{ __host_job_async_results_item.ansible_job_id }}"
+  register: __host_job_async_result
+  until: __host_job_async_result.finished
+  retries: 10
+  loop: "{{ __host_job_async.results }}"
+  loop_control:
+    loop_var: __host_job_async_results_item
+  when: __host_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ controller_configuration_hosts_secure_logging }}"
 ...

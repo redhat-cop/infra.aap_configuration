@@ -39,4 +39,19 @@
   loop_control:
     loop_var: __controller_source_item
   no_log: "{{ controller_configuration_inventory_sources_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __inventory_source_job_async
+
+- name: "Configure Inventory Source | Wait for finish the Inventory Source creation"
+  async_status:
+    jid: "{{ __inventory_source_job_async_results_item.ansible_job_id }}"
+  register: __inventory_source_job_async_result
+  until: __inventory_source_job_async_result.finished
+  retries: 10
+  loop: "{{ __inventory_source_job_async.results }}"
+  loop_control:
+    loop_var: __inventory_source_job_async_results_item
+  when: __inventory_source_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ controller_configuration_inventory_sources_secure_logging }}"
 ...
