@@ -9,7 +9,6 @@ from ansible.module_utils.six import PY2, PY3
 from ansible.module_utils.six.moves.urllib.parse import urlparse, urlencode
 from ansible.module_utils.six.moves.urllib.error import HTTPError
 from ansible.module_utils.six.moves.http_cookiejar import CookieJar
-from ansible.galaxy.collection import build_collection
 from ansible.module_utils._text import to_bytes, to_native, to_text
 from ansible.module_utils.compat.importlib import import_module  # noqa F401
 import os.path
@@ -819,24 +818,13 @@ class AHModule(AnsibleModule):
         elif os.path.isfile(b_output_path):
             self.fail_json(msg="the output collection directory {0} is a file - aborting".format(to_native(output_path)))
 
-        try:
-            out = build_collection(
-                to_text(path, errors="surrogate_or_strict"),
-                to_text(output_path, errors="surrogate_or_strict"),
-                force,
-            )
-            # path output is correct in ansible-galaxy >= 2.10.0 but in earlier versions the value is not returned so we can just return the output_path
-            self.json_output["path"] = out or output_path
+        output_build = self.run_command(["ansible-galaxy", "collection", "build", path, "--output-path", output_path, (None, "--force")[force]])
+        if output_build[0] == 0:
+            self.json_output["path"] = "/" + "/".join(output_build[1].split("/")[1:])[:-1]
             self.json_output["changed"] = True
             self.exit_json(**self.json_output)
-        except Exception as e:
-            err = "{0}".format(e)
-            if "You can use --force to re-create the collection artifact." in err:
-                self.json_output["path"] = err[10:-75]
-                self.json_output["changed"] = False
-                self.exit_json(**self.json_output)
-            else:
-                self.fail_json(msg=err)
+        else:
+            self.fail_json(msg=output_build[2])
 
     def wait_sync_output(self, response):
         for k in ("task_id", "state", "started_at", "finished_at"):
