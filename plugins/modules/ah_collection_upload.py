@@ -62,7 +62,10 @@ def main():
 
     module.upload(path, "artifacts/collections", wait, item_type="collections")
     module.exit_json(**module.json_output)
+<<<<<<< HEAD
 
+=======
+>>>>>>> d4704f3ca18bc0ec1573e32ec44420b169626770
 
 if __name__ == "__main__":
     main()
