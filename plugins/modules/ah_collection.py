@@ -14,11 +14,11 @@ ANSIBLE_METADATA = {"metadata_version": "1.1", "status": ["preview"], "supported
 
 DOCUMENTATION = """
 ---
-module: ah_collection_manage
+module: ah_collection
 author: "Sean Sullivan (@sean-m-sullivan)"
 short_description: update, or destroy Automation Hub Collections.
 description:
-    - Update, or destroy Automation Hub Collections. See
+    - Upload, or destroy Automation Hub Collections. See
       U(https://www.ansible.com/) for an overview.
 options:
     namespace:
@@ -35,9 +35,19 @@ options:
       description:
         - Collection Version. Must be lower case containing only alphanumeric characters and underscores.
       type: str
+    path:
+      description:
+        - Collection artifact file path.
+      type: str
+    wait
+      description:
+        - Waits for the collection to be uploaded
+      type: bool
+      default: true
     state:
       description:
         - Desired state of the resource.
+        - If present with a path, will upload a collection artifact to Automation hub.
         - If present will return data on a collection.
         - If present with version, will return data on a collection version.
         - If absent without version, will delete the collection and all versions.
@@ -51,6 +61,13 @@ extends_documentation_fragment: redhat_cop.ah_configuration.auth
 
 
 EXAMPLES = """
+- name: Upload collection to automation hub
+  ah_collection_upload:
+    namespace: awx
+    name: awx
+    path: /var/tmp/collections/awx_awx-15.0.0.tar.gz
+
+
 - name: Remove collection
   ah_collection_manage:
     namespace: test_collection
@@ -67,6 +84,8 @@ def main():
     argument_spec = dict(
         namespace=dict(required=True),
         name=dict(required=True),
+        path=dict(),
+        wait=dict(type="bool", default=True),
         version=dict(),
         state=dict(choices=["present", "absent"], default="present"),
     )
@@ -77,38 +96,39 @@ def main():
     # Extract our parameters
     namespace = module.params.get("namespace")
     name = module.params.get("name")
+    path = module.params.get("path")
+    wait = module.params.get("wait")
     version = module.params.get("version")
     state = module.params.get("state")
 
-    new_fields = {}
+    if path:
+        module.upload(path, "artifacts/collections", wait, item_type="collections")
 
     # Attempt to look up an existing item based on the provided data
     if version:
-      #existing_item = module.get_endpoint("collections/{0}/{1}/versions/{2}".format(namespace, name, version), None, **{"return_none_on_404": True})
-      collection_endpoint = "collections/{0}/{1}/versions/{2}".format(namespace, name, version)
+        # existing_item = module.get_endpoint("collections/{0}/{1}/versions/{2}".format(namespace, name, version), None, **{"return_none_on_404": True})
+        collection_endpoint = "collections/{0}/{1}/versions/{2}".format(namespace, name, version)
     else:
-      collection_endpoint = "collections/{0}/{1}".format(namespace, name)
-      #existing_item = module.get_endpoint("collections/{0}/{1}".format(namespace, name), None, **{"return_none_on_404": True})
-
+        collection_endpoint = "collections/{0}/{1}".format(namespace, name)
+        # existing_item = module.get_endpoint("collections/{0}/{1}".format(namespace, name), None, **{"return_none_on_404": True})
 
     existing_item = module.get_endpoint(collection_endpoint, **{"return_none_on_404": True})
     if existing_item is None:
         if version:
-              module.fail_json(msg='Could not find Collection {0}.{1} with_version {2}'.format(namespace, name, version))
+            module.fail_json(msg="Could not find Collection {0}.{1} with_version {2}".format(namespace, name, version))
         else:
-              module.fail_json(msg='Could not find Collection {0}.{1}'.format(namespace, name))
+            module.fail_json(msg="Could not find Collection {0}.{1}".format(namespace, name))
     else:
-        response = existing_item['json']
+        module.json_output["collection"] = existing_item["json"]
 
     if state == "absent":
         # If the state was absent we can let the module delete it if needed, the module will handle exiting from this
-        response["task"] = module.delete_endpoint(existing_item['json']['href'])['json']['task']
-        response["deleted"] = True
-        response["changed"] = True
-
+        module.json_output["task"] = module.delete_endpoint(existing_item["json"]["href"])["json"]["task"]
+        module.json_output["deleted"] = True
+        module.json_output["changed"] = True
 
     # If the state was present and we can Return information about the collection
-    module.exit_json(**response)
+    module.exit_json(**module.json_output)
 
 
 if __name__ == "__main__":

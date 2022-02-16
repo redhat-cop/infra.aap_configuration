@@ -61,6 +61,7 @@ def main():
     wait = module.params.get("wait")
 
     module.upload(path, "artifacts/collections", wait, item_type="collections")
+    module.exit_json(**module.json_output)
 
 
 if __name__ == "__main__":

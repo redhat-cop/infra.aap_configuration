@@ -66,8 +66,10 @@
   when: ah_collection_list is not defined
 
 - name: Publish Collections
-  redhat_cop.ah_configuration.ah_collection_upload:
-    path: "{{ __ah_collection_file }}"
+  redhat_cop.ah_configuration.ah_collection:
+    namespace:        "{{ (__ah_collection_file | basename).split('-')[0] }}"
+    name:             "{{ (__ah_collection_file | basename).split('-')[1] }}"
+    path:             "{{ __ah_collection_file }}"
     ah_host:          "{{ ah_host }}"
     ah_username:      "{{ ah_username | default(omit) }}"
     ah_password:      "{{ ah_password | default(omit) }}"
