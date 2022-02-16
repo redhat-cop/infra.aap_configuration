@@ -548,6 +548,15 @@ class AHModule(AnsibleModule):
 
         response = self.post_endpoint("{0}/{1}".format(endpoint, approvalEndpoint), None, **{"return_none_on_404": True})
 
+        i = 0
+        while i < 5:
+            if not response:
+                time.sleep(1)
+                response = self.post_endpoint("{0}/{1}".format(endpoint, approvalEndpoint), None, **{"return_none_on_404": True})
+                i += 1
+            else:
+                break
+
         if response and response["status_code"] in [202]:
             self.json_output["changed"] = True
         else:
