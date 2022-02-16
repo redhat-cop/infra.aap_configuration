@@ -1,12 +1,23 @@
 ---
-- name: Include Inventory Sources list
-  include_vars:
-    file: "{{ __inventory_sources_variables_file_item }}"
-  loop:
-    - "{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/configure_controller_inventory_sources.yml"
-  loop_control:
-    loop_var: __inventory_sources_variables_file_item
-  when: dir_orgs_vars is defined and orgs is defined and env is defined
+- block:
+  - name: "Read Inventory Source definitions"
+    include_vars:
+      file: "{{ item.src }}"
+    with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_inventory_sources.d/"
+    when: item.state == 'file'
+    register: contents
+
+  - name: "Populate Inventory Source list"
+    set_fact:
+      populate_controller_inventory_source_update: "{{ (populate_controller_inventory_source_update | default([])) + item.ansible_facts.controller_inventory_sources }}"
+    loop: "{{ contents.results }}"
+    when: contents.results is defined and item.ansible_facts is defined
+
+  - name: "Set Inventory Source Data Structure"
+    set_fact:
+      controller_inventory_sources: "{{ populate_controller_inventory_source_update }}"
+    when: populate_controller_inventory_sources is defined
+
 
 - name: Update Controller Inventory Sources | Launch inventory Source Update
   import_role:
