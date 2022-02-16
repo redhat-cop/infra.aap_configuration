@@ -630,7 +630,8 @@ class AHModule(AnsibleModule):
         if state == "failed":
             self.fail_json(msg="Upload of collection failed: {0}".format(response["json"]["error"]["description"]))
         else:
-            self.exit_json(**self.json_output)
+            time.sleep(1)
+            return
 
     def upload(self, path, endpoint, wait=True, item_type="unknown"):
         ct, body = self.prepare_multipart(path)
@@ -640,7 +641,7 @@ class AHModule(AnsibleModule):
             self.json_output["changed"] = True
             if wait:
                 self.wait_for_complete(response["json"]["task"])
-            self.exit_json(**self.json_output)
+            return
         else:
             if "json" in response and "__all__" in response["json"]:
                 self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]["__all__"][0]))
