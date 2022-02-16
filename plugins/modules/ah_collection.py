@@ -101,8 +101,14 @@ def main():
     version = module.params.get("version")
     state = module.params.get("state")
 
+<<<<<<< HEAD
     if path:
         module.upload(path, "artifacts/collections", wait, item_type="collections")
+=======
+    new_fields = {}
+    if path:
+      module.upload(path, "artifacts/collections", wait, item_type="collections")
+>>>>>>> d4704f3ca18bc0ec1573e32ec44420b169626770
 
     # Attempt to look up an existing item based on the provided data
     if version:
