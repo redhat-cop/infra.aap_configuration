@@ -18,6 +18,8 @@
       controller_inventory_sources: "{{ populate_controller_inventory_source_update }}"
     when: populate_controller_inventory_sources is defined
 
+  when: dir_orgs_vars is defined and orgs is defined and env is defined
+
 
 - name: Update Controller Inventory Sources | Launch inventory Source Update
   import_role:
