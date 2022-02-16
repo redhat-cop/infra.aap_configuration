@@ -63,12 +63,12 @@
       tags: hosts
   tags: hosts
 
-- name: Include Tasks to config Local Users
-  include_tasks: local_users.yml
+- name: Include Tasks to config User Accounts
+  include_tasks: user_accounts.yml
   args:
     apply:
-      tags: local_users
-  tags: local_users
+      tags: user_accounts
+  tags: user_accounts
 
 - name: Include Tasks to config Teams
   include_tasks: teams.yml
