@@ -25,7 +25,7 @@
 #    name: redhat_cop.controller_configuration.roles
 
 - name: Create Role Based Access Entry on Controller
-  role:
+  ansible.controller.role:
     user:                           "{{ __controller_role_item.0.user | default(omit, true) }}"
     team:                           "{{ __controller_role_item.0.team | default(omit, true) }}"
     role:                           "{{ __controller_role_item.1 | mandatory }}"
