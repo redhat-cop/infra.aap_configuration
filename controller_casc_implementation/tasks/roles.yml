@@ -53,7 +53,7 @@
     controller_host:                "{{ controller_hostname | default(omit, true) }}"
     controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
     validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
-  loop: "{{ configure_controller_roles | subelements('roles') }}"
+  loop: "{{ controller_roles | subelements('roles') }}"
   loop_control:
     loop_var: __controller_role_item
   no_log: "{{ controller_configuration_role_secure_logging }}"
