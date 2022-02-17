@@ -98,6 +98,13 @@
       tags: workflow_job_templates
   tags: workflow_job_templates
 
+- name: Include Tasks to config Workflow_Job_Template_Nodes
+  include_tasks: workflow_job_template_nodes.yml
+  args:
+    apply:
+      tags: workflow_job_template_nodes,job_templates
+  tags: workflow_job_template_nodes,job_templates
+
 - name: Include Tasks to config Schedules
   include_tasks: schedules.yml
   args:
