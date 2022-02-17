@@ -1,5 +1,12 @@
 ---
 # tasks file for controller_casc_implementation
+- name: Include Tasks to config Settings
+  include_tasks: settings.yml
+  args:
+    apply:
+      tags: settings
+  tags: settings
+
 - name: Include Tasks to config Organizations
   include_tasks: organizations.yml
   args:
