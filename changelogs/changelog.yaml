@@ -79,3 +79,17 @@ releases:
     fragments:
     - changes.yml
     release_date: '2021-12-02'
+  0.6.1:
+    changes:
+      minor_changes:
+      - added namespace state absent module parameter
+      - added new permision options to the ah_group_perm module and group role.
+      - ah_ee_namespace and ah_ee_repository - adding the ``new_name`` parameter so
+        that users can rename namespaces and repositories (https://github.com/redhat-cop/ah_configuration/issues/44)
+      - removed dependency for ansible.galaxy module which wasn't accessible in 2.12
+        Ansible
+    fragments:
+    - 49-ee-new-name.yml
+    - galaxy_deps.yml
+    - new_ah_perms.yml
+    release_date: '2022-02-17'

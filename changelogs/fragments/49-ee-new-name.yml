@@ -1,5 +1,0 @@
----
-minor_changes:
-  - ah_ee_namespace and ah_ee_repository - adding the ``new_name`` parameter
-    so that users can rename namespaces and repositories
-    (https://github.com/redhat-cop/ah_configuration/issues/44)
