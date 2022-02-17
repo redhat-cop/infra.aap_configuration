@@ -26,11 +26,11 @@ options:
         - Collection artifact file path.
       required: True
       type: str
-    wait
+    wait:
       description:
-        - Waits for the collection to be uploaded
+        - Wait for the collection to be uploaded.
+      default: False
       type: bool
-      default: true
 
 extends_documentation_fragment: redhat_cop.ah_configuration.auth
 """
