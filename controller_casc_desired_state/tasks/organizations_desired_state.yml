@@ -1,10 +1,24 @@
 ---
-- name: "DESIRED STATE: configure_controller_organizations"
-  include_vars:
-    file: "{{ item }}"
-  loop:
-    - "{{ dir_orgs_vars }}/env/common/configure_controller_organizations.yml"
-  when: dir_orgs_vars is defined
+- block:
+  - name: "Read Organization definitions"
+    include_vars:
+      file: "{{ item.src }}"
+    with_filetree: "{{ dir_orgs_vars }}/env/common/controller_organizations.d/"
+    when: item.state == 'file'
+    register: contents
+
+  - name: "Populate Organizations list"
+    set_fact:
+      populate_controller_organizations: "{{ (populate_controller_organizations | default([])) + item.ansible_facts.controller_organizations }}"
+    loop: "{{ contents.results }}"
+    when: contents.results is defined and item.ansible_facts is defined
+
+  - name: "Set Projects Data Structure"
+    set_fact:
+      controller_organizations: "{{ populate_controller_organizations }}"
+    when: populate_controller_organizations is defined
+
+  when: orgs is defined and dir_orgs_vars is defined
 
 - set_fact:
        __controller_api_organizations: "{{ lookup('ansible.controller.controller_api', 'organizations',

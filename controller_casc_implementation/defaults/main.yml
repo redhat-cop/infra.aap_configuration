@@ -1,2 +1,19 @@
 ---
 # defaults file for controller_casc_implementation
+controller_credentials: []
+controller_execution_environments: []
+controller_hosts: []
+controller_inventories: []
+controller_inventory_sources: []
+controller_inventory_sources: []
+controller_job_templates: []
+controller_organizations: []
+controller_projects: []
+controller_projects: []
+controller_roles: []
+controller_schedules: []
+controller_settings: []
+controller_teams: []
+controller_user_accounts: []
+controller_workflow_job_templates: []
+...
