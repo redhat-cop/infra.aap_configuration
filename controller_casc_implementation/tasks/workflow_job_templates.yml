@@ -9,13 +9,13 @@
 
   - name: "Populate Workflow Job Templates list"
     set_fact:
-      populate_controller_workflow_job_templates: "{{ (populate_controller_workflow_job_templates | default([])) + item.ansible_facts.controller_workflow_job_templates }}"
+      populate_controller_workflow_job_templates: "{{ (populate_controller_workflow_job_templates | default([])) + item.ansible_facts.controller_workflows }}"
     loop: "{{ contents.results }}"
     when: contents.results is defined and item.ansible_facts is defined
 
   - name: "Set Job Templates Data Structure"
     set_fact:
-      controller_workflow_job_templates: "{{ populate_controller_workflow_job_templates }}"
+      controller_workflows: "{{ populate_controller_workflow_job_templates }}"
     when: populate_controller_workflow_job_templates is defined
 
   when: dir_orgs_vars is defined and orgs is defined
