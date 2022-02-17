@@ -77,6 +77,20 @@
       tags: teams
   tags: teams
 
+- name: Include Tasks to config Job_Templates
+  include_tasks: job_templates.yml
+  args:
+    apply:
+      tags: job_templates
+  tags: job_templates
+
+- name: Include Tasks to config Schedules
+  include_tasks: schedules.yml
+  args:
+    apply:
+      tags: schedules
+  tags: schedules
+
 - name: Include Tasks to config Roles
   include_tasks: roles.yml
   args:
@@ -84,10 +98,4 @@
       tags: roles
   tags: roles
 
-- name: Include Tasks to config Job_Templates
-  include_tasks: job_templates.yml
-  args:
-    apply:
-      tags: job_templates
-  tags: job_templates
 ...
