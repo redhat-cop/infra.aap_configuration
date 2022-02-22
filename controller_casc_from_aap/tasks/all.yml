@@ -1,0 +1,11 @@
+---
+- block:
+  - name: "export all supported objects"
+    ansible.controller.export:
+      all: true
+    register: contents
+
+  - name: "Show the existing objects"
+    debug:
+      var: contents
+...

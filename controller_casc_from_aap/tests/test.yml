@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  connection: local
+  remote_user: root
+  roles:
+    - ../../controller_casc_from_aap
