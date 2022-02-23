@@ -13,23 +13,23 @@
           - __controller_organizations_name
       loop_control:
         loop_var: __controller_organizations_name_item
-    tags:
-      - desired_state
-      - desired_state_schedules
-      - desired_state_workflow_job_templates
-      - desired_state_job_templates
-      - desired_state_projects
-      - desired_state_credentials
-      - desired_state_groups
-      - desired_state_hosts
-      - desired_state_inventory_source
-      - desired_state_inventories
-      - desired_state_teams
-      - desired_state_local_users
-      - desired_state_credential_types
-    when:
-      - desired_state is defined
-      - desired_state
+  tags:
+    - desired_state
+    - desired_state_schedules
+    - desired_state_workflow_job_templates
+    - desired_state_job_templates
+    - desired_state_projects
+    - desired_state_credentials
+    - desired_state_groups
+    - desired_state_hosts
+    - desired_state_inventory_source
+    - desired_state_inventories
+    - desired_state_teams
+    - desired_state_local_users
+    - desired_state_credential_types
+  when:
+    - desired_state is defined
+    - desired_state
 
 - name: Include Tasks to configure Controller Inventories
   include_tasks: inventories_desired_state.yml
