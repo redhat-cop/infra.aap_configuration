@@ -22,7 +22,7 @@
     - desired_state_credentials
     - desired_state_groups
     - desired_state_hosts
-    - desired_state_inventory_source
+    - desired_state_inventory_sources
     - desired_state_inventories
     - desired_state_teams
     - desired_state_local_users
@@ -30,6 +30,18 @@
   when:
     - desired_state is defined
     - desired_state
+
+- name: Include Tasks to configure Controller Inventory Sources
+  include_tasks: inventory_sources_desired_state.yml
+  loop: "{{ __controller_organizations_name }}"
+  loop_control:
+    loop_var: __controller_organizations_name_item
+  args:
+    apply:
+      tags: desired_state_inventory_sources
+  tags:
+    - desired_state
+    - desired_state_inventory_sources
 
 - name: Include Tasks to configure Controller Inventories
   include_tasks: inventories_desired_state.yml
@@ -72,3 +84,12 @@
   tags:
     - desired_state
     - desired_state_organizations
+
+- name: Include Tasks to config DESIRED STATE credential_types
+  include_tasks: credential_types_desired_state.yml
+  args:
+    apply:
+      tags: desired_state_credential_types
+  tags:
+    - desired_state
+    - desired_state_credential_types
