@@ -7,6 +7,13 @@
       tags: settings
   tags: settings
 
+- name: Include Tasks to config Galaxy Credentials
+  include_tasks: galaxy_credentials.yml
+  args:
+    apply:
+      tags: galaxy_credentials
+  tags: galaxy_credentials
+
 - name: Include Tasks to config Organizations
   include_tasks: organizations.yml
   args:
