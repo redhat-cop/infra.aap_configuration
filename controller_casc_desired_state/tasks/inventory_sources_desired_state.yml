@@ -45,7 +45,7 @@
       debug:
         msg:
           - "Current Info: {{ current_info_for_inventory_sources }}"
-          - "CasC inventory_sources: {{ configure_controller_inventory_source }}"
+          - "CasC inventory_sources: {{ controller_inventory_sources }}"
 
     - name: "DESIRED STATE: Show the inventory sources not in CasC"
       debug:
@@ -53,8 +53,8 @@
           - "Inventory name: {{ current_info_item_for_inventory_sources.inventory }}"
           - "Inventory Source name: {{ current_info_item_for_inventory_sources.inventory_source }}"
       vars:
-        inventory_index: "{{ lookup('ansible.utils.index_of', data=configure_controller_inventory_source, test='match', value=current_info_item_for_inventory_sources.inventory, key='inventory', fail_on_missing='true', wantlist=True) }}"
-        inventory_source_index: "{{ lookup('ansible.utils.index_of', data=configure_controller_inventory_source, test='match', value='^'+current_info_item_for_inventory_sources.inventory_source+'$', key='name', fail_on_missing='true', wantlist=True) }}"
+        inventory_index: "{{ lookup('ansible.utils.index_of', data=controller_inventory_sources, test='match', value=current_info_item_for_inventory_sources.inventory, key='inventory', fail_on_missing='true', wantlist=True) }}"
+        inventory_source_index: "{{ lookup('ansible.utils.index_of', data=controller_inventory_sources, test='match', value='^'+current_info_item_for_inventory_sources.inventory_source+'$', key='name', fail_on_missing='true', wantlist=True) }}"
       loop: "{{ current_info_for_inventory_sources }}"
       loop_control:
         loop_var: current_info_item_for_inventory_sources
@@ -72,8 +72,8 @@
         inventory: "{{ remove_inventory_sources_item.inventory }}"
         state: absent
       vars:
-        inventory_index: "{{ lookup('ansible.utils.index_of', data=configure_controller_inventory_source, test='match', value=remove_inventory_sources_item.inventory, key='inventory', fail_on_missing='true', wantlist=True) }}"
-        inventory_source_index: "{{ lookup('ansible.utils.index_of', data=configure_controller_inventory_source, test='match', value='^'+remove_inventory_sources_item.inventory_source+'$', key='name', fail_on_missing='true', wantlist=True) }}"
+        inventory_index: "{{ lookup('ansible.utils.index_of', data=controller_inventory_sources, test='match', value=remove_inventory_sources_item.inventory, key='inventory', fail_on_missing='true', wantlist=True) }}"
+        inventory_source_index: "{{ lookup('ansible.utils.index_of', data=controller_inventory_sources, test='match', value='^'+remove_inventory_sources_item.inventory_source+'$', key='name', fail_on_missing='true', wantlist=True) }}"
       loop: "{{ current_info_for_inventory_sources }}"
       loop_control:
         loop_var: remove_inventory_sources_item

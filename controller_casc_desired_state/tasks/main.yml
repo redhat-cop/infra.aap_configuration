@@ -25,7 +25,7 @@
     - desired_state_inventory_sources
     - desired_state_inventories
     - desired_state_teams
-    - desired_state_local_users
+    - desired_state_user_accounts
     - desired_state_credential_types
   when:
     - desired_state is defined
@@ -93,3 +93,25 @@
   tags:
     - desired_state
     - desired_state_credential_types
+
+- name: Include Tasks to config DESIRED STATE User Accounts
+  include_tasks: user_accounts_desired_state.yml
+  args:
+    apply:
+      tags: desired_state_user_accounts
+  tags:
+    - desired_state
+    - desired_state_user_accounts
+
+- name: Include Tasks to configure Controller Teams
+  include_tasks: teams_desired_state.yml
+  loop: "{{ __controller_organizations_name }}"
+  loop_control:
+    loop_var: __controller_organizations_name_item
+  args:
+    apply:
+      tags: desired_state_teams
+  tags:
+    - desired_state
+    - desired_state_teams
+...

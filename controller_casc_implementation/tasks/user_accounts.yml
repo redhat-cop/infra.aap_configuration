@@ -9,7 +9,7 @@
 
   - name: "Populate User Accounts list"
     set_fact:
-      populate_controller_users: "{{ (populate_controller_local_users | default([])) + item.ansible_facts.controller_user_accounts }}"
+      populate_controller_user_accounts: "{{ (populate_controller_user_accounts | default([])) + item.ansible_facts.controller_user_accounts }}"
     loop: "{{ contents.results }}"
     when: contents.results is defined and item.ansible_facts is defined
 
