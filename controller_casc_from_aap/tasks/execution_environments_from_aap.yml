@@ -1,0 +1,11 @@
+---
+- name: "Create the output directory: {{ output_path }}"
+  file:
+    path: "{{ output_path }}"
+    state: directory
+
+- name: "Add current execution environments to the output yaml file: {{ output_path }}/current_execution_environments.yaml"
+  template:
+    src: "templates/current_execution_environments.j2"
+    dest: "{{ output_path }}/current_execution_environments.yaml"
+...

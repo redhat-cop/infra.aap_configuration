@@ -1,0 +1,13 @@
+---
+controller_user_accounts:
+{% for user in current_asset_value %}
+- username: "{{ user.natural_key.username }}"
+  password: "INITIAL"
+  email: "{{ user.email }}"
+  first_name: "{{ user.first_name }}"
+  last_name: "{{ user.last_name }}"
+  auditor: "{{ user.is_system_auditor }}"
+  superuser: "{{ user.is_superuser }}"
+  update_secrets: False
+{% endfor %}
+...

@@ -1,0 +1,33 @@
+---
+controller_templates:
+{% for job_template in current_asset_value %}
+  - name: "{{ job_template.natural_key.name | mandatory }}"
+    description: "{{ job_template.description }}"
+    organization: "{{ job_template.natural_key.organization.name | mandatory('The job template \'' + job_template.natural_key.name + '\' must belong to an organization') }}"
+    project: "{{ job_template.project.name | mandatory('The job template \'' + job_template.natural_key.name + '\' must have a project assigned') }}"
+{% if job_template.inventory %}
+    inventory: "{{ job_template.inventory.name }}"
+{% endif %}
+    playbook: "{{ job_template.playbook }}"
+    job_type: "{{ job_template.job_type }}"
+    fact_caching_enabled: "{{ job_template.use_fact_cache }}"
+{% if job_template.related.credentials %}
+    credentials:
+{% for credential in job_template.related.credentials %}
+      - "{{ credential.name }}"
+{% endfor %}
+{% endif %}
+    concurrent_jobs_enabled: "{{ job_template.allow_simultaneous }}"
+    ask_scm_branch_on_launch: "{{ job_template.ask_scm_branch_on_launch }}"
+    ask_tags_on_launch: "{{ job_template.ask_tags_on_launch }}"
+    ask_verbosity_on_launch: "{{ job_template.ask_verbosity_on_launch }}"
+    ask_variables_on_launch: "{{ job_template.ask_variables_on_launch }}"
+{% if (job_template.extra_vars | length) > 3 %}
+    extra_vars:
+{{ job_template.extra_vars | from_json | to_nice_yaml(indent=2) | indent(width=6, indentfirst=True) }}
+{%- endif -%}
+{% if job_template.execution_environment %}
+    execution_environment: "{{ job_template.execution_environment.name }}"
+{% endif %}
+{% endfor %}
+...

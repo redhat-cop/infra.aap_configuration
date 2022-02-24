@@ -1,11 +1,46 @@
 ---
 - block:
-  - name: "export all supported objects"
+  - name: "export all supported objects (Be patient... this may take a while!)"
     ansible.controller.export:
-      all: true
+      controller_host: "{{ controller_hostname }}"
+      validate_certs: "{{ controller_validate_certs }}"
+      controller_username: admin
+      controller_password: redhat00
+      all: "{{ true if 'all' in input_tag else omit }}"
+      credentials: "{{ 'all' if 'credentials' in input_tag else omit }}"
+      credential_types: "{{ 'all' if 'credential_types' in input_tag else omit }}"
+      execution_environments: "{{ 'all' if 'execution_environments' in input_tag else omit }}"
+      groups: "{{ 'all' if 'groups' in input_tag else omit }}"
+      hosts: "{{ 'all' if 'hosts' in input_tag else omit }}"
+      inventory: "{{ 'all' if 'inventory' in input_tag else omit }}"
+      inventory_sources: "{{ 'all' if 'inventory_sources' in input_tag else omit }}"
+      job_templates: "{{ 'all' if 'job_templates' in input_tag else omit }}"
+      notification_templates: "{{ 'all' if 'notification_templates' in input_tag else omit }}"
+      organizations: "{{ 'all' if 'organizations' in input_tag else omit }}"
+      projects: "{{ 'all' if 'projects' in input_tag else omit }}"
+      roles: "{{ 'all' if 'roles' in input_tag else omit }}"
+      teams: "{{ 'all' if 'teams' in input_tag else omit }}"
+      users: "{{ 'all' if 'users' in input_tag else omit }}"
+      workflow_job_template_nodes: "{{ 'all' if 'workflow_job_template_nodes' in input_tag else omit }}"
+      workflow_job_templates: "{{ 'all' if 'workflow_job_templates' in input_tag else omit }}"
     register: contents
 
-  - name: "Show the existing objects"
-    debug:
-      var: contents
+  - name: "For each asset, call the correct file"
+    include_tasks: "{{ asset_item.key }}_from_aap.yml"
+    vars:
+      current_asset_value: "{{ asset_item.value }}"
+    loop: "{{ contents.assets | dict2items }}"
+    loop_control:
+      loop_var: asset_item
+      label: asset_item
+
+# - block:
+#   - name: "export all supported objects"
+#     ansible.controller.export:
+#       all: true
+#     register: contents
+#
+#   - name: "Show the existing objects"
+#     debug:
+#       var: contents
 ...

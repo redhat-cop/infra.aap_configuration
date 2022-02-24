@@ -1,0 +1,31 @@
+---
+controller_workflow_nodes:
+{% for node in current_asset_value.value %}
+  - identifier: "{{ node.natural_key.identifier }}"
+    workflow: "{{ node.natural_key.workflow_job_template.name }}"
+    unified_job_template: "{{ node.unified_job_template.name }}"
+{% if node.job_type %}
+    job_type: "{{ node.job_type }}"
+{% endif %}
+    organization: "{{ node.workflow_job_template.organization.name }}"
+    all_parents_must_converge: "{{ node.all_parents_must_converge }}"
+{% if node.related.success_nodes is defined and node.related.success_nodes | length > 0 %}
+    success_nodes:
+{% for success in node.related.success_nodes %}
+      - {{ success.identifier }}
+{% endfor %}
+{% endif %}
+{% if node.related.always_nodes and node.related.always_nodes | length > 0 %}
+    always_nodes:
+{% for always in node.related.always_nodes %}
+      - {{ always.identifier }}
+{% endfor %}
+{% endif %}
+{% if node.related.failure_nodes and node.related.failure_nodes | length > 0 %}
+    failure_nodes:
+{% for failure in node.related.failure_nodes %}
+      - {{ failure.identifier }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+...

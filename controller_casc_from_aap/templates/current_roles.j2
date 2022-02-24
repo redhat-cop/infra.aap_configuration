@@ -1,0 +1,24 @@
+---
+{% for role in current_user_roles.value %}
+{% if role.content_object is defined %}
+{% if object_type is match('user') %}
+  - user: "{{ current_user_roles.key }}"
+{% elif object_type is match('team') %}
+  - team: "{{ current_user_roles.key }}"
+{% endif %}
+{% if role.content_object.type is match('organization') %}
+    organizations:
+      - "{{ role.content_object.name }}"
+{% elif role.content_object.type is match('job_template') %}
+    job_template: "{{ role.content_object.name }}"
+{% elif role.content_object.type is match('inventory') %}
+    inventory: "{{ role.content_object.name }}"
+{% elif role.content_object.type is match('team') %}
+    target_teams:
+      - "{{ role.content_object.name }}"
+{% endif %}
+    roles:
+      - "{{ role.name }}"
+{% endif %}
+{% endfor %}
+...
