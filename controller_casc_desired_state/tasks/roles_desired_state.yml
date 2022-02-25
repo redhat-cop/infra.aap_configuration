@@ -1,22 +1,22 @@
 ---
 - block:
-  - name: "Read Teams definitions"
+  - name: "Read Roles definitions"
     include_vars:
       file: "{{ item.src }}"
-    with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_teams.d/"
+    with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_roles.d/"
     when: item.state == 'file'
     register: contents
 
-  - name: "Populate Teams list"
+  - name: "Populate Roles list"
     set_fact:
-      populate_controller_teams: "{{ (populate_controller_teams | default([])) + item.ansible_facts.controller_teams }}"
+      populate_controller_roles: "{{ (populate_controller_roles | default([])) + item.ansible_facts.controller_roles }}"
     loop: "{{ contents.results }}"
     when: contents.results is defined and item.ansible_facts is defined
 
-  - name: "Set Teams Data Structure"
+  - name: "Set Roles Data Structure"
     set_fact:
-      controller_teams: "{{ populate_controller_teams }}"
-    when: populate_controller_teams is defined
+      controller_roles: "{{ populate_controller_roles }}"
+    when: populate_controller_roles is defined
 
   when: orgs is defined and dir_orgs_vars is defined
 
@@ -26,32 +26,32 @@
          host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
 - block:
 
-    - name: "DESIRED STATE: Get the API list of all teams"
+    - name: "DESIRED STATE: Get the API list of all roles"
       set_fact:
-        __controller_api_teams: "{{ query('ansible.controller.controller_api', 'teams',
+        __controller_api_roles: "{{ query('ansible.controller.controller_api', 'roles',
           host=controller_hostname, username=controller_username,
           password=controller_password, verify_ssl=false) }}"
 
     - debug:
-        msg: "{{ __controller_api_teams }}"
+        msg: "{{ __controller_api_roles }}"
 
     - name: "DESIRED STATE: Find the difference of Project between what is on the Controller versus CasC on SCM"
       set_fact:
-        __teams_difference: "{{ lookup('redhat_cop.controller_casc.controller_object_diff_temp',
-          api_list=__controller_api_teams, compare_list=controller_teams,
+        __roles_difference: "{{ lookup('redhat_cop.controller_casc.controller_object_diff_temp',
+          api_list=__controller_api_roles, compare_list=controller_roles,
           with_present=true, set_absent=true ) }}"
 
     - debug:
         var: "{{ item }}"
       loop:
-          - __teams_difference
+          - __roles_difference
 
     - set_fact:
-        controller_teams: "{{ __teams_difference }}"
+        controller_roles: "{{ __roles_difference }}"
 
-    - name: "DESIRED STATE: Configure Controller Teams"
+    - name: "DESIRED STATE: Configure Controller Roles"
       import_role:
-        name: redhat_cop.controller_configuration.teams
+        name: redhat_cop.controller_configuration.roles
 
   when:
     - __controller_api_current_user_check_is_admin.is_superuser

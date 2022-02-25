@@ -1,41 +1,38 @@
 # tasks file for controller_casc_desired_state
-- name: Include Tasks to configure Controller Inventories
-  block:
-    - name: Get all organizations name from API
-      set_fact:
-        __controller_organizations_name: "{{ lookup('ansible.controller.controller_api', 'organizations',
-          host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) | map(attribute='name') | list}}"
-
-    - name: Show all organizations name taken from API
-      debug:
-        var: "{{ __controller_organizations_name_item }}"
-      loop:
-          - __controller_organizations_name
-      loop_control:
-        loop_var: __controller_organizations_name_item
-  tags:
-    - desired_state
-    - desired_state_schedules
-    - desired_state_workflow_job_templates
-    - desired_state_job_templates
-    - desired_state_projects
-    - desired_state_credentials
-    - desired_state_groups
-    - desired_state_hosts
-    - desired_state_inventory_sources
-    - desired_state_inventories
-    - desired_state_teams
-    - desired_state_user_accounts
-    - desired_state_credential_types
-  when:
-    - desired_state is defined
-    - desired_state
+#- name: Include Tasks to configure Controller Inventories
+#  block:
+#    - name: Get all organizations name from API
+#      set_fact:
+#        __controller_organizations_name: "{{ lookup('ansible.controller.controller_api', 'organizations',
+#          host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) | map(attribute='name') | list}}"
+#
+#    - name: Show all organizations name taken from API
+#      debug:
+#        var: "{{ __controller_organizations_name_item }}"
+#      loop:
+#          - __controller_organizations_name
+#      loop_control:
+#        loop_var: __controller_organizations_name_item
+#  tags:
+#    - desired_state
+#    - desired_state_schedules
+#    - desired_state_workflow_job_templates
+#    - desired_state_job_templates
+#    - desired_state_projects
+#    - desired_state_credentials
+#    - desired_state_groups
+#    - desired_state_hosts
+#    - desired_state_inventory_sources
+#    - desired_state_inventories
+#    - desired_state_teams
+#    - desired_state_user_accounts
+#    - desired_state_credential_types
+#  when:
+#    - desired_state is defined
+#    - desired_state
 
 - name: Include Tasks to configure Controller Inventory Sources
   include_tasks: inventory_sources_desired_state.yml
-  loop: "{{ __controller_organizations_name }}"
-  loop_control:
-    loop_var: __controller_organizations_name_item
   args:
     apply:
       tags: desired_state_inventory_sources
@@ -45,9 +42,6 @@
 
 - name: Include Tasks to configure Controller Inventories
   include_tasks: inventories_desired_state.yml
-  loop: "{{ __controller_organizations_name }}"
-  loop_control:
-    loop_var: __controller_organizations_name_item
   args:
     apply:
       tags: desired_state_inventories
@@ -57,9 +51,6 @@
 
 - name: Include Tasks to config DESIRED STATE Projects
   include_tasks: projects_desired_state.yml
-  loop: "{{ __controller_organizations_name }}"
-  loop_control:
-    loop_var: __controller_organizations_name_item
   args:
     apply:
       tags: desired_state_projects
@@ -105,13 +96,19 @@
 
 - name: Include Tasks to configure Controller Teams
   include_tasks: teams_desired_state.yml
-  loop: "{{ __controller_organizations_name }}"
-  loop_control:
-    loop_var: __controller_organizations_name_item
   args:
     apply:
       tags: desired_state_teams
   tags:
     - desired_state
     - desired_state_teams
+
+- name: Include Tasks to configure Controller Roles
+  include_tasks: roles_desired_state.yml
+  args:
+    apply:
+      tags: desired_state_roles
+  tags:
+    - desired_state
+    - desired_state_roles
 ...
