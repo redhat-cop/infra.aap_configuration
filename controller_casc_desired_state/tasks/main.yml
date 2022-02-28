@@ -94,6 +94,15 @@
     - desired_state
     - desired_state_groups
 
+- name: Include Tasks to config DESIRED STATE hosts
+  include_tasks: hosts_desired_state.yml
+  args:
+    apply:
+      tags: desired_state_hosts
+  tags:
+    - desired_state
+    - desired_state_hosts
+
 - name: Include Tasks to config DESIRED STATE User Accounts
   include_tasks: user_accounts_desired_state.yml
   args:

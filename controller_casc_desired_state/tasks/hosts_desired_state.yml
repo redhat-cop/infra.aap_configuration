@@ -1,0 +1,91 @@
+---
+- block:
+  - name: "Read Hosts definitions"
+    include_vars:
+      file: "{{ item.src }}"
+    with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_hosts.d/"
+    when: item.state == 'file'
+    register: contents
+
+  - name: "Populate Hosts list"
+    set_fact:
+      populate_controller_hosts: "{{ (populate_controller_hosts | default([])) + item.ansible_facts.controller_hosts }}"
+    loop: "{{ contents.results }}"
+    when: contents.results is defined and item.ansible_facts is defined
+
+  - name: "Set Hosts Data Structure"
+    set_fact:
+      controller_hosts: "{{ populate_controller_hosts }}"
+    when: populate_controller_hosts is defined
+
+  when: orgs is defined and dir_orgs_vars is defined
+
+- name: "DESIRED STATE: Get the current controller user to determine if it is super-admin"
+  set_fact:
+       __controller_api_current_user_check_is_admin: "{{ lookup('ansible.controller.controller_api', 'users', query_params={ 'username': controller_username },
+         host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
+- block:
+
+    - name: Get the organization ID
+      set_fact:
+        # controller_organization_id: "{{ lookup('ansible.controller.controller_api', 'organizations', query_params={ 'summary_fields.inventory': '/api/v2/organizations/132/admins/' },
+        #   host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
+        controller_organization_id: "{{ lookup('ansible.controller.controller_api', 'organizations', query_params={ 'name': orgs },
+          host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
+
+    - name: "DESIRED STATE: Get the API list of all inventories"
+      set_fact:
+        __controller_api_inventories: "{{ query('ansible.controller.controller_api', 'inventories',
+          query_params={ 'organization': controller_organization_id.id, 'not__total_hosts': '0' },
+          host=controller_hostname, username=controller_username,
+          password=controller_password, verify_ssl=false) }}"
+
+    - debug:
+        msg: "{{ __controller_api_inventories }}"
+
+    - name: "DESIRED STATE: Get the API list of all hosts in the inventories at organization {{ orgs }}"
+      set_fact:
+        __controller_api_hosts: "{{ (__controller_api_hosts | default([])) + query('ansible.controller.controller_api', 'hosts',
+          query_params={ 'inventory': current_inventory.id },
+          host=controller_hostname, username=controller_username,
+          password=controller_password, verify_ssl=false) }}"
+      loop: "{{ __controller_api_inventories }}"
+      loop_control:
+        loop_var: current_inventory
+
+    - debug:
+        msg: "{{ __controller_api_hosts }}"
+
+    - name: "DESIRED STATE: Find the difference of Project between what is on the Controller versus CasC on SCM"
+      set_fact:
+        __hosts_difference: "{{ lookup('redhat_cop.controller_casc.controller_object_diff_temp',
+          query_params={ 'summary_fields.inventory.organization_id': controller_organization_id.id },
+          api_list=__controller_api_hosts, compare_list=controller_hosts,
+          with_present=true, set_absent=true ) }}"
+
+    - name: "DESIRED STATE: Set the inventory key at the correct place"
+      set_fact:
+        controller_hosts: "{{ (controller_hosts | default([])) + [new_host_diff] }}"
+      vars:
+        new_host_diff: "{{ host_diff | combine({'inventory': host_diff.summary_fields.inventory.name}) }}"
+      loop: "{{ __hosts_difference }}"
+      loop_control:
+        loop_var: host_diff
+        index_var: hosts_diff_idx
+
+    - debug:
+        var: "{{ item }}"
+      loop:
+          - __hosts_difference
+          - controller_hosts
+
+    - name: "DESIRED STATE: Configure Controller Hosts"
+      import_role:
+        name: redhat_cop.controller_configuration.hosts
+
+  when:
+    - __controller_api_current_user_check_is_admin.is_superuser
+#    - desired_state is defined
+#    - desired_state | bool
+...
+
