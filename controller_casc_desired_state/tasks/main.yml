@@ -138,4 +138,22 @@
   tags:
     - desired_state
     - desired_state_job_templates
+
+- name: Include Tasks to configure Controller Workflow Job Templates
+  include_tasks: workflow_job_templates_desired_state.yml
+  args:
+    apply:
+      tags: desired_state_workflow_job_templates
+  tags:
+    - desired_state
+    - desired_state_workflow_job_templates
+
+- name: Include Tasks to configure Controller Workflow Job Template Nodes
+  include_tasks: workflow_job_template_nodes_desired_state.yml
+  args:
+    apply:
+      tags: desired_state_workflow_job_template_nodes
+  tags:
+    - desired_state
+    - desired_state_workflow_job_template_nodes
 ...
