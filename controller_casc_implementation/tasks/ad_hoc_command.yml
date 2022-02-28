@@ -1,0 +1,26 @@
+---
+- block:
+  - name: "Read Ad Hoc Command definitions"
+    include_vars:
+      file: "{{ item.src }}"
+    with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_ad_hoc_commands.d/"
+    when: item.state == 'file'
+    register: contents
+
+  - name: "Populate Ad Hoc Command list"
+    set_fact:
+      populate_controller_ad_hoc_commands: "{{ (populate_controller_ad_hoc_commands | default([])) + item.ansible_facts.controller_ad_hoc_commands }}"
+    loop: "{{ contents.results }}"
+    when: contents.results is defined and item.ansible_facts is defined
+
+  - name: "Set Ad Hoc Command Data Structure"
+    set_fact:
+      controller_ad_hoc_commands: "{{ populate_controller_ad_hoc_commands }}"
+    when: populate_controller_ad_hoc_commands is defined
+
+  when: dir_orgs_vars is defined and orgs is defined
+
+- name: Configure Controller Ad Hoc Command | Launch ad_hoc_commands creation
+  import_role:
+    name: redhat_cop.controller_configuration.ad_hoc_commands
+...

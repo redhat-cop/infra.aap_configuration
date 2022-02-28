@@ -1,0 +1,26 @@
+---
+- block:
+  - name: "Read Ad Hoc Command Cancel definitions"
+    include_vars:
+      file: "{{ item.src }}"
+    with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_ad_hoc_commands_cancel.d/"
+    when: item.state == 'file'
+    register: contents
+
+  - name: "Populate Ad Hoc Command Cancel list"
+    set_fact:
+      populate_controller_ad_hoc_commands_cancel: "{{ (populate_controller_ad_hoc_commands_cancel | default([])) + item.ansible_facts.controller_ad_hoc_commands_cancel }}"
+    loop: "{{ contents.results }}"
+    when: contents.results is defined and item.ansible_facts is defined
+
+  - name: "Set Ad Hoc Command Cancel Data Structure"
+    set_fact:
+      controller_ad_hoc_commands_cancel: "{{ populate_controller_ad_hoc_commands_cancel }}"
+    when: populate_controller_ad_hoc_commands_cancel is defined
+
+  when: dir_orgs_vars is defined and orgs is defined
+
+- name: Configure Controller Ad Hoc Command Cancel | Launch ad_hoc_commands_cancel creation
+  import_role:
+    name: redhat_cop.controller_configuration.ad_hoc_commands_cancel
+...

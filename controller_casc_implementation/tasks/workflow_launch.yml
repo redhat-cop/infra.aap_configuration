@@ -1,0 +1,26 @@
+---
+- block:
+  - name: "Read Groups definitions"
+    include_vars:
+      file: "{{ item.src }}"
+    with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_workflow_launch_jobs.d/"
+    when: item.state == 'file'
+    register: contents
+
+  - name: "Populate Groups list"
+    set_fact:
+      populate_controller_workflow_launch_jobs: "{{ (populate_controller_workflow_launch_jobs | default([])) + item.ansible_facts.controller_workflow_launch_jobs }}"
+    loop: "{{ contents.results }}"
+    when: contents.results is defined and item.ansible_facts is defined
+
+  - name: "Set Groups Data Structure"
+    set_fact:
+      controller_workflow_launch_jobs: "{{ populate_controller_workflow_launch_jobs }}"
+    when: populate_controller_workflow_launch_jobs is defined
+
+  when: dir_orgs_vars is defined and orgs is defined
+
+- name: Configure Controller Groups | Launch workflow_launch_jobs creation
+  import_role:
+    name: redhat_cop.controller_configuration.workflow_launch_jobs
+...

@@ -1,0 +1,26 @@
+---
+- block:
+  - name: "Read Notifications definitions"
+    include_vars:
+      file: "{{ item.src }}"
+    with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_notifications.d/"
+    when: item.state == 'file'
+    register: contents
+
+  - name: "Populate Notifications list"
+    set_fact:
+      populate_controller_notifications: "{{ (populate_controller_notifications | default([])) + item.ansible_facts.controller_notifications }}"
+    loop: "{{ contents.results }}"
+    when: contents.results is defined and item.ansible_facts is defined
+
+  - name: "Set Notifications Data Structure"
+    set_fact:
+      controller_notifications: "{{ populate_controller_notifications }}"
+    when: populate_controller_notifications is defined
+
+  when: dir_orgs_vars is defined and orgs is defined
+
+- name: Configure Controller Notifications | Launch notifications creation
+  import_role:
+    name: redhat_cop.controller_configuration.notification_templates
+...
