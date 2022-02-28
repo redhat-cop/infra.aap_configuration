@@ -35,6 +35,20 @@
       tags: credentials
   tags: credentials
 
+- name: Include Tasks to config Credential Types
+  include_tasks: credential_types
+  args:
+    apply:
+      tags: credential_types
+  tags: credential_types
+
+- name: Include Tasks to config Credential Input Sources
+  include_tasks: credential_input_sources.yml
+  args:
+    apply:
+      tags: credential_input_sources
+  tags: credential_input_sources
+
 - name: Include Tasks to config Projects
   include_tasks: projects.yml
   args:
@@ -77,6 +91,20 @@
       tags: hosts
   tags: hosts
 
+- name: Include Tasks to config Groups
+  include_tasks: groups.yml
+  args:
+    apply:
+      tags: groups
+  tags: groups
+
+- name: Include Tasks to configure Controller Instance Groups
+  include_tasks: instance_groups.yml
+  args:
+    apply:
+      tags: instance_groups
+  tags: instance_groups
+
 - name: Include Tasks to config User Accounts
   include_tasks: user_accounts.yml
   args:
@@ -112,6 +140,13 @@
       tags: workflow_job_template_nodes,job_templates
   tags: workflow_job_template_nodes,job_templates
 
+- name: Include Tasks to config Workflow Launch
+  include_tasks: workflow_launch.yml
+  args:
+    apply:
+      tags: workflow_launch
+  tags: workflow_launch
+
 - name: Include Tasks to config Schedules
   include_tasks: schedules.yml
   args:
@@ -125,5 +160,62 @@
     apply:
       tags: roles
   tags: roles
+
+- name: Include Tasks to config Job Cancel
+  include_tasks: jobs_cancel.yml
+  args:
+    apply:
+      tags: jobs_cancel
+  tags: jobs_cancel
+
+- name: Include Tasks to config Job Launch
+  include_tasks: job_launch.yml
+  args:
+    apply:
+      tags: job_launch
+  tags: job_launch
+
+- name: Include Tasks to config Notifications
+  include_tasks: notifications.yml
+  args:
+    apply:
+      tags: notifications
+  tags: notifications
+
+- name: Include Tasks to config Ad Hoc Command Cancel
+  include_tasks: ad_hoc_command_cancel.yml
+  args:
+    apply:
+      tags: ad_hoc_command_cancel
+  tags: ad_hoc_command_cancel
+
+- name: Include Tasks to config Ad Hoc Command
+  include_tasks: ad_hoc_command.yml
+  args:
+    apply:
+      tags: ad_hoc_command
+  tags: ad_hoc_command
+
+- name: Include Tasks to config Applications
+  include_tasks: applications.yml
+  args:
+    apply:
+      tags: applications
+  tags: applications
+
+
+- name: Include Tasks to config Labels
+  include_tasks: labels.yml
+  args:
+    apply:
+      tags: labels
+  tags: labels
+
+- name: Include Tasks to config License
+  include_tasks: license.yml
+  args:
+    apply:
+      tags: license
+  tags: license
 
 ...
