@@ -129,4 +129,13 @@
   tags:
     - desired_state
     - desired_state_roles
+
+- name: Include Tasks to configure Controller Job Templates
+  include_tasks: job_templates_desired_state.yml
+  args:
+    apply:
+      tags: desired_state_job_templates
+  tags:
+    - desired_state
+    - desired_state_job_templates
 ...
