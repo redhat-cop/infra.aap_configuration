@@ -1,4 +1,0 @@
----
-minor_changes:
-  - added new permision options to the ah_group_perm module and group role.
-  - added namespace state absent module parameter
