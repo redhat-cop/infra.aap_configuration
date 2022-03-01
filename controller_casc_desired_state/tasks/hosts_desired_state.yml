@@ -66,7 +66,7 @@
             __hosts_difference: "{{ lookup('redhat_cop.controller_casc.controller_object_diff_temp',
               query_params={ 'summary_fields.inventory.organization_id': controller_organization_id.id },
               api_list=__controller_api_hosts, compare_list=controller_hosts,
-              with_present=true, set_absent=true ) }}"
+              with_present=false, set_absent=true ) }}"
 
         - name: "DESIRED STATE: Set the inventory key at the correct place"
           set_fact:

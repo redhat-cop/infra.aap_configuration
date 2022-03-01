@@ -218,4 +218,11 @@
       tags: license
   tags: license
 
+- name: Include Tasks to configure Controller Webhook CI
+  include_tasks: ci_webhook_trigger.yml
+  args:
+    apply:
+      tags: ci_webhook_trigger
+  tags: ci_webhook_trigger
+  when: tower_webhook_payload is defined
 ...
