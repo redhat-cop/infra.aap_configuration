@@ -21,22 +21,8 @@
       tags: organizations
   tags: organizations
 
-- name: Include Tasks to config Execution Environments
-  include_tasks: execution_environments.yml
-  args:
-    apply:
-      tags: execution_environments
-  tags: execution_environments
-
-- name: Include Tasks to config Credentials
-  include_tasks: credentials.yml
-  args:
-    apply:
-      tags: credentials
-  tags: credentials
-
 - name: Include Tasks to config Credential Types
-  include_tasks: credential_types
+  include_tasks: credential_types.yml
   args:
     apply:
       tags: credential_types
@@ -48,6 +34,20 @@
     apply:
       tags: credential_input_sources
   tags: credential_input_sources
+
+- name: Include Tasks to config Credentials
+  include_tasks: credentials.yml
+  args:
+    apply:
+      tags: credentials
+  tags: credentials
+
+- name: Include Tasks to config Execution Environments
+  include_tasks: execution_environments.yml
+  args:
+    apply:
+      tags: execution_environments
+  tags: execution_environments
 
 - name: Include Tasks to config Projects
   include_tasks: projects.yml

@@ -11,7 +11,7 @@
     set_fact:
       populate_controller_projects: "{{ (populate_controller_projects | default([])) + item.ansible_facts.controller_projects }}"
     loop: "{{ contents.results }}"
-    when: contents.results is defined and item.ansible_facts is defined
+    when: contents.results is defined and item.ansible_facts.controller_projects is defined
 
   - name: "Set Projects Data Structure"
     set_fact:

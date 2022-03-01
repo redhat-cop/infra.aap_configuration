@@ -11,7 +11,7 @@
     set_fact:
       populate_controller_inventories: "{{ (populate_controller_inventories | default([])) + item.ansible_facts.controller_inventories }}"
     loop: "{{ contents.results }}"
-    when: contents.results is defined and item.ansible_facts is defined
+    when: contents.results is defined and item.ansible_facts.controller_inventories is defined
 
   - name: "Set Inventories Data Structure"
     set_fact:
@@ -20,10 +20,10 @@
 
   when: orgs is defined and dir_orgs_vars is defined
 
-- name: "DESIRED STATE: Get the API list of all Projects and Inventories in the 'test' Organization"
+- name: "DESIRED STATE: Get the API list of all Inventories"
   set_fact:
     __controller_api_inventories: "{{ query('ansible.controller.controller_api', 'inventories',
-      host=controller_hostname, username=controller_username,
+      host=controller_host, username=controller_username,
       password=controller_password, verify_ssl=false) }}"
 
 - debug:

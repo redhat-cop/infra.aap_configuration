@@ -11,7 +11,7 @@
     set_fact:
       populate_controller_license: "{{ (populate_controller_license | default([])) + item.ansible_facts.controller_license }}"
     loop: "{{ contents.results }}"
-    when: contents.results is defined and item.ansible_facts is defined
+    when: contents.results is defined and item.ansible_facts.controller_license is defined
 
   - name: "Set License Data Structure"
     set_fact:
@@ -23,4 +23,5 @@
 - name: Configure Controller License | Launch license creation
   import_role:
     name: redhat_cop.controller_configuration.license
+  when: populate_controller_license is defined
 ...

@@ -1,13 +1,13 @@
 # tasks file for controller_casc_desired_state
 #
-- name: Include Tasks to configure Controller Roles
-  include_tasks: roles_desired_state.yml
-  args:
-    apply:
-      tags: desired_state_roles
-  tags:
-    - desired_state
-    - desired_state_roles
+#- name: Include Tasks to configure Controller Roles
+#  include_tasks: roles_desired_state.yml
+#  args:
+#    apply:
+#      tags: desired_state_roles
+#  tags:
+#    - desired_state
+#    - desired_state_roles
 
 # REVIEW - TODO
 # - name: Include Tasks to config DESIRED STATE  Schedules

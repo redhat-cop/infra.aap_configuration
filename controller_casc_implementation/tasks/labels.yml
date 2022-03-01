@@ -11,7 +11,7 @@
     set_fact:
       populate_controller_labels: "{{ (populate_controller_labels | default([])) + item.ansible_facts.controller_labels }}"
     loop: "{{ contents.results }}"
-    when: contents.results is defined and item.ansible_facts is defined
+    when: contents.results is defined and item.ansible_facts.controller_labels is defined
 
   - name: "Set Labels Data Structure"
     set_fact:

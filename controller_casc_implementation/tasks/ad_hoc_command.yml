@@ -11,7 +11,7 @@
     set_fact:
       populate_controller_ad_hoc_commands: "{{ (populate_controller_ad_hoc_commands | default([])) + item.ansible_facts.controller_ad_hoc_commands }}"
     loop: "{{ contents.results }}"
-    when: contents.results is defined and item.ansible_facts is defined
+    when: contents.results is defined and item.ansible_facts.controller_ad_hoc_commands is defined
 
   - name: "Set Ad Hoc Command Data Structure"
     set_fact:
@@ -22,5 +22,5 @@
 
 - name: Configure Controller Ad Hoc Command | Launch ad_hoc_commands creation
   import_role:
-    name: redhat_cop.controller_configuration.ad_hoc_commands
+    name: redhat_cop.controller_configuration.ad_hoc_command
 ...

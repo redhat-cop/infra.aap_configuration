@@ -11,7 +11,7 @@
     set_fact:
       populate_controller_cancel_jobs: "{{ (populate_controller_cancel_jobs | default([])) + item.ansible_facts.controller_cancel_jobs }}"
     loop: "{{ contents.results }}"
-    when: contents.results is defined and item.ansible_facts is defined
+    when: contents.results is defined and item.ansible_facts.controller_cancel_jobs is defined
 
   - name: "Set Jobs Cancel Data Structure"
     set_fact:

@@ -11,7 +11,7 @@
     set_fact:
       populate_controller_inventories: "{{ (populate_controller_inventories | default([])) + item.ansible_facts.controller_inventories }}"
     loop: "{{ contents.results }}"
-    when: contents.results is defined and item.ansible_facts is defined
+    when: contents.results is defined and item.ansible_facts.controller_inventories is defined
 
   - name: "Set Inventories Data Structure"
     set_fact:

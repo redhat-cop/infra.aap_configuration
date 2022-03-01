@@ -11,7 +11,7 @@
     set_fact:
       populate_controller_job_templates: "{{ (populate_controller_job_templates | default([])) + item.ansible_facts.controller_templates }}"
     loop: "{{ contents.results }}"
-    when: contents.results is defined and item.ansible_facts is defined
+    when: contents.results is defined and item.ansible_facts.controller_templates is defined
 
   - name: "Set Job Templates Data Structure"
     set_fact:
@@ -23,7 +23,7 @@
 - name: "DESIRED STATE: Get the API list of all Job Templates"
   set_fact:
     __controller_api_job_templates: "{{ query('ansible.controller.controller_api', 'job_templates',
-      host=controller_hostname, username=controller_username,
+      host=controller_host, username=controller_username,
       password=controller_password, verify_ssl=false) }}"
 
 - debug:

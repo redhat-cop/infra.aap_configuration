@@ -11,7 +11,7 @@
     set_fact:
       populate_controller_workflow_job_templates: "{{ (populate_controller_workflow_job_templates | default([])) + item.ansible_facts.controller_workflows }}"
     loop: "{{ contents.results }}"
-    when: contents.results is defined and item.ansible_facts is defined
+    when: contents.results is defined and item.ansible_facts.controller_workflows is defined
 
   - name: "Set Job Templates Data Structure"
     set_fact:
@@ -20,10 +20,10 @@
 
   when: dir_orgs_vars is defined and orgs is defined
 
-- name: "DESIRED STATE: Get the API list of all Workflow Job Templates and Inventories in the 'test' Organization"
+- name: "DESIRED STATE: Get the API list of all Workflow Job Templates"
   set_fact:
     __controller_api_workflow_job_templates: "{{ query('ansible.controller.controller_api', 'workflow_job_templates',
-      host=controller_hostname, username=controller_username,
+      host=controller_host, username=controller_username,
       password=controller_password, verify_ssl=false) }}"
 
 - debug:

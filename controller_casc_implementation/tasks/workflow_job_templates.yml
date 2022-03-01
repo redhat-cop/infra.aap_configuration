@@ -11,7 +11,7 @@
     set_fact:
       populate_controller_workflow_job_templates: "{{ (populate_controller_workflow_job_templates | default([])) + item.ansible_facts.controller_workflows }}"
     loop: "{{ contents.results }}"
-    when: contents.results is defined and item.ansible_facts is defined
+    when: contents.results is defined and item.ansible_facts.controller_workflows is defined
 
   - name: "Set Job Templates Data Structure"
     set_fact:

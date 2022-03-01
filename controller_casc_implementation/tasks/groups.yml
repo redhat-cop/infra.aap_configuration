@@ -11,7 +11,7 @@
     set_fact:
       populate_controller_groups: "{{ (populate_controller_groups | default([])) + item.ansible_facts.controller_groups }}"
     loop: "{{ contents.results }}"
-    when: contents.results is defined and item.ansible_facts is defined
+    when: contents.results is defined and item.ansible_facts.controller_groups is defined
 
   - name: "Set Groups Data Structure"
     set_fact:

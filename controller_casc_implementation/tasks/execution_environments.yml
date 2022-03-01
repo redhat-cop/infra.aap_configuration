@@ -11,7 +11,7 @@
     set_fact:
       populate_controller_execution_environments: "{{ (populate_controller_execution_environments | default([])) + item.ansible_facts.controller_execution_environments }}"
     loop: "{{ contents.results }}"
-    when: contents.results is defined and item.ansible_facts is defined
+    when: contents.results is defined and item.ansible_facts.controller_execution_environments is defined
 
   - name: "Set Projects Data Structure"
     set_fact:
