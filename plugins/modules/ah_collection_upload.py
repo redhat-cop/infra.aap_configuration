@@ -24,6 +24,7 @@ options:
     path:
       description:
         - Collection artifact file path.
+        - Can be a URL
       required: True
       type: str
     wait:
@@ -40,6 +41,10 @@ EXAMPLES = """
 - name: Upload collection to automation hub
   ah_collection_upload:
     path: /var/tmp/collections/awx_awx-15.0.0.tar.gz
+
+- name: Upload collection to automation hub from galaxy
+  ah_collection_upload:
+    path: https://galaxy.ansible.com/download/theforeman-foreman-3.2.0.tar.gz
 
 """
 
