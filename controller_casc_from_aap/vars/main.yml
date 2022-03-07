@@ -2,6 +2,7 @@
 # vars file for controller_casc_implementation
 output_path: "/tmp/casc_from_aap_output"
 valid_tags:
+  - all
   - credentials
   - credential_types
   - execution_environments
