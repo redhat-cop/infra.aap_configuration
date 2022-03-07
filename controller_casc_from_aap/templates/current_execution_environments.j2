@@ -1,0 +1,10 @@
+---
+controller_execution_environments:
+{% for ee in current_asset_value %}
+  - name: "{{ ee.natural_key.name }}"
+    description: "{{ ee.description }}"
+    image: "{{ ee.image }}"
+    pull: "{{ ee.pull }}"
+    credential: "{{ ee.credential.name }}"
+{% endfor %}
+...

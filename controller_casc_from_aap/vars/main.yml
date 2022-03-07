@@ -1,0 +1,20 @@
+---
+# vars file for controller_casc_implementation
+output_path: "/tmp/casc_from_aap_output"
+valid_tags:
+  - credentials
+  - credential_types
+  - execution_environments
+  - groups
+  - hosts
+  - inventory
+  - inventory_sources
+  - job_templates
+  - notification_templates
+  - organizations
+  - projects
+  - roles
+  - teams
+  - users
+  - workflow_job_template_nodes
+  - workflow_job_templates

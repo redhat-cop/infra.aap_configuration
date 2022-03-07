@@ -1,0 +1,15 @@
+---
+- name: "Create the output directory: {{ output_path }}"
+  file:
+    path: "{{ output_path }}"
+    state: directory
+
+- name: "Add current organizations to the output yaml file"
+  template:
+    src: "templates/current_organizations.j2"
+    dest: "{{ output_path }}/current_organization_{{ current_organization.name }}.yaml"
+  loop: "{{ current_asset_value }}"
+  loop_control:
+    loop_var: current_organization
+    label: "{{ current_organization.name }} at file {{ output_path }}/current_organization_{{ current_organization.name }}.yaml"
+...
