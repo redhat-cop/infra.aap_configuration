@@ -1,0 +1,12 @@
+---
+configure_tower_groups:
+{% for group in current_asset_value.value %}
+  - name: "{{ group.natural_key.name }}"
+    description: "{{ group.description }}"
+    inventory: "{{ group.natural_key.inventory.name }}"
+    hosts:
+{% for host in group.related.hosts %}
+      - {{ host.name }}
+{% endfor %}
+{% endfor %}
+...

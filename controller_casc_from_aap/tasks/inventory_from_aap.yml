@@ -1,0 +1,74 @@
+---
+# Get the list of the inventories that don't have any inventory source
+- name: "Populate a list of the inventories not having an inventory source"
+  set_fact:
+    inventories_without_sources: "{{ (inventories_without_sources | default([])) + [inventory_source_item.name] }}"
+  loop: "{{ query('ansible.controller.controller_api', 'inventories', query_params={ 'has_inventory_sources': false }, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
+  loop_control:
+    loop_var: inventory_source_item
+    label: "{{ inventory_source_item.name }}"
+  when: inventories_without_sources is not defined or inventory_source_item.name in inventories_without_sources
+
+- name: "Create the output directory: {{ output_path }}"
+  file:
+    path: "{{ output_path }}"
+    state: directory
+
+- name: "Add current inventories to the output yaml file: {{ output_path }}/current_inventories.yaml"
+  template:
+    src: "templates/current_inventories.j2"
+    dest: "{{ output_path }}/current_inventories.yaml"
+
+- name: "Let re-use the input variable"
+  set_fact:
+    current_asset_value_here: "{{ current_asset_value }}"
+    current_asset_value: {}
+
+- name: "Create the inventory's hosts list"
+  set_fact:
+    new_current_asset_value_inventory_hosts: "{{ (new_current_asset_value_inventory_hosts | default({})) | combine({host_asset_item.0.name: ((new_current_asset_value_inventory_hosts[host_asset_item.0.name] | default([])) + [host_asset_item.1])}) }}"
+  loop: "{{ current_asset_value_here | subelements('related.hosts') }}"
+  loop_control:
+    loop_var: host_asset_item
+    label: "{{ host_asset_item.0.name }} - {{ host_asset_item.1.name }}"
+  when:
+    - host_asset_item.0.kind is not match('smart')
+    - inventories_without_sources is defined
+    - host_asset_item.0.name in inventories_without_sources
+
+- name: "Set the inventory's hosts"
+  include_tasks: "hosts_from_aap.yml"
+  loop: "{{ new_current_asset_value_inventory_hosts | default({}) | dict2items }}"
+  loop_control:
+    loop_var: current_asset_value
+    label: "{{ current_asset_value.key }}"
+  when:
+    - inventories_without_sources is defined
+    - current_asset_value.key in inventories_without_sources
+
+- name: "Let re-use the input variable again"
+  set_fact:
+    current_asset_value: {}
+
+- name: "Create the inventory's groups list"
+  set_fact:
+    new_current_asset_value_inventory_groups: "{{ (new_current_asset_value_inventory_groups | default({})) | combine({group_asset_item.0.name: ((new_current_asset_value_inventory_groups[group_asset_item.0.name] | default([])) + [group_asset_item.1])}) }}"
+  loop: "{{ current_asset_value_here | subelements('related.groups') }}"
+  loop_control:
+    loop_var: group_asset_item
+    label: "{{ group_asset_item.0.name }} - {{ group_asset_item.1.name }}"
+  when:
+    - group_asset_item.0.kind is not match('smart')
+    - inventories_without_sources is defined
+    - group_asset_item.0.name in inventories_without_sources
+
+- name: "Set the inventory's groups"
+  include_tasks: "groups_from_aap.yml"
+  loop: "{{ new_current_asset_value_inventory_groups | default({}) | dict2items }}"
+  loop_control:
+    loop_var: current_asset_value
+    label: "{{ current_asset_value.key }}"
+  when:
+    - inventories_without_sources is defined
+    - current_asset_value.key in inventories_without_sources
+...

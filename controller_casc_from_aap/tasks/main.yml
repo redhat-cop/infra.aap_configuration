@@ -1,115 +1,27 @@
 ---
 # tasks file for controller_casc_from_aap
-- name: Include Tasks to get all
+- name: "Check if the required input variables are present"
+  assert:
+    that:
+      - input_tag is defined
+      - (input_tag | type_debug) == 'list'
+    fail_msg: 'A variable called ''input_tag'' of type ''list'' is needed: -e ''{input_tag: [organizations, projects]}'''
+    quiet: true
+
+- name: "Check if the required input values are correct"
+  assert:
+    that:
+      - tag_item in valid_tags
+    fail_msg: "The valid tags are the following ones: {{ valid_tags | join(', ') }}"
+    quiet: true
+  loop: "{{ input_tag }}"
+  loop_control:
+    loop_var: tag_item
+
+- name: "Include Tasks to get all objects of type {{ input_tag }}"
   include_tasks: all.yml
   args:
     apply:
-      tags: all
-  tags: all
-
-- name: Include Tasks to get Settings
-  include_tasks: settings.yml
-  args:
-    apply:
-      tags: settings
-  tags: settings
-
-- name: Include Tasks to get Organizations
-  include_tasks: organizations.yml
-  args:
-    apply:
-      tags: organizations
-  tags: organizations
-
-- name: Include Tasks to get Execution Environments
-  include_tasks: execution_environments.yml
-  args:
-    apply:
-      tags: execution_environments
-  tags: execution_environments
-
-- name: Include Tasks to get Credentials
-  include_tasks: credentials.yml
-  args:
-    apply:
-      tags: credentials
-  tags: credentials
-
-- name: Include Tasks to get Projects
-  include_tasks: projects.yml
-  args:
-    apply:
-      tags: projects
-  tags: projects
-
-- name: Include Tasks to get Project Update
-  include_tasks: project_update.yml
-  args:
-    apply:
-      tags: project_update
-  tags: project_update
-
-- name: Include Tasks to get Inventories
-  include_tasks: inventories.yml
-  args:
-    apply:
-      tags: inventories
-  tags: inventories
-
-- name: Include Tasks to get Inventory Sources
-  include_tasks: inventory_sources.yml
-  args:
-    apply:
-      tags: inventory_sources
-  tags: inventory_sources
-
-- name: Include Tasks to get Inventory Source Update
-  include_tasks: inventory_source_update.yml
-  args:
-    apply:
-      tags: inventory_source_update
-  tags: inventory_source_update
-
-- name: Include Tasks to get Hosts
-  include_tasks: hosts.yml
-  args:
-    apply:
-      tags: hosts
-  tags: hosts
-
-- name: Include Tasks to get User Accounts
-  include_tasks: user_accounts.yml
-  args:
-    apply:
-      tags: user_accounts
-  tags: user_accounts
-
-- name: Include Tasks to get Teams
-  include_tasks: teams.yml
-  args:
-    apply:
-      tags: teams
-  tags: teams
-
-- name: Include Tasks to get Job_Templates
-  include_tasks: job_templates.yml
-  args:
-    apply:
-      tags: job_templates
-  tags: job_templates
-
-- name: Include Tasks to get Schedules
-  include_tasks: schedules.yml
-  args:
-    apply:
-      tags: schedules
-  tags: schedules
-
-- name: Include Tasks to get Roles
-  include_tasks: roles.yml
-  args:
-    apply:
-      tags: roles
-  tags: roles
-
+      tags: "{{ input_tag | to_yaml }}"
+  tags: "{{ valid_tags }}"
 ...

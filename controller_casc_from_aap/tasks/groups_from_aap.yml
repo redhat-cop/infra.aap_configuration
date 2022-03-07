@@ -1,0 +1,12 @@
+---
+- name: "Create the output directory: {{ output_path }}"
+  file:
+    path: "{{ output_path }}"
+    state: directory
+
+- name: "Add current groups to the output yaml file: {{ output_path }}/current_groups_{{ current_asset_value.key }}.yaml"
+  template:
+    src: "templates/current_groups.j2"
+    dest: "{{ output_path }}/current_groups_{{ current_asset_value.key }}.yaml"
+...
+

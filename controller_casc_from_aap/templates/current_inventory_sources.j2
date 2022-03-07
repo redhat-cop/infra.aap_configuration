@@ -1,0 +1,17 @@
+---
+controller_inventory_sources:
+{% for inventory_source in current_asset_value %}
+  - name: "{{ inventory_source.natural_key.name }}"
+    description: "{{ inventory_source.description }}"
+    source: "{{ inventory_source.source }}"
+    source_project: "{{ inventory_source.source_project.name }}"
+    execution_environment: "{{ inventory_source.execution_environment.name }}"
+    source_path: "{{ inventory_source.source_path }}"
+    inventory: "{{ inventory_source.natural_key.inventory.name }}"
+    update_on_launch: "{{ inventory_source.update_on_launch }}"
+    overwrite: "{{ inventory_source.overwrite }}"
+{% if inventory_source.credential %}
+    credential: "{{ inventory_source.credential }}"
+{% endif %}
+{% endfor %}
+...

@@ -1,0 +1,30 @@
+---
+- name: "Create the output directory: {{ output_path }}"
+  file:
+    path: "{{ output_path }}"
+    state: directory
+
+- name: "Add current users to the output yaml file: {{ output_path }}/current_users.yaml"
+  template:
+    src: "templates/current_users.j2"
+    dest: "{{ output_path }}/current_users.yaml"
+
+- name: "Let re-use the input variable"
+  set_fact:
+    current_asset_value_here: "{{ current_asset_value }}"
+    current_asset_value: {}
+
+- name: "Create the user's roles list"
+  set_fact:
+    new_current_asset_value_users: "{{ (new_current_asset_value_users | default({})) | combine({user_asset_item.0.username: ((new_current_asset_value_users[user_asset_item.0.username] | default([])) + [user_asset_item.1])}) }}"
+  loop: "{{ current_asset_value_here | subelements('related.roles') }}"
+  loop_control:
+    loop_var: user_asset_item
+    label: "{{ user_asset_item.0.username }} - {{ user_asset_item.1.name }}"
+
+- name: "Set the user's roles"
+  include_tasks: "roles_from_aap.yml"
+  vars:
+    current_asset_value: "{{ new_current_asset_value_users }}"
+    object_type: "{{ (current_asset_value_here | first).natural_key.type }}"
+...
