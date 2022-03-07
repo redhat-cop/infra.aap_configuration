@@ -3,9 +3,9 @@
   - name: "export all supported objects (Be patient... this may take a while!)"
     ansible.controller.export:
       controller_host: "{{ controller_hostname }}"
+      controller_username: "{{ controller_username }}"
+      controller_password: "{{ controller_password }}"
       validate_certs: "{{ controller_validate_certs }}"
-      controller_username: admin
-      controller_password: redhat00
       all: "{{ true if 'all' in input_tag else omit }}"
       credentials: "{{ 'all' if 'credentials' in input_tag else omit }}"
       credential_types: "{{ 'all' if 'credential_types' in input_tag else omit }}"
@@ -18,7 +18,7 @@
       notification_templates: "{{ 'all' if 'notification_templates' in input_tag else omit }}"
       organizations: "{{ 'all' if 'organizations' in input_tag else omit }}"
       projects: "{{ 'all' if 'projects' in input_tag else omit }}"
-      roles: "{{ 'all' if 'roles' in input_tag else omit }}"
+      role: "{{ 'all' if 'role' in input_tag else omit }}"
       teams: "{{ 'all' if 'teams' in input_tag else omit }}"
       users: "{{ 'all' if 'users' in input_tag else omit }}"
       workflow_job_template_nodes: "{{ 'all' if 'workflow_job_template_nodes' in input_tag else omit }}"
