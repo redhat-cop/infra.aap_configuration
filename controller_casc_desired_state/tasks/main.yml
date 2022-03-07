@@ -110,14 +110,15 @@
 # REVIEW - TODO
 # - name: Include Tasks to config DESIRED STATE credential_input_sources
 
-- name: Include Tasks to config DESIRED STATE credential_types
-  include_tasks: credential_types_desired_state.yml
-  args:
-    apply:
-      tags: desired_state_credential_types
-  tags:
-    - desired_state
-    - desired_state_credential_types
+# REVIEW - TODO
+#- name: Include Tasks to config DESIRED STATE credential_types
+#  include_tasks: credential_types_desired_state.yml
+#  args:
+#    apply:
+#      tags: desired_state_credential_types
+#  tags:
+#    - desired_state
+#    - desired_state_credential_types
 
 - name: Include Tasks to config DESIRED STATE credentials
   include_tasks: credentials_desired_state.yml
@@ -146,16 +147,6 @@
   tags:
     - desired_state
     - desired_state_organizations
-
-- name: Include Tasks to config DESIRED STATE Galaxy credentials
-  include_tasks: galaxy_credentials_desired_state.yml
-  args:
-    apply:
-      tags: desired_state_galaxy_credentials
-  tags:
-    - desired_state
-    - desired_state_galaxy_credentials
-
 
 #- name: Include Tasks to configure Controller Schedules
 #  include_tasks: schedules_desired_state.yml
