@@ -3,6 +3,6 @@ controller_hosts:
 {% for host in current_asset_value.value %}
   - name: "{{ host.name }}"
     description: "{{ host.description }}"
-    inventory: "{{ host.inventory.name | mandatory('The host \'' + host.name + '\' must have an associated inventory') }}"
+    inventory: "{{ host.inventory.name | 'ToDo: The host \'' + host.name + '\' must have an associated inventory' }}"
 {% endfor %}
 ...
