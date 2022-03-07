@@ -3,8 +3,8 @@ controller_templates:
 {% for job_template in current_asset_value %}
   - name: "{{ job_template.natural_key.name }}"
     description: "{{ job_template.description }}"
-    organization: "{{ job_template.natural_key.organization.name | 'ToDo: The job template \'' + job_template.natural_key.name + '\' must belong to an organization' }}"
-    project: "{{ job_template.project.name | 'ToDo: The job template \'' + job_template.natural_key.name + '\' must have a project assigned' }}"
+    organization: "{{ job_template.natural_key.organization.name | default('ToDo: The job template \'' + job_template.natural_key.name + '\' must belong to an organization') }}"
+    project: "{{ job_template.project.name | default('ToDo: The job template \'' + job_template.natural_key.name + '\' must have a project assigned') }}"
 {% if job_template.inventory %}
     inventory: "{{ job_template.inventory.name }}"
 {% endif %}
