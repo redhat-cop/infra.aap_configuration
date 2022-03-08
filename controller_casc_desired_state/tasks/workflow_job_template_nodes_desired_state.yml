@@ -23,7 +23,7 @@
 - name: "DESIRED STATE: Get the API list of all Workflow Job Template Nodes"
   set_fact:
     __controller_api_workflow_job_template_nodes: "{{ query('ansible.controller.controller_api', 'workflow_job_template_nodes',
-      host=controller_host, username=controller_username,
+      host=controller_hostname, username=controller_username,
       password=controller_password, verify_ssl=false) }}"
 - block:
     - debug:
