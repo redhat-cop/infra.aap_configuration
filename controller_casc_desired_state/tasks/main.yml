@@ -16,7 +16,9 @@
   include_tasks: workflow_job_template_nodes_desired_state.yml
   args:
     apply:
-      tags: desired_state_workflow_job_template_nodes
+      tags:
+        - desired_state
+        - desired_state_workflow_job_template_nodes
   tags:
     - desired_state
     - desired_state_workflow_job_template_nodes
@@ -25,7 +27,9 @@
   include_tasks: workflow_job_templates_desired_state.yml
   args:
     apply:
-      tags: desired_state_workflow_job_templates
+      tags:
+        - desired_state
+        - desired_state_workflow_job_templates
   tags:
     - desired_state
     - desired_state_workflow_job_templates
@@ -34,7 +38,9 @@
   include_tasks: job_templates_desired_state.yml
   args:
     apply:
-      tags: desired_state_job_templates
+      tags:
+        - desired_state
+        - desired_state_job_templates
   tags:
     - desired_state
     - desired_state_job_templates
@@ -44,7 +50,9 @@
   include_tasks: teams_desired_state.yml
   args:
     apply:
-      tags: desired_state_teams
+      tags:
+        - desired_state
+        - desired_state_teams
   tags:
     - desired_state
     - desired_state_teams
@@ -54,7 +62,9 @@
   include_tasks: user_accounts_desired_state.yml
   args:
     apply:
-      tags: desired_state_user_accounts
+      tags:
+        - desired_state
+        - desired_state_user_accounts
   tags:
     - desired_state
     - desired_state_user_accounts
@@ -66,7 +76,9 @@
   include_tasks: groups_desired_state.yml
   args:
     apply:
-      tags: desired_state_groups
+      tags:
+        - desired_state
+        - desired_state_groups
   tags:
     - desired_state
     - desired_state_groups
@@ -75,7 +87,9 @@
   include_tasks: hosts_desired_state.yml
   args:
     apply:
-      tags: desired_state_hosts
+      tags:
+        - desired_state
+        - desired_state_hosts
   tags:
     - desired_state
     - desired_state_hosts
@@ -84,7 +98,9 @@
   include_tasks: inventory_sources_desired_state.yml
   args:
     apply:
-      tags: desired_state_inventory_sources
+      tags:
+        - desired_state
+        - desired_state_inventory_sources
   tags:
     - desired_state
     - desired_state_inventory_sources
@@ -93,7 +109,9 @@
   include_tasks: inventories_desired_state.yml
   args:
     apply:
-      tags: desired_state_inventories
+      tags:
+        - desired_state
+        - desired_state_inventories
   tags:
     - desired_state
     - desired_state_inventories
@@ -102,7 +120,9 @@
   include_tasks: projects_desired_state.yml
   args:
     apply:
-      tags: desired_state_projects
+      tags:
+        - desired_state
+        - desired_state_projects
   tags:
     - desired_state
     - desired_state_projects
@@ -115,7 +135,9 @@
 #  include_tasks: credential_types_desired_state.yml
 #  args:
 #    apply:
-#      tags: desired_state_credential_types
+#      tags:
+#       - desired_state
+#       - desired_state_credential_types
 #  tags:
 #    - desired_state
 #    - desired_state_credential_types
@@ -124,7 +146,9 @@
   include_tasks: credentials_desired_state.yml
   args:
     apply:
-      tags: desired_state_credentials
+      tags:
+        - desired_state
+        - desired_state_credentials
   tags:
     - desired_state
     - desired_state_credentials
@@ -134,7 +158,9 @@
 #  include_tasks: excecution_environments_desired_state.yml
 #  args:
 #    apply:
-#      tags: desired_state_excecution_environments
+#      tags:
+#        - desired_state
+#        - desired_state_excecution_environments
 #  tags:
 #    - desired_state
 #    - desired_state_excecution_environments
@@ -143,7 +169,9 @@
   include_tasks: organizations_desired_state.yml
   args:
     apply:
-      tags: desired_state_organizations
+      tags:
+        - desired_state
+        - desired_state_organizations
   tags:
     - desired_state
     - desired_state_organizations
@@ -152,7 +180,9 @@
 #  include_tasks: schedules_desired_state.yml
 #  args:
 #    apply:
-#      tags: desired_state_schedules
+#      tags:
+#        - desired_state
+#        - desired_state_schedules
 #  tags:
 #    - desired_state
 #    - desired_state_schedules
