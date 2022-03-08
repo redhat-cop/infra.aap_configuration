@@ -9,7 +9,7 @@
                    | flatten }}"
 - name: "Get the Organization and the tags to run the CasC"
   set_fact:
-    org_dirs_dict: "{{ (org_dirs_dict | default({})) | combine({input_var[0]: ((org_dirs_dict[input_var[0]] | default([])) + [input_var[1]])}) }}"
+    org_dirs_dict: "{{ (org_dirs_dict | default({})) | combine({input_var[0]: (((org_dirs_dict[input_var[0]] | default([])) + [input_var[1]] ) | unique ) }) }}"
   vars:
     #input_var: "{{ item | regex_search('/([^/]*)/env/(?:[^/]*)/configure_controller_(.*).ya?ml', '\\1', '\\2') }}"
     input_var: "{{ item | regex_search('/([^/]*)/env/(?:[^/]*)/controller_(.*).d/', '\\1', '\\2') }}"
