@@ -24,7 +24,7 @@ controller_templates:
     ask_variables_on_launch: "{{ job_template.ask_variables_on_launch }}"
 {% if (job_template.extra_vars | length) > 3 %}
     extra_vars:
-{{ job_template.extra_vars | from_json | to_nice_yaml(indent=2) | indent(width=6, indentfirst=True) }}
+{{ job_template.extra_vars | from_json | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
 {%- endif -%}
 {% if job_template.execution_environment %}
     execution_environment: "{{ job_template.execution_environment.name }}"
