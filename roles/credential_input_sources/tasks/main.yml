@@ -28,7 +28,8 @@
     jid: "{{ __credential_input_sources_job_async_results_item.ansible_job_id }}"
   register: __credential_input_sources_job_async_result
   until: __credential_input_sources_job_async_result.finished
-  retries: 10
+  retries: "{{ controller_configuration_credential_input_sources_async_retries }}"
+  delay: "{{ controller_configuration_credential_input_sources_async_delay }}"
   loop: "{{ __credential_input_sources_job_async.results }}"
   loop_control:
     loop_var: __credential_input_sources_job_async_results_item
