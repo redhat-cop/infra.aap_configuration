@@ -34,7 +34,8 @@
     jid: "{{ __organizations_job_async_results_item.ansible_job_id }}"
   register: __organizations_job_async_result
   until: __organizations_job_async_result.finished
-  retries: 10
+  retries: "{{ controller_configuration_organizations_async_retries }}"
+  delay: "{{ controller_configuration_organizations_async_delay }}"
   loop: "{{ __organizations_job_async.results }}"
   loop_control:
     loop_var: __organizations_job_async_results_item
