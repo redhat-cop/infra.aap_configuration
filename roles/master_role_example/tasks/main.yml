@@ -19,7 +19,7 @@
     loop_var: "__controller_***********_item"
   no_log: "{{ controller_configuration_*******_secure_logging }}"
   when: controller_************ is defined
-    async: 1000
+  async: 1000
   poll: 0
   register: __controller_***********_job_async
 
@@ -28,7 +28,8 @@
     jid: "{{ __controller_***********_job_async_results_item.ansible_job_id }}"
   register: __controller_***********_job_async_result
   until: __controller_***********_job_async_result.finished
-  retries: 10
+  retries: "{{ controller_configuration_***********_async_retries }}"
+  delay: "{{ controller_configuration_***********_async_delay }}"
   loop: "{{ __controller_***********_job_async.results }}"
   loop_control:
     loop_var: __controller_***********_job_async_results_item
