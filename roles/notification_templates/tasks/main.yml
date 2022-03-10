@@ -31,7 +31,8 @@
     jid: "{{ __controller_notification_job_async_results_item.ansible_job_id }}"
   register: __controller_notification_job_async_result
   until: __controller_notification_job_async_result.finished
-  retries: 10
+  retries: "{{ controller_configuration_notifications_async_retries }}"
+  delay: "{{ controller_configuration_notifications_async_delay }}"
   loop: "{{ __controller_notification_job_async.results }}"
   loop_control:
     loop_var: __controller_notification_job_async_results_item

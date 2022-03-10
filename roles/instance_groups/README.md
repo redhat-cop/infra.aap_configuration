@@ -33,6 +33,19 @@ controller_configuration_instance_groups_secure_logging defaults to the value of
 |`controller_configuration_instance_groups_secure_logging`|`False`|no|Whether or not to include the sensitive instance groups role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
+### Asynchronous Retry Variables
+The following Variables set asynchronous retries for the role.
+If neither of the retries or delay or retries are set, they will default to their respective defaults.
+This allows for all items to be created, then checked that the task finishes successfully.
+This also speeds up the overall role.
+
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|
+|`controller_configuration_async_retries`|30|no|This variable sets the number of retries to attempt for the role globally.|
+|`controller_configuration_instance_groups_async_retries`|30|no|This variable sets the number of retries to attempt for the role.|
+|`controller_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
+|`controller_configuration_instance_groups_async_delay`|1|no|This sets the delay between retries for the role.|
+
 ## Data Structure
 ### Variables
 |Variable Name|Default Value|Required|Type|Description|

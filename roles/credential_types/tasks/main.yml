@@ -28,7 +28,8 @@
     jid: "{{ __credentialTypes_job_async_result_item.ansible_job_id }}"
   register: __credentialTypes_job_async_result
   until: __credentialTypes_job_async_result.finished
-  retries: 10
+  retries: "{{ controller_configuration_credential_types_async_retries }}"
+  delay: "{{ controller_configuration_credential_types_async_delay }}"
   loop: "{{ __credentialTypes_job_async.results }}"
   when: __credentialTypes_job_async_result_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_credential_types_secure_logging }}"
