@@ -16,8 +16,9 @@
 
     - name: Wait for Controller to come up
       uri:
-        url: "{{ controller_hostname }}/api/v2/ping"
+        url: "https://{{ controller_hostname }}/api/v2/ping"
         status_code: 200
+        validate_certs: "{{ controller_validate_certs }}"
       register: result
       until: result.status == 200
       retries: 80
