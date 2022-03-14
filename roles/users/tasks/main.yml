@@ -10,6 +10,7 @@
     is_superuser:             "{{ __controller_user_accounts_item.is_superuser | default(__controller_user_accounts_item.superuser | default(omit)) }}"
     is_system_auditor:        "{{ __controller_user_accounts_item.is_auditor | default(__controller_user_accounts_item.is_system_auditor | default(omit)) }}"
     update_secrets:           "{{ __controller_user_accounts_item.update_secrets | default(omit) }}"
+    organization:             "{{ __controller_user_accounts_item.organization | default(__controller_user_accounts_item.organization | default(omit)) }}"
     state:                    "{{ __controller_user_accounts_item.state | default(controller_state | default(omit, true)) }}"
 
     # Role Standard Options
