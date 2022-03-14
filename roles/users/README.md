@@ -58,6 +58,7 @@ This also speeds up the overall role.
 |`last_name`|""|no|str|The last name of the user|
 |`is_superuser`|false|no|bool|Whether the user is a superuser|
 |`is_system_auditor`|false|no|bool|Whether the user is an auditor|
+|`organization`|""|no|str|The name of the organization the user belongs to|
 |`state`|`present`|no|str|Desired state of the resource.|
 |`update_secrets`|true|no|bool| True will always change password if user specifies password, even if API gives $encrypted$ for password. False will only set the password if other values change too.|
 
