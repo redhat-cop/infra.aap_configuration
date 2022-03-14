@@ -1,17 +1,19 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+The role controller_casc_from_aap is intended to be used as the first step to begin using the Configuration as Code on Ansible Tower or Ansible Automation Platform, when you already have a running instance of any of them. Obviously, you also could start to write your objects as code from scratch, but the idea behind the creation of that role is to simplify your lives and make that task a little bit easier.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+That role requires the Ansible collection [ansible.controller](https://console.redhat.com/ansible/automation-hub/repo/published/ansible/controller?version=4.1.0) to be installed and accessible.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+The following variables are required for that role to work properly:
+
+- **`output_path`**: The path to the output directory where all the generated `yaml` files with the corresponding Objects as code will be written to. The default path is `/tmp/casc_from_aap_output`.
 
 Dependencies
 ------------
@@ -21,18 +23,49 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```yaml
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    controller_hostname: "{{ vault_controller_hostname }}"
+    controller_username: "{{ vault_controller_username }}"
+    controller_password: "{{ vault_controller_password }}"
+    controller_validate_certs: "{{ vault_controller_validate_certs }}"
+  collections:
+    - redhat_cop.controller_casc
+  pre_tasks:
+    - name: "Check if the required input variables are present"
+      assert:
+        that:
+          - input_tag is defined
+          - (input_tag | type_debug) == 'list'
+        fail_msg: 'A variable called ''input_tag'' of type ''list'' is needed: -e ''{input_tag: [organizations, projects]}'''
+        quiet: true
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+    - name: "Check if the required input values are correct"
+      assert:
+        that:
+          - tag_item in valid_tags
+        fail_msg: "The valid tags are the following ones: {{ valid_tags | join(', ') }}"
+        quiet: true
+      loop: "{{ input_tag }}"
+      loop_control:
+        loop_var: tag_item
+  roles:
+    - controller_casc_from_aap
+...
+```
 
 License
 -------
 
-BSD
+GPLv3+
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+- Ivan Aragonés:
+  - email: <iaragone@redhat.com>
+  - github: https://github.com/ivarmu
