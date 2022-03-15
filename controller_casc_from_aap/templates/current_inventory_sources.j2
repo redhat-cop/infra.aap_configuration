@@ -4,9 +4,12 @@ controller_inventory_sources:
   - name: "{{ inventory_source.natural_key.name }}"
     description: "{{ inventory_source.description }}"
     source: "{{ inventory_source.source }}"
+{% if inventory_source.source_project %}
     source_project: "{{ inventory_source.source_project.name }}"
-    execution_environment: "{{ inventory_source.execution_environment.name }}"
+{% endif %}
+{% if inventory_source.source_path %}
     source_path: "{{ inventory_source.source_path }}"
+{% endif %}
     inventory: "{{ inventory_source.natural_key.inventory.name }}"
     update_on_launch: "{{ inventory_source.update_on_launch }}"
     overwrite: "{{ inventory_source.overwrite }}"

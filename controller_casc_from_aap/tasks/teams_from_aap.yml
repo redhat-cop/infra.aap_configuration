@@ -27,4 +27,5 @@
   vars:
     current_asset_value: "{{ new_current_asset_value_teams }}"
     object_type: "{{ (current_asset_value_here | first).natural_key.type }}"
+  when: new_current_asset_value_teams is defined
 ...
