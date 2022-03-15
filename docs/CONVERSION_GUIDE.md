@@ -1,9 +1,11 @@
 # Red Hat Communties of Practice Controller Configuration Collection Conversion Guide
 
-# REQUIREMENTS
-The AWX.AWX OR ANSIBLE.TOWER collections MUST be installed in order for this collection to work. It is recomended they be invoked in the playbook in the following way.
+## REQUIREMENTS
+
+The AWX.AWX OR ANSIBLE.CONTROLLER collections MUST be installed in order for this collection to work. It is recommended they be invoked in the playbook in the following way.
 
 ## Using this collection
+
 The awx.awx or ansible.controller collection must be invoked in the playbook in order for ansible to pick up the correct modules to use.
 
 Otherwise it will look for the modules only in your base installation. If there are errors complaining about "couldn't resolve module/action" this is the most likely cause.
@@ -19,9 +21,10 @@ Otherwise it will look for the modules only in your base installation. If there 
     - redhat_cop.controller_configuration
 ```
 
-# Variable name changes
+## Variable name changes
 
 ### Major Variable names changed
+
 The Following Variables need to be changed:
 |Tower Variable Name|Controller Variable Name|
 |:---:|:---:|
@@ -54,6 +57,7 @@ The Following Variables need to be changed:
 |`tower_workflow_launch_jobs`|`controller_workflow_launch_jobs`|
 
 ### Authentication Credentials
+
 |Tower Variable Name|Controller Variable Name|
 |:---:|:---:|
 |`tower_username`|`controller_username`|
@@ -66,10 +70,12 @@ The Following Variables need to be changed:
 ### Specific Changes in Roles
 
 ### Projects
+
 |Tower Variable Name|Controller Variable Name|Reason|
 |:---:|:---:|:---:|
-|`default_environment`|`custom_virtualenv`|`enviroments now refer to Execution Enviroments`|
+|`default_environment`|`custom_virtualenv`|`environments now refer to Execution Environments`|
 
 ## Notes
+
 Making these changes should be all the ones you need to make in order to use the updated collection.
 However there have been many changes and this list is in no way final or all encompassing.
