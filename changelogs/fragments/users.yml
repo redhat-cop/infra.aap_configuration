@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Allow setting the organization when creating users.
+...
