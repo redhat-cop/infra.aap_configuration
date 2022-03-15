@@ -1,5 +1,5 @@
 
-## Contributor's Guidelines
+# Contributor's Guidelines
 
 - All YAML files named with '.yml' extension
 - Use spaces around jinja variables. {{ var }} over {{var}}
@@ -10,4 +10,4 @@
 - Paths - When defining paths, do not include trailing slashes (e.g. my_path: /foo not my_path: /foo/). When concatenating paths, follow the same convention (e.g. {{ my_path }}/bar not {{ my_path }}bar)
 - Indentation - Use 2 spaces for each indent
 - `vars/` vs `defaults/` - if you have variables that don't need to change or be overridden by user, put those in `vars/` and those that a user would likely override, put those under `defaults/` directory.
-- All playbooks/roles should be focused on compatibility with Ansible Tower
+- All playbooks/roles should be focused on compatibility with Automation Controller
