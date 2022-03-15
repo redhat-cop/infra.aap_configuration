@@ -630,7 +630,8 @@ class AHModule(AnsibleModule):
         if state == "failed":
             self.fail_json(msg="Upload of collection failed: {0}".format(response["json"]["error"]["description"]))
         else:
-            self.exit_json(**self.json_output)
+            time.sleep(1)
+            return
 
     def upload(self, path, endpoint, wait=True, item_type="unknown"):
         if "://" in path:
@@ -645,7 +646,7 @@ class AHModule(AnsibleModule):
             self.json_output["changed"] = True
             if wait:
                 self.wait_for_complete(response["json"]["task"])
-            self.exit_json(**self.json_output)
+            return
         else:
             if "json" in response and "__all__" in response["json"]:
                 self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]["__all__"][0]))
@@ -796,6 +797,12 @@ class AHModule(AnsibleModule):
             response=sample,
             total_results=response["json"]["meta"]["count"],
         )
+
+    def get_exactly_one(self, endpoint, name_or_id=None, **kwargs):
+        return self.get_one(endpoint, name_or_id=name_or_id, allow_none=False, **kwargs)
+
+    def resolve_name_to_id(self, endpoint, name_or_id):
+        return self.get_exactly_one(endpoint, name_or_id)["id"]
 
     def objects_could_be_different(self, old, new, field_set=None, warning=False):
         if field_set is None:

@@ -42,6 +42,13 @@
       vars:
         ah_auto_approve: true
 
+    - name: Remove collection
+      ah_collection:
+        namespace: community_test
+        name: test
+        version: 1.0.1
+        state: absent
+
     - name: Deauthenticate
       ah_token:
         ah_host: "{{ ah_host }}"
