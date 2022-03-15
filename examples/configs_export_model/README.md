@@ -1,19 +1,29 @@
-# Ansible Tower Export Documentation
+# Automation Controller Export Documentation
 
 ## Description
-This is documentation on how to use a the Tower export commands in development.
 
-This command for awx allows you to export all available endpoints for tower for use in import, use in your own templates, for backup and many other uses.
+This is documentation on how to use a the Automation Controller export commands in development.
+
+This command allows exporting all available endpoints for Automation Controller for use in importing, templates, backups and many other uses.
 
 ## Installation
-pip install awxkit
+
+```console
+pip3 install awxkit
+```
 
 ## Basic command options
-awx export --conf.host https://localhost --conf.username admin --conf.password ******** --conf.insecure --help
 
+```console
+awx export --conf.host https://localhost --conf.username admin --conf.password ******** --conf.insecure --help
+```
+
+```console
 awx export --conf.host https://localhost --conf.username admin --conf.password ******** --conf.insecure --job_templates
+```
 
 ## Available options for this command
+
 |Option|
 |:---:|
 |users|
