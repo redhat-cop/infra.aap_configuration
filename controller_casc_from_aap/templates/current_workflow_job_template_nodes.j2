@@ -7,7 +7,7 @@ controller_workflow_nodes:
 {% if node.job_type %}
     job_type: "{{ node.job_type }}"
 {% endif %}
-    organization: "{{ node.workflow_job_template.organization.name }}"
+    organization: "{{ node.workflow_job_template.organization.name | default('ToDo: The WF node \'' + node.natural_key.identifier + '\' must have an organization') }}"
     all_parents_must_converge: "{{ node.all_parents_must_converge }}"
 {% if node.related.success_nodes is defined and node.related.success_nodes | length > 0 %}
     success_nodes:
