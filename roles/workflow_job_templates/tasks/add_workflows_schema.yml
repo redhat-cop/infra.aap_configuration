@@ -35,6 +35,7 @@
   async: 1000
   poll: 0
   register: __workflows_node_async
+  changed_when: not __workflows_node_async.changed
 
 - name: "Manage Workflows | Wait for finish the workflow creation"
   async_status:

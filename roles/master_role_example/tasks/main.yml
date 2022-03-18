@@ -22,6 +22,7 @@
   async: 1000
   poll: 0
   register: __controller_***********_job_async
+  changed_when: not __controller_***********_job_async.changed
 
 - name: "Configure *********** | Wait for finish the *********** creation"
   async_status:
