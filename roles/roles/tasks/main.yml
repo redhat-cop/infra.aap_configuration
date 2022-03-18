@@ -35,6 +35,7 @@
   async: 1000
   poll: 0
   register: __controller_role_job_async
+  changed_when: not __controller_role_job_async.changed
 
 - name: "Configure Roles | Wait for finish the Roles creation"
   async_status:

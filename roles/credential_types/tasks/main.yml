@@ -22,6 +22,7 @@
   async: 1000
   poll: 0
   register: __credentialTypes_job_async
+  changed_when: not __credentialTypes_job_async.changed
 
 - name: "Configure Controller Credential Types | Wait for finish the credential types creation"
   async_status:
