@@ -26,12 +26,25 @@ Currently:
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the project update task does not include sensitive information.
-controller_configuration_project_update_secure_logging defaults to the value of controller_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
+controller_configuration_project_update_secure_logging defaults to the value of controller_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`controller_configuration_project_update_secure_logging`|`False`|no|Whether or not to include the sensitive ad_hoc_command role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`controller_configuration_project_update_secure_logging`|`False`|no|Whether or not to include the sensitive Project role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
+
+### Asynchronous Retry Variables
+The following Variables set asynchronous retries for the role.
+If neither of the retries or delay or retries are set, they will default to their respective defaults.
+This allows for all items to be created, then checked that the task finishes successfully.
+This also speeds up the overall role.
+
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|
+|`controller_configuration_async_retries`|60|no|This variable sets the number of retries to attempt for the role globally.|
+|`controller_configuration_project_update_async_retries`|60|no|This variable sets the number of retries to attempt for the role.|
+|`controller_configuration_async_delay`|10|no|This sets the delay between retries for the role globally.|
+|`controller_configuration_project_update_async_delay`|10|no|This sets the delay between retries for the role.|
 
 ## Data Structure
 ### Variables
