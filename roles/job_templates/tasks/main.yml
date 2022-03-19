@@ -65,6 +65,7 @@
   async: 1000
   poll: 0
   register: __job_temaplates_job_async
+  changed_when: not __job_temaplates_job_async.changed
 
 - name: "Configure Controller Job Templates | Wait for finish the job templates creation"
   async_status:
@@ -74,6 +75,9 @@
   retries: "{{ controller_configuration_job_templates_async_retries }}"
   delay: "{{ controller_configuration_job_templates_async_delay }}"
   loop: "{{ __job_temaplates_job_async.results }}"
+  loop_control:
+    loop_var: __job_temaplates_job_async_result_item
   when: __job_temaplates_job_async_result_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_job_templates_secure_logging }}"
 ...
+
