@@ -3,7 +3,7 @@
 An Ansible Role to create Workflow Job Templates on Ansible Controller.
 
 ## Requirements
-ansible-galaxy collection install  -r tests/collections/requirements.yml to be installed
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
   or
@@ -14,12 +14,12 @@ Currently:
 ### Authentication
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`controller_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
+|`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
 |`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
 |`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
 |`controller_username`|""|yes|Admin User on the Ansible Controller Server.||
-|`controller_password`|""|yes|Controller Admin User's password on the Ansible Controller Server.  This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
-|`controller_oauthtoken`|""|yes|Controller Admin User's token on the Ansible Controller Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`controller_password`|""|yes|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
+|`controller_oauthtoken`|""|yes|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 |`workflow_job_templates`|`see below`|yes|Data structure describing your workflow job templates described below.||
 
 ### Secure Logging Variables
@@ -30,8 +30,8 @@ workflow_job_templates_secure_logging defaults to the value of controller_config
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`workflow_job_templates_secure_logging`|`False`|no|Whether or not to include the sensitive Workflow Job Templates role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
+|`workflow_job_templates_secure_logging`|`False`|no|Whether or not to include the sensitive Workflow Job Templates role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ## Data Structure
 ### Variables For Workflow Job Template
@@ -57,7 +57,7 @@ workflow_job_templates_secure_logging defaults to the value of controller_config
 |`notification_templates_success`|""|no|list|The notifications on success to use for this organization in a list.|
 |`scm_branch`|""|no|str|SCM branch applied as a prompt, assuming job template prompts for SCM branch|
 |`state`|`present`|no|str|Desired state of the resource.|
-|`schema`|""|no|dict|A json list of nodes and their coresponding options. The suboptions are in the module doc.|
+|`schema`|""|no|dict|A json list of nodes and their corresponding options. The sub-options are in the module doc.|
 |`destroy_current_schema`|""|no|dict|Set in order to destroy current schema on the workflow, used in cases where drastic changes to schema are happening.|
 |`survey_enabled`|""|no|bool|Enable a survey on the job template.|
 |`survey_spec`|""|no|dict|JSON/YAML dict formatted survey definition.|
@@ -69,7 +69,7 @@ workflow_job_templates_secure_logging defaults to the value of controller_config
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`workflow_job_template`|""|yes|str|The workflow job template the node exists in. Used for looking up the node, cannot be modified after creation.|
-|`identifier`|""|yes|str|An identifier for this node that is unique within its workflow. It is copied to workflow job nodes corresponding to this node. This functions the same as the name field for other resources, however if it is not set, it will be set to a random UUID4 value. Recomended to use Column and row numbers for identifiers such as Node401. [Refer to this documentation for more](https://github.com/ansible/awx/blob/devel/docs/workflow.md)|
+|`identifier`|""|yes|str|An identifier for this node that is unique within its workflow. It is copied to workflow job nodes corresponding to this node. This functions the same as the name field for other resources, however if it is not set, it will be set to a random UUID4 value. Recommended to use Column and row numbers for identifiers such as Node401. [Refer to this documentation for more](https://github.com/ansible/awx/blob/devel/docs/workflow.md)|
 |`unified_job_template`|""|no|str|Name of unified job template to run in the workflow. Can be a job template, project, inventory source, etc. This parameter is mutually exclusive with approval_node.|
 |`approval_node`|""|no|str|A dictionary of Name, description, and timeout values for the approval node. This parameter is mutually exclusive with unified_job_template.|
 |`organization`|""|no|str|The organization of the workflow job template the node exists in. Used for looking up the workflow, not a direct model field.|
@@ -87,7 +87,7 @@ workflow_job_templates_secure_logging defaults to the value of controller_config
 |`job_type`|""|no|str|Job type applied as a prompt, if job template prompts for job type|
 |`limit`|""|no|str|Limit to act on, applied as a prompt, if job template prompts for limit|
 |`scm_branch`|""|no|str|SCM branch applied as a prompt, if job template prompts for SCM branch|
-|`skip_tags`|""|no|str|Tags to skip, applied as a prompt, if job tempalte prompts for job tags|
+|`skip_tags`|""|no|str|Tags to skip, applied as a prompt, if job template prompts for job tags|
 
 ### Approval node dictionary
 |Variable Name|Default Value|Required|Type|Description|
@@ -117,8 +117,8 @@ Refer to the [Controller Api Guide](https://docs.ansible.com/ansible-tower/lates
 ### Workflow Data Structures
 This role accepts two data models.
 #### Simplified Workflow nodes
-A simple starightforward easy to maintain model using the var simplified_workflow_nodes.
-However this is, not compatable with the schema option on the controller_workflow_job_template module and will result in errors.
+A simple straightforward easy to maintain model using the var simplified_workflow_nodes.
+However this is, not compatible with the schema option on the controller_workflow_job_template module and will result in errors.
 Uses the variable 'simplified_workflow_nodes' to describe nodes as shown below.
 
 #### Simplified Workflow Node Data structure model
