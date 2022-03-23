@@ -3,7 +3,7 @@
 An Ansible Role to launch a job template on Ansible Controller.
 
 ## Requirements
-ansible-galaxy collection install  -r tests/collections/requirements.yml to be installed
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
   or
@@ -14,12 +14,12 @@ Currently:
 ### Authentication
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`controller_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
+|`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
 |`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
 |`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
 |`controller_username`|""|yes|Admin User on the Ansible Controller Server.||
-|`controller_password`|""|yes|Controller Admin User's password on the Ansible Controller Server.  This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
-|`controller_oauthtoken`|""|yes|Controller Admin User's token on the Ansible Controller Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`controller_password`|""|yes|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
+|`controller_oauthtoken`|""|yes|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 |`controller_workflow_launch_jobs`|`see below`|yes|Data structure describing workflow or workflows to launch Described below.||
 
 ### Secure Logging Variables
@@ -30,8 +30,8 @@ controller_configuration_workflow_launch_secure_logging defaults to the value of
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`controller_configuration_workflow_launch_secure_logging`|`False`|no|Whether or not to include the sensitive ad_hoc_command role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
+|`controller_configuration_workflow_launch_secure_logging`|`False`|no|Whether or not to include the sensitive ad_hoc_command role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ## Data Structure
 ### Variables

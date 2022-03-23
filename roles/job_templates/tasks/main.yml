@@ -35,7 +35,7 @@
     ask_inventory_on_launch:              "{{ __controller_template_item.ask_inventory_on_launch | default(omit) }}"
     ask_credential_on_launch:             "{{ __controller_template_item.ask_credential_on_launch | default(omit) }}"
     survey_enabled:                       "{{ __controller_template_item.survey_enabled | default(omit) }}"
-    survey_spec:                          "{{ __controller_template_item.related.survey_spec | default(__controller_template_item.survey | default(omit, true)) }}"
+    survey_spec:                          "{{ __controller_template_item.related.survey_spec | default(__controller_template_item.survey_spec | default(__controller_template_item.survey | default(omit, true))) }}"
     become_enabled:                       "{{ __controller_template_item.become_enabled | default(omit) }}"
     allow_simultaneous:                   "{{ __controller_template_item.allow_simultaneous | default(omit) }}"
     timeout:                              "{{ __controller_template_item.timeout | default(omit, true) }}"

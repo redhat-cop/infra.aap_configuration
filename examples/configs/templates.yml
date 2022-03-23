@@ -25,6 +25,21 @@ controller_templates:
     credentials: Demo Credential
     verbosity: 0
     inventory: localhost
+    survey_spec:
+      name: ''
+      description: ''
+      spec:
+        - question_name: Target Host
+          question_description: target host is required for playbook to work, this host
+            needs to exist in the inventory
+          required: true
+          type: text
+          variable: target_hosts
+          min: 0
+          max: 1024
+          default: infra-ansible-tower-testing.infra.sat.rdu2.redhat.com
+          choices: ''
+          new_question: true
 
 # You can retrieve a job along with its survey spec using tower cli as follows:
 # tower-cli receive --job_template <Name> --user admin --format yaml
@@ -33,15 +48,15 @@ controller_templates:
 #   name: ''
 #   description: ''
 #   spec:
-#   - question_name: Target Host
-#     question_description: target host is required for playbook to work, this host
-#       needs to exist in the inventory
-#     required: true
-#     type: text
-#     variable: target_hosts
-#     min: 0
-#     max: 1024
-#     default: infra-ansible-tower-testing.infra.sat.rdu2.redhat.com
-#     choices: ''
-#     new_question: true
+#     - question_name: Target Host
+#       question_description: target host is required for playbook to work, this host
+#         needs to exist in the inventory
+#       required: true
+#       type: text
+#       variable: target_hosts
+#       min: 0
+#       max: 1024
+#       default: infra-ansible-tower-testing.infra.sat.rdu2.redhat.com
+#       choices: ''
+#       new_question: true
 ...

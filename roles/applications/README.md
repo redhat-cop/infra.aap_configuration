@@ -3,7 +3,7 @@
 An Ansible Role to create Applications on Ansible Controller.
 
 ## Requirements
-ansible-galaxy collection install  -r tests/collections/requirements.yml to be installed
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
   or
@@ -14,12 +14,12 @@ Currently:
 ### Authentication
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`controller_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
+|`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
 |`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
 |`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
 |`controller_username`|""|yes|Admin User on the Ansible Controller Server.||
-|`controller_password`|""|yes|Controller Admin User's password on the Ansible Controller Server.  This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
-|`controller_oauthtoken`|""|yes|Controller Admin User's token on the Ansible Controller Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`controller_password`|""|yes|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
+|`controller_oauthtoken`|""|yes|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 |`controller_applications`|`see below`|yes|Data structure describing your applications, described below.||
 
 
@@ -31,7 +31,7 @@ controller_configuration_applications_secure_logging defaults to the value of co
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`controller_configuration_applications_secure_logging`|`False`|no|Whether or not to include the sensitive Application role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`controller_configuration_applications_secure_logging`|`False`|no|Whether or not to include the sensitive Application role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
@@ -56,7 +56,7 @@ This also speeds up the overall role.
 |`description`|""|no|str|Description to use for the application.|
 |`authorization_grant_type`|"password"|yes|str|Grant type for tokens in this application, "password" or "authorization-code"|
 |`client_type`|"public"|yes|str|Application client type, "confidential" or "public"|
-|`redirect_uris`|""|no|str|Allowed urls list, space separated. Required with "autorization-code" grant type|
+|`redirect_uris`|""|no|str|Allowed urls list, space separated. Required with "authorization-code" grant type|
 |`skip_authorization`|"false"|yes|bool|Set True to skip authorization step for completely trusted applications.|
 |`state`|`present`|no|str|Desired state of the application.|
 
