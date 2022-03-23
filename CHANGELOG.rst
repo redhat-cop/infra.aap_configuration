@@ -5,6 +5,27 @@ redhat_cop.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v2.1.3
+======
+
+Minor Changes
+-------------
+
+- Added asynchronous to {organizations,credentials,credential_types,inventories,job_templates} task to speed up creation.
+- Allow setting the organization when creating users.
+- Update to controller_object_diff lookup plugin to better handle group, host, inventory, credential, workflow_job_template_node and user objects.
+- Update to controller_object_diff lookup plugin to better handle organizations.
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- galaxy credentials in the organization role now require assign_galaxy_organizations_to_org to be true.
+
+Bugfixes
+--------
+
+- Fixes option of `survey_spec` on job_templates role.
+
 v2.1.1
 ======
 
