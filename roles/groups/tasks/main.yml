@@ -26,6 +26,7 @@
   async: 1000
   poll: 0
   register: __group_job_async
+  changed_when: not __group_job_async.changed
 
 - name: "Create Controller Group | Wait for finish the Controller Group creation"
   async_status:

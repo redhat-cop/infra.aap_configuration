@@ -20,6 +20,7 @@
   async: 1000
   poll: 0
   register: __controller_label_job_async
+  changed_when: not __controller_label_job_async.changed
 
 - name: "Configure Labels | Wait for finish the Label creation"
   async_status:

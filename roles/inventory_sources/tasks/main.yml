@@ -42,6 +42,7 @@
   async: 1000
   poll: 0
   register: __inventory_source_job_async
+  changed_when: not __inventory_source_job_async.changed
 
 - name: "Configure Inventory Source | Wait for finish the Inventory Source creation"
   async_status:

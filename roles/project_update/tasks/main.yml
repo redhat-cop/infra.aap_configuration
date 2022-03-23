@@ -23,4 +23,21 @@
     - controller_projects is defined
     - __project_update_update_item.update
     - __project_update_update_item.state | default('present') != "absent"
+  async: 1000
+  poll: 0
+  register: __project_update_job_async
+  changed_when: not __project_update_job_async.changed
+
+- name: "Configure Controller Projects | Wait for finish the projects creation"
+  async_status:
+    jid: "{{ __project_update_job_async_results_item.ansible_job_id }}"
+  register: __project_update_job_async_result
+  until: __project_update_job_async_result.finished
+  retries: "{{ controller_configuration_project_update_async_retries }}"
+  delay: "{{ controller_configuration_project_update_async_delay }}"
+  loop: "{{ __project_update_job_async.results }}"
+  loop_control:
+    loop_var: __project_update_job_async_results_item
+  when: __project_update_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ controller_configuration_project_update_secure_logging }}"
 ...
