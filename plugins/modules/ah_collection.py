@@ -91,6 +91,7 @@ EXAMPLES = """
 from ..module_utils.ah_module import AHModule
 import pathlib
 
+
 def main():
     # Any additional arguments that are not fields of the item can be added here
     argument_spec = dict(
@@ -117,7 +118,6 @@ def main():
     version = module.params.get("version")
     state = module.params.get("state")
 
-
     # Attempt to look up an existing item based on the provided data
     if version:
         collection_endpoint = "collections/{0}/{1}/versions/{2}".format(namespace, name, version)
@@ -139,9 +139,9 @@ def main():
         module.exit_json(**module.json_output)
     else:
         file = pathlib.Path(path)
-        if not file.exists ():
+        if not file.exists():
             module.fail_json(msg="Could not find Collection {0}.{1} in path {2}".format(namespace, name, path))
-  
+
     if path:
         if existing_item is not None and overwrite_existing:
             # Delete collection
@@ -153,14 +153,14 @@ def main():
             # Get new collection version
             existing_item = module.get_endpoint(collection_endpoint, **{"return_none_on_404": True})
             if auto_approve:
-              module.approve(
+                module.approve(
                     endpoint=collection_endpoint,
                 )
         elif existing_item is None:
             module.upload(path, "artifacts/collections", wait, item_type="collections")
             module.json_output["changed"] = True
             if auto_approve:
-              module.approve(
+                module.approve(
                     endpoint=collection_endpoint,
                 )
         else:
