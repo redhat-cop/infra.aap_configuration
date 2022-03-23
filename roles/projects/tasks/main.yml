@@ -42,6 +42,7 @@
   async: 1000
   poll: 0
   register: __projects_job_async
+  changed_when: not __projects_job_async.changed
 
 - name: "Configure Controller Projects | Wait for finish the projects creation"
   async_status:
