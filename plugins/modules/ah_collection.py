@@ -89,7 +89,7 @@ EXAMPLES = """
 """
 
 from ..module_utils.ah_module import AHModule
-
+import pathlib
 
 def main():
     # Any additional arguments that are not fields of the item can be added here
@@ -159,6 +159,7 @@ def main():
         else:
             module.json_output["collection"] = existing_item["json"]
 
+    # If state is absent, check if it exists, delete and exit.
     if state == "absent":
         if existing_item is None:
             module.json_output["deleted"] = False
