@@ -56,39 +56,30 @@ jobs:
           command: minikube service awx-service --url
 
       - name: minikube kubectl get pods
-        if: always()
         run: minikube kubectl get pods
 
       - name: Set service url
-        if: always()
         run: echo '::set-output name=SERVICEURL::$(minikube service awx-service --url)'
         id: service-url
 
       - name: Display service url
-        if: always()
         run: echo "Service URL is ${{ steps.service-url.outputs.SERVICEURL }}"
 
       - name: Display Versions
-        if: always()
         run: which python && pip --version && ansible --version
 
       - name: Checkout
-        if: always()
         uses: actions/checkout@v2
 
       - name: "Install Galaxy dependencies"
-        if: always()
         run: ansible-galaxy collection install -r .github/collections/requirements.yml
 
       - name: Check service password
-        if: always()
         run: echo "Service password is ${{ steps.service-password.outputs.SERVICEPASSWORD }}"
 
       - name: "Perform playbook tests"
-        if: always()
         run: ansible-playbook examples/configure_controller.yml -e controller_hostname=${{ steps.service-url.outputs.SERVICEURL }}
 
       - name: "Perform export model playbook tests"
-        if: always()
         run: ansible-playbook examples/configure_controller_export_model.yml -e controller_hostname=${{ steps.service-url.outputs.SERVICEURL }}
 ...
