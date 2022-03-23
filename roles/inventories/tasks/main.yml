@@ -38,5 +38,5 @@
   loop_control:
     loop_var: __inventories_job_async_result_item
   when: __inventories_job_async_result_item.ansible_job_id is defined
-  no_log: true
+  no_log: "{{ controller_configuration_inventories_secure_logging }}"
 ...
