@@ -23,6 +23,7 @@
   async: 1000
   poll: 0
   register: __host_job_async
+  changed_when: not __host_job_async.changed
 
 - name: "Configure Controller Hosts | Wait for finish the Hosts creation"
   async_status:

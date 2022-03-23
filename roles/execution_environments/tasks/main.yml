@@ -25,6 +25,7 @@
   async: 1000
   poll: 0
   register: __execution_environments_job_async
+  changed_when: not __execution_environments_job_async.changed
 
 - name: "Create Controller Execution Environments | Wait for finish the Controller Execution Environments creation"
   async_status:

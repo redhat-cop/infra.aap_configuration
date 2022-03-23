@@ -46,6 +46,19 @@ This also speeds up the overall role.
 |`controller_configuration_async_delay`|10|no|This sets the delay between retries for the role globally.|
 |`controller_configuration_project_update_async_delay`|10|no|This sets the delay between retries for the role.|
 
+### Asynchronous Retry Variables
+The following Variables set asynchronous retries for the role.
+If neither of the retries or delay or retries are set, they will default to their respective defaults.
+This allows for all items to be created, then checked that the task finishes successfully.
+This also speeds up the overall role.
+
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|
+|`controller_configuration_async_retries`|60|no|This variable sets the number of retries to attempt for the role globally.|
+|`controller_configuration_project_update_async_retries`|60|no|This variable sets the number of retries to attempt for the role.|
+|`controller_configuration_async_delay`|10|no|This sets the delay between retries for the role globally.|
+|`controller_configuration_project_update_async_delay`|10|no|This sets the delay between retries for the role.|
+
 ## Data Structure
 ### Variables
 |Variable Name|Default Value|Required|Type|Description|
