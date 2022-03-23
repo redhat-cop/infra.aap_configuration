@@ -43,9 +43,9 @@ collections:
     # version: ...
 ```
 
-## Conversion from Controller_configuration
+## Conversion from tower_configuration
 
-If you were using a version of redhat_cop.controller_configuration, please refer to our Conversion Guide here: [Conversion Guide](docs/CONVERSION_GUIDE.md)
+If you were using a version of redhat_cop.tower_configuration, please refer to our Conversion Guide here: [Conversion Guide](docs/CONVERSION_GUIDE.md)
 
 ## Using this collection
 
