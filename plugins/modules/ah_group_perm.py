@@ -39,6 +39,7 @@ options:
       - For container image management, only with private automation hub v4.3.2
         or later, C(change_containernamespace_perms), C(change_container),
         C(change_image_tag), C(create_container), and C(push_container), and C(delete_containerrepository).
+      - For remote registry management, C(add_containerregistryremote), C(change_containerregistryremote), and C(delete_containerregistryremote).
       - For task management, C(change_task), C(view_task), and C(delete_task).
       - You can also grant or revoke all permissions with C(*) or C(all).
     type: list
