@@ -35,7 +35,10 @@
   retries: "{{ controller_configuration_inventories_async_retries }}"
   delay: "{{ controller_configuration_inventories_async_delay }}"
   loop: "{{ __inventories_job_async.results }}"
+  loop_control:
+    loop_var: __inventories_job_async_result_item
   when: __inventories_job_async_result_item.ansible_job_id is defined
   delegate_to: "{{ 'localhost' if controller_local else omit }}"
   no_log: true
 ...
+
