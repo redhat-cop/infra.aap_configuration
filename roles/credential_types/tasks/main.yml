@@ -37,4 +37,3 @@
   when: __credentialTypes_job_async_result_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_credential_types_secure_logging }}"
 ...
-
