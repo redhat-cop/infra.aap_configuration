@@ -143,6 +143,10 @@ FRIENDLY_PERM_NAMES = {
     "create_container": "container.add_containernamespace",
     "push_container": "container.namespace_push_containerdistribution",
     "delete_containerrepository": "container.delete_containerrepository",
+    # Remote Registries
+    "add_containerregistryremote": "galaxy.add_containerregistryremote",
+    "change_containerregistryremote": "galaxy.change_containerregistryremote",
+    "delete_containerregistryremote": "galaxy.delete_containerregistryremote",
     # Tasks
     "change_task": "core.change_task",
     "delete_task": "core.delete_task",
