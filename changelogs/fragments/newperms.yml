@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Added group permissions for remote registry management - add_containerregistryremote, change_containerregistryremote, delete_containerregistryremote. 
+...
