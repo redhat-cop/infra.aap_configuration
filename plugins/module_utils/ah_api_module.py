@@ -43,7 +43,7 @@ class AHAPIModule(AnsibleModule):
     """Ansible module for managing private automation hub servers."""
 
     AUTH_ARGSPEC = dict(
-        ah_host=dict(required=False, fallback=(env_fallback, ["AH_HOST"])),
+        ah_host=dict(required=False, aliases=["ah_hostname"], fallback=(env_fallback, ["AH_HOST"])),
         ah_username=dict(required=False, fallback=(env_fallback, ["AH_USERNAME"])),
         ah_password=dict(no_log=True, required=False, fallback=(env_fallback, ["AH_PASSWORD"])),
         ah_path_prefix=dict(required=False, fallback=(env_fallback, ["GALAXY_API_PATH_PREFIX"])),

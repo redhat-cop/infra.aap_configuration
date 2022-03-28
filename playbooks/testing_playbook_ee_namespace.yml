@@ -19,7 +19,7 @@
       ah_group:
         name: operators
         state: present
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -29,7 +29,7 @@
       ah_group:
         name: administrators
         state: present
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -43,7 +43,7 @@
           - view_user
           - view_group
           - change_image_tag
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -54,7 +54,7 @@
         name: administrators
         state: present
         perms: "*"
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -65,7 +65,7 @@
       ah_ee_namespace:
         name: namespace1
         state: present
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -78,7 +78,7 @@
         state: present
         groups:
           - administrators
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -90,7 +90,7 @@
         state: present
         groups:
           - operators
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -103,7 +103,7 @@
         append: false
         groups:
           - operators
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -118,7 +118,7 @@
         append: true
         groups:
           - administrators
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -131,7 +131,7 @@
         state: absent
         # new_name is ignored when deleting the namespace (state: absent)
         new_name: foobar
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -145,7 +145,7 @@
       ah_group:
         name: "{{ item }}"
         state: absent
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"

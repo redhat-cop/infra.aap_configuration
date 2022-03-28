@@ -58,7 +58,7 @@
           * bullet 1
           * bullet 2
         state: updated
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -85,7 +85,7 @@
         name: "{{ repository }}"
         readme_file: "{{ tempfile['path'] }}"
         state: updated
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -100,7 +100,7 @@
         description: Repository renamed
         readme: Repository renamed
         state: updated
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -113,7 +113,7 @@
         description: Repository renamed
         readme: Repository renamed
         state: updated
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -126,7 +126,7 @@
         description: Repository renamed
         readme: Repository renamed
         state: updated
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -139,7 +139,7 @@
         description: To jest jakiś opis
         readme_file: "{{ tempfile['path'] }}"
         state: updated
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -158,7 +158,7 @@
         tags:
           - v2
           - "2.0"
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -172,7 +172,7 @@
         tags:
           - prod2
           - prod2.0
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -184,7 +184,7 @@
         state: updated
         append: false
         tags: "{{ tag }}"
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -194,7 +194,7 @@
       ah_ee_image:
         name: "{{ repository }}:{{ tag }}"
         state: absent
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -206,7 +206,7 @@
       ah_ee_repository:
         name: "{{ repository }}"
         state: absent
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
