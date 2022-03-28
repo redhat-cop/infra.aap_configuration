@@ -9,7 +9,7 @@
     readme:           "{{ __ee_repository_item.readme | default(omit) }}"
     readme_file:      "{{ __ee_repository_item.readme_file | default(omit) }}"
     state:            "{{ __ee_repository_item.state | default(ah_state | default('present')) }}"
-    ah_host:          "{{ ah_host }}"
+    ah_host:          "{{ ah_hostname | default(ah_host) }}"
     ah_username:      "{{ ah_username | default(omit) }}"
     ah_password:      "{{ ah_password | default(omit) }}"
     ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
