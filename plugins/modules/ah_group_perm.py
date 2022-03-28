@@ -39,6 +39,7 @@ options:
       - For container image management, only with private automation hub v4.3.2
         or later, C(change_containernamespace_perms), C(change_container),
         C(change_image_tag), C(create_container), and C(push_container), and C(delete_containerrepository).
+      - For remote registry management, C(add_containerregistryremote), C(change_containerregistryremote), and C(delete_containerregistryremote).
       - For task management, C(change_task), C(view_task), and C(delete_task).
       - You can also grant or revoke all permissions with C(*) or C(all).
     type: list
@@ -143,6 +144,10 @@ FRIENDLY_PERM_NAMES = {
     "create_container": "container.add_containernamespace",
     "push_container": "container.namespace_push_containerdistribution",
     "delete_containerrepository": "container.delete_containerrepository",
+    # Remote Registries
+    "add_containerregistryremote": "galaxy.add_containerregistryremote",
+    "change_containerregistryremote": "galaxy.change_containerregistryremote",
+    "delete_containerregistryremote": "galaxy.delete_containerregistryremote",
     # Tasks
     "change_task": "core.change_task",
     "delete_task": "core.delete_task",
