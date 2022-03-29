@@ -3,7 +3,7 @@
   - name: "Read Organization definitions"
     include_vars:
       file: "{{ item.src }}"
-    with_filetree: "{{ dir_orgs_vars }}/env/common/controller_organizations.d/"
+    with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_organizations.d/"
     when: item.state == 'file'
     register: contents
 
