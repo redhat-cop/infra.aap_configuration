@@ -19,7 +19,7 @@
       ah_group:
         name: operators
         state: present
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -29,7 +29,7 @@
       ah_group:
         name: administrators
         state: present
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -39,7 +39,7 @@
       ah_group:
         name: managers
         state: present
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -55,7 +55,7 @@
           - view_group
           - view_collectionremote
           - upload_to_namespace
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -66,7 +66,7 @@
         name: administrators
         state: present
         perms: "*"
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -80,7 +80,7 @@
         perms:
           - change_collectionremote
           - view_collectionremote
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -91,7 +91,7 @@
       ah_user:
         username: operator1
         state: present
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -109,7 +109,7 @@
           - operators
           - administrators
         state: present
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -121,7 +121,7 @@
         username: admin1
         first_name: Róża
         state: present
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -133,7 +133,7 @@
         username: operator1
         groups: operators
         state: present
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -146,7 +146,7 @@
           - managers
         append: true
         state: present
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -159,7 +159,7 @@
           - administrators
         append: false
         state: present
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -171,7 +171,7 @@
         groups: []
         append: false
         state: present
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -183,7 +183,7 @@
         username: operator1
         password: test123456
         state: present
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -194,7 +194,7 @@
       ah_group:
         name: administrators
         state: absent
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -204,7 +204,7 @@
       ah_user:
         username: "{{ item }}"
         state: absent
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
@@ -218,7 +218,7 @@
       ah_group:
         name: "{{ item }}"
         state: absent
-        ah_host: "{{ ah_host }}"
+        ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
