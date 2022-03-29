@@ -3,7 +3,7 @@
   - name: "Read Settings definitions"
     include_vars:
       file: "{{ item.src }}"
-    with_filetree: "{{ dir_orgs_vars }}/env/{{ env }}/controller_settings.d/"
+    with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_settings.d/"
     when: item.state == 'file'
     register: contents
 
