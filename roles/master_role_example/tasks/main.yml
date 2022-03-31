@@ -23,6 +23,8 @@
   poll: 0
   register: __controller_***********_job_async
   changed_when: not __controller_***********_job_async.changed
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Configure *********** | Wait for finish the *********** creation"
   async_status:
@@ -36,4 +38,6 @@
     loop_var: __controller_***********_job_async_results_item
   when: __controller_***********_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_*******_secure_logging }}"
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
 ...
