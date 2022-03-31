@@ -29,6 +29,8 @@
   poll: 0
   register: __instance_groups_job_async
   changed_when: not __instance_groups_job_async.changed
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Configure Controller instance groups | Wait for finish the instance groups creation"
   async_status:
@@ -42,4 +44,6 @@
     loop_var: __instance_groups_job_async_results_item
   when: __instance_groups_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_instance_groups_secure_logging }}"
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
 ...

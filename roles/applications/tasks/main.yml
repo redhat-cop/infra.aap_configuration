@@ -26,6 +26,8 @@
   poll: 0
   register: __applications_job_async
   changed_when: not __applications_job_async.changed
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Create Applications | Wait for finish the Applications creation"
   async_status:
@@ -39,4 +41,6 @@
     loop_var: __applications_job_async_results_item
   when: __applications_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_applications_secure_logging }}"
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
 ...
