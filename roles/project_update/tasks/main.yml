@@ -27,6 +27,8 @@
   poll: 0
   register: __project_update_job_async
   changed_when: not __project_update_job_async.changed
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Configure Controller Projects | Wait for finish the projects creation"
   async_status:
@@ -40,4 +42,6 @@
     loop_var: __project_update_job_async_results_item
   when: __project_update_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_project_update_secure_logging }}"
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
 ...

@@ -24,6 +24,8 @@
   poll: 0
   register: __host_job_async
   changed_when: not __host_job_async.changed
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Configure Controller Hosts | Wait for finish the Hosts creation"
   async_status:
@@ -37,4 +39,6 @@
     loop_var: __host_job_async_results_item
   when: __host_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_hosts_secure_logging }}"
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
 ...
