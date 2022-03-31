@@ -23,7 +23,7 @@ jobs:
           python-version: 3.8
 
       - name: Install ansible-base and changelog
-        run: pip install ansible antsibull-changelog
+        run: pip install ansible-core antsibull-changelog
 
       - name: Publish to galaxy
         run: ansible-playbook .github/workflow-config/release.yml
