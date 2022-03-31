@@ -20,6 +20,13 @@
 
     - name: Update changelog
       command:
+        cmd: antsibull-changelog lint
+        chdir: "{{ repo_base_dir }}"
+      register: update_changelog
+      changed_when: "update_changelog.rc != 2"
+
+    - name: Update changelog
+      command:
         cmd: antsibull-changelog release --verbose --version {{ collection_version }}
         chdir: "{{ repo_base_dir }}"
       register: update_changelog
