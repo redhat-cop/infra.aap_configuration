@@ -49,4 +49,10 @@
       register: publish_result
       changed_when: "publish_result.rc != 2"
       tags: publish
+
+    - name: remove galaxy.yml
+      file:
+        path: "{{ repo_base_dir }}/galaxy.yml"
+        state: absent
+      tags: cleanup
 ...
