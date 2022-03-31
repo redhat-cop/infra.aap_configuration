@@ -27,6 +27,7 @@
     controller_host: '{{ lookup("env", "CONTROLLER_HOST") | default(lookup("env", "TOWER_HOST")) }}'
     controller_username: '{{ lookup("env", "CONTROLLER_USERNAME") | default(lookup("env", "TOWER_USERNAME")) }}'
     controller_password: '{{ lookup("env", "CONTROLLER_PASSWORD") | default(lookup("env", "TOWER_PASSWORD")) }}'
+    validate_certs: '{{ lookup("env", "CONTROLLER_VERIFY_SSL") | default(lookup("env", "TOWER_VERIFY_SSL")) }}'
     name: "{{ org_tags.key }} CasC_JobTemplates_AAP_CI_Config_Controller"
     extra_vars:
       orgs: "{{ org_tags.key }}"
