@@ -24,9 +24,9 @@
 
 - name: "Run the CasC_JobTemplates_AAP_CI_Config_Controller Automation Platform Job to update the objects"
   ansible.controller.job_launch:
-    controller_host: '{{ lookup("env", "CONTROLLER_HOST") }}'
-    controller_username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
-    controller_password: '{{ lookup("env", "CONTROLLER_PASSWORD") }}'
+    controller_host: '{{ lookup("env", "CONTROLLER_HOST") | default(lookup("env", "TOWER_HOST")) }}'
+    controller_username: '{{ lookup("env", "CONTROLLER_USERNAME") | default(lookup("env", "TOWER_USERNAME")) }}'
+    controller_password: '{{ lookup("env", "CONTROLLER_PASSWORD") | default(lookup("env", "TOWER_PASSWORD")) }}'
     name: "{{ org_tags.key }} CasC_JobTemplates_AAP_CI_Config_Controller"
     extra_vars:
       orgs: "{{ org_tags.key }}"
