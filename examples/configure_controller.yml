@@ -21,7 +21,7 @@
         validate_certs: "{{ controller_validate_certs }}"
       register: result
       until: result.status == 200
-      retries: 80
+      retries: 20
       delay: 30
       ignore_errors: true
 
