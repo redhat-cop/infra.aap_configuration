@@ -6,7 +6,7 @@
     new_name:                             "{{ __controller_template_item.new_name | default(omit, true) }}"
     copy_from:                            "{{ __controller_template_item.copy_from | default(omit, true) }}"
     description:                          "{{ __controller_template_item.description | default(omit, true) }}"
-    execution_environment:                "{{ __controller_template_item.execution_environment | default(omit, true) }}"
+    execution_environment:                "{{ __controller_template_item.execution_environment.name | default( __controller_template_item.execution_environment | default(omit, true)) }}"
     job_type:                             "{{ __controller_template_item.job_type | default('run') }}"
     inventory:                            "{{ __controller_template_item.inventory.name | default( __controller_template_item.inventory | default(omit, true)) }}"
     organization:                         "{{ __controller_template_item.organization.name | default( __controller_template_item.organization | default(omit, true)) }}"
