@@ -5,6 +5,15 @@ redhat_cop.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v2.1.4
+======
+
+Bugfixes
+--------
+
+- Fixes async to work on default execution enviroments.
+- Fixes inventories hardcoded 'no_log' true on the async job check task.
+
 v2.1.3
 ======
 
