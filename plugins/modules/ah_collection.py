@@ -91,6 +91,7 @@ EXAMPLES = """
 from ..module_utils.ah_module import AHModule
 import pathlib
 
+
 def main():
     # Any additional arguments that are not fields of the item can be added here
     argument_spec = dict(
@@ -124,6 +125,23 @@ def main():
         collection_endpoint = "collections/{0}/{1}".format(namespace, name)
 
     existing_item = module.get_endpoint(collection_endpoint, **{"return_none_on_404": True})
+
+    # If state is absent, check if it exists, delete and exit.
+    if state == "absent":
+        if existing_item is None:
+            module.json_output["deleted"] = False
+            module.json_output["changed"] = False
+        else:
+            # If the state was absent we can let the module delete it if needed, the module will handle exiting from this
+            module.json_output["task"] = module.delete_endpoint(existing_item["json"]["href"])["json"]["task"]
+            module.json_output["deleted"] = True
+            module.json_output["changed"] = True
+        module.exit_json(**module.json_output)
+    else:
+        file = pathlib.Path(path)
+        if not file.exists():
+            module.fail_json(msg="Could not find Collection {0}.{1} in path {2}".format(namespace, name, path))
+
     if path:
         if existing_item is not None and overwrite_existing:
             # Delete collection

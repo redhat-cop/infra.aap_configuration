@@ -19,6 +19,7 @@ options:
     - If value not set, will try environment variable C(AH_HOST)
     - If value not specified by any means, the value of C(127.0.0.1) will be used
     type: str
+    aliases: [ ah_hostname ]
   ah_username:
     description:
     - Username for your Ansible Galaxy or Automation Hub instance.

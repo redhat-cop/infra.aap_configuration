@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from ansible.module_utils.basic import AnsibleModule, env_fallback
-from ansible.module_utils.urls import Request, SSLValidationError, ConnectionError
+from ansible.module_utils.urls import Request, SSLValidationError, ConnectionError, fetch_file
 from ansible.module_utils.six import string_types
 from ansible.module_utils.six import PY2, PY3
 from ansible.module_utils.six.moves.urllib.parse import urlparse, urlencode
@@ -29,7 +29,7 @@ class AHModule(AnsibleModule):
     url = None
     session = None
     AUTH_ARGSPEC = dict(
-        ah_host=dict(required=False, fallback=(env_fallback, ["AH_HOST"])),
+        ah_host=dict(required=False, aliases=["ah_hostname"], fallback=(env_fallback, ["AH_HOST"])),
         ah_username=dict(required=False, fallback=(env_fallback, ["AH_USERNAME"])),
         ah_password=dict(no_log=True, required=False, fallback=(env_fallback, ["AH_PASSWORD"])),
         ah_path_prefix=dict(required=False, fallback=(env_fallback, ["GALAXY_API_PATH_PREFIX"])),
@@ -643,6 +643,11 @@ class AHModule(AnsibleModule):
             return
 
     def upload(self, path, endpoint, wait=True, item_type="unknown"):
+        if "://" in path:
+            tmppath = fetch_file(self, path)
+            path = ".".join(tmppath.split(".")[:-2]) + ".tar.gz"
+            os.rename(tmppath, path)
+            self.add_cleanup_file(path)
         ct, body = self.prepare_multipart(path)
         response = self.make_request("POST", endpoint, **{"data": body, "headers": {"Content-Type": str(ct)}, "binary": True, "return_errors_on_404": True})
         if response["status_code"] in [202]:

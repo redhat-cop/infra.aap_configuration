@@ -5,6 +5,17 @@ redhat_cop.ah_configuration Release Notes
 .. contents:: Topics
 
 
+v0.6.1
+======
+
+Minor Changes
+-------------
+
+- added namespace state absent module parameter
+- added new permision options to the ah_group_perm module and group role.
+- ah_ee_namespace and ah_ee_repository - adding the ``new_name`` parameter so that users can rename namespaces and repositories (https://github.com/redhat-cop/ah_configuration/issues/44)
+- removed dependency for ansible.galaxy module which wasn't accessible in 2.12 Ansible
+
 v0.5.5
 ======
 
