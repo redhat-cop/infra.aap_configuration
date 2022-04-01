@@ -249,3 +249,12 @@ releases:
     - survey.yml
     - users.yml
     release_date: '2022-03-23'
+  2.1.4:
+    changes:
+      bugfixes:
+      - Fixes async to work on default execution enviroments.
+      - Fixes inventories hardcoded 'no_log' true on the async job check task.
+    fragments:
+    - async.yml
+    - inventories.yml
+    release_date: '2022-03-31'
