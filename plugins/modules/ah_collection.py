@@ -177,6 +177,17 @@ def main():
         else:
             module.json_output["collection"] = existing_item["json"]
 
+    # If state is absent, check if it exists, delete and exit.
+    if state == "absent":
+        if existing_item is None:
+            module.json_output["deleted"] = False
+            module.json_output["changed"] = False
+        else:
+            # If the state was absent we can let the module delete it if needed, the module will handle exiting from this
+            module.json_output["task"] = module.delete_endpoint(existing_item["json"]["href"])["json"]["task"]
+            module.json_output["deleted"] = True
+            module.json_output["changed"] = True
+
     # If the state was present and we can Return information about the collection
     module.exit_json(**module.json_output)
 
