@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Fixes inventories hardcoded 'no_log' true on the async job check task.
-...

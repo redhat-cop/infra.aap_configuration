@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Fixes async to work on default execution enviroments.
-...
