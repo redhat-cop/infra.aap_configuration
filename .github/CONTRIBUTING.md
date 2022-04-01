@@ -36,3 +36,6 @@ If you feel like getting your hands dirty, feel free to make the change yourself
 See [Using Pull Requests](https://help.github.com/articles/using-pull-requests/) got more information on how to use GitHub PRs.
 
 For an in depth guide on how to contribute see [this article](https://opensource.com/article/19/7/create-pull-request-github)
+
+## Automation Hub API Spec
+For development purposes it can help to have a version of the Automation Hub API spec available to you. You can find this by navigating to `https://<AH_HOST>/api/galaxy/v3/openapi.yaml`. VSCode extensions exist to render this file using Swagger.
