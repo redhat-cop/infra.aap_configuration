@@ -57,7 +57,7 @@
 
           * bullet 1
           * bullet 2
-        state: updated
+        state: present
         ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
@@ -84,7 +84,7 @@
       ah_ee_repository:
         name: "{{ repository }}"
         readme_file: "{{ tempfile['path'] }}"
-        state: updated
+        state: present
         ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
@@ -99,7 +99,7 @@
         delete_namespace_if_empty: false
         description: Repository renamed
         readme: Repository renamed
-        state: updated
+        state: present
         ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
@@ -112,7 +112,7 @@
         new_name: test-namespace-rename/image2
         description: Repository renamed
         readme: Repository renamed
-        state: updated
+        state: present
         ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
@@ -125,7 +125,7 @@
         new_name: test-namespace-image
         description: Repository renamed
         readme: Repository renamed
-        state: updated
+        state: present
         ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
@@ -138,7 +138,7 @@
         new_name: "{{ repository }}"
         description: To jest jakiś opis
         readme_file: "{{ tempfile['path'] }}"
-        state: updated
+        state: present
         ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
@@ -154,7 +154,7 @@
     - name: Ensure the repository image has the additionnal required tags
       ah_ee_image:
         name: "{{ repository }}:{{ tag }}"
-        state: updated
+        state: present
         tags:
           - v2
           - "2.0"
@@ -167,7 +167,7 @@
     - name: Ensure the repository image has a defined set of tags
       ah_ee_image:
         name: "{{ repository }}:{{ tag }}"
-        state: updated
+        state: present
         append: false
         tags:
           - prod2
@@ -181,7 +181,7 @@
     - name: Reset the original tag
       ah_ee_image:
         name: "{{ repository }}:prod2"
-        state: updated
+        state: present
         append: false
         tags: "{{ tag }}"
         ah_host: "{{ ah_hostname }}"

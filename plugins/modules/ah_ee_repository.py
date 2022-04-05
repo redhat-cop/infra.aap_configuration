@@ -58,10 +58,10 @@ options:
     description:
       - If C(absent), then the module deletes the repository.
       - The module does not fail if the repository does not exist because the state is already as expected.
-      - If C(updated), then the module updates the description and README file for the repository.
+      - If C(present), then the module sets the description and README file for the repository.
     type: str
-    default: updated
-    choices: [absent, updated]
+    default: present
+    choices: [absent, present]
 notes:
   - Supports C(check_mode).
   - Only works with private automation hub v4.3.2 or later.
@@ -74,7 +74,7 @@ EXAMPLES = r"""
 - name: Ensure the repository description and README are set
   redhat_cop.ah_configuration.ah_ee_repository:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8
-    state: updated
+    state: present
     description: Supported execution environment
     readme: |
       # My execution environment
@@ -88,7 +88,7 @@ EXAMPLES = r"""
 - name: Ensure the repository README is set
   redhat_cop.ah_configuration.ah_ee_repository:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8
-    state: updated
+    state: present
     readme_file: README.md
     ah_host: hub.example.com
     ah_username: admin
@@ -99,7 +99,7 @@ EXAMPLES = r"""
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8
     new_name: aap-20/supported
     delete_namespace_if_empty: false
-    state: updated
+    state: present
     ah_host: hub.example.com
     ah_username: admin
     ah_password: Sup3r53cr3t
@@ -169,7 +169,7 @@ def main():
         description=dict(),
         readme=dict(),
         readme_file=dict(type="path"),
-        state=dict(choices=["updated", "absent"], default="updated"),
+        state=dict(choices=["present", "absent"], default="present"),
     )
 
     # Create a module for ourselves

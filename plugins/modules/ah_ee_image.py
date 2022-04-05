@@ -19,7 +19,7 @@ module: ah_ee_image
 short_description: Manage private automation hub execution environment images
 description:
   - Delete execution environment images.
-  - Updade container image tags.
+  - Update container image tags.
 version_added: '0.4.3'
 author: Herve Quatremain (@herve4m)
 options:
@@ -32,7 +32,7 @@ options:
   tags:
     description:
       - List of the image tags to update.
-      - Only used when C(state) is set to C(updated), otherwise ignored.
+      - Only used when C(state) is set to C(present), otherwise ignored.
     type: list
     elements: str
   append:
@@ -44,10 +44,10 @@ options:
   state:
     description:
       - If C(absent), then the module deletes the image and all its tags.
-      - If C(updated), then the module updates the image tags.
+      - If C(present), then the module updates the image tags.
     type: str
-    default: updated
-    choices: [absent, updated]
+    default: present
+    choices: [absent, present]
 notes:
   - Supports C(check_mode).
   - Only works with private automation hub v4.3.2 or later.
@@ -58,7 +58,7 @@ EXAMPLES = r"""
 - name: Ensure the image has the additional tags
   redhat_cop.ah_configuration.ah_ee_image:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8:2.0.0-15
-    state: updated
+    state: present
     tags:
       - v2
       - "2.0"
@@ -70,7 +70,7 @@ EXAMPLES = r"""
 - name: Replace all the image tags
   redhat_cop.ah_configuration.ah_ee_image:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8:2.0.0-15
-    state: updated
+    state: present
     append: false
     tags:
       - prod2
@@ -100,7 +100,7 @@ def main():
         name=dict(required=True),
         tags=dict(type="list", elements="str"),
         append=dict(type="bool", default=True),
-        state=dict(choices=["updated", "absent"], default="updated"),
+        state=dict(choices=["present", "absent"], default="present"),
     )
 
     # Create a module for ourselves
