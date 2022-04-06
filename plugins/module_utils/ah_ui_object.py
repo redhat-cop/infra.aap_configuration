@@ -1050,6 +1050,16 @@ class AHUIEERepository(AHUIObject):
             )
         )
 
+class AHUIEERegistry(AHUIObject):
+
+    def __init__(self, API_object, data={}):
+        """Initialize the object."""
+        super(AHUIEERegistry, self).__init__(API_object, data)
+        self.endpoint = "execution-environments/registries"
+        self.object_type = "registries"
+        self.name_field = "name"
+        self.id_field = "pk"
+
 
 class AHUIEEImage(AHUIObject):
     """Manage execution environment images.
