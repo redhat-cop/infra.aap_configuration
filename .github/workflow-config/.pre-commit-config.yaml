@@ -25,7 +25,7 @@ repos:
         entry: >-
           ansible-lint -vp -c .github/workflow-config/.ansiblelint.yml
   - repo: https://github.com/ambv/black
-    rev: stable
+    rev: 22.3.0
     hooks:
       - id: black
         name: black
