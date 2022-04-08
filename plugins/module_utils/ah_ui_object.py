@@ -1051,7 +1051,7 @@ class AHUIEERepository(AHUIObject):
         )
 
 class AHUIEERegistry(AHUIObject):
-"""Manage execution environment registries.
+    """Manage execution environment registries.
 
     A registry is a remote resource which can be synced to pull down repositories (container images)
 
