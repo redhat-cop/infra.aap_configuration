@@ -1050,6 +1050,7 @@ class AHUIEERepository(AHUIObject):
             )
         )
 
+
 class AHUIEERegistry(AHUIObject):
     """Manage execution environment registries.
 
