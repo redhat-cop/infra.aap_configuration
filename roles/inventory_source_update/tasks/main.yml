@@ -6,7 +6,7 @@
     inventory:                "{{ __inventory_source_update_item.inventory }}"
     organization:             "{{ __inventory_source_update_item.organization | default(omit, true) }}"
     wait:                     "{{ __inventory_source_update_item.wait | default(omit) }}"
-    interval:                 "{{ __inventory_source_update_item.interval | default(1) }}"
+    interval:                 "{{ __inventory_source_update_item.interval | default(controller_configuration_inventory_source_update_async_delay) }}"
     timeout:                  "{{ __inventory_source_update_item.timeout | default(omit, true) }}"
 
     # Role Standard Options
