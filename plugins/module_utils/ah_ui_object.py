@@ -1051,6 +1051,67 @@ class AHUIEERepository(AHUIObject):
         )
 
 
+class AHUIEERegistry(AHUIObject):
+    """Manage execution environment registries.
+
+    A registry is a remote resource which can be synced to pull down repositories (container images)
+
+    Getting the info for a registry:
+        ``GET /api/galaxy/_ui/v1/execution-environments/registries/<pk>`` ::
+
+            {
+                "pk": "70acd9b2-ca24-48bb-b62f-87099022d69c",
+                "name": "test3",
+                "url": "https://quay.io/mytest",
+                "policy": "immediate",
+                "created_at": "2022-04-05T17:21:41.556808Z",
+                "updated_at": "2022-04-05T17:21:41.556829Z",
+                "tls_validation": false,
+                "client_cert": null,
+                "ca_cert": null,
+                "last_sync_task": {},
+                "download_concurrency": null,
+                "proxy_url": null,
+                "write_only_fields": [
+                    {
+                        "name": "client_key",
+                        "is_set": false
+                    },
+                    {
+                        "name": "username",
+                        "is_set": false
+                    },
+                    {
+                        "name": "password",
+                        "is_set": false
+                    },
+                    {
+                        "name": "client_key",
+                        "is_set": false
+                    },
+                    {
+                        "name": "proxy_username",
+                        "is_set": false
+                    },
+                    {
+                        "name": "proxy_password",
+                        "is_set": false
+                    }
+                ],
+                "rate_limit": null,
+                "is_indexable": false
+            }
+    """
+
+    def __init__(self, API_object, data={}):
+        """Initialize the object."""
+        super(AHUIEERegistry, self).__init__(API_object, data)
+        self.endpoint = "execution-environments/registries"
+        self.object_type = "registries"
+        self.name_field = "name"
+        self.id_field = "pk"
+
+
 class AHUIEEImage(AHUIObject):
     """Manage execution environment images.
 
