@@ -80,18 +80,18 @@ extends_documentation_fragment: redhat_cop.ah_configuration.auth_ui
 """
 
 EXAMPLES = r"""
-- name: Ensure the registry description and README are set
+- name: Add a remote registry to AH
   redhat_cop.ah_configuration.ah_ee_registry:
-    name: quay.io
+    name: my_quayio
     state: present
     url: https://quay.io/my/registry
     ah_host: hub.example.com
     ah_username: admin
     ah_password: Sup3r53cr3t
 
-- name: Ensure the registry description and README are set
+- name: Add a remote registry which requires auth to AH
   redhat_cop.ah_configuration.ah_ee_registry:
-    name: quay.io
+    name: my_quayio_auth
     state: present
     url: https://quay.io/my/registry
     username: myuser
@@ -100,9 +100,9 @@ EXAMPLES = r"""
     ah_username: admin
     ah_password: Sup3r53cr3t
 
-- name: Ensure the registry description and README are set
+- name: Remove a remote registry from AH
   redhat_cop.ah_configuration.ah_ee_registry:
-    name: quay.io
+    name: examplehub
     state: absent
     ah_host: hub.example.com
     ah_username: admin
