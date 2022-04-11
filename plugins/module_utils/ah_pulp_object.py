@@ -650,8 +650,8 @@ class AHPulpTask(AHPulpObject):
         :py:attr:``self.data`` contains the retrieved object (or ``{}`` if
         the requested object does not exist)
 
-        :param name: Name of the object to retrieve.
-        :type name: str
+        :param parent_task: ID of the parent task
+        :type parent_task: str
         """
         query = {"parent_task": parent_task}
         url = self.api.build_pulp_url(self.endpoint, query_params=query)
@@ -663,11 +663,11 @@ class AHPulpTask(AHPulpObject):
         if response["status_code"] != 200:
             error_msg = self.api.extract_error_msg(response)
             if error_msg:
-                fail_msg = "Unable to get {object_type} {name}: {code}: {error}".format(
-                    object_type=self.object_type, name=name, code=response["status_code"], error=error_msg
+                fail_msg = "Unable to get {object_type} {parent_task}: {code}: {error}".format(
+                    object_type=self.object_type, parent_task=parent_task, code=response["status_code"], error=error_msg
                 )
             else:
-                fail_msg = "Unable to get {object_type} {name}: {code}".format(object_type=self.object_type, name=name, code=response["status_code"])
+                fail_msg = "Unable to get {object_type} {pt}: {code}".format(object_type=self.object_type, pt=parent_task, code=response["status_code"])
             self.api.fail_json(msg=fail_msg)
 
         return response["json"]["results"]
