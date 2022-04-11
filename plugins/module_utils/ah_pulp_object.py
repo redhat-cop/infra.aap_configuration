@@ -599,3 +599,75 @@ class AHPulpEERepository(AHPulpObject):
                 tag=tag, object_type=self.object_type, name=self.name, digest=digest, code=response["status_code"]
             )
         )
+
+
+class AHPulpTask(AHPulpObject):
+    """Manage a task with the Pulp API.
+
+    The :py:class:``AHPulpTask`` get tasks.
+
+    Getting the details of a namespace:
+        ``GET /pulp/api/v3/tasks/<id>`` ::
+        {
+            "pulp_href": "/pulp/api/v3/tasks/947b4b75-c4ee-46e7-a1b4-a39f9b8968eb/",
+            "pulp_created": "2022-04-08T12:55:06.523919Z",
+            "state": "completed",
+            "name": "galaxy_ng.app.tasks.registry_sync.sync_all_repos_in_registry",
+            "logging_cid": "",
+            "started_at": "2022-04-08T12:55:06.571182Z",
+            "finished_at": "2022-04-08T12:55:07.332468Z",
+            "error": null,
+            "worker": "/pulp/api/v3/workers/c03535f2-6b6b-4918-ba24-dd28e1f12a90/",
+            "parent_task": null,
+            "child_tasks": [
+                "/pulp/api/v3/tasks/49c3c7d8-6343-4f6b-a870-d1746918c2e3/",
+                "/pulp/api/v3/tasks/551afc88-99e8-4590-a54c-3274c3295261/",
+                "/pulp/api/v3/tasks/2d28ab54-615f-4eb1-a8e8-87defe4e8e9c/",
+                "/pulp/api/v3/tasks/e19cab33-3434-4288-8c08-96fabc928a0a/",
+                "/pulp/api/v3/tasks/75467e10-e5e0-452e-82f1-96df3e6aa3fc/",
+                "/pulp/api/v3/tasks/25641ab9-4404-4ceb-aacd-8de408a5ea87/"
+            ],
+            "task_group": null,
+            "progress_reports": [],
+            "created_resources": [],
+            "reserved_resources_record": []
+        }
+
+    """
+
+    def __init__(self, API_object, data={}):
+        """Initialize the object."""
+        super(AHPulpTask, self).__init__(API_object, data)
+        self.endpoint = "tasks"
+        self.object_type = "task"
+        self.name_field = "name"
+
+    def get_children(self, parent_task):
+        """Retrieve a single object from a GET API call.
+
+        Upon completion, :py:attr:``self.exists`` is set to ``True`` if the
+        object exists or ``False`` if not.
+        :py:attr:``self.data`` contains the retrieved object (or ``{}`` if
+        the requested object does not exist)
+
+        :param parent_task: ID of the parent task
+        :type parent_task: str
+        """
+        query = {"parent_task": parent_task}
+        url = self.api.build_pulp_url(self.endpoint, query_params=query)
+        try:
+            response = self.api.make_request("GET", url)
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="GET error: {error}".format(error=e))
+
+        if response["status_code"] != 200:
+            error_msg = self.api.extract_error_msg(response)
+            if error_msg:
+                fail_msg = "Unable to get {object_type} {parent_task}: {code}: {error}".format(
+                    object_type=self.object_type, parent_task=parent_task, code=response["status_code"], error=error_msg
+                )
+            else:
+                fail_msg = "Unable to get {object_type} {pt}: {code}".format(object_type=self.object_type, pt=parent_task, code=response["status_code"])
+            self.api.fail_json(msg=fail_msg)
+
+        return response["json"]["results"]
