@@ -7,8 +7,10 @@
 # Ansible Automation Hub UI project at https://github.com/ansible/ansible-hub-ui
 
 from __future__ import absolute_import, division, print_function
+import time
 
 from .ah_api_module import AHAPIModuleError
+from .ah_pulp_object import AHPulpTask
 
 __metaclass__ = type
 
@@ -1110,6 +1112,65 @@ class AHUIEERegistry(AHUIObject):
         self.object_type = "registries"
         self.name_field = "name"
         self.id_field = "pk"
+
+    def sync(self, wait, interval, timeout, auto_exit=True):
+        """Perform an POST API call to sync an object.
+
+        :param wait: Whether to wait for the object to finish syncing
+        :type wait: bool
+        :param interval: How often to poll for a change in the sync status
+        :type interval: integer
+        :param timeout: How long to wait for the sync to complete in seconds
+        :type timeout: integer
+        :param auto_exit: Exit the module when the API call is done.
+        :type auto_exit: bool
+
+        :return: Do not return if ``auto_exit`` is ``True``. Otherwise, return
+                 ``True``.
+        :rtype: bool
+        """
+
+        url = self.api.build_ui_url("{endpoint}/sync".format(endpoint=self.id_endpoint))
+        try:
+            response = self.api.make_request("POST", url)
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Start Sync error: {error}".format(error=e))
+
+        if response["status_code"] == 202:
+            sync_status = "Started"
+            if wait:
+                start = time.time()
+                parentTask = response["json"]["task"]
+                taskPulp = AHPulpTask(self.api)
+                elapsed = 0
+                while sync_status not in ["Complete", "Failed"]:
+                    children = taskPulp.get_children(parentTask)
+                    complete = True
+                    for childTask in children:
+                        if childTask["error"]:
+                            sync_status = "Complete"
+                            error_output = childTask["error"]["description"].split(",")
+                            self.api.fail_json(status=error_output[0], msg=error_output[1], url=error_output[2], traceback=childTask["error"]["traceback"])
+                        complete &= childTask["state"] == "completed"
+                    if complete:
+                        sync_status = "Complete"
+                        break
+                    time.sleep(interval)
+                    elapsed = time.time() - start
+                    if timeout and elapsed > timeout:
+                        self.api.fail_json(msg="Timed out awaiting sync", children=children)
+
+            if auto_exit:
+                json_output = {"name": self.name, "changed": True, "sync_status": sync_status, "task": response["json"]["task"]}
+                self.api.exit_json(**json_output)
+            return True
+
+        error_msg = self.api.extract_error_msg(response)
+        if error_msg:
+            self.api.fail_json(msg="Unable to create {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg))
+        self.api.fail_json(
+            msg="Unable to create {object_type} {name}: {code}".format(object_type=self.object_type, name=self.name, code=response["status_code"])
+        )
 
 
 class AHUIEEImage(AHUIObject):
