@@ -1143,17 +1143,17 @@ class AHUIEERegistry(AHUIObject):
                 parentTask = response["json"]["task"]
                 taskPulp = AHPulpTask(self.api)
                 elapsed = 0
-                while (sync_status not in ['Complete', 'Failed']):
+                while sync_status not in ["Complete", "Failed"]:
                     children = taskPulp.get_children(parentTask)
                     complete = True
                     for childTask in children:
                         if childTask["error"]:
-                            sync_status = 'Complete'
-                            error_output = childTask["error"]["description"].split(',')
+                            sync_status = "Complete"
+                            error_output = childTask["error"]["description"].split(",")
                             self.api.fail_json(status=error_output[0], msg=error_output[1], url=error_output[2], traceback=childTask["error"]["traceback"])
-                        complete &= childTask["state"] == 'completed'
+                        complete &= childTask["state"] == "completed"
                     if complete:
-                        sync_status = 'Complete'
+                        sync_status = "Complete"
                         break
                     time.sleep(interval)
                     elapsed = time.time() - start
@@ -1168,7 +1168,9 @@ class AHUIEERegistry(AHUIObject):
         error_msg = self.api.extract_error_msg(response)
         if error_msg:
             self.api.fail_json(msg="Unable to create {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg))
-        self.api.fail_json(msg="Unable to create {object_type} {name}: {code}".format(object_type=self.object_type, name=self.name, code=response["status_code"]))
+        self.api.fail_json(
+            msg="Unable to create {object_type} {name}: {code}".format(object_type=self.object_type, name=self.name, code=response["status_code"])
+        )
 
 
 class AHUIEEImage(AHUIObject):

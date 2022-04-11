@@ -600,6 +600,7 @@ class AHPulpEERepository(AHPulpObject):
             )
         )
 
+
 class AHPulpTask(AHPulpObject):
     """Manage a task with the Pulp API.
 
