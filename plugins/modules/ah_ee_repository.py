@@ -266,7 +266,7 @@ def main():
                 name = new_name
                 repository_ui.get_object(name)
         elif repository_pulp.exists:
-            rename_repository(module, repository_pulp, repository_ui, name, new_name, delete_namespace_if_empty)
+            rename_repository(module, repository_pulp, name, new_name, delete_namespace_if_empty)
             name = new_name
             changed = True
 
