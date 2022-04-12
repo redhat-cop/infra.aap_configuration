@@ -878,6 +878,7 @@ class AHUIEENamespace(AHUIObject):
         else:
             raise AHAPIModuleError(fail_msg)
 
+
 class AHUIEERemote(AHUIObject):
     def __init__(self, API_object, data={}):
         """Initialize the object."""
@@ -886,6 +887,7 @@ class AHUIEERemote(AHUIObject):
         self.object_type = "remote"
         self.name_field = "pulp_id"
         self.id_field = "pulp_id"
+
 
 class AHUIEERepository(AHUIObject):
     """Manage the README file of execution environment repositories.

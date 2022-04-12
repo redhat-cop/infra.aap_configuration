@@ -209,7 +209,12 @@ def main():
     )
 
     # Create a module for ourselves
-    module = AHAPIModule(argument_spec=argument_spec, supports_check_mode=True, mutually_exclusive=[("readme", "readme_file"), ("include_tags", "exclude_tags"),("new_name", "registry")], required_by={"registry": "upstream_name"})
+    module = AHAPIModule(
+        argument_spec=argument_spec,
+        supports_check_mode=True,
+        mutually_exclusive=[("readme", "readme_file"), ("include_tags", "exclude_tags"), ("new_name", "registry")],
+        required_by={"registry": "upstream_name"},
+    )
 
     # Extract our parameters
     name = module.params.get("name")
@@ -229,7 +234,9 @@ def main():
     if vers < "4.3.2":
         module.fail_json(msg="This module requires private automation hub version 4.3.2 or later. Your version is {vers}".format(vers=vers))
     elif vers < "4.4.0" and registry:
-        module.fail_json(msg="This module requires private automation hub version 4.4.0 or later to create remote repositories. Your version is {vers}".format(vers=vers))
+        module.fail_json(
+            msg="This module requires private automation hub version 4.4.0 or later to create remote repositories. Your version is {vers}".format(vers=vers)
+        )
 
     # Process the object from the Pulp API (delete or create)
     repository_pulp = AHPulpEERepository(module)
@@ -297,7 +304,9 @@ def main():
 
     else:
         if not repository_pulp.exists:
-            module.fail_json(msg="The {repository} repository does not exist and registry is not set so it is assumed this is a local image.".format(repository=name))
+            module.fail_json(
+                msg="The {repository} repository does not exist and registry is not set so it is assumed this is a local image.".format(repository=name)
+            )
 
     # If a README file is given, verify that it exists and then read it.
     if readme_file is not None:
