@@ -1,4 +1,6 @@
 ---
 breaking_changes:
   - Options for state in ah_ee_image and ah_ee_repository modules changed from 'updated' to 'present' as a bug fix.
+major_changes:
+  - Added ability to add remote repositories in ah_ee_repository module.
 ...
