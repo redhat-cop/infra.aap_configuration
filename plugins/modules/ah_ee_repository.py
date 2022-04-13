@@ -172,7 +172,7 @@ def delete_empty_namespace(module, repository_name):
         namespace_pulp.delete(auto_exit=False)
 
 
-def rename_repository(module, repository_pulp, old_name, new_name, delete_namespace_if_empty=True):
+def rename_repository(module, repository_pulp, remote_pulp, old_name, new_name, delete_namespace_if_empty=True):
     """Rename the given repository.
 
     :param module: The API object that the function uses to access the API.
@@ -189,6 +189,8 @@ def rename_repository(module, repository_pulp, old_name, new_name, delete_namesp
     :type delete_namespace_if_empty: bool
     """
     repository_pulp.update({"name": new_name, "base_path": new_name}, auto_exit=False)
+    if remote_pulp.exists:
+        remote_pulp.update({"name": new_name})
     if delete_namespace_if_empty:
         delete_empty_namespace(module, old_name)
 
@@ -212,7 +214,7 @@ def main():
     module = AHAPIModule(
         argument_spec=argument_spec,
         supports_check_mode=True,
-        mutually_exclusive=[("readme", "readme_file"), ("include_tags", "exclude_tags"), ("new_name", "registry")],
+        mutually_exclusive=[("readme", "readme_file"), ("include_tags", "exclude_tags")],
         required_by={"registry": "upstream_name"},
     )
 
@@ -257,6 +259,10 @@ def main():
 
     changed = False
 
+    remote_pulp = AHPulpEERepository(module)
+    if registry:
+        remote_pulp.get_object(name)
+
     if new_name and new_name != name:
         new_repository_pulp = AHPulpEERepository(module)
         new_repository_pulp.get_object(new_name)
@@ -273,7 +279,7 @@ def main():
                 name = new_name
                 repository_ui.get_object(name)
         elif repository_pulp.exists:
-            rename_repository(module, repository_pulp, name, new_name, delete_namespace_if_empty)
+            rename_repository(module, repository_pulp, remote_pulp, name, new_name, delete_namespace_if_empty)
             name = new_name
             changed = True
 
@@ -307,6 +313,9 @@ def main():
             module.fail_json(
                 msg="The {repository} repository does not exist and registry is not set so it is assumed this is a local image.".format(repository=name)
             )
+
+    repository_pulp.get_object(name)
+    repository_ui.get_object(name)
 
     # If a README file is given, verify that it exists and then read it.
     if readme_file is not None:
