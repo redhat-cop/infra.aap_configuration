@@ -31,7 +31,6 @@ options:
   new_name:
     description:
       - New name for the repository. Setting this option changes the name of the repository which current name is set in C(name).
-      - only possible for local repositories
     type: str
   delete_namespace_if_empty:
     description:
