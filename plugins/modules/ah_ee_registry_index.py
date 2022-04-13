@@ -51,12 +51,12 @@ extends_documentation_fragment: redhat_cop.ah_configuration.auth_ui
 
 EXAMPLES = """
 - name: Index redhat registry without waiting
-  ah_ee_registry_sync:
+  ah_ee_registry_index:
     name: redhat
     wait: false
 
 - name: Index registry.redhat.io registry and wait up to 300 seconds
-  ah_ee_registry_sync:
+  ah_ee_registry_index:
     name: registry_redhat_io
     wait: true
     timeout: 300
