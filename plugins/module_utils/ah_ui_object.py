@@ -1010,9 +1010,8 @@ class AHUIEERepository(AHUIObject):
                     if timeout and elapsed > timeout:
                         self.api.fail_json(msg="Timed out awaiting sync")
 
-            if auto_exit:
-                json_output = {"name": self.name, "changed": True, "sync_status": sync_status, "task": response["json"]["task"]}
-                self.api.exit_json(**json_output)
+            json_output = {"name": self.name, "changed": True, "sync_status": sync_status, "task": response["json"]["task"]}
+            self.api.exit_json(**json_output)
             return True
 
         error_msg = self.api.extract_error_msg(response)

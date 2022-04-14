@@ -644,7 +644,7 @@ class AHPulpTask(AHPulpObject):
         self.name_field = "name"
 
     def get_object(self, task):
-        url = self.api.build_pulp_url("{endpoint}/{task_id}".format(endpoint=self.endpoint, task_id=task.split('/')[-2]))
+        url = self.api.build_pulp_url("{endpoint}/{task_id}".format(endpoint=self.endpoint, task_id=task.split("/")[-2]))
         try:
             response = self.api.make_request("GET", url)
         except AHAPIModuleError as e:
@@ -654,15 +654,14 @@ class AHPulpTask(AHPulpObject):
             error_msg = self.api.extract_error_msg(response)
             if error_msg:
                 fail_msg = "Unable to get {object_type} {name}: {code}: {error}".format(
-                    object_type=self.object_type, name=name, code=response["status_code"], error=error_msg
+                    object_type=self.object_type, name=self.href, code=response["status_code"], error=error_msg
                 )
             else:
-                fail_msg = "Unable to get {object_type} {name}: {code}".format(object_type=self.object_type, name=name, code=response["status_code"])
+                fail_msg = "Unable to get {object_type} {name}: {code}".format(object_type=self.object_type, name=self.href, code=response["status_code"])
             self.api.fail_json(msg=fail_msg)
 
         self.data = response["json"]
         self.exists = True
-
 
     def get_children(self, parent_task):
         """Retrieve a single object from a GET API call.
