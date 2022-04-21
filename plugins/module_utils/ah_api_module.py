@@ -214,7 +214,7 @@ class AHAPIModule(AnsibleModule):
 
         return response
 
-    def make_request(self, method, url, **kwargs):
+    def make_request(self, method, url, wait_for_task=True, **kwargs):
         """Perform an API call and return the data.
 
         :param method: GET, PUT, POST, or DELETE
@@ -246,7 +246,7 @@ class AHAPIModule(AnsibleModule):
                 raise AHAPIModuleError("Failed to parse the response json: {0}".format(e))
 
         # A background task has been triggered. Check if the task is completed
-        if response.status == 202 and "task" in response_json:
+        if response.status == 202 and "task" in response_json and wait_for_task:
             url = url._replace(path=response_json["task"], query="")
             for _ in range(5):
                 time.sleep(3)
