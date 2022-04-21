@@ -7,6 +7,7 @@
 # Ansible Automation Hub UI project at https://github.com/ansible/ansible-hub-ui
 
 from __future__ import absolute_import, division, print_function
+import time
 
 from .ah_api_module import AHAPIModuleError
 
@@ -671,3 +672,24 @@ class AHPulpTask(AHPulpObject):
             self.api.fail_json(msg=fail_msg)
 
         return response["json"]["results"]
+
+    def wait_for_children(self, parent_task, interval, timeout, task_status="Started"):
+        start = time.time()
+        elapsed = 0
+        while task_status not in ["Complete", "Failed"]:
+            children = self.get_children(parent_task)
+            complete = True
+            for childTask in children:
+                if childTask["error"]:
+                    task_status = "Complete"
+                    error_output = childTask["error"]["description"].split(",")
+                    self.api.fail_json(status=error_output[0], msg=error_output[1], url=error_output[2], traceback=childTask["error"]["traceback"])
+                complete &= childTask["state"] == "completed"
+            if complete:
+                task_status = "Complete"
+                break
+            time.sleep(interval)
+            elapsed = time.time() - start
+            if timeout and elapsed > timeout:
+                self.api.fail_json(msg="Timed out awaiting task completion", children=children)
+        return task_status
