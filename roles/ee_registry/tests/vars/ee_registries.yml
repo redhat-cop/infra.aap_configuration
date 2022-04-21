@@ -1,0 +1,7 @@
+---
+ah_ee_repositories:
+  - name: registry.redhat
+    url: registry.redhat.io
+    username: myuser
+    password: mypassword
+...
