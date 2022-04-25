@@ -41,7 +41,7 @@ controller_configuration_inventory_source_update_secure_logging defaults to the 
 |`inventory`|""|yes|str|Name or id of the inventory that contains the inventory source(s) to update.|
 |`organization`|""|no|str|Name of the inventory source's inventory's organization.|
 |`wait`|""|no|bool|Wait for the job to complete.|
-|`interval`|""|no|int|The interval to request an update from controller.|
+|`interval`|`controller_configuration_inventory_source_update_async_delay`|no|int|The interval to request an update from controller.|
 |`timeout`|""|no|int|If waiting for the job to complete this will abort after this amount of seconds.|
 
 ### Standard Project Data Structure
