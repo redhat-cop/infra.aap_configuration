@@ -75,7 +75,7 @@ This also speeds up the overall role.
 |`state`|`present`|no|Desired state of the resource.|
 |`wait`|""|no|Provides option to wait for completed project sync before returning.|
 |`update_project`|""|no|Force project to update after changes.Used in conjunction with wait, interval, and timeout.|
-|`interval`|1|no|The interval to request an update from controller. Requires wait.|
+|`interval`|`controller_configuration_projects_async_delay`|no|The interval to request an update from controller. Requires wait.|
 ### Standard Project Data Structure
 #### Json Example
 ```json
