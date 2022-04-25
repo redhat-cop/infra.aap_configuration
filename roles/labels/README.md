@@ -41,9 +41,9 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`controller_configuration_async_retries`|30|no|This variable sets the number of retries to attempt for the role globally.|
-|`controller_configuration_labels_async_retries`|30|no|This variable sets the number of retries to attempt for the role.|
+|`controller_configuration_labels_async_retries`|`{{ controller_configuration_async_retries }}`|no|This variable sets the number of retries to attempt for the role.|
 |`controller_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
-|`controller_configuration_labels_async_delay`|1|no|This sets the delay between retries for the role.|
+|`controller_configuration_labels_async_delay`|`controller_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ## Data Structure
 ### Variables
