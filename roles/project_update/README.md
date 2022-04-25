@@ -66,7 +66,7 @@ This also speeds up the overall role.
 |`name`|""|yes|str|The name or id of the project to update.|
 |`organization`|""|no|str|Organization the project exists in. Used for lookup only.|
 |`wait`|""|no|str|Wait for the project to complete.|
-|`interval`|""|no|str|The interval to request an update from controller.|
+|`interval`|`controller_configuration_project_update_async_delay`|no|str|The interval to request an update from controller.|
 |`timeout`|""|no|str|If waiting for the job to complete this will abort after this amount of seconds.|
 
 ### Standard Project Data Structure
