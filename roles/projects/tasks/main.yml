@@ -23,7 +23,7 @@
     state:                                "{{ __controller_project_item.state | default(controller_state | default('present')) }}"
     wait:                                 "{{ __controller_project_item.wait | default(omit) }}"
     update_project:                       "{{ __controller_project_item.update_project | default(omit) }}"
-    interval:                             "{{ __controller_project_item.interval | default(1) }}"
+    interval:                             "{{ __controller_project_item.interval | default(controller_configuration_projects_async_delay) }}"
     notification_templates_started:       "{{ __controller_project_item.notification_templates_started | default(__controller_project_item.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
     notification_templates_success:       "{{ __controller_project_item.notification_templates_success | default(__controller_project_item.related.notification_templates_success | default([]) | map(attribute='name') | list ) }}"
     notification_templates_error:         "{{ __controller_project_item.notification_templates_error | default(__controller_project_item.related.notification_templates_error | default([]) | map(attribute='name') | list ) }}"
