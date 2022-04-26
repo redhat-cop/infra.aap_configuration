@@ -10,7 +10,7 @@
 
 # These are the default variables specific to the notification_templates role
 
-# list of dict to describe Tower notification templates
+# list of dict to describe Controller notification templates
 controller_notifications: []
 # possible fields:
 # - name: "notif_name"  # mandatory

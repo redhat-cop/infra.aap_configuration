@@ -9,7 +9,7 @@
 # controller_validate_certs: false
 
 # These are the default variables specific to the license role
-# list of dicts to describe Tower inventory groups
+# list of dicts to describe Controller inventory groups
 controller_groups: []
 # possible fields are:
 # - name: "group_name"  # mandatory

@@ -9,7 +9,7 @@
 # controller_validate_certs: false
 
 # These are the default variables specific to the license role
-# list of dicts describing Tower credential input sources
+# list of dicts describing Controller credential input sources
 controller_credential_input_sources: []
 # possible values:
 # - target_credential: "credential_name"  # mandatory

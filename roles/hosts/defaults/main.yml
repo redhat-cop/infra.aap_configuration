@@ -10,7 +10,7 @@
 
 # These are the default variables specific to the license role
 
-# list of dicts to describe Tower inventory hosts
+# list of dicts to describe Controller inventory hosts
 controller_hosts: []
 # possible fields:
 # - name: "host_name"  # mandatory

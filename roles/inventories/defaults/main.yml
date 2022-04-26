@@ -10,7 +10,7 @@
 
 # These are the default variables specific to the license role
 
-# list of dicts to describe Tower inventories
+# list of dicts to describe Controller inventories
 controller_inventories: []
 # possible fields:
 # - name: "inventory_name"  # mandatory
