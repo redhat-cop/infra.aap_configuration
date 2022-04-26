@@ -1,5 +1,5 @@
 ---
-- name: Get list of organizations from Tower
+- name: Get list of organizations from Controller
   uri:
     force_basic_auth: true
     method: GET

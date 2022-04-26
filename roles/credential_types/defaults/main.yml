@@ -9,7 +9,7 @@
 # controller_validate_certs: false
 
 # These are the default variables specific to the license role
-# list of dict to define Tower credential types
+# list of dict to define Controller credential types
 controller_credential_types: []
 # possible fields:
 # - name: "cred_type_name"  # mandatory

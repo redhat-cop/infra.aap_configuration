@@ -10,7 +10,7 @@
 
 # These are the default variables specific to the users role
 
-# list of dicts describing Tower users
+# list of dicts describing Controller users
 controller_user_accounts: []
 # possible fields:
 # - username: "user_name"  # mandatory

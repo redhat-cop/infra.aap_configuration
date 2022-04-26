@@ -10,7 +10,7 @@
 
 # These are the default variables specific to the license role
 
-# list of dict describing Tower schedules:
+# list of dict describing Controller schedules:
 controller_schedules: []
 # possible fields:
 # - name: "schedule_name"  # mandatory

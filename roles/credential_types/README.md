@@ -73,7 +73,7 @@ The workaround is to use the following format:
 The role will strip the double space between the curly bracket in order to provide controller with the correct format for the Injectors.
 
 ### Input and Injector Schema
-The following detais the data format to use for inputs and injectors. These can be in either YAML or JSON For the most up to date information and more details see [Custom Credential Types - Ansible Tower Documentation](https://docs.ansible.com/ansible-tower/latest/html/userguide/credential_types.html)
+The following detais the data format to use for inputs and injectors. These can be in either YAML or JSON For the most up to date information and more details see [Custom Credential Types - Ansible Controller Documentation](https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html)
 
 #### Input Schema
 ```yaml

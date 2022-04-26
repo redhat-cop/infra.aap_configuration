@@ -1,6 +1,6 @@
 ---
-# Launch tower Workflow
-- name: Launch a Tower Workflow
+# Launch Controller Workflow
+- name: Launch a Controller Workflow
   workflow_launch:
     name:                     "{{ __workflow_launch_item.name }}"
     organization:             "{{ __workflow_launch_item.organization | default(omit, true) }}"
