@@ -10,7 +10,7 @@
 
 # These are the default variables specific to the teams role
 
-# list of dicts describing the Tower teams
+# list of dicts describing the Controller teams
 controller_teams: []
 # possible fields:
 # - name: "team_name"  # mandatory

@@ -10,7 +10,7 @@
 
 # These are the default variables specific to the projects role
 
-# list of dict describing Tower projects
+# list of dict describing Controller projects
 controller_projects: []
 # possible fields:
 # - name: "project_name"  # mandatory

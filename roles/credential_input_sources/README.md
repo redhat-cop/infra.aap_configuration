@@ -57,7 +57,7 @@ This also speeds up the overall role.
 |`description`|`False`|no|str|Description to use for the credential input source.|
 |`state`|`present`|no|str|Desired state of the resource.|
 
-For further details on fields see https://docs.ansible.com/ansible-tower/latest/html/userguide/credential_plugins.html
+For further details on fields see https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html
 
 ### Standard Project Data Structure
 #### Json Example
