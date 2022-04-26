@@ -10,7 +10,7 @@
 
 # These are the default variables specific to the controller_role role
 
-# list of dict describing a Tower access controle rule
+# list of dict describing a Controller access control rule
 controller_roles: []
 # possible fields:
 # - role:  # mandatory, choices: admin, read, member, execute, adhoc, update, use, auditor, project_admin,

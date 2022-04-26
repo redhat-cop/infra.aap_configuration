@@ -10,7 +10,7 @@
 
 # These are the default variables specific to the workflow_job_templates role
 
-# list of dicts describing Tower workflow templates
+# list of dicts describing Controller workflow templates
 controller_workflows: []
 # - name: "workflow_template_name"  # mandatory
 #  new_name: "new_name"  # optional

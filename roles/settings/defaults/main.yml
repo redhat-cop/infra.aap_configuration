@@ -10,7 +10,7 @@
 
 # These are the default variables specific to the controller_settings role
 
-# list of dicts (or a single dict) describing the Tower settings
+# list of dicts (or a single dict) describing the Controller settings
 controller_settings: []
 # possible fields:
 # - settings:  # either this field or name/value is mandatory

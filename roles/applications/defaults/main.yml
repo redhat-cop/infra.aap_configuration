@@ -10,7 +10,7 @@
 
 # These are the default variables specific to the license role
 
-# a list of dictionaries describing the Tower applications
+# a list of dictionaries describing the Controller applications
 controller_applications: []
 # possible fields:
 # - name:  "app_name"  # mandatory

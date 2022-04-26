@@ -1,7 +1,7 @@
 ---
 controller_notification_templates:
 - name: Email notification
-  description: Send out emails for tower jobs
+  description: Send out emails for Controller jobs
   organization: Default
   notification_type: email
   notification_configuration:

@@ -1,8 +1,8 @@
 ---
 # Only Job name, type, project and playbook are required
-# Survey spec can be exported from existing job template using:
-# tower-cli job_template survey --name="my job template" -f yaml
-# https://github.com/ansible/tower-cli/blob/master/docs/source/cli_ref/usage/SURVEYS.rst
+# Survey spec can be exported from existing job template querying the API.
+# Find the ID of the job template and use the following URL:
+# https://<controller_url>/api/v2/job_templates/<ID>/survey_spec/
 controller_templates:
   - name: test-template-1
     description: created by Ansible Playbook

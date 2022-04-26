@@ -24,7 +24,7 @@ Examples of the playbooks in use can be found in the examples folder.
 
 ## Variables
 
-### Standard Tower Variables
+### Standard Controller Variables
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`controller_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
