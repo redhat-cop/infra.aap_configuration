@@ -1,5 +1,5 @@
 ---
-- name: Sync ee_registry in Automation Hub
+- name: Index ee_registry in Automation Hub
   hosts: localhost
   connection: local
   gather_facts: false
