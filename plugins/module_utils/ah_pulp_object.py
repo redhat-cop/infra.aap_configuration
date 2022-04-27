@@ -336,6 +336,53 @@ class AHPulpEENamespace(AHPulpObject):
         self.name_field = "name"
 
 
+class AHPulpEERemote(AHPulpObject):
+    """Manage the execution environment repository with the Pulp API.
+
+    A repository (or container for Pulp) represents a container image and is
+    stored inside a namespace.
+
+    The :py:class:``AHPulpEERemote`` creates, deletes, and updates remotes.
+    Creating the repository with this class breaks the web UI, therefore we should
+    use the remote_ui functionality to create. The vision is that this class will mostly be used to rename a remote.
+
+    Getting the details of a remote:
+        ``GET /pulp/api/v3/remotes/container/container/?name=<name>`` ::
+
+            {
+              "count": 1,
+              "next": null,
+              "previous": null,
+              "results": [
+                {
+                  "name": "ansible-automation-platform-20-early-access/ee-minimal-rhel8",
+                  "base_path": "ansible-automation-platform-20-early-access/ee-minimal-rhel8",
+                  "pulp_created": "2021-08-17T08:22:24.338660Z",
+                  "pulp_href": "/pulp/api/v3/distributions/container/container/d610ec76-ec86-427e-89d4-4d28c37515e1/",
+                  "pulp_labels": {},
+                  "content_guard": "/pulp/api/v3/contentguards/container/content_redirect/2406a920-5821-432c-9c86-3ed36f2c87ef/",
+                  "repository_version": null,
+                  "repository": "/pulp/api/v3/repositories/container/container-push/7f926cb2-1cc7-4043-b0f2-da6c5cd7caa0/",
+                  "registry_path": "hub.lab.example.com/ansible-automation-platform-20-early-access/ee-minimal-rhel8",
+                  "namespace": "/pulp/api/v3/pulp_container/namespaces/88c3275f-72be-405d-83e2-d4a49cb444d9/",
+                  "private": false,
+                  "description": null
+                }
+              ]
+            }
+
+    Delete a remote:
+        ``DELETE /pulp/api/v3/remotes/container/container/d610ec76-ec86-427e-89d4-4d28c37515e1/``
+    """
+
+    def __init__(self, API_object, data={}):
+        """Initialize the object."""
+        super(AHPulpEERemote, self).__init__(API_object, data)
+        self.endpoint = "remotes/container/container"
+        self.object_type = "remote"
+        self.name_field = "name"
+
+
 class AHPulpEERepository(AHPulpObject):
     """Manage the execution environment repository with the Pulp API.
 

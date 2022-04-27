@@ -48,7 +48,7 @@ This also speeds up the overall role.
 <!-- |`new_name`|""|yes|str|Setting this option will change the existing name (looked up via the name field.| -->
 |`append`|true|no|bool|Whether to append or replace the tags specified to the image.|
 |`tags`|""|no|str|List of the image tags to update.|
-|`state`|`updated`|no|str|Desired state of the ee_image. (Possible values of updated or absent)|
+|`state`|`present`|no|str|Desired state of the ee_image. (Possible values of `present` or `absent`)|
 
 ### Standard Project Data Structure
 
@@ -57,7 +57,7 @@ This also speeds up the overall role.
 ---
 ah_ee_images:
   - name: ansible-automation-platform-20-early-access/ee-supported-rhel8:2.0.0-15
-    state: updated
+    state: present
     append: false
     tags:
       - v2

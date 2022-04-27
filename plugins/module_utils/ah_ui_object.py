@@ -175,7 +175,7 @@ class AHUIObject(object):
         :raises AHAPIModuleError: An API error occured. That exception is only
                                   raised when ``exit_on_error`` is ``False``.
         """
-        query = {self.name_field: name}
+        query = {self.name_field: name, "limit": "1000"}
         url = self.api.build_ui_url(self.endpoint, query_params=query)
         try:
             response = self.api.make_request("GET", url)
@@ -879,6 +879,16 @@ class AHUIEENamespace(AHUIObject):
             self.api.fail_json(msg=fail_msg)
         else:
             raise AHAPIModuleError(fail_msg)
+
+
+class AHUIEERemote(AHUIObject):
+    def __init__(self, API_object, data={}):
+        """Initialize the object."""
+        super(AHUIEERemote, self).__init__(API_object, data)
+        self.endpoint = "execution-environments/remotes"
+        self.object_type = "remote"
+        self.name_field = "pulp_id"
+        self.id_field = "pulp_id"
 
 
 class AHUIEERepository(AHUIObject):
