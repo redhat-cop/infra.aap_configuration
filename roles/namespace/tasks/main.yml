@@ -23,4 +23,25 @@
   loop_control:
     loop_var: "__namespace_item"
   no_log: "{{ ah_configuration_namespace_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __namespaces_job_async
+  changed_when: not __namespaces_job_async.changed
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
+
+- name: "Create Namespace | Wait for finish the namespace creation"
+  async_status:
+    jid: "{{ __namespaces_job_async.ansible_job_id }}"
+  register: __namespaces_job_async_result
+  until: __namespaces_job_async_result.finished
+  retries: "{{ ah_configuration_namespace_async_retries }}"
+  delay: "{{ ah_configuration_namespace_async_delay }}"
+  loop: "{{ __namespaces_job_async.results }}"
+  loop_control:
+    loop_var: __namespaces_job_async_result_item
+  when: __namespaces_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ ah_configuration_namespace_secure_logging }}"
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
 ...
