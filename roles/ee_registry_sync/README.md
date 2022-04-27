@@ -1,6 +1,6 @@
 # redhat_cop.ah_configuration.ee_registry_sync
 ## Description
-An Ansible Role to create EE Registries in Automation Hub.
+An Ansible Role to sync EE Registries in Automation Hub.
 
 ## Variables
 |Variable Name|Default Value|Required|Description|Example|
