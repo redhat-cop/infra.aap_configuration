@@ -11,7 +11,7 @@
 # a list of dictionaries describing the Automation Hub ee repository
 ah_ee_registries: []
 # possible fields:
-#  - name: "namespace_name" # mandatory
+#  - name: "registry" # mandatory
 #    url: registry.redhat.io # mandatory
 #    username: myuser
 #    password: mypass
