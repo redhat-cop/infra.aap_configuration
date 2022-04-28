@@ -93,3 +93,36 @@ releases:
     - galaxy_deps.yml
     - new_ah_perms.yml
     release_date: '2022-02-17'
+  0.7.0:
+    changes:
+      breaking_changes:
+      - Options for state in ah_ee_image and ah_ee_repository modules changed from
+        'updated' to 'present' as a bug fix.
+      - module ah_collection_upload has been removed.
+      major_changes:
+      - Added ability to add remote repositories in ah_ee_repository module.
+      - Adds ah_ee_registry module
+      - Adds ah_ee_registry_index module
+      - Adds ah_ee_registry_sync module
+      - Adds ee_registry role
+      - Adds ee_registry_index role
+      - Adds ee_registry_sync role
+      - module ah_collection can now upload and delete collections
+      minor_changes:
+      - Added group permissions for remote registry management - add_containerregistryremote,
+        change_containerregistryremote, delete_containerregistryremote.
+      - ah_hostname becomes an alias for ah_host in modules
+      - ah_hostname is now the default option for roles, though ah_host remains an
+        alias
+    fragments:
+    - ah_ee_registry.yml
+    - ah_ee_registry_sync.yml
+    - ee_modules_state.yml
+    - hostname.yml
+    - new_ah_perms copy.yml
+    - newperms.yml
+    modules:
+    - description: Manage private automation hub execution environment remote registries.
+      name: ah_ee_registry
+      namespace: ''
+    release_date: '2022-04-28'
