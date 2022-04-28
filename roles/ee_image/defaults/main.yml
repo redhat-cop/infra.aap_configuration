@@ -12,7 +12,7 @@
 ah_ee_images: []
 # possible fields:
 #  - name: name: ansible-automation-platform-20-early-access/ee-supported-rhel8:2.0.0-15
-#    state: updated
+#    state: present
 #    append: true
 #    tags:
 #      - v2
@@ -20,4 +20,6 @@ ah_ee_images: []
 #      - prod1
 
 ah_configuration_ee_image_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
+ah_configuration_ee_image_async_retries: "{{ ah_configuration_async_retries | default(30) }}"
+ah_configuration_ee_image_async_delay: "{{ ah_configuration_async_delay | default(1) }}"
 ...

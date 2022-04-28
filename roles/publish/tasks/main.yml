@@ -80,6 +80,27 @@
   loop_control:
     loop_var: "__ah_collection_file"
   no_log: "{{ ah_configuration_publish_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __publish_job_async
+  changed_when: not __publish_job_async.changed
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
+
+- name: "Create EE Image | Wait for finish the publish creation"
+  async_status:
+    jid: "{{ __publish_job_async.ansible_job_id }}"
+  register: __publish_job_async_result
+  until: __publish_job_async_result.finished
+  retries: "{{ ah_configuration_publish_async_retries }}"
+  delay: "{{ ah_configuration_publish_async_delay }}"
+  loop: "{{ __publish_job_async.results }}"
+  loop_control:
+    loop_var: __publish_job_async_result_item
+  when: __publish_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ ah_configuration_publish_secure_logging }}"
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
 
 - name: Approve Collections
   redhat_cop.ah_configuration.ah_approval:

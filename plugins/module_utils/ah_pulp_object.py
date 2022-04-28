@@ -7,6 +7,7 @@
 # Ansible Automation Hub UI project at https://github.com/ansible/ansible-hub-ui
 
 from __future__ import absolute_import, division, print_function
+import time
 
 from .ah_api_module import AHAPIModuleError
 
@@ -335,6 +336,53 @@ class AHPulpEENamespace(AHPulpObject):
         self.name_field = "name"
 
 
+class AHPulpEERemote(AHPulpObject):
+    """Manage the execution environment repository with the Pulp API.
+
+    A repository (or container for Pulp) represents a container image and is
+    stored inside a namespace.
+
+    The :py:class:``AHPulpEERemote`` creates, deletes, and updates remotes.
+    Creating the repository with this class breaks the web UI, therefore we should
+    use the remote_ui functionality to create. The vision is that this class will mostly be used to rename a remote.
+
+    Getting the details of a remote:
+        ``GET /pulp/api/v3/remotes/container/container/?name=<name>`` ::
+
+            {
+              "count": 1,
+              "next": null,
+              "previous": null,
+              "results": [
+                {
+                  "name": "ansible-automation-platform-20-early-access/ee-minimal-rhel8",
+                  "base_path": "ansible-automation-platform-20-early-access/ee-minimal-rhel8",
+                  "pulp_created": "2021-08-17T08:22:24.338660Z",
+                  "pulp_href": "/pulp/api/v3/distributions/container/container/d610ec76-ec86-427e-89d4-4d28c37515e1/",
+                  "pulp_labels": {},
+                  "content_guard": "/pulp/api/v3/contentguards/container/content_redirect/2406a920-5821-432c-9c86-3ed36f2c87ef/",
+                  "repository_version": null,
+                  "repository": "/pulp/api/v3/repositories/container/container-push/7f926cb2-1cc7-4043-b0f2-da6c5cd7caa0/",
+                  "registry_path": "hub.lab.example.com/ansible-automation-platform-20-early-access/ee-minimal-rhel8",
+                  "namespace": "/pulp/api/v3/pulp_container/namespaces/88c3275f-72be-405d-83e2-d4a49cb444d9/",
+                  "private": false,
+                  "description": null
+                }
+              ]
+            }
+
+    Delete a remote:
+        ``DELETE /pulp/api/v3/remotes/container/container/d610ec76-ec86-427e-89d4-4d28c37515e1/``
+    """
+
+    def __init__(self, API_object, data={}):
+        """Initialize the object."""
+        super(AHPulpEERemote, self).__init__(API_object, data)
+        self.endpoint = "remotes/container/container"
+        self.object_type = "remote"
+        self.name_field = "name"
+
+
 class AHPulpEERepository(AHPulpObject):
     """Manage the execution environment repository with the Pulp API.
 
@@ -642,6 +690,26 @@ class AHPulpTask(AHPulpObject):
         self.object_type = "task"
         self.name_field = "name"
 
+    def get_object(self, task):
+        url = self.api.build_pulp_url("{endpoint}/{task_id}".format(endpoint=self.endpoint, task_id=task.split("/")[-2]))
+        try:
+            response = self.api.make_request("GET", url)
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="GET error: {error}".format(error=e))
+
+        if response["status_code"] != 200:
+            error_msg = self.api.extract_error_msg(response)
+            if error_msg:
+                fail_msg = "Unable to get {object_type} {name}: {code}: {error}".format(
+                    object_type=self.object_type, name=self.href, code=response["status_code"], error=error_msg
+                )
+            else:
+                fail_msg = "Unable to get {object_type} {name}: {code}".format(object_type=self.object_type, name=self.href, code=response["status_code"])
+            self.api.fail_json(msg=fail_msg)
+
+        self.data = response["json"]
+        self.exists = True
+
     def get_children(self, parent_task):
         """Retrieve a single object from a GET API call.
 
@@ -671,3 +739,24 @@ class AHPulpTask(AHPulpObject):
             self.api.fail_json(msg=fail_msg)
 
         return response["json"]["results"]
+
+    def wait_for_children(self, parent_task, interval, timeout, task_status="Started"):
+        start = time.time()
+        elapsed = 0
+        while task_status not in ["Complete", "Failed"]:
+            children = self.get_children(parent_task)
+            complete = True
+            for childTask in children:
+                if childTask["error"]:
+                    task_status = "Complete"
+                    error_output = childTask["error"]["description"].split(",")
+                    self.api.fail_json(status=error_output[0], msg=error_output[1], url=error_output[2], traceback=childTask["error"]["traceback"])
+                complete &= childTask["state"] == "completed"
+            if complete:
+                task_status = "Complete"
+                break
+            time.sleep(interval)
+            elapsed = time.time() - start
+            if timeout and elapsed > timeout:
+                self.api.fail_json(msg="Timed out awaiting task completion", children=children)
+        return task_status
