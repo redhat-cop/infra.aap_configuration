@@ -11,17 +11,10 @@
 # a list of dictionaries describing the Automation Hub ee repository
 ah_ee_registries: []
 # possible fields:
-#  - name: "namespace_name" # mandatory
-#    url: registry.redhat.io # mandatory
-#    username: myuser
-#    password: mypass
-#    tls_validation: false
-#    proxy_url: myproxy.example.com:8080
-#    proxy_username: proxyadmin
-#    proxy_password: proxyadmin
-#    download_concurrency: 100
-#    rate_limit: 5
-#    state: present
+#  - name: "registry_name" # mandatory
+#    interval: 1
+#    wait: true
+#    timeout:
 
 ah_configuration_ee_registry_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
 ah_configuration_ee_registry_sync_async_retries: "{{ ah_configuration_async_retries | default(30) }}"
