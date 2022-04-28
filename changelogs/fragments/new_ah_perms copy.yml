@@ -1,5 +1,0 @@
----
-breaking_changes:
-  - module ah_collection_upload has been removed.
-major_changes:
-  - module ah_collection can now upload and delete collections
