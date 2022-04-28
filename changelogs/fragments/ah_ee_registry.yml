@@ -1,7 +1,0 @@
----
-major_changes:
-  - Adds ah_ee_registry module
-  - Adds ee_registry role
-  - Adds ah_ee_registry_index module
-  - Adds ee_registry_index role
-...

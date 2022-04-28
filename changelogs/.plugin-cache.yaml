@@ -20,6 +20,11 @@ plugins:
       name: ah_build
       namespace: ''
       version_added: null
+    ah_collection:
+      description: update, or destroy Automation Hub Collections.
+      name: ah_collection
+      namespace: ''
+      version_added: null
     ah_collection_upload:
       description: Upload a collection artifact to Automation Hub.
       name: ah_collection_upload
@@ -35,11 +40,31 @@ plugins:
       name: ah_ee_namespace
       namespace: ''
       version_added: 0.4.3
+    ah_ee_registry:
+      description: Manage private automation hub execution environment remote registries.
+      name: ah_ee_registry
+      namespace: ''
+      version_added: 0.7.0
+    ah_ee_registry_index:
+      description: Initiate an execution environment registry indexing.
+      name: ah_ee_registry_index
+      namespace: ''
+      version_added: null
+    ah_ee_registry_sync:
+      description: Initiate an execution environment registry sync.
+      name: ah_ee_registry_sync
+      namespace: ''
+      version_added: null
     ah_ee_repository:
       description: Manage private automation hub execution environment repositories/containers
       name: ah_ee_repository
       namespace: ''
       version_added: 0.4.3
+    ah_ee_repository_sync:
+      description: Initiate an execution environment repository sync.
+      name: ah_ee_repository_sync
+      namespace: ''
+      version_added: null
     ah_group:
       description: Manage private automation hub user groups
       name: ah_group
@@ -79,4 +104,4 @@ plugins:
   shell: {}
   strategy: {}
   vars: {}
-version: 0.6.1
+version: 0.7.0

@@ -1,5 +1,0 @@
----
-minor_changes:
-  - ah_hostname becomes an alias for ah_host in modules
-  - ah_hostname is now the default option for roles, though ah_host remains an alias
-...
