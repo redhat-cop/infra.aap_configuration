@@ -25,7 +25,7 @@
 
 - name: "Create EE Image | Wait for finish the ee_registry_index creation"
   async_status:
-    jid: "{{ __ee_registry_indexes_job_async.ansible_job_id }}"
+    jid: "{{ __ee_registry_indexes_job_async_result_item.ansible_job_id }}"
   register: __ee_registry_indexes_job_async_result
   until: __ee_registry_indexes_job_async_result.finished
   retries: "{{ ah_configuration_ee_registry_index_async_retries }}"

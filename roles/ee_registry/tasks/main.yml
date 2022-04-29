@@ -33,7 +33,7 @@
 
 - name: "Create EE Registry | Wait for finish the ee_registry creation"
   async_status:
-    jid: "{{ __ee_registries_job_async.ansible_job_id }}"
+    jid: "{{ __ee_registries_job_async_result_item.ansible_job_id }}"
   register: __ee_registries_job_async_result
   until: __ee_registries_job_async_result.finished
   retries: "{{ ah_configuration_ee_registry_async_retries }}"

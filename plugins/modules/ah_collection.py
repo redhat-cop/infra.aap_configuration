@@ -39,18 +39,18 @@ options:
       description:
         - Collection artifact file path.
       type: str
-    wait
+    wait:
       description:
         - Waits for the collection to be uploaded
       type: bool
       default: true
-    auto_approve
+    auto_approve:
       description:
         - Approves a collection.
         - Requires version to be set.
       type: bool
       default: true
-    overwrite_existing
+    overwrite_existing:
       description:
         - Overwrites an existing collection.
         - Requires version to be set.

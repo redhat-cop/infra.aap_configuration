@@ -11,7 +11,7 @@
 # a list of dictionaries describing the Automation Hub ee repository
 ah_ee_registries: []
 # possible fields:
-#  - name: "namespace_name" # mandatory
+#  - name: "registry" # mandatory
 #    url: registry.redhat.io # mandatory
 #    username: myuser
 #    password: mypass
@@ -24,6 +24,6 @@ ah_ee_registries: []
 #    state: present
 
 ah_configuration_ee_registry_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
-ah_configuration_ee_registry_async_retries: "{{ ah_configuration_async_retries | default(30) }}"
+ah_configuration_ee_registry_async_retries: "{{ ah_configuration_async_retries | default(50) }}"
 ah_configuration_ee_registry_async_delay: "{{ ah_configuration_async_delay | default(1) }}"
 ...
