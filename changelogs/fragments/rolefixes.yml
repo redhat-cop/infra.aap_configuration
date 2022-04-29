@@ -2,4 +2,6 @@
 bugfixes:
   - Fix issue where all roles had the wrong variable set and caused failures
   - Fixed issue with new variables not included in ee_repository role
+minor_changes:
+  - Changed default retries on async tasks in roles to 50
 ...
