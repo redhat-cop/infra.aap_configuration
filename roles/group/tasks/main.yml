@@ -24,7 +24,7 @@
 
 - name: "Create EE Image | Wait for finish the group creation"
   async_status:
-    jid: "{{ __groups_job_async.ansible_job_id }}"
+    jid: "{{ __groups_job_async_result_item.ansible_job_id }}"
   register: __groups_job_async_result
   until: __groups_job_async_result.finished
   retries: "{{ ah_configuration_group_async_retries }}"
@@ -61,7 +61,7 @@
 
 - name: "Create Group | Wait for finish the group creation"
   async_status:
-    jid: "{{ __group_perms_job_async.ansible_job_id }}"
+    jid: "{{ __group_perms_job_async_result_item.ansible_job_id }}"
   register: __group_perms_job_async_result
   until: __group_perms_job_async_result.finished
   retries: "{{ ah_configuration_group_async_retries }}"

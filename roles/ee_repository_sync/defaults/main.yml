@@ -9,14 +9,14 @@
 # These are the default variables specific to the license role
 
 # a list of dictionaries describing the Automation Hub ee repository
-ah_ee_registries: []
+ah_ee_repositories: []
 # possible fields:
-#  - name: "registry_name" # mandatory
+#  - name: "namespace_name" # mandatory
 #    interval: 1
 #    wait: true
 #    timeout:
 
-ah_configuration_ee_registry_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
-ah_configuration_ee_registry_index_async_retries: "{{ ah_configuration_async_retries | default(50) }}"
-ah_configuration_ee_registry_index_async_delay: "{{ ah_configuration_async_delay | default(1) }}"
+ah_configuration_ee_repository_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
+ah_configuration_ee_repository_sync_async_retries: "{{ ah_configuration_async_retries | default(50) }}"
+ah_configuration_ee_repository_sync_async_delay: "{{ ah_configuration_async_delay | default(1) }}"
 ...

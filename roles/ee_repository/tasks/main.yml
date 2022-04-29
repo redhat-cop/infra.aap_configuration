@@ -3,17 +3,22 @@
 # Create AH EE repository
 - name: Add Automation Hub EE repository
   ah_ee_repository:
-    name:             "{{ __ee_repository_item.name }}"
-    # new_name:         "{{ __ee_repository_item.new_name | default(omit) }}"  <-- Needs adding once new_name option added to module
-    description:      "{{ __ee_repository_item.description | default(omit) }}"
-    readme:           "{{ __ee_repository_item.readme | default(omit) }}"
-    readme_file:      "{{ __ee_repository_item.readme_file | default(omit) }}"
-    state:            "{{ __ee_repository_item.state | default(ah_state | default('present')) }}"
-    ah_host:          "{{ ah_host | default(ah_hostname) }}"
-    ah_username:      "{{ ah_username | default(omit) }}"
-    ah_password:      "{{ ah_password | default(omit) }}"
-    ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
-    validate_certs:   "{{ ah_validate_certs | default(omit) }}"
+    name:                       "{{ __ee_repository_item.name }}"
+    new_name:                   "{{ __ee_repository_item.new_name | default(omit) }}"
+    description:                "{{ __ee_repository_item.description | default(omit) }}"
+    readme:                     "{{ __ee_repository_item.readme | default(omit) }}"
+    readme_file:                "{{ __ee_repository_item.readme_file | default(omit) }}"
+    delete_namespace_if_empty:  "{{ __ee_repository_item.delete_namespace_if_empty | default(omit) }}"
+    registry:                   "{{ __ee_repository_item.registry | default(omit) }}"
+    upstream_name:              "{{ __ee_repository_item.upstream_name | default(omit) }}"
+    include_tags:               "{{ __ee_repository_item.include_tags | default(omit) }}"
+    exclude_tags:               "{{ __ee_repository_item.exclude_tags | default(omit) }}"
+    state:                      "{{ __ee_repository_item.state | default(ah_state | default('present')) }}"
+    ah_host:                    "{{ ah_host | default(ah_hostname) }}"
+    ah_username:                "{{ ah_username | default(omit) }}"
+    ah_password:                "{{ ah_password | default(omit) }}"
+    ah_path_prefix:             "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:             "{{ ah_validate_certs | default(omit) }}"
   loop: "{{ ah_ee_repositories }}"
   loop_control:
     loop_var: "__ee_repository_item"
@@ -27,7 +32,7 @@
 
 - name: "Create EE Repository | Wait for finish the ee_repository creation"
   async_status:
-    jid: "{{ __ee_repositories_job_async.ansible_job_id }}"
+    jid: "{{ __ee_repositories_job_async_result_item.ansible_job_id }}"
   register: __ee_repositories_job_async_result
   until: __ee_repositories_job_async_result.finished
   retries: "{{ ah_configuration_ee_repository_async_retries }}"
