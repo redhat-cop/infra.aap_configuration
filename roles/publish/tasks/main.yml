@@ -87,9 +87,9 @@
   vars:
     ansible_async_dir: '/tmp/.ansible_async'
 
-- name: "Create EE Image | Wait for finish the publish creation"
+- name: "Publish Collection | Wait for finish the publish creation"
   async_status:
-    jid: "{{ __publish_job_async.ansible_job_id }}"
+    jid: "{{ __publish_job_async_result_item.ansible_job_id }}"
   register: __publish_job_async_result
   until: __publish_job_async_result.finished
   retries: "{{ ah_configuration_publish_async_retries }}"
