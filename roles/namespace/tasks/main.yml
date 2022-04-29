@@ -32,7 +32,7 @@
 
 - name: "Create Namespace | Wait for finish the namespace creation"
   async_status:
-    jid: "{{ __namespaces_job_async.ansible_job_id }}"
+    jid: "{{ __namespaces_job_async_result_item.ansible_job_id }}"
   register: __namespaces_job_async_result
   until: __namespaces_job_async_result.finished
   retries: "{{ ah_configuration_namespace_async_retries }}"
