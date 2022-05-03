@@ -1,7 +1,13 @@
 ---
 - name: Include projects vars
   include_vars: ../vars/controller_projects.yml
+  tags:
+    - projects
+    - alltags
 
-- include_role:
+- import_role:
     name: redhat_cop.controller_configuration.projects
+  tags:
+    - projects
+    - alltags
 ...

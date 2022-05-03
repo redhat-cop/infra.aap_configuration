@@ -1,0 +1,13 @@
+---
+- name: Include roles vars
+  include_vars: ../vars/controller_roles.yml
+  tags:
+    - roles
+    - alltags
+
+- import_role:
+    name: redhat_cop.controller_configuration.roles
+  tags:
+    - roles
+    - alltags
+...

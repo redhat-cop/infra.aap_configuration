@@ -1,0 +1,12 @@
+# Refer to https://github.com/redhat-cop/tower_configuration/tree/devel/roles/execution_environments
+# for documentation and additional parameter information
+
+---
+controller_execution_environments:
+  - name: ""
+    image: ""
+    organization: "{{ which_org }}"
+    credential: ""
+    pull: "" # always, missing, or never
+    state: "{{ absent_present }}"
+...

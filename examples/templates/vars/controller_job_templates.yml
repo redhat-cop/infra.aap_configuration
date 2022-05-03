@@ -1,4 +1,4 @@
-# Refer to https://github.com/redhat-cop/controller_configuration/tree/devel/roles/job_templates
+# Refer to https://github.com/redhat-cop/tower_configuration/tree/devel/roles/job_templates
 # for documentation and additional parameter information
 
 ---
@@ -9,9 +9,9 @@ controller_templates:
     project: ""
     playbook: ""
     labels: ""
-    ask_limit_on_launch: true
+    ask_limit_on_launch: yes
     limit: ""
-    credentials:
+    credentials: 
       - ""
     organization: ""
     state: "{{ absent_present }}"
@@ -22,26 +22,26 @@ controller_templates:
     project: ""
     playbook: ""
     labels: ""
-    credentials:
+    credentials: 
       - ""
     organization: ""
     state: "{{ absent_present }}"
-    survey_enabled: true
+    survey_enabled: yes
     survey:
       name: ""
       description: ""
       spec:
         - question_name: ""
           question_description: ""
-          required: true
-          new_question: true
+          required: yes
+          new_question: yes
           variable: ""
           default: ""
           type: ""
         - question_name: ""
           question_description: ""
-          required: true
-          new_question: true
+          required: yes
+          new_question: yes
           variable: ""
           default: ""
           type: ""
