@@ -1,4 +1,4 @@
-# Refer to https://github.com/redhat-cop/controller_configuration/tree/devel/roles/projects
+# Refer to https://github.com/redhat-cop/tower_configuration/tree/devel/roles/projects
 # for documentation and additional parameter information
 
 ---
@@ -9,9 +9,9 @@ controller_projects:
     scm_branch: ""
     scm_credential: ""
     scm_type: git
-    scm_update_on_launch: false
+    scm_update_on_launch: no
     scm_update_cache_timeout: 3600
     scm_url: ""
     state: "{{ absent_present }}"
-    wait: true
+    wait: yes
 ...

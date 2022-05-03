@@ -1,7 +1,13 @@
 ---
 - name: Include job templates vars
   include_vars: ../vars/controller_job_templates.yml
+  tags:
+    - jobtemplates
+    - alltags
 
-- include_role:
+- import_role:
     name: redhat_cop.controller_configuration.job_templates
+  tags:
+    - jobtemplates
+    - alltags
 ...

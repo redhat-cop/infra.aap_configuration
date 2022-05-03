@@ -1,17 +1,42 @@
+# Available tags
+#   - never
+#   - alltags
+#   - settings
+#   - credtypes
+#   - orgs
+#   - users
+#   - teams
+#   - credentials
+#   - projects
+#   - labels
+#   - inventory
+#   - inventorysources
+#   - hosts
+#   - groups
+#   - jobtemplates
+#   - workflows
+#   - schedules
+#   - ees
+#   - instancegroups
+#   - notifications
+#   - roles
+
+
 ---
 - name: Playbook to configure a Tower cluster
   hosts: localhost
   connection: local
-  gather_facts: false
+  gather_facts: no
   collections:
-    - ansible.tower
+    - ansible.controller
     - redhat_cop.controller_configuration
 
   vars:
     absent_present: "present"
+    which_org: ""
 
   environment:
-    CONTROLLER_VERIFY_SSL: false
+    CONTROLLER_VERIFY_SSL: False
 
   pre_tasks:
     - name: Include Vars
@@ -21,107 +46,141 @@
     - name: Include task for managing LDAP settings
       include_tasks: tasks/manage_controller_settings.yml
       tags:
-        - all
         - never
+        - alltags
         - settings
+    
+    - name: Include task for managing instance groups
+      include_tasks: tasks/manage_instance_groups.yml
+      tags:
+        - never
+        - alltags
+        - instancegroups
 
     - name: Include task for managing credential types
       include_tasks: tasks/manage_credential_types.yml
       tags:
-        - all
         - never
+        - alltags
         - credtypes
 
     - name: Include task for managing organizations
       include_tasks: tasks/manage_organizations.yml
       tags:
-        - all
         - never
+        - alltags
         - orgs
-
+    
     - name: Include task for managing users
       include_tasks: tasks/manage_users.yml
       tags:
-        - all
         - never
+        - alltags
         - users
+    
+    - name: Include task for managing teams
+      include_tasks: tasks/manage_teams.yml
+      tags:
+        - never
+        - alltags
+        - teams
 
     - name: Include task for managing credentials
       include_tasks: tasks/manage_credentials.yml
       tags:
-        - all
         - never
+        - alltags
         - credentials
 
-    # Add Orgs a second time to associate the Galaxy /
-    # Automation Hub credentials with the Org for project sync
+    # Add Orgs a second time to associate the Galaxy / Automation Hub credentials with the Org for project sync
     - name: Include task for managing organizations
       include_tasks: tasks/manage_organizations.yml
       tags:
-        - all
         - never
+        - alltags
         - orgs
-
+    
+    - name: Include task for manging execution environments
+      include_tasks: tasks/manage_ees.yml
+      tags:
+        - never
+        - alltags
+        - ees
+      
     - name: Include task for managing projects
       include_tasks: tasks/manage_projects.yml
       tags:
-        - all
         - never
+        - alltags
         - projects
-
+    
     - name: Include task for managing labels
       include_tasks: tasks/manage_labels.yml
       tags:
-        - all
         - never
+        - alltags
         - labels
-
+    
     - name: Include task for managing inventories
       include_tasks: tasks/manage_inventories.yml
       tags:
-        - all
         - never
+        - alltags
         - inventory
-
+    
     - name: Include task for managing inventories
       include_tasks: tasks/manage_inventory_sources.yml
       tags:
-        - all
         - never
+        - alltags
         - inventorysources
 
     - name: Include task for managing hosts
       include_tasks: tasks/manage_hosts.yml
       tags:
-        - all
         - never
+        - alltags
         - hosts
 
     - name: Include task for managing groups
       include_tasks: tasks/manage_groups.yml
       tags:
-        - all
         - never
+        - alltags
         - groups
+
+    - name: Include task for managing notification templates
+      include_tasks: tasks/manage_notification_templates.yml
+      tags:
+        - never
+        - alltags
+        - notifications
 
     - name: Include task for managing job templates
       include_tasks: tasks/manage_job_templates.yml
       tags:
-        - all
         - never
+        - alltags
         - jobtemplates
 
     - name: Include task for managing workflow templates
       include_tasks: tasks/manage_workflow_templates.yml
       tags:
-        - all
         - never
+        - alltags
         - workflows
 
     - name: Include task for managing schedules
       include_tasks: tasks/manage_schedules.yml
       tags:
-        - all
         - never
+        - alltags
         - schedules
+
+    - name: Include task for managing roles
+      include_tasks: tasks/manage_roles.yml
+      tags:
+        - never
+        - alltags
+        - roles
 ...
