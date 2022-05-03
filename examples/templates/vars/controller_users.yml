@@ -8,6 +8,6 @@ controller_user_accounts:
     email: 
     first_name: 
     last_name: 
-    is_superuser: no
+    is_superuser: false
     state: "{{ absent_present }}"
 ...

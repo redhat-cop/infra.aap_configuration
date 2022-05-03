@@ -5,7 +5,7 @@
 controller_schedules:
   - name: ""
     description: ""
-    enabled: no
+    enabled: false
     extra_data:
       var1: ""
       var2: ""
