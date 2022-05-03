@@ -49,7 +49,7 @@
         - never
         - alltags
         - settings
-    
+
     - name: Include task for managing instance groups
       include_tasks: tasks/manage_instance_groups.yml
       tags:
@@ -70,14 +70,14 @@
         - never
         - alltags
         - orgs
-    
+
     - name: Include task for managing users
       include_tasks: tasks/manage_users.yml
       tags:
         - never
         - alltags
         - users
-    
+
     - name: Include task for managing teams
       include_tasks: tasks/manage_teams.yml
       tags:
@@ -99,35 +99,35 @@
         - never
         - alltags
         - orgs
-    
+
     - name: Include task for manging execution environments
       include_tasks: tasks/manage_ees.yml
       tags:
         - never
         - alltags
         - ees
-      
+
     - name: Include task for managing projects
       include_tasks: tasks/manage_projects.yml
       tags:
         - never
         - alltags
         - projects
-    
+
     - name: Include task for managing labels
       include_tasks: tasks/manage_labels.yml
       tags:
         - never
         - alltags
         - labels
-    
+
     - name: Include task for managing inventories
       include_tasks: tasks/manage_inventories.yml
       tags:
         - never
         - alltags
         - inventory
-    
+
     - name: Include task for managing inventories
       include_tasks: tasks/manage_inventory_sources.yml
       tags:

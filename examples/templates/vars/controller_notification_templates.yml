@@ -10,14 +10,14 @@ controller_notification_templates:
     notification_type: "email"
     notification_configuration: 
       - host: ""
-        port: 
+        port: 25
         username: ""
         password: ""
         sender: ""
         recipients:
-          - 
+          - ""
         timeout: 30
-        use_tls: yes
+        use_tls: true
         use_ssl: false
     state: "{{ absent_present }}"
 ...
