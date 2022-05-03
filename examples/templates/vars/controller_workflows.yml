@@ -34,7 +34,7 @@ controller_workflows:
           - node102
           - node103
         state: "{{ absent_present }}"
-      
+
       - unified_job_template:
           name: ""
         identifier: node102

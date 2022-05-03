@@ -13,5 +13,5 @@ controller_projects:
     scm_update_cache_timeout: 3600
     scm_url: ""
     state: "{{ absent_present }}"
-    wait: yes
+    wait: true
 ...
