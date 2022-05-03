@@ -9,7 +9,7 @@ controller_projects:
     scm_branch: ""
     scm_credential: ""
     scm_type: git
-    scm_update_on_launch: no
+    scm_update_on_launch: false
     scm_update_cache_timeout: 3600
     scm_url: ""
     state: "{{ absent_present }}"

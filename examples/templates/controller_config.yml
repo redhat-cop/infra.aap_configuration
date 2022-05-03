@@ -26,7 +26,7 @@
 - name: Playbook to configure a Tower cluster
   hosts: localhost
   connection: local
-  gather_facts: no
+  gather_facts: false
   collections:
     - ansible.controller
     - redhat_cop.controller_configuration

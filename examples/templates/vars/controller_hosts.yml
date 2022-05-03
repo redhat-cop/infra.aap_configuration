@@ -6,24 +6,24 @@ controller_hosts:
   - name: ""
     new_name: ""
     inventory: "{{ which_inventory }}"
-    enabled: "yes"
+    enabled: true
     state: "{{ absent_present }}"
 
   - name: ""
     new_name: ""
     inventory: "{{ which_inventory }}"
-    enabled: "yes"
+    enabled: true
     state: "{{ absent_present }}"
 
   - name: ""
     new_name: ""
     inventory: "{{ which_inventory }}"
-    enabled: "yes"
+    enabled: true
     state: "{{ absent_present }}"
 
   - name: ""
     new_name: ""
     inventory: "{{ which_inventory }}"
-    enabled: "yes"
+    enabled: true
     state: "{{ absent_present }}"
 ...

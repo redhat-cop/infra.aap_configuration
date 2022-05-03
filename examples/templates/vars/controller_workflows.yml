@@ -6,22 +6,22 @@ controller_workflows:
   - name: ""
     organization: ""
     state: ""
-    survey_enabled: yes
+    survey_enabled: true
     survey:
       name: ""
       description: ""
       spec:
         - question_name: ""
           question_description: ""
-          required: yes
-          new_question: yes
+          required: true
+          new_question: true
           variable: ""
           default: ""
           type: ""
         - question_name: ""
           question_description: ""
-          required: yes
-          new_question: yes
+          required: true
+          new_question: true
           variable: ""
           default: ""
           type: ""
