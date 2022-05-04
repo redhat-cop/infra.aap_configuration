@@ -5,6 +5,19 @@ redhat_cop.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v2.1.5
+======
+
+Major Changes
+-------------
+
+- Adds dispatch role - A role to run all other roles.
+
+Bugfixes
+--------
+
+- Changed default interval for inventory_source_update, project_update and project to be the value of the role's async delay value. This still defaults to 1 if the delay value is not set as previously.
+
 v2.1.4
 ======
 
