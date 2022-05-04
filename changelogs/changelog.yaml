@@ -258,3 +258,15 @@ releases:
     - async.yml
     - inventories.yml
     release_date: '2022-03-31'
+  2.1.5:
+    changes:
+      bugfixes:
+      - Changed default interval for inventory_source_update, project_update and project
+        to be the value of the role's async delay value. This still defaults to 1
+        if the delay value is not set as previously.
+      major_changes:
+      - Adds dispatch role - A role to run all other roles.
+    fragments:
+    - dispatch.yml
+    - interval_delay.yaml
+    release_date: '2022-05-04'
