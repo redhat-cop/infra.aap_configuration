@@ -34,7 +34,7 @@
   loop_control:
     loop_var: __ee_registry_syncs_job_async_result_item
   when: __ee_registry_syncs_job_async_result_item.ansible_job_id is defined
-  no_log: "{{ ah_configuration_ee_registry_sync_secure_logging }}"
+  no_log: "{{ ah_configuration_ee_registry_secure_logging }}"
   vars:
     ansible_async_dir: '/tmp/.ansible_async'
 ...
