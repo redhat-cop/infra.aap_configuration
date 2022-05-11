@@ -171,7 +171,7 @@ class AHAPIModule(AnsibleModule):
         headers = kwargs.get("headers", {})
         data = json.dumps(kwargs.get("data", {}))
 
-        #set default response
+        # set default response
         response = {}
 
         try:
