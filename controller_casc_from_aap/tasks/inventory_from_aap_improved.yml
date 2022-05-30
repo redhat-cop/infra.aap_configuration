@@ -1,0 +1,47 @@
+---
+- set_fact:
+    lookvar: "{{ lookup('ansible.controller.controller_api', 'api/v2/inventories/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, query_params={
+                            'has_inventory_sources': 'false',
+                            'not__kind': 'smart'
+                          }
+                        )
+             }}"
+- set_fact:
+    current_inventories: "{{ (current_inventories | default([])) + [{
+      'has_inventory_sources': item.has_inventory_sources,
+      'id': item.id,
+      'name': item.name,
+      'description': item.description,
+      'organization': lookup('ansible.controller.controller_api', 'api/v2/organizations/'+(item.organization|string), host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs)['name'],
+      'host_filter': item.host_filter,
+      'kind': item.kind,
+      'variables': item.variables,
+      'hosts': lookup('ansible.controller.controller_api', item.related.hosts, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, wantlist=true) | json_query('[*].{name: name, description: description}'),
+      'groups': lookup('ansible.controller.controller_api', item.related.groups, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, wantlist=true) | json_query('[*].{name: name, description: description, hosts_url: related.hosts}') | map('combine', {'inventory': item.name}) | list
+    }] }}"
+  loop: "{{ lookvar }}"
+
+- name: "Create the output directory: {{ output_path }}"
+  file:
+    path: "{{ output_path }}"
+    state: directory
+
+- name: "Add current inventories to the output yaml file: {{ output_path }}/current_inventories.yaml"
+  template:
+    src: "templates/current_inventories_improved.j2"
+    dest: "{{ output_path }}/current_inventories.yaml"
+  vars:
+    current_asset_value: "{{ current_inventories }}"
+
+- name: "Set the inventory's hosts"
+  include_tasks: "hosts_from_aap_improved.yml"
+  loop: "{{ current_inventories | json_query('[*].{hosts: hosts, name: name}') }}"
+  loop_control:
+    loop_var: current_asset_value
+    label: "{{ current_asset_value.name }}"
+
+- name: "Set the inventory's groups"
+  include_tasks: "groups_from_aap_improved.yml"
+  vars:
+    current_asset_value: "{{ current_inventories }}"
+...
