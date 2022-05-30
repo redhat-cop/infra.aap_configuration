@@ -102,8 +102,8 @@
   include_tasks: user_accounts.yml
   args:
     apply:
-      tags: user_accounts
-  tags: user_accounts
+      tags: users
+  tags: users
 
 - name: Include Tasks to config Teams
   include_tasks: teams.yml
