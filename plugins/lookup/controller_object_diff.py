@@ -28,12 +28,12 @@ options:
     required: True
   set_absent:
     description:
-      - Set items not in the compare list to state: absent
+      - Set state of items not in the compare list to 'absent'
     type: boolean
     default: True
   with_present:
     description:
-      - Include items in the original compare list in the output, and set state: present
+      - Include items in the original compare list in the output, and set state to 'present'
     type: boolean
     default: True
   warn_on_empty_api:
