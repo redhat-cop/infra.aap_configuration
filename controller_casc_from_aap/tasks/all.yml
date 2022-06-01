@@ -49,5 +49,8 @@
     - name: "Export Job Templates"
       include_tasks: "job_templates_from_aap_improved.yml"
       when: "'job_templates' in input_tag"
-  when: "['inventory', 'organizations', 'job_templates'] | intersect(input_tag) | length > 0"
+    - name: "Export Job Templates"
+      include_tasks: "workflow_job_template_nodes_from_aap_improved.yml"
+      when: "'workflow_job_template_nodes' in input_tag"
+  when: "['inventory', 'organizations', 'job_templates', 'workflow_job_template_nodes'] | intersect(input_tag) | length > 0"
 ...

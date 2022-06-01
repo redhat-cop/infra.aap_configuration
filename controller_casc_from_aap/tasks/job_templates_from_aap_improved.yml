@@ -1,6 +1,6 @@
 ---
 - set_fact:
-    lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/job_templates/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs) }}"
+    lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/job_templates/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) }}"
 
 - name: "Create the output directory: {{ output_path }}"
   file:

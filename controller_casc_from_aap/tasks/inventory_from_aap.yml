@@ -3,7 +3,7 @@
 - name: "Populate a list of the inventories not having an inventory source"
   set_fact:
     inventories_without_sources: "{{ (inventories_without_sources | default([])) + [inventory_source_item.name] }}"
-  loop: "{{ query('ansible.controller.controller_api', 'inventories', query_params={ 'has_inventory_sources': false }, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
+  loop: "{{ query('ansible.controller.controller_api', 'inventories', query_params={ 'has_inventory_sources': false }, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false, return_all=true) }}"
   loop_control:
     loop_var: inventory_source_item
     label: "{{ inventory_source_item.name }}"

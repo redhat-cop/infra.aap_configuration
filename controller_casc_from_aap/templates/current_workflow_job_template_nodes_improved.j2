@@ -1,0 +1,31 @@
+---
+controller_workflow_nodes:
+{% for node in current_asset_value %}
+  - identifier: "{{ node.identifier }}"
+    workflow_job_template: "{{ node.summary_fields.workflow_job_template.name }}"
+    unified_job_template: "{{ node.summary_fields.unified_job_template.name }}"
+{% if node.job_type %}
+    job_type: "{{ node.job_type }}"
+{% endif %}
+    organization: "{{ worflow_job_template_organization | default('ToDo: The WF node \'' + node.identifier + '\' must have an organization') }}"
+    all_parents_must_converge: "{{ node.all_parents_must_converge }}"
+{% if node.success_nodes is defined and node.success_nodes | length > 0 %}
+    success_nodes:
+{% for success in node.success_nodes %}
+      - {{ query('ansible.controller.controller_api', 'workflow_job_template_nodes/'+success, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs)[0].identifier }}
+{% endfor %}
+{% endif %}
+{% if node.always_nodes and node.always_nodes | length > 0 %}
+    always_nodes:
+{% for always in node.always_nodes %}
+      - {{ always }}
+{% endfor %}
+{% endif %}
+{% if node.failure_nodes and node.failure_nodes | length > 0 %}
+    failure_nodes:
+{% for failure in node.failure_nodes %}
+      - {{ failure }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+...

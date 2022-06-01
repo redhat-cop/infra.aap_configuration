@@ -1,23 +1,24 @@
 ---
 - set_fact:
-    lookvar: "{{ lookup('ansible.controller.controller_api', 'api/v2/inventories/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, query_params={
-                            'has_inventory_sources': 'false',
-                            'not__kind': 'smart'
-                          }
-                        )
+    lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/inventories/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true, query_params={
+                          'has_inventory_sources': 'false',
+                          'not__kind': 'smart'
+                        }
+                      )
              }}"
+
 - set_fact:
     current_inventories: "{{ (current_inventories | default([])) + [{
       'has_inventory_sources': item.has_inventory_sources,
       'id': item.id,
       'name': item.name,
       'description': item.description,
-      'organization': lookup('ansible.controller.controller_api', 'api/v2/organizations/'+(item.organization|string), host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs)['name'],
+      'organization': lookup('ansible.controller.controller_api', 'api/v2/organizations/'+(item.organization|string), host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true)['name'],
       'host_filter': item.host_filter,
       'kind': item.kind,
       'variables': item.variables,
-      'hosts': lookup('ansible.controller.controller_api', item.related.hosts, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, wantlist=true) | json_query('[*].{name: name, description: description}'),
-      'groups': lookup('ansible.controller.controller_api', item.related.groups, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, wantlist=true) | json_query('[*].{name: name, description: description, hosts_url: related.hosts}') | map('combine', {'inventory': item.name}) | list
+      'hosts': query('ansible.controller.controller_api', item.related.hosts, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].{name: name, description: description}'),
+      'groups': query('ansible.controller.controller_api', item.related.groups, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].{name: name, description: description, hosts_url: related.hosts}') | map('combine', {'inventory': item.name}) | list
     }] }}"
   loop: "{{ lookvar }}"
 
