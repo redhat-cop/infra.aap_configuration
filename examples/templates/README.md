@@ -108,9 +108,9 @@ Variables
     controller_organizations
 
         Dictionary of organizations to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional oranizaitons.
-    
+
     You must associate Galaxy / Automation Hub credentials with an Organization before you sync projects.  Otherwise the project sync will fail. This particular vars file has the organization defined with the Galaxy / Automation Hub credentials.
-    
+
     There is a check in the `tasks/manage_controller_organizations.yml` which checks to see if the organization is already defined.  If it is not defined then it creates the organization.
 
     However, you cannot associate a Galaxy / Private Automation Hub credential to an organization you are defining for the first time because those credentials for that organization have not been created yet.  So the organization is created, then credentials are added to the organization, and then the organization is updated to associate the Galaxy / Automation Hub credentials.
