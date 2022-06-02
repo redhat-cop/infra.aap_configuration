@@ -8,7 +8,7 @@ controller_notification_templates:
     description: ""
     organization: ""
     notification_type: "email"
-    notification_configuration: 
+    notification_configuration:
       - host: ""
         port: 25
         username: ""
