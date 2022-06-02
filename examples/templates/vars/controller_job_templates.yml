@@ -11,7 +11,7 @@ controller_templates:
     labels: ""
     ask_limit_on_launch: true
     limit: ""
-    credentials: 
+    credentials:
       - ""
     organization: ""
     state: "{{ absent_present }}"
@@ -22,7 +22,7 @@ controller_templates:
     project: ""
     playbook: ""
     labels: ""
-    credentials: 
+    credentials:
       - ""
     organization: ""
     state: "{{ absent_present }}"
