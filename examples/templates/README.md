@@ -3,12 +3,12 @@ Controller Configuration
 
 A single playbook and multiple task and vars files which can be used to define your Tower or Controller configuration as code.  Update the vars files to define your objects and run the playbook to deploy your changes to your Tower / AAP 2.1 cluster(s).
 
-If executed with the `all` tag then the playbook will create all ojbects defined in all vars files in the appropriate order.
+If executed with the `alltags` tag then the playbook will create all ojbects defined in all vars files in the appropriate order.
 
 Use of some tags may require that you include other tags; for example if adding a project but you haven't already added the correct SCM credential.
 
 Available tags:
-- all
+- alltags
 - settings
 - credtypes
 - orgs
@@ -162,8 +162,8 @@ Variables
     controller_vars
 
         If using ansible-playbook, populate `controller_vars` your Tower or Controller hostname (or IP adress), username, and password.  The variables are used for your connection to Tower / Controller to create the objects you define in these vars files.
-        
-        If you are going to create a Job Template in Tower / Controller to run the `controller_config.yml` playbook then do not populate this file and instead use either a Survey or extra_vars with your job tmeplate..
+
+        If you are going to create a Job Template in Tower / Controller to run the `controller_config.yml` playbook then do not populate this file and instead use either a Survey or extra_vars with your job tmeplate.
 
 `vars/controller_workflows.yml`:
 
@@ -184,7 +184,7 @@ You can run this playbook from ansible cli or as a Job Template in Tower / Contr
 
 From the command line to define all objects:
 
-    ansible-playbook controller_config.yml --tags all
+    ansible-playbook controller_config.yml --tags alltags
 
     or just to create new job templates:
 
