@@ -8,7 +8,7 @@
     organization:                         "{{ __controller_source_item.inventory.organization.name | default( __controller_source_item.organization | default(omit, true)) }}"
     source:                               "{{ __controller_source_item.source | default(omit, true) }}"
     source_path:                          "{{ __controller_source_item.source_path | default(omit, true) }}"
-    source_vars:                          "{{ __controller_source_item.source_vars | default(omit, true) }}"
+    source_vars:                          "{{ __controller_source_item.source_vars | default(omit, true) | regex_replace('[ ]{2,}','') }}"
     enabled_var:                          "{{ __controller_source_item.enabled_var | default(omit, true) }}"
     enabled_value:                        "{{ __controller_source_item.enabled_value | default(omit, true) }}"
     host_filter:                          "{{ __controller_source_item.host_filter | default(omit, true) }}"
