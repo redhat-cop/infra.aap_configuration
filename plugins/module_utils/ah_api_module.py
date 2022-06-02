@@ -171,6 +171,9 @@ class AHAPIModule(AnsibleModule):
         headers = kwargs.get("headers", {})
         data = json.dumps(kwargs.get("data", {}))
 
+        # set default response
+        response = {}
+
         try:
             response = self.session.open(method, url.geturl(), headers=headers, data=data)
         except SSLValidationError as ssl_err:
