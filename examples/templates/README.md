@@ -19,11 +19,15 @@ Available tags:
 - labels
 - inventory
 - inventorysources
+- instancegroups
 - hosts
 - groups
+- ees
+- notifications
 - jobtemplates
 - workflows
 - schedules
+- roles
 
 Requirements
 ------------
@@ -170,6 +174,30 @@ Variables
     controller_workflows
 
         Dictionary of workflows to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional workflows.
+
+`vars/controller_execution_environments.yml`:
+
+    controller_execution_environments
+
+        Dictionary of exection environments to define.  One example exists that will need to be filled in.  You can also copy / paste the example for additional execution environments.
+
+`vars/controller_notification_templates.yml`:
+
+    controller_notification_templates
+
+        Dictionary of notification templates to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional notification templates.
+
+`vars/controller_roles.yml`:
+
+    controller_roles
+
+        Dictionary of roles to define.  One example exists that will need to be filled in.  You can also copy / paste the example for additional roles.
+
+`vars/controller_instance_groups.yml`:
+
+    controller_instance_groups
+
+        Dictionary of instance groups to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional instance groups.
 
 Dependencies
 ------------
