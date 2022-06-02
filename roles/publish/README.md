@@ -12,6 +12,7 @@ An Ansible Role to publish collections to Automation Hub or Galaxies.
 |`ah_collection_list`|`list`|no|Data structure file paths to pre built collections, mutually exclusive with ah_collections.||
 |`ah_configuration_working_dir`|`/var/tmp`|no|The working directory where the built artifacts live, or where the artifacts will be built.||
 |`ah_auto_approve`|`False`|no|Whether the collection will be automatically approved in Automation Hub. This will only work if the account being used has correct privileges.||
+|`ah_overwrite_existing`|`True`|no|Whether the collection will be automatically overwrite an existing collection in Automation Hub. This will only work if the account being used has correct privileges.||
 
 ### Secure Logging Variables
 The following Variables compliment each other.

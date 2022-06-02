@@ -67,15 +67,17 @@
 
 - name: Publish Collections
   redhat_cop.ah_configuration.ah_collection:
-    namespace:        "{{ (__ah_collection_file | basename).split('-')[0] }}"
-    name:             "{{ (__ah_collection_file | basename).split('-')[1] }}"
-    path:             "{{ __ah_collection_file }}"
-    ah_host:          "{{ ah_host | default(ah_hostname) }}"
-    ah_username:      "{{ ah_username | default(omit) }}"
-    ah_password:      "{{ ah_password | default(omit) }}"
-    ah_token:         "{{ ah_token | default(omit) }}"
-    ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
-    validate_certs:   "{{ ah_validate_certs | default(omit) }}"
+    namespace:            "{{ (__ah_collection_file | basename).split('-')[0] }}"
+    name:                 "{{ (__ah_collection_file | basename).split('-')[1] }}"
+    path:                 "{{ __ah_collection_file }}"
+    auto_approve:         "{{ ah_auto_approve }}"
+    overwrite_existing:   "{{ ah_overwrite_existing }}"
+    ah_host:              "{{ ah_host | default(ah_hostname) }}"
+    ah_username:          "{{ ah_username | default(omit) }}"
+    ah_password:          "{{ ah_password | default(omit) }}"
+    ah_token:             "{{ ah_token | default(omit) }}"
+    ah_path_prefix:       "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:       "{{ ah_validate_certs | default(omit) }}"
   loop: "{{ ah_collection_list }}"
   loop_control:
     loop_var: "__ah_collection_file"
