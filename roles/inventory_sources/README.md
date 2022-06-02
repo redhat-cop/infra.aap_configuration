@@ -47,6 +47,22 @@ This also speeds up the overall role.
 |`controller_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
 |`controller_configuration_inventory_sources_async_delay`|`controller_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
+### Formating Variables
+Variables can use a standard Jinja templating format to describe the resource.
+
+Example:
+```json
+{{ variable }}
+```
+
+Because of this it is difficult to provide controller with the required format for these fields.
+
+The workaround is to use the following format:
+```json
+{  { variable }}
+```
+The role will strip the double space between the curly bracket in order to provide controller with the correct format for the Variables.
+
 ## Data Structure
 ### Variables
 |Variable Name|Default Value|Required|Description|
