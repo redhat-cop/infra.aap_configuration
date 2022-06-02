@@ -20,6 +20,7 @@
 ah_configuration_working_dir: "/var/tmp"
 
 ah_auto_approve: false
+ah_overwrite_existing: true
 
 ah_configuration_publish_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
 ah_configuration_publish_async_retries: "{{ ah_configuration_async_retries | default(50) }}"
