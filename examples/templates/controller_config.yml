@@ -23,7 +23,7 @@
 
 
 ---
-- name: Playbook to configure a Tower cluster
+- name: Playbook to configure a controller cluster
   hosts: localhost
   connection: local
   gather_facts: false

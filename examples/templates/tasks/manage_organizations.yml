@@ -5,7 +5,7 @@
     method: GET
     password: "{{ controller_password }}"
     return_content: true
-    url:  "https://{{ controller_hostname }}/api/v2/organizations/"
+    url: "https://{{ controller_hostname }}/api/v2/organizations/"
     user: "{{ controller_username }}"
     validate_certs: "{{ controller_validate_certs }}"
   register: existing_organizations
