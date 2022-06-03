@@ -1,0 +1,13 @@
+---
+- name: Include EE vars
+  include_vars: ../vars/controller_ees.yml
+  tags:
+    - ees
+    - alltags
+
+- import_role:
+    name: redhat_cop.controller_configuration.execution_environments
+  tags:
+    - ees
+    - alltags
+...

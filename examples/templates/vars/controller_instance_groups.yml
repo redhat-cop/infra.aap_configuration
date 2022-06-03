@@ -1,0 +1,10 @@
+# Refer to https://github.com/redhat-cop/controller_configuration/tree/devel/roles/instance_groups
+# for documentation and additional parameter information
+
+---
+controller_instance_groups:
+  - name: ""
+    instances: ""
+    is_container_group: false
+    state: "{{ absent_present }}"
+...

@@ -1,7 +1,13 @@
 ---
-- name: Include inventories vars
+- name: Include inventory sources vars
   include_vars: ../vars/controller_inventory_sources.yml
+  tags:
+    - inventorysources
+    - alltags
 
 - include_role:
-    name: redhat_cop.controller_configuration.inventories
+    name: redhat_cop.controller_configuration.inventory_sources
+  tags:
+    - inventorysources
+    - alltags
 ...

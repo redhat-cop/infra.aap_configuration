@@ -1,0 +1,10 @@
+# Refer to https://github.com/redhat-cop/controller_configuration/tree/devel/roles/teams
+# for documentation and additional parameter information
+
+---
+controller_teams:
+  - name: ""
+    description: ""
+    organization: "{{ which_org }}"
+    state: "{{ absent_present }}"
+...
