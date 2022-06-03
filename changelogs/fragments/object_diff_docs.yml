@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Fixed broken documentation for controller_object_diff plugin
+...
