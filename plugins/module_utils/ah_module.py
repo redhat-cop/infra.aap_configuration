@@ -124,7 +124,7 @@ class AHModule(AnsibleModule):
         if not endpoint.startswith("/api/"):
             if self.path_prefix == "galaxy":
                 endpoint = "api/galaxy/v3{0}".format(endpoint)
-            elif self.path_prefix == "galaxy":
+            elif self.path_prefix != "galaxy":
                 endpoint = "api/automation-hub/v3{0}".format(endpoint)
             else:
                 endpoint = "api/{0}/v3{1}".format(self.path_prefix, endpoint)
