@@ -1,7 +1,13 @@
 ---
 - name: Include hosts vars
   include_vars: ../vars/controller_hosts.yml
+  tags:
+    - hosts
+    - alltags
 
-- include_role:
+- import_role:
     name: redhat_cop.controller_configuration.hosts
+  tags:
+    - hosts
+    - alltags
 ...
