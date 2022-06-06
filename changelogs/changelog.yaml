@@ -270,3 +270,10 @@ releases:
     - dispatch.yml
     - interval_delay.yaml
     release_date: '2022-05-04'
+  2.1.6:
+    changes:
+      bugfixes:
+      - Fixed broken documentation for controller_object_diff plugin
+    fragments:
+    - object_diff_docs.yml
+    release_date: '2022-06-06'
