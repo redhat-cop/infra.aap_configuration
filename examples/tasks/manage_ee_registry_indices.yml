@@ -1,0 +1,14 @@
+---
+- name: Include vars
+  include_vars: ../vars/ah_ee_registry_indices.yml
+  tags:
+    - alltags
+    - indices
+
+- name: Import ah_configuration role
+  import_role:
+    name: redhat_cop.ah_configuration.ee_registry_index
+  tags:
+    - alltags
+    - indices
+...

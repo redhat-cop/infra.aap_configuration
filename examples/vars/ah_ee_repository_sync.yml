@@ -1,0 +1,10 @@
+# Refer to https://github.com/redhat-cop/ah_configuration/tree/devel/roles/ee_repository_sync
+# for documentation and additional parameter information
+
+---
+ah_ee_repositories:
+  - name:
+    wait:
+    interval:
+    timeout:
+...

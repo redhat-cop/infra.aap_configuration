@@ -1,0 +1,14 @@
+---
+- name: Include vars
+  include_vars: ../vars/ah_ee_images.yml
+  tags:
+    - alltags
+    - ee_images
+
+- name: Import ah_configuration role
+  import_role:
+    name: redhat_cop.ah_configuration.ee_image
+  tags:
+    - alltags
+    - ee_images
+...
