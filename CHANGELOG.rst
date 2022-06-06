@@ -5,6 +5,14 @@ redhat_cop.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v2.1.6
+======
+
+Bugfixes
+--------
+
+- Fixed broken documentation for controller_object_diff plugin
+
 v2.1.5
 ======
 
