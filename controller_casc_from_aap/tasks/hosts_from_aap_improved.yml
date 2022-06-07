@@ -1,6 +1,4 @@
 ---
-- debug:
-    msg: "{{ current_asset_value }}"
 - name: "Create the output directory: {{ output_path }}"
   file:
     path: "{{ output_path }}"
