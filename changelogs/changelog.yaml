@@ -126,3 +126,14 @@ releases:
       name: ah_ee_registry
       namespace: ''
     release_date: '2022-04-28'
+  0.8.0:
+    changes:
+      bugfixes:
+      - Fix issue where all roles had the wrong variable set and caused failures
+      - Fixed issue with new variables not included in ee_repository role
+      - Fixed issue with sync and index roles where a no_log variable was incorrect
+      minor_changes:
+      - Changed default retries on async tasks in roles to 50
+    fragments:
+    - rolefixes.yml
+    release_date: '2022-06-07'
