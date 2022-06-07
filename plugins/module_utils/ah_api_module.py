@@ -206,10 +206,10 @@ class AHAPIModule(AnsibleModule):
                 # We are going to return a 400 so the module can decide what to do with it
                 page_data = he.read()
                 try:
-                    return {'status_code': he.code, 'json': json.loads(page_data)}
+                    return {"status_code": he.code, "json": json.loads(page_data)}
                 # JSONDecodeError only available on Python 3.5+
                 except ValueError:
-                    return {'status_code': he.code, 'text': page_data}
+                    return {"status_code": he.code, "text": page_data}
             elif he.code == 204 and method == "DELETE":
                 # A 204 is a normal response for a delete function
                 pass
