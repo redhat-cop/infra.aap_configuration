@@ -5,6 +5,21 @@ redhat_cop.ah_configuration Release Notes
 .. contents:: Topics
 
 
+v0.8.0
+======
+
+Minor Changes
+-------------
+
+- Changed default retries on async tasks in roles to 50
+
+Bugfixes
+--------
+
+- Fix issue where all roles had the wrong variable set and caused failures
+- Fixed issue with new variables not included in ee_repository role
+- Fixed issue with sync and index roles where a no_log variable was incorrect
+
 v0.7.0
 ======
 
