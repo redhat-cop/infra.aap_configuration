@@ -1,5 +1,6 @@
 ---
-- set_fact:
+- name: "Get current Job Templates from the API"
+  set_fact:
     jt_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/job_templates/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) }}"
 
 - name: "Create the output directory: {{ output_path }}"
@@ -12,5 +13,5 @@
     src: "templates/current_job_templates_improved.j2"
     dest: "{{ output_path }}/current_job_templates.yaml"
   vars:
-    current_asset_value: "{{ jt_lookvar }}"
+    current_jt_asset_value: "{{ jt_lookvar }}"
 ...

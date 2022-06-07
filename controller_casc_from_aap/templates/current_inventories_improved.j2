@@ -1,6 +1,6 @@
 ---
 controller_inventories:
-{% for inventory in current_asset_value %}
+{% for inventory in current_inventories_asset_value %}
   - name: "{{ inventory.name }}"
     description: "{{ inventory.description }}"
     organization: "{{ inventory.organization }}"

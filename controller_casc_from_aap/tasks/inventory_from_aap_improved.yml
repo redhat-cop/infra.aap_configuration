@@ -1,5 +1,6 @@
 ---
-- set_fact:
+- name: "Get the inventoryes from the API"
+  set_fact:
     inventory_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/inventories/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true, query_params={
                           'has_inventory_sources': 'false',
                           'not__kind': 'smart'
@@ -7,7 +8,8 @@
                       )
              }}"
 
-- set_fact:
+- name: "Translate the inventories to a usefull structure"
+  set_fact:
     current_inventories: "{{ (current_inventories | default([])) + [{
       'has_inventory_sources': inventory_lookvar_item.has_inventory_sources,
       'id': inventory_lookvar_item.id,
@@ -35,17 +37,17 @@
     src: "templates/current_inventories_improved.j2"
     dest: "{{ output_path }}/current_inventories.yaml"
   vars:
-    current_asset_value: "{{ current_inventories }}"
+    current_inventories_asset_value: "{{ current_inventories }}"
 
 - name: "Set the inventory's hosts"
   include_tasks: "hosts_from_aap_improved.yml"
   loop: "{{ current_inventories | json_query('[*].{hosts: hosts, name: name}') }}"
   loop_control:
-    loop_var: current_asset_value
-    label: "{{ current_asset_value.name }}"
+    loop_var: current_hosts_asset_value
+    label: "{{ current_hosts_asset_value.name }}"
 
 - name: "Set the inventory's groups"
   include_tasks: "groups_from_aap_improved.yml"
   vars:
-    current_asset_value: "{{ current_inventories }}"
+    current_groups_asset_value: "{{ current_inventories }}"
 ...

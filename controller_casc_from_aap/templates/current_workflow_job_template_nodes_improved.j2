@@ -1,6 +1,6 @@
 ---
 controller_workflow_nodes:
-{% for node in current_asset_value.value.nodes %}
+{% for node in current_wfjtn_asset_value.value.nodes %}
   - identifier: "{{ node.identifier }}"
     workflow_job_template: "{{ node.summary_fields.workflow_job_template.name }}"
     unified_job_template: "{{ node.summary_fields.unified_job_template.name }}"

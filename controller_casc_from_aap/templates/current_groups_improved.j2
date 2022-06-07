@@ -1,6 +1,6 @@
 ---
 configure_tower_groups:
-{% for inventory in current_asset_value %}
+{% for inventory in current_groups_asset_value %}
 {% for group in inventory.groups %}
   - name: "{{ group.name }}"
     description: "{{ group.description }}"
