@@ -1,0 +1,36 @@
+---
+- set_fact:
+    wfjt_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/workflow_job_templates/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) }}"
+
+- name: "Create the output directory: {{ output_path }}"
+  file:
+    path: "{{ output_path }}"
+    state: directory
+
+- name: "Add current workflow job templates to the output yaml file: {{ output_path }}/current_workflow_job_templates.yaml"
+  template:
+    src: "templates/current_workflow_job_templates_improved.j2"
+    dest: "{{ output_path }}/current_workflow_job_templates.yaml"
+  vars:
+    current_asset_value: "{{ wfjt_lookvar }}"
+
+- name: "Let re-use the input variable"
+  set_fact:
+#     current_asset_value_here: "{{ current_asset_value }}"
+    current_asset_value: {}
+#
+# - name: "Create the workflow job template's nodes list"
+#   set_fact:
+#     new_current_asset_value_workflow_job_templates: "{{ (new_current_asset_value_workflow_job_templates | default({})) | combine({workflow_job_template_asset_item.0.name: ((new_current_asset_value_workflow_job_templates[workflow_job_template_asset_item.0.name] | default([])) + [workflow_job_template_asset_item.1])}) }}"
+#   loop: "{{ current_asset_value_here | subelements('related.workflow_nodes') }}"
+#   loop_control:
+#     loop_var: workflow_job_template_asset_item
+#     label: "{{ workflow_job_template_asset_item.0.name }} - {{ workflow_job_template_asset_item.1.natural_key.identifier }}"
+
+- name: "Set the workflow_job_template's nodes"
+  include_tasks: "workflow_job_template_nodes_from_aap_improved.yml"
+#   loop: "{{ new_current_asset_value_workflow_job_templates | default({}) | dict2items }}"
+#   loop_control:
+#     loop_var: current_asset_value
+#     label: "{{ current_asset_value.key }}"
+...

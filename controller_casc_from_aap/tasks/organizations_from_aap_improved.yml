@@ -1,6 +1,6 @@
 ---
 - set_fact:
-    lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/organizations/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) }}"
+    orgs_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/organizations/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) }}"
 
 - name: "Create the output directory: {{ output_path }}"
   file:
@@ -11,7 +11,7 @@
   template:
     src: "templates/current_organizations_improved.j2"
     dest: "{{ output_path }}/current_organization_{{ current_organization.name }}.yaml"
-  loop: "{{ lookvar }}"
+  loop: "{{ orgs_lookvar }}"
   loop_control:
     loop_var: current_organization
     label: "{{ current_organization.name }} at file {{ output_path }}/current_organization_{{ current_organization.name }}.yaml"

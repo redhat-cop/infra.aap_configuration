@@ -1,6 +1,6 @@
 ---
 - set_fact:
-    lookvar: "{{ (lookvar|default({})) | combine({item.summary_fields.workflow_job_template.name: {'nodes': (lookvar[item.summary_fields.workflow_job_template.name]['nodes']|default([]) + [item] | flatten), 'wfjtn_url': item.related.workflow_job_template}}) }}"
+    wfjtn_lookvar: "{{ (wfjtn_lookvar|default({})) | combine({item.summary_fields.workflow_job_template.name: {'nodes': (wfjtn_lookvar[item.summary_fields.workflow_job_template.name]['nodes']|default([]) + [item] | flatten), 'wfjtn_url': item.related.workflow_job_template}}) }}"
   loop: "{{ query('ansible.controller.controller_api', 'api/v2/workflow_job_template_nodes/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) }}"
 
 - name: "Create the output directory: {{ output_path }}"
@@ -15,7 +15,7 @@
   vars:
     worflow_job_template_name: "{{ current_asset_value.key }}"
     worflow_job_template_organization: "{{ query('ansible.controller.controller_api', current_asset_value.value.wfjtn_url, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs)[0].summary_fields.organization.name }}"
-  loop: "{{ lookvar | dict2items }}"
+  loop: "{{ wfjtn_lookvar | dict2items }}"
   loop_control:
     loop_var: current_asset_value
 ...

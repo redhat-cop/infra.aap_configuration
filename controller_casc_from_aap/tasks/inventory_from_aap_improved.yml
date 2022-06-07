@@ -1,6 +1,6 @@
 ---
 - set_fact:
-    lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/inventories/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true, query_params={
+    inventory_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/inventories/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true, query_params={
                           'has_inventory_sources': 'false',
                           'not__kind': 'smart'
                         }
@@ -20,7 +20,7 @@
       'hosts': query('ansible.controller.controller_api', item.related.hosts, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].{name: name, description: description}'),
       'groups': query('ansible.controller.controller_api', item.related.groups, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].{name: name, description: description, hosts_url: related.hosts}') | map('combine', {'inventory': item.name}) | list
     }] }}"
-  loop: "{{ lookvar }}"
+  loop: "{{ inventory_lookvar }}"
 
 - name: "Create the output directory: {{ output_path }}"
   file:
