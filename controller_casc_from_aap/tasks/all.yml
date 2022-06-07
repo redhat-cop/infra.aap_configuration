@@ -53,7 +53,10 @@
       include_tasks: "workflow_job_templates_from_aap_improved.yml"
       when: "'workflow_job_templates' in input_tag or 'all' in input_tag"
     - name: "Export Workflow Job Template Nodes"
+      # Do not run if 'all' is in input_tag, as it will be called from workflow_job_templates_from_aap_improved.yml
       include_tasks: "workflow_job_template_nodes_from_aap_improved.yml"
-      when: "'workflow_job_template_nodes' in input_tag or 'all' in input_tag"
+      when:
+        - "'workflow_job_template_nodes' in input_tag"
+        - "'workflow_job_templates' not in input_tag"
   when: "['all', 'inventory', 'organizations', 'job_templates', 'workflow_job_templates', 'workflow_job_template_nodes'] | intersect(input_tag) | length > 0"
 ...
