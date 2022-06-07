@@ -16,7 +16,7 @@ Currently:
 |`ah_username`|""|yes|Admin User on the Automation Hub or Galaxy Server.||
 |`ah_password`|""|yes|Automation Hub Admin User's password on the Automation Hub Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`validate_certs`|`False`|no|Whether or not to validate the Ansible Automation Hub Server's SSL certificate.||
+|`ah_validate_certs`|`False`|no|Whether or not to validate the Ansible Automation Hub Server's SSL certificate.||
 |`ah_namespaces`|`see below`|yes|Data structure describing your namespaces, described below.||
 
 
@@ -40,7 +40,7 @@ ah_configuration_ansible_config_secure_logging defaults to the value of ah_confi
 |`ah_configuration_working_dir`|"/var/tmp"|no|path|Location to render the ansible config file to.|
 |`automation_hub_list`|""|yes|list|A list of Automation hubs and galaxies to put in the ansible config, see below for details.|
 |`ansible_config_list`|""|no|list|A set of ansible config settings, a default is set, but can be overriden, see below for details.|
-|`validate_certs`|"false"|no|list|Set to determine if certificates should be validated.|
+|`ah_validate_certs`|"false"|no|list|Set to determine if certificates should be validated.|
 
 #### automation_hub_list
 |Variable Name|Default Value|Required|Type|Description|
