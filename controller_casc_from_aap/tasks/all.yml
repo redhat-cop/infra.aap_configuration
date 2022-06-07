@@ -37,7 +37,7 @@
       loop_control:
         loop_var: asset_item
         label: asset_item
-  when: "['credentials', 'credential_types', 'execution_environments', 'inventory_sources', 'notification_templates', 'projects', 'teams', 'users', 'workflow_job_templates'] | intersect(input_tag) | length > 0"
+  when: "['all', 'credentials', 'credential_types', 'execution_environments', 'inventory_sources', 'notification_templates', 'projects', 'teams', 'users', 'workflow_job_templates'] | intersect(input_tag) | length > 0"
 
 - block:
     - name: "Export Inventories and related Groups and Hosts"
@@ -52,5 +52,5 @@
     - name: "Workflow Export Job Template Nodes"
       include_tasks: "workflow_job_template_nodes_from_aap_improved.yml"
       when: "'workflow_job_template_nodes' in input_tag"
-  when: "['inventory', 'organizations', 'job_templates', 'workflow_job_template_nodes'] | intersect(input_tag) | length > 0"
+  when: "['all', 'inventory', 'organizations', 'job_templates', 'workflow_job_template_nodes'] | intersect(input_tag) | length > 0"
 ...
