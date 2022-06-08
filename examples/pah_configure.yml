@@ -19,15 +19,11 @@
     - name: Include task to manage private automation hub groups
       include_tasks: tasks/manage_groups.yml
       tags:
-        - never
-        - alltags
         - groups
 
     - name: Include task to manage private automation hub users
       include_tasks: tasks/manage_users.yml
       tags:
-        - never
-        - alltags
         - users
 
     # All tasks below here may need to be re-ordered so they
@@ -35,63 +31,45 @@
     - name: Include task for managing collection namespaces
       include_tasks: tasks/manage_collection_namespaces.yml
       tags:
-        - never
-        - alltags
         - namespaces
 
     - name: Include task for collection publishing
       include_tasks: tasks/manage_collection_publish.yml
       tags:
-        - never
-        - alltags
         - publish
 
     - name: Include task for execution environment images
       include_tasks: tasks/manage_ee_images.yml
       tags:
-        - never
-        - alltags
         - ee_images
 
     - name: Include task to manage execution enviornment namespaces
       include_tasks: tasks/manage_ee_namespaces.yml
       tags:
-        - never
-        - alltags
         - ee_namespaces
 
     - name: Include task to manage execution environment registries
       include_tasks: tasks/manage_ee_registries.yml
       tags:
-        - never
-        - alltags
         - registries
 
     - name: Include task to manage execution environment registry indices
       include_tasks: tasks/manage_ee_registry_indices.yml
       tags:
-        - never
-        - alltags
         - indices
 
     - name: Include task to manage execution environment registry sync
       include_tasks: tasks/manage_ee_registry_sync.yml
       tags:
-        - never
-        - alltags
         - regsync
 
     - name: Include task to manage execution environment repositories
       include_tasks: tasks/manage_ee_repositories.yml
       tags:
-        - never
-        - alltags
         - repos
 
     - name: Include task to manage execution environment repository sync
       include_tasks: tasks/manage_ee_repository_sync
       tags:
-        - never
-        - alltags
         - reposync
 ...

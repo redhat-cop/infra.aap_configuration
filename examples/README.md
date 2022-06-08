@@ -1,4 +1,4 @@
-Private Automation Hub Configuration
+Private Automation Hub Configuration Example Playbook
 =========
 
 A single playbook and multiple task and vars files which can be used to define your Private Automation Hub configuration as code.  Update the vars files to define your objects and run the playbook to deploy your changes to your Private Automation Hub cluster(s).
@@ -8,7 +8,6 @@ If executed with the `alltags` tag then the playbook will create all objects def
 Use of some tags may require that you include other tags; for example if adding a collection but you haven't already added the correct collection namespace.
 
 Available tags:
-- alltags
 - groups
 - users
 - namespaces
@@ -141,11 +140,15 @@ You can run this playbook from ansible cli or as a Job Template (future use case
 
 From the command line to define all objects:
 
-    ansible-playbook ah_configure.yml --tags alltags
+    ansible-playbook pah_configure.yml
 
     or just to create new job templates:
 
-    ansible-playbook ah_configure.yaml --tags namespaces
+    ansible-playbook pah_configure.yml --tags namespaces
+
+    or with ansible-navigator:
+
+    ansible-navigator run pah_configure.yml
 
 
 NOTE: If you do not specify any tags then no content will be created or updated.
