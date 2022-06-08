@@ -3,7 +3,7 @@ Private Automation Hub Configuration
 
 A single playbook and multiple task and vars files which can be used to define your Private Automation Hub configuration as code.  Update the vars files to define your objects and run the playbook to deploy your changes to your Private Automation Hub cluster(s).
 
-If executed with the `alltags` tag then the playbook will create all ojbects defined in all vars files in the appropriate order.
+If executed with the `alltags` tag then the playbook will create all objects defined in all vars files in the appropriate order.
 
 Use of some tags may require that you include other tags; for example if adding a collection but you haven't already added the correct collection namespace.
 
@@ -158,4 +158,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+[Tony Reveal](https://github.com/tonyreveal)
