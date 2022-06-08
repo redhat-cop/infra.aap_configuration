@@ -12,5 +12,5 @@ ah_namespaces:
     resources:
     links:
     groups:
-    state: "{{ absent_present }}"
+    state: "{{ target_state }}"
 ...

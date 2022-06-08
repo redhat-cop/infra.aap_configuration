@@ -12,5 +12,5 @@ ah_users:
     email:
     is_superuser: false
     password:
-    state: "{{ absent_present }}"
+    state: "{{ target_state }}"
 ...

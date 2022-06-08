@@ -5,5 +5,5 @@
 ah_groups:
   - name:
     perms:
-    state: "{{ absent_present }}"
+    state: "{{ target_state }}"
 ...

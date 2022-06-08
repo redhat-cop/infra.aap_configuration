@@ -14,5 +14,5 @@ ah_ee_registries:
     proxy_password:
     download_concurrency:
     rate_limit:
-    state: "{{ absent_present }}"
+    state: "{{ target_state }}"
 ...

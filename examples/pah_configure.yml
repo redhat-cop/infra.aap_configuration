@@ -7,7 +7,7 @@
     - redhat_cop.ah_configuration
 
   vars:
-    absent_present: "present"
+    target_state: "present"
 
   pre_tasks:
     - name: Include Vars

@@ -8,5 +8,5 @@ ah_ee_namespaces:
     groups:
       -
       -
-    state: "{{ absent_present }}"
+    state: "{{ target_state }}"
 ...

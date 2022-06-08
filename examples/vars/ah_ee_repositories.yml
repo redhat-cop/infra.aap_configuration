@@ -7,5 +7,5 @@ ah_ee_repositories:
     description:
     readme:
     readme_file:
-    state: "{{ absent_present }}"
+    state: "{{ target_state }}"
 ...
