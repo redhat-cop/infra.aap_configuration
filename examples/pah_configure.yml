@@ -12,6 +12,8 @@
   pre_tasks:
     - name: Include Vars
       include_vars: vars/pah_vars.yml
+      tags:
+        - always
 
   tasks:
     - name: Include task to manage private automation hub groups
