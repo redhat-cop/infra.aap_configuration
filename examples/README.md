@@ -3,8 +3,6 @@ Private Automation Hub Configuration Example Playbook
 
 A single playbook and multiple task and vars files which can be used to define your Private Automation Hub configuration as code.  Update the vars files to define your objects and run the playbook to deploy your changes to your Private Automation Hub cluster(s).
 
-If executed with the `alltags` tag then the playbook will create all objects defined in all vars files in the appropriate order.
-
 Use of some tags may require that you include other tags; for example if adding a collection but you haven't already added the correct collection namespace.
 
 Available tags:
@@ -32,9 +30,9 @@ Variables
 
 `pah_configure.yml`:
 
-    absent_present
+    target_state
 
-        I suggest leaving `absent_present` set to "present".
+        I suggest leaving `target_state` set to "present".
 
 `vars/ah_collection_namespaces.yml`:
 
@@ -150,8 +148,6 @@ From the command line to define all objects:
 
     ansible-navigator run pah_configure.yml
 
-
-NOTE: If you do not specify any tags then no content will be created or updated.
 
 License
 -------
