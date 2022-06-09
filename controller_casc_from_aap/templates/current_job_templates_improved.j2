@@ -31,7 +31,7 @@ controller_templates:
 {% endif %}
 {%- endif -%}
 {% if is_aap %}
-    execution_environment: "{{ job_template.execution_environment.name }}"
+    execution_environment: "{{ job_template.summary_fields.execution_environment.name }}"
 {% endif %}
 {% endfor %}
 ...
