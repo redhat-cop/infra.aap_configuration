@@ -9,7 +9,7 @@
     - awx.awx
     - redhat_cop.controller_configuration
   # Define following vars here, or in configs/controller_auth.yml
-  # controller_hostname: controller.example.com
+  # controller_hostname: https://controller.example.com
   # controller_username: admin
   # controller_password: changeme
   pre_tasks:
