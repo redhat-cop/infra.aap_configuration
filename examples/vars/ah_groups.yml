@@ -1,0 +1,9 @@
+# Refer to https://github.com/redhat-cop/ah_configuration/tree/devel/roles/group
+# for documentation and additional parameter information
+
+---
+ah_groups:
+  - name:
+    perms:
+    state: "{{ target_state }}"
+...

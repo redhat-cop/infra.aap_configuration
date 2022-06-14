@@ -1,0 +1,18 @@
+# Refer to https://github.com/redhat-cop/ah_configuration/tree/devel/roles/ee_registry
+# for documentation and additional parameter information
+
+---
+ah_ee_registries:
+  - name:
+    new_name:
+    url:
+    username:
+    password:
+    tls_validation:
+    proxy_url:
+    proxy_username:
+    proxy_password:
+    download_concurrency:
+    rate_limit:
+    state: "{{ target_state }}"
+...

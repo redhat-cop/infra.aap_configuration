@@ -1,0 +1,16 @@
+# Refer to https://github.com/redhat-cop/ah_configuration/tree/devel/roles/namespace
+# for documentation and additional parameter information
+
+---
+ah_namespaces:
+  - name:
+    new_name:
+    description:
+    company:
+    email:
+    avatar_url:
+    resources:
+    links:
+    groups:
+    state: "{{ target_state }}"
+...

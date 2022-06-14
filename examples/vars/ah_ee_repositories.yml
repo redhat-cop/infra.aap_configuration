@@ -1,0 +1,11 @@
+# Refer to https://github.com/redhat-cop/ah_configuration/tree/devel/roles/ee_repository
+# for documentation and additional parameter information
+
+---
+ah_ee_repositories:
+  - name:
+    description:
+    readme:
+    readme_file:
+    state: "{{ target_state }}"
+...

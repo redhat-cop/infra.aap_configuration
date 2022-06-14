@@ -1,0 +1,16 @@
+# Refer to https://github.com/redhat-cop/ah_configuration/tree/devel/roles/user
+# for documentation and additional parameter information
+
+---
+ah_users:
+  - username:
+    groups:
+      - ""
+    append: true
+    first_name:
+    last_name:
+    email:
+    is_superuser: false
+    password:
+    state: "{{ target_state }}"
+...

@@ -1,0 +1,12 @@
+---
+- name: Include vars
+  include_vars: ../vars/ah_ee_namespaces.yml
+  tags:
+    - ee_namespaces
+
+- name: Import ah_configuration role
+  import_role:
+    name: redhat_cop.ah_configuration.ee_namespace
+  tags:
+    - ee_namespaces
+...

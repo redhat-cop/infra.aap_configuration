@@ -1,0 +1,12 @@
+# Refer to https://github.com/redhat-cop/ah_configuration/tree/devel/roles/ee_image
+# for documentation and additional parameter information
+
+---
+ah_ee_images:
+  - name:
+    state: "{{ target_state }}"
+    append: false
+    tags:
+      - "latest"
+      - "v1.0.0"
+...

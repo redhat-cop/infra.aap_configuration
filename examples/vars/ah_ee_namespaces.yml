@@ -1,0 +1,12 @@
+# Refer to https://github.com/redhat-cop/ah_configuration/tree/devel/roles/ee_namespace
+# for documentation and additional parameter information
+
+---
+ah_ee_namespaces:
+  - name:
+    append:
+    groups:
+      -
+      -
+    state: "{{ target_state }}"
+...
