@@ -204,7 +204,12 @@ class AHAPIModule(AnsibleModule):
             # Sanity check: Did we get some other kind of error?  If so, write an appropriate error message.
             elif he.code >= 400:
                 # We are going to return a 400 so the module can decide what to do with it
-                pass
+                page_data = he.read()
+                try:
+                    return {"status_code": he.code, "json": json.loads(page_data)}
+                # JSONDecodeError only available on Python 3.5+
+                except ValueError:
+                    return {"status_code": he.code, "text": page_data}
             elif he.code == 204 and method == "DELETE":
                 # A 204 is a normal response for a delete function
                 pass
@@ -239,6 +244,10 @@ class AHAPIModule(AnsibleModule):
         try:
             response_body = response.read()
         except Exception as e:
+            if response["json"]["errors"]:
+                raise AHAPIModuleError("Errors occurred with request (HTTP 400). Errors: {errors}".format(errors=response["json"]["errors"]))
+            elif response["text"]:
+                raise AHAPIModuleError("Errors occurred with request (HTTP 400). Errors: {errors}".format(errors=response["text"]))
             raise AHAPIModuleError("Failed to read response body: {error}".format(error=e))
 
         response_json = {}

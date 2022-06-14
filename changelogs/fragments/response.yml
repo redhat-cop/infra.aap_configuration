@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Fixed an issue where a genuine API error would cause a module to have an unhandled error.
+...
