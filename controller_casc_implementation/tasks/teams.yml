@@ -23,4 +23,22 @@
 - name: Configure Controller Teams | Launch teams creation
   import_role:
     name: redhat_cop.controller_configuration.teams
+
+- name: Populate users list from LDAP
+  set_fact:
+    ldap_users:
+      - ldap_user: user01
+        ldap_password: redhat00
+      - ldap_user: user02
+        ldap_password: redhat00
+
+- name: Login Users from LDAP
+  uri:
+    url: "https://{{ controller_hostname }}/api/v2/me/"
+    user: "{{ item.ldap_user }}"
+    password: "{{ item.ldap_password }}"
+    method: GET
+    force_basic_auth: yes
+    status_code: 200
+  loop: "{{ ldap_users }}"
 ...
