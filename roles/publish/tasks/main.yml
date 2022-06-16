@@ -4,6 +4,7 @@
     repo:     "{{ __ah_collection_item.git_url }}"
     dest:     "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}/"
     version:  "{{ __ah_collection_item.version | default(omit) }}"
+    key_file: "{{ __ah_collection_item.key_path | default(omit) }}"
   loop: "{{ ah_collections }}"
   loop_control:
     loop_var: "__ah_collection_item"
@@ -14,9 +15,9 @@
 
 - name: Copy local collection to working dir
   copy:
-    src:         "{{ __ah_collection_item.collection_local_path }}/"
-    dest:         "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}"
-    remote_src:   true
+    src:  "{{ __ah_collection_item.collection_local_path }}/"
+    dest: "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}"
+    remote_src: true
   loop: "{{ ah_collections }}"
   loop_control:
     loop_var: "__ah_collection_item"
@@ -27,9 +28,9 @@
 
 - name: Build Collections
   redhat_cop.ah_configuration.ah_build:
-    path:             "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}"
-    output_path:      "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}"
-    force:            true
+    path:        "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}"
+    output_path: "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}"
+    force: true
   register: ah_build_results
   loop: "{{ ah_collections }}"
   loop_control:
@@ -50,7 +51,7 @@
 # __ah_build_result_item.results.path will be the output_path in ansible<2.10 but the actual built path in ansible>=2.10
 - name: Find all relevant built collection files
   find:
-    paths: "{{ (__ah_build_result_item.stat.isdir) | ternary(__ah_build_result_item.stat.path, (__ah_build_result_item.stat.path | dirname)) }}"
+    paths:    "{{ (__ah_build_result_item.stat.isdir) | ternary(__ah_build_result_item.stat.path, (__ah_build_result_item.stat.path | dirname)) }}"
     patterns: "{{ (__ah_build_result_item.stat.isdir) | ternary('*.tar.gz', (__ah_build_result_item.stat.path | basename)) }}"
   register: __ah_collections_find_results
   no_log: "{{ ah_configuration_publish_secure_logging }}"
@@ -67,17 +68,17 @@
 
 - name: Publish Collections
   redhat_cop.ah_configuration.ah_collection:
-    namespace:            "{{ (__ah_collection_file | basename).split('-')[0] }}"
-    name:                 "{{ (__ah_collection_file | basename).split('-')[1] }}"
-    path:                 "{{ __ah_collection_file }}"
-    auto_approve:         "{{ ah_auto_approve }}"
-    overwrite_existing:   "{{ ah_overwrite_existing }}"
-    ah_host:              "{{ ah_host | default(ah_hostname) }}"
-    ah_username:          "{{ ah_username | default(omit) }}"
-    ah_password:          "{{ ah_password | default(omit) }}"
-    ah_token:             "{{ ah_token | default(omit) }}"
-    ah_path_prefix:       "{{ ah_path_prefix | default(omit) }}"
-    validate_certs:       "{{ ah_validate_certs | default(omit) }}"
+    namespace:          "{{ (__ah_collection_file | basename).split('-')[0] }}"
+    name:               "{{ (__ah_collection_file | basename).split('-')[1] }}"
+    path:               "{{ __ah_collection_file }}"
+    auto_approve:       "{{ ah_auto_approve }}"
+    overwrite_existing: "{{ ah_overwrite_existing }}"
+    ah_host:            "{{ ah_host | default(ah_hostname) }}"
+    ah_username:        "{{ ah_username | default(omit) }}"
+    ah_password:        "{{ ah_password | default(omit) }}"
+    ah_token:           "{{ ah_token | default(omit) }}"
+    ah_path_prefix:     "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:     "{{ ah_validate_certs | default(omit) }}"
   loop: "{{ ah_collection_list }}"
   loop_control:
     loop_var: "__ah_collection_file"
@@ -106,15 +107,15 @@
 
 - name: Approve Collections
   redhat_cop.ah_configuration.ah_approval:
-    namespace:        "{{ (__ah_collection_file | basename).split('-')[0] }}"
-    name:             "{{ (__ah_collection_file | basename).split('-')[1] }}"
-    version:          "{{ (__ah_collection_file | basename).split('-')[2:] | join('-') | splitext | first | splitext | first }}"
-    ah_host:          "{{ ah_host | default(ah_hostname) }}"
-    ah_username:      "{{ ah_username | default(omit) }}"
-    ah_password:      "{{ ah_password | default(omit) }}"
-    ah_token:         "{{ ah_token | default(omit) }}"
-    ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
-    validate_certs:   "{{ ah_validate_certs | default(omit) }}"
+    namespace:      "{{ (__ah_collection_file | basename).split('-')[0] }}"
+    name:           "{{ (__ah_collection_file | basename).split('-')[1] }}"
+    version:        "{{ (__ah_collection_file | basename).split('-')[2:] | join('-') | splitext | first | splitext | first }}"
+    ah_host:        "{{ ah_host | default(ah_hostname) }}"
+    ah_username:    "{{ ah_username | default(omit) }}"
+    ah_password:    "{{ ah_password | default(omit) }}"
+    ah_token:       "{{ ah_token | default(omit) }}"
+    ah_path_prefix: "{{ ah_path_prefix | default(omit) }}"
+    validate_certs: "{{ ah_validate_certs | default(omit) }}"
   loop: "{{ ah_collection_list }}"
   loop_control:
     loop_var: "__ah_collection_file"
@@ -124,5 +125,4 @@
   retries: 3
   delay: 2
   until: not approval is failed
-
 ...
