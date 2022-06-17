@@ -29,7 +29,7 @@
       - "{{ controller_validate_certs }}"
 
 - set_fact:
-    __controller_api_organizations: "{{ lookup('ansible.controller.controller_api', 'organizations',
+    __controller_api_organizations: "{{ query('ansible.controller.controller_api', 'organizations',
       host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs) }}"
 
 - name: "DESIRED STATE: Find the difference of Organizations between what is on the Controller versus curated list."
