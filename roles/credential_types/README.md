@@ -28,6 +28,7 @@ If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add credential type task does not include sensitive information.
 controller_configuration_credential_types_secure_logging defaults to the value of controller_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
+|Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`controller_configuration_secure_logging`|`False`|no|Whether or not to include the sensitive Credential Type role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`controller_configuration_credential_types_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
@@ -41,7 +42,7 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`controller_configuration_async_retries`|30|no|This variable sets the number of retries to attempt for the role globally.|
-|`controller_configuration_credential_types_async_retries`|`{{ controller_configuration_async_retries }}`|no|This variable sets the number of retries to attempt for the role.|
+|`controller_configuration_credential_types_async_retries`|`controller_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
 |`controller_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
 |`controller_configuration_credential_types_async_delay`|`controller_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
@@ -51,7 +52,7 @@ This also speeds up the overall role.
 |:---:|:---:|:---:|:---:|
 |`name`|""|yes|Name of Credential Type|
 |`description`|`False`|no|The description of the credential type to give more detail about it.|
-|`injectors`|""|no|Enter injectors using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax. See not below on proper formatting.|
+|`injectors`|""|no|Enter injectors using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax. See below on proper formatting.|
 |`inputs`|""|no|Enter inputs using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax.|
 |`kind`|"cloud"|no|The type of credential type being added. Note that only cloud and net can be used for creating credential types.|
 |`state`|`present`|no|Desired state of the resource.|
@@ -66,10 +67,16 @@ Example:
 
 Because of this it is difficult to provide controller with the required format for these fields.
 
-The workaround is to use the following format:
+The workaround is easier to do in yaml with unsafe syntax, to read more about this check out the [documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_advanced_syntax.html):
+```yaml
+!unsafe '{{ variable }}'
+```
+
+If you want to use json you will have to use the following format:
 ```json
 {  { variable }}
 ```
+
 The role will strip the double space between the curly bracket in order to provide controller with the correct format for the Injectors.
 
 ### Input and Injector Schema
@@ -166,11 +173,11 @@ controller_credential_types:
     - rest_password
   injectors:
     extra_vars:
-      rest_password: "{  { rest_password }}"
-      rest_username: "{  { rest_username }}"
+      rest_password: !unsafe "{{ rest_password }}"
+      rest_username: !unsafe "{{ rest_username }}"
     env:
-      rest_username_env: "{  { rest_username }}"
-      rest_password_env: "{  { rest_password }}"
+      rest_username_env: !unsafe "{{ rest_username }}"
+      rest_password_env: !unsafe "{{ rest_password }}"
 ```
 ## Playbook Examples
 ### Standard Role Usage
