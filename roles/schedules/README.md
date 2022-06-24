@@ -56,6 +56,7 @@ This also speeds up the overall role.
 |`rrule`|""|yes|str|A value representing the schedules iCal recurrence rule. See the awx.awx.schedule plugin for help constructing this value|
 |`extra_data`|`{}`|no|dict|Extra vars for the job template. Only allowed if prompt on launch|
 |`inventory`|""|no|str|Inventory applied to job template, assuming the job template prompts for an inventory.|
+|`credentials`|""|no|list|List of credentials applied as a prompt, assuming job template prompts for credentials|
 |`scm_branch`|Project default|no|str|Branch to use in the job run. Project default used if not set. Only allowed if `allow_override` set to true on project|
 |`job_type`|Job template default|no|str|The job type used for the job template.|
 |`job_tags`|""|no|str|Comma separated list of tags to apply to the job|
@@ -64,6 +65,7 @@ This also speeds up the overall role.
 |`diff_mode`|Job template default|no|bool|Enable diff mode for the job template|
 |`verbosity`|Job template default|no|int|Level of verbosity for the job. Only allowed if configured to prompt on launch|
 |`unified_job_template`|""|no|string|Name of unified job template to schedule. Required if state='present.|
+|`organization`|""|no|str|The organization the unified job template exists in. Used for looking up the unified job template, not a direct model field.|
 |`enabled`|`true`|no|bool|Enabled processing of this job template|
 |`state`|`present`|no|str|Desired state of the resource.|
 
