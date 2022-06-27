@@ -75,9 +75,9 @@ options:
     groups:
       description:
         - A list of dictionaries of the Names and object_permissions values for groups that control the Namespace.
-        - Required if state is present
       type: list
       elements: dict
+      default: []
       suboptions:
         name:
           description:
@@ -128,7 +128,7 @@ def main():
         avatar_url=dict(),
         resources=dict(),
         links=dict(type="list", elements="dict"),
-        groups=dict(type="list", elements="dict"),
+        groups=dict(type="list", elements="dict", default=[]),
         state=dict(choices=["present", "absent"], default="present"),
     )
 

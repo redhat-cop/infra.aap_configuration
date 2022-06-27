@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Fixed issue where groups was required to create a namespace using ah_namespace module
+...
