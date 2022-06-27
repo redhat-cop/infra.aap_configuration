@@ -128,7 +128,7 @@ def main():
         avatar_url=dict(),
         resources=dict(),
         links=dict(type="list", elements="dict"),
-        groups=dict(type="list", elements="dict"),
+        groups=dict(type="list", elements="dict", default=[]),
         state=dict(choices=["present", "absent"], default="present"),
     )
 
