@@ -75,9 +75,9 @@ options:
     groups:
       description:
         - A list of dictionaries of the Names and object_permissions values for groups that control the Namespace.
-        - Required if state is present
       type: list
       elements: dict
+      default: []
       suboptions:
         name:
           description:
