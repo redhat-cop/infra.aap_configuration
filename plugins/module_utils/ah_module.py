@@ -122,12 +122,7 @@ class AHModule(AnsibleModule):
         if not endpoint.startswith("/"):
             endpoint = "/{0}".format(endpoint)
         if not endpoint.startswith("/api/"):
-            if self.path_prefix == "galaxy":
-                endpoint = "api/galaxy/v3{0}".format(endpoint)
-            elif self.path_prefix != "galaxy":
-                endpoint = "api/automation-hub/v3{0}".format(endpoint)
-            else:
-                endpoint = "api/{0}/v3{1}".format(self.path_prefix, endpoint)
+            endpoint = "api/{0}/v3{1}".format(self.path_prefix, endpoint)
         if not endpoint.endswith("/") and "?" not in endpoint:
             endpoint = "{0}/".format(endpoint)
 
@@ -334,16 +329,7 @@ class AHModule(AnsibleModule):
         if self.username and self.password:
             # Attempt to get a token from /v3/auth/token/ by giving it our username/password combo
             # If we have a username and password, we need to get a session cookie
-
-            # Post to the tokens endpoint with baisc auth to try and get a token
-            if self.path_prefix == "galaxy":
-                api_token_url = (self.url._replace(path="/api/galaxy/v3/auth/token/")).geturl()
-            elif self.path_prefix == "automation-hub":
-                api_token_url = (self.url._replace(path="/api/automation-hub/v3/auth/token/")).geturl()
-            else:
-                token_path = "api/{0}/v3/auth/token/".format(self.path_prefix)
-                api_token_url = (self.url._replace(path=token_path)).geturl()
-
+            api_token_url = self.build_url("auth/token").geturl()
             try:
                 response = self.session.open(
                     "POST",
