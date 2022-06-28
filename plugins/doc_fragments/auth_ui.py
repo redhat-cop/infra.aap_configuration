@@ -45,4 +45,5 @@ options:
     - For galaxy_ng this is either 'automation-hub' or the custom prefix used on install with GALAXY_API_PATH_PREFIX
     - For Automation Hub this is 'galaxy'
     type: str
+    default: 'galaxy'
 """
