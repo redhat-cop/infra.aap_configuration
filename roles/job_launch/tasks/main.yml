@@ -17,7 +17,7 @@
     diff_mode:                "{{ __job_launch_item.diff_mode | default(omit) }}"
     credential_passwords:     "{{ __job_launch_item.credential_passwords | default(omit, true) }}"
     wait:                     "{{ __job_launch_item.wait | default(omit) }}"
-    interval:                 "{{ __job_launch_item.interval | default(1) }}"
+    interval:                 "{{ __job_launch_item.interval | default(omit) }}"
     timeout:                  "{{ __job_launch_item.timeout | default(omit, true) }}"
 
     # Role Standard Options

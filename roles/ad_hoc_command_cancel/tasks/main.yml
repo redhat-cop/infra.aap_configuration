@@ -4,7 +4,7 @@
   ad_hoc_command_cancel:
     command_id:             "{{ __ad_hoc_command_cancel_item.id }}"
     fail_if_not_running:    "{{ __ad_hoc_command_cancel_item.fail_if_not_running | default(omit) }}"
-    interval:               "{{ __ad_hoc_command_cancel_item.interval | default(1) }}"
+    interval:               "{{ __ad_hoc_command_cancel_item.interval | default(omit) }}"
     timeout:                "{{ __ad_hoc_command_cancel_item.timeout | default(omit, true) }}"
 
     # Role Standard Options

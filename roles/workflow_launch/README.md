@@ -44,7 +44,7 @@ controller_configuration_workflow_launch_secure_logging defaults to the value of
 |`scm_branch`|""|no|str|A specific of the SCM project to run the template on.|
 |`extra_vars`|""|no|str|Any extra vars required to launch the job. ask_extra_vars needs to be set to True via controller_job_template module.|
 |`wait`|""|no|bool|Wait for the job to complete.|
-|`interval`|""|no|int|The interval to request an update from controller.|
+|`interval`|2|no|int|The interval to request an update from controller.|
 |`timeout`|""|no|int|If waiting for the job to complete this will abort after this amount of seconds.|
 
 ### Standard Project Data Structure
