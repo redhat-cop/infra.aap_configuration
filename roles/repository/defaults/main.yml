@@ -12,9 +12,7 @@
 ah_repositories: []
 # possible fields:
 #  - name: "namespace_name" # mandatory
-#    description: "A description"
-#    readme: "The contents of a readme will go here"
-#    readme_file: "readme.md"
+#    url: "Remote URL for the repository" # mandatory
 
 ah_configuration_repository_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
 ah_configuration_repository_async_retries: "{{ ah_configuration_async_retries | default(50) }}"
