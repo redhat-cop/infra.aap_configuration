@@ -51,7 +51,7 @@ controller_configuration_job_launch_secure_logging defaults to the value of cont
 |`diff_mode`|""|no|str|Show the changes made by Ansible tasks where supported.|
 |`credential_passwords`|""|no|str|Passwords for credentials which are set to prompt on launch.|
 |`wait`|""|no|bool|Wait for the job to complete.|
-|`interval`|""|no|int|The interval to request an update from controller.|
+|`interval`|2|no|int|The interval to request an update from controller.|
 |`timeout`|""|no|int|If waiting for the job to complete this will abort after this amount of seconds.|
 
 ### Standard Project Data Structure
