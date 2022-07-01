@@ -1,0 +1,43 @@
+---
+
+# Create AH repository
+- name: Add Automation Hub repository
+  ah_repository:
+    name:                       "{{ __repository_item.name }}"
+    url:                        "{{ __repository_item.url  }}"
+    auth_url:                   "{{ __repository_item.auth_url | default(omit) }}"
+    token:                      "{{ __repository_item.token | default(omit) }}"
+    username:                   "{{ __repository_item.username | default(omit) }}"
+    password:                   "{{ __repository_item.password | default(omit) }}"
+    requirements:               "{{ __repository_item.requirements | default(omit) }}"
+    requirements_file:          "{{ __repository_item.requirements_file | default(omit }}"
+    proxy_url:                  "{{ proxy_url | default(ah_hostname) }}"
+    proxy_username:             "{{ proxy_username | default(omit) }}"
+    proxy_password:             "{{ proxy_password | default(omit) }}"
+    download_concurrency:       "{{ download_concurrency | default(10) }}"
+  loop: "{{ ah_repositories }}"
+  loop_control:
+    loop_var: "__repository_item"
+  no_log: "{{ ah_configuration_repository_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __repositories_job_async
+  changed_when: not __repositories_job_async.changed
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
+
+- name: "Create Repository | Wait for finish the repository creation"
+  async_status:
+    jid: "{{ __repositories_job_async_result_item.ansible_job_id }}"
+  register: __repositories_job_async_result
+  until: __repositories_job_async_result.finished
+  retries: "{{ ah_configuration_repository_async_retries }}"
+  delay: "{{ ah_configuration_repository_async_delay }}"
+  loop: "{{ __repositories_job_async.results }}"
+  loop_control:
+    loop_var: __repositories_job_async_result_item
+  when: __repositories_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ ah_configuration_repository_secure_logging }}"
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
+...
