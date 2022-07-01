@@ -1,6 +1,6 @@
 # redhat_cop.ah_configuration.repository
 ## Description
-An Ansible Role to create Namespaces in Automation Hub.
+An Ansible Role to create Repositories in Automation Hub.
 
 ## Variables
 |Variable Name|Default Value|Required|Description|Example|
@@ -50,7 +50,7 @@ This also speeds up the overall role.
 ### Variables
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|Namespace name. Must be lower case containing only alphanumeric characters and underscores.|
+|`name`|""|yes|str|repository name. Must be lower case containing only alphanumeric characters and underscores.|
 <!-- |`new_name`|""|yes|str|Setting this option will change the existing name (looked up via the name field.| -->
 
 ### Standard Project Data Structure
@@ -91,4 +91,4 @@ ah_repositories:
 [GPLv3+](LICENSE)
 
 ## Author
-[Tom Page](https://github.com/Tompage1994/)
+[Inderpal Tiwana](https://github.com/inderpaltiwana/)

@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: "repository"
-  author: "Tom Page"
+  author: "Inderpal Tiwana"
   description: "An Ansible Role to create repository in Automation Hub."
   company: "Red Hat"
 
