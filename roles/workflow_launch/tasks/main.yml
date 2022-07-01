@@ -9,7 +9,7 @@
     scm_branch:               "{{ __workflow_launch_item.scm_branch | default(omit, true) }}"
     extra_vars:               "{{ __workflow_launch_item.extra_vars | default(omit, true) }}"
     wait:                     "{{ __workflow_launch_item.wait | default(omit) }}"
-    interval:                 "{{ __workflow_launch_item.interval | default(1) }}"
+    interval:                 "{{ __workflow_launch_item.interval | default(omit) }}"
     timeout:                  "{{ __workflow_launch_item.timeout | default(omit, true) }}"
 
     # Role Standard Options

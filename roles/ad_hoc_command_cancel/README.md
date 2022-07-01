@@ -39,7 +39,7 @@ controller_configuration_ad_hoc_command_secure_logging defaults to the value of 
 |:---:|:---:|:---:|:---:|:---:|
 |`id`|""|no|int|ID of the command to cancel Recommended to be in a separate list of ID's see example, defaults to output of ad_hoc_command_role of controller_ad_hoc_commands_output.|
 |`fail_if_not_running`|""|no|bool|Fail loudly if the I(command_id) can not be canceled.|
-|`interval`|1|no|int|Limit to use for the ad hoc command.|
+|`interval`|2|no|int|Limit to use for the ad hoc command.|
 |`timeout`|""|yes|int|Credential to use for ad hoc command.|
 
 

@@ -50,7 +50,7 @@ controller_configuration_ad_hoc_command_secure_logging defaults to the value of 
 |`become_enabled`|""|no|bool|If the become flag should be set.|
 |`diff_mode`|""|no|bool|Show the changes made by Ansible tasks where supported|
 |`wait`|`False`|no|bool|Wait for the command to complete.|
-|`interval`|1|no|int|The interval to request an update from controller.|
+|`interval`|2|no|int|The interval to request an update from controller.|
 |`timeout`|""|no|int|If waiting for the command to complete this will abort after this amount of seconds.|
 
 
