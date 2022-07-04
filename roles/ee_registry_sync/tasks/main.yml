@@ -1,7 +1,7 @@
 ---
 
 # Create AH EE registry
-- name: Add Automation Hub EE Registry
+- name: Sync Automation Hub EE Registry
   ah_ee_registry_sync:
     name:                   "{{ __ee_registry_item.name }}"
     wait:                   "{{ __ee_registry_item.wait | default(omit) }}"
@@ -23,7 +23,7 @@
   vars:
     ansible_async_dir: '/tmp/.ansible_async'
 
-- name: "Create EE Image | Wait for finish the ee_registry_sync creation"
+- name: "EE Registry Sync | Wait for finish the ee_registry_sync to complete"
   async_status:
     jid: "{{ __ee_registry_syncs_job_async_result_item.ansible_job_id }}"
   register: __ee_registry_syncs_job_async_result
