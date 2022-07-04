@@ -22,7 +22,7 @@
   vars:
     ansible_async_dir: '/tmp/.ansible_async'
 
-- name: "Create EE Image | Wait for finish the group creation"
+- name: "Create Group | Wait for finish the group creation"
   async_status:
     jid: "{{ __groups_job_async_result_item.ansible_job_id }}"
   register: __groups_job_async_result
