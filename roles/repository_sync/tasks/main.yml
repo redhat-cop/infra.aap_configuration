@@ -2,7 +2,7 @@
 
 # Sync AH repository
 - name: Sync Automation Hub repository
-  ah_repository:
+  ah_repository_sync:
     name:                       "{{ __repository_item.name }}"
     wait:                        "{{ __repository_item.wait | default(omit)  }}"
     auth_url:                   "{{ __repository_item.interval | default(1) }}"
