@@ -5,7 +5,7 @@
   ah_repository_sync:
     name:                       "{{ __repository_item.name }}"
     wait:                        "{{ __repository_item.wait | default(omit)  }}"
-    auth_url:                   "{{ __repository_item.interval | default(1) }}"
+    interval:                   "{{ __repository_item.interval | default(1) }}"
     timeout:                      "{{ __repository_item.timeout | default(omit) }}"
   loop: "{{ ah_repositories }}"
   loop_control:
@@ -29,7 +29,7 @@
   loop_control:
     loop_var: __repositories_syncs_job_async_result_item
   when: __repositories_syncs_job_async_result_item.ansible_job_id is defined
-  no_log: "{{ ah_configuration_repository_syncs_secure_logging }}"
+  no_log: "{{ ah_configuration_repository_secure_logging }}"
   vars:
     ansible_async_dir: '/tmp/.ansible_async'
 ...
