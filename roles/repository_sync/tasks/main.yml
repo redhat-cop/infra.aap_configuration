@@ -4,9 +4,9 @@
 - name: Sync Automation Hub repository
   ah_repository_sync:
     name:                       "{{ __repository_item.name }}"
-    wait:                        "{{ __repository_item.wait | default(omit)  }}"
+    wait:                       "{{ __repository_item.wait | default(omit)  }}"
     interval:                   "{{ __repository_item.interval | default(1) }}"
-    timeout:                      "{{ __repository_item.timeout | default(omit) }}"
+    timeout:                    "{{ __repository_item.timeout | default(omit) }}"
   loop: "{{ ah_repositories }}"
   loop_control:
     loop_var: "__repository_item"
