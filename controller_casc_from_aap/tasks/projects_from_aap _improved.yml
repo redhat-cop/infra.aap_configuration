@@ -12,4 +12,6 @@
   template:
     src: "templates/current_projects_improved.j2"
     dest: "{{ output_path }}/current_projects.yaml"
+  vars:
+    current_pj_asset_value: "{{ projects_lookvar }}"    
 ...
