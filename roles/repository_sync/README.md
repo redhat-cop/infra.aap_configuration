@@ -6,7 +6,7 @@ An Ansible Role to sync Repositories in Automation Hub.
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes| Repository name. Probably one of community or rh-certified.||
-|`wait`|""|yes|Wait for the repository to finish syncing before returning.||
+|`wait`|""|false|Wait for the repository to finish syncing before returning.||
 |`interval`|"1"|no|The interval to request an update from Automation Hub.||
 |`timeout`|""|no|If waiting for the project to update this will abort after this amount of seconds.||
 
@@ -41,8 +41,10 @@ This also speeds up the overall role.
 ### Variables
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|repository name. Must be lower case containing only alphanumeric characters and underscores.|
-<!-- |`new_name`|""|yes|str|Setting this option will change the existing name (looked up via the name field.| -->
+|`name`|""|yes|str|Repository name. Must be lower case containing only alphanumeric characters and underscores.|
+|`wait`|true|no|str|Whether to wait for the sync to complete|
+|`interval`|"1"|no|str|The interval which the sync task will be checked for completion|
+|`timeout`|""|no|str|How long to wait for the sync task to complete|
 
 ### Standard Project Data Structure
 
@@ -52,7 +54,9 @@ This also speeds up the overall role.
 ah_repositories:
   - name: abc15
     description: string
-    readme: "# My repo"
+    readme: "# My repository"
+    wait: true
+    interval: 1
 ```
 
 ## Playbook Examples
