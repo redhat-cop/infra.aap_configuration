@@ -1,6 +1,6 @@
 ---
 controller_projects:
-{% for project in current_pj_asset_value %}
+{% for project in current_projects_asset_value %}
   - name: "{{ project.name }}"
     description: "{{ project.description }}"
     organization: "{{ project.summary_fields.organization.name | default('ToDo: The project \'' + project.name + '\' must have an organization') }}"
