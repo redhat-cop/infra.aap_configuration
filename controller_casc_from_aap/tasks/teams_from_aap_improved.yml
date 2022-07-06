@@ -1,0 +1,24 @@
+---
+- name: "Get current Teams from the API"
+  set_fact:
+    teams_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/teams/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) }}"
+
+- name: "Create the output directory: {{ output_path }}"
+  file:
+    path: "{{ output_path }}"
+    state: directory
+
+- name: "Add current teams to the output yaml file: {{ output_path }}/current_teams.yaml"
+  template:
+    src: "templates/current_teams_improved.j2"
+    dest: "{{ output_path }}/current_teams.yaml"
+  vars:
+    current_teams_asset_value: "{{ teams_lookvar }}"
+
+- name: "Set the team's roles"
+  include_tasks: "team_roles_from_aap_improved.yml"
+  vars:
+    teamname: "{{ item.name }}"
+    teamid: "{{ item.id }}"
+  loop: "{{ teams_lookvar }}"
+...

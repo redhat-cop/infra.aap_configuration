@@ -1,0 +1,23 @@
+---
+- name: "Get current Users from the API"
+  set_fact:
+    users_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/users/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) }}"
+
+- name: "Create the output directory: {{ output_path }}"
+  file:
+    path: "{{ output_path }}"
+    state: directory
+
+- name: "Add current users to the output yaml file: {{ output_path }}/current_users.yaml"
+  template:
+    src: "templates/current_users_improved.j2"
+    dest: "{{ output_path }}/current_users.yaml"
+  vars:
+    current_users_asset_value: "{{ users_lookvar }}"
+
+- name: "Set the user's roles"
+  include_tasks: "user_roles_from_aap_improved.yml"
+  vars:
+    username: "{{ item.username }}"
+  loop: "{{ users_lookvar }}"
+...
