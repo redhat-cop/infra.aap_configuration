@@ -1,6 +1,6 @@
 # redhat_cop.ah_configuration.ee_repository
 ## Description
-An Ansible Role to create Namespaces in Automation Hub.
+An Ansible Role to create Repositories in Automation Hub.
 
 ## Variables
 |Variable Name|Default Value|Required|Description|Example|
@@ -44,9 +44,9 @@ This also speeds up the overall role.
 ### Variables
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|Namespace name. Must be lower case containing only alphanumeric characters and underscores.|
+|`name`|""|yes|str|Repository name. Must be lower case containing only alphanumeric characters and underscores.|
 <!-- |`new_name`|""|yes|str|Setting this option will change the existing name (looked up via the name field.| -->
-|`description`|""|yes|str|Description to use for the Namespace.|
+|`description`|""|yes|str|Description to use for the Repository.|
 |`readme`|""|no|str|The readme for the ee repository. (mutex with readme_file)|
 |`readme_file`|""|no|str|The file location for the readme for the ee repository. (mutex with readme)|
 |`state`|`present`|no|str|Desired state of the ee_repository.|
