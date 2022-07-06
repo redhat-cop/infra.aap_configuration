@@ -14,3 +14,4 @@
     dest: "{{ output_path }}/current_inventory_sources.yaml"
   vars:
     current_inventory_source_asset_value: "{{ inventory_source_lookvar }}"
+...
