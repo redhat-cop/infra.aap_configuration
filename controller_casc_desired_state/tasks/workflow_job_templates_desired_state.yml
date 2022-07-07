@@ -20,33 +20,39 @@
 
   when: dir_orgs_vars is defined and orgs is defined
 
-- name: "DESIRED STATE: Get the API list of all Workflow Job Templates"
-  set_fact:
-    __controller_api_workflow_job_templates: "{{ query('ansible.controller.controller_api', 'workflow_job_templates',
-      host=controller_hostname, username=controller_username,
-      password=controller_password, verify_ssl=false) }}"
+- block:
+    - name: Get the organization ID
+      set_fact:
+        __controller_organization_id: "{{ lookup('ansible.controller.controller_api', 'organizations', query_params={ 'name': orgs },
+          host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
 
-- debug:
-    var: "{{ item }}"
-  loop:
-      - __controller_api_workflow_job_templates
+    - name: "DESIRED STATE: Get the API list of all Workflow Job Templates"
+      set_fact:
+        __controller_api_workflow_job_templates: "{{ query('ansible.controller.controller_api', 'workflow_job_templates',
+          query_params={ 'organization': __controller_organization_id.id },
+          host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
 
-- name: "DESIRED STATE: Find the difference of Workflow Job Templates between what is on the Controller versus CasC on SCM"
-  set_fact:
-    __workflow_job_templates_difference: "{{ lookup('redhat_cop.controller_casc.controller_object_diff_temp',
-      api_list=__controller_api_workflow_job_templates, compare_list=controller_workflows,
-      with_present=false, set_absent=true ) }}"
+    - debug:
+        var: "{{ item }}"
+      loop:
+          - __controller_api_workflow_job_templates
 
-- debug:
-    var: "{{ item }}"
-  loop:
-      - __workflow_job_templates_difference
+    - name: "DESIRED STATE: Find the difference of Workflow Job Templates between what is on the Controller versus CasC on SCM"
+      set_fact:
+        __workflow_job_templates_difference: "{{ lookup('redhat_cop.controller_casc.controller_object_diff_temp',
+          api_list=__controller_api_workflow_job_templates, compare_list=controller_workflows,
+          with_present=false, set_absent=true ) }}"
 
-- name: "DESIRED STATE: Set job_template's list to be configured"
-  set_fact:
-    controller_workflows: "{{ __workflow_job_templates_difference }}"
+    - debug:
+        var: "{{ item }}"
+      loop:
+          - __workflow_job_templates_difference
 
-- name: "DESIRED STATE: Configure Controller Workflow Job Templates"
-  import_role:
-    name: redhat_cop.controller_configuration.workflow_job_templates
+    - name: "DESIRED STATE: Set job_template's list to be configured"
+      set_fact:
+        controller_workflows: "{{ __workflow_job_templates_difference }}"
+
+    - name: "DESIRED STATE: Configure Controller Workflow Job Templates"
+      import_role:
+        name: redhat_cop.controller_configuration.workflow_job_templates
 ...
