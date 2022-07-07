@@ -33,7 +33,7 @@ options:
       type: str
     auth_url:
       description:
-        - Remote URL for the repository authentication if seperate.
+        - Remote URL for the repository authentication if separate.
       type: str
     token:
       description:
@@ -47,6 +47,23 @@ options:
       description:
         - Password to authenticate to the remote repository.
       type: str
+    tls_validation:
+      description:
+        - Whether to use TLS validation against the remote repository.
+      type: bool
+      default: True
+    client_key:
+      description:
+        - A PEM encoded private key used for authentication.
+      type: str
+    client_cert:
+      description:
+        - A PEM encoded client certificate used for authentication.
+      type: str
+    ca_cert:
+      description:
+        - A PEM encoded CA certificate used for authentication.
+      type: str
     requirements:
       description:
         - Requirements to download from remote.
@@ -55,6 +72,12 @@ options:
       description:
         - A yaml requirements file to download from remote.
       type: str
+    signed_only:
+      description:
+        - Whether to only download signed collections
+        - Only available in AAP 2.2 or later
+      type: bool
+      default: False
     proxy_url:
       description:
         - Proxy URL to use for the connection
@@ -72,6 +95,11 @@ options:
         - Number of concurrent collections to download.
       type: str
       default: 10
+    rate_limit:
+      description:
+        - Limits total download rate in requests per second.
+      type: str
+      default: 8
 
 extends_documentation_fragment: redhat_cop.ah_configuration.auth
 """
@@ -112,12 +140,18 @@ def main():
         token=dict(),
         username=dict(),
         password=dict(no_log=True),
+        tls_validation=dict(type="bool", default=True),
+        client_key=dict(no_log=True),
+        client_cert=dict(),
+        ca_cert=dict(),
         requirements=dict(type="list", elements="str"),
         requirements_file=dict(),
+        signed_only=dict(type="bool"),
         proxy_url=dict(),
         proxy_username=dict(),
         proxy_password=dict(no_log=True),
         download_concurrency=dict(default="10"),
+        rate_limit=dict(default="8"),
     )
 
     mutually_exclusive = [("requirements", "requirements_file")]
@@ -144,10 +178,16 @@ def main():
         "token",
         "username",
         "password",
+        "tls_validation",
+        "client_key",
+        "client_cert",
+        "ca_cert",
+        "signed_only",
         "proxy_url",
         "proxy_username",
         "proxy_password",
         "download_concurrency",
+        "rate_limit",
     ):
         field_val = module.params.get(field_name)
         if field_val is not None:
