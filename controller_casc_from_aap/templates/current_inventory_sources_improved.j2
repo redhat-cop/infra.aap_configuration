@@ -1,6 +1,6 @@
 ---
 controller_inventory_sources:
-{% for inventory_source in current_inventory_source_asset_value %}
+{% for inventory_source in current_inventory_sources_asset_value %}
   - name: "{{ inventory_source.name }}"
     description: "{{ inventory_source.description }}"
     source: "{{ inventory_source.source }}"
