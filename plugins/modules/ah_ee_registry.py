@@ -46,6 +46,36 @@ options:
   tls_validation:
     description:
       - Whether to validate TLS when connecting to the remote registry
+  client_key:
+    description:
+      - A PEM encoded private key file used for authentication.
+      - Mutually exclusive with C(client_key_path)
+    type: str
+  client_cert:
+    description:
+      - A PEM encoded client certificate used for authentication.
+      - Mutually exclusive with C(client_cert_path)
+    type: str
+  ca_cert:
+    description:
+      - A PEM encoded CA certificate used for authentication.
+      - Mutually exclusive with C(ca_cert_path)
+    type: str
+  client_key_path:
+    description:
+      - Path to a PEM encoded private key file used for authentication.
+      - Mutually exclusive with C(client_key)
+    type: str
+  client_cert_path:
+    description:
+      - Path to a PEM encoded client certificate used for authentication.
+      - Mutually exclusive with C(client_cert)
+    type: str
+  ca_cert_path:
+    description:
+      - Path to a PEM encoded CA certificate used for authentication.
+      - Mutually exclusive with C(ca_cert)
+    type: str
   proxy_url:
     description:
       - Proxy URL to use for the connection
@@ -123,6 +153,12 @@ def main():
         username=dict(),
         password=dict(),
         tls_validation=dict(type="bool", default=True),
+        client_key=dict(no_log="true"),
+        client_cert=dict(),
+        ca_cert=dict(),
+        client_key_path=dict(),
+        client_cert_path=dict(),
+        ca_cert_path=dict(),
         proxy_url=dict(),
         proxy_username=dict(),
         proxy_password=dict(),
@@ -132,7 +168,11 @@ def main():
     )
 
     # Create a module for ourselves
-    module = AHAPIModule(argument_spec=argument_spec, supports_check_mode=True)
+    module = AHAPIModule(
+        argument_spec=argument_spec,
+        supports_check_mode=True,
+        mutually_exclusive=[("client_key", "client_key_path"), ("client_cert", "client_cert_path"), ("ca_cert", "ca_cert_path")],
+    )
 
     # Extract our parameters
     name = module.params.get("name")
@@ -156,6 +196,9 @@ def main():
         "username",
         "password",
         "tls_validation",
+        "client_key",
+        "client_cert",
+        "ca_cert",
         "proxy_url",
         "proxy_username",
         "proxy_password",
@@ -164,6 +207,16 @@ def main():
     ):
         field_val = module.params.get(field_name)
         if field_val is not None:
+            new_fields[field_name] = field_val
+
+    for field_name in (
+        "client_key",
+        "client_cert",
+        "ca_cert",
+    ):
+        path_val = module.params.get("{}_path".format(field_name))
+        if path_val is not None:
+            field_val = module.getFileContent(path_val)
             new_fields[field_name] = field_val
 
     # API (POST): /api/galaxy/_ui/v1/registry/

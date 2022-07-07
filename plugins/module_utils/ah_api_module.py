@@ -16,6 +16,7 @@ import json
 import time
 
 from ansible.module_utils.basic import AnsibleModule, env_fallback
+from ansible.module_utils._text import to_bytes, to_text
 
 from ansible.module_utils.six.moves.urllib.parse import urlparse, urlencode
 from ansible.module_utils.six.moves.urllib.error import HTTPError
@@ -387,6 +388,14 @@ class AHAPIModule(AnsibleModule):
             header = {}
         self.headers.update(header)
         self.authenticated = True
+
+    def getFileContent(self, path):
+        try:
+            with open(to_bytes(path, errors="surrogate_or_strict"), "rb") as f:
+                b_file_data = f.read()
+            return to_text(b_file_data)
+        except FileNotFoundError:
+            self.fail_json(msg="No such file found on the local filesystem: '{}'".format(path))
 
     def logout(self):
         if not self.authenticated:
