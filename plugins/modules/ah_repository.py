@@ -53,17 +53,35 @@ options:
       type: bool
       default: True
     client_key:
-      description:
-        - A PEM encoded private key used for authentication.
-      type: str
-    client_cert:
-      description:
-        - A PEM encoded client certificate used for authentication.
-      type: str
-    ca_cert:
-      description:
-        - A PEM encoded CA certificate used for authentication.
-      type: str
+    description:
+      - A PEM encoded private key file used for authentication.
+      - Mutually exclusive with C(client_key_path)
+    type: str
+  client_cert:
+    description:
+      - A PEM encoded client certificate used for authentication.
+      - Mutually exclusive with C(client_cert_path)
+    type: str
+  ca_cert:
+    description:
+      - A PEM encoded CA certificate used for authentication.
+      - Mutually exclusive with C(ca_cert_path)
+    type: str
+  client_key_path:
+    description:
+      - Path to a PEM encoded private key file used for authentication.
+      - Mutually exclusive with C(client_key)
+    type: str
+  client_cert_path:
+    description:
+      - Path to a PEM encoded client certificate used for authentication.
+      - Mutually exclusive with C(client_cert)
+    type: str
+  ca_cert_path:
+    description:
+      - Path to a PEM encoded CA certificate used for authentication.
+      - Mutually exclusive with C(ca_cert)
+    type: str
     requirements:
       description:
         - Requirements to download from remote.
@@ -144,6 +162,9 @@ def main():
         client_key=dict(no_log=True),
         client_cert=dict(),
         ca_cert=dict(),
+        client_key_path=dict(),
+        client_cert_path=dict(),
+        ca_cert_path=dict(),
         requirements=dict(type="list", elements="str"),
         requirements_file=dict(),
         signed_only=dict(type="bool"),
@@ -154,7 +175,12 @@ def main():
         rate_limit=dict(default="8"),
     )
 
-    mutually_exclusive = [("requirements", "requirements_file")]
+    mutually_exclusive = [
+        ("requirements", "requirements_file"),
+        ("client_key", "client_key_path"),
+        ("client_cert", "client_cert_path"),
+        ("ca_cert", "ca_cert_path"),
+    ]
 
     # Create a module for ourselves
     module = AHModule(argument_spec=argument_spec, mutually_exclusive=mutually_exclusive)
@@ -191,6 +217,16 @@ def main():
     ):
         field_val = module.params.get(field_name)
         if field_val is not None:
+            new_fields[field_name] = field_val
+
+    for field_name in (
+        "client_key",
+        "client_cert",
+        "ca_cert",
+    ):
+        path_val = module.params.get("{}_path".format(field_name))
+        if path_val is not None:
+            field_val = module.getFileContent(path_val)
             new_fields[field_name] = field_val
 
     # If the state was present and we can let the module build or update the existing item, this will return on its own
