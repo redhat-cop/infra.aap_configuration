@@ -610,9 +610,12 @@ class AHModule(AnsibleModule):
         return (parser(headers)["content-type"], b_content)  # Message converts to native strings
 
     def getFileContent(self, path):
-        with open(to_bytes(path, errors="surrogate_or_strict"), "rb") as f:
-            b_file_data = f.read()
-        return to_text(b_file_data)
+        try:
+            with open(to_bytes(path, errors="surrogate_or_strict"), "rb") as f:
+                b_file_data = f.read()
+            return to_text(b_file_data)
+        except FileNotFoundError:
+            self.fail_json(msg="No such file found on the local filesystem: '{}'".format(path))
 
     def wait_for_complete(self, task_url):
         endpoint = task_url
