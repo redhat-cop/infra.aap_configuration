@@ -176,8 +176,8 @@ class AHModule(AnsibleModule):
             # If we have a oauth token, we just use a bearer header
             headers["Authorization"] = "Token {0}".format(self.oauth_token)
         elif self.basic_auth:
-            basic_str = base64.b64encode("{}:{}".format(self.username, self.password).encode('ascii'))
-            headers["Authorization"] = "Basic {}".format(basic_str.decode('ascii'))
+            basic_str = base64.b64encode("{}:{}".format(self.username, self.password).encode("ascii"))
+            headers["Authorization"] = "Basic {}".format(basic_str.decode("ascii"))
         if method in ["POST", "PUT", "PATCH"]:
             headers.setdefault("Content-Type", "application/json")
             kwargs["headers"] = headers
@@ -350,12 +350,12 @@ class AHModule(AnsibleModule):
                 except HTTPError as he:
                     test_url = self.build_url("namespaces").geturl()
                     self.basic_auth = True
-                    basic_str = base64.b64encode("{}:{}".format(self.username, self.password).encode('ascii'))
+                    basic_str = base64.b64encode("{}:{}".format(self.username, self.password).encode("ascii"))
                     response = self.session.open(
                         "GET",
                         test_url,
                         validate_certs=self.verify_ssl,
-                        headers={"Content-Type": "application/json", "Authorization": "Basic {}".format(basic_str.decode('ascii'))},
+                        headers={"Content-Type": "application/json", "Authorization": "Basic {}".format(basic_str.decode("ascii"))},
                     )
             except HTTPError as he:
                 try:

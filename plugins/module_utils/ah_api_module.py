@@ -379,8 +379,8 @@ class AHAPIModule(AnsibleModule):
                 response = self.make_request_raw_reponse("POST", url, data={"username": self.username, "password": self.password}, headers=header)
             except:
                 test_url = self.build_ui_url("me")
-                basic_str = base64.b64encode("{}:{}".format(self.username, self.password).encode('ascii'))
-                header =  {"Authorization": "Basic {}".format(basic_str.decode('ascii'))}
+                basic_str = base64.b64encode("{}:{}".format(self.username, self.password).encode("ascii"))
+                header = {"Authorization": "Basic {}".format(basic_str.decode("ascii"))}
                 response = self.make_request_raw_reponse("GET", test_url, headers=header)
         except AHAPIModuleError as e:
             self.fail_json(msg="Authentication error: {error}".format(error=e))
