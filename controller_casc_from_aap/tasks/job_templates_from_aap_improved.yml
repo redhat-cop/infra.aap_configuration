@@ -13,5 +13,5 @@
     src: "templates/current_job_templates_improved.j2"
     dest: "{{ output_path }}/current_job_templates.yaml"
   vars:
-    current_jt_asset_value: "{{ jt_lookvar }}"
+    current_job_templates_asset_value: "{{ jt_lookvar }}"
 ...
