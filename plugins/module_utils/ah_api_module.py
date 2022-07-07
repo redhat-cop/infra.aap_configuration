@@ -10,6 +10,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+import base64
 import re
 import socket
 import json
@@ -374,7 +375,13 @@ class AHAPIModule(AnsibleModule):
         # Strict-Transport-Security: max-age=15768000
 
         try:
-            response = self.make_request_raw_reponse("POST", url, data={"username": self.username, "password": self.password}, headers=header)
+            try:
+                response = self.make_request_raw_reponse("POST", url, data={"username": self.username, "password": self.password}, headers=header)
+            except:
+                test_url = self.build_ui_url("me")
+                basic_str = base64.b64encode("{}:{}".format(self.username, self.password).encode('ascii'))
+                header =  {"Authorization": "Basic {}".format(basic_str.decode('ascii'))}
+                response = self.make_request_raw_reponse("GET", test_url, headers=header)
         except AHAPIModuleError as e:
             self.fail_json(msg="Authentication error: {error}".format(error=e))
         for h in response.getheaders():
