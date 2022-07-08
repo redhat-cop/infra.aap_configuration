@@ -1,43 +1,50 @@
 ---
-
 # Create AH repository
-- name: Add Automation Hub repository
+- name: Update Certified repository
   ah_repository:
-    name:                       "{{ __repository_item.name }}"
-    url:                        "{{ __repository_item.url  }}"
-    auth_url:                   "{{ __repository_item.auth_url | default(omit) }}"
-    token:                      "{{ __repository_item.token | default(omit) }}"
-    username:                   "{{ __repository_item.username | default(omit) }}"
-    password:                   "{{ __repository_item.password | default(omit) }}"
-    requirements:               "{{ __repository_item.requirements | default(omit) }}"
-    requirements_file:          "{{ __repository_item.requirements_file | default(omit }}"
-    proxy_url:                  "{{ proxy_url | default(ah_hostname) }}"
-    proxy_username:             "{{ proxy_username | default(omit) }}"
-    proxy_password:             "{{ proxy_password | default(omit) }}"
-    download_concurrency:       "{{ download_concurrency | default(10) }}"
-  loop: "{{ ah_repositories }}"
-  loop_control:
-    loop_var: "__repository_item"
+    name:                 "rh-certified"
+    url:                  "{{ ah_repository_certified['url'] | default('https://cloud.redhat.com/api/automation-hub/') }}"
+    auth_url:             "{{ ah_repository_certified['auth_url'] | default('https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token') }}"
+    token:                "{{ ah_repository_certified['token'] | default(omit) }}"
+    username:             "{{ ah_repository_certified['username'] | default(omit) }}"
+    password:             "{{ ah_repository_certified['password'] | default(omit) }}"
+    download_concurrency: "{{ ah_repository_certified['download_concurrency'] | default(10) }}"
+    rate_limit:           "{{ ah_repository_certified['rate_limit'] | default(8) }}"
+    signed_only:          "{{ ah_repository_certified['signed_only'] | default(omit) }}"
+    tls_validation:       "{{ ah_repository_certified['tls_validation'] | default(true) }}"
+    client_key:           "{{ ah_repository_certified['client_key'] | default(omit) }}"
+    client_cert:          "{{ ah_repository_certified['client_cert'] | default(omit) }}"
+    ca_cert:              "{{ ah_repository_certified['ca_cert'] | default(omit) }}"
+    client_key_path:      "{{ ah_repository_certified['client_key_path'] | default(omit) }}"
+    client_cert_path:     "{{ ah_repository_certified['client_cert_path'] | default(omit) }}"
+    ca_cert_path:         "{{ ah_repository_certified['ca_cert_path'] | default(omit) }}"
+    proxy_url:            "{{ proxy_url | default(omit) }}"
+    proxy_username:       "{{ proxy_username | default(omit) }}"
+    proxy_password:       "{{ proxy_password | default(omit) }}"
   no_log: "{{ ah_configuration_repository_secure_logging }}"
-  async: 1000
-  poll: 0
-  register: __repositories_job_async
-  changed_when: not __repositories_job_async.changed
-  vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+  when: ah_repository_certified is defined
 
-- name: "Create Repository | Wait for finish the repository creation"
-  async_status:
-    jid: "{{ __repositories_job_async_result_item.ansible_job_id }}"
-  register: __repositories_job_async_result
-  until: __repositories_job_async_result.finished
-  retries: "{{ ah_configuration_repository_async_retries }}"
-  delay: "{{ ah_configuration_repository_async_delay }}"
-  loop: "{{ __repositories_job_async.results }}"
-  loop_control:
-    loop_var: __repositories_job_async_result_item
-  when: __repositories_job_async_result_item.ansible_job_id is defined
+- name: Update Community repository
+  ah_repository:
+    name:                 "community"
+    url:                  "{{ ah_repository_community['url'] | default('https://galaxy.ansible.com/api/') }}"
+    username:             "{{ ah_repository_community['username'] | default(omit) }}"
+    password:             "{{ ah_repository_community['password'] | default(omit) }}"
+    requirements:         "{{ ah_repository_community['requirements'] | default(omit) }}"
+    requirements_file:    "{{ ah_repository_community['requirements_file'] | default(omit }}"
+    download_concurrency: "{{ ah_repository_community['download_concurrency'] | default(10) }}"
+    rate_limit:           "{{ ah_repository_community['rate_limit'] | default(8) }}"
+    signed_only:          "{{ ah_repository_community['signed_only'] | default(omit) }}"
+    tls_validation:       "{{ ah_repository_community['tls_validation'] | default(true) }}"
+    client_key:           "{{ ah_repository_community['client_key'] | default(omit) }}"
+    client_cert:          "{{ ah_repository_community['client_cert'] | default(omit) }}"
+    ca_cert:              "{{ ah_repository_community['ca_cert'] | default(omit) }}"
+    client_key_path:      "{{ ah_repository_community['client_key_path'] | default(omit) }}"
+    client_cert_path:     "{{ ah_repository_community['client_cert_path'] | default(omit) }}"
+    ca_cert_path:         "{{ ah_repository_community['ca_cert_path'] | default(omit) }}"
+    proxy_url:            "{{ proxy_url | default(omit) }}"
+    proxy_username:       "{{ proxy_username | default(omit) }}"
+    proxy_password:       "{{ proxy_password | default(omit) }}"
   no_log: "{{ ah_configuration_repository_secure_logging }}"
-  vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+  when: ah_repository_community is defined
 ...

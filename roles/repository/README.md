@@ -3,11 +3,11 @@
 An Ansible Role to create Repositories in Automation Hub.
 
 ## Variables
+These are the sub options for the vars `ah_repository_certified` and `ah_repository_community` which are dictionaries with the options you want. See examples for details.
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes| Repository name. Probably one of community or rh-certified||
-|`url`|""|yes|Remote URL for the repository.||
-|`auth_url`|""|no|Remote URL for the repository authentication if seperate.||
+|`url`|"cloud.redhat or galaxy"|no|Remote URL for the repository.||
+|`auth_url`|""|no|Remote URL for the repository authentication if separate.||
 |`token`|""|no|Token to authenticate to the remote repository.||
 |`username`|""|no|Username to authenticate to the remote repository.||
 |`password`|""|no|Password to authenticate to the remote repository.||
@@ -16,9 +16,16 @@ An Ansible Role to create Repositories in Automation Hub.
 |`proxy_url`|""|no|Proxy URL to use for the connection.||
 |`proxy_username`|""|no|Proxy URL to use for the connection.||
 |`proxy_password`|""|no|Proxy URL to use for the connection.||
-|`download_concurrency`|""|no| Number of concurrent collections to download.||
-
-
+|`download_concurrency`|"10"|no| Number of concurrent collections to download.||
+|`rate_limit`|"8"|Limits total download rate in requests per second||
+|`signed_only`|""|no|Only download signed collections|True|
+|`tls_validation`|""|no|Whether to use TLS validation against the remote repository|True|
+|`client_key`|""|no|A PEM encoded private key file used for authentication||
+|`client_cert`|""|no|A PEM encoded client certificate used for authentication||
+|`ca_cert`|""|no|A PEM encoded CA certificate used for authentication||
+|`client_key_path`|""|no|Path to a PEM encoded private key file used for authentication||
+|`client_cert_path`|""|no|Path to a PEM encoded client certificate used for authentication||
+|`ca_cert_path`|""|no|Path to a PEM encoded CA certificate used for authentication||
 
 ### Secure Logging Variables
 The following Variables compliment each other.
@@ -30,21 +37,6 @@ ah_configuration_repository_secure_logging defaults to the value of ah_configura
 |:---:|:---:|:---:|:---:|
 |`ah_configuration_repository_secure_logging`|`False`|no|Whether or not to include the sensitive Namepsace role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`ah_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
-
-
-### Asynchronous Retry Variables
-The following Variables set asynchronous retries for the role.
-If neither of the retries or delay or retries are set, they will default to their respective defaults.
-This allows for all items to be created, then checked that the task finishes successfully.
-This also speeds up the overall role.
-
-|Variable Name|Default Value|Required|Description|
-|:---:|:---:|:---:|:---:|
-|`ah_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
-|`ah_configuration_repository_async_retries`|`ah_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
-|`ah_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
-|`ah_configuration_repository_async_delay`|`ah_configuration_async_delay`|no|This sets the delay between retries for the role.|
-
 
 ## Data Structure
 ### Variables
@@ -58,10 +50,18 @@ This also speeds up the overall role.
 #### Yaml Example
 ```yaml
 ---
-ah_repositories:
-  - name: abc15
-    description: string
-    readme: "# My repo"
+ah_repository_certified:
+  url: https://cloud.redhat.com/api/automation-hub/
+  auth_url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+  token: 'secretToken'
+
+ah_repository_community:
+  url: https://galaxy.ansible.com/api/
+  requirements:
+    - redhat_cop.ah_configuration
+    - redhat_cop.controller_configuration
+    - redhat_cop.aap_utilities
+    - redhat_cop.ee_utilities
 ```
 
 ## Playbook Examples
@@ -91,4 +91,4 @@ ah_repositories:
 [GPLv3+](LICENSE)
 
 ## Author
-[Inderpal Tiwana](https://github.com/inderpaltiwana/)
+[Inderpal Tiwana](https://github.com/inderpaltiwana/) and [David Danielsson](https://github.com/djdanielsson)
