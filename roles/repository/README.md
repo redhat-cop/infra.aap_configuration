@@ -6,7 +6,7 @@ An Ansible Role to create Repositories in Automation Hub.
 These are the sub options for the vars `ah_repository_certified` and `ah_repository_community` which are dictionaries with the options you want. See examples for details.
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`url`|"cloud.redhat or galaxy"|no|Remote URL for the repository.||
+|`url`|"cloud.redhat or galaxy"|no|Remote URL for the repository.|"https://galaxy.ansible.com/api/"|
 |`auth_url`|""|no|Remote URL for the repository authentication if separate.||
 |`token`|""|no|Token to authenticate to the remote repository.||
 |`username`|""|no|Username to authenticate to the remote repository.||
@@ -17,7 +17,7 @@ These are the sub options for the vars `ah_repository_certified` and `ah_reposit
 |`proxy_username`|""|no|Proxy URL to use for the connection.||
 |`proxy_password`|""|no|Proxy URL to use for the connection.||
 |`download_concurrency`|"10"|no| Number of concurrent collections to download.||
-|`rate_limit`|"8"|Limits total download rate in requests per second||
+|`rate_limit`|"8"|no|Limits total download rate in requests per second||
 |`signed_only`|""|no|Only download signed collections|True|
 |`tls_validation`|""|no|Whether to use TLS validation against the remote repository|True|
 |`client_key`|""|no|A PEM encoded private key file used for authentication||
