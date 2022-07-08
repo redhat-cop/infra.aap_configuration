@@ -21,6 +21,11 @@
     proxy_url:            "{{ proxy_url | default(omit) }}"
     proxy_username:       "{{ proxy_username | default(omit) }}"
     proxy_password:       "{{ proxy_password | default(omit) }}"
+    ah_host:              "{{ ah_host | default(ah_hostname) }}"
+    ah_username:          "{{ ah_username | default(omit) }}"
+    ah_password:          "{{ ah_password | default(omit) }}"
+    ah_path_prefix:       "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:       "{{ ah_validate_certs | default(omit) }}"
   no_log: "{{ ah_configuration_repository_secure_logging }}"
   when: ah_repository_certified is defined
 
@@ -31,7 +36,7 @@
     username:             "{{ ah_repository_community['username'] | default(omit) }}"
     password:             "{{ ah_repository_community['password'] | default(omit) }}"
     requirements:         "{{ ah_repository_community['requirements'] | default(omit) }}"
-    requirements_file:    "{{ ah_repository_community['requirements_file'] | default(omit }}"
+    requirements_file:    "{{ ah_repository_community['requirements_file'] | default(omit) }}"
     download_concurrency: "{{ ah_repository_community['download_concurrency'] | default(10) }}"
     rate_limit:           "{{ ah_repository_community['rate_limit'] | default(8) }}"
     signed_only:          "{{ ah_repository_community['signed_only'] | default(omit) }}"
@@ -45,6 +50,11 @@
     proxy_url:            "{{ proxy_url | default(omit) }}"
     proxy_username:       "{{ proxy_username | default(omit) }}"
     proxy_password:       "{{ proxy_password | default(omit) }}"
+    ah_host:              "{{ ah_host | default(ah_hostname) }}"
+    ah_username:          "{{ ah_username | default(omit) }}"
+    ah_password:          "{{ ah_password | default(omit) }}"
+    ah_path_prefix:       "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:       "{{ ah_validate_certs | default(omit) }}"
   no_log: "{{ ah_configuration_repository_secure_logging }}"
   when: ah_repository_community is defined
 ...

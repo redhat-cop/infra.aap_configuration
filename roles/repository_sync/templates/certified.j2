@@ -1,0 +1,15 @@
+[
+{% if ah_repository_certified is defined -%}
+{'name' : 'rh-certified',
+{% if ah_repository_certified['wait'] is defined -%}
+'wait' : {{ ah_repository_certified['wait'] }},
+{% endif %}
+{% if ah_repository_certified['interval'] is defined -%}
+'interval' : {{ ah_repository_certified['interval'] }},
+{% endif %}
+{% if ah_repository_certified['timeout'] is defined -%}
+'timeout' : {{ ah_repository_certified['timeout'] }},
+{% endif %}
+}
+{% endif %}
+]
