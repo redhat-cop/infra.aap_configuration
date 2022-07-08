@@ -377,22 +377,21 @@ class AHAPIModule(AnsibleModule):
         try:
             try:
                 response = self.make_request_raw_reponse("POST", url, data={"username": self.username, "password": self.password}, headers=header)
-            except:
+                for h in response.getheaders():
+                    if h[0].lower() == "set-cookie":
+                        k, v = h[1].split("=", 1)
+                        if k.lower() == "csrftoken":
+                            header = {"X-CSRFToken": v.split(";", 1)[0]}
+                            self.headers.update(header)
+                            break
+            except AHAPIModuleError:
                 test_url = self.build_ui_url("me")
                 basic_str = base64.b64encode("{}:{}".format(self.username, self.password).encode("ascii"))
                 header = {"Authorization": "Basic {}".format(basic_str.decode("ascii"))}
                 response = self.make_request_raw_reponse("GET", test_url, headers=header)
+                self.headers.update(header)
         except AHAPIModuleError as e:
             self.fail_json(msg="Authentication error: {error}".format(error=e))
-        for h in response.getheaders():
-            if h[0].lower() == "set-cookie":
-                k, v = h[1].split("=", 1)
-                if k.lower() == "csrftoken":
-                    header = {"X-CSRFToken": v.split(";", 1)[0]}
-                    break
-        else:
-            header = {}
-        self.headers.update(header)
         self.authenticated = True
 
     def logout(self):

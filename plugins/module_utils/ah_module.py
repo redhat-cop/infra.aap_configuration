@@ -347,7 +347,7 @@ class AHModule(AnsibleModule):
                         url_password=self.password,
                         headers={"Content-Type": "application/json"},
                     )
-                except HTTPError as he:
+                except HTTPError:
                     test_url = self.build_url("namespaces").geturl()
                     self.basic_auth = True
                     basic_str = base64.b64encode("{}:{}".format(self.username, self.password).encode("ascii"))
