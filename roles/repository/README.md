@@ -1,8 +1,11 @@
 # redhat_cop.ah_configuration.repository
+
 ## Description
+
 An Ansible Role to create Repositories in Automation Hub.
 
 ## Variables
+
 These are the sub options for the vars `ah_repository_certified` and `ah_repository_community` which are dictionaries with the options you want. See examples for details.
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
@@ -29,6 +32,7 @@ These are the sub options for the vars `ah_repository_certified` and `ah_reposit
 |`ca_cert_path`|""|no|Path to a PEM encoded CA certificate used for authentication||
 
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add repository task does not include sensitive information.
@@ -39,14 +43,16 @@ ah_configuration_repository_secure_logging defaults to the value of ah_configura
 |`ah_configuration_repository_secure_logging`|`False`|no|Whether or not to include the sensitive Namepsace role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`ah_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
+## Data Structure
+
 ### Standard Project Data Structure
 
 #### Yaml Example
+
 ```yaml
 ---
 ah_repository_certified:
-  url: https://cloud.redhat.com/api/automation-hub/
-  auth_url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+  url: 'https://cloud.redhat.com/api/automation-hub/<custom_sync_url_from_cloud>'
   token: 'secretToken'
 
 ah_repository_community:
@@ -59,7 +65,9 @@ ah_repository_community:
 ```
 
 ## Playbook Examples
+
 ### Standard Role Usage
+
 ```yaml
 ---
 - name: Add repository to Automation Hub
@@ -81,8 +89,11 @@ ah_repository_community:
   roles:
     - ../../repository
 ```
+
 ## License
+
 [GPLv3+](LICENSE)
 
 ## Author
+
 [Inderpal Tiwana](https://github.com/inderpaltiwana/) and [David Danielsson](https://github.com/djdanielsson)
