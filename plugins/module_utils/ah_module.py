@@ -15,6 +15,7 @@ import os.path
 from socket import gethostbyname
 import re
 from json import loads, dumps
+import base64
 import os
 import time
 import email.mime.multipart
@@ -53,6 +54,7 @@ class AHModule(AnsibleModule):
     password = None
     verify_ssl = True
     oauth_token = None
+    basic_auth = False
     authenticated = False
     error_callback = None
     warn_callback = None
@@ -173,6 +175,9 @@ class AHModule(AnsibleModule):
         if self.oauth_token:
             # If we have a oauth token, we just use a bearer header
             headers["Authorization"] = "Token {0}".format(self.oauth_token)
+        elif self.basic_auth:
+            basic_str = base64.b64encode("{}:{}".format(self.username, self.password).encode("ascii"))
+            headers["Authorization"] = "Basic {}".format(basic_str.decode("ascii"))
         if method in ["POST", "PUT", "PATCH"]:
             headers.setdefault("Content-Type", "application/json")
             kwargs["headers"] = headers
@@ -331,16 +336,27 @@ class AHModule(AnsibleModule):
             # If we have a username and password, we need to get a session cookie
             api_token_url = self.build_url("auth/token").geturl()
             try:
-                response = self.session.open(
-                    "POST",
-                    api_token_url,
-                    validate_certs=self.verify_ssl,
-                    follow_redirects=True,
-                    force_basic_auth=True,
-                    url_username=self.username,
-                    url_password=self.password,
-                    headers={"Content-Type": "application/json"},
-                )
+                try:
+                    response = self.session.open(
+                        "POST",
+                        api_token_url,
+                        validate_certs=self.verify_ssl,
+                        follow_redirects=True,
+                        force_basic_auth=True,
+                        url_username=self.username,
+                        url_password=self.password,
+                        headers={"Content-Type": "application/json"},
+                    )
+                except HTTPError:
+                    test_url = self.build_url("namespaces").geturl()
+                    self.basic_auth = True
+                    basic_str = base64.b64encode("{}:{}".format(self.username, self.password).encode("ascii"))
+                    response = self.session.open(
+                        "GET",
+                        test_url,
+                        validate_certs=self.verify_ssl,
+                        headers={"Content-Type": "application/json", "Authorization": "Basic {}".format(basic_str.decode("ascii"))},
+                    )
             except HTTPError as he:
                 try:
                     resp = he.read()
@@ -352,12 +368,13 @@ class AHModule(AnsibleModule):
                 self.fail_json(msg="Failed to get token: {0}".format(e))
 
             token_response = None
-            try:
-                token_response = response.read()
-                response_json = loads(token_response)
-                self.oauth_token = response_json["token"]
-            except (Exception) as e:
-                self.fail_json(msg="Failed to extract token information from login response: {0}".format(e), **{"response": token_response})
+            if not self.basic_auth:
+                try:
+                    token_response = response.read()
+                    response_json = loads(token_response)
+                    self.oauth_token = response_json["token"]
+                except (Exception) as e:
+                    self.fail_json(msg="Failed to extract token information from login response: {0}".format(e), **{"response": token_response})
 
         # If we have neither of these, then we can try un-authenticated access
         self.authenticated = True
