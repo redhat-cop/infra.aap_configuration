@@ -17,9 +17,9 @@
   no_log: "{{ ah_configuration_repository_secure_logging }}"
   vars:
     ansible_async_dir: '/tmp/.ansible_async'
-    _ah_repositories: "{{ _certified + _community }}"
-    _community: "{{ lookup('template', 'community.j2') }}"
-    _certified: "{{ lookup('template', 'certified.j2') }}"
+    _ah_repositories:
+      - "{{ ah_repository_certified | combine({'name': 'rh-certified'}) }}"
+      - "{{ ah_repository_community | combine({'name': 'community'}) }}"
 
 # - name: Sync Automation Hub repository
 #   ah_repository_sync:

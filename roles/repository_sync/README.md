@@ -27,7 +27,7 @@ ah_configuration_repository_secure_logging defaults to the value of ah_configura
 ```yaml
 ---
 ah_repository_certified:
-  url: 'https://cloud.redhat.com/api/automation-hub/'
+  url: 'https://cloud.redhat.com/api/automation-hub/<custom_sync_url_from_cloud>'
   token: 'secretToken'
 
 ah_repository_community:

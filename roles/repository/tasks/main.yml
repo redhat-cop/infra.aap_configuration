@@ -3,7 +3,7 @@
 - name: Update Certified repository
   ah_repository:
     name:                 "rh-certified"
-    url:                  "{{ ah_repository_certified['url'] | default('https://cloud.redhat.com/api/automation-hub/') }}"
+    url:                  "{{ ah_repository_certified['url'] | mandatory }}"
     auth_url:             "{{ ah_repository_certified['auth_url'] | default('https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token') }}"
     token:                "{{ ah_repository_certified['token'] | default(omit) }}"
     username:             "{{ ah_repository_certified['username'] | default(omit) }}"
