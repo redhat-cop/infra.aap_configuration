@@ -1,0 +1,17 @@
+---
+- name: "Get current Execution Environments from the API"
+  set_fact:
+    execution_environments_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/execution_environments/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) }}"
+
+- name: "Create the output directory: {{ output_path }}"
+  file:
+    path: "{{ output_path }}"
+    state: directory
+
+- name: "Add current execution environments to the output yaml file: {{ output_path }}/current_execution_environments.yaml"
+  template:
+    src: "templates/current_execution_environments_improved.j2"
+    dest: "{{ output_path }}/current_execution_environments_improved.yaml"
+  vars:
+    current_execution_environments_asset_value: "{{ execution_environments_lookvar }}"
+...

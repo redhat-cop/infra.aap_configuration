@@ -3,41 +3,41 @@
   set_fact:
     is_aap: "{{ lookup('ansible.controller.controller_api', 'ping', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs).version is version('4.0.0', '>=') }}"
 
-- block:
-    - name: "export all supported objects (Be patient... this may take a while!)"
-      ansible.controller.export:
-        controller_host: "{{ controller_hostname }}"
-        controller_username: "{{ controller_username }}"
-        controller_password: "{{ controller_password }}"
-        validate_certs: "{{ controller_validate_certs }}"
-        # all: "{{ true if 'all' in input_tag else omit }}"
-        ### credentials:                 "{{ 'all' if ('all' in input_tag or 'credentials' in input_tag) else omit }}"
-        ### credential_types:            "{{ 'all' if ('all' in input_tag or 'credential_types' in input_tag) else omit }}"
-        execution_environments:      "{{ 'all' if ((is_aap | bool) and ('all' in input_tag or 'execution_environments' in input_tag)) else omit }}"
-        ### # groups:                      "{{ 'all' if ('all' in input_tag or 'groups' in input_tag) else omit }}"
-        ### # hosts:                       "{{ 'all' if ('all' in input_tag or 'hosts' in input_tag) else omit }}"
-        ### inventory:                   "{{ 'all' if ('all' in input_tag or 'inventory' in input_tag) else omit }}"
-        ### inventory_sources:           "{{ 'all' if ('all' in input_tag or 'inventory_sources' in input_tag) else omit }}"
-        ### job_templates:               "{{ 'all' if ('all' in input_tag or 'job_templates' in input_tag) else omit }}"
-        ### notification_templates:      "{{ 'all' if ('all' in input_tag or 'notification_templates' in input_tag) else omit }}"
-        ### organizations:               "{{ 'all' if ('all' in input_tag or 'organizations' in input_tag) else omit }}"
-        ### projects:                    "{{ 'all' if ('all' in input_tag or 'projects' in input_tag) else omit }}"
-        # roles:                       "{{ 'all' if ('all' in input_tag or 'roles' in input_tag) else omit }}"
-        ### teams:                       "{{ 'all' if ('all' in input_tag or 'teams' in input_tag) else omit }}"
-        ### users:                       "{{ 'all' if ('all' in input_tag or 'users' in input_tag) else omit }}"
-        # workflow_job_template_nodes: "{{ 'all' if ('all' in input_tag or 'workflow_job_template_nodes' in input_tag) else omit }}"
-        # workflow_job_templates:      "{{ 'all' if ('all' in input_tag or 'workflow_job_templates' in input_tag) else omit }}"
-      register: contents
-
-    - name: "For each asset, call the correct file"
-      include_tasks: "{{ asset_item.key }}_from_aap.yml"
-      vars:
-        current_asset_value: "{{ asset_item.value }}"
-      loop: "{{ contents.assets | dict2items }}"
-      loop_control:
-        loop_var: asset_item
-        label: asset_item
-  when: "['all', 'execution_environments'] | intersect(input_tag) | length > 0"
+#- block:
+#    - name: "export all supported objects (Be patient... this may take a while!)"
+#      ansible.controller.export:
+#        controller_host: "{{ controller_hostname }}"
+#        controller_username: "{{ controller_username }}"
+#        controller_password: "{{ controller_password }}"
+#        validate_certs: "{{ controller_validate_certs }}"
+#        # all: "{{ true if 'all' in input_tag else omit }}"
+#        ### credentials:                 "{{ 'all' if ('all' in input_tag or 'credentials' in input_tag) else omit }}"
+#        ### credential_types:            "{{ 'all' if ('all' in input_tag or 'credential_types' in input_tag) else omit }}"
+#        ### execution_environments:      "{{ 'all' if ((is_aap | bool) and ('all' in input_tag or 'execution_environments' in input_tag)) else omit }}"
+#        ### # groups:                      "{{ 'all' if ('all' in input_tag or 'groups' in input_tag) else omit }}"
+#        ### # hosts:                       "{{ 'all' if ('all' in input_tag or 'hosts' in input_tag) else omit }}"
+#        ### inventory:                   "{{ 'all' if ('all' in input_tag or 'inventory' in input_tag) else omit }}"
+#        ### inventory_sources:           "{{ 'all' if ('all' in input_tag or 'inventory_sources' in input_tag) else omit }}"
+#        ### job_templates:               "{{ 'all' if ('all' in input_tag or 'job_templates' in input_tag) else omit }}"
+#        ### notification_templates:      "{{ 'all' if ('all' in input_tag or 'notification_templates' in input_tag) else omit }}"
+#        ### organizations:               "{{ 'all' if ('all' in input_tag or 'organizations' in input_tag) else omit }}"
+#        ### projects:                    "{{ 'all' if ('all' in input_tag or 'projects' in input_tag) else omit }}"
+#        # roles:                       "{{ 'all' if ('all' in input_tag or 'roles' in input_tag) else omit }}"
+#        ### teams:                       "{{ 'all' if ('all' in input_tag or 'teams' in input_tag) else omit }}"
+#        ### users:                       "{{ 'all' if ('all' in input_tag or 'users' in input_tag) else omit }}"
+#        # workflow_job_template_nodes: "{{ 'all' if ('all' in input_tag or 'workflow_job_template_nodes' in input_tag) else omit }}"
+#        # workflow_job_templates:      "{{ 'all' if ('all' in input_tag or 'workflow_job_templates' in input_tag) else omit }}"
+#      register: contents
+#
+#    - name: "For each asset, call the correct file"
+#      include_tasks: "{{ asset_item.key }}_from_aap.yml"
+#      vars:
+#        current_asset_value: "{{ asset_item.value }}"
+#      loop: "{{ contents.assets | dict2items }}"
+#      loop_control:
+#        loop_var: asset_item
+#        label: asset_item
+#  when: "['all'] | intersect(input_tag) | length > 0"
 
 - block:
     - name: "Export Inventories and related Groups and Hosts"
@@ -72,12 +72,15 @@
       when: "'workflow_job_templates' in input_tag or 'all' in input_tag"
     - name: "Export Projects"
       include_tasks: "projects_from_aap_improved.yml"
-      when: "'projects' in input_tag or 'all' in input_tag"     
+      when: "'projects' in input_tag or 'all' in input_tag"
+    - name: "Export Execution Environments"
+      include_tasks: "execution_environments_from_aap_improved.yml"
+      when: "('execution_environments' in input_tag or 'all' in input_tag) and is_aap"
     - name: "Export Workflow Job Template Nodes"
       # Do not run if 'all' is in input_tag, as it will be called from workflow_job_templates_from_aap_improved.yml
       include_tasks: "workflow_job_template_nodes_from_aap_improved.yml"
       when:
         - "'workflow_job_template_nodes' in input_tag"
         - "'workflow_job_templates' not in input_tag"
-  when: "['all', 'inventory', 'inventory_sources', 'credentials', 'credential_types', 'notification_templates', 'users', 'teams', 'organizations', 'projects', 'job_templates', 'workflow_job_templates', 'workflow_job_template_nodes'] | intersect(input_tag) | length > 0"
+  when: "['all', 'inventory', 'inventory_sources', 'credentials', 'credential_types', 'notification_templates', 'users', 'teams', 'organizations', 'projects', 'execution_environments', 'job_templates', 'workflow_job_templates', 'workflow_job_template_nodes'] | intersect(input_tag) | length > 0"
 ...
