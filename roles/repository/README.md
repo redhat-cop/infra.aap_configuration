@@ -9,7 +9,7 @@ An Ansible Role to create Repositories in Automation Hub.
 These are the sub options for the vars `ah_repository_certified` and `ah_repository_community` which are dictionaries with the options you want. See examples for details.
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`url`|""|yes|(`ah_repository_certified`)Remote URL for the repository.|"https://console.redhat.com/api/automation-hub/content/1234567-synclist/"|
+|`url`|"https://cloud.redhat.com/api/automation-hub/"|no|(`ah_repository_certified`)Remote URL for the repository.|"https://console.redhat.com/api/automation-hub/content/1234567-synclist/"|
 |`url`|"https://galaxy.ansible.com/api/"|no|(`ah_repository_community`)Remote URL for the repository.||
 |`auth_url`|"https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token"|no|(`ah_repository_certified`)Remote URL for the repository authentication if separate.||
 |`token`|""|no|Token to authenticate to the remote repository.||
@@ -22,8 +22,8 @@ These are the sub options for the vars `ah_repository_certified` and `ah_reposit
 |`proxy_password`|""|no|Proxy URL to use for the connection.||
 |`download_concurrency`|"10"|no| Number of concurrent collections to download.||
 |`rate_limit`|"8"|no|Limits total download rate in requests per second||
-|`signed_only`|""|no|Only download signed collections|True|
-|`tls_validation`|""|no|Whether to use TLS validation against the remote repository|True|
+|`signed_only`|"False"|no|Only download signed collections|True|
+|`tls_validation`|"True"|no|Whether to use TLS validation against the remote repository|False|
 |`client_key`|""|no|A PEM encoded private key file used for authentication||
 |`client_cert`|""|no|A PEM encoded client certificate used for authentication||
 |`ca_cert`|""|no|A PEM encoded CA certificate used for authentication||
