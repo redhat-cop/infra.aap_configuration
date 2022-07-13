@@ -1,25 +1,29 @@
 # redhat_cop.ah_configuration.repository
+
 ## Description
+
 An Ansible Role to create Repositories in Automation Hub.
 
 ## Variables
+
 These are the sub options for the vars `ah_repository_certified` and `ah_repository_community` which are dictionaries with the options you want. See examples for details.
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`url`|"cloud.redhat or galaxy"|no|Remote URL for the repository.||
-|`auth_url`|""|no|Remote URL for the repository authentication if separate.||
+|`url`|"https://cloud.redhat.com/api/automation-hub/"|no|(`ah_repository_certified`)Remote URL for the repository.|"https://console.redhat.com/api/automation-hub/content/1234567-synclist/"|
+|`url`|"https://galaxy.ansible.com/api/"|no|(`ah_repository_community`)Remote URL for the repository.||
+|`auth_url`|"https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token"|no|(`ah_repository_certified`)Remote URL for the repository authentication if separate.||
 |`token`|""|no|Token to authenticate to the remote repository.||
 |`username`|""|no|Username to authenticate to the remote repository.||
 |`password`|""|no|Password to authenticate to the remote repository.||
-|`requirements`|""|no|Requirements to download from remote.||
-|`requirements_file`|""|no|A yaml requirements file to download from remote.||
+|`requirements`|""|no|(`ah_repository_community`)Requirements to download from remote.||
+|`requirements_file`|""|no|(`ah_repository_community`)A yaml requirements file to download from remote.||
 |`proxy_url`|""|no|Proxy URL to use for the connection.||
 |`proxy_username`|""|no|Proxy URL to use for the connection.||
 |`proxy_password`|""|no|Proxy URL to use for the connection.||
 |`download_concurrency`|"10"|no| Number of concurrent collections to download.||
-|`rate_limit`|"8"|Limits total download rate in requests per second||
-|`signed_only`|""|no|Only download signed collections|True|
-|`tls_validation`|""|no|Whether to use TLS validation against the remote repository|True|
+|`rate_limit`|"8"|no|Limits total download rate in requests per second||
+|`signed_only`|"False"|no|Only download signed collections|True|
+|`tls_validation`|"True"|no|Whether to use TLS validation against the remote repository|False|
 |`client_key`|""|no|A PEM encoded private key file used for authentication||
 |`client_cert`|""|no|A PEM encoded client certificate used for authentication||
 |`ca_cert`|""|no|A PEM encoded CA certificate used for authentication||
@@ -28,6 +32,7 @@ These are the sub options for the vars `ah_repository_certified` and `ah_reposit
 |`ca_cert_path`|""|no|Path to a PEM encoded CA certificate used for authentication||
 
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add repository task does not include sensitive information.
@@ -39,20 +44,15 @@ ah_configuration_repository_secure_logging defaults to the value of ah_configura
 |`ah_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ## Data Structure
-### Variables
-|Variable Name|Default Value|Required|Type|Description|
-|:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|repository name. Must be lower case containing only alphanumeric characters and underscores.|
-<!-- |`new_name`|""|yes|str|Setting this option will change the existing name (looked up via the name field.| -->
 
 ### Standard Project Data Structure
 
 #### Yaml Example
+
 ```yaml
 ---
 ah_repository_certified:
-  url: https://cloud.redhat.com/api/automation-hub/
-  auth_url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+  url: 'https://cloud.redhat.com/api/automation-hub/<custom_sync_url_from_cloud>'
   token: 'secretToken'
 
 ah_repository_community:
@@ -65,7 +65,9 @@ ah_repository_community:
 ```
 
 ## Playbook Examples
+
 ### Standard Role Usage
+
 ```yaml
 ---
 - name: Add repository to Automation Hub
@@ -87,8 +89,11 @@ ah_repository_community:
   roles:
     - ../../repository
 ```
+
 ## License
+
 [GPLv3+](LICENSE)
 
 ## Author
+
 [Inderpal Tiwana](https://github.com/inderpaltiwana/) and [David Danielsson](https://github.com/djdanielsson)
