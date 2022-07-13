@@ -26,7 +26,8 @@
     __controller_api_current_user_check_is_admin: "{{ lookup('ansible.controller.controller_api', 'users', query_params={ 'username': controller_username },
       host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
 
-- set_fact:
+- name: "DESIRED STATE: Sets the current controller user to determine if it is super-admin"
+  set_fact:
     __controller_api_user_accounts: "{{ query('ansible.controller.controller_api', 'users',
       host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
 
@@ -44,10 +45,6 @@
       set_fact:
         populate_controller_api_user_accounts_without_external_accounts: "{{ __controller_api_user_accounts | selectattr('external_account', 'none') | list }}"
 
-    - name: DEBUG populate_controller_api_user_accounts_without_external_accounts
-      debug:
-        msg: "{{ populate_controller_api_user_accounts_without_external_accounts }}"
-
     - name: "Set User Accounts from API without External Accounts Data Structure"
       set_fact:
         __controller_api_user_accounts: "{{ populate_controller_api_user_accounts_without_external_accounts }}"
@@ -59,21 +56,15 @@
 
 - block:
 
-    - debug:
-        msg: "{{ __controller_api_user_accounts }}"
-
     - name: "DESIRED STATE: Find the difference of User Accounts between what is on the Controller versus CasC on SCM"
       set_fact:
         __user_accounts_difference: "{{ lookup('redhat_cop.controller_casc.controller_object_diff_temp',
           api_list=__controller_api_user_accounts, compare_list=controller_user_accounts,
           with_present=false, set_absent=true ) }}"
 
-    - debug:
-        var: "{{ item }}"
-      loop:
-        - __user_accounts_difference
 
-    - set_fact:
+    - name: "DESIRED STATE: Sets the difference of User Accounts between what is on the Controller versus CasC on SCM"
+      set_fact:
         controller_user_accounts: "{{ __user_accounts_difference }}"
 
     # - name: "DESIRED STATE: Configure Controller User Accounts"

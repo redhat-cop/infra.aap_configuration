@@ -7,11 +7,13 @@
   file:
     path: "{{ output_path }}"
     state: directory
+    mode: 0644
 
 - name: "Add current execution environments to the output yaml file: {{ output_path }}/current_execution_environments.yaml"
   template:
     src: "templates/current_execution_environments_improved.j2"
     dest: "{{ output_path }}/current_execution_environments_improved.yaml"
+    mode: 0644
   vars:
     current_execution_environments_asset_value: "{{ execution_environments_lookvar }}"
 ...

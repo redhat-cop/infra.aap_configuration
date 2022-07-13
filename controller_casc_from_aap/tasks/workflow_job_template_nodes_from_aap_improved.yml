@@ -1,7 +1,7 @@
 ---
 - name: "Get the current Workflow Job Template Nodes from the API"
   set_fact:
-    wfjtn_lookvar: "{{ (wfjtn_lookvar|default({})) | combine({wfjtn_lookvar_item.summary_fields.workflow_job_template.name: {'nodes': (wfjtn_lookvar[wfjtn_lookvar_item.summary_fields.workflow_job_template.name]['nodes']|default([]) + [wfjtn_lookvar_item] | flatten), 'wfjtn_url': wfjtn_lookvar_item.related.workflow_job_template}}) }}"
+    wfjtn_lookvar: "{{ (wfjtn_lookvar|default({})) | combine({wfjtn_lookvar_item.summary_fields.workflow_job_template.name: {'nodes': (wfjtn_lookvar[wfjtn_lookvar_item.summary_fields.workflow_job_template.name]['nodes']|default([]) + [wfjtn_lookvar_item] | flatten), 'wfjtn_url': wfjtn_lookvar_item.related.workflow_job_template }}) }}"
   loop: "{{ query('ansible.controller.controller_api', 'api/v2/workflow_job_template_nodes/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) }}"
   loop_control:
     loop_var: wfjtn_lookvar_item
@@ -11,11 +11,13 @@
   file:
     path: "{{ output_path }}"
     state: directory
+    mode: 0644
 
 - name: "Add current workflow job template nodes to the output yaml file: {{ output_path }}/current_workflow_job_template_nodes_{{ worflow_job_template_name }}.yaml"
   template:
     src: "templates/current_workflow_job_template_nodes_improved.j2"
     dest: "{{ output_path }}/current_workflow_job_template_nodes_{{ worflow_job_template_name }}.yaml"
+    mode: 0644
   vars:
     worflow_job_template_name: "{{ current_wfjtn_asset_value.key }}"
     worflow_job_template_organization: "{{ query('ansible.controller.controller_api', current_wfjtn_asset_value.value.wfjtn_url, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs)[0].summary_fields.organization.name }}"

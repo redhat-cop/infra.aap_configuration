@@ -36,21 +36,14 @@
           query_params={ 'organization': __controller_organization_id.id },
           host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
 
-    - debug:
-        msg: "{{ __controller_api_teams }}"
-
     - name: "DESIRED STATE: Find the difference of Teams between what is on the Controller versus CasC on SCM"
       set_fact:
         __teams_difference: "{{ lookup('redhat_cop.controller_casc.controller_object_diff_temp',
           api_list=__controller_api_teams, compare_list=controller_teams,
           with_present=false, set_absent=true ) }}"
 
-    - debug:
-        var: "{{ item }}"
-      loop:
-          - __teams_difference
-
-    - set_fact:
+    - name: "DESIRED STATE: Sets the difference of Teams between what is on the Controller versus CasC on SCM"
+      set_fact: 
         controller_teams: "{{ __teams_difference }}"
 
     - name: "DESIRED STATE: Configure Controller Teams"

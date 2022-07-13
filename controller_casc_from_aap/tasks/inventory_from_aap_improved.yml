@@ -11,17 +11,17 @@
 - name: "Translate the inventories to a usefull structure"
   set_fact:
     current_inventories: "{{ (current_inventories | default([])) + [{
-      'has_inventory_sources': inventory_lookvar_item.has_inventory_sources,
-      'id': inventory_lookvar_item.id,
-      'name': inventory_lookvar_item.name,
-      'description': inventory_lookvar_item.description,
-      'organization': lookup('ansible.controller.controller_api', 'api/v2/organizations/'+(inventory_lookvar_item.organization|string), host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true)['name'],
-      'host_filter': inventory_lookvar_item.host_filter,
-      'kind': inventory_lookvar_item.kind,
-      'variables': inventory_lookvar_item.variables,
-      'hosts': query('ansible.controller.controller_api', inventory_lookvar_item.related.hosts, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].{name: name, description: description}'),
-      'groups': query('ansible.controller.controller_api', inventory_lookvar_item.related.groups, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].{name: name, description: description, hosts_url: related.hosts}') | map('combine', {'inventory': inventory_lookvar_item.name}) | list
-    }] }}"
+        'has_inventory_sources': inventory_lookvar_item.has_inventory_sources,
+        'id': inventory_lookvar_item.id,
+        'name': inventory_lookvar_item.name,
+        'description': inventory_lookvar_item.description,
+        'organization': lookup('ansible.controller.controller_api', 'api/v2/organizations/'+(inventory_lookvar_item.organization|string), host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true)['name'],
+        'host_filter': inventory_lookvar_item.host_filter,
+        'kind': inventory_lookvar_item.kind,
+        'variables': inventory_lookvar_item.variables,
+        'hosts': query('ansible.controller.controller_api', inventory_lookvar_item.related.hosts, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].{name: name, description: description}'),
+        'groups': query('ansible.controller.controller_api', inventory_lookvar_item.related.groups, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].{name: name, description: description, hosts_url: related.hosts}') | map('combine', {'inventory': inventory_lookvar_item.name}) | list
+      }] }}"
   loop: "{{ inventory_lookvar }}"
   loop_control:
     loop_var: inventory_lookvar_item
@@ -31,11 +31,13 @@
   file:
     path: "{{ output_path }}"
     state: directory
+    mode: 0644
 
 - name: "Add current inventories to the output yaml file: {{ output_path }}/current_inventories.yaml"
   template:
     src: "templates/current_inventories_improved.j2"
     dest: "{{ output_path }}/current_inventories.yaml"
+    mode: 0644
   vars:
     current_inventories_asset_value: "{{ current_inventories }}"
 

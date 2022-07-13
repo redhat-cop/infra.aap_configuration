@@ -3,9 +3,11 @@
   file:
     path: "{{ output_path }}"
     state: directory
+    mode: 0644
 
 - name: "Add current hosts to the output yaml file: {{ output_path }}/current_hosts_{{ current_asset_value.key }}.yaml"
   template:
     src: "templates/current_hosts.j2"
     dest: "{{ output_path }}/current_hosts_{{ current_asset_value.key }}.yaml"
+    mode: 0644
 ...

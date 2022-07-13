@@ -7,11 +7,12 @@
   file:
     path: "{{ output_path }}"
     state: directory
-
+    mode: 0644
 - name: "Add current users to the output yaml file: {{ output_path }}/current_users.yaml"
   template:
     src: "templates/current_users_improved.j2"
     dest: "{{ output_path }}/current_users.yaml"
+    mode: 0644
   vars:
     current_users_asset_value: "{{ users_lookvar }}"
 

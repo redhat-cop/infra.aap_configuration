@@ -3,11 +3,13 @@
   file:
     path: "{{ output_path }}"
     state: directory
+    mode: 0644
 
 - name: "Add current teams to the output yaml file: {{ output_path }}/current_teams.yaml"
   template:
     src: "templates/current_teams.j2"
     dest: "{{ output_path }}/current_teams.yaml"
+    mode: 0644
 
 - name: "Let re-use the input variable"
   set_fact:

@@ -3,9 +3,11 @@
   file:
     path: "{{ output_path }}"
     state: directory
+    mode: 0644
 
 - name: "Add current inventory sources to the output yaml file: {{ output_path }}/current_inventory_sources.yaml"
   template:
     src: "templates/current_inventory_sources.j2"
     dest: "{{ output_path }}/current_inventory_sources.yaml"
+    mode: 0644
 ...

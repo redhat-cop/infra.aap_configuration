@@ -20,15 +20,8 @@
 
   when: orgs is defined and dir_orgs_vars is defined
 
-- debug:
-    msg:
-      - "{{ lookup('pipe','env') }}"
-      - "{{ controller_hostname }}"
-      - "{{ controller_username }}"
-      - "{{ controller_password }}"
-      - "{{ controller_validate_certs }}"
-
-- set_fact:
+- name: "Gets current Organizations configured"
+  set_fact: 
     __controller_api_organizations: "{{ query('ansible.controller.controller_api', 'organizations',
       host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs) }}"
 
@@ -38,12 +31,8 @@
       api_list=__controller_api_organizations, compare_list=controller_organizations,
       with_present=false, set_absent=true ) }}"
 
-- debug:
-    var: "{{ item }}"
-  loop:
-      - __organizations_difference
-
-- set_fact:
+- name: "Sets Organization differences"
+  set_fact:
     controller_organizations: "{{ __organizations_difference }}"
 
 - name: "DESIRED STATE: Configure Controller Projects | Launch project creation"

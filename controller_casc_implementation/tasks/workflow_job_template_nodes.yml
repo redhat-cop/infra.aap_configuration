@@ -51,7 +51,7 @@
   loop: "{{ controller_workflow_nodes }}"
   loop_control:
     loop_var: __workflow_loop_node_item
-  no_log: "{{ workflow_job_templates_secure_logging | default(true)}}"
+  no_log: "{{ workflow_job_templates_secure_logging | default(true) }}"
 
 - name: "Create links between Workflow job template nodes"
   ansible.controller.workflow_job_template_node:
@@ -71,7 +71,7 @@
   loop: "{{ controller_workflow_nodes }}"
   loop_control:
     loop_var: __workflow_loop_node_item
-  no_log: "{{ workflow_job_templates_secure_logging | default(true)}}"
+  no_log: "{{ workflow_job_templates_secure_logging | default(true) }}"
   # Execute only the nodes that define links to the following
   when: ((__workflow_loop_node_item.always_nodes is defined and __workflow_loop_node_item.always_nodes | length > 0 ) or
         (__workflow_loop_node_item.success_nodes is defined and __workflow_loop_node_item.success_nodes | length > 0 ) or

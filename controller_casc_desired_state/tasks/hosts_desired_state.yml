@@ -43,10 +43,6 @@
           host=controller_hostname, username=controller_username,
           password=controller_password, verify_ssl=false) }}"
 
-    - debug:
-        msg: "{{ __controller_api_inventories }}"
-      when: __controller_api_inventories is defined
-
     - name: "DESIRED STATE: Get the API list of all hosts in the inventories at organization {{ orgs }}"
       set_fact:
         __controller_api_hosts: "{{ (__controller_api_hosts | default([])) + query('ansible.controller.controller_api', 'hosts',

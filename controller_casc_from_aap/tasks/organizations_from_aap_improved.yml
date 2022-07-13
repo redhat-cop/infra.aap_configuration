@@ -7,11 +7,13 @@
   file:
     path: "{{ output_path }}"
     state: directory
+    mode: 0644
 
 - name: "Add current organizations to the output yaml file"
   template:
     src: "templates/current_organizations_improved.j2"
     dest: "{{ output_path }}/current_organization_{{ current_organization.name }}.yaml"
+    mode: 0644
   loop: "{{ orgs_lookvar }}"
   loop_control:
     loop_var: current_organization

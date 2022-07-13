@@ -39,21 +39,12 @@
           host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) |  selectattr('workflow_job_template', 'defined') | selectattr('workflow_job_template','in',__controller_api_workflow_job_templates_id) }}"
 
 - block:
-    - debug:
-        var: "{{ item }}"
-      loop:
-          - __controller_api_workflow_job_template_nodes
 
     - name: "DESIRED STATE: Find the difference of Workflow Job Templates Nodes between what is on the Controller versus CasC on SCM"
       set_fact:
         __workflow_job_template_nodes_difference: "{{ lookup('redhat_cop.controller_casc.controller_object_diff_temp',
           api_list=__controller_api_workflow_job_template_nodes, compare_list=controller_workflow_nodes,
           with_present=false, set_absent=true ) }}"
-
-    - debug:
-        var: "{{ item }}"
-      loop:
-          - __workflow_job_template_nodes_difference
 
     - name: "DESIRED STATE: Set job_template's list to be configured"
       set_fact:

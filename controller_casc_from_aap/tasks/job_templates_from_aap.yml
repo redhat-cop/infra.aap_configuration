@@ -3,9 +3,11 @@
   file:
     path: "{{ output_path }}"
     state: directory
+    mode: 0644
 
 - name: "Add current job templates to the output yaml file: {{ output_path }}/current_job_templates.yaml"
   template:
     src: "templates/current_job_templates.j2"
     dest: "{{ output_path }}/current_job_templates.yaml"
+    mode: 0644
 ...
