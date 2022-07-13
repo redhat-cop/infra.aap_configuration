@@ -53,71 +53,71 @@ options:
       type: bool
       default: True
     client_key:
-    description:
-      - A PEM encoded private key file used for authentication.
-      - Mutually exclusive with C(client_key_path)
-    type: str
-  client_cert:
-    description:
-      - A PEM encoded client certificate used for authentication.
-      - Mutually exclusive with C(client_cert_path)
-    type: str
-  ca_cert:
-    description:
-      - A PEM encoded CA certificate used for authentication.
-      - Mutually exclusive with C(ca_cert_path)
-    type: str
-  client_key_path:
-    description:
-      - Path to a PEM encoded private key file used for authentication.
-      - Mutually exclusive with C(client_key)
-    type: str
-  client_cert_path:
-    description:
-      - Path to a PEM encoded client certificate used for authentication.
-      - Mutually exclusive with C(client_cert)
-    type: str
-  ca_cert_path:
-    description:
-      - Path to a PEM encoded CA certificate used for authentication.
-      - Mutually exclusive with C(ca_cert)
-    type: str
-    requirements:
       description:
-        - Requirements to download from remote.
-      type: list
-    requirements_file:
-      description:
-        - A yaml requirements file to download from remote.
+        - A PEM encoded private key file used for authentication.
+        - Mutually exclusive with C(client_key_path)
       type: str
-    signed_only:
+    client_cert:
       description:
-        - Whether to only download signed collections
-        - Only available in AAP 2.2 or later
-      type: bool
-      default: False
-    proxy_url:
-      description:
-        - Proxy URL to use for the connection
+        - A PEM encoded client certificate used for authentication.
+        - Mutually exclusive with C(client_cert_path)
       type: str
-    proxy_username:
+    ca_cert:
       description:
-        - Proxy URL to use for the connection
+        - A PEM encoded CA certificate used for authentication.
+        - Mutually exclusive with C(ca_cert_path)
       type: str
-    proxy_password:
+    client_key_path:
       description:
-        - Proxy URL to use for the connection
+        - Path to a PEM encoded private key file used for authentication.
+        - Mutually exclusive with C(client_key)
       type: str
-    download_concurrency:
+    client_cert_path:
       description:
-        - Number of concurrent collections to download.
+        - Path to a PEM encoded client certificate used for authentication.
+        - Mutually exclusive with C(client_cert)
       type: str
-      default: 10
-    rate_limit:
+    ca_cert_path:
       description:
-        - Limits total download rate in requests per second.
+        - Path to a PEM encoded CA certificate used for authentication.
+        - Mutually exclusive with C(ca_cert)
       type: str
-      default: 8
+      requirements:
+        description:
+          - Requirements to download from remote.
+        type: list
+      requirements_file:
+        description:
+          - A yaml requirements file to download from remote.
+        type: str
+      signed_only:
+        description:
+          - Whether to only download signed collections
+          - Only available in AAP 2.2 or later
+        type: bool
+        default: False
+      proxy_url:
+        description:
+          - Proxy URL to use for the connection
+        type: str
+      proxy_username:
+        description:
+          - Proxy URL to use for the connection
+        type: str
+      proxy_password:
+        description:
+          - Proxy URL to use for the connection
+        type: str
+      download_concurrency:
+        description:
+          - Number of concurrent collections to download.
+        type: str
+        default: 10
+      rate_limit:
+        description:
+          - Limits total download rate in requests per second.
+        type: str
+        default: 8
 
 extends_documentation_fragment: redhat_cop.ah_configuration.auth
 """
