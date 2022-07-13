@@ -1,4 +1,0 @@
----
-major_changes:
-  - Allows basic auth as backup method to enable keycloak based users to authenticate.
-...
