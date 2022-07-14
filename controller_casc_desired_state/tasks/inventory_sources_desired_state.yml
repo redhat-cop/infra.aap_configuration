@@ -38,7 +38,7 @@
     loop: "{{ current_inventory_sources_for_inventory_sources.assets.inventory_sources }}"
     loop_control:
       loop_var: inventory_source_item
-    ignore_errors: true
+    # ignore_errors: true
 
   - block:
     - name: "DESIRED STATE: Show the currently existing hosts associated with it's inventories"
