@@ -20,7 +20,7 @@
     mode: 0644
   vars:
     worflow_job_template_name: "{{ current_wfjtn_asset_value.key }}"
-    worflow_job_template_organization: "{{ query('ansible.controller.controller_api', current_wfjtn_asset_value.value.wfjtn_url, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs)[0].summary_fields.organization.name }}"
+    worflow_job_template_organization: "{{ query('ansible.controller.controller_api', current_wfjtn_asset_value.value.wfjtn_url, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs)[0].summary_fields.organization.name | default('ToDo: The WF node  must have an organization') }}"
   loop: "{{ wfjtn_lookvar | dict2items }}"
   loop_control:
     loop_var: current_wfjtn_asset_value
