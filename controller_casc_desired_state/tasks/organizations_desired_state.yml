@@ -21,7 +21,7 @@
   when: orgs is defined and dir_orgs_vars is defined
 
 - name: "Gets current Organizations configured"
-  set_fact: 
+  set_fact:
     __controller_api_organizations: "{{ query('ansible.controller.controller_api', 'organizations',
       host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs) }}"
 

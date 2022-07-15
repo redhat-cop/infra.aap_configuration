@@ -3,7 +3,7 @@
   file:
     path: "{{ output_path }}"
     state: directory
-    mode: 0644    
+    mode: 0644
 
 - name: "Add current groups to the output yaml file: {{ output_path }}/current_groups_{{ current_asset_value.key }}.yaml"
   template:

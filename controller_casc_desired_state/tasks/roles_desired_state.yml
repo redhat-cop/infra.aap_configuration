@@ -39,7 +39,7 @@
           with_present=false, set_absent=true ) }}"
 
     - name: "DESIRED STATE: Sets differences between Roles what is on the Controller versus CasC on SCM"
-      set_fact: 
+      set_fact:
         controller_roles: "{{ __roles_difference }}"
 
     - name: "DESIRED STATE: Configure Controller Roles"
