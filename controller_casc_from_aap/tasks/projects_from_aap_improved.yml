@@ -7,13 +7,13 @@
   file:
     path: "{{ output_path }}"
     state: directory
-    mode: 0644
-  
+    mode: '0755'
+
 - name: "Add current projects to the output yaml file: {{ output_path }}/current_projects.yaml"
   template:
     src: "templates/current_projects_improved.j2"
     dest: "{{ output_path }}/current_projects.yaml"
-    mode: 0644
+    mode: '0644'
   vars:
-    current_projects_asset_value: "{{ projects_lookvar }}"    
+    current_projects_asset_value: "{{ projects_lookvar }}"
 ...

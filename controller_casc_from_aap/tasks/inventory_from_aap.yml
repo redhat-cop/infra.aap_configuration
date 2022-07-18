@@ -13,13 +13,13 @@
   file:
     path: "{{ output_path }}"
     state: directory
-    mode: 0644
+    mode: '0755'
 
 - name: "Add current inventories to the output yaml file: {{ output_path }}/current_inventories.yaml"
   template:
     src: "templates/current_inventories.j2"
     dest: "{{ output_path }}/current_inventories.yaml"
-    mode: 0644
+    mode: '0644'
 
 - name: "Let re-use the input variable"
   set_fact:

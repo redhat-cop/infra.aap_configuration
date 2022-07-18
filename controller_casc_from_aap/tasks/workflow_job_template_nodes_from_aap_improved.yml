@@ -11,13 +11,13 @@
   file:
     path: "{{ output_path }}"
     state: directory
-    mode: 0644
+    mode: '0755'
 
 - name: "Add current workflow job template nodes to the output yaml file: {{ output_path }}/current_workflow_job_template_nodes_{{ worflow_job_template_name }}.yaml"
   template:
     src: "templates/current_workflow_job_template_nodes_improved.j2"
     dest: "{{ output_path }}/current_workflow_job_template_nodes_{{ worflow_job_template_name }}.yaml"
-    mode: 0644
+    mode: '0644'
   vars:
     worflow_job_template_name: "{{ current_wfjtn_asset_value.key }}"
     worflow_job_template_organization: "{{ query('ansible.controller.controller_api', current_wfjtn_asset_value.value.wfjtn_url, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs)[0].summary_fields.organization.name | default('ToDo: The WF node  must have an organization') }}"
