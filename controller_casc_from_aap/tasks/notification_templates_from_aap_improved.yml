@@ -7,13 +7,13 @@
   file:
     path: "{{ output_path }}"
     state: directory
-    mode: 0644
+    mode: '0755'
 
 - name: "Add current notification templates to the output yaml file: {{ output_path }}/current_notification_templates.yaml"
   template:
     src: "templates/current_notification_templates_improved.j2"
     dest: "{{ output_path }}/current_notification_templates.yaml"
-    mode: 0644
+    mode: '0644'
   vars:
     current_notification_templates_asset_value: "{{ notification_templates_lookvar }}"
 ...
