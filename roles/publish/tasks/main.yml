@@ -5,6 +5,7 @@
     dest:     "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}/"
     version:  "{{ __ah_collection_item.version | default(omit) }}"
     key_file: "{{ __ah_collection_item.key_path | default(omit) }}"
+    ssh_opts: "{{ __ah_collection_item.ssh_opts | default(omit) }}"
   loop: "{{ ah_collections }}"
   loop_control:
     loop_var: "__ah_collection_item"

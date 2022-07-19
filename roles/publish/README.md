@@ -48,7 +48,8 @@ This also speeds up the overall role.
 |`git_url`|""|no|str|Url to git repo. Required if collection_local_path not set|
 |`version`|""|no|str|Git ref to pull. Will default to default branch if unset. Can specify tag, branch or commit ref here.|
 |`key_path`|""|no|str|Path to ssh key for authentication.|
-|`collection_local_path`|""|no|str|Path to collection stored locally. Required if git_url not set. This value will be used rather than git_url if set|
+|`ssh_opts`|""|no|str|Options git will pass to ssh when used as protocol.|
+|`collection_local_path`|""|no|str|Path to collection stored locally. Required if git_url not set. This value will be used rather than git_url if set.|
 
 ### Standard Project Data Structure
 
