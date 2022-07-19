@@ -13,7 +13,6 @@
 - name: "Set the oauth token to be used since now"
   set_fact:
     oauthtoken: "{{ authtoken_res.json.token }}"
-    oauthtoken_id: "{{ authtoken_res.json.id }}"
     oauthtoken_url: "{{ authtoken_res.json.url }}"
   no_log: true
 
@@ -104,7 +103,6 @@
 
 - name: "Delete the Authentication Token used"
   uri:
-    #url: "https://{{ controller_hostname }}/api/v2/tokens/{{ oauthtoken_id }}/"
     url: "https://{{ controller_hostname }}{{ oauthtoken_url }}"
     user: "{{ controller_username }}"
     password: "{{ controller_password }}"
