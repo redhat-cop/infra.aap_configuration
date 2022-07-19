@@ -1,7 +1,7 @@
 ---
 - name: "Get the inventoryes from the API"
   set_fact:
-    inventory_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/inventories/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true, query_params={
+    inventory_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/inventories/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, query_params={
                           'has_inventory_sources': 'false',
                           'not__kind': 'smart'
                         }
@@ -15,12 +15,12 @@
         'id': inventory_lookvar_item.id,
         'name': inventory_lookvar_item.name,
         'description': inventory_lookvar_item.description,
-        'organization': lookup('ansible.controller.controller_api', 'api/v2/organizations/'+(inventory_lookvar_item.organization|string), host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true)['name'],
+        'organization': lookup('ansible.controller.controller_api', 'api/v2/organizations/'+(inventory_lookvar_item.organization|string), host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true)['name'],
         'host_filter': inventory_lookvar_item.host_filter,
         'kind': inventory_lookvar_item.kind,
         'variables': inventory_lookvar_item.variables,
-        'hosts': query('ansible.controller.controller_api', inventory_lookvar_item.related.hosts, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].{name: name, description: description}'),
-        'groups': query('ansible.controller.controller_api', inventory_lookvar_item.related.groups, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].{name: name, description: description, hosts_url: related.hosts}') | map('combine', {'inventory': inventory_lookvar_item.name}) | list
+        'hosts': query('ansible.controller.controller_api', inventory_lookvar_item.related.hosts, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].{name: name, description: description}'),
+        'groups': query('ansible.controller.controller_api', inventory_lookvar_item.related.groups, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].{name: name, description: description, hosts_url: related.hosts}') | map('combine', {'inventory': inventory_lookvar_item.name}) | list
       }] }}"
   loop: "{{ inventory_lookvar }}"
   loop_control:

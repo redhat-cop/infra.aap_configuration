@@ -1,7 +1,7 @@
 ---
 - name: "Get current Users from the API"
   set_fact:
-    user_roles_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/users/' + username +'/roles/', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) }}"
+    user_roles_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/users/' + username +'/roles/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) }}"
 
 - name: "Create the output directory: {{ output_path }}"
   file:

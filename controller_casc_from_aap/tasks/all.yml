@@ -1,7 +1,25 @@
 ---
+- name: "Get the Authentication Token for the future requests"
+  uri:
+    url: "https://{{ controller_hostname }}/api/v2/tokens/"
+    user: "{{ controller_username }}"
+    password: "{{ controller_password }}"
+    method: POST
+    force_basic_auth: true
+    validate_certs: "{{ controller_validate_certs }}"
+    status_code: 201
+  register: authtoken_res
+
+- name: "Set the oauth token to be used since now"
+  set_fact:
+    oauthtoken: "{{ authtoken_res.json.token }}"
+    oauthtoken_id: "{{ authtoken_res.json.id }}"
+    oauthtoken_url: "{{ authtoken_res.json.url }}"
+  no_log: true
+
 - name: "Check if the connection is to an Ansible Tower or to Automation Platform"
   set_fact:
-    is_aap: "{{ lookup('ansible.controller.controller_api', 'ping', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs).version is version('4.0.0', '>=') }}"
+    is_aap: "{{ lookup('ansible.controller.controller_api', 'ping', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs).version is version('4.0.0', '>=') }}"
 
 #- block:
 #    - name: "export all supported objects (Be patient... this may take a while!)"
@@ -83,4 +101,15 @@
         - "'workflow_job_template_nodes' in input_tag"
         - "'workflow_job_templates' not in input_tag"
   when: "['all', 'inventory', 'inventory_sources', 'credentials', 'credential_types', 'notification_templates', 'users', 'teams', 'organizations', 'projects', 'execution_environments', 'job_templates', 'workflow_job_templates', 'workflow_job_template_nodes'] | intersect(input_tag) | length > 0"
+
+- name: "Delete the Authentication Token used"
+  uri:
+    #url: "https://{{ controller_hostname }}/api/v2/tokens/{{ oauthtoken_id }}/"
+    url: "https://{{ controller_hostname }}{{ oauthtoken_url }}"
+    user: "{{ controller_username }}"
+    password: "{{ controller_password }}"
+    method: DELETE
+    force_basic_auth: true
+    validate_certs: "{{ controller_validate_certs }}"
+    status_code: 204
 ...

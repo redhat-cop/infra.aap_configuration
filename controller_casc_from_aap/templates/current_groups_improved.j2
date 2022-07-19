@@ -6,7 +6,7 @@ configure_tower_groups:
     description: "{{ group.description }}"
     inventory: "{{ inventory.name }}"
     hosts:
-{{ query('ansible.controller.controller_api', group.hosts_url, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].name') | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
+{{ query('ansible.controller.controller_api', group.hosts_url, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].name') | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
 {%- endfor -%}
 {%- endfor -%}
 ...
