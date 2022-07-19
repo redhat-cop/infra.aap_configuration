@@ -137,3 +137,29 @@ releases:
     fragments:
     - rolefixes.yml
     release_date: '2022-06-07'
+  0.8.1:
+    changes:
+      bugfixes:
+      - Fixed an issue where a genuine API error would cause a module to have an unhandled
+        error.
+      - Fixed incorrect task names on serveral roles
+      - Fixed issue where groups was required to create a namespace using ah_namespace
+        module
+      major_changes:
+      - Allows basic auth as backup method to enable keycloak based users to authenticate.
+      minor_changes:
+      - Added certificate and key authentication for ee registries in ah_ee_registry
+        module
+      - Added repository role
+      - Added repository sync role
+      - Added several options to the ah_repository module
+    fragments:
+    - ah_namespace_group.yml
+    - auth.yml
+    - ee_registry_options.yml
+    - repo_options.yml
+    - repositories.yml
+    - repositories_sync.yml
+    - response.yml
+    - tasknames.yml
+    release_date: '2022-07-13'
