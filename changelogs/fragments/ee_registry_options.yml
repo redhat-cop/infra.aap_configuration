@@ -1,4 +1,0 @@
----
-minor_changes:
-  - Added certificate and key authentication for ee registries in ah_ee_registry module
-...

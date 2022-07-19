@@ -5,6 +5,29 @@ redhat_cop.ah_configuration Release Notes
 .. contents:: Topics
 
 
+v0.8.1
+======
+
+Major Changes
+-------------
+
+- Allows basic auth as backup method to enable keycloak based users to authenticate.
+
+Minor Changes
+-------------
+
+- Added certificate and key authentication for ee registries in ah_ee_registry module
+- Added repository role
+- Added repository sync role
+- Added several options to the ah_repository module
+
+Bugfixes
+--------
+
+- Fixed an issue where a genuine API error would cause a module to have an unhandled error.
+- Fixed incorrect task names on serveral roles
+- Fixed issue where groups was required to create a namespace using ah_namespace module
+
 v0.8.0
 ======
 
