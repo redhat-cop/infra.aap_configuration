@@ -3,7 +3,7 @@
   set_fact:
     team_roles_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/teams/' + teamid +'/roles/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) }}"
 
-- name: "Create the output directory: {{ output_path }}"
+- name: "Create the output directory for team roles: {{ output_path }}"
   file:
     path: "{{ output_path }}"
     state: directory

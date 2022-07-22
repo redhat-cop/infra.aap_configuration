@@ -3,19 +3,35 @@
   set_fact:
     teams_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/teams/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) }}"
 
-- name: "Create the output directory: {{ output_path }}"
+- name: "Group the teams by Organization"
+  set_fact:
+    teams_orgs: "{{ (teams_orgs | default({})) | combine({(teams_org.organization | default('ORGANIZATIONLESS', true)): ((teams_orgs[teams_org.organization] | default([])) + [teams_org])}) }}"
+  loop: "{{ teams_lookvar }}"
+  loop_control:
+    loop_var: teams_org
+    label: "{{ teams_org.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }} - {{ teams_org.name }}"
+
+- name: "Create the output directory for teams: {{ output_path }}/<ORGANIZATION_NAME>"
   file:
-    path: "{{ output_path }}"
+    path: "{{ output_path }}/{{ teams_org_dir.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}"
     state: directory
     mode: '0755'
+  loop: "{{ teams_orgs | dict2items }}"
+  loop_control:
+    loop_var: teams_org_dir
+    label: "{{ output_path }}/{{ teams_org_dir.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}"
 
-- name: "Add current teams to the output yaml file: {{ output_path }}/current_teams.yaml"
+- name: "Add current teams to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_teams.yaml"
   template:
     src: "templates/current_teams_improved.j2"
-    dest: "{{ output_path }}/current_teams.yaml"
+    dest: "{{ output_path }}/{{ teams_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}/current_teams.yaml"
     mode: '0644'
   vars:
-    current_teams_asset_value: "{{ teams_lookvar }}"
+    current_teams_asset_value: "{{ teams_org_template.value }}"
+  loop: "{{ teams_orgs | dict2items }}"
+  loop_control:
+    loop_var: teams_org_template
+    label: "{{ output_path }}/{{ teams_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}/current_teams.yaml"
 
 - name: "Set the team's roles"
   include_tasks: "team_roles_from_aap_improved.yml"

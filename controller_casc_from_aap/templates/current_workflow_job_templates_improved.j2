@@ -1,6 +1,6 @@
 --
 controller_workflows:
-{% for workflow_job_template in current_wfjt_asset_value %}
+{% for workflow_job_template in current_workflow_job_templates_asset_value %}
   - name: "{{ workflow_job_template.name }}"
     description: "{{ workflow_job_template.description }}"
     organization: "{{ workflow_job_template.summary_fields.organization.name | default('ToDo: The WF \'' + workflow_job_template.name + '\' must belong to an organization') }}"

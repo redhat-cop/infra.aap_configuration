@@ -7,22 +7,28 @@
     loop_var: wfjtn_lookvar_item
     label: "{{ wfjtn_lookvar_item.summary_fields.workflow_job_template.name }}"
 
-- name: "Create the output directory: {{ output_path }}"
+- name: "Create the output directory for workflow job template nodes: {{ output_path }}/<ORGANIZATION_NAME>"
   file:
-    path: "{{ output_path }}"
+    path: "{{ output_path }}/{{ workflow_job_template_organization }}"
     state: directory
     mode: '0755'
+  vars:
+    workflow_job_template_organization: "{{ query('ansible.controller.controller_api', wfjtn_org_dir.value.wfjtn_url, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs)[0].summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+  loop: "{{ wfjtn_lookvar | dict2items }}"
+  loop_control:
+    loop_var: wfjtn_org_dir
+    label: "{{ output_path }}/{{ workflow_job_template_organization }}"
 
-- name: "Add current workflow job template nodes to the output yaml file: {{ output_path }}/current_workflow_job_template_nodes_{{ worflow_job_template_name }}.yaml"
+- name: "Add current workflow job template nodes to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_workflow_job_template_nodes_{{ workflow_job_template_name }}.yaml"
   template:
     src: "templates/current_workflow_job_template_nodes_improved.j2"
-    dest: "{{ output_path }}/current_workflow_job_template_nodes_{{ worflow_job_template_name }}.yaml"
+    dest: "{{ output_path }}/{{ workflow_job_template_organization }}/current_workflow_job_template_nodes_{{ workflow_job_template_name }}.yaml"
     mode: '0644'
   vars:
-    worflow_job_template_name: "{{ current_wfjtn_asset_value.key }}"
-    worflow_job_template_organization: "{{ query('ansible.controller.controller_api', current_wfjtn_asset_value.value.wfjtn_url, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs)[0].summary_fields.organization.name | default('ToDo: The WF node  must have an organization') }}"
+    workflow_job_template_name: "{{ current_wfjtn_asset_value.key }}"
+    workflow_job_template_organization: "{{ query('ansible.controller.controller_api', current_wfjtn_asset_value.value.wfjtn_url, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs)[0].summary_fields.organization.name | default('ToDo: The WF node  must have an organization') }}"
   loop: "{{ wfjtn_lookvar | dict2items }}"
   loop_control:
     loop_var: current_wfjtn_asset_value
-    label: "{{ current_wfjtn_asset_value.key }}"
+    label: "{{ output_path }}/{{ workflow_job_template_organization }}/current_workflow_job_template_nodes_{{ workflow_job_template_name }}.yaml"
 ...

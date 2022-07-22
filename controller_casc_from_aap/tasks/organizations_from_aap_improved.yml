@@ -3,19 +3,23 @@
   set_fact:
     orgs_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/organizations/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) }}"
 
-- name: "Create the output directory: {{ output_path }}"
+- name: "Create the output directory for organizations: {{ output_path }}/{{ current_organization_dir.name }}"
   file:
-    path: "{{ output_path }}"
+    path: "{{ output_path }}/{{ current_organization_dir.name }}"
     state: directory
     mode: '0755'
+  loop: "{{ orgs_lookvar }}"
+  loop_control:
+    loop_var: current_organization_dir
+    label: "{{ output_path }}/{{ current_organization_dir.name }}"
 
 - name: "Add current organizations to the output yaml file"
   template:
     src: "templates/current_organizations_improved.j2"
-    dest: "{{ output_path }}/current_organization_{{ current_organization.name }}.yaml"
+    dest: "{{ output_path }}/{{ current_organization.name }}/current_organization.yaml"
     mode: '0644'
   loop: "{{ orgs_lookvar }}"
   loop_control:
     loop_var: current_organization
-    label: "{{ current_organization.name }} at file {{ output_path }}/current_organization_{{ current_organization.name }}.yaml"
+    label: "{{ output_path }}/{{ current_organization.name }}/current_organization.yaml"
 ...
