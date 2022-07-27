@@ -6,6 +6,7 @@
 - name: "Group the notification templates by Organization"
   set_fact:
     notification_templates_orgs: "{{ (notification_templates_orgs | default({})) | combine({(notification_templates_org.organization | default('ORGANIZATIONLESS', true)): ((notification_templates_orgs[notification_templates_org.organization] | default([])) + [notification_templates_org])}) }}"
+    needed_paths: "{{ ((needed_paths | default([])) + [notification_templates_org.summary_fields.organization.name | default('ORGANIZATIONLESS', true)]) | flatten | unique }}"
   loop: "{{ notification_templates_lookvar }}"
   loop_control:
     loop_var: notification_templates_org
@@ -13,13 +14,13 @@
 
 - name: "Create the output directory for notification templatess: {{ output_path }}/<ORGANIZATION_NAME>"
   file:
-    path: "{{ output_path }}/{{ notification_templates_org_dir.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}"
+    path: "{{ output_path }}/{{ needed_path }}"
     state: directory
     mode: '0755'
-  loop: "{{ notification_templates_orgs | dict2items }}"
+  loop: "{{ needed_paths }}"
   loop_control:
-    loop_var: notification_templates_org_dir
-    label: "{{ output_path }}/{{ notification_templates_org_dir.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}"
+    loop_var: needed_path
+    label: "{{ output_path }}/{{ needed_path }}"
 
 - name: "Add current notification templates to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_notification_templates.yaml"
   template:

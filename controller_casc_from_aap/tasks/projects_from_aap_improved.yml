@@ -6,6 +6,7 @@
 - name: "Group the projects by Organization"
   set_fact:
     projects_orgs: "{{ (projects_orgs | default({})) | combine({(projects_org.organization | default('ORGANIZATIONLESS', true)): ((projects_orgs[projects_org.organization] | default([])) + [projects_org])}) }}"
+    needed_paths: "{{ ((needed_paths | default([])) + [projects_org.summary_fields.organization.name | default('ORGANIZATIONLESS', true)]) | flatten | unique }}"
   loop: "{{ projects_lookvar }}"
   loop_control:
     loop_var: projects_org
@@ -13,13 +14,13 @@
 
 - name: "Create the output directory for projects: {{ output_path }}/<ORGANIZATION_NAME>"
   file:
-    path: "{{ output_path }}/{{ projects_org_dir.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}"
+    path: "{{ output_path }}/{{ needed_path }}"
     state: directory
     mode: '0755'
-  loop: "{{ projects_orgs | dict2items }}"
+  loop: "{{ needed_paths }}"
   loop_control:
-    loop_var: projects_org_dir
-    label: "{{ output_path }}/{{ projects_org_dir.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}"
+    loop_var: needed_path
+    label: "{{ output_path }}/{{ needed_path }}"
 
 - name: "Add current projects to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_projects.yaml"
   template:

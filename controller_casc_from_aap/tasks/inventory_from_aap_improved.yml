@@ -24,6 +24,7 @@
         'hosts': query('ansible.controller.controller_api', inventory_lookvar_item.related.hosts, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].{name: name, description: description}'),
         'groups': query('ansible.controller.controller_api', inventory_lookvar_item.related.groups, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].{name: name, description: description, hosts_url: related.hosts}') | map('combine', {'inventory': inventory_lookvar_item.name}) | list
       }]}) }}"
+    needed_paths: "{{ ((needed_paths | default([])) + [inventory_lookvar_item_organization]) | flatten | unique }}"
   vars:
     inventory_lookvar_item_organization: "{{ lookup('ansible.controller.controller_api', 'api/v2/organizations/'+(inventory_lookvar_item.organization|string), host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true)['name'] }}"
   loop: "{{ inventory_lookvar }}"
@@ -33,13 +34,13 @@
 
 - name: "Create the output directory for inventories: {{ output_path }}/<ORGANIZATION_NAME>"
   file:
-    path: "{{ output_path }}/{{ current_inventory_dir.key }}"
+    path: "{{ output_path }}/{{ needed_path }}"
     state: directory
     mode: '0755'
-  loop: "{{ current_inventories | dict2items }}"
+  loop: "{{ needed_paths }}"
   loop_control:
-    loop_var: current_inventory_dir
-    label: "{{ output_path }}/{{ current_inventory_dir.key }}"
+    loop_var: needed_path
+    label: "{{ output_path }}/{{ needed_path }}"
 
 - name: "Add current inventories to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_inventories.yaml"
   template:

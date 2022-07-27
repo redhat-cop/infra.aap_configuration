@@ -7,7 +7,7 @@ controller_workflow_nodes:
 {% if node.job_type %}
     job_type: "{{ node.job_type }}"
 {% endif %}
-    organization: "{{ workflow_job_template_organization }}"
+    organization: "{{ current_wfjtn_asset_value.value.organization }}"
     all_parents_must_converge: "{{ node.all_parents_must_converge }}"
 {% if node.success_nodes is defined and node.success_nodes | length > 0 %}
     success_nodes:
