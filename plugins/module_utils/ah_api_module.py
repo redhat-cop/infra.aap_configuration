@@ -66,13 +66,16 @@ class AHAPIModule(AnsibleModule):
     path_prefix = "galaxy"
     authenticated = False
 
-    def __init__(self, argument_spec, **kwargs):
+    def __init__(self, argument_spec, direct_params=None, **kwargs):
         """Initialize the object."""
         full_argspec = {}
         full_argspec.update(AHAPIModule.AUTH_ARGSPEC)
         full_argspec.update(argument_spec)
 
-        super(AHAPIModule, self).__init__(argument_spec=full_argspec, **kwargs)
+        if direct_params is not None:
+            self.params = direct_params
+        else:
+            super(AHAPIModule, self).__init__(argument_spec=full_argspec, **kwargs)
 
         # Update the current object with the provided parameters
         for short_param, long_param in self.short_params.items():
@@ -123,6 +126,8 @@ class AHAPIModule(AnsibleModule):
         """
         if endpoint is None:
             api_path = "/{base}/".format(base=prefix.strip("/"))
+        elif "?" in endpoint:
+            api_path = "{base}/{endpoint}".format(base=prefix, endpoint=endpoint.strip("/"))
         else:
             api_path = "{base}/{endpoint}/".format(base=prefix, endpoint=endpoint.strip("/"))
         url = self.host_url._replace(path=api_path)
