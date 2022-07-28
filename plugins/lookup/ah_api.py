@@ -17,11 +17,12 @@ options:
     description:
       - The endpoint to query.
     choices:
-      - ee_images
+      - ee_images (A second term of the image repository name is required)
       - ee_namespaces
       - ee_registries
       - ee_repositories
       - collections
+      - collection (Three additional terms are required with the repository {published, rh_certified, community}, the namespace, and the collection name)
       - groups
       - namespaces
       - repository_community
@@ -84,6 +85,15 @@ EXAMPLES = """
   debug:
     msg: "{{ lookup('redhat_cop.ah_configuration.ah_api', 'namespaces', host='https://ah.example.com', username='ansible',
               password='Passw0rd123', verify_ssl=false, query_params={'company': 'Devops'}) }}"
+
+- name: Get the list of tags for my_ee
+  set_fact:
+    my_ee_tags: "{{ lookup('redhat_cop.ah_configuration.ah_api', 'ee_images', 'my_ee') | map(attribute='tags') | list | flatten }}"
+
+- name: Get the list of versions for redhat_cop.ah_configuration in the published repo
+  set_fact:
+    collection_versions: "{{ lookup('redhat_cop.ah_configuration.ah_api', 'collection', 'published', 'redhat_cop',
+                            'ah_configuration').all_versions | map(attribute='version') | list }}"
 """
 
 RETURN = """
@@ -112,9 +122,6 @@ class LookupModule(LookupBase):
         self.display.warning(warning)
 
     def run(self, terms, variables=None, **kwargs):
-        if len(terms) != 1:
-            raise AnsibleError("You must pass exactly one endpoint to query")
-
         self.set_options(direct=kwargs)
 
         # Defer processing of params to logic shared with the modules
@@ -128,22 +135,33 @@ class LookupModule(LookupBase):
         module = AHAPIModule(argument_spec={}, direct_params=module_params, error_callback=self.handle_error, warn_callback=self.warn_callback)
 
         endpoints = {
-            "ee_images": "/pulp/api/v3/distributions/container/container",
+            "ee_images": "/api/{prefix}/_ui/v1/execution-environments/repositories/{ee_repository}/_content/images/",
             "ee_namespaces": "/pulp/api/v3/pulp_container/namespaces/",
             "ee_registries": "/api/{prefix}/_ui/v1/registry/",
             "ee_repositories": "/api/{prefix}/_ui/v1/execution-environments/repositories/",
             "collections": "/api/{prefix}/v3/collections/",
+            "collection": "/api/{prefix}/_ui/v1/repo/{repository}/{namespace}/{name}",
             "groups": "/api/{prefix}/_ui/v1/groups/",
             "namespaces": "/api/{prefix}/v3/namespaces/",
-            "repository_community": "api/{prefix}/content/community/v3/sync/config/",
-            "repository_rh_certified": "api/{prefix}/content/rh-certified/v3/sync/config/",
+            "repository_community": "/api/{prefix}/content/community/v3/sync/config/",
+            "repository_rh_certified": "/api/{prefix}/content/rh-certified/v3/sync/config/",
             "users": "/api/{prefix}/_ui/v1/users/",
         }
 
         if terms[0] not in endpoints:
             raise AnsibleError("{0} is not a valid endpoint to query. See the full list of choices in the plugin documentation".format(terms[0]))
 
-        endpoint = endpoints[terms[0]].format(prefix="galaxy")
+        if terms[0] == "ee_images":
+            if len(terms) != 2:
+                raise AnsibleError("A second term for the name of the ee repository is required")
+            endpoint = endpoints[terms[0]].format(prefix=module.path_prefix, ee_repository=terms[1])
+        elif terms[0] == "collection":
+            if len(terms) != 4:
+                raise AnsibleError("4 terms are required with: 'collection', <repository>, <namespace>, <name>")
+            endpoint = endpoints[terms[0]].format(prefix=module.path_prefix, repository=terms[1], namespace=terms[2], name=terms[3])
+        else:
+            endpoint = endpoints[terms[0]].format(prefix=module.path_prefix)
+
         url = module._build_url("", endpoint=endpoint, query_params=self.get_option("query_params", {}))
 
         module.authenticate()
