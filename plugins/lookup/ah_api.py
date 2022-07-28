@@ -17,17 +17,17 @@ options:
     description:
       - The endpoint to query.
     choices:
-      - ee_images (A second term of the image repository name is required)
-      - ee_namespaces
-      - ee_registries
-      - ee_repositories
-      - collections
-      - collection (Three additional terms are required with the repository {published, rh_certified, community}, the namespace, and the collection name)
-      - groups
-      - namespaces
-      - repository_community
-      - repository_rh_certified
-      - users
+      - 'ee_images', [ee_image_repository_name]
+      - 'ee_namespaces'
+      - 'ee_registries'
+      - 'ee_repositories'
+      - 'collections'
+      - 'collection', [repository={published, rh_certified, community}], [collection_namespace], [collection_name]
+      - 'groups'
+      - 'namespaces'
+      - 'repository_community'
+      - 'repository_rh_certified'
+      - 'users'
     required: True
   query_params:
     description:
@@ -74,6 +74,7 @@ options:
 extends_documentation_fragment: redhat_cop.ah_configuration.auth_plugin
 notes:
   - If the query is not filtered properly this can cause a performance impact.
+  - Two options take multiple terms. 'ee_images' and 'collection'. See the _terms choices above or the examples below for more details.
 """
 
 EXAMPLES = """
