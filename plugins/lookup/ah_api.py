@@ -17,17 +17,17 @@ options:
     description:
       - The endpoint to query.
     choices:
-      - 'ee_images', [ee_image_repository_name]
-      - 'ee_namespaces'
-      - 'ee_registries'
-      - 'ee_repositories'
-      - 'collections'
-      - 'collection', [repository={published, rh_certified, community}], [collection_namespace], [collection_name]
-      - 'groups'
-      - 'namespaces'
-      - 'repository_community'
-      - 'repository_rh_certified'
-      - 'users'
+      - "'ee_images', [ee_image_repository_name]"
+      - "'ee_namespaces'"
+      - "'ee_registries'"
+      - "'ee_repositories'"
+      - "'collections'"
+      - "'collection', [repository={published, rh_certified, community}], [collection_namespace], [collection_name]"
+      - "'groups'"
+      - "'namespaces'"
+      - "'repository_community'"
+      - "'repository_rh_certified'"
+      - "'users'"
     required: True
   query_params:
     description:
