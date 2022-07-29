@@ -1,4 +1,0 @@
----
-major_changes:
-  - Adds the ah_api lookup plugin to do generic API lookups on endpoints.
-...

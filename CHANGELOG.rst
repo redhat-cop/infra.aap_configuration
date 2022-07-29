@@ -5,6 +5,14 @@ redhat_cop.ah_configuration Release Notes
 .. contents:: Topics
 
 
+v0.9.1
+======
+
+Major Changes
+-------------
+
+- Adds the ah_api lookup plugin to do generic API lookups on endpoints.
+
 v0.8.1
 ======
 

@@ -8,7 +8,11 @@ plugins:
   connection: {}
   httpapi: {}
   inventory: {}
-  lookup: {}
+  lookup:
+    ah_api:
+      description: Search the API for objects
+      name: ah_api
+      version_added: null
   module:
     ah_approval:
       description: Approve a collection in Automation Hub.
@@ -104,4 +108,4 @@ plugins:
   shell: {}
   strategy: {}
   vars: {}
-version: 0.8.1
+version: 0.9.1
