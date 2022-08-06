@@ -1,0 +1,9 @@
+# Refer to https://github.com/redhat-cop/controller_configuration/tree/devel/roles/labels
+# for documentation and additional parameter information
+
+---
+controller_labels:
+  - name: ""
+    organization: ""
+    state: "{{ absent_present }}"
+...

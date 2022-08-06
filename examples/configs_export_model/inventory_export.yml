@@ -1,0 +1,42 @@
+---
+controller_inventories:
+  - name: 2nd Testing Inventory
+    description: ''
+    kind: ''
+    host_filter: null
+    organization:
+      name: Satellite
+      type: organization
+    natural_key:
+      organization:
+        name: Satellite
+        type: organization
+      name: 2nd Testing Inventory
+      type: inventory
+  - name: Testing Inventory
+    description: ''
+    kind: ''
+    host_filter: null
+    organization:
+      name: Satellite
+      type: organization
+    natural_key:
+      organization:
+        name: Satellite
+        type: organization
+      name: Testing Inventory
+      type: inventory
+  - name: satlab-admin-inventory
+    description: Load inventory from satlab-admin hosts file
+    kind: ''
+    host_filter: null
+    organization:
+      name: Default
+      type: organization
+    natural_key:
+      organization:
+        name: Default
+        type: organization
+      name: satlab-admin-inventory
+      type: inventory
+...

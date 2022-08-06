@@ -1,0 +1,11 @@
+# Refer to https://github.com/redhat-cop/controller_configuration/tree/devel/roles/organizations
+# for documentation and additional parameter information
+
+---
+controller_organizations:
+  - name: ""
+    galaxy_credentials:
+      - "RH Automation Hub {{ which_org}}"
+      - "Ansible Galaxy"
+    state: "{{ absent_present }}"
+...

@@ -1,0 +1,8 @@
+# Refer to https://github.com/redhat-cop/controller_configuration/tree/devel/roles/organizations
+# for documentation and additional parameter information
+
+---
+controller_organizations:
+  - name: ""
+    state: "{{ absent_present }}"
+...

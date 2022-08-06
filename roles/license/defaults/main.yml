@@ -1,0 +1,19 @@
+---
+# These are the default variables common to most controller_configuration and _utilities roles
+# You shouldn't need to define them again and again but they should be defined
+# controller_hostname: "{{ inventory_hostname }}"
+# controller_username: "admin"
+# controller_password: ""
+# controller_oauthtoken: ""
+# controller_config_file: ""
+# controller_validate_certs: false
+
+# These are the default variables specific to the license role
+
+controller_configuration_license_secure_logging: "{{controller_configuration_secure_logging | default('false')}}"
+
+# Example license datastructure but no sensible default.
+# controller_license:
+#  manifest: "{{ playbook_dir }}/controller_manifest/manifest_redhat_cop_controller_configuration_manifest.zip"
+#  eula_accepted: true  # must be true or role will fail
+...

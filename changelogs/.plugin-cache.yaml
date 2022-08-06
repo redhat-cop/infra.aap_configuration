@@ -1,0 +1,21 @@
+objects:
+  role: {}
+plugins:
+  become: {}
+  cache: {}
+  callback: {}
+  cliconf: {}
+  connection: {}
+  httpapi: {}
+  inventory: {}
+  lookup:
+    controller_object_diff:
+      description: Return difference for objects from Controller API
+      name: controller_object_diff
+      version_added: null
+  module: {}
+  netconf: {}
+  shell: {}
+  strategy: {}
+  vars: {}
+version: 2.1.6

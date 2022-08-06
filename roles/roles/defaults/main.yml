@@ -1,0 +1,36 @@
+---
+# These are the default variables common to most controller_configuration and _utilities roles
+# You shouldn't need to define them again and again but they should be defined
+# controller_hostname: "{{ inventory_hostname }}"
+# controller_username: "admin"
+# controller_password: ""
+# controller_oauthtoken: ""
+# controller_config_file: ""
+# controller_validate_certs: false
+
+# These are the default variables specific to the controller_role role
+
+# list of dict describing a Controller access control rule
+controller_roles: []
+# possible fields:
+# - role:  # mandatory, choices: admin, read, member, execute, adhoc, update, use, auditor, project_admin,
+#         # inventory_admin, credential_admin, workflow_admin, notification_admin, job_template_admin
+#  # one of user or team is mandatory
+#  user: "user_name"
+#  team: "team_name"
+#  # one object to which the role applies, also mandatory
+#  credential:  # possible roles: admin, use, read
+#  inventory:  # possible roles: admin, update, use, adhoc, read
+#  job_template:  # possible roles: admin, execute, read
+#  organization:  # possible roles: admin, member, execute, read,
+#                 #                 {project,inventory,credential,workflow,notification,job_template}_admin
+#  project:  # possible roles: admin, update, use, read
+#  target_team:  # possible roles: admin, member
+#  workflow:  # possible roles: admin, execute, read
+#  # other fields
+#  state: present  # optional, choices: present, absent
+
+controller_configuration_role_secure_logging: "{{controller_configuration_secure_logging | default('false') }}"
+controller_configuration_role_async_retries: "{{ controller_configuration_async_retries | default(30) }}"
+controller_configuration_role_async_delay: "{{ controller_configuration_async_delay | default(1) }}"
+...

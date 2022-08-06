@@ -1,0 +1,22 @@
+# Refer to https://github.com/redhat-cop/controller_configuration/tree/devel/roles/groups
+# for documentation and additional parameter information
+
+---
+controller_groups:
+  - name: ""
+    new_name: ""
+    hosts:
+      - ""
+      - ""
+    inventory: ""
+    variables:
+      var1:
+    state: "{{ absent_present }}"
+
+  - name: ""
+    new_name: ""
+    hosts:
+      - ""
+    inventory: ""
+    state: "{{ absent_present }}"
+...

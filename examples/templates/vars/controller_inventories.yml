@@ -1,0 +1,9 @@
+# Refer to https://github.com/redhat-cop/controller_configuration/tree/devel/roles/inventories
+# for documentation and additional parameter information
+
+---
+controller_inventories:
+  - name: ""
+    state: "{{ absent_present }}"
+    organization: ""
+...

@@ -1,0 +1,14 @@
+---
+
+- name: "Run redhat_cop.controller_configuration.{{ __role.role }} role"
+  include_role:
+    name: "{{ __role.role }}"
+    apply:
+      tags: "{{ __role.tags }}"
+  when: hostvars[inventory_hostname][__role.var] is defined
+  tags: always
+  loop: "{{ controller_configuration_dispatcher_roles }}"
+  loop_control:
+    loop_var: __role
+
+...

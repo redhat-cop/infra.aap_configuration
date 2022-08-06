@@ -1,0 +1,16 @@
+---
+# These are the default variables common to most controller_configuration and _utilities roles
+# You shouldn't need to define them again and again but they should be defined
+# controller_hostname: "{{ inventory_hostname }}"
+# controller_username: "admin"
+# controller_password: ""
+# controller_oauthtoken: ""
+# controller_config_file: ""
+# controller_validate_certs: false
+
+# These are the default variables specific to the **** role
+
+controller_configuration_*******_secure_logging: "{{controller_configuration_secure_logging | default('false')}}"
+controller_configuration_***********_async_retries: "{{ controller_configuration_async_retries | default(30) }}"
+controller_configuration_***********_async_delay: "{{ controller_configuration_async_delay | default(1) }}"
+...

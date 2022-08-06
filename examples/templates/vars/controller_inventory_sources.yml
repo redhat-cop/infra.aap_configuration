@@ -1,0 +1,15 @@
+# Refer to https://github.com/redhat-cop/controller_configuration/tree/devel/roles/inventory_sources
+# for documentation and additional parameter information
+
+---
+controller_inventory_sources:
+  - name: ""
+    credential: ""
+    description: ""
+    inventory: ""
+    organization: ""
+    source: ""                    # project, ec2, gce, azure, vmware, satellite, openstack, rhv, custom script, etc
+    source_path: ""               # when sourcing inventory from project
+    source_project: ""            # when sourcing inventory from project
+    state: "{{ absent_present }}"
+...

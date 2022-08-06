@@ -1,0 +1,29 @@
+---
+# These are the default variables common to most controller_configuration and _utilities roles
+# You shouldn't need to define them again and again but they should be defined
+# controller_hostname: "{{ inventory_hostname }}"
+# controller_username: "admin"
+# controller_password: ""
+# controller_oauthtoken: ""
+# controller_config_file: ""
+# controller_validate_certs: false
+
+# These are the default variables specific to the organizations role
+controller_organizations: []
+# possible fields
+# - name: "Default"  # mandatory
+#  description: "some description"  # optional
+#  custom_virtualenv: "/var/lib/awx/myvenv"  # optional, absolute path to custom virtualenv
+#  max_hosts: 0  # optional, integer
+#  galaxy_credentials: []  # optional
+#  notification_templates_approvals: [] # optional, notification template names
+#  notification_templates_started: [] # optional, notification template names
+#  notification_templates_success: [] # optional, notification template names
+#  notification_templates_error: [] # optional, notification template names
+#  state: present  # optional, choices: present, absent
+
+controller_configuration_organizations_secure_logging: "{{controller_configuration_secure_logging | default('false')}}"
+controller_configuration_organizations_async_retries: "{{ controller_configuration_async_retries | default(30) }}"
+controller_configuration_organizations_async_delay: "{{ controller_configuration_async_delay | default(1) }}"
+assign_galaxy_credentials_to_org: true
+...

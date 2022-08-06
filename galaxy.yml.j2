@@ -1,0 +1,28 @@
+---
+namespace: {{ collection_namespace }}
+name: {{ collection_name }}
+version: {{ collection_version }}
+description: A collection of roles to manage Ansible Controller
+readme: README.md
+authors:
+    - Andrew Huffman
+    - Jonathan Lozada De La Matta @jlozadad
+    - Kedar Kulkarni @kedark3
+    - Tom Page @Tompage1994
+    - Sean Sullivan @sean-m-sullivan
+repository: {{ collection_repo }}
+issues: {{ collection_repo }}/issues
+build_ignore:
+    - galaxy.yml.j2
+    - release.yml
+    - .github
+    - .ansiblelint.yml
+    - .yamllint.yml
+license:
+    - GPL-3.0-or-later
+tags:
+    - controller
+    - collection
+    - controller_configuration
+    - automation_platform
+...

@@ -1,0 +1,2 @@
+minor_changes:
+  - inventory_sources - update ``source_vars`` to parse Jinja variables using the same workaround as inventories role.
