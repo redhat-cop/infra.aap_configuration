@@ -1,5 +1,10 @@
 ---
 - hosts: localhost
-  remote_user: root
+  connection: local
+  gather_facts: false
+  collections:
+    - ansible.controller
+    - redhat_cop.controller_configuration
+    - redhat_cop.controller_casc
   roles:
     - controller_casc_desired_state
