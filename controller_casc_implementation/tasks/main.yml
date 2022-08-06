@@ -13,6 +13,8 @@
     apply:
       tags: organizations
   tags: organizations
+  vars:
+    assign_galaxy_credentials_to_org: false
 
 - name: Include Tasks to config Credential Types
   include_tasks: credential_types.yml
