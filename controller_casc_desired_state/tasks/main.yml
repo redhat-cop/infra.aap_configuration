@@ -12,16 +12,37 @@
 # REVIEW - TODO
 # - name: Include Tasks to config DESIRED STATE  Schedules
 
-- name: Include Tasks to configure Controller Workflow Job Template Nodes
-  include_tasks: workflow_job_template_nodes_desired_state.yml
-  args:
-    apply:
-      tags:
-        - desired_state
-        - desired_state_workflow_job_template_nodes
+- block:
+  - name: "Get the Authentication Token for the future requests"
+    uri:
+      url: "https://{{ controller_hostname }}/api/v2/tokens/"
+      user: "{{ controller_username }}"
+      password: "{{ controller_password }}"
+      method: POST
+      force_basic_auth: true
+      validate_certs: "{{ controller_validate_certs }}"
+      status_code: 201
+    register: authtoken_res
+
+  - name: "Set the oauth token to be used since now"
+    set_fact:
+      oauthtoken: "{{ authtoken_res.json.token }}"
+      oauthtoken_url: "{{ authtoken_res.json.url }}"
+    no_log: true
+
   tags:
     - desired_state
-    - desired_state_workflow_job_template_nodes
+    - desired_state_workflow_job_templates
+    - desired_state_job_templates
+    - desired_state_teams
+    - desired_state_user_accounts
+    - desired_state_groups
+    - desired_state_hosts
+    - desired_state_inventory_sources
+    - desired_state_inventories
+    - desired_state_projects
+    - desired_state_credentials
+    - desired_state_organizations
 
 - name: Include Tasks to configure Controller Workflow Job Templates
   include_tasks: workflow_job_templates_desired_state.yml
@@ -46,6 +67,8 @@
     - desired_state_job_templates
 
 # REVIEW - TODO - Not delete FROM External Source - LDAP
+# desired_state_teams It must be defined to run the Team's desired state.
+# https://issues.redhat.com/projects/AAP/issues/AAP-2393
 - name: Include Tasks to configure Controller Teams
   include_tasks: teams_desired_state.yml
   args:
@@ -56,8 +79,8 @@
   tags:
     - desired_state
     - desired_state_teams
+  when: desired_state_teams is defined
 
-# REVIEW - TODO - Not delete FROM External Source - LDAP
 - name: Include Tasks to config DESIRED STATE User Accounts
   include_tasks: user_accounts_desired_state.yml
   args:

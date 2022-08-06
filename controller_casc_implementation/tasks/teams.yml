@@ -27,9 +27,15 @@
 - name: Populate users list from LDAP
   set_fact:
     ldap_users:
-      - ldap_user: user01
+      - ldap_user: ldap-user01
         ldap_password: redhat00
-      - ldap_user: user02
+      - ldap_user: ldap-user02
+        ldap_password: redhat00
+      - ldap_user: ldap-admin01
+        ldap_password: redhat00
+      - ldap_user: ldap-admin02
+        ldap_password: redhat00
+      - ldap_user: ldap-cmdb01
         ldap_password: redhat00
 
 - name: Login Users from LDAP
@@ -40,5 +46,6 @@
     method: GET
     force_basic_auth: yes
     status_code: 200
+    validate_certs: false
   loop: "{{ ldap_users }}"
 ...

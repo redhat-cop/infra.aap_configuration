@@ -1,38 +1,66 @@
-Role Name
+controller_configuration.casc_desired_state
 =========
 
-A brief description of the role goes here.
+An ansible role to manage the desired state of the AWX or Automation Controller configuration. This role leverage the controller_object_diff.py lookup plugin of the redhat_cop.controller_configuration, comparing two lists, one taken directly from the API and the other one from the git repository, that was previosly created and implemented for the controller_configuration.casc_implementation, and deletes the objects in the AWX or Automation Controller that are not defined in the git repository list.
+
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed Currently: awx.awx or ansible.controller and redhat_cop.controller_configuration.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+### Organization and Environment Variables
+The following Variables set the organization where should be applied the configuration, the absolute or relative of the directory structure where the variables will be stored and the life-cycle enviroment to use.
 
-Dependencies
-------------
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|
+|`orgs:`|Acme|yes|This variable sets the organization where should be applied the configuration.|
+|`dir_orgs_vars:`|orgs_vars|yes|This variable sets the directory path where the variables will be store.|
+|`env:`|dev|yes|This variable sets the life-cycle enviroment to use.|
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Role Tags
+----------------
+
+The role is designed to be used with tags, each tags correspond to an AWX or Automation Controller object to be managed by ansible.
+
+```bash
+$ ansible-playbook desired-state.yml --list-tags
+      TASK TAGS: [desired_state, desired_state_credentials, desired_state_groups, desired_state_hosts, desired_state_inventories, desired_state_inventory_sources, desired_state_job_templates, desired_state_organizations, desired_state_projects, desired_state_teams, desired_state_user_accounts, desired_state_workflow_job_template_nodes, desired_state_workflow_job_templates]
+```
 
 Example Playbook
 ----------------
+---
+- hosts: controller
+  connection: local
+  gather_facts: false
+  collections:
+    - ansible.controller
+    - redhat_cop.controller_configuration
+  roles:
+    - controller_casc_desired_state
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```bash
+$ ansible-playbook config-controller.yml --tags desired_state_${CONTROLLER_OBJECT} -e "{orgs: ${ORGANIZATION}, dir_orgs_vars: orgs_vars, env: ${ENVIRONMENT} }" --vault-password-file ./.vault_pass.txt -e @orgs_vars/env/${ENVIRONMENT}/configure_connection_controller_credentials.yml ${OTHER}
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```
 
 License
 -------
 
-BSD
+GPLv3+
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+- silvinux
+  - email: <silvio@redhat.com>
+  - github: https://github.com/silvinux
+
+ToDo
+------------------
+- desired_state_roles
+- Issue: Due to the Team Object doesn't return any field related to external account on Controller API, which help to filter if the teams comes from an External Source and not to be deleted by the Desired State Ansible automation process.
