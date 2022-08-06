@@ -125,15 +125,8 @@
   include_tasks: workflow_job_templates.yml
   args:
     apply:
-      tags: workflow_job_templates
-  tags: workflow_job_templates
-
-- name: Include Tasks to config Workflow_Job_Template_Nodes
-  include_tasks: workflow_job_template_nodes.yml
-  args:
-    apply:
-      tags: workflow_job_template_nodes,job_templates
-  tags: workflow_job_template_nodes,job_templates
+      tags: workflow_job_templates,job_templates
+  tags: workflow_job_templates,job_templates
 
 - name: Include Tasks to config Workflow Launch
   include_tasks: workflow_launch.yml
@@ -197,7 +190,6 @@
     apply:
       tags: applications
   tags: applications
-
 
 - name: Include Tasks to config Labels
   include_tasks: labels.yml
