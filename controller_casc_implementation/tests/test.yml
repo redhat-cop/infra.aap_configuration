@@ -1,14 +1,10 @@
 ---
-- hosts: localhost
+- hosts: controller
   connection: local
-  remote_user: root
-  vars:
-    controller_host: "tower1-rhel7.iam.lab"
-    controller_hostname: "{{ controller_host }}"
-    controller_username: "admin"
-    controller_password: "admin"
-    controller_validate_certs: false
+  gather_facts: false
   collections:
+    - ansible.controller
+    - redhat_cop.controller_configuration
     - redhat_cop.controller_casc
   roles:
     - controller_casc_implementation
