@@ -1,4 +1,4 @@
-controller_configuration.casc_desired_state
+controller_configuration.controller_casc_desired_state
 =========
 
 An ansible role to manage the desired state of the AWX or Automation Controller configuration. This role leverage the controller_object_diff.py lookup plugin of the redhat_cop.controller_configuration, comparing two lists, one taken directly from the API and the other one from the git repository, that was previosly created and implemented for the controller_configuration.casc_implementation, and deletes the objects in the AWX or Automation Controller that are not defined in the git repository list.
@@ -59,6 +59,10 @@ Author Information
 - silvinux
   - email: <silvio@redhat.com>
   - github: https://github.com/silvinux
+
+- Ivan Aragonés:
+  - email: <iaragone@redhat.com>
+  - github: https://github.com/ivarmu
 
 ToDo
 ------------------

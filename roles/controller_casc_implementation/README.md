@@ -1,4 +1,4 @@
-controller_configuration.casc_implementation
+controller_configuration.controller_casc_implementation
 =========
 
 An ansible role which implements the roles of the awx o automation controller objects from the redhat_cop.controller_configuration collection using a hierarchical and scalable directory structure which is grouped based on the configuration code life-cycle. Addionally, is possible to leverage the gitlab or github webhook sender and the Automation Controller webhook receiver to create a pipeline to apply the configuration which will be triggered when changes has been made in a git repository.

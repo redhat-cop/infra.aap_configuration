@@ -1,0 +1,50 @@
+---
+controller_roles:
+  - user: "adminorg1"
+    organizations:
+      - "Organization1"
+    role: member
+
+  - user: "adminorg1"
+    organizations:
+      - "Organization1"
+    role: member
+    target_teams:
+      - "Organization1 admins-team"
+
+  - user: "adminorg2"
+    organizations:
+      - "Organization2"
+    role: member
+
+  - user: "adminorg2"
+    organizations:
+      - "Organization2"
+    role: admin
+    target_teams:
+      - "Organization2 admins-team"
+
+  - user: "userorg1"
+    organizations:
+      - "Organization1"
+    role: member
+
+  - user: "userorg1"
+    organizations:
+      - "Organization1"
+    role: member
+    target_teams:
+      - "Organization1 users-team"
+
+  - user: "userorg2"
+    organizations:
+      - "Organization2"
+    role: member
+
+  - user: "userorg2"
+    organizations:
+      - "Organization2"
+    role: member
+    target_teams:
+      - "Organization2 users-team"
+...

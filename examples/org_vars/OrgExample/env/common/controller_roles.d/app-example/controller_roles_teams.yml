@@ -1,0 +1,8 @@
+---
+controller_roles:
+  - team: "Organization1 admins-team"
+    role: admin
+
+  - team: "Organization2 admins-team"
+    role: admin
+...
