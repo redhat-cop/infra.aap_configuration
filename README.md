@@ -32,9 +32,18 @@ Define following vars here, or in `galaxy_configs/galaxy_auth.yml`
 `galaxy_server: ansible-galaxy-web-svc-test-project.example.com`
 
 You can also specify authentication by setting the following variables:
- - `galaxy_server`, `galaxy_oauthtoken`
+ - `galaxy_server`, `galaxy_oauthtoken`, `ah_token`
 
-The OAuth2 token is the only method. You can obtain the token through through the web interface.
+The OAuth2 token is the only method. You can obtain the token through through the web interface. If you only pass a username and password to galaxy API roles/modules a new OAUTH2 token will be generated, invalidating the previous user token. To ensure this doesn't occur always set the ah_token variable to the users OAUTH2 token before executing automation. This does not affect pulp API calls.
+
+Galaxy API calls
+
+ - group
+ - namespace
+ - publish
+ - repository
+ - repository_sync
+ - user
 
 These can be specified via (from highest to lowest precedence):
 
