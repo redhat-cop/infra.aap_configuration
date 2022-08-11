@@ -1,0 +1,55 @@
+---
+- name: Add Controller Schedule
+  schedule:
+    name:                           "{{ __controller_schedule_item.name | mandatory }}"
+    new_name:                       "{{ __controller_schedule_item.new_name | default(omit, true) }}"
+    description:                    "{{ __controller_schedule_item.description | default(omit, true) }}"
+    rrule:                          "{{ __controller_schedule_item.rrule | default(omit, true) }}"
+    extra_data:                     "{{ __controller_schedule_item.extra_data | default(omit, true) }}"
+    inventory:                      "{{ __controller_schedule_item.inventory | default(omit, true) }}"
+    credentials:                    "{{ __controller_schedule_item.credentials | default(omit, true) }}"
+    scm_branch:                     "{{ __controller_schedule_item.scm_branch | default(omit, true) }}"
+    job_type:                       "{{ __controller_schedule_item.job_type | default(omit, true) }}"
+    job_tags:                       "{{ __controller_schedule_item.job_tags | default(omit, true) }}"
+    skip_tags:                      "{{ __controller_schedule_item.skip_tags | default(omit, true) }}"
+    limit:                          "{{ __controller_schedule_item.limit | default(omit, true) }}"
+    diff_mode:                      "{{ __controller_schedule_item.diff_mode | default(omit) }}"
+    verbosity:                      "{{ __controller_schedule_item.verbosity | default(omit, true) }}"
+    organization:                   "{{ __controller_schedule_item.organization | default(omit, true) }}"
+    unified_job_template:           "{{ __controller_schedule_item.unified_job_template | default(omit, true) }}"
+    enabled:                        "{{ __controller_schedule_item.enabled | default(omit) }}"
+    state:                          "{{ __controller_schedule_item.state | default(controller_state | default('present')) }}"
+
+    # Role Standard Options
+    controller_username:            "{{ controller_username | default(omit, true) }}"
+    controller_password:            "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:          "{{ controller_oauthtoken | default(omit, true) }}"
+    controller_host:                "{{ controller_hostname | default(omit, true) }}"
+    controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
+    validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
+  loop: "{{ controller_schedules }}"
+  loop_control:
+    loop_var: "__controller_schedule_item"
+  no_log: "{{ controller_configuration_schedules_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __controller_schedule_job_async
+  changed_when: not __controller_schedule_job_async.changed
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
+
+- name: "Configure Schedules | Wait for finish the Schedules creation"
+  async_status:
+    jid: "{{ __controller_schedule_job_async_results_item.ansible_job_id }}"
+  register: __controller_schedule_job_async_result
+  until: __controller_schedule_job_async_result.finished
+  retries: "{{ controller_configuration_schedules_async_retries }}"
+  delay: "{{ controller_configuration_schedules_async_delay }}"
+  loop: "{{ __controller_schedule_job_async.results }}"
+  loop_control:
+    loop_var: __controller_schedule_job_async_results_item
+  when: __controller_schedule_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ controller_configuration_schedules_secure_logging }}"
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
+...

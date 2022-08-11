@@ -1,0 +1,16 @@
+# Refer to https://github.com/redhat-cop/controller_configuration/tree/devel/roles/schedules
+# for documentation and additional parameter information
+
+---
+controller_schedules:
+  - name: ""
+    description: ""
+    enabled: false
+    extra_data:
+      var1: ""
+      var2: ""
+    rrule: "DTSTART;TZID=America/New_York:20210527T000000 RRULE:FREQ=MINUTELY;INTERVAL=30"
+    unified_job_template: ""
+    verbosity: 1
+    state: "{{ absent_present }}"
+...

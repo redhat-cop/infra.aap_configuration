@@ -1,0 +1,23 @@
+# Refer to https://github.com/redhat-cop/controller_configuration/tree/devel/roles/notification_templates
+# for documentation and additional parameter information
+
+---
+controller_notification_templates:
+  - name: ""
+    new_name: ""
+    description: ""
+    organization: ""
+    notification_type: "email"
+    notification_configuration:
+      - host: ""
+        port: 25
+        username: ""
+        password: ""
+        sender: ""
+        recipients:
+          - ""
+        timeout: 30
+        use_tls: true
+        use_ssl: false
+    state: "{{ absent_present }}"
+...

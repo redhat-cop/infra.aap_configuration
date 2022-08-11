@@ -1,0 +1,86 @@
+---
+# Create Controller Template
+- name: Add Controller Job Templates
+  job_template:
+    name:                                 "{{ __controller_template_item.name | mandatory }}"
+    new_name:                             "{{ __controller_template_item.new_name | default(omit, true) }}"
+    copy_from:                            "{{ __controller_template_item.copy_from | default(omit, true) }}"
+    description:                          "{{ __controller_template_item.description | default(omit, true) }}"
+    execution_environment:                "{{ __controller_template_item.execution_environment.name | default( __controller_template_item.execution_environment | default(omit, true)) }}"
+    job_type:                             "{{ __controller_template_item.job_type | default('run') }}"
+    inventory:                            "{{ __controller_template_item.inventory.name | default( __controller_template_item.inventory | default(omit, true)) }}"
+    organization:                         "{{ __controller_template_item.organization.name | default( __controller_template_item.organization | default(omit, true)) }}"
+    project:                              "{{ __controller_template_item.project.name | default( __controller_template_item.project | default(omit, true)) }}"
+    playbook:                             "{{ __controller_template_item.playbook | default(omit, true) }}"
+    credentials:                          "{{ __controller_template_item.credentials | default(__controller_template_item.related.credentials | default([]) | map(attribute='name') | list ) }}"
+    forks:                                "{{ __controller_template_item.forks | default(omit, true) }}"
+    limit:                                "{{ __controller_template_item.limit | default(omit, true) }}"
+    verbosity:                            "{{ __controller_template_item.verbosity | default(omit, true) }}"
+    extra_vars:                           "{{ __controller_template_item.extra_vars | default(omit, true) }}"
+    job_tags:                             "{{ __controller_template_item.job_tags | default(omit, true) }}"
+    force_handlers:                       "{{ __controller_template_item.force_handlers | default(omit) }}"
+    skip_tags:                            "{{ __controller_template_item.skip_tags | default(omit, true) }}"
+    start_at_task:                        "{{ __controller_template_item.start_at_task | default(omit, true) }}"
+    diff_mode:                            "{{ __controller_template_item.diff_mode | default(omit) }}"
+    use_fact_cache:                       "{{ __controller_template_item.use_fact_cache | default(omit) }}"
+    host_config_key:                      "{{ __controller_template_item.host_config_key | default(omit, true) }}"
+    ask_scm_branch_on_launch:             "{{ __controller_template_item.ask_scm_branch_on_launch | default(omit) }}"
+    ask_diff_mode_on_launch:              "{{ __controller_template_item.ask_diff_mode_on_launch | default(omit) }}"
+    ask_variables_on_launch:              "{{ __controller_template_item.ask_variables_on_launch | default(omit) }}"
+    ask_limit_on_launch:                  "{{ __controller_template_item.ask_limit_on_launch | default(omit) }}"
+    ask_tags_on_launch:                   "{{ __controller_template_item.ask_tags | default( __controller_template_item.ask_tags_on_launch | default(omit)) }}"
+    ask_skip_tags_on_launch:              "{{ __controller_template_item.ask_skip_tags | default( __controller_template_item.ask_skip_tags_on_launch | default(omit)) }}"
+    ask_job_type_on_launch:               "{{ __controller_template_item.ask_job_type_on_launch | default(omit) }}"
+    ask_verbosity_on_launch:              "{{ __controller_template_item.ask_verbosity_on_launch | default(omit) }}"
+    ask_inventory_on_launch:              "{{ __controller_template_item.ask_inventory_on_launch | default(omit) }}"
+    ask_credential_on_launch:             "{{ __controller_template_item.ask_credential_on_launch | default(omit) }}"
+    survey_enabled:                       "{{ __controller_template_item.survey_enabled | default(omit) }}"
+    survey_spec:                          "{{ __controller_template_item.related.survey_spec | default(__controller_template_item.survey_spec | default(__controller_template_item.survey | default(omit, true))) }}"
+    become_enabled:                       "{{ __controller_template_item.become_enabled | default(omit) }}"
+    allow_simultaneous:                   "{{ __controller_template_item.allow_simultaneous | default(omit) }}"
+    timeout:                              "{{ __controller_template_item.timeout | default(omit, true) }}"
+    custom_virtualenv:                    "{{ __controller_template_item.custom_virtualenv | default(omit, true) }}"
+    instance_groups:                      "{{ __controller_template_item.instance_groups | default(omit, true) }}"
+    job_slice_count:                      "{{ __controller_template_item.job_slice_count | default(1) }}"
+    webhook_service:                      "{{ __controller_template_item.webhook_service | default(omit, true) }}"
+    webhook_credential:                   "{{ __controller_template_item.webhook_credential | default(omit, true) }}"
+    scm_branch:                           "{{ __controller_template_item.scm_branch | default(omit, true) }}"
+    labels:                               "{{ __controller_template_item.labels | default(__controller_template_item.related.labels | default([]) | map(attribute='name') | list ) }}"
+    state:                                "{{ __controller_template_item.state | default(controller_state | default('present')) }}"
+    notification_templates_started:       "{{ __controller_template_item.notification_templates_started | default(__controller_template_item.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
+    notification_templates_success:       "{{ __controller_template_item.notification_templates_success | default(__controller_template_item.related.notification_templates_success | default([]) | map(attribute='name') | list ) }}"
+    notification_templates_error:         "{{ __controller_template_item.notification_templates_error | default(__controller_template_item.related.notification_templates_error | default([]) | map(attribute='name') | list ) }}"
+
+    # Role Standard Options
+    controller_username:                  "{{ controller_username | default(omit, true) }}"
+    controller_password:                  "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:                "{{ controller_oauthtoken | default(omit, true) }}"
+    controller_host:                      "{{ controller_hostname | default(omit, true) }}"
+    controller_config_file:               "{{ controller_config_file | default(omit, true) }}"
+    validate_certs:                       "{{ controller_validate_certs | default(omit) }}"
+  loop: "{{ controller_templates }}"
+  loop_control:
+    loop_var: __controller_template_item
+  no_log: "{{ controller_configuration_job_templates_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __job_temaplates_job_async
+  changed_when: not __job_temaplates_job_async.changed
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
+
+- name: "Configure Controller Job Templates | Wait for finish the job templates creation"
+  async_status:
+    jid: "{{ __job_temaplates_job_async_result_item.ansible_job_id }}"
+  register: __job_temaplates_job_async_result
+  until: __job_temaplates_job_async_result.finished
+  retries: "{{ controller_configuration_job_templates_async_retries }}"
+  delay: "{{ controller_configuration_job_templates_async_delay }}"
+  loop: "{{ __job_temaplates_job_async.results }}"
+  loop_control:
+    loop_var: __job_temaplates_job_async_result_item
+  when: __job_temaplates_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ controller_configuration_job_templates_secure_logging }}"
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
+...

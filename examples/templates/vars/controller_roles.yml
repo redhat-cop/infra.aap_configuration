@@ -1,0 +1,16 @@
+# Refer to https://github.com/redhat-cop/controller_configuration/tree/devel/roles/roles
+# for documentation and additional parameter information
+
+# READ DOCUMENTATION FOR THIS ROLE BEFORE DEFINING PERMISSIONS AS CODE TO
+# ENSURE UNDERSTANDING
+
+---
+controller_roles:
+  - user: ""
+    role: ""
+    state: "{{ absent_present }}"
+
+  - team: ""
+    role: ""
+    state: "{{ absent_present }} "
+...

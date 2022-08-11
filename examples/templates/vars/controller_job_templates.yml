@@ -1,0 +1,48 @@
+# Refer to https://github.com/redhat-cop/controller_configuration/tree/devel/roles/job_templates
+# for documentation and additional parameter information
+
+---
+controller_templates:
+  - name: ""
+    job_type: run
+    inventory: ""
+    project: ""
+    playbook: ""
+    labels: ""
+    ask_limit_on_launch: true
+    limit: ""
+    credentials:
+      - ""
+    organization: ""
+    state: "{{ absent_present }}"
+
+  - name: ""
+    job_type: run
+    inventory: ""
+    project: ""
+    playbook: ""
+    labels: ""
+    credentials:
+      - ""
+    organization: ""
+    state: "{{ absent_present }}"
+    survey_enabled: true
+    survey:
+      name: ""
+      description: ""
+      spec:
+        - question_name: ""
+          question_description: ""
+          required: true
+          new_question: true
+          variable: ""
+          default: ""
+          type: ""
+        - question_name: ""
+          question_description: ""
+          required: true
+          new_question: true
+          variable: ""
+          default: ""
+          type: ""
+...

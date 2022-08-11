@@ -1,0 +1,14 @@
+---
+controller_projects:
+  - name: "{{ orgs }} Container_Group"
+    description: "Project to run Container_Groups example"
+    organization: "{{ orgs }}"
+    scm_type: git
+    scm_url: "git@gitlab.automationiberia.com:aap-demo/readonly-playbooks.git"
+    scm_credential: "{{ orgs }} {{ env }} Gitlab Credential"
+    scm_clean: false
+    scm_delete_on_update: false
+    scm_update_on_launch: false
+    scm_update_cache_timeout: 86400
+    allow_override: true
+...

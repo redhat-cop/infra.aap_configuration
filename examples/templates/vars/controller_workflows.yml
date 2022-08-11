@@ -1,0 +1,53 @@
+# Refer to https://github.com/redhat-cop/controller_configuration/tree/devel/roles/workflow_job_templates
+# for documentation and additional parameter information
+
+---
+controller_workflows:
+  - name: ""
+    organization: ""
+    state: ""
+    survey_enabled: true
+    survey:
+      name: ""
+      description: ""
+      spec:
+        - question_name: ""
+          question_description: ""
+          required: true
+          new_question: true
+          variable: ""
+          default: ""
+          type: ""
+        - question_name: ""
+          question_description: ""
+          required: true
+          new_question: true
+          variable: ""
+          default: ""
+          type: ""
+    simplified_workflow_nodes:
+      - unified_job_template: ""
+        identifier: node101
+        success_nodes: []
+        failure_nodes: []
+        always_nodes:
+          - node102
+          - node103
+        state: "{{ absent_present }}"
+
+      - unified_job_template:
+          name: ""
+        identifier: node102
+        success_nodes: []
+        failure_nodes: []
+        always_nodes: []
+        state: "{{ absent_present }}"
+
+      - unified_job_template: ""
+        identifier: node103
+        success_nodes: []
+        failure_nodes: []
+        always_nodes:
+          - node201
+        state: "{{ absent_present }}"
+...

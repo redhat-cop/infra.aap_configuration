@@ -1,0 +1,13 @@
+---
+- name: Include notification template vars
+  include_vars: ../vars/controller_notification_templates.yml
+  tags:
+    - notifications
+    - alltags
+
+- import_role:
+    name: redhat_cop.controller_configuration.notification_templates
+  tags:
+    - notifications
+    - alltags
+...

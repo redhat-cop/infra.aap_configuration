@@ -1,0 +1,74 @@
+---
+# Create Workflow
+- name: Manage Workflows
+  workflow_job_template:
+    name:                               "{{ __workflow_loop_item.name | mandatory }}"
+    new_name:                           "{{ __workflow_loop_item.new_name | default(omit, true) }}"
+    copy_from:                          "{{ __workflow_loop_item.copy_from | default(omit, true) }}"
+    description:                        "{{ __workflow_loop_item.description | default(omit, true) }}"
+    extra_vars:                         "{{ __workflow_loop_item.extra_vars | default(omit, true) }}"
+    allow_simultaneous:                 "{{ __workflow_loop_item.allow_simultaneous | default(omit) }}"
+    organization:                       "{{ __workflow_loop_item.organization.name | default( __workflow_loop_item.organization | default(omit, true)) }}"
+    ask_variables_on_launch:            "{{ __workflow_loop_item.ask_variables_on_launch | default(omit) }}"  # only supported starting from Ansible 2.9
+    inventory:                          "{{ __workflow_loop_item.inventory.name | default( __workflow_loop_item.inventory | default(omit, true)) }}"
+    limit:                              "{{ __workflow_loop_item.limit | default(omit, true) }}"
+    labels:                             "{{ __workflow_loop_item.labels | default(__workflow_loop_item.related.labels | default([]) | map(attribute='name') | list ) }}"
+    scm_branch:                         "{{ __workflow_loop_item.scm_branch | default(omit, true) }}"
+    ask_inventory_on_launch:            "{{ __workflow_loop_item.ask_inventory_on_launch | default(omit) }}"
+    ask_scm_branch_on_launch:           "{{ __workflow_loop_item.ask_scm_branch_on_launch | default(omit) }}"
+    ask_limit_on_launch:                "{{ __workflow_loop_item.ask_limit_on_launch | default(omit) }}"
+    webhook_service:                    "{{ __workflow_loop_item.webhook_service | default(omit, true) }}"
+    webhook_credential:                 "{{ __workflow_loop_item.webhook_credential.name | default(__workflow_loop_item.webhook_credential | default(omit, true)) }}"
+    survey_enabled:                     "{{ __workflow_loop_item.survey_enabled | default(omit) }}"
+    survey_spec:                        "{{ __workflow_loop_item.related.survey_spec | default( __workflow_loop_item.survey_spec | default( __workflow_loop_item.survey | default(omit, true))) }}"
+    schema:                             "{{ __workflow_loop_item.related.workflow_nodes | default( __workflow_loop_item.workflow_nodes | default(omit, true) ) }}"
+    destroy_current_schema:             "{{ __workflow_loop_item.destroy_current_schema | default(omit) }}"
+    state:                              "{{ __workflow_loop_item.state | default(controller_state | default('present')) }}"
+    notification_templates_started:     "{{ __workflow_loop_item.notification_templates_started | default(__workflow_loop_item.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
+    notification_templates_success:     "{{ __workflow_loop_item.notification_templates_success | default(__workflow_loop_item.related.notification_templates_success | default([]) | map(attribute='name') | list ) }}"
+    notification_templates_error:       "{{ __workflow_loop_item.notification_templates_error | default(__workflow_loop_item.related.notification_templates_error | default([]) | map(attribute='name') | list ) }}"
+    notification_templates_approvals:   "{{ __workflow_loop_item.notification_templates_approvals | default(__workflow_loop_item.related.notification_templates_approvals | default([]) | map(attribute='name') | list ) }}"
+
+    # Role Standard Options
+    controller_username:                "{{ controller_username | default(omit, true) }}"
+    controller_password:                "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:              "{{ controller_oauthtoken | default(omit, true) }}"
+    controller_host:                    "{{ controller_hostname | default(omit, true) }}"
+    controller_config_file:             "{{ controller_config_file | default(omit, true) }}"
+    validate_certs:                     "{{ controller_validate_certs | default(omit) }}"
+  loop: "{{ controller_workflows }}"
+  loop_control:
+    loop_var: __workflow_loop_item
+  no_log: "{{ workflow_job_templates_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __workflows_job_async
+  changed_when: not __workflows_job_async.changed
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
+
+- name: "Manage Workflows | Wait for finish the workflow creation"
+  async_status:
+    jid: "{{ __workflows_job_async_results_item.ansible_job_id }}"
+  register: __workflows_job_async_result
+  until: __workflows_job_async_result.finished
+  retries: "{{ controller_configuration_workflow_async_retries }}"
+  delay: "{{ controller_configuration_workflow_async_delay }}"
+  loop: "{{ __workflows_job_async.results }}"
+  loop_control:
+    loop_var: __workflows_job_async_results_item
+  when: __workflows_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ workflow_job_templates_secure_logging }}"
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
+
+# Create links between workflow node
+- name: loop over nodes in schema to add to workflow templates
+  include_tasks: "add_workflows_schema.yml"
+  loop: "{{ controller_workflows }}"
+  loop_control:
+    loop_var: __workflow_loop_item
+  when:
+    - __workflow_loop_item.simplified_workflow_nodes is defined
+    - __workflow_loop_item.state == "present"
+...

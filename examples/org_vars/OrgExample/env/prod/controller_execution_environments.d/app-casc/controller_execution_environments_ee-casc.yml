@@ -1,0 +1,7 @@
+---
+controller_execution_environments:
+  - name: "ee-casc"
+    image: automationhub.automationiberia.com/ee-casc:latest
+    pull: always
+    credential: "{{ orgs }} {{ env }} Automation Private Hub Container Registry"
+...
