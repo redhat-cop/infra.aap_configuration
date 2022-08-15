@@ -7,10 +7,10 @@
   collections:
     - redhat_cop.ah_configuration
   vars:
-    ah_host: hub.lab.example.com
+    ah_hostname: http://localhost:8002/
     ah_username: admin
-    ah_password: redhat
-    ah_path_prefix: galaxy
+    ah_password: admin
+    ah_path_prefix: 'automation-hub'
     ah_validate_certs: false
 
   tasks:

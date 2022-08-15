@@ -36,11 +36,11 @@
       include_role:
         name: namespace
 
-    - name: Publish Collections
-      include_role:
-        name: publish
-      vars:
-        ah_auto_approve: true
+#    - name: Publish Collections
+#      include_role:
+#        name: publish
+#      vars:
+#        ah_auto_approve: true
 
     - name: Remove collection
       ah_collection:
@@ -48,6 +48,10 @@
         name: test
         version: 1.0.1
         state: absent
+        ah_host: "{{ ah_hostname }}"
+        ah_token: "{{ ah_token }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
 
     - name: Configure community repo
       ah_repository:
@@ -56,29 +60,49 @@
         requirements:
           - name: redhat_cop.ah_configuration
           - name: redhat_cop.tower_configuration
+        ah_host: "{{ ah_hostname }}"
+        ah_token: "{{ ah_token }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
 
     - name: Configure community repo from file
       ah_repository:
         name: community
         url: https://galaxy.ansible.com/api/
         requirements_file: files/collection_requirement_file.yml
+        ah_host: "{{ ah_hostname }}"
+        ah_token: "{{ ah_token }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
 
     - name: Sync community repo
       ah_repository_sync:
         name: community
         wait: true
+        ah_host: "{{ ah_hostname }}"
+        ah_token: "{{ ah_token }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
 
-    - name: Configure community repo
+    - name: Configure rh-certified repo
       ah_repository:
         name: rh-certified
         url: https://cloud.redhat.com/api/automation-hub/
         auth_url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
         token: aabbcc
+        ah_host: "{{ ah_hostname }}"
+        ah_token: "{{ ah_token }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
 
     - name: Add EE Registry
       ah_ee_registry:
         name: myreg
         url: https://registry.redhat.io
+        ah_host: "{{ ah_hostname }}"
+        ah_token: "{{ ah_token }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
 
     - name: Deauthenticate
       ah_token:

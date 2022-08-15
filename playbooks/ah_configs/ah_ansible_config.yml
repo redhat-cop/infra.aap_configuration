@@ -1,8 +1,8 @@
 ---
 automation_hub_list:
   - name: automation_hub
-    url: "{{ah_host}}"
-    auth_url: "{{ah_host}}api/automation-hub/"  # {{ah_host}}api/galaxy/ for AH {{ah_host}}api/automation-hub/ for Galaxy
+    url: "{{ ah_hostname }}"
+    auth_url: "{{ ah_hostname }}api/automation-hub/"  # {{ah_hostname}}api/galaxy/ for AH {{ah_hostname}}api/automation-hub/ for Galaxy
     username: "{{ ah_username }}"
     password: "{{ ah_password }}"
 
