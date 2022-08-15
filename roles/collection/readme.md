@@ -6,7 +6,7 @@ An Ansible Role to update, or destroy Automation Hub Collections.
 
 ## Variables
 
-These are the sub options for the vars `ah_collection` which are dictionaries with the options you want. See examples for details.
+These are the sub options for the vars `ah_collections` which are dictionaries with the options you want. See examples for details.
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`namespace`|""|yes|Namespace name. Must be lower case containing only alphanumeric characters and underscores.|"awx"|
