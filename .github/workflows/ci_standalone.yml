@@ -1,0 +1,94 @@
+---
+name: Standalone
+on: [push, pull_request]
+
+jobs:
+
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: "Checkout galaxy_ng"
+        uses: actions/checkout@v2
+        with:
+          repository: ansible/galaxy_ng
+          path: galaxy_ng
+
+      - name: "Checkout ansible-hub-ui"
+        uses: actions/checkout@v2
+        with:
+          repository: ansible/ansible-hub-ui
+          path: ansible-hub-ui
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Update apt
+        run: sudo apt -y update
+
+      - name: Install LDAP requirements
+        run: sudo apt-get install -y libsasl2-dev python-dev libldap2-dev libssl-dev build-essential
+
+      - name: Install docker-compose
+        run: pip3 install --upgrade docker-compose
+
+      - name: collect system info
+        run: whoami; id; pwd; ls -al; uname -a ; df -h .; mount ; cat /etc/issue; docker --version ; ps aux | fgrep -i docker; ls -al /var/run/containerd/containerd.sock
+
+      - name: create the .compose.env file
+        run: rm -f galaxy_ng/.compose.env; cp galaxy_ng/.compose.env.example galaxy_ng/.compose.env
+
+      - name: workaround github worker permissions issues
+        run: sed -i.bak 's/PIP_EDITABLE_INSTALL=1/PIP_EDITABLE_INSTALL=0/' galaxy_ng/.compose.env
+
+      - name: workaround github worker permissions issues
+        run: sed -i.bak 's/WITH_DEV_INSTALL=1/WITH_DEV_INSTALL=0/' galaxy_ng/.compose.env
+
+      - name: set the hub ui path in .compose.env
+        run: echo "ANSIBLE_HUB_UI_PATH='/home/runner/work/ah_configuration/ah_configuration/ansible-hub-ui'" >> galaxy_ng/.compose.env
+
+      - name: cat
+        run: cat galaxy_ng/.compose.env
+
+      - name: build stack
+        working-directory: galaxy_ng
+        run: make docker/build
+
+      - name: run migrations
+        working-directory: galaxy_ng
+        run: make docker/migrate
+
+      - name: load translations
+        working-directory: galaxy_ng
+        run: make docker/translations
+
+      - name: load loaddata
+        working-directory: galaxy_ng
+        run: make docker/loaddata
+
+      - name: start the compose stack
+        working-directory: galaxy_ng
+        run: ./compose up -d
+
+      - name: give stack some time to spin up
+        run: sleep 240
+
+      - name: Install collection
+        run: |
+          cp .github/workflow-config/galaxy.yml galaxy.yml
+          ansible-galaxy collection build
+          ansible-galaxy collection install redhat_cop-ah_configuration-0.0.1-devel.tar.gz
+
+      - name: "Perform playbook tests"
+        run: ansible-playbook playbooks/testing_playbook.yml -v
+
+      - name: "Perform playbook tests"
+        run: ansible-playbook playbooks/testing_playbook_user.yml -v
+
+      - name: "Perform playbook tests"
+        run: ansible-playbook playbooks/testing_playbook_ee_namespace.yml -v
+
+      - name: "Perform playbook tests"
+        run: ansible-playbook playbooks/testing_playbook_ee_repository.yml -v
