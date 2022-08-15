@@ -7,7 +7,7 @@
 # ah_validate_certs: false
 
 # These are the default variables specific to the collection role
-collection: []
+ah_collections: []
 # possible fields:
 # - namespace
 # - name
