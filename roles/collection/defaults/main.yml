@@ -1,0 +1,24 @@
+---
+
+# These are the default variables common to most ah_configuration roles
+# You shouldn't need to define them again and again but they should be defined
+# ah_hostname: "{{ inventory_hostname }}"
+# ah_oauthtoken: ""
+# ah_validate_certs: false
+
+# These are the default variables specific to the collection role
+ah_collections: []
+# possible fields:
+# - namespace
+# - name
+# - version
+# - path
+# - wait
+# - auto_approve
+# - overwrite_existing
+# - state
+
+ah_configuration_repository_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
+ah_configuration_user_async_retries: "{{ ah_configuration_async_retries | default(50) }}"
+ah_configuration_user_async_delay: "{{ ah_configuration_async_delay | default(1) }}"
+...

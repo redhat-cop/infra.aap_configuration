@@ -1,0 +1,43 @@
+# Update or destroy Automation Hub Collection
+- name: Update or destroy Automation Hub Collection
+  collection:
+    namespace:             "{{ __collection.namespace }}"
+    name:                  "{{ __collection.name }}"
+    version:               "{{ __collection.version | default('') }}"
+    path:                  "{{ __collection.path | default('') }}"
+    wait:                  "{{ __collection.wait | default('true') }}"
+    auto_approve:          "{{ __collection.auto_approve | default('true') }}"
+    overwrite_existing:    "{{ __collection.overwrite_existing | default('true') }}"
+    state:                 "{{ __collection.state | default('present') }}"
+    ah_host:               "{{ ah_host | default(ah_hostname) }}"
+    ah_username:           "{{ ah_username | default(omit) }}"
+    ah_password:           "{{ ah_password | default(omit) }}"
+    ah_token:              "{{ ah_token | default(omit) }}"
+    ah_path_prefix:        "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:        "{{ ah_validate_certs | default(omit) }}"
+  loop: "{{ ah_collections }}"
+  loop_control:
+    loop_var: "__collection"
+  no_log: "{{ ah_configuration_namespace_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __collections_job_async
+  changed_when: not __collections_job_async.changed
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
+
+- name: "Update/Destroy collection | Wait for finish the update/destruction of collection"
+  async_status:
+    jid: "{{ __collections_job_async_result_item.ansible_job_id }}"
+  register: __collections_job_async_result
+  until: __collections_job_async_result.finished
+  retries: "{{ ah_configuration_user_async_retries }}"
+  delay: "{{ ah_configuration_user_async_delay }}"
+  loop: "{{ __collections_job_async.results }}"
+  loop_control:
+    loop_var: __collections_job_async_result_item
+  when: __collections_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ ah_configuration_user_secure_logging }}"
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
+...
