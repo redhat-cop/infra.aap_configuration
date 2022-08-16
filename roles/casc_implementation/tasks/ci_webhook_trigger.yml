@@ -30,7 +30,7 @@
       ansible_python_interpreter: "/usr/bin/python3"
       env: "{{ env }}"
     tags: "{{ org_tags.value }}"
-    wait: yes
+    wait: true
     verbosity: 0
   with_dict: "{{ org_dirs_dict }}"
   loop_control:
