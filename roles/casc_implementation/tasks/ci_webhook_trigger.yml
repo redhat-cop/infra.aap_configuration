@@ -15,8 +15,6 @@
   loop: "{{ list_of_dirs }}"
   when: input_var | type_debug is match('list')
 
-- debug: var=org_dirs_dict
-
 - name: "Run the CasC_JobTemplates_AAP_CI_Config_Controller Automation Platform Job to update the objects"
   ansible.controller.job_launch:
     controller_host: '{{ lookup("env", "CONTROLLER_HOST") | default(lookup("env", "TOWER_HOST"),true) }}'
