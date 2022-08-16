@@ -17,7 +17,7 @@
     path: "{{ output_path }}/{{ needed_path }}"
     state: directory
     mode: '0755'
-  loop: "{{ needed_paths }}"
+  loop: "{{ needed_paths | default([]) }}"
   loop_control:
     loop_var: needed_path
     label: "{{ output_path }}/{{ needed_path }}"
@@ -29,7 +29,7 @@
     mode: '0644'
   vars:
     current_job_templates_asset_value: "{{ job_templates_org_template.value }}"
-  loop: "{{ job_templates_orgs | dict2items }}"
+  loop: "{{ job_templates_orgs  | default({}) | dict2items }}"
   loop_control:
     loop_var: job_templates_org_template
     label: "{{ output_path }}/{{ job_templates_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS') }}/current_job_templates.yaml"

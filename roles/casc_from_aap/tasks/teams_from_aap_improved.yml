@@ -17,7 +17,7 @@
     path: "{{ output_path }}/{{ needed_path }}"
     state: directory
     mode: '0755'
-  loop: "{{ needed_paths }}"
+  loop: "{{ needed_paths | default([]) }}"
   loop_control:
     loop_var: needed_path
     label: "{{ output_path }}/{{ needed_path }}"
@@ -29,7 +29,7 @@
     mode: '0644'
   vars:
     current_teams_asset_value: "{{ teams_org_template.value }}"
-  loop: "{{ teams_orgs | dict2items }}"
+  loop: "{{ teams_orgs  | default({}) | dict2items }}"
   loop_control:
     loop_var: teams_org_template
     label: "{{ output_path }}/{{ teams_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}/current_teams.yaml"

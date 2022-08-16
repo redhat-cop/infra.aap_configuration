@@ -37,7 +37,7 @@
     path: "{{ output_path }}/{{ needed_path }}"
     state: directory
     mode: '0755'
-  loop: "{{ needed_paths }}"
+  loop: "{{ needed_paths | default([]) }}"
   loop_control:
     loop_var: needed_path
     label: "{{ output_path }}/{{ needed_path }}"
@@ -49,7 +49,7 @@
     mode: '0644'
   vars:
     current_inventories_asset_value: "{{ current_inventory_dir.value }}"
-  loop: "{{ current_inventories | dict2items }}"
+  loop: "{{ current_inventories | default({}) | dict2items }}"
   loop_control:
     loop_var: current_inventory_dir
     label: "{{ output_path }}/{{ current_inventory_dir.key }}/current_inventories.yaml"
@@ -63,7 +63,7 @@
   vars:
     output_path: "{{ local_output_path }}/{{ current_inventory_sources.key }}"
     current_organization_inventories: "{{ current_inventory_sources.value }}"
-  loop: "{{ current_inventories | dict2items }}"
+  loop: "{{ current_inventories | default({}) | dict2items }}"
   loop_control:
     loop_var: current_inventory_sources
     label: "{{ local_output_path }}/{{ current_inventory_sources.key }}"
@@ -73,7 +73,7 @@
   vars:
     output_path: "{{ local_output_path }}/{{ current_inventory_hosts.key }}"
     current_organization_inventories: "{{ current_inventory_hosts.value | json_query('[*].{hosts: hosts, name: name}') }}"
-  loop: "{{ current_inventories | dict2items }}"
+  loop: "{{ current_inventories | default({}) | dict2items }}"
   loop_control:
     loop_var: current_inventory_hosts
     label: "{{ local_output_path }}/{{ current_inventory_hosts.key }}"
@@ -83,7 +83,7 @@
   vars:
     output_path: "{{ local_output_path }}/{{ current_inventory_groups.key }}"
     current_organization_inventories: "{{ current_inventory_groups.value }}"
-  loop: "{{ current_inventories | dict2items }}"
+  loop: "{{ current_inventories | default({}) | dict2items }}"
   loop_control:
     loop_var: current_inventory_groups
     label: "{{ local_output_path }}/{{ current_inventory_groups.key }}"
