@@ -1,9 +1,9 @@
 --
 controller_workflows:
-{% for workflow_job_template in current_asset_value %}
-  - name: "{{ workflow_job_template.natural_key.name }}"
+{% for workflow_job_template in current_workflow_job_templates_asset_value %}
+  - name: "{{ workflow_job_template.name }}"
     description: "{{ workflow_job_template.description }}"
-    organization: "{{ workflow_job_template.natural_key.organization.name | default('ToDo: The WF \'' + workflow_job_template.natural_key.name + '\' must have an organization') }}"
+    organization: "{{ workflow_job_template.summary_fields.organization.name | default('ToDo: The WF \'' + workflow_job_template.name + '\' must belong to an organization') }}"
     survey_enabled: "{{ workflow_job_template.survey_enabled }}"
     ask_variables_on_launch: "{{ workflow_job_template.ask_variables_on_launch }}"
     allow_simultaneous: "{{ workflow_job_template.allow_simultaneous }}"

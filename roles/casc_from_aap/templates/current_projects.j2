@@ -1,13 +1,13 @@
 ---
 controller_projects:
-{% for project in current_asset_value %}
+{% for project in current_projects_asset_value %}
   - name: "{{ project.name }}"
     description: "{{ project.description }}"
-    organization: "{{ project.organization.name | default('ToDo: The project \'' + project.name + '\' must have an organization') }}"
+    organization: "{{ project.summary_fields.organization.name | default('ToDo: The project \'' + project.name + '\' must have an organization') }}"
 {% if project.scm_type %}
     scm_type: "{{ project.scm_type }}"
     scm_url: "{{ project.scm_url }}"
-    scm_credential: "{{ project.credential.name | default('ToDo: The project \'' + project.name + '\' is missing the SCM credential') }}"
+    scm_credential: "{{ project.summary_fields.credential.name | default('ToDo: The project \'' + project.name + '\' is missing the SCM credential') }}"
     scm_branch: "{{ project.scm_branch }}"
     scm_clean: "{{ project.scm_clean }}"
     scm_delete_on_update: "{{ project.scm_delete_on_update }}"

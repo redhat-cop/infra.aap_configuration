@@ -1,19 +1,19 @@
 ---
 controller_templates:
-{% for job_template in current_asset_value %}
-  - name: "{{ job_template.natural_key.name }}"
+{% for job_template in current_job_templates_asset_value %}
+  - name: "{{ job_template.name }}"
     description: "{{ job_template.description }}"
-    organization: "{{ job_template.natural_key.organization.name | default('ToDo: The job template \'' + job_template.natural_key.name + '\' must belong to an organization') }}"
-    project: "{{ job_template.project.name | default('ToDo: The job template \'' + job_template.natural_key.name + '\' must have a project assigned') }}"
+    organization: "{{ job_template.summary_fields.organization.name | default('ToDo: The job template \'' + job_template.name + '\' must belong to an organization') }}"
+    project: "{{ job_template.summary_fields.project.name | default('ToDo: The job template \'' + job_template.name + '\' must have a project assigned') }}"
 {% if job_template.inventory %}
-    inventory: "{{ job_template.inventory.name }}"
+    inventory: "{{ job_template.summary_fields.inventory.name }}"
 {% endif %}
     playbook: "{{ job_template.playbook }}"
     job_type: "{{ job_template.job_type }}"
     fact_caching_enabled: "{{ job_template.use_fact_cache }}"
-{% if job_template.related.credentials %}
+{% if job_template.summary_fields.credentials %}
     credentials:
-{% for credential in job_template.related.credentials %}
+{% for credential in job_template.summary_fields.credentials %}
       - "{{ credential.name }}"
 {% endfor %}
 {% endif %}
@@ -31,7 +31,7 @@ controller_templates:
 {% endif %}
 {%- endif -%}
 {% if is_aap %}
-    execution_environment: "{{ job_template.execution_environment.name }}"
+    execution_environment: "{{ job_template.summary_fields.execution_environment.name | default(omit) }}"
 {% endif %}
 {% endfor %}
 ...
