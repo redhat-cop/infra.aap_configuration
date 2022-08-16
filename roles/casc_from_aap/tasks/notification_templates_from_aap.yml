@@ -24,7 +24,7 @@
 
 - name: "Add current notification templates to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_notification_templates.yaml"
   template:
-    src: "templates/current_notification_templates_improved.j2"
+    src: "templates/current_notification_templates.j2"
     dest: "{{ output_path }}/{{ notification_templates_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}/current_notification_templates.yaml"
     mode: '0644'
   vars:

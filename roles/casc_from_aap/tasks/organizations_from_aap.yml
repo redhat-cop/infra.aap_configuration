@@ -15,7 +15,7 @@
 
 - name: "Add current organizations to the output yaml file"
   template:
-    src: "templates/current_organizations_improved.j2"
+    src: "templates/current_organizations.j2"
     dest: "{{ output_path }}/{{ current_organization.name }}/current_organization.yaml"
     mode: '0644'
   loop: "{{ orgs_lookvar }}"

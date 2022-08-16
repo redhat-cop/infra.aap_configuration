@@ -24,7 +24,7 @@
 
 - name: "Add current projects to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_projects.yaml"
   template:
-    src: "templates/current_projects_improved.j2"
+    src: "templates/current_projects.j2"
     dest: "{{ output_path }}/{{ projects_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}/current_projects.yaml"
     mode: '0644'
   vars:

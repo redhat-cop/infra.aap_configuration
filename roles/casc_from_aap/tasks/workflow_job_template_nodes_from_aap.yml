@@ -23,7 +23,7 @@
 
 - name: "Add current workflow job template nodes to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_workflow_job_template_nodes_{{ workflow_job_template_name }}.yaml"
   template:
-    src: "templates/current_workflow_job_template_nodes_improved.j2"
+    src: "templates/current_workflow_job_template_nodes.j2"
     dest: "{{ output_path }}/{{ current_wfjtn_asset_value.value.organization }}/current_workflow_job_template_nodes_{{ workflow_job_template_name }}.yaml"
     mode: '0644'
   vars:

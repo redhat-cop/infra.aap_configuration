@@ -7,7 +7,7 @@
 
 - name: "Add current groups to the output yaml file: {{ output_path }}/current_groups_<INVENTORY_NAME>.yaml"
   template:
-    src: "templates/current_groups_improved.j2"
+    src: "templates/current_groups.j2"
     dest: "{{ output_path }}/current_groups_{{ current_groups_asset_value.name }}.yaml"
     mode: '0644'
   loop: "{{ current_organization_inventories }}"

@@ -44,7 +44,7 @@
 
 - name: "Add current inventories to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_inventories.yaml"
   template:
-    src: "templates/current_inventories_improved.j2"
+    src: "templates/current_inventories.j2"
     dest: "{{ output_path }}/{{ current_inventory_dir.key }}/current_inventories.yaml"
     mode: '0644'
   vars:
@@ -59,7 +59,7 @@
     local_output_path: "{{ output_path }}"
 
 - name: "Set the inventory's inventory sources"
-  include_tasks: "inventory_sources_from_aap_improved.yml"
+  include_tasks: "inventory_sources_from_aap.yml"
   vars:
     output_path: "{{ local_output_path }}/{{ current_inventory_sources.key }}"
     current_organization_inventories: "{{ current_inventory_sources.value }}"
@@ -69,7 +69,7 @@
     label: "{{ local_output_path }}/{{ current_inventory_sources.key }}"
 
 - name: "Set the inventory's hosts"
-  include_tasks: "hosts_from_aap_improved.yml"
+  include_tasks: "hosts_from_aap.yml"
   vars:
     output_path: "{{ local_output_path }}/{{ current_inventory_hosts.key }}"
     current_organization_inventories: "{{ current_inventory_hosts.value | json_query('[*].{hosts: hosts, name: name}') }}"
@@ -79,7 +79,7 @@
     label: "{{ local_output_path }}/{{ current_inventory_hosts.key }}"
 
 - name: "Set the inventory's groups"
-  include_tasks: "groups_from_aap_improved.yml"
+  include_tasks: "groups_from_aap.yml"
   vars:
     output_path: "{{ local_output_path }}/{{ current_inventory_groups.key }}"
     current_organization_inventories: "{{ current_inventory_groups.value }}"

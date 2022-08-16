@@ -24,7 +24,7 @@
 
 - name: "Add current workflow job templates to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_workflow_job_templates.yaml"
   template:
-    src: "templates/current_workflow_job_templates_improved.j2"
+    src: "templates/current_workflow_job_templates.j2"
     dest: "{{ output_path }}/{{ workflow_job_templates_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS') }}/current_workflow_job_templates.yaml"
     mode: '0644'
   vars:
@@ -35,5 +35,5 @@
     label: "{{ output_path }}/{{ workflow_job_templates_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS') }}/current_workflow_job_templates.yaml"
 
 - name: "Set the workflow_job_template's nodes"
-  include_tasks: "workflow_job_template_nodes_from_aap_improved.yml"
+  include_tasks: "workflow_job_template_nodes_from_aap.yml"
 ...
