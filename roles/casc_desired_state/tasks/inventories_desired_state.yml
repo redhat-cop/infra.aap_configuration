@@ -1,22 +1,22 @@
 ---
 - block:
-  - name: "Read Inventories definitions"
-    include_vars:
-      file: "{{ item.src }}"
-    with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_inventories.d/"
-    when: item.state == 'file'
-    register: contents
+    - name: "Read Inventories definitions"
+      include_vars:
+        file: "{{ item.src }}"
+      with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_inventories.d/"
+      when: item.state == 'file'
+      register: contents
 
-  - name: "Populate Inventories list"
-    set_fact:
-      populate_controller_inventories: "{{ (populate_controller_inventories | default([])) + item.ansible_facts.controller_inventories }}"
-    loop: "{{ contents.results }}"
-    when: contents.results is defined and item.ansible_facts.controller_inventories is defined
+    - name: "Populate Inventories list"
+      set_fact:
+        populate_controller_inventories: "{{ (populate_controller_inventories | default([])) + item.ansible_facts.controller_inventories }}"
+      loop: "{{ contents.results }}"
+      when: contents.results is defined and item.ansible_facts.controller_inventories is defined
 
-  - name: "Set Inventories Data Structure"
-    set_fact:
-      controller_inventories: "{{ populate_controller_inventories }}"
-    when: populate_controller_inventories is defined
+    - name: "Set Inventories Data Structure"
+      set_fact:
+        controller_inventories: "{{ populate_controller_inventories }}"
+      when: populate_controller_inventories is defined
 
   when: orgs is defined and dir_orgs_vars is defined
 
