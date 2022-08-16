@@ -1,3 +1,4 @@
+---
 controller_organizations:
   - name: "{{ orgs }}"
     description: "Organization for globally available objects"

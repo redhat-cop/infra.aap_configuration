@@ -1,3 +1,4 @@
+---
 controller_organizations:
   - name: "Organization1"
     description: "Organization 1 to tests"
