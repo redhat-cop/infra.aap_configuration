@@ -1,29 +1,29 @@
 ---
 - block:
-  - name: "Read Teams definitions"
-    include_vars:
-      file: "{{ item.src }}"
-    with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_teams.d/"
-    when: item.state == 'file'
-    register: contents
+    - name: "Read Teams definitions"
+      include_vars:
+        file: "{{ item.src }}"
+      with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_teams.d/"
+      when: item.state == 'file'
+      register: contents
 
-  - name: "Populate Teams list"
-    set_fact:
-      populate_controller_teams: "{{ (populate_controller_teams | default([])) + item.ansible_facts.controller_teams }}"
-    loop: "{{ contents.results }}"
-    when: contents.results is defined and item.ansible_facts.controller_teams is defined
+    - name: "Populate Teams list"
+      set_fact:
+        populate_controller_teams: "{{ (populate_controller_teams | default([])) + item.ansible_facts.controller_teams }}"
+      loop: "{{ contents.results }}"
+      when: contents.results is defined and item.ansible_facts.controller_teams is defined
 
-  - name: "Set Teams Data Structure"
-    set_fact:
-      controller_teams: "{{ populate_controller_teams }}"
-    when: populate_controller_teams is defined
+    - name: "Set Teams Data Structure"
+      set_fact:
+        controller_teams: "{{ populate_controller_teams }}"
+      when: populate_controller_teams is defined
 
   when: orgs is defined and dir_orgs_vars is defined
 
 - name: "DESIRED STATE: Get the current controller user to determine if it is super-admin"
   set_fact:
-       __controller_api_current_user_check_is_admin: "{{ lookup('ansible.controller.controller_api', 'users', query_params={ 'username': controller_username },
-         host=controller_hostname, oauth_token=oauthtoken, verify_ssl=false) }}"
+    __controller_api_current_user_check_is_admin: "{{ lookup('ansible.controller.controller_api', 'users', query_params={ 'username': controller_username },
+        host=controller_hostname, oauth_token=oauthtoken, verify_ssl=false) }}"
 - block:
     - name: Get the organization ID
       set_fact:

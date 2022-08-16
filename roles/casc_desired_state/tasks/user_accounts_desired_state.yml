@@ -1,23 +1,23 @@
 ---
 # tasks file for controller_ldap_settings
 - block:
-  - name: "Read User Accounts definitions"
-    include_vars:
-      file: "{{ item.src }}"
-    with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_users.d/"
-    when: item.state == 'file'
-    register: contents
+    - name: "Read User Accounts definitions"
+      include_vars:
+        file: "{{ item.src }}"
+      with_filetree: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_users.d/"
+      when: item.state == 'file'
+      register: contents
 
-  - name: "Populate User Accounts list"
-    set_fact:
-      populate_controller_user_accounts: "{{ (populate_controller_user_accounts | default([])) + item.ansible_facts.controller_user_accounts }}"
-    loop: "{{ contents.results }}"
-    when: contents.results is defined and item.ansible_facts.controller_user_accounts is defined
+    - name: "Populate User Accounts list"
+      set_fact:
+        populate_controller_user_accounts: "{{ (populate_controller_user_accounts | default([])) + item.ansible_facts.controller_user_accounts }}"
+      loop: "{{ contents.results }}"
+      when: contents.results is defined and item.ansible_facts.controller_user_accounts is defined
 
-  - name: "Set User Accounts Data Structure"
-    set_fact:
-      controller_user_accounts: "{{ populate_controller_user_accounts }}"
-    when: populate_controller_user_accounts is defined
+    - name: "Set User Accounts Data Structure"
+      set_fact:
+        controller_user_accounts: "{{ populate_controller_user_accounts }}"
+      when: populate_controller_user_accounts is defined
 
   when: orgs is defined and dir_orgs_vars is defined
 

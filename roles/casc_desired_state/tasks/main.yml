@@ -1,34 +1,35 @@
+---
 # tasks file for casc_desired_state
 #
-#- name: Include Tasks to configure Controller Roles
-#  include_tasks: roles_desired_state.yml
-#  args:
-#    apply:
-#      tags: desired_state_roles
-#  tags:
-#    - desired_state
-#    - desired_state_roles
+# - name: Include Tasks to configure Controller Roles
+#   include_tasks: roles_desired_state.yml
+#   args:
+#     apply:
+#       tags: desired_state_roles
+#   tags:
+#     - desired_state
+#     - desired_state_roles
 
 # REVIEW - TODO
 # - name: Include Tasks to config DESIRED STATE  Schedules
 
 - block:
-  - name: "Get the Authentication Token for the future requests"
-    uri:
-      url: "https://{{ controller_hostname }}/api/v2/tokens/"
-      user: "{{ controller_username }}"
-      password: "{{ controller_password }}"
-      method: POST
-      force_basic_auth: true
-      validate_certs: "{{ controller_validate_certs }}"
-      status_code: 201
-    register: authtoken_res
+    - name: "Get the Authentication Token for the future requests"
+      uri:
+        url: "https://{{ controller_hostname }}/api/v2/tokens/"
+        user: "{{ controller_username }}"
+        password: "{{ controller_password }}"
+        method: POST
+        force_basic_auth: true
+        validate_certs: "{{ controller_validate_certs }}"
+        status_code: 201
+      register: authtoken_res
 
-  - name: "Set the oauth token to be used since now"
-    set_fact:
-      oauthtoken: "{{ authtoken_res.json.token }}"
-      oauthtoken_url: "{{ authtoken_res.json.url }}"
-    no_log: true
+    - name: "Set the oauth token to be used since now"
+      set_fact:
+        oauthtoken: "{{ authtoken_res.json.token }}"
+        oauthtoken_url: "{{ authtoken_res.json.url }}"
+      no_log: true
 
   tags:
     - desired_state
@@ -154,16 +155,16 @@
 # - name: Include Tasks to config DESIRED STATE credential_input_sources
 
 # REVIEW - TODO
-#- name: Include Tasks to config DESIRED STATE credential_types
-#  include_tasks: credential_types_desired_state.yml
-#  args:
-#    apply:
-#      tags:
-#       - desired_state
-#       - desired_state_credential_types
-#  tags:
-#    - desired_state
-#    - desired_state_credential_types
+# - name: Include Tasks to config DESIRED STATE credential_types
+#   include_tasks: credential_types_desired_state.yml
+#   args:
+#     apply:
+#       tags:
+#        - desired_state
+#        - desired_state_credential_types
+#   tags:
+#     - desired_state
+#     - desired_state_credential_types
 
 - name: Include Tasks to config DESIRED STATE credentials
   include_tasks: credentials_desired_state.yml
@@ -177,16 +178,16 @@
     - desired_state_credentials
 
 # REVIEW - TODO
-#- name: Include Tasks to configure Controller Excecution Environments
-#  include_tasks: excecution_environments_desired_state.yml
-#  args:
-#    apply:
-#      tags:
-#        - desired_state
-#        - desired_state_excecution_environments
-#  tags:
-#    - desired_state
-#    - desired_state_excecution_environments
+# - name: Include Tasks to configure Controller Excecution Environments
+#   include_tasks: excecution_environments_desired_state.yml
+#   args:
+#     apply:
+#       tags:
+#         - desired_state
+#         - desired_state_excecution_environments
+#   tags:
+#     - desired_state
+#     - desired_state_excecution_environments
 
 - name: Include Tasks to config DESIRED STATE Organizations
   include_tasks: organizations_desired_state.yml
@@ -199,15 +200,15 @@
     - desired_state
     - desired_state_organizations
 
-#- name: Include Tasks to configure Controller Schedules
-#  include_tasks: schedules_desired_state.yml
-#  args:
-#    apply:
-#      tags:
-#        - desired_state
-#        - desired_state_schedules
-#  tags:
-#    - desired_state
-#    - desired_state_schedules
+# - name: Include Tasks to configure Controller Schedules
+#   include_tasks: schedules_desired_state.yml
+#   args:
+#     apply:
+#       tags:
+#         - desired_state
+#         - desired_state_schedules
+#   tags:
+#     - desired_state
+#     - desired_state_schedules
 
 ...

@@ -7,3 +7,4 @@
     - redhat_cop.controller_configuration
   roles:
     - casc_implementation
+...
