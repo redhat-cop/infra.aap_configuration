@@ -27,7 +27,7 @@
     controller_host: '{{ lookup("env", "CONTROLLER_HOST") | default(lookup("env", "TOWER_HOST"),true) }}'
     controller_username: '{{ lookup("env", "CONTROLLER_USERNAME") | default(lookup("env", "TOWER_USERNAME"),true) }}'
     controller_password: '{{ lookup("env", "CONTROLLER_PASSWORD") | default(lookup("env", "TOWER_PASSWORD"),true) }}'
-    validate_certs: '{{ lookup("env", "CONTROLLER_VERIFY_SSL") | default(lookup("env", "TOWER_VERIFY_SSL"),true) }}'
+    validate_certs: '{{ lookup("env", "CONTROLLER_VERIFY_SSL") | default(lookup("env", "TOWER_VERIFY_SSL"),true) | default(false,true) }}'
     name: "{{ org_tags.key }} CasC_JobTemplates_AAP_CI_Config_Controller"
     extra_vars:
       orgs: "{{ org_tags.key }}"
@@ -35,7 +35,6 @@
       ansible_python_interpreter: "/usr/bin/python3"
       env: "{{ env }}"
     tags: "{{ org_tags.value }}"
-    validate_certs: no
     wait: yes
     verbosity: 0
   with_dict: "{{ org_dirs_dict }}"

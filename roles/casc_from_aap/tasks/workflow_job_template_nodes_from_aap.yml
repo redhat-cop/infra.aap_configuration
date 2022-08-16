@@ -1,8 +1,7 @@
 ---
 - name: "Get the current Workflow Job Template Nodes from the API"
   set_fact:
-    # wfjtn_lookvar: "{{ (wfjtn_lookvar|default({})) | combine({wfjtn_lookvar_item.summary_fields.workflow_job_template.name: {'nodes': (wfjtn_lookvar[wfjtn_lookvar_item.summary_fields.workflow_job_template.name]['nodes']|default([]) + [wfjtn_lookvar_item] | flatten), 'wfjtn_url': wfjtn_lookvar_item.related.workflow_job_template}}) }}"
-    wfjtn_lookvar: "{{ (wfjtn_lookvar|default({})) | combine({wfjtn_lookvar_item.summary_fields.workflow_job_template.name: {'nodes': (wfjtn_lookvar[wfjtn_lookvar_item.summary_fields.workflow_job_template.name]['nodes']|default([]) + [wfjtn_lookvar_item] | flatten), 'organization': workflow_job_template_organization}}) }}"
+    wfjtn_lookvar: "{{ (wfjtn_lookvar | default({})) | combine({wfjtn_lookvar_item.summary_fields.workflow_job_template.name: {'nodes': (wfjtn_lookvar[wfjtn_lookvar_item.summary_fields.workflow_job_template.name]['nodes']|default([]) + [wfjtn_lookvar_item] | flatten), 'organization': workflow_job_template_organization} }) }}"
     needed_paths: "{{ ((needed_paths | default([])) + [workflow_job_template_organization]) | flatten | unique }}"
   vars:
     workflow_job_template_organization: "{{ query('ansible.controller.controller_api', wfjtn_lookvar_item.related.workflow_job_template, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs)[0].summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
