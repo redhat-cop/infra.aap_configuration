@@ -86,4 +86,3 @@
   when:
     - __controller_api_current_user_check_is_admin.is_superuser
 ...
-
