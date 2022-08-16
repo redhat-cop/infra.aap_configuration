@@ -2,22 +2,22 @@
 # tasks file for casc_implementation
 
 - block:
-  - name: "Get the Authentication Token for the future requests"
-    uri:
-      url: "https://{{ controller_hostname }}/api/v2/tokens/"
-      user: "{{ controller_username }}"
-      password: "{{ controller_password }}"
-      method: POST
-      force_basic_auth: true
-      validate_certs: "{{ controller_validate_certs }}"
-      status_code: 201
-    register: authtoken_res
+    - name: "Get the Authentication Token for the future requests"
+      uri:
+        url: "https://{{ controller_hostname }}/api/v2/tokens/"
+        user: "{{ controller_username }}"
+        password: "{{ controller_password }}"
+        method: POST
+        force_basic_auth: true
+        validate_certs: "{{ controller_validate_certs }}"
+        status_code: 201
+      register: authtoken_res
 
-  - name: "Set the oauth token to be used since now"
-    set_fact:
-      controller_oauthtoken: "{{ authtoken_res.json.token }}"
-      oauthtoken_url: "{{ authtoken_res.json.url }}"
-    no_log: true
+    - name: "Set the oauth token to be used since now"
+      set_fact:
+        controller_oauthtoken: "{{ authtoken_res.json.token }}"
+        oauthtoken_url: "{{ authtoken_res.json.url }}"
+      no_log: true
 
   tags:
     - settings
