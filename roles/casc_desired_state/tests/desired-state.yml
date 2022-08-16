@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  collections:
+    - ansible.controller
+    - redhat_cop.controller_configuration
+  roles:
+    - casc_desired_state
