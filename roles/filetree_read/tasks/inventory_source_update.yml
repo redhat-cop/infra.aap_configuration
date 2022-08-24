@@ -9,18 +9,19 @@
 
   - name: "Populate Inventory Source list"
     set_fact:
-      populate_controller_inventory_sources: "{{ (populate_controller_inventory_sources | default([])) + item.ansible_facts.controller_inventory_sources }}"
+      __populate_controller_inventory_source_update: "{{ (populate_controller_inventory_source_update | default([])) + item.ansible_facts.controller_inventory_sources }}"
     loop: "{{ contents.results }}"
     when: contents.results is defined and item.ansible_facts.controller_inventory_sources is defined
 
   - name: "Set Inventory Source Data Structure"
     set_fact:
-      controller_inventory_sources: "{{ populate_controller_inventory_sources }}"
-    when: populate_controller_inventory_sources is defined
+      controller_inventory_sources: "{{ __populate_controller_inventory_source_update }}"
+    when: __populate_controller_inventory_sources is defined
 
   when: dir_orgs_vars is defined and orgs is defined and env is defined
 
-- name: Configure Controller Inventory Sources | Launch inventory creation
+
+- name: Update Controller Inventory Sources | Launch inventory Source Update
   import_role:
-    name: redhat_cop.controller_configuration.inventory_sources
+    name: redhat_cop.controller_configuration.inventory_source_update
 ...
