@@ -24,7 +24,7 @@
         name: redhat_cop.controller_configuration.job_launch
       vars:
         controller_launch_jobs:
-          - name: "{{ org_tags.key }} JobTemplates_AAP_CI_Config_Controller"
+          - name: "{{ org_tags.key }} JobTemplates_AAP_CD_Config_Controller"
             extra_vars:
               orgs: "{{ org_tags.key }}"
               dir_orgs_vars: 'orgs_vars'
