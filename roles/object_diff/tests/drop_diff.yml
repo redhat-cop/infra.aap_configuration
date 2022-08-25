@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  roles:
+    - role: redhat_cop.controller_configuration.filetree_read
+    - role: redhat_cop.controller_configuration.object_diff
+    - role: redhat_cop.controller_configuration.dispatch
+      vars:
+        controller_configuration_dispatcher_roles:
+          - {role: workflow_job_templates, var: controller_workflows, tags: workflow_job_templates}
+          - {role: job_templates, var: controller_templates, tags: job_templates}
+          - {role: teams, var: controller_teams, tags: teams}
+          - {role: users, var: controller_user_accounts, tags: users}
+          - {role: groups, var: controller_groups, tags: inventories}
+          - {role: hosts, var: controller_hosts, tags: hosts}
+          - {role: inventory_sources, var: controller_inventory_sources, tags: inventory_sources}
+          - {role: inventories, var: controller_inventories, tags: inventories}
+          - {role: projects, var: controller_projects, tags: projects}
+          - {role: credentials, var: controller_credentials, tags: credentials}
+          - {role: credential_types, var: controller_credential_types, tags: credential_types}
+          - {role: organizations, var: controller_organizations, tags: organizations}
+...
