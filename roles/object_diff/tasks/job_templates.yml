@@ -1,0 +1,22 @@
+---
+- name: Get the organization ID
+  set_fact:
+    __controller_organization_id: "{{ lookup('ansible.controller.controller_api', 'organizations', query_params={ 'name': orgs },
+      host=controller_hostname, oauth_token=oauthtoken, verify_ssl=false) }}"
+
+- name: "OBJECT DIFF: Get the API list of all Job Templates {{ orgs }} Organization"
+  set_fact:
+    __controller_api_job_templates: "{{ query('ansible.controller.controller_api', 'job_templates',
+      query_params={ 'organization': __controller_organization_id.id },
+      host=controller_hostname, oauth_token=oauthtoken, verify_ssl=false) }}"
+
+- name: "OBJECT DIFF: Find the difference of Job Templates between what is on the Controller versus CasC on SCM"
+  set_fact:
+    __job_templates_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
+      api_list=__controller_api_job_templates, compare_list=controller_templates,
+      with_present=false, set_absent=true ) }}"
+
+- name: "OBJECT DIFF: Set job_template's list to be configured"
+  set_fact:
+    controller_templates: "{{ __job_templates_difference }}"
+...

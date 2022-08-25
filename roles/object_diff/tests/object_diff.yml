@@ -6,5 +6,5 @@
     - ansible.controller
     - redhat_cop.controller_configuration
   roles:
-    - casc_desired_state
+    - object_diff
 ...

@@ -1,5 +1,5 @@
 ---
-# defaults file for casc_desired_state
+# defaults file for object_diff
 
 # Authentication
 controller_username: "{{ vault_controller_username | default(lookup('env', 'CONTROLLER_USERNAME')) }}"

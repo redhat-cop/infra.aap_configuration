@@ -1,0 +1,22 @@
+---
+- name: Get the organization ID
+  set_fact:
+    __controller_organization_id: "{{ lookup('ansible.controller.controller_api', 'organizations', query_params={ 'name': orgs },
+      host=controller_hostname, oauth_token=oauthtoken, verify_ssl=false) }}"
+
+- name: "OBJECT DIFF: Get the API list of all Projects {{ orgs }} Organization"
+  set_fact:
+    __controller_api_projects: "{{ query('ansible.controller.controller_api', 'projects',
+      query_params={ 'organization': __controller_organization_id.id },
+      host=controller_hostname, oauth_token=oauthtoken, verify_ssl=false) }}"
+
+- name: "OBJECT DIFF: Find the difference of Project between what is on the Controller versus CasC on SCM"
+  set_fact:
+    __projects_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
+      api_list=__controller_api_projects, compare_list=controller_projects,
+      with_present=false, set_absent=true ) }}"
+
+- name: "OBJECT DIFF: Set project's list to be configured"
+  set_fact:
+    controller_projects: "{{ __projects_difference }}"
+...
