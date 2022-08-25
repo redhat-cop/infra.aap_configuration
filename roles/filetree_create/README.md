@@ -34,8 +34,6 @@ Example Playbook
     controller_username: "{{ vault_controller_username }}"
     controller_password: "{{ vault_controller_password }}"
     controller_validate_certs: "{{ vault_controller_validate_certs }}"
-  collections:
-    - redhat_cop.controller_configuration
   pre_tasks:
     - name: "Check if the required input variables are present"
       assert:
@@ -55,7 +53,7 @@ Example Playbook
       loop_control:
         loop_var: tag_item
   roles:
-    - filetree_create
+    - redhat_cop.controller_configuration.filetree_create
 ...
 ```
 
