@@ -1,6 +1,6 @@
 ---
 # vars file for casc_implementation
-output_path: "/tmp/casc_from_aap_output"
+output_path: "/tmp/filetree_output"
 valid_tags:
   - all
   - credentials

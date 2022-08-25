@@ -35,5 +35,5 @@
     label: "{{ output_path }}/{{ workflow_job_templates_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS') }}/current_workflow_job_templates.yaml"
 
 - name: "Set the workflow_job_template's nodes"
-  include_tasks: "workflow_job_template_nodes_from_aap.yml"
+  include_tasks: "workflow_job_template_nodes.yml"
 ...

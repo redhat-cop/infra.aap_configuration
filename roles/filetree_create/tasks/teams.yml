@@ -35,7 +35,7 @@
     label: "{{ output_path }}/{{ teams_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}/current_teams.yaml"
 
 - name: "Set the team's roles"
-  include_tasks: "team_roles_from_aap.yml"
+  include_tasks: "team_roles.yml"
   vars:
     teamname: "{{ item.name }}"
     teamid: "{{ item.id }}"
