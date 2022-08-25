@@ -2,9 +2,6 @@
 - hosts: localhost
   connection: local
   gather_facts: false
-  collections:
-    - ansible.controller
-    - redhat_cop.controller_configuration
   roles:
-    - object_diff
+    - redhat_cop.controller_configuration.object_diff
 ...

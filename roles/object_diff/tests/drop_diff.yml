@@ -2,10 +2,6 @@
 - hosts: localhost
   connection: local
   gather_facts: false
-  collections:
-    - ansible.controller
-    - redhat_cop.controller_configuration
-    - redhat_cop.controller_casc
   roles:
     - role: redhat_cop.controller_configuration.filetree_read
     - role: redhat_cop.controller_configuration.object_diff
