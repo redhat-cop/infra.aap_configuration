@@ -1,0 +1,19 @@
+---
+- name: "Read User Accounts definitions"
+  include_vars:
+    file: "{{ item.src }}"
+  with_filetree: "{{ filetree_controller_user_accounts }}"
+  when: item.state == 'file'
+  register: __contents_filetree_controller_user_accounts
+
+- name: "Populate User Accounts list"
+  set_fact:
+    __populate_controller_user_accounts: "{{ (__populate_controller_user_accounts | default([])) + item.ansible_facts.controller_user_accounts }}"
+  loop: "{{ __contents_filetree_controller_user_accounts.results }}"
+  when: __contents_filetree_controller_user_accounts.results is defined and item.ansible_facts.controller_user_accounts is defined
+
+- name: "Set User Accounts Data Structure"
+  set_fact:
+    controller_user_accounts: "{{ __populate_controller_user_accounts }}"
+  when: __populate_controller_user_accounts is defined
+...

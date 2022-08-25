@@ -1,0 +1,19 @@
+---
+- name: "Read Organization definitions"
+  include_vars:
+    file: "{{ item.src }}"
+  with_filetree: "{{ filetree_controller_organizations }}"
+  when: item.state == 'file'
+  register: __contents_filetree_controller_organizations
+
+- name: "Populate Organizations list"
+  set_fact:
+    __populate_controller_organizations: "{{ (__populate_controller_organizations | default([])) + item.ansible_facts.controller_organizations }}"
+  loop: "{{ __contents_filetree_controller_organizations.results }}"
+  when: __contents_filetree_controller_organizations.results is defined and item.ansible_facts.controller_organizations is defined
+
+- name: "Set Organization Data Structure"
+  set_fact:
+    controller_organizations: "{{ __populate_controller_organizations }}"
+  when: __populate_controller_organizations is defined
+...

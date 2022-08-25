@@ -1,0 +1,19 @@
+---
+- name: "Read Roles definitions"
+  include_vars:
+    file: "{{ item.src }}"
+  with_filetree: "{{ filetree_controller_roles }}"
+  when: item.state == 'file'
+  register: __contents_filetree_controller_roles
+
+- name: "Populate Roles list"
+  set_fact:
+    __populate_controller_roles: "{{ (__populate_controller_roles | default([])) + item.ansible_facts.controller_roles }}"
+  loop: "{{ __contents_filetree_controller_roles.results }}"
+  when: __contents_filetree_controller_roles.results is defined and item.ansible_facts.controller_roles is defined
+
+- name: "Set Roles Data Structure"
+  set_fact:
+    controller_roles: "{{ __populate_controller_roles }}"
+  when: __populate_controller_roles is defined
+...

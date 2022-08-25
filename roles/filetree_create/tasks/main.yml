@@ -1,0 +1,27 @@
+---
+# tasks file for filetree_create
+- name: "Check if the required input variables are present"
+  assert:
+    that:
+      - input_tag is defined
+      - (input_tag | type_debug) == 'list'
+    fail_msg: 'A variable called ''input_tag'' of type ''list'' is needed: -e ''{input_tag: [organizations, projects]}'''
+    quiet: true
+
+- name: "Check if the required input values are correct"
+  assert:
+    that:
+      - tag_item in valid_tags
+    fail_msg: "The valid tags are the following ones: {{ valid_tags | join(', ') }}"
+    quiet: true
+  loop: "{{ input_tag }}"
+  loop_control:
+    loop_var: tag_item
+
+- name: "Include Tasks to get all objects of type {{ input_tag }}"
+  include_tasks: all.yml
+  args:
+    apply:
+      tags: "{{ input_tag | to_yaml }}"
+  tags: "{{ valid_tags }}"
+...

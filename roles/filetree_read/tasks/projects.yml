@@ -1,0 +1,19 @@
+---
+- name: "Read Projects definitions"
+  include_vars:
+    file: "{{ item.src }}"
+  with_filetree: "{{ filetree_controller_projects }}"
+  when: item.state == 'file'
+  register: __contents_filetree_controller_projects
+
+- name: "Populate Projects list"
+  set_fact:
+    __populate_controller_projects: "{{ (__populate_controller_projects | default([])) + item.ansible_facts.controller_projects }}"
+  loop: "{{ __contents_filetree_controller_projects.results }}"
+  when: __contents_filetree_controller_projects.results is defined and item.ansible_facts.controller_projects is defined
+
+- name: "Set Projects Data Structure"
+  set_fact:
+    controller_projects: "{{ __populate_controller_projects }}"
+  when: __populate_controller_projects is defined
+...

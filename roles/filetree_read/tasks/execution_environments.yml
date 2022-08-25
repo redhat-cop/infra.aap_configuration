@@ -1,0 +1,19 @@
+---
+- name: "Read Execution Environments definitions"
+  include_vars:
+    file: "{{ item.src }}"
+  with_filetree: "{{ filetree_controller_execution_environments }}"
+  when: item.state == 'file'
+  register: __contents_filetree_controller_execution_environments
+
+- name: "Populate Execution Environments list"
+  set_fact:
+    __populate_controller_execution_environments: "{{ (__populate_controller_execution_environments | default([])) + item.ansible_facts.controller_execution_environments }}"
+  loop: "{{ __contents_filetree_controller_execution_environments.results }}"
+  when: __contents_filetree_controller_execution_environments.results is defined and item.ansible_facts.controller_execution_environments is defined
+
+- name: "Set Projects Data Structure"
+  set_fact:
+    controller_execution_environments: "{{ __populate_controller_execution_environments }}"
+  when: __populate_controller_execution_environments is defined
+...

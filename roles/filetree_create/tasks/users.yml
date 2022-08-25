@@ -1,0 +1,43 @@
+---
+- name: "Get current Users from the API"
+  set_fact:
+    users_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/users/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) }}"
+
+- name: "Add the users the Organizations information"
+  set_fact:
+    current_users: "{{ (current_users | default([])) + [user_lookvar_item | combine({'organizations': user_lookvar_item_organizations})] }}"
+  vars:
+    user_lookvar_item_organizations: "{{ query('ansible.controller.controller_api', user_lookvar_item.related.organizations, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].name') }}"
+  loop: "{{ users_lookvar }}"
+  loop_control:
+    loop_var: user_lookvar_item
+    label: "User {{ user_lookvar_item.username }}"
+
+- name: "Create the output directory for users: {{ output_path }}/<ORGANIZATION_NAME>"
+  file:
+    path: "{{ output_path }}/{{ current_user_dir }}"
+    state: directory
+    mode: '0755'
+  loop: "{{ current_users | json_query('[*].organizations') | flatten | unique }}"
+  loop_control:
+    loop_var: current_user_dir
+    label: "{{ output_path }}/{{ current_user_dir }}"
+
+- name: "Add current users to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_users_<USERNAME>.yaml"
+  template:
+    src: "templates/current_users.j2"
+    dest: "{{ output_path }}/{{ current_user_dir.1 }}/current_users_{{ current_user_dir.0.username }}.yaml"
+    mode: '0644'
+  vars:
+    current_users_asset_value: "{{ current_user_dir.0 }}"
+  loop: "{{ current_users | subelements('organizations') }}"
+  loop_control:
+    loop_var: current_user_dir
+    label: "{{ output_path }}/{{ current_user_dir.1 }}/current_users_{{ current_user_dir.0.username }}.yaml"
+
+- name: "Set the user's roles"
+  include_tasks: "user_roles.yml"
+  vars:
+    username: "{{ item.username }}"
+  loop: "{{ users_lookvar }}"
+...

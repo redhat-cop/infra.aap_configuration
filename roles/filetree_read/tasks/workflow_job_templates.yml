@@ -1,0 +1,19 @@
+---
+- name: "Read Workflow Job Templates definitions"
+  include_vars:
+    file: "{{ item.src }}"
+  with_filetree: "{{ filetree_controller_workflow_job_templates }}"
+  when: item.state == 'file'
+  register: __contents_filetree_controller_workflow_job_templates
+
+- name: "Populate Workflow Job Templates list"
+  set_fact:
+    __populate_controller_workflow_job_templates: "{{ (__populate_controller_workflow_job_templates | default([])) + item.ansible_facts.controller_workflows }}"
+  loop: "{{ __contents_filetree_controller_workflow_job_templates.results }}"
+  when: __contents_filetree_controller_workflow_job_templates.results is defined and item.ansible_facts.controller_workflows is defined
+
+- name: "Set Job Templates Data Structure"
+  set_fact:
+    controller_workflows: "{{ __populate_controller_workflow_job_templates }}"
+  when: __populate_controller_workflow_job_templates is defined
+...

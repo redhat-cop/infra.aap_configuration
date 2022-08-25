@@ -1,0 +1,19 @@
+---
+- name: "Read Groups definitions"
+  include_vars:
+    file: "{{ item.src }}"
+  with_filetree: "{{ filetree_controller_groups }}"
+  when: item.state == 'file'
+  register: __contents_filetree_controller_groups
+
+- name: "Populate Groups list"
+  set_fact:
+    __populate_controller_groups: "{{ (__populate_controller_groups | default([])) + item.ansible_facts.controller_groups }}"
+  loop: "{{ __contents_filetree_controller_groups.results }}"
+  when: __contents_filetree_controller_groups.results is defined and item.ansible_facts.controller_groups is defined
+
+- name: "Set Groups Data Structure"
+  set_fact:
+    controller_groups: "{{ __populate_controller_groups }}"
+  when: __populate_controller_groups is defined
+...
