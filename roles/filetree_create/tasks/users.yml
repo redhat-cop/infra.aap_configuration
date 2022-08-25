@@ -36,7 +36,7 @@
     label: "{{ output_path }}/{{ current_user_dir.1 }}/current_users_{{ current_user_dir.0.username }}.yaml"
 
 - name: "Set the user's roles"
-  include_tasks: "user_roles_from_aap.yml"
+  include_tasks: "user_roles.yml"
   vars:
     username: "{{ item.username }}"
   loop: "{{ users_lookvar }}"

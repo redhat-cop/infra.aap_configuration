@@ -1,8 +1,8 @@
-`casc_from_aap`
-controller_configuration.casc_from_aap
+`filetree_create`
+controller_configuration.filetree_create
 =========
 
-The role `casc_from_aap` is intended to be used as the first step to begin using the Configuration as Code on Ansible Tower or Ansible Automation Platform, when you already have a running instance of any of them. Obviously, you also could start to write your objects as code from scratch, but the idea behind the creation of that role is to simplify your lives and make that task a little bit easier.
+The role `filetree_create` is intended to be used as the first step to begin using the Configuration as Code on Ansible Tower or Ansible Automation Platform, when you already have a running instance of any of them. Obviously, you also could start to write your objects as code from scratch, but the idea behind the creation of that role is to simplify your lives and make that task a little bit easier.
 
 Requirements
 ------------
@@ -14,7 +14,7 @@ Role Variables
 
 The following variables are required for that role to work properly:
 
-- **`output_path`**: The path to the output directory where all the generated `yaml` files with the corresponding Objects as code will be written to. The default path is `/tmp/casc_from_aap_output`.
+- **`output_path`**: The path to the output directory where all the generated `yaml` files with the corresponding Objects as code will be written to. The default path is `/tmp/filetree_output`.
 
 Dependencies
 ------------
@@ -55,7 +55,7 @@ Example Playbook
       loop_control:
         loop_var: tag_item
   roles:
-    - casc_from_aap
+    - filetree_create
 ...
 ```
 
