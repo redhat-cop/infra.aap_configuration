@@ -1,5 +1,5 @@
 ---
-# vars file for casc_implementation
+# vars file for filetree_create
 output_path: "/tmp/filetree_output"
 valid_tags:
   - all

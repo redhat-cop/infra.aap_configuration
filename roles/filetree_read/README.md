@@ -221,13 +221,13 @@ orgs_vars/Organization1
     │   │   │   ├── controller_inventory_sources_sourceb_dev.yml
     │   │   │   └── controller_inventory_sources_sourceb_prod.yml
     │   │   └── controller_inventory_sources.yml
-    │   └── controller_settings.d
-    │       ├── app-examples
-    │       │   ├── controller_settings_jobs.yml
-    │       │   ├── controller_settings_ldap.yml
-    │       │   ├── controller_settings_system.yml
-    │       │   └── controller_settings_user_interface.yml
-    │       └── controller_settings.yml
+    │   └── controller_settings.d                           (1)
+    │       ├── app-examples                                (1)
+    │       │   ├── controller_settings_jobs.yml            (1)
+    │       │   ├── controller_settings_ldap.yml            (1)
+    │       │   ├── controller_settings_system.yml          (1)
+    │       │   └── controller_settings_user_interface.yml  (1)
+    │       └── controller_settings.yml                     (1)
     └── demo-prd
         ├── controller_credentials.d
         │   ├── app-examples
@@ -264,16 +264,15 @@ orgs_vars/Organization1
         │   │   ├── controller_inventory_sources_sourceb_dev.yml
         │   │   └── controller_inventory_sources_sourceb_prod.yml
         │   └── controller_inventory_sources.yml
-        └── controller_settings.d
-            ├── app-examples
-            │   ├── controller_settings_jobs.yml
-            │   ├── controller_settings_ldap.yml
-            │   ├── controller_settings_system.yml
-            │   └── controller_settings_user_interface.yml
-            └── controller_settings.yml
-
+        └── controller_settings.d                          (1)
+            ├── app-examples                               (1)
+            │   ├── controller_settings_jobs.yml           (1)
+            │   ├── controller_settings_ldap.yml           (1)
+            │   ├── controller_settings_system.yml         (1)
+            │   └── controller_settings_user_interface.yml (1)
+            └── controller_settings.yml                    (1)
 ```
-
+> **NOTE (1):** These directories and files must belong to SuperAdmin Organization ONLY, because must have admin super powers.
 
 Role Tags
 ----------------

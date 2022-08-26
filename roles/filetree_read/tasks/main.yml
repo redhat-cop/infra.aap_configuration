@@ -1,5 +1,5 @@
 ---
-# tasks file for casc_implementation
+# tasks file for filetree_read
 
 - block:
     - name: "Get the Authentication Token for the future requests"
@@ -20,27 +20,7 @@
       no_log: true
 
   tags:
-    - settings
-    - organizations
-    - labels
-    - users
-    - teams
-    - credential_types
-    - credential_input_sources
-    - credentials
-    - notifications
-    - projects
-    - execution_environments
-    - applications
-    - inventories
-    - inventory_sources
-    - instance_groups
-    - hosts
-    - groups
-    - job_templates
-    - workflow_job_templates
-    - schedules
-    - roles
+    - always
 
 - name: Include Tasks to config Settings
   include_tasks: settings.yml

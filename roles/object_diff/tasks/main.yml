@@ -18,18 +18,7 @@
       no_log: true
 
   tags:
-    - workflow_job_templates
-    - job_templates
-    - teams
-    - users
-    - groups
-    - hosts
-    - inventory_sources
-    - inventories
-    - projects
-    - credentials
-    - credential_types
-    - organizations
+    - always
 
 - name: Include Tasks to configure Controller Workflow Job Templates
   include_tasks: workflow_job_templates.yml
