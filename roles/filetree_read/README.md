@@ -80,7 +80,7 @@ controller_templates:
 ```
 
 ### Directory and Variables Data Structure for Authentication (Optional)
-- It could be created in the follwoing path encrypted variables to be loaded to authenticated against the different controllers.
+- It could be created in the following path encrypted variables to be loaded to authenticate against the different controllers.
 
 ```bash
  tree -L 5 orgs_vars/env/
