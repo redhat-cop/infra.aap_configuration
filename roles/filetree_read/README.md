@@ -297,16 +297,17 @@ Example Playbook
   vars:
     controller_configuration_projects_async_retries: 60
     controller_configuration_projects_async_delay: 2
-  roles:
-    - {role: redhat_cop.controller_configuration.filetree_read, assign_galaxy_credentials_to_org: false}
-    - {role: redhat_cop.controller_configuration.dispatch, assign_galaxy_credentials_to_org: false}
-
-  post_tasks:
+  pre_tasks:
     - block:
         - name: Include Tasks to load Galaxy credentials to be added to Organizations
           ansible.builtin.include_role:
             name: redhat_cop.controller_configuration.filetree_read
-            tasks_from: organizations.yml
+            tasks_from: "{{ create_orgs_credentials }}"
+          loop:
+            - organizations.yml
+            - credentials.yml
+          loop_control:
+            loop_var: create_orgs_credentials
 
         - name: Include Tasks to add Galaxy credentials to Organizations
           ansible.builtin.include_role:
@@ -314,11 +315,16 @@ Example Playbook
             apply:
               tags:
                 - organizations
+                - credentials
           vars:
+            assign_galaxy_credentials_to_org: false
             controller_configuration_dispatcher_roles:
               - {role: organizations, var: controller_organizations, tags: organizations}
-      tags:
-        - organizations
+              - {role: credentials, var: controller_credentials, tags: credentials}
+
+  roles:
+    - {role: redhat_cop.controller_configuration.filetree_read }
+    - {role: redhat_cop.controller_configuration.dispatch }
 ...
 
 ```
