@@ -58,4 +58,28 @@ filetree_controller_templates: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/contro
 filetree_controller_workflow_job_templates: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_workflow_job_templates.d/"
 filetree_controller_schedules: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_schedules.d/"
 filetree_controller_roles: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_roles.d/"
+
+# filetree_read tasks order and name
+controller_configuration_filetree_read_tasks:
+  - {name: settings, var: controller_settings, tags: settings}
+  - {name: organizations, var: controller_organizations, tags: organizations}
+  - {name: labels, var: controller_labels, tags: labels}
+  - {name: user_accounts, var: controller_user_accounts, tags: users}
+  - {name: teams, var: controller_teams, tags: teams}
+  - {name: credential_types, var: controller_credential_types, tags: credential_types}
+  - {name: credential_input_sources, var: controller_credential_input_sources, tags: credential_input_sources}
+  - {name: credentials, var: controller_credentials, tags: credentials}
+  - {name: notifications, var: controller_notifications, tags: notification_templates}
+  - {name: projects, var: controller_projects, tags: projects}
+  - {name: execution_environments, var: controller_execution_environments, tags: execution_environments}
+  - {name: applications, var: controller_applications, tags: applications}
+  - {name: inventories, var: controller_inventories, tags: inventories}
+  - {name: inventory_sources, var: controller_inventory_sources, tags: inventory_sources}
+  - {name: instance_groups, var: controller_instance_groups, tags: instance_groups}
+  - {name: hosts, var: controller_hosts, tags: hosts}
+  - {name: groups, var: controller_groups, tags: inventories}
+  - {name: job_templates, var: controller_templates, tags: job_templates}
+  - {name: workflow_job_templates, var: controller_workflows, tags: workflow_job_templates}
+  - {name: schedules, var: controller_schedules, tags: schedules}
+  - {name: roles, var: controller_roles, tags: roles}
 ...

@@ -20,115 +20,14 @@
   tags:
     - always
 
-- name: Include Tasks to configure Controller Workflow Job Templates
-  include_tasks: workflow_job_templates.yml
+- name: "Include Tasks to get OBJECT DIFF {{  __task_diff.name }}"
+  include_tasks: "{{  __task_diff.name }}.yml"
   args:
     apply:
-      tags:
-        - workflow_job_templates
-  tags:
-    - workflow_job_templates
+      tags: "{{  __task_diff.tags }}"
+  tags: always
+  loop: "{{ controller_configuration_object_diff_tasks }}"
+  loop_control:
+    loop_var: __task_diff
 
-- name: Include Tasks to configure Controller Job Templates
-  include_tasks: job_templates.yml
-  args:
-    apply:
-      tags:
-        - job_templates
-  tags:
-    - job_templates
-
-# REVIEW - TODO - Not delete FROM External Source - LDAP
-# drop_teams It must be defined to run the Team's object diff.
-# https://issues.redhat.com/projects/AAP/issues/AAP-2393
-- name: Include Tasks to configure Controller Teams
-  include_tasks: teams.yml
-  args:
-    apply:
-      tags:
-        - teams
-  tags:
-    - teams
-  when: drop_teams is defined
-
-- name: Include Tasks to config OBJECT DIFF User Accounts
-  include_tasks: user_accounts.yml
-  args:
-    apply:
-      tags:
-        - users
-  tags:
-    - users
-
-- name: Include Tasks to config OBJECT DIFF groups
-  include_tasks: groups.yml
-  args:
-    apply:
-      tags:
-        - groups
-  tags:
-    - groups
-
-- name: Include Tasks to config OBJECT DIFF hosts
-  include_tasks: hosts.yml
-  args:
-    apply:
-      tags:
-        - hosts
-  tags:
-    - hosts
-
-- name: Include Tasks to configure Controller Inventory Sources
-  include_tasks: inventory_sources.yml
-  args:
-    apply:
-      tags:
-        - inventory_sources
-  tags:
-    - inventory_sources
-
-- name: Include Tasks to configure Controller Inventories
-  include_tasks: inventories.yml
-  args:
-    apply:
-      tags:
-        - inventories
-  tags:
-    - inventories
-
-- name: Include Tasks to config OBJECT DIFF Projects
-  include_tasks: projects.yml
-  args:
-    apply:
-      tags:
-        - projects
-  tags:
-    - projects
-
-- name: Include Tasks to config OBJECT DIFF credentials
-  include_tasks: credentials.yml
-  args:
-    apply:
-      tags:
-        - credentials
-  tags:
-    - credentials
-
-- name: Include Tasks to config OBJECT DIFF credential types
-  include_tasks: credential_types.yml
-  args:
-    apply:
-      tags:
-        - credential_types
-  tags:
-    - credential_types
-
-- name: Include Tasks to config OBJECT DIFF Organizations
-  include_tasks: organizations.yml
-  args:
-    apply:
-      tags:
-        - organizations
-  tags:
-    - organizations
 ...

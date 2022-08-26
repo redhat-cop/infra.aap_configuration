@@ -11,32 +11,40 @@ controller_validate_certs: "{{ vault_controller_validate_certs | default(lookup(
 drop_user_external_accounts: True
 
 # Automation Controller Object Lists
-controller_ad_hoc_commands: []
-controller_ad_hoc_commands_cancel: []
-controller_applications: []
-controller_cancel_jobs: []
-controller_credential_input_sources: []
+controller_settings: []
+controller_organizations: []
+controller_labels: []
+controller_user_accounts: []
+controller_teams: []
 controller_credential_types: []
 controller_credentials: []
+controller_credential_input_sources: []
+controller_notifications: []
+controller_projects: []
 controller_execution_environments: []
-controller_groups: []
-controller_hosts: []
-controller_instance_groups: []
+controller_applications: []
 controller_inventories: []
 controller_inventory_sources: []
-controller_labels: []
-controller_launch_jobs: []
-controller_license: []
-controller_notifications: []
-controller_organizations: []
-controller_projects: []
-controller_roles: []
-controller_schedules: []
-controller_settings: []
-controller_teams: []
+controller_instance_groups: []
+controller_hosts: []
+controller_groups: []
 controller_templates: []
-controller_user_accounts: []
-controller_workflow_launch_jobs: []
-controller_workflow_nodes: []
-controller_workflows: []
+controller_workflow_job_templates: []
+controller_schedules: []
+controller_roles: []
+
+# object_diff tasks name
+controller_configuration_object_diff_tasks:
+  - {name: workflow_job_templates, var: controller_workflows, tags: workflow_job_templates}
+  - {name: job_templates, var: controller_templates, tags: job_templates}
+  - {name: teams, var: controller_teams, tags: teams}
+  - {name: user_accounts, var: controller_user_accounts, tags: users}
+  - {name: groups, var: controller_groups, tags: groups}
+  - {name: hosts, var: controller_hosts, tags: hosts}
+  - {name: inventory_sources, var: controller_inventory_sources, tags: inventory_sources}
+  - {name: inventories, var: controller_inventories, tags: inventories}
+  - {name: projects, var: controller_projects, tags: projects}
+  - {name: credentials, var: controller_credentials, tags: credentials}
+  - {name: credential_types, var: controller_credential_types, tags: credential_types}
+  - {name: organizations, var: controller_organizations, tags: organizations}
 ...

@@ -35,7 +35,8 @@ $ ansible-playbook object_diff.yml --list-tags
 
 Example Playbook
 ----------------
----
+
+```bash
 ---
 - hosts: localhost
   connection: local
@@ -58,9 +59,8 @@ Example Playbook
           - {role: credentials, var: controller_credentials, tags: credentials}
           - {role: credential_types, var: controller_credential_types, tags: credential_types}
           - {role: organizations, var: controller_organizations, tags: organizations}
-```bash
-$ ansible-playbook drop_diff.yml --tags ${CONTROLLER_OBJECT} -e "{orgs: ${ORGANIZATION}, dir_orgs_vars: orgs_vars, env: ${ENVIRONMENT} }" --vault-password-file ./.vault_pass.txt -e @orgs_vars/env/${ENVIRONMENT}/configure_connection_controller_credentials.yml ${OTHER}
 
+$ ansible-playbook drop_diff.yml --tags ${CONTROLLER_OBJECT} -e "{orgs: ${ORGANIZATION}, dir_orgs_vars: orgs_vars, env: ${ENVIRONMENT} }" --vault-password-file ./.vault_pass.txt -e @orgs_vars/env/${ENVIRONMENT}/configure_connection_controller_credentials.yml ${OTHER}
 ```
 
 License
