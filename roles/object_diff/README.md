@@ -79,7 +79,8 @@ Author Information
   - email: <iaragone@redhat.com>
   - github: https://github.com/ivarmu
 
-ToDo
-------------------
-- roles
-- Issue: Due to the Team Object doesn't return any field related to external account on Controller API, which help to filter if the teams comes from an External Source and not to be deleted by the Object Diff Ansible automation process.
+Important things to take into account
+-------------------------------------
+- Issues:
+  - Users and Teams must be managed by users with privileges.
+  - Due to the Team Object doesn't return from API any field related to external account on Controller API, which help to filter if the teams comes from an External Source and not to be deleted by the Object Diff Ansible automation process.
