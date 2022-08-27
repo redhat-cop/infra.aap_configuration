@@ -31,6 +31,6 @@
               - {role: credentials, var: controller_credentials, tags: credentials}
 
   roles:
-    - {role: redhat_cop.controller_configuration.filetree_read }
-    - {role: redhat_cop.controller_configuration.dispatch }
+    - {role: redhat_cop.controller_configuration.filetree_read}
+    - {role: redhat_cop.controller_configuration.dispatch}
 ...
