@@ -25,6 +25,7 @@ controller_templates:
     credentials: Demo Credential
     verbosity: 0
     inventory: localhost
+    execution_environment: "my custom execution environment"
     survey_spec:
       name: ''
       description: ''
