@@ -1,0 +1,19 @@
+---
+- name: "Read Job Templates definitions"
+  include_vars:
+    file: "{{ item.src }}"
+  with_filetree: "{{ filetree_controller_templates }}"
+  when: item.state == 'file'
+  register: __contents_filetree_controller_templates
+
+- name: "Populate Job Templates list"
+  set_fact:
+    __populate_controller_job_templates: "{{ (__populate_controller_job_templates | default([])) + item.ansible_facts.controller_templates }}"
+  loop: "{{ __contents_filetree_controller_templates.results }}"
+  when: __contents_filetree_controller_templates.results is defined and item.ansible_facts.controller_templates is defined
+
+- name: "Set Job Templates Data Structure"
+  set_fact:
+    controller_templates: "{{ __populate_controller_job_templates }}"
+  when: __populate_controller_job_templates is defined
+...

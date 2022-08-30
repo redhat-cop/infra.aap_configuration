@@ -1,0 +1,19 @@
+---
+- name: "Read Schedules definitions"
+  include_vars:
+    file: "{{ item.src }}"
+  with_filetree: "{{ filetree_controller_schedules }}"
+  when: item.state == 'file'
+  register: __contents_filetree_controller_schedules
+
+- name: "Populate Schedules list"
+  set_fact:
+    __populate_controller_schedules: "{{ (__populate_controller_schedules | default([])) + item.ansible_facts.controller_schedules }}"
+  loop: "{{ __contents_filetree_controller_schedules.results }}"
+  when: __contents_filetree_controller_schedules.results is defined and item.ansible_facts.controller_schedules is defined
+
+- name: "Set Schedules Data Structure"
+  set_fact:
+    controller_schedules: "{{ __populate_controller_schedules }}"
+  when: __populate_controller_schedules is defined
+...

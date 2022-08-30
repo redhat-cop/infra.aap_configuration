@@ -1,0 +1,10 @@
+---
+configure_tower_groups:
+{% for group in current_groups_asset_value.groups %}
+  - name: "{{ group.name }}"
+    description: "{{ group.description }}"
+    inventory: "{{ current_groups_asset_value.name }}"
+    hosts:
+{{ query('ansible.controller.controller_api', group.hosts_url, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].name') | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
+{%- endfor -%}
+...

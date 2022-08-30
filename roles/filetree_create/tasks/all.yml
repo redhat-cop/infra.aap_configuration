@@ -1,0 +1,75 @@
+---
+- name: "Get the Authentication Token for the future requests"
+  uri:
+    url: "https://{{ controller_hostname }}/api/v2/tokens/"
+    user: "{{ controller_username }}"
+    password: "{{ controller_password }}"
+    method: POST
+    force_basic_auth: true
+    validate_certs: "{{ controller_validate_certs }}"
+    status_code: 201
+  register: authtoken_res
+
+- name: "Set the oauth token to be used since now"
+  set_fact:
+    oauthtoken: "{{ authtoken_res.json.token }}"
+    oauthtoken_url: "{{ authtoken_res.json.url }}"
+  no_log: true
+
+- name: "Check if the connection is to an Ansible Tower or to Automation Platform"
+  set_fact:
+    is_aap: "{{ lookup('ansible.controller.controller_api', 'ping', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs).version is version('4.0.0', '>=') }}"
+
+- block:
+    - name: "Export Inventories and related Groups and Hosts"
+      include_tasks: "inventory.yml"
+      when: "'inventory' in input_tag or 'all' in input_tag"
+    - name: "Export Credentials"
+      include_tasks: "credentials.yml"
+      when: "'credentials' in input_tag or 'all' in input_tag"
+    - name: "Export Credential Types"
+      include_tasks: "credential_types.yml"
+      when: "'credential_types' in input_tag or 'all' in input_tag"
+    - name: "Export Notification Templates"
+      include_tasks: "notification_templates.yml"
+      when: "'notification_templates' in input_tag or 'all' in input_tag"
+    - name: "Export Users"
+      include_tasks: "users.yml"
+      when: "'users' in input_tag or 'all' in input_tag"
+    - name: "Export Teams"
+      include_tasks: "teams.yml"
+      when: "'teams' in input_tag or 'all' in input_tag"
+    - name: "Export Organizations"
+      include_tasks: "organizations.yml"
+      when: "'organizations' in input_tag or 'all' in input_tag"
+    - name: "Export Job Templates"
+      include_tasks: "job_templates.yml"
+      when: "'job_templates' in input_tag or 'all' in input_tag"
+    - name: "Export Projects"
+      include_tasks: "projects.yml"
+      when: "'projects' in input_tag or 'all' in input_tag"
+    - name: "Export Execution Environments"
+      include_tasks: "execution_environments.yml"
+      when: "('execution_environments' in input_tag or 'all' in input_tag) and is_aap"
+    - name: "Export Workflow Job Templates"
+      include_tasks: "workflow_job_templates.yml"
+      when: "'workflow_job_templates' in input_tag or 'all' in input_tag"
+    - name: "Export Workflow Job Template Nodes"
+      # Do not run if 'all' is in input_tag, as it will be called from workflow_job_templates.yml
+      include_tasks: "workflow_job_template_nodes.yml"
+      when:
+        - "'workflow_job_template_nodes' in input_tag"
+        - "'workflow_job_templates' not in input_tag"
+        - "'all' not in input_tag"
+  when: "['all', 'inventory', 'credentials', 'credential_types', 'notification_templates', 'users', 'teams', 'organizations', 'projects', 'execution_environments', 'job_templates', 'workflow_job_templates', 'workflow_job_template_nodes'] | intersect(input_tag) | length > 0"
+
+- name: "Delete the Authentication Token used"
+  uri:
+    url: "https://{{ controller_hostname }}{{ oauthtoken_url }}"
+    user: "{{ controller_username }}"
+    password: "{{ controller_password }}"
+    method: DELETE
+    force_basic_auth: true
+    validate_certs: "{{ controller_validate_certs }}"
+    status_code: 204
+...

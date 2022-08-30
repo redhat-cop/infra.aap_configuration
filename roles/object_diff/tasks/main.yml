@@ -1,0 +1,33 @@
+---
+- block:
+    - name: "Get the Authentication Token for the future requests"
+      uri:
+        url: "https://{{ controller_hostname }}/api/v2/tokens/"
+        user: "{{ controller_username }}"
+        password: "{{ controller_password }}"
+        method: POST
+        force_basic_auth: true
+        validate_certs: "{{ controller_validate_certs }}"
+        status_code: 201
+      register: authtoken_res
+
+    - name: "Set the oauth token to be used since now"
+      set_fact:
+        oauthtoken: "{{ authtoken_res.json.token }}"
+        oauthtoken_url: "{{ authtoken_res.json.url }}"
+      no_log: true
+
+  tags:
+    - always
+
+- name: "Include Tasks to get OBJECT DIFF {{  __task_diff.name }}"
+  include_tasks: "{{  __task_diff.name }}.yml"
+  args:
+    apply:
+      tags: "{{  __task_diff.tags }}"
+  tags: always
+  loop: "{{ controller_configuration_object_diff_tasks }}"
+  loop_control:
+    loop_var: __task_diff
+
+...

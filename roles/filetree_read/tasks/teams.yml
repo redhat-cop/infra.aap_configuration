@@ -1,0 +1,19 @@
+---
+- name: "Read Teams definitions"
+  include_vars:
+    file: "{{ item.src }}"
+  with_filetree: "{{ filetree_controller_teams }}"
+  when: item.state == 'file'
+  register: __contents_filetree_controller_teams
+
+- name: "Populate Teams list"
+  set_fact:
+    __populate_controller_teams: "{{ (__populate_controller_teams | default([])) + item.ansible_facts.controller_teams }}"
+  loop: "{{ __contents_filetree_controller_teams.results }}"
+  when: __contents_filetree_controller_teams.results is defined and item.ansible_facts.controller_teams is defined
+
+- name: "Set Teams Data Structure"
+  set_fact:
+    controller_teams: "{{ __populate_controller_teams }}"
+  when: __populate_controller_teams is defined
+...

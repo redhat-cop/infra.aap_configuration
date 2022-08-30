@@ -1,0 +1,19 @@
+---
+- name: "Read Inventory Source definitions"
+  include_vars:
+    file: "{{ item.src }}"
+  with_filetree: "{{ filetree_controller_inventory_sources }}"
+  when: item.state == 'file'
+  register: __contents_filetree_controller_inventory_sources
+
+- name: "Populate Inventory Source list"
+  set_fact:
+    __populate_controller_inventory_sources: "{{ (__populate_controller_inventory_sources | default([])) + item.ansible_facts.controller_inventory_sources }}"
+  loop: "{{ __contents_filetree_controller_inventory_sources.results }}"
+  when: __contents_filetree_controller_inventory_sources.results is defined and item.ansible_facts.controller_inventory_sources is defined
+
+- name: "Set Inventory Source Data Structure"
+  set_fact:
+    controller_inventory_sources: "{{ __populate_controller_inventory_sources }}"
+  when: __populate_controller_inventory_sources is defined
+...

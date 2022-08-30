@@ -1,0 +1,36 @@
+---
+# tasks file for filetree_read
+
+- block:
+    - name: "Get the Authentication Token for the future requests"
+      uri:
+        url: "https://{{ controller_hostname }}/api/v2/tokens/"
+        user: "{{ controller_username }}"
+        password: "{{ controller_password }}"
+        method: POST
+        force_basic_auth: true
+        validate_certs: "{{ controller_validate_certs }}"
+        status_code: 201
+      register: authtoken_res
+
+    - name: "Set the oauth token to be used since now"
+      set_fact:
+        controller_oauthtoken: "{{ authtoken_res.json.token }}"
+        oauthtoken_url: "{{ authtoken_res.json.url }}"
+      no_log: true
+
+  tags:
+    - always
+
+
+- name: "Include Tasks to config {{  __task_filetree_read.name }}"
+  include_tasks: "{{  __task_filetree_read.name }}.yml"
+  args:
+    apply:
+      tags: "{{  __task_filetree_read.tags }}"
+  tags: always
+  loop: "{{ controller_configuration_filetree_read_tasks }}"
+  loop_control:
+    loop_var: __task_filetree_read
+
+...

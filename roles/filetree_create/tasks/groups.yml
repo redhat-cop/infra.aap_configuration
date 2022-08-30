@@ -1,0 +1,17 @@
+---
+- name: "Create the output directory for groups: {{ output_path }}"
+  file:
+    path: "{{ output_path }}"
+    state: directory
+    mode: '0755'
+
+- name: "Add current groups to the output yaml file: {{ output_path }}/current_groups_<INVENTORY_NAME>.yaml"
+  template:
+    src: "templates/current_groups.j2"
+    dest: "{{ output_path }}/current_groups_{{ current_groups_asset_value.name }}.yaml"
+    mode: '0644'
+  loop: "{{ current_organization_inventories }}"
+  loop_control:
+    loop_var: current_groups_asset_value
+    label: "{{ output_path }}/current_groups_{{ current_groups_asset_value.name }}.yaml"
+...

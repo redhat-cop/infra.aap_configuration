@@ -1,0 +1,21 @@
+---
+# vars file for filetree_create
+valid_tags:
+  - all
+  - credentials
+  - credential_types
+  - execution_environments
+  - groups
+  - hosts
+  - inventory
+  - inventory_sources
+  - job_templates
+  - notification_templates
+  - organizations
+  - projects
+  - roles
+  - teams
+  - users
+  - workflow_job_template_nodes
+  - workflow_job_templates
+...

@@ -1,0 +1,20 @@
+---
+{% for role in user_roles_lookvar %}
+{% if role.summary_fields.resource_type is defined %}
+  - user: "{{ username }}"
+{% if role.summary_fields.resource_type is match('organization') %}
+    organizations:
+      - "{{ role.summary_fields.resource_name }}"
+{% elif role.summary_fields.resource_type is match('team') %}
+    target_teams:
+      - "{{ role.summary_fields.resource_name }}"
+{% elif role.summary_fields.resource_type is match('job_template') %}
+    job_template: "{{ role.summary_fields.resource_name }}"
+{% elif role.summary_fields.resource_type is match('inventory') %}
+    inventory: "{{ role.summary_fields.resource_name }}"
+{% endif %}
+    roles:
+      - "{{ role.name }}"
+{% endif %}
+{% endfor %}
+...

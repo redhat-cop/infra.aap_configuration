@@ -1,0 +1,43 @@
+---
+- name: "Get current Teams from the API"
+  set_fact:
+    teams_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/teams/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) }}"
+
+- name: "Group the teams by Organization"
+  set_fact:
+    teams_orgs: "{{ (teams_orgs | default({})) | combine({(teams_org.organization | default('ORGANIZATIONLESS', true)): ((teams_orgs[teams_org.organization] | default([])) + [teams_org])}) }}"
+    needed_paths: "{{ ((needed_paths | default([])) + [teams_org.summary_fields.organization.name | default('ORGANIZATIONLESS', true)]) | flatten | unique }}"
+  loop: "{{ teams_lookvar }}"
+  loop_control:
+    loop_var: teams_org
+    label: "{{ teams_org.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }} - {{ teams_org.name }}"
+
+- name: "Create the output directory for teams: {{ output_path }}/<ORGANIZATION_NAME>"
+  file:
+    path: "{{ output_path }}/{{ needed_path }}"
+    state: directory
+    mode: '0755'
+  loop: "{{ needed_paths | default([]) }}"
+  loop_control:
+    loop_var: needed_path
+    label: "{{ output_path }}/{{ needed_path }}"
+
+- name: "Add current teams to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_teams.yaml"
+  template:
+    src: "templates/current_teams.j2"
+    dest: "{{ output_path }}/{{ teams_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}/current_teams.yaml"
+    mode: '0644'
+  vars:
+    current_teams_asset_value: "{{ teams_org_template.value }}"
+  loop: "{{ teams_orgs  | default({}) | dict2items }}"
+  loop_control:
+    loop_var: teams_org_template
+    label: "{{ output_path }}/{{ teams_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}/current_teams.yaml"
+
+- name: "Set the team's roles"
+  include_tasks: "team_roles.yml"
+  vars:
+    teamname: "{{ item.name }}"
+    teamid: "{{ item.id }}"
+  loop: "{{ teams_lookvar }}"
+...

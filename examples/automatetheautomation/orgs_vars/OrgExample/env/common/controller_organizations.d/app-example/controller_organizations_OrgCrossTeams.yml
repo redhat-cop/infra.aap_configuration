@@ -1,0 +1,5 @@
+---
+controller_organizations:
+  - name: "OrgCrossTeams"
+    description: "Organization to run playbooks Cross Teams"
+...

@@ -1,0 +1,50 @@
+---
+# defaults file for object_diff
+
+# Authentication
+controller_username: "{{ vault_controller_username | default(lookup('env', 'CONTROLLER_USERNAME')) }}"
+controller_password: "{{ vault_controller_password | default(lookup('env', 'CONTROLLER_PASSWORD')) }}"
+controller_hostname: "{{ vault_controller_hostname | default(lookup('env', 'CONTROLLER_HOST')) }}"
+controller_validate_certs: "{{ vault_controller_validate_certs | default(lookup('env', 'CONTROLLER_VERIFY_SSL')) }}"
+
+# populate_controller_api_user_accounts_without_external_accounts
+drop_user_external_accounts: True
+
+# Automation Controller Object Lists
+controller_settings: []
+controller_organizations: []
+controller_labels: []
+controller_user_accounts: []
+controller_teams: []
+controller_credential_types: []
+controller_credentials: []
+controller_credential_input_sources: []
+controller_notifications: []
+controller_projects: []
+controller_execution_environments: []
+controller_applications: []
+controller_inventories: []
+controller_inventory_sources: []
+controller_instance_groups: []
+controller_hosts: []
+controller_groups: []
+controller_templates: []
+controller_workflow_job_templates: []
+controller_schedules: []
+controller_roles: []
+
+# object_diff tasks name
+controller_configuration_object_diff_tasks:
+  - {name: workflow_job_templates, var: controller_workflows, tags: workflow_job_templates}
+  - {name: job_templates, var: controller_templates, tags: job_templates}
+  - {name: teams, var: controller_teams, tags: teams}
+  - {name: user_accounts, var: controller_user_accounts, tags: users}
+  - {name: groups, var: controller_groups, tags: groups}
+  - {name: hosts, var: controller_hosts, tags: hosts}
+  - {name: inventory_sources, var: controller_inventory_sources, tags: inventory_sources}
+  - {name: inventories, var: controller_inventories, tags: inventories}
+  - {name: projects, var: controller_projects, tags: projects}
+  - {name: credentials, var: controller_credentials, tags: credentials}
+  - {name: credential_types, var: controller_credential_types, tags: credential_types}
+  - {name: organizations, var: controller_organizations, tags: organizations}
+...

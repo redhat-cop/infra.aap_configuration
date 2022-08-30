@@ -1,0 +1,6 @@
+---
+controller_inventories:
+  - name: "InventaryExcel"
+    description: "Inventory Taken from excel file"
+    organization: "{{ orgs }}"
+...

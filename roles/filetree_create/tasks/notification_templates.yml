@@ -1,0 +1,36 @@
+---
+- name: "Get current Notification Templates from the API"
+  set_fact:
+    notification_templates_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/notification_templates/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) }}"
+
+- name: "Group the notification templates by Organization"
+  set_fact:
+    notification_templates_orgs: "{{ (notification_templates_orgs | default({})) | combine({(notification_templates_org.organization | default('ORGANIZATIONLESS', true)): ((notification_templates_orgs[notification_templates_org.organization] | default([])) + [notification_templates_org])}) }}"
+    needed_paths: "{{ ((needed_paths | default([])) + [notification_templates_org.summary_fields.organization.name | default('ORGANIZATIONLESS', true)]) | flatten | unique }}"
+  loop: "{{ notification_templates_lookvar }}"
+  loop_control:
+    loop_var: notification_templates_org
+    label: "{{ notification_templates_org.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }} - {{ notification_templates_org.name }}"
+
+- name: "Create the output directory for notification templates: {{ output_path }}/<ORGANIZATION_NAME>"
+  file:
+    path: "{{ output_path }}/{{ needed_path }}"
+    state: directory
+    mode: '0755'
+  loop: "{{ needed_paths | default([]) }}"
+  loop_control:
+    loop_var: needed_path
+    label: "{{ output_path }}/{{ needed_path }}"
+
+- name: "Add current notification templates to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_notification_templates.yaml"
+  template:
+    src: "templates/current_notification_templates.j2"
+    dest: "{{ output_path }}/{{ notification_templates_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}/current_notification_templates.yaml"
+    mode: '0644'
+  vars:
+    current_notification_templates_asset_value: "{{ notification_templates_org_template.value }}"
+  loop: "{{ notification_templates_orgs | default({}) | dict2items }}"
+  loop_control:
+    loop_var: notification_templates_org_template
+    label: "{{ output_path }}/{{ notification_templates_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}/current_notification_templates.yaml"
+...

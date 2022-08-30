@@ -1,0 +1,30 @@
+---
+controller_schedules:
+  - name: "{{ orgs }} CasC_Objects_Cleanup"
+    description: CasC_Ojbects_Cleanup
+    unified_job_template: "{{ orgs }} CasC_JobTemplates_AAP_Desired_State"
+    rrule: DTSTART;TZID=Europe/Madrid:20220127T163000 RRULE:INTERVAL=1;FREQ=DAILY
+    job_tags: desired_state
+    enabled: false
+    extra_data:
+      ansible_python_interpreter: /usr/bin/python3
+      ansible_async_dir: /home/runner/.ansible_async/
+      env: "{{ env }}"
+      dir_orgs_vars: orgs_vars
+      orgs: "{{ orgs }}"
+    organization: "{{ orgs }}"
+
+  - name: "{{ orgs }} CasC_Objects_Creation"
+    description: CasC_Ojbects_Cleanup
+    unified_job_template: "{{ orgs }} CasC_JobTemplates_AAP_CI_Config_Controller"
+    rrule: DTSTART;TZID=Europe/Madrid:20220127T000000 RRULE:INTERVAL=1;FREQ=DAILY
+    enabled: false
+    extra_data:
+      ansible_python_interpreter: /usr/bin/python3
+      ansible_async_dir: /home/runner/.ansible_async/
+      env: "{{ env }}"
+      dir_orgs_vars: orgs_vars
+      orgs: "{{ orgs }}"
+    organization: "{{ orgs }}"
+
+...

@@ -1,0 +1,17 @@
+---
+controller_inventories:
+{% for inventory in current_inventories_asset_value %}
+  - name: "{{ inventory.name }}"
+    description: "{{ inventory.description }}"
+    organization: "{{ inventory.organization }}"
+{% if inventory.host_filter %}
+    host_filter: "{{ inventory.host_filter }}"
+{% endif %}
+{% if inventory.kind %}
+    kind: "{{ inventory.kind }}"
+{% endif %}
+{% if inventory.variables %}
+    variables: "{{ inventory.variables }}"
+{% endif %}
+{% endfor %}
+...

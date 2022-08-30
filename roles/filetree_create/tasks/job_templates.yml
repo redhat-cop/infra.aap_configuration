@@ -1,0 +1,36 @@
+---
+- name: "Get current Job Templates from the API"
+  set_fact:
+    job_templates_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/job_templates/', query_params={'order_by': 'organization'}, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) }}"
+
+- name: "Group the job_templates by Organization"
+  set_fact:
+    job_templates_orgs: "{{ (job_templates_orgs | default({})) | combine({(job_templates_org.organization | default('ORGANIZATIONLESS', true)): ((job_templates_orgs[job_templates_org.organization] | default([])) + [job_templates_org])}) }}"
+    needed_paths: "{{ ((needed_paths | default([])) + [job_templates_org.summary_fields.organization.name | default('ORGANIZATIONLESS', true)]) | flatten | unique }}"
+  loop: "{{ job_templates_lookvar }}"
+  loop_control:
+    loop_var: job_templates_org
+    label: "{{ job_templates_org.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }} - {{ job_templates_org.name }}"
+
+- name: "Create the output directory for job templates: {{ output_path }}/<ORGANIZATION_NAME>"
+  file:
+    path: "{{ output_path }}/{{ needed_path }}"
+    state: directory
+    mode: '0755'
+  loop: "{{ needed_paths | default([]) }}"
+  loop_control:
+    loop_var: needed_path
+    label: "{{ output_path }}/{{ needed_path }}"
+
+- name: "Add current job_templates to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_job_templates.yaml"
+  template:
+    src: "templates/current_job_templates.j2"
+    dest: "{{ output_path }}/{{ job_templates_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS') }}/current_job_templates.yaml"
+    mode: '0644'
+  vars:
+    current_job_templates_asset_value: "{{ job_templates_org_template.value }}"
+  loop: "{{ job_templates_orgs  | default({}) | dict2items }}"
+  loop_control:
+    loop_var: job_templates_org_template
+    label: "{{ output_path }}/{{ job_templates_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS') }}/current_job_templates.yaml"
+...

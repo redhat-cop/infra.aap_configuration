@@ -1,0 +1,8 @@
+---
+controller_teams:
+{% for team in current_teams_asset_value %}
+  - name: "{{ team.name }}"
+    description: "{{ team.description }}"
+    organization: "{{ team.summary_fields.organization.name }}"
+{% endfor %}
+...

@@ -1,0 +1,20 @@
+---
+- name: "Get current Team Roles from the API"
+  set_fact:
+    team_roles_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/teams/' + teamid +'/roles/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) }}"
+
+- name: "Create the output directory for team roles: {{ output_path }}"
+  file:
+    path: "{{ output_path }}"
+    state: directory
+    mode: '0755'
+
+- name: "Add current roles to the output yaml file"
+  template:
+    src: "templates/current_team_roles.j2"
+    dest: "{{ output_path }}/current_roles_{{ teamname }}.yaml"
+    mode: '0644'
+  vars:
+    current_team_roles_asset_value: "{{ team_roles_lookvar }}"
+  when: team_roles_lookvar | length > 0
+...

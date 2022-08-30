@@ -112,6 +112,17 @@ controller_configuration_ad_hoc_command_secure_logging defaults to the value of 
     └── workfows_launch.yml
 ```
 
+## Configuring Continous Deployment
+
+This section explains how to setup the Continous Deployment (CD) of the defined configurations on Ansible controller when a event occurs(usally a merge event) in the git reposository where the definitions are kept.
+
+This procedure has been tested with **gitlab** git server
+
+You have make the following configurations in order to configure CD integration:
+
+1. Configure a Project and a job template with [webhook](https://docs.ansible.com/automation-controller/latest/html/userguide/webhooks.html#id2) property enabled in the Controller pointing to the playbook in charge of CD, you can find an example [here](cd-gitlab-webhook-trigger.yml).
+
+2. Configure [project webhook](https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html) on the project where defined configurations are hosted.
 
 ## License
 [MIT](LICENSE)

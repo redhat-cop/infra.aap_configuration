@@ -1,0 +1,22 @@
+---
+- name: Get the organization ID
+  set_fact:
+    __controller_organization_id: "{{ lookup('ansible.controller.controller_api', 'organizations', query_params={ 'name': orgs },
+      host=controller_hostname, oauth_token=oauthtoken, verify_ssl=false) }}"
+
+- name: "OBJECT DIFF: Get the API list of all Inventories"
+  set_fact:
+    __controller_api_inventory_sources: "{{ query('ansible.controller.controller_api', 'inventory_sources',
+      query_params={ 'organization': __controller_organization_id.id },
+      host=controller_hostname, oauth_token=oauthtoken, verify_ssl=false) }}"
+
+- name: "OBJECT DIFF: Find the difference of Project between what is on the Controller versus CasC on SCM"
+  set_fact:
+    __inventory_sources_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
+      api_list=__controller_api_inventory_sources, compare_list=controller_inventory_sources,
+      with_present=false, set_absent=true ) }}"
+
+- name: "OBJECT DIFF: Set inventory_sources' list to be configured"
+  set_fact:
+    controller_inventory_sources: "{{ __inventory_sources_difference }}"
+...

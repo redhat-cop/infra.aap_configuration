@@ -1,0 +1,20 @@
+---
+controller_projects:
+{% for project in current_projects_asset_value %}
+  - name: "{{ project.name }}"
+    description: "{{ project.description }}"
+    organization: "{{ project.summary_fields.organization.name | default('ToDo: The project \'' + project.name + '\' must have an organization') }}"
+{% if project.scm_type %}
+    scm_type: "{{ project.scm_type }}"
+    scm_url: "{{ project.scm_url }}"
+    scm_credential: "{{ project.summary_fields.credential.name | default('ToDo: The project \'' + project.name + '\' is missing the SCM credential') }}"
+    scm_branch: "{{ project.scm_branch }}"
+    scm_clean: "{{ project.scm_clean }}"
+    scm_delete_on_update: "{{ project.scm_delete_on_update }}"
+    scm_update_on_launch: "{{ project.scm_update_on_launch }}"
+    scm_update_cache_timeout: "{{ project.scm_update_cache_timeout }}"
+{% endif %}
+    allow_override: "{{ project.allow_override }}"
+    timeout: {{ project.timeout }}
+{% endfor %}
+...

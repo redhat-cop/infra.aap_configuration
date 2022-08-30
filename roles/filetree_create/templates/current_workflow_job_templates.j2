@@ -1,0 +1,13 @@
+--
+controller_workflows:
+{% for workflow_job_template in current_workflow_job_templates_asset_value %}
+  - name: "{{ workflow_job_template.name }}"
+    description: "{{ workflow_job_template.description }}"
+    organization: "{{ workflow_job_template.summary_fields.organization.name | default('ToDo: The WF \'' + workflow_job_template.name + '\' must belong to an organization') }}"
+    survey_enabled: "{{ workflow_job_template.survey_enabled }}"
+    ask_variables_on_launch: "{{ workflow_job_template.ask_variables_on_launch }}"
+    allow_simultaneous: "{{ workflow_job_template.allow_simultaneous }}"
+    scm_branch: "{{ workflow_job_template.scm_branch }}"
+    webhook_service: "{{ workflow_job_template.webhook_service }}"
+{% endfor %}
+...

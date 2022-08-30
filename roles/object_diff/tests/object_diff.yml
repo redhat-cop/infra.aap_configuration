@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  roles:
+    - redhat_cop.controller_configuration.object_diff
+...
