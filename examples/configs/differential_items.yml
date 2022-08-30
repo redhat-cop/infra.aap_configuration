@@ -83,12 +83,12 @@ differential_items:
     differential_test_items:
       - name:  RHVM-02
         organization: Default
-        inventory: 12
+        inventory: 3
         state: absent
     expected_test_result:
       - name: RHVM-01-Default
         organization: Default
-        inventory: 12
+        inventory: 3
         state: absent
   - name: inventories
     with_present: false
