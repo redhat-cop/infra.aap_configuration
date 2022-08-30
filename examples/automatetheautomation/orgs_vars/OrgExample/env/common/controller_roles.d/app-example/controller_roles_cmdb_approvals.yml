@@ -1,0 +1,7 @@
+---
+controller_roles:
+  - workflows:
+      - "{{ orgs }} WF_INVENTORY_SOURCE_UPDATE"
+    team: "ldap-users-cmdb"
+    role: approval
+...
