@@ -202,8 +202,8 @@ def main():
         description=dict(),
         registry=dict(),
         upstream_name=dict(),
-        include_tags=dict(type="list", elements="str"),
-        exclude_tags=dict(type="list", elements="str"),
+        include_tags=dict(type="list", elements="str", default=[]),
+        exclude_tags=dict(type="list", elements="str", default=[]),
         readme=dict(),
         readme_file=dict(type="path"),
         state=dict(choices=["present", "absent"], default="present"),
@@ -303,8 +303,7 @@ def main():
         if repository_ui.exists:
             remote.get_object(repository_ui.data["pulp"]["repository"]["remote"]["pulp_id"])
 
-        if not remote.exists:
-            new_fields["name"] = name
+        new_fields["name"] = name
 
         remote_changed = remote.create_or_update(new_fields, auto_exit=False)
         changed = changed or remote_changed
