@@ -12,7 +12,7 @@
     ask_variables_on_launch:            "{{ __workflow_loop_item.ask_variables_on_launch | default(omit) }}"  # only supported starting from Ansible 2.9
     inventory:                          "{{ __workflow_loop_item.inventory.name | default( __workflow_loop_item.inventory | default(omit, true)) }}"
     limit:                              "{{ __workflow_loop_item.limit | default(omit, true) }}"
-    labels:                             "{{ __workflow_loop_item.labels | default(__workflow_loop_item.related.labels | default([]) | map(attribute='name') | list ) }}"
+    labels:                             "{{ __workflow_loop_item.labels | default(__workflow_loop_item.related.labels | default([]) | map(attribute='name') | list ) | default(omit, true) }}"
     scm_branch:                         "{{ __workflow_loop_item.scm_branch | default(omit, true) }}"
     ask_inventory_on_launch:            "{{ __workflow_loop_item.ask_inventory_on_launch | default(omit) }}"
     ask_scm_branch_on_launch:           "{{ __workflow_loop_item.ask_scm_branch_on_launch | default(omit) }}"
@@ -24,10 +24,10 @@
     schema:                             "{{ __workflow_loop_item.related.workflow_nodes | default( __workflow_loop_item.workflow_nodes | default(omit, true) ) }}"
     destroy_current_schema:             "{{ __workflow_loop_item.destroy_current_schema | default(omit) }}"
     state:                              "{{ __workflow_loop_item.state | default(controller_state | default('present')) }}"
-    notification_templates_started:     "{{ __workflow_loop_item.notification_templates_started | default(__workflow_loop_item.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
-    notification_templates_success:     "{{ __workflow_loop_item.notification_templates_success | default(__workflow_loop_item.related.notification_templates_success | default([]) | map(attribute='name') | list ) }}"
-    notification_templates_error:       "{{ __workflow_loop_item.notification_templates_error | default(__workflow_loop_item.related.notification_templates_error | default([]) | map(attribute='name') | list ) }}"
-    notification_templates_approvals:   "{{ __workflow_loop_item.notification_templates_approvals | default(__workflow_loop_item.related.notification_templates_approvals | default([]) | map(attribute='name') | list ) }}"
+    notification_templates_started:     "{{ __workflow_loop_item.notification_templates_started | default(__workflow_loop_item.related.notification_templates_started | default([]) | map(attribute='name') | list ) | default(omit, true) }}"
+    notification_templates_success:     "{{ __workflow_loop_item.notification_templates_success | default(__workflow_loop_item.related.notification_templates_success | default([]) | map(attribute='name') | list ) | default(omit, true) }}"
+    notification_templates_error:       "{{ __workflow_loop_item.notification_templates_error | default(__workflow_loop_item.related.notification_templates_error | default([]) | map(attribute='name') | list ) | default(omit, true) }}"
+    notification_templates_approvals:   "{{ __workflow_loop_item.notification_templates_approvals | default(__workflow_loop_item.related.notification_templates_approvals | default([]) | map(attribute='name') | list ) | default(omit, true) }}"
 
     # Role Standard Options
     controller_username:                "{{ controller_username | default(omit, true) }}"

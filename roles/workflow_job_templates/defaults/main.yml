@@ -46,7 +46,7 @@ controller_workflows: []
 #    limit:  # optional, str
 #    diff_mode: false  # optional, boolean
 #    verbosity: 0  # optional, choices: [0-4]
-#    credentials: # optional, list of credential names
+#    credentials: [] # optional, list of credential names
 #    workflow_job_template: "workflow_template_name"  # mandatory
 #    unified_job_template : Can be a job template, project, inventory source, etc.  # mandatory
 #    approval_node: # optional, dictionary of Name, description, and timeout values for the approval node.

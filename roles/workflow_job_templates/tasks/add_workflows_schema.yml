@@ -12,7 +12,7 @@
     limit:                          "{{ __workflow_loop_node_item.limit | default(omit, true) }}"
     diff_mode:                      "{{ __workflow_loop_node_item.diff_mode | default (omit) }}"
     verbosity:                      "{{ __workflow_loop_node_item.verbosity | default(omit, true) }}"
-    credentials:                    "{{ __workflow_loop_node_item.credentials | default(__workflow_loop_node_item.related.credentials | default([]) | map(attribute='name') | list ) }}"
+    credentials:                    "{{ __workflow_loop_node_item.credentials | default(__workflow_loop_node_item.related.credentials | default([]) | map(attribute='name') | list ) | default(omit, true) }}"
     workflow_job_template:          "{{ __workflow_loop_node_item.workflow_job_template.name | default( __workflow_loop_node_item.workflow_job_template | default(omit, true) ) }}"
     unified_job_template:           "{{ __workflow_loop_node_item.unified_job_template.name | default( __workflow_loop_node_item.unified_job_template | default(omit, true)) }}"  # Run Job template
     approval_node:                  "{{ __workflow_loop_node_item.approval_node | default(omit, true) }}"
