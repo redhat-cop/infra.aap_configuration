@@ -7,7 +7,7 @@
   set_fact:
     current_users: "{{ (current_users | default([])) + [user_lookvar_item | combine({'organizations': user_lookvar_item_organizations})] }}"
   vars:
-    user_lookvar_item_organizations: "{{ query('ansible.controller.controller_api', user_lookvar_item.related.organizations, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].name') }}"
+    user_lookvar_item_organizations: "{{ query('ansible.controller.controller_api', user_lookvar_item.related.organizations, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) | selectattr('name', 'defined') | map(attribute='name') }}"
   loop: "{{ users_lookvar }}"
   loop_control:
     loop_var: user_lookvar_item
@@ -18,7 +18,7 @@
     path: "{{ output_path }}/{{ current_user_dir }}"
     state: directory
     mode: '0755'
-  loop: "{{ current_users | json_query('[*].organizations') | flatten | unique }}"
+  loop: "{{ current_users | selectattr('organizations', 'defined') | map(attribute='organizations') | flatten | unique }}"
   loop_control:
     loop_var: current_user_dir
     label: "{{ output_path }}/{{ current_user_dir }}"

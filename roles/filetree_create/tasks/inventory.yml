@@ -21,8 +21,8 @@
         'kind': inventory_lookvar_item.kind,
         'variables': inventory_lookvar_item.variables,
         'inventory_sources': query('ansible.controller.controller_api', inventory_lookvar_item.related.inventory_sources, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true),
-        'hosts': query('ansible.controller.controller_api', inventory_lookvar_item.related.hosts, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].{name: name, description: description}'),
-        'groups': query('ansible.controller.controller_api', inventory_lookvar_item.related.groups, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) | json_query('[*].{name: name, description: description, hosts_url: related.hosts}') | map('combine', {'inventory': inventory_lookvar_item.name}) | list
+        'hosts': query('ansible.controller.controller_api', inventory_lookvar_item.related.hosts, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true),
+        'groups': query('ansible.controller.controller_api', inventory_lookvar_item.related.groups, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true)
       }]}) }}"
     needed_paths: "{{ ((needed_paths | default([])) + [inventory_lookvar_item_organization]) | flatten | unique }}"
   vars:
@@ -72,7 +72,7 @@
   include_tasks: "hosts.yml"
   vars:
     output_path: "{{ local_output_path }}/{{ current_inventory_hosts.key }}"
-    current_organization_inventories: "{{ current_inventory_hosts.value | json_query('[*].{hosts: hosts, name: name}') }}"
+    current_organization_inventories: "{{ current_inventory_hosts.value }}"
   loop: "{{ current_inventories | default({}) | dict2items }}"
   loop_control:
     loop_var: current_inventory_hosts

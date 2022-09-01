@@ -9,8 +9,6 @@ Requirements
 That role requires the following:
 
 - [awx.awx](https://docs.ansible.com/ansible/latest/collections/awx/awx/index.html) or [ansible.controller]ansible collection.
-- [Community.General](https://docs.ansible.com/ansible/latest/collections/community/general/index.html#plugins-in-community-general)
-- jmespath library needs to be installed on the host running the playbook (needed for the json_query filter)
 
 ```bash
 $ ansible-galaxy collection install community.general -p collections
