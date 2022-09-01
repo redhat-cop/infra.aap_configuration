@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Fixed optional lists to default to omit if the list is empty.
+...

@@ -54,7 +54,7 @@ controller_templates: []
 #  job_slice_count: 1  # optional, integer
 #  webhook_service:   # optional, str
 #  webhook_credential:   # optional, str
-#  labels:  # optional, str
+#  labels: [] # optional, list of label names
 #  state: present  # optional, choices: present, absent
 #  instance_groups: # optional, str
 #  notification_templates_started: []  # optional, notification template names
