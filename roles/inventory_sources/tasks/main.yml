@@ -24,9 +24,9 @@
     source_project:                       "{{ __controller_source_item.source_project.name | default( __controller_source_item.source_project | default(omit, true)) }}"
     update_on_project_update:             "{{ __controller_source_item.update_on_project_update | default(omit) }}"
     state:                                "{{ __controller_source_item.state | default(controller_state | default('present')) }}"
-    notification_templates_started:       "{{ __controller_source_item.notification_templates_started | default(__controller_source_item.related.notification_templates_started | default([]) | map(attribute='name') | list ) }}"
-    notification_templates_success:       "{{ __controller_source_item.notification_templates_success | default(__controller_source_item.related.notification_templates_success | default([]) | map(attribute='name') | list ) }}"
-    notification_templates_error:         "{{ __controller_source_item.notification_templates_error | default(__controller_source_item.related.notification_templates_error | default([]) | map(attribute='name') | list ) }}"
+    notification_templates_started:       "{{ __controller_source_item.notification_templates_started | default(__controller_source_item.related.notification_templates_started | default([]) | map(attribute='name') | list ) | default(omit, true) }}"
+    notification_templates_success:       "{{ __controller_source_item.notification_templates_success | default(__controller_source_item.related.notification_templates_success | default([]) | map(attribute='name') | list ) | default(omit, true) }}"
+    notification_templates_error:         "{{ __controller_source_item.notification_templates_error | default(__controller_source_item.related.notification_templates_error | default([]) | map(attribute='name') | list ) | default(omit, true) }}"
 
     # Role Standard Options
     controller_config_file:               "{{ controller_config_file | default(omit, true) }}"
