@@ -1,0 +1,4 @@
+---
+minor_changes:
+    - Remove json_query and jmespath dependency from filetree_create role.
+...
