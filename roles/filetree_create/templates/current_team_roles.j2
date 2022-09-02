@@ -1,4 +1,5 @@
 ---
+controller_roles:
 {% for role in team_roles_lookvar %}
 {% if role.summary_fields.resource_type is defined %}
   - team: "{{ teamname }}"

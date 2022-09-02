@@ -1,4 +1,5 @@
 ---
+controller_roles:
 {% for role in current_user_roles.value %}
 {% if role.content_object is defined %}
 {% if object_type is match('user') %}
