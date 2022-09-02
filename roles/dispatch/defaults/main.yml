@@ -10,12 +10,12 @@ ah_configuration_dispatcher_roles:
   - {role: ee_registry_index, var: ah_ee_registries, tags: indices}
   - {role: ee_registry_sync, var: ah_ee_registries, tags: regsync}
   - {role: ee_repository, var: ah_ee_repositories, tags: repos}
-  - {role: ee_repository_sync, var: ee_repository_sync, tags: reposync}
+  - {role: ee_repository_sync, var: ah_ee_repository_sync, tags: reposync}
   - {role: group, var: ah_groups, tags: groups}
   - {role: namespace, var: ah_namespaces, tags: namespace}
   - {role: publish, var: ah_collections, tags: publish}
-  - {role: repository, var: [ah_repository_certified, ah_repository_community ], tags: repos}
+  - {role: repository, var: [ ah_repository_certified, ah_repository_community ], tags: repos}
   # - {role: repository, var: ah_repository_certified, tags: repository}
   # - {role: repository, var: ah_repository_community, tags: repository}
-  - {role: repository_sync, var: repository_sync, tags: reposync}
+  - {role: repository_sync, var: ah_ee_repositories, tags: reposync}
   - {role: user, var: ah_users, tags: users}
