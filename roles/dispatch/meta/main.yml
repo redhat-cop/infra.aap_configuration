@@ -1,8 +1,8 @@
 ---
 galaxy_info:
   role_name: "dispatch"
-  author: "Alan Wong"
-  description: "An Ansible Role which launches all of the roles within the ah_configuration collection."
+  author: "Alan Wong and Tom Page"
+  description: "An Ansible Role which launches all of the roles for which variables are found within the ah_configuration collection."
   company: "Red Hat"
 
   # If the issue tracker for your role is not on github, uncomment the
