@@ -1,6 +1,6 @@
 ---
 controller_hosts:
-{% for host in current_hosts_asset_value.hosts %}
+{% for host in current_hosts_asset_value.hosts if not host.has_inventory_sources %}
   - name: "{{ host.name }}"
     description: "{{ host.description }}"
     inventory: "{{ current_hosts_asset_value.name | default('ToDo: The host \'' + host.name + '\' must have an associated inventory') }}"
