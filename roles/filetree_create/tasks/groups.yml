@@ -14,4 +14,5 @@
   loop_control:
     loop_var: current_groups_asset_value
     label: "{{ output_path }}/current_groups_{{ current_groups_asset_value.name | regex_replace('/','_') }}.yaml"
+  when: current_groups_asset_value.groups | length > 0
 ...
