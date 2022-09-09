@@ -99,13 +99,6 @@
       debug:
         var: launched_controller_jobs
 
-    - name: Cancel Controller Jobs
-      include_role:
-        name: jobs_cancel
-      vars:
-        controller_cancel_jobs: "{{ launched_controller_jobs.results }}"
-      when: launched_controller_jobs is defined
-
     - name: Launch Controller workflows
       include_role:
         name: workflow_launch
