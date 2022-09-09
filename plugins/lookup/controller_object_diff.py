@@ -46,20 +46,47 @@ options:
 """
 
 EXAMPLES = """
+# Set the controller_api_plugin manually:
+- name: Set the name for the collection to provide the plugin controller_api
+  set_fact:
+    controller_api_plugin: "awx.awx.controller_api"
+
+# Set the controller_api_plugin automatically:
+- block:
+    - name: "Check if the collection ansible.controller is installed"
+      set_fact:
+        ansible_controller_collection_installed: "{{ lookup('pipe', 'ansible-galaxy collection list | grep -i ansible.controllersss') }}"
+  rescue:
+    - name: "Check if the collection awx.awx is installed"
+      set_fact:
+        awx_awx_collection_installed: "{{ lookup('pipe', 'ansible-galaxy collection list | grep -i awx.awx') }}"
+  always:
+    - name: "Set the collection providing the controller_api lookup plugin"
+      set_fact:
+        controller_api_plugin: "{{ ('ansible.controller.controller_api' if ansible_controller_collection_installed is defined) | default('awx.awx.controller_api' if awx_awx_collection_installed is defined) | default('NONE') }}"
+    - name: "Fail if no collection is detected"
+      fail:
+        msg: "One of the following collections is required to be installed: 'ansible.controller' or 'awx.awx'."
+      when: controller_api_plugin is match('NONE')
+    - name: "Show the plugin we are using"
+      debug:
+        msg: "Using the 'controller_api' plugin from: {{ controller_api_plugin }}"
+
+# Examples for the lookup plugin
 - name: Get the organization ID
   set_fact:
-    controller_organization_id: "{{ lookup('awx.awx.controller_api', 'organizations', query_params={ 'name': 'Default' },
+    controller_organization_id: "{{ lookup(controller_api_plugin, 'organizations', query_params={ 'name': 'Default' },
       host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
 
 - name: "Get the API list of all Projects in the Default Organization"
   set_fact:
-    controller_api_results: "{{ lookup('awx.awx.controller_api', 'projects', query_params={ 'organization':
+    controller_api_results: "{{ lookup(controller_api_plugin, 'projects', query_params={ 'organization':
       controller_organization_id.id } ,host=controller_hostname, username=controller_username,
       password=controller_password, verify_ssl=false) }}"
 
 - name: "Get the API in a list form. Useful for making sure the results of one item is set to a list.
   set_fact:
-    controller_api_results: "{{ query('awx.awx.controller_api', 'inventories', query_params={ 'organization':
+    controller_api_results: "{{ query(controller_api_plugin, 'inventories', query_params={ 'organization':
       controller_organization_id.id } ,host=controller_hostname, username=controller_username,
       password=controller_password, verify_ssl=false) }}"
 

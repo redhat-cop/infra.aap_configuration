@@ -18,7 +18,7 @@
 
 - name: "Check if the connection is to an Ansible Tower or to Automation Platform"
   set_fact:
-    is_aap: "{{ lookup('ansible.controller.controller_api', 'ping', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs).version is version('4.0.0', '>=') }}"
+    is_aap: "{{ lookup(controller_api_plugin, 'ping', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs).version is version('4.0.0', '>=') }}"
 
 - block:
     - name: "Export Inventories and related Groups and Hosts"
