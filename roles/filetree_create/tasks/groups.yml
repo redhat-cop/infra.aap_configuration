@@ -8,10 +8,11 @@
 - name: "Add current groups to the output yaml file: {{ output_path }}/current_groups_<INVENTORY_NAME>.yaml"
   template:
     src: "templates/current_groups.j2"
-    dest: "{{ output_path }}/current_groups_{{ current_groups_asset_value.name }}.yaml"
+    dest: "{{ output_path }}/current_groups_{{ current_groups_asset_value.name | regex_replace('/','_') }}.yaml"
     mode: '0644'
   loop: "{{ current_organization_inventories }}"
   loop_control:
     loop_var: current_groups_asset_value
-    label: "{{ output_path }}/current_groups_{{ current_groups_asset_value.name }}.yaml"
+    label: "{{ output_path }}/current_groups_{{ current_groups_asset_value.name | regex_replace('/','_') }}.yaml"
+  when: current_groups_asset_value.groups | length > 0
 ...
