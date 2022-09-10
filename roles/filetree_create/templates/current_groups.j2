@@ -5,6 +5,6 @@ configure_tower_groups:
     description: "{{ group.description }}"
     inventory: "{{ current_groups_asset_value.name }}"
     hosts:
-{{ query('ansible.controller.controller_api', group.related.hosts, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=10000) | selectattr("name", "defined") | map(attribute="name") | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
+{{ query('ansible.controller.controller_api', group.related.hosts, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) | selectattr("name", "defined") | map(attribute="name") | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
 {%- endfor -%}
 ...

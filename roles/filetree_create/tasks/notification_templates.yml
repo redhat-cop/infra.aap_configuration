@@ -1,7 +1,7 @@
 ---
 - name: "Get current Notification Templates from the API"
   set_fact:
-    notification_templates_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/notification_templates/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) }}"
+    notification_templates_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/notification_templates/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) }}"
 
 - name: "Group the notification templates by Organization"
   set_fact:
