@@ -1,7 +1,7 @@
 ---
 - name: "Get the inventoryes from the API"
   set_fact:
-    inventory_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/inventories/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, query_params={
+    inventory_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/inventories/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects, query_params={
                           'not__kind': 'smart',
                           'order_by': 'organization'
                         }
@@ -19,9 +19,9 @@
         'host_filter': inventory_lookvar_item.host_filter,
         'kind': inventory_lookvar_item.kind,
         'variables': inventory_lookvar_item.variables,
-        'inventory_sources': query('ansible.controller.controller_api', inventory_lookvar_item.related.inventory_sources, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=10000) if inventory_lookvar_item.has_inventory_sources else [],
-        'hosts': query('ansible.controller.controller_api', inventory_lookvar_item.related.hosts, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=10000) if not inventory_lookvar_item.has_inventory_sources else [],
-        'groups': query('ansible.controller.controller_api', inventory_lookvar_item.related.groups, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=10000) if not inventory_lookvar_item.has_inventory_sources else []
+        'inventory_sources': query('ansible.controller.controller_api', inventory_lookvar_item.related.inventory_sources, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) if inventory_lookvar_item.has_inventory_sources else [],
+        'hosts': query('ansible.controller.controller_api', inventory_lookvar_item.related.hosts, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) if not inventory_lookvar_item.has_inventory_sources else [],
+        'groups': query('ansible.controller.controller_api', inventory_lookvar_item.related.groups, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) if not inventory_lookvar_item.has_inventory_sources else []
       }]}) }}"
     needed_paths: "{{ ((needed_paths | default([])) + [inventory_lookvar_item_organization]) | flatten | unique }}"
   vars:

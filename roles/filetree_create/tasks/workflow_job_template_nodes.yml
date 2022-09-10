@@ -5,7 +5,7 @@
     needed_paths: "{{ ((needed_paths | default([])) + [workflow_job_template_organization]) | flatten | unique }}"
   vars:
     workflow_job_template_organization: "{{ query('ansible.controller.controller_api', wfjtn_lookvar_item.related.workflow_job_template, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs)[0].summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
-  loop: "{{ query('ansible.controller.controller_api', 'api/v2/workflow_job_template_nodes/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) }}"
+  loop: "{{ query('ansible.controller.controller_api', 'api/v2/workflow_job_template_nodes/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) }}"
   loop_control:
     loop_var: wfjtn_lookvar_item
     label: "{{ workflow_job_template_organization + ' - ' + wfjtn_lookvar_item.summary_fields.workflow_job_template.name }}"

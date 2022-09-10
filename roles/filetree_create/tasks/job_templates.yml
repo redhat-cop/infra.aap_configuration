@@ -1,7 +1,7 @@
 ---
 - name: "Get current Job Templates from the API"
   set_fact:
-    job_templates_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/job_templates/', query_params={'order_by': 'organization'}, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true) }}"
+    job_templates_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/job_templates/', query_params={'order_by': 'organization'}, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) }}"
 
 - name: "Group the job_templates by Organization"
   set_fact:
