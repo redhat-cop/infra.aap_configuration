@@ -15,8 +15,8 @@ controller_groups:
     variables:
       some_var: some_val
       ansible_connection: local
-      site_subnet: "{% raw %}{  % if site == 'SITE-2' %}10.200.{  % else %}10.100.{  % endif%}{% endraw %}"
-      remote_subnet: "{% raw %}{  % if site == 'SITE-2' %}10.100.{  % else %}10.200.{  % endif%}{% endraw %}"
+      site_subnet: "{% raw %}{  % if site == 'SITE-2' %}10.200.{% else %}10.100.{% endif %}{% endraw %}"
+      remote_subnet: "{% raw %}{  % if site == 'SITE-2' %}10.100.{% else %}10.200.{% endif %}{% endraw %}"
   - name: sat_lab_group
     inventory: satlab-admin-inventory
     variables:

@@ -2,13 +2,4 @@
 controller_organizations:
   - name: "{{ current_organization.name }}"
     description: "{{ current_organization.description }}"
-{%- raw %}
-    galaxy_credentials: "{{ common_galaxy_credentials }}"
-
-common_galaxy_credentials:
-  - "Ansible Galaxy"
-  - "{{ orgs }} {{ env }} Automation Hub Community Repository"
-  - "{{ orgs }} {{ env }} Automation Hub Published Repository"
-  - "{{ orgs }} {{ env }} Automation Hub RH Certified Repository"
-{% endraw %}
 ...
