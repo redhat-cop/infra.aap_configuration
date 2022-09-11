@@ -15,7 +15,11 @@ Role Variables
 
 The following variables are required for that role to work properly:
 
-- **`output_path`**: The path to the output directory where all the generated `yaml` files with the corresponding Objects as code will be written to. The default path is `/tmp/filetree_output`.
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|:---:|
+|**`output_path`**|"/tmp/filetree_output"|no|The path to the output directory where all the generated `yaml` files with the corresponding Obje    cts as code will be written to.
+|**`query_controller_api_max_objects`**|"10000"|no|Maximum number of objects to return from the list. If a list view returns more an max_objec    ts an exception will be raised|
+
 
 Dependencies
 ------------
