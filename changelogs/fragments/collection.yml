@@ -1,4 +1,4 @@
 ---
 minor_changes:
-  - created a role from ah_collection module
+  - add `ah_token` so repository_sync works with token only and doesn't change the original token that happens when using `ah_username` and `ah_password`. This will keep it from breaking Ansible Automation Controller credentials that point to Private Automation Hub.
 ...
