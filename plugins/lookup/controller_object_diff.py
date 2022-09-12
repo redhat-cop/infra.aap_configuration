@@ -63,7 +63,10 @@ EXAMPLES = """
   always:
     - name: "Set the collection providing the controller_api lookup plugin"
       set_fact:
-        controller_api_plugin: "{{ ('ansible.controller.controller_api' if ansible_controller_collection_installed is defined) | default('awx.awx.controller_api' if awx_awx_collection_installed is defined) | default('NONE') }}"
+        controller_api_plugin: "{{        ('ansible.controller.controller_api' if ansible_controller_collection_installed is defined) |
+                                   default('awx.awx.controller_api' if awx_awx_collection_installed is defined) |
+                                   default('NONE')
+                                }}"
     - name: "Fail if no collection is detected"
       fail:
         msg: "One of the following collections is required to be installed: 'ansible.controller' or 'awx.awx'."
