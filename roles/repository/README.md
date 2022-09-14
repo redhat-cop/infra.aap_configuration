@@ -20,6 +20,7 @@ These are the sub options for the vars `ah_repository_certified` and `ah_reposit
 |`proxy_url`|""|no|Proxy URL to use for the connection.||
 |`proxy_username`|""|no|Proxy URL to use for the connection.||
 |`proxy_password`|""|no|Proxy URL to use for the connection.||
+|`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 |`download_concurrency`|"10"|no| Number of concurrent collections to download.||
 |`rate_limit`|"8"|no|Limits total download rate in requests per second||
 |`signed_only`|"False"|no|Only download signed collections|True|
