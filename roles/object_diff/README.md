@@ -17,9 +17,9 @@ The following Variables set the organization where should be applied the configu
 
 | Variable Name | Default Value | Required | Description |
 | :------------ | :-----------: | :------: | :---------- |
-| `controller_api_plugin`: | N/A | yes | Full path for the controller_api_plugin to be used. <br/> Can have two possible values: <br/>&nbsp;&nbsp;- awx.awx.controller_api             # For the community Collection version <br/>&nbsp;&nbsp;- ansible.controller.controller_api  # For the Red Hat Certified Collection version|
-|`drop_user_external_accounts:`|N/A|no|When is true, all users will be taken to compare with SCM configuration as code|
-|`drop_teams:`|N/A|no|When is true, all teams will be taken to compare with SCM configuration as code|
+| `controller_api_plugin` | `ansible.controller` | yes | Full path for the controller_api_plugin to be used. <br/> Can have two possible values: <br/>&nbsp;&nbsp;- awx.awx.controller_api             # For the community Collection version <br/>&nbsp;&nbsp;- ansible.controller.controller_api  # For the Red Hat Certified Collection version|
+| `drop_user_external_accounts` | `False` | no | When is true, all users will be taken to compare with SCM configuration as code |
+| `drop_teams` | `False` | no | When is true, all teams will be taken to compare with SCM configuration as code |
 
 Role Tags
 ----------------
