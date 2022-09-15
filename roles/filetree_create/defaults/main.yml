@@ -29,6 +29,4 @@ output_path: "/tmp/filetree_output"
 # Maximum number of objects to return from the list. If a list view returns more an max_objects an exception will be raised
 query_controller_api_max_objects: 10000
 
-# Collection to access the plugin 'controller_api'
-controller_api_plugin: "ansible.controller"
 ...

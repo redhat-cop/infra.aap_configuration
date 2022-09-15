@@ -48,6 +48,4 @@ controller_configuration_object_diff_tasks:
   - {name: credential_types, var: controller_credential_types, tags: credential_types}
   - {name: organizations, var: controller_organizations, tags: organizations}
 
-# Collection to access the plugin 'controller_api'
-controller_api_plugin: "ansible.controller"
 ...

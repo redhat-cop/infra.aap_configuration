@@ -1,14 +1,6 @@
 ---
 # tasks file for object_diff
 - block:
-    - name: "Check if the controller_api plugin is correctly selected"
-      ansible.builtin.assert:
-        that:
-          - controller_api_plugin is defined
-          - controller_api_plugin is match('awx.awx.controller_api') or controller_api_plugin is match('ansible.controller.controller_api')
-        fail_msg: "'controller_api_plugin' variable must be defined with one of the following possible values: 'awx.awx.controller_api' or 'ansible.controller.controller_api'"
-        quiet: true
-
     - name: "Get the Authentication Token for the future requests"
       uri:
         url: "https://{{ controller_hostname }}/api/v2/tokens/"
