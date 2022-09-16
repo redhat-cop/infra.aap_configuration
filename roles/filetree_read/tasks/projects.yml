@@ -1,9 +1,15 @@
 ---
+- name: "Get list of files inside {{ filetree_controller_projects }}"
+  find:
+    paths: "{{ filetree_controller_projects }}"
+    file_type: file
+    recurse: yes
+  register: __list_files_controller_projects
+
 - name: "Read Projects definitions"
   include_vars:
-    file: "{{ item.src }}"
-  with_filetree: "{{ filetree_controller_projects }}"
-  when: item.state == 'file'
+    file: "{{ item.path }}"
+  loop: "{{ __list_files_controller_projects.files }}"
   register: __contents_filetree_controller_projects
 
 - name: "Populate Projects list"

@@ -1,9 +1,15 @@
 ---
+- name: "Get list of files inside {{ filetree_controller_labels }}"
+  find:
+    paths: "{{ filetree_controller_labels }}"
+    file_type: file
+    recurse: yes
+  register: __list_files_controller_labels
+
 - name: "Read Labels definitions"
   include_vars:
-    file: "{{ item.src }}"
-  with_filetree: "{{ filetree_controller_labels }}"
-  when: item.state == 'file'
+    file: "{{ item.path }}"
+  loop: "{{ __list_files_controller_labels.files }}"
   register: __contents_filetree_controller_labels
 
 - name: "Populate Labels list"

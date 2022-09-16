@@ -1,9 +1,15 @@
 ---
+- name: "Get list of files inside {{ filetree_controller_inventory_sources }}"
+  find:
+    paths: "{{ filetree_controller_inventory_sources }}"
+    file_type: file
+    recurse: yes
+  register: __list_files_controller_inventory_sources
+
 - name: "Read Inventory Source definitions"
   include_vars:
-    file: "{{ item.src }}"
-  with_filetree: "{{ filetree_controller_inventory_sources }}"
-  when: item.state == 'file'
+    file: "{{ item.path }}"
+  loop: "{{ __list_files_controller_inventory_sources.files }}"
   register: __contents_filetree_controller_inventory_sources
 
 - name: "Populate Inventory Source list"

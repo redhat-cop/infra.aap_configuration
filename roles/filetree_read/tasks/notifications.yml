@@ -1,9 +1,15 @@
 ---
+- name: "Get list of files inside {{ filetree_controller_notifications }}"
+  find:
+    paths: "{{ filetree_controller_notifications }}"
+    file_type: file
+    recurse: yes
+  register: __list_files_controller_notifications
+
 - name: "Read Notifications definitions"
   include_vars:
-    file: "{{ item.src }}"
-  with_filetree: "{{ filetree_controller_notifications }}"
-  when: item.state == 'file'
+    file: "{{ item.path }}"
+  loop: "{{ __list_files_controller_notifications.files }}"
   register: __contents_filetree_controller_notifications
 
 - name: "Populate Notifications list"
