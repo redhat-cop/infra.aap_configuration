@@ -3,7 +3,7 @@
   find:
     paths: "{{ filetree_controller_user_accounts }}"
     file_type: file
-    recurse: yes
+    recurse: true
   register: __list_files_controller_user_accounts
 
 - name: "Read User Accounts definitions"

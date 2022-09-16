@@ -3,7 +3,7 @@
   find:
     paths: "{{ filetree_controller_groups }}"
     file_type: file
-    recurse: yes
+    recurse: true
   register: __list_files_controller_groups
 
 - name: "Read Groups definitions"
