@@ -1,36 +1,35 @@
 ---
 - name: "Get current Projects from the API"
   set_fact:
-    projects_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/projects/', query_params={'order_by': 'organization'}, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) }}"
+    projects_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/projects/',
+                                query_params={'order_by': 'organization,id'},
+                                host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
+                                return_all=true, max_objects=query_controller_api_max_objects)
+                       }}"
 
-- name: "Group the projects by Organization"
-  set_fact:
-    projects_orgs: "{{ (projects_orgs | default({})) | combine({(projects_org.organization | default('ORGANIZATIONLESS', true)): ((projects_orgs[projects_org.organization] | default([])) + [projects_org])}) }}"
-    needed_paths: "{{ ((needed_paths | default([])) + [projects_org.summary_fields.organization.name | default('ORGANIZATIONLESS', true)]) | flatten | unique }}"
-  loop: "{{ projects_lookvar }}"
-  loop_control:
-    loop_var: projects_org
-    label: "{{ projects_org.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }} - {{ projects_org.name }}"
-
-- name: "Create the output directory for projects: {{ output_path }}/<ORGANIZATION_NAME>"
+- name: "Create the output directory for projects: {{ output_path }}/<ORGANIZATION_NAME>/projects"
   file:
-    path: "{{ output_path }}/{{ needed_path }}"
+    path: "{{ output_path }}/{{ needed_path }}/projects"
     state: directory
     mode: '0755'
-  loop: "{{ needed_paths | default([]) }}"
+  loop: "{{ (projects_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
+            + (['ORGANIZATIONLESS'] if ((projects_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0 ) else [])
+         }}"
   loop_control:
     loop_var: needed_path
-    label: "{{ output_path }}/{{ needed_path }}"
+    label: "{{ output_path }}/{{ needed_path }}/projects"
 
-- name: "Add current projects to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_projects.yaml"
+- name: "Add current projects to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/projects"
   template:
     src: "templates/current_projects.j2"
-    dest: "{{ output_path }}/{{ projects_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}/current_projects.yaml"
+    dest: "{{ output_path }}/{{ project_organization }}/projects/{{ project_id }}_{{ project_name }}.yaml"
     mode: '0644'
   vars:
-    current_projects_asset_value: "{{ projects_org_template.value }}"
-  loop: "{{ projects_orgs | default({}) | dict2items }}"
+    project_organization: "{{ current_projects_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}"
+    project_id: "{{ current_projects_asset_value.id }}"
+    project_name: "{{ current_projects_asset_value.name | regex_replace('/','_') }}"
+  loop: "{{ projects_lookvar }}"
   loop_control:
-    loop_var: projects_org_template
-    label: "{{ output_path }}/{{ projects_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}/current_projects.yaml"
+    loop_var: current_projects_asset_value
+    label: "{{ output_path }}/{{ project_organization }}/projects/{{ project_id }}_{{ project_name }}.yaml"
 ...

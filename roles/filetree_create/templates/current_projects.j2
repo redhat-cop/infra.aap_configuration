@@ -1,20 +1,18 @@
 ---
 controller_projects:
-{% for project in current_projects_asset_value %}
-  - name: "{{ project.name }}"
-    description: "{{ project.description }}"
-    organization: "{{ project.summary_fields.organization.name | default('ToDo: The project \'' + project.name + '\' must have an organization') }}"
-{% if project.scm_type %}
-    scm_type: "{{ project.scm_type }}"
-    scm_url: "{{ project.scm_url }}"
-    scm_credential: "{{ project.summary_fields.credential.name | default('ToDo: The project \'' + project.name + '\' is missing the SCM credential') }}"
-    scm_branch: "{{ project.scm_branch }}"
-    scm_clean: "{{ project.scm_clean }}"
-    scm_delete_on_update: "{{ project.scm_delete_on_update }}"
-    scm_update_on_launch: "{{ project.scm_update_on_launch }}"
-    scm_update_cache_timeout: "{{ project.scm_update_cache_timeout }}"
+  - name: "{{ current_projects_asset_value.name }}"
+    description: "{{ current_projects_asset_value.description }}"
+    organization: "{{ current_projects_asset_value.summary_fields.organization.name | default('ToDo: The project \'' + current_projects_asset_value.name + '\' must have an organization') }}"
+{% if current_projects_asset_value.scm_type %}
+    scm_type: "{{ current_projects_asset_value.scm_type }}"
+    scm_url: "{{ current_projects_asset_value.scm_url }}"
+    scm_credential: "{{ current_projects_asset_value.summary_fields.credential.name | default('ToDo: The project \'' + current_projects_asset_value.name + '\' is missing the SCM credential') }}"
+    scm_branch: "{{ current_projects_asset_value.scm_branch }}"
+    scm_clean: "{{ current_projects_asset_value.scm_clean }}"
+    scm_delete_on_update: "{{ current_projects_asset_value.scm_delete_on_update }}"
+    scm_update_on_launch: "{{ current_projects_asset_value.scm_update_on_launch }}"
+    scm_update_cache_timeout: "{{ current_projects_asset_value.scm_update_cache_timeout }}"
 {% endif %}
-    allow_override: "{{ project.allow_override }}"
-    timeout: {{ project.timeout }}
-{% endfor %}
+    allow_override: "{{ current_projects_asset_value.allow_override }}"
+    timeout: {{ current_projects_asset_value.timeout }}
 ...

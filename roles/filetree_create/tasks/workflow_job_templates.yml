@@ -1,38 +1,37 @@
 ---
 - name: "Get current Workflow Job Templates from the API"
   set_fact:
-    workflow_job_templates_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/workflow_job_templates/', query_params={'order_by': 'organization'}, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) }}"
+    workflow_job_templates_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/workflow_job_templates/',
+                                              query_params={'order_by': 'organization,id'},
+                                              host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
+                                              return_all=true, max_objects=query_controller_api_max_objects)
+                                     }}"
 
-- name: "Group the workflow job templates by Organization"
-  set_fact:
-    workflow_job_templates_orgs: "{{ (workflow_job_templates_orgs | default({})) | combine({(workflow_job_templates_org.organization | default('ORGANIZATIONLESS', true)): ((workflow_job_templates_orgs[workflow_job_templates_org.organization] | default([])) + [workflow_job_templates_org])}) }}"
-    needed_paths: "{{ ((needed_paths | default([])) + [workflow_job_templates_org.summary_fields.organization.name | default('ORGANIZATIONLESS', true)]) | flatten | unique }}"
-  loop: "{{ workflow_job_templates_lookvar }}"
-  loop_control:
-    loop_var: workflow_job_templates_org
-    label: "{{ workflow_job_templates_org.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }} - {{ workflow_job_templates_org.name }}"
-
-- name: "Create the output directory for workflow job templates: {{ output_path }}/<ORGANIZATION_NAME>"
+- name: "Create the output directory for workflow job templates: {{ output_path }}/<ORGANIZATION_NAME>/workflow_job_templates"
   file:
-    path: "{{ output_path }}/{{ needed_path }}"
+    path: "{{ output_path }}/{{ needed_path }}/workflow_job_templates/"
     state: directory
     mode: '0755'
-  loop: "{{ needed_paths | default([]) }}"
+  loop: "{{ (workflow_job_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
+            + (['ORGANIZATIONLESS'] if ((workflow_job_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0 ) else [])
+         }}"
   loop_control:
     loop_var: needed_path
-    label: "{{ output_path }}/{{ needed_path }}"
+    label: "{{ output_path }}/{{ needed_path }}/workflow_job_templates/"
 
-- name: "Add current workflow job templates to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_workflow_job_templates.yaml"
+- name: "Add current workflow job templates to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/workflow_job_templates"
   template:
     src: "templates/current_workflow_job_templates.j2"
-    dest: "{{ output_path }}/{{ workflow_job_templates_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS') }}/current_workflow_job_templates.yaml"
+    dest: "{{ output_path }}/{{ workflow_job_template_organization }}/workflow_job_templates/{{ workflow_job_template_id }}_{{ workflow_job_template_name }}.yaml"
     mode: '0644'
   vars:
-    current_workflow_job_templates_asset_value: "{{ workflow_job_templates_org_template.value }}"
-  loop: "{{ workflow_job_templates_orgs | default({}) | dict2items }}"
+    workflow_job_template_organization: "{{ current_workflow_job_templates_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+    workflow_job_template_id: "{{ current_workflow_job_templates_asset_value.id }}"
+    workflow_job_template_name: "{{ current_workflow_job_templates_asset_value.name | regex_replace('/','_') }}"
+  loop: "{{ workflow_job_templates_lookvar }}"
   loop_control:
-    loop_var: workflow_job_templates_org_template
-    label: "{{ output_path }}/{{ workflow_job_templates_org_template.value[0].summary_fields.organization.name | default('ORGANIZATIONLESS') }}/current_workflow_job_templates.yaml"
+    loop_var: current_workflow_job_templates_asset_value
+    label: "{{ output_path }}/{{ workflow_job_template_organization }}/workflow_job_templates/{{ workflow_job_template_id }}_{{ workflow_job_template_name }}.yaml"
 
 - name: "Set the workflow_job_template's nodes"
   include_tasks: "workflow_job_template_nodes.yml"

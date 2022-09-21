@@ -1,37 +1,35 @@
 ---
 controller_templates:
-{% for job_template in current_job_templates_asset_value %}
-  - name: "{{ job_template.name }}"
-    description: "{{ job_template.description }}"
-    organization: "{{ job_template.summary_fields.organization.name | default('ToDo: The job template \'' + job_template.name + '\' must belong to an organization') }}"
-    project: "{{ job_template.summary_fields.project.name | default('ToDo: The job template \'' + job_template.name + '\' must have a project assigned') }}"
-{% if job_template.inventory %}
-    inventory: "{{ job_template.summary_fields.inventory.name }}"
+  - name: "{{ current_job_templates_asset_value.name }}"
+    description: "{{ current_job_templates_asset_value.description }}"
+    organization: "{{ current_job_templates_asset_value.summary_fields.organization.name | default('ToDo: The job template \'' + current_job_templates_asset_value.name + '\' must belong to an organization') }}"
+    project: "{{ current_job_templates_asset_value.summary_fields.project.name | default('ToDo: The job template \'' + current_job_templates_asset_value.name + '\' must have a project assigned') }}"
+{% if current_job_templates_asset_value.inventory %}
+    inventory: "{{ current_job_templates_asset_value.summary_fields.inventory.name }}"
 {% endif %}
-    playbook: "{{ job_template.playbook }}"
-    job_type: "{{ job_template.job_type }}"
-    fact_caching_enabled: "{{ job_template.use_fact_cache }}"
-{% if job_template.summary_fields.credentials %}
+    playbook: "{{ current_job_templates_asset_value.playbook }}"
+    job_type: "{{ current_job_templates_asset_value.job_type }}"
+    fact_caching_enabled: "{{ current_job_templates_asset_value.use_fact_cache }}"
+{% if current_job_templates_asset_value.summary_fields.credentials %}
     credentials:
-{% for credential in job_template.summary_fields.credentials %}
+{% for credential in current_job_templates_asset_value.summary_fields.credentials %}
       - "{{ credential.name }}"
 {% endfor %}
 {% endif %}
-    concurrent_jobs_enabled: "{{ job_template.allow_simultaneous }}"
-    ask_scm_branch_on_launch: "{{ job_template.ask_scm_branch_on_launch }}"
-    ask_tags_on_launch: "{{ job_template.ask_tags_on_launch }}"
-    ask_verbosity_on_launch: "{{ job_template.ask_verbosity_on_launch }}"
-    ask_variables_on_launch: "{{ job_template.ask_variables_on_launch }}"
-{% if (job_template.extra_vars | length) > 3 %}
+    concurrent_jobs_enabled: "{{ current_job_templates_asset_value.allow_simultaneous }}"
+    ask_scm_branch_on_launch: "{{ current_job_templates_asset_value.ask_scm_branch_on_launch }}"
+    ask_tags_on_launch: "{{ current_job_templates_asset_value.ask_tags_on_launch }}"
+    ask_verbosity_on_launch: "{{ current_job_templates_asset_value.ask_verbosity_on_launch }}"
+    ask_variables_on_launch: "{{ current_job_templates_asset_value.ask_variables_on_launch }}"
+{% if (current_job_templates_asset_value.extra_vars | length) > 3 %}
     extra_vars:
-{% if (job_template.extra_vars[0] is match('{')) %}
-{{ job_template.extra_vars | from_json | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
+{% if (current_job_templates_asset_value.extra_vars[0] is match('{')) %}
+{{ current_job_templates_asset_value.extra_vars | from_json | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
 {% else %}
-{{ job_template.extra_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
+{{ current_job_templates_asset_value.extra_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
 {% endif %}
 {%- endif -%}
 {% if is_aap %}
-    execution_environment: "{{ job_template.summary_fields.execution_environment.name | default(omit) }}"
+    execution_environment: "{{ current_job_templates_asset_value.summary_fields.execution_environment.name | default(omit) }}"
 {% endif %}
-{% endfor %}
 ...
