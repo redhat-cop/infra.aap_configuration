@@ -64,7 +64,7 @@ This also speeds up the overall role.
 |`limit`|""|no|str|A host pattern to constrain the list of hosts managed or affected by the playbook|
 |`diff_mode`|Job template default|no|bool|Enable diff mode for the job template|
 |`verbosity`|Job template default|no|int|Level of verbosity for the job. Only allowed if configured to prompt on launch|
-|`unified_job_template`|""|no|string|Name of unified job template to schedule. Required if state='present.|
+|`unified_job_template`|""|no|string|The name of object that is being targeted by the schedule. Example objects include projects, inventory sources, and templates. Required if state='present.|
 |`organization`|""|no|str|The organization the unified job template exists in. Used for looking up the unified job template, not a direct model field.|
 |`enabled`|`true`|no|bool|Enabled processing of this job template|
 |`state`|`present`|no|str|Desired state of the resource.|
