@@ -1,17 +1,15 @@
 ---
 controller_inventories:
-{% for inventory in current_inventories_asset_value %}
-  - name: "{{ inventory.name }}"
-    description: "{{ inventory.description }}"
-    organization: "{{ inventory.organization }}"
-{% if inventory.host_filter %}
-    host_filter: "{{ inventory.host_filter }}"
+  - name: "{{ current_inventories_asset_value.name }}"
+    description: "{{ current_inventories_asset_value.description }}"
+    organization: "{{ current_inventories_asset_value.organization }}"
+{% if current_inventories_asset_value.host_filter %}
+    host_filter: "{{ current_inventories_asset_value.host_filter }}"
 {% endif %}
-{% if inventory.kind %}
-    kind: "{{ inventory.kind }}"
+{% if current_inventories_asset_value.kind %}
+    kind: "{{ current_inventories_asset_value.kind }}"
 {% endif %}
-{% if inventory.variables %}
-    variables: "{{ inventory.variables }}"
+{% if current_inventories_asset_value.variables %}
+    variables: "{{ current_inventories_asset_value.variables }}"
 {% endif %}
-{% endfor %}
 ...

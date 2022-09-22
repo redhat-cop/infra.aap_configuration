@@ -1,16 +1,14 @@
 ---
 controller_notification_templates:
-{% for notification_template in current_notification_templates_asset_value %}
-- name: "{{ notification_template.name }}"
+- name: "{{ current_notification_templates_asset_value.name }}"
   notification_template:
-    name: "{{ notification_template.name }}"
-    organization: "{{ notification_template.summary_fields.organization.name }}"
-    notification_type: "{{ notification_template.notification_type }}"
+    name: "{{ current_notification_templates_asset_value.name }}"
+    organization: "{{ current_notification_templates_asset_value.summary_fields.organization.name }}"
+    notification_type: "{{ current_notification_templates_asset_value.notification_type }}"
     notification_configuration:
-{{ notification_template.notification_configuration | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
-{% if notification_template.messages is defined and notification_template.messages %}
+{{ current_notification_templates_asset_value.notification_configuration | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
+{% if current_notification_templates_asset_value.messages is defined and current_notification_templates_asset_value.messages %}
     messages:
-{{ notification_template.messages | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
+{{ current_notification_templates_asset_value.messages | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
 {% endif %}
-{% endfor %}
 ...

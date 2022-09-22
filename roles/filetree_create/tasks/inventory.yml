@@ -1,57 +1,41 @@
 ---
 - name: "Get the inventoryes from the API"
   set_fact:
-    inventory_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/inventories/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects, query_params={
-                          'not__kind': 'smart',
-                          'order_by': 'organization'
-                        }
-                      )
-             }}"
+    inventory_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/inventories/',
+                                 query_params={
+                                   'not__kind': 'smart',
+                                   'order_by': 'organization,id'
+                                 },
+                                 host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
+                                 return_all=true, max_objects=query_controller_api_max_objects
+                           )
+                        }}"
 
-- name: "Translate the inventories to a useful structure"
-  set_fact:
-    current_inventories: "{{ (current_inventories | default({})) | combine({(inventory_lookvar_item_organization | default('ORGANIZATIONLESS', true)): (current_inventories[inventory_lookvar_item_organization] | default([])) + [{
-        'has_inventory_sources': inventory_lookvar_item.has_inventory_sources,
-        'id': inventory_lookvar_item.id,
-        'name': inventory_lookvar_item.name,
-        'description': inventory_lookvar_item.description,
-        'organization': inventory_lookvar_item_organization,
-        'host_filter': inventory_lookvar_item.host_filter,
-        'kind': inventory_lookvar_item.kind,
-        'variables': inventory_lookvar_item.variables,
-        'inventory_sources': query('ansible.controller.controller_api', inventory_lookvar_item.related.inventory_sources, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) if inventory_lookvar_item.has_inventory_sources else [],
-        'hosts': query('ansible.controller.controller_api', inventory_lookvar_item.related.hosts, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) if not inventory_lookvar_item.has_inventory_sources else [],
-        'groups': query('ansible.controller.controller_api', inventory_lookvar_item.related.groups, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) if not inventory_lookvar_item.has_inventory_sources else []
-      }]}) }}"
-    needed_paths: "{{ ((needed_paths | default([])) + [inventory_lookvar_item_organization]) | flatten | unique }}"
-  vars:
-    inventory_lookvar_item_organization: "{{ lookup('ansible.controller.controller_api', 'api/v2/organizations/'+(inventory_lookvar_item.organization|string), host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true)['name'] }}"
-  loop: "{{ inventory_lookvar }}"
-  loop_control:
-    loop_var: inventory_lookvar_item
-    label: "{{ inventory_lookvar_item_organization }} - {{ inventory_lookvar_item.name }}"
-
-- name: "Create the output directory for inventories: {{ output_path }}/<ORGANIZATION_NAME>"
+- name: "Create the output directory for inventories: {{ output_path }}/<ORGANIZATION_NAME>/inventories"
   file:
-    path: "{{ output_path }}/{{ needed_path }}"
+    path: "{{ output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
     state: directory
     mode: '0755'
-  loop: "{{ needed_paths | default([]) }}"
+  vars:
+    inventory_organization: "{{ needed_path.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+    inventory_name: "{{ needed_path.name | regex_replace('/','_') }}"
+  loop: "{{ inventory_lookvar }}"
   loop_control:
     loop_var: needed_path
-    label: "{{ output_path }}/{{ needed_path }}"
+    label: "{{ output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
 
-- name: "Add current inventories to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_inventories.yaml"
+- name: "Add current inventories to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/inventories"
   template:
     src: "templates/current_inventories.j2"
-    dest: "{{ output_path }}/{{ current_inventory_dir.key }}/current_inventories.yaml"
+    dest: "{{ output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}/{{ current_inventories_asset_value.id }}_{{ inventory_name }}.yaml"
     mode: '0644'
   vars:
-    current_inventories_asset_value: "{{ current_inventory_dir.value }}"
-  loop: "{{ current_inventories | default({}) | dict2items }}"
+    inventory_organization: "{{ current_inventories_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+    inventory_name: "{{ current_inventories_asset_value.name | regex_replace('/','_') }}"
+  loop: "{{ inventory_lookvar }}"
   loop_control:
-    loop_var: current_inventory_dir
-    label: "{{ output_path }}/{{ current_inventory_dir.key }}/current_inventories.yaml"
+    loop_var: current_inventories_asset_value
+    label: "{{ output_path }}/{{ inventory_organization }}/inventories/{{ current_inventories_asset_value.id }}_{{ inventory_name }}.yaml"
 
 - name: "Set local_output_path"
   set_fact:
@@ -60,30 +44,48 @@
 - name: "Set the inventory's inventory sources"
   include_tasks: "inventory_sources.yml"
   vars:
-    output_path: "{{ local_output_path }}/{{ current_inventory_sources.key }}"
-    current_organization_inventories: "{{ current_inventory_sources.value }}"
-  loop: "{{ current_inventories | default({}) | dict2items }}"
+    inventory_organization: "{{ current_inventory_sources.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+    inventory_name: "{{ current_inventory_sources.name | regex_replace('/','_') }}"
+    output_path: "{{ local_output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
+    current_inventory_sources_asset_value: "{{ query('ansible.controller.controller_api', current_inventory_sources.related.inventory_sources,
+                                                          host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
+                                                          return_all=true, max_objects=query_controller_api_max_objects
+                                                    ) if current_inventory_sources.has_inventory_sources else []
+                                            }}"
+  loop: "{{ inventory_lookvar }}"
   loop_control:
     loop_var: current_inventory_sources
-    label: "{{ local_output_path }}/{{ current_inventory_sources.key }}"
+    label: "{{ local_output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
 
 - name: "Set the inventory's hosts"
   include_tasks: "hosts.yml"
   vars:
-    output_path: "{{ local_output_path }}/{{ current_inventory_hosts.key }}"
-    current_organization_inventories: "{{ current_inventory_hosts.value }}"
-  loop: "{{ current_inventories | default({}) | dict2items }}"
+    inventory_organization: "{{ current_inventory_hosts.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+    inventory_name: "{{ current_inventory_hosts.name | regex_replace('/','_') }}"
+    output_path: "{{ local_output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
+    current_hosts_asset_value: "{{ query('ansible.controller.controller_api', current_inventory_hosts.related.hosts,
+                                              host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
+                                              return_all=true, max_objects=query_controller_api_max_objects
+                                        ) if not current_inventory_hosts.has_inventory_sources else []
+                                }}"
+  loop: "{{ inventory_lookvar }}"
   loop_control:
     loop_var: current_inventory_hosts
-    label: "{{ local_output_path }}/{{ current_inventory_hosts.key }}"
+    label: "{{ local_output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
 
 - name: "Set the inventory's groups"
   include_tasks: "groups.yml"
   vars:
-    output_path: "{{ local_output_path }}/{{ current_inventory_groups.key }}"
-    current_organization_inventories: "{{ current_inventory_groups.value }}"
-  loop: "{{ current_inventories | default({}) | dict2items }}"
+    inventory_organization: "{{ current_inventory_groups.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+    inventory_name: "{{ current_inventory_groups.name | regex_replace('/','_') }}"
+    output_path: "{{ local_output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
+    current_groups_asset_value: "{{ query('ansible.controller.controller_api', current_inventory_groups.related.groups,
+                                               host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
+                                               return_all=true, max_objects=query_controller_api_max_objects
+                                         ) if not current_inventory_groups.has_inventory_sources else []
+                                 }}"
+  loop: "{{ inventory_lookvar }}"
   loop_control:
     loop_var: current_inventory_groups
-    label: "{{ local_output_path }}/{{ current_inventory_groups.key }}"
+    label: "{{ local_output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
 ...
