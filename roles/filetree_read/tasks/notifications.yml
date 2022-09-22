@@ -1,25 +1,25 @@
 ---
 - name: "Get list of files inside {{ filetree_controller_notifications }}"
-  find:
+  ansible.builtin.find:
     paths: "{{ filetree_controller_notifications }}"
     file_type: file
     recurse: true
   register: __list_files_controller_notifications
 
 - name: "Read Notifications definitions"
-  include_vars:
+  ansible.builtin.include_vars:
     file: "{{ item.path }}"
   loop: "{{ __list_files_controller_notifications.files }}"
   register: __contents_filetree_controller_notifications
 
 - name: "Populate Notifications list"
-  set_fact:
+  ansible.builtin.set_fact:
     __populate_controller_notifications: "{{ (__populate_controller_notifications | default([])) + item.ansible_facts.controller_notifications }}"
   loop: "{{ __contents_filetree_controller_notifications.results }}"
   when: __contents_filetree_controller_notifications.results is defined and item.ansible_facts.controller_notifications is defined
 
 - name: "Set Notifications Data Structure"
-  set_fact:
+  ansible.builtin.set_fact:
     controller_notifications: "{{ __populate_controller_notifications }}"
   when: __populate_controller_notifications is defined
 ...

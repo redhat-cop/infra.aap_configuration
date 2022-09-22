@@ -1,25 +1,25 @@
 ---
 - name: "Get list of files inside {{ filetree_controller_schedules }}"
-  find:
+  ansible.builtin.find:
     paths: "{{ filetree_controller_schedules }}"
     file_type: file
     recurse: true
   register: __list_files_controller_schedules
 
 - name: "Read Schedules definitions"
-  include_vars:
+  ansible.builtin.include_vars:
     file: "{{ item.path }}"
   loop: "{{ __list_files_controller_schedules.files }}"
   register: __contents_filetree_controller_schedules
 
 - name: "Populate Schedules list"
-  set_fact:
+  ansible.builtin.set_fact:
     __populate_controller_schedules: "{{ (__populate_controller_schedules | default([])) + item.ansible_facts.controller_schedules }}"
   loop: "{{ __contents_filetree_controller_schedules.results }}"
   when: __contents_filetree_controller_schedules.results is defined and item.ansible_facts.controller_schedules is defined
 
 - name: "Set Schedules Data Structure"
-  set_fact:
+  ansible.builtin.set_fact:
     controller_schedules: "{{ __populate_controller_schedules }}"
   when: __populate_controller_schedules is defined
 ...

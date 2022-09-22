@@ -1,12 +1,12 @@
 ---
 - name: "Create the output directory: {{ output_path }}"
-  file:
+  ansible.builtin.file:
     path: "{{ output_path }}"
     state: directory
     mode: '0755'
 
 - name: "Add current roles to the output yaml file"
-  template:
+  ansible.builtin.template:
     src: "templates/current_roles.j2"
     dest: "{{ output_path }}/current_roles_{{ current_user_roles.key }}.yaml"
     mode: '0644'

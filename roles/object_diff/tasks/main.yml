@@ -1,8 +1,9 @@
 ---
 # tasks file for object_diff
-- block:
+- name: "Setup authentication (block)"
+  block:
     - name: "Get the Authentication Token for the future requests"
-      uri:
+      ansible.builtin.uri:
         url: "https://{{ controller_hostname }}/api/v2/tokens/"
         user: "{{ controller_username }}"
         password: "{{ controller_password }}"
@@ -13,7 +14,7 @@
       register: authtoken_res
 
     - name: "Set the oauth token to be used since now"
-      set_fact:
+      ansible.builtin.set_fact:
         oauthtoken: "{{ authtoken_res.json.token }}"
         oauthtoken_url: "{{ authtoken_res.json.url }}"
       no_log: true
@@ -22,7 +23,7 @@
     - always
 
 - name: "Include Tasks to get OBJECT DIFF {{  __task_diff.name }}"
-  include_tasks: "{{  __task_diff.name }}.yml"
+  ansible.builtin.include_tasks: "{{  __task_diff.name }}.yml"
   args:
     apply:
       tags: "{{  __task_diff.tags }}"

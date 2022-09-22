@@ -1,24 +1,28 @@
 ---
 # tasks file for filetree_create
-- block:
-    - block:
+- name: "Check requirements (block)"
+  block:
+    - name: "Check installed collections (block)"
+      block:
         - name: "Check if the collection ansible.controller is installed"
-          set_fact:
-            ansible_controller_collection_installed: "{{ lookup('pipe', 'ansible-galaxy collection list | grep -i ansible.controller') }}"
+          ansible.builtin.set_fact:
+            ansible_controller_collection_installed: "{{ lookup('ansible.builtin.pipe', 'ansible-galaxy collection list | grep -i ansible.controller || echo NOTINSTALLED') }}"
+          failed_when: ansible_controller_collection_installed is match('NOTINSTALLED')
       rescue:
         - name: "Check if the collection awx.awx is installed"
-          set_fact:
-            awx_awx_collection_installed: "{{ lookup('pipe', 'ansible-galaxy collection list | grep -i awx.awx') }}"
+          ansible.builtin.set_fact:
+            awx_awx_collection_installed: "{{ lookup('ansible.builtin.pipe', 'ansible-galaxy collection list | grep -i awx.awx || echo NOTINSTALLED') }}"
+          failed_when: awx_awx_collection_installed is match('NOTINSTALLED')
       always:
         - name: "Set the collection providing the controller_api lookup plugin"
-          set_fact:
+          ansible.builtin.set_fact:
             controller_api_plugin: "{{ ('ansible.controller.controller_api' if ansible_controller_collection_installed is defined) | default('awx.awx.controller_api' if awx_awx_collection_installed is defined) | default('NONE') }}"
         - name: "Fail if no collection is detected"
-          fail:
+          ansible.builtin.fail:
             msg: "One of the following collections is required to be installed: 'ansible.controller' or 'awx.awx'."
           when: controller_api_plugin is match('NONE')
         - name: "Show the plugin we are using"
-          debug:
+          ansible.builtin.debug:
             msg: "Using the 'controller_api' plugin from: {{ controller_api_plugin }}"
 
     - name: "Check if the required input variables are present"
@@ -43,7 +47,7 @@
     - always
 
 - name: "Include Tasks to get all objects of type {{ input_tag }}"
-  include_tasks: all.yml
+  ansible.builtin.include_tasks: all.yml
   args:
     apply:
       tags: "{{ input_tag | to_yaml }}"

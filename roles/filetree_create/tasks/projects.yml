@@ -1,6 +1,6 @@
 ---
 - name: "Get current Projects from the API"
-  set_fact:
+  ansible.builtin.set_fact:
     projects_lookvar: "{{ query(controller_api_plugin, 'api/v2/projects/',
                                 query_params={'order_by': 'organization,id'},
                                 host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
@@ -8,26 +8,26 @@
                        }}"
 
 - name: "Create the output directory for projects: {{ output_path }}/<ORGANIZATION_NAME>/projects"
-  file:
+  ansible.builtin.file:
     path: "{{ output_path }}/{{ needed_path }}/projects"
     state: directory
     mode: '0755'
   loop: "{{ (projects_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
-            + (['ORGANIZATIONLESS'] if ((projects_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0 ) else [])
+            + (['ORGANIZATIONLESS'] if ((projects_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
          }}"
   loop_control:
     loop_var: needed_path
     label: "{{ output_path }}/{{ needed_path }}/projects"
 
 - name: "Add current projects to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/projects"
-  template:
+  ansible.builtin.template:
     src: "templates/current_projects.j2"
     dest: "{{ output_path }}/{{ project_organization }}/projects/{{ project_id }}_{{ project_name }}.yaml"
     mode: '0644'
   vars:
     project_organization: "{{ current_projects_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}"
     project_id: "{{ current_projects_asset_value.id }}"
-    project_name: "{{ current_projects_asset_value.name | regex_replace('/','_') }}"
+    project_name: "{{ current_projects_asset_value.name | regex_replace('/', '_') }}"
   loop: "{{ projects_lookvar }}"
   loop_control:
     loop_var: current_projects_asset_value

@@ -5,7 +5,7 @@
     name:                           "{{ __execution_environments_item.name | mandatory }}"
     description:                    "{{ __execution_environments_item.description | default(omit, true) }}"
     image:                          "{{ __execution_environments_item.image | mandatory }}"
-    organization:                   "{{ __execution_environments_item.organization.name | default( __execution_environments_item.organization | default(omit, true)) }}"
+    organization:                   "{{ __execution_environments_item.organization.name | default(__execution_environments_item.organization | default(omit, true)) }}"
     credential:                     "{{ __execution_environments_item.credential | default(omit, true) }}"
     pull:                           "{{ __execution_environments_item.pull | default(omit, true) }}"
     state:                          "{{ __execution_environments_item.state | default(controller_state | default('present')) }}"
@@ -30,7 +30,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Create Controller Execution Environments | Wait for finish the Controller Execution Environments creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __execution_environments_job_async_results_item.ansible_job_id }}"
   register: __execution_environments_job_async_result
   until: __execution_environments_job_async_result.finished

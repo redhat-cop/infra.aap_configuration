@@ -1,25 +1,25 @@
 ---
 - name: "Get list of files inside {{ filetree_controller_applications }}"
-  find:
+  ansible.builtin.find:
     paths: "{{ filetree_controller_applications }}"
     file_type: file
     recurse: true
   register: __list_files_controller_applications
 
 - name: "Read Applications definitions"
-  include_vars:
+  ansible.builtin.include_vars:
     file: "{{ item.path }}"
   loop: "{{ __list_files_controller_applications.files }}"
   register: __contents_filetree_controller_applications
 
 - name: "Populate Applications list"
-  set_fact:
+  ansible.builtin.set_fact:
     __populate_controller_applications: "{{ (__populate_controller_applications | default([])) + item.ansible_facts.controller_applications }}"
   loop: "{{ __contents_filetree_controller_applications.results }}"
   when: __contents_filetree_controller_applications.results is defined and item.ansible_facts.controller_applications is defined
 
 - name: "Set Applications Data Structure"
-  set_fact:
+  ansible.builtin.set_fact:
     controller_applications: "{{ __populate_controller_applications }}"
   when: __populate_controller_applications is defined
 ...

@@ -25,7 +25,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Configure Labels | Wait for finish the Label creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __controller_label_job_async_results_item.ansible_job_id }}"
   register: __controller_label_job_async_result
   until: __controller_label_job_async_result.finished

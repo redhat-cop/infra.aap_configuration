@@ -1,6 +1,6 @@
 ---
 - name: "Get current Organizations from the API"
-  set_fact:
+  ansible.builtin.set_fact:
     orgs_lookvar: "{{ query(controller_api_plugin, 'api/v2/organizations/',
                             query_params={'order_by': 'id'},
                             host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
@@ -8,7 +8,7 @@
                    }}"
 
 - name: "Create the output directory for organizations: {{ output_path }}/{{ current_organization_dir.name }}"
-  file:
+  ansible.builtin.file:
     path: "{{ output_path }}/{{ current_organization_dir.name }}"
     state: directory
     mode: '0755'
@@ -18,7 +18,7 @@
     label: "{{ output_path }}/{{ current_organization_dir.name }}"
 
 - name: "Add current organizations to the output yaml file"
-  template:
+  ansible.builtin.template:
     src: "templates/current_organizations.j2"
     dest: "{{ output_path }}/{{ current_organization.name }}/current_organization.yaml"
     mode: '0644'

@@ -3,7 +3,7 @@
   credential_type:
     name:                           "{{ __controller_credential_type_item.name | mandatory }}"
     description:                    "{{ __controller_credential_type_item.description | default(omit, true) }}"
-    injectors:                      "{{ __controller_credential_type_item.injectors | default(omit, true) | regex_replace('[ ]{2,}','') }}"
+    injectors:                      "{{ __controller_credential_type_item.injectors | default(omit, true) | regex_replace('[ ]{2,}', '') }}"
     inputs:                         "{{ __controller_credential_type_item.inputs | default(omit, true) }}"
     kind:                           "{{ __controller_credential_type_item.kind | default('cloud') }}"
     state:                          "{{ __controller_credential_type_item.state | default(controller_state | default('present')) }}"
@@ -27,7 +27,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Configure Controller Credential Types | Wait for finish the credential types creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __credentialtypes_job_async_result_item.ansible_job_id }}"
   register: __credentialtypes_job_async_result
   until: __credentialtypes_job_async_result.finished

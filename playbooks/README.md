@@ -1,8 +1,11 @@
 # controller_configuration.configure_controller.yml playbook
+
 ## Description
+
 An Ansible playbook to run any defined configurations on Ansible Controller.
 
 ## Requirements
+
 ansible-galaxy collection install  -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
@@ -10,21 +13,27 @@ Currently:
   ansible.controller
 
 ## Usage
+
 The following command will invoke the playbook with the awx collection
+
 ```console
 ansible-playbook redhat_cop.controller_configuration.configure_awx.yml
 ```
+
 The following command will invoke the playbook with the ansible.controller collection
+
 ```console
 ansible-playbook redhat_cop.controller_configuration.configure_controller.yml
 ```
 
 ## Examples
+
 Examples of the playbooks in use can be found in the examples folder.
 
 ## Variables
 
 ### Standard Controller Variables
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`controller_state`|"present"|no|The state all objects will take unless overriden by object default|'absent'|
@@ -36,6 +45,7 @@ Examples of the playbooks in use can be found in the examples folder.
 |`controller_configs_dir`|`see role`|no|.|Directory with Controller configs. Falls back to env CONTROLLER_CONFIGS_DIR. Defaults to $PWD/configs|
 
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add ad hoc commands task does not include sensitive information.
@@ -46,7 +56,9 @@ controller_configuration_ad_hoc_command_secure_logging defaults to the value of 
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared accross multiple roles, see above.|
 
 ## Data Structure
+
 ### Config Top Level Vars
+
 |Variable Name|Default Value|Description|
 |:---:|:---:|:---:|
 |`controller_ad_hoc_commands`|`see role`|Data structure describing your ad hoc commands to run . Described in role.|
@@ -77,8 +89,8 @@ controller_configuration_ad_hoc_command_secure_logging defaults to the value of 
 |`workflow_job_templates`|`see role`|Data structure describing your workflow job templates . Described in role.|
 |`controller_workflow_launch_jobs`|`see role`|Data structure describing workflow or workflows to launch . Described in role.|
 
-
 ### Standard Configs Folder Data Structure
+
 ```yaml
 ---
 └── configs
@@ -109,12 +121,12 @@ controller_configuration_ad_hoc_command_secure_logging defaults to the value of 
     ├── templates.yml
     ├── user_accounts.yml
     ├── workflows.yml
-    └── workfows_launch.yml
+    └── workflows_launch.yml
 ```
 
-## Configuring Continous Deployment
+## Configuring Continuous Deployment
 
-This section explains how to setup the Continous Deployment (CD) of the defined configurations on Ansible controller when a event occurs(usally a merge event) in the git reposository where the definitions are kept.
+This section explains how to setup the Continuous Deployment (CD) of the defined configurations on Ansible controller when a event occurs(usually a merge event) in the git repository where the definitions are kept.
 
 This procedure has been tested with **gitlab** git server
 
@@ -125,7 +137,9 @@ You have make the following configurations in order to configure CD integration:
 2. Configure [project webhook](https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html) on the project where defined configurations are hosted.
 
 ## License
+
 [MIT](LICENSE)
 
 ## Author
+
 [Sean Sullivan](https://github.com/sean-m-sullivan)

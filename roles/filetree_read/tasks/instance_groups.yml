@@ -1,25 +1,25 @@
 ---
 - name: "Get list of files inside {{ filetree_controller_instance_groups }}"
-  find:
+  ansible.builtin.find:
     paths: "{{ filetree_controller_instance_groups }}"
     file_type: file
     recurse: true
   register: __list_files_controller_instance_groups
 
 - name: "Read Instance Groups definitions"
-  include_vars:
+  ansible.builtin.include_vars:
     file: "{{ item.path }}"
   loop: "{{ __list_files_controller_instance_groups.files }}"
   register: __contents_filetree_controller_instance_groups
 
 - name: "Populate Instance Groups list"
-  set_fact:
+  ansible.builtin.set_fact:
     __populate_controller_instance_groups: "{{ (__populate_controller_instance_groups | default([])) + item.ansible_facts.controller_instance_groups }}"
   loop: "{{ __contents_filetree_controller_instance_groups.results }}"
   when: __contents_filetree_controller_instance_groups.results is defined and item.ansible_facts.controller_instance_groups is defined
 
 - name: "Set Instance Groups Data Structure"
-  set_fact:
+  ansible.builtin.set_fact:
     controller_instance_groups: "{{ __populate_controller_instance_groups }}"
   when: __populate_controller_instance_groups is defined
 ...

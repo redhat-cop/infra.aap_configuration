@@ -1,8 +1,11 @@
 # controller_configuration.license
+
 ## Description
+
 An Ansible Role to deploy a license on Ansible Controller.
 
 ## Requirements
+
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
@@ -12,6 +15,7 @@ Currently:
 ## Variables
 
 ### Authentication
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
@@ -23,6 +27,7 @@ Currently:
 |`controller_license`|`see below`|yes|Data structure describing your license for controller, described below.||
 
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add license task does not include sensitive information.
@@ -34,7 +39,9 @@ controller_configuration_license_secure_logging defaults to the value of control
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ## Data Structure
-### Variables
+
+### License Variables
+
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`manifest_file`|""|no|obj|File path to a Red Hat subscription manifest (a .zip file)|
@@ -46,10 +53,12 @@ controller_configuration_license_secure_logging defaults to the value of control
 |`eula_accepted`|""|yes|bool|DEPRECATED since Tower 3.8 - Whether to accept the End User License Agreement for Ansible controller|
 |`force`|`False`|no|bool|By default, the license manifest will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.|
 
-For further details on fields see https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html
+For further details on fields see <https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html>
 
 ### Standard Project Data Structure
+
 #### Json Example
+
 ```json
 {
     "controller_license": {
@@ -58,7 +67,9 @@ For further details on fields see https://docs.ansible.com/automation-controller
       }
 }
 ```
+
 #### Yaml Example
+
 ```yaml
 ---
 controller_license:
@@ -69,7 +80,9 @@ controller_license:
 ```
 
 ## Playbook Examples
+
 ### Standard Role Usage
+
 ```yaml
 ---
 - name: Playbook to configure ansible controller post installation
@@ -88,8 +101,11 @@ controller_license:
   roles:
     - {role: redhat_cop.controller_configuration.license, when: controller_license is defined}
 ```
+
 ## License
+
 [MIT](LICENSE)
 
 ## Author
+
 [Tom Page](https://github.com/Tompage1994)

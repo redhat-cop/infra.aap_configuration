@@ -1,8 +1,11 @@
 # controller_configuration.***********
+
 ## Description
-An Ansible Role to create ******* on Ansible Controller.
+
+An Ansible Role to create******* on Ansible Controller.
 
 ## Requirements
+
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
@@ -12,6 +15,7 @@ Currently:
 ## Variables
 
 ### Authentication
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
@@ -23,6 +27,7 @@ Currently:
 |`controller_************`|`see below`|yes|Data structure describing your organization or organizations Described below.||
 
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add ******* task does not include sensitive information.
@@ -34,6 +39,7 @@ controller_configuration_*******_secure_logging defaults to the value of control
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
+
 The following Variables set asynchronous retries for the role.
 If neither of the retries or delay or retries are set, they will default to their respective defaults.
 This allows for all items to be created, then checked that the task finishes successfully.
@@ -47,7 +53,9 @@ This also speeds up the overall role.
 |`controller_configuration_*******_async_delay`|`controller_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ## Data Structure
-### Variables
+
+### ************ Variables
+
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of Job Template|
@@ -56,23 +64,27 @@ This also speeds up the overall role.
 
 |`state`|`present`|no|str|Desired state of the resource.|
 
-
-
 ### Standard Project Data Structure
+
 #### Json Example
+
 ```json
 {
 }
 
 ```
+
 #### Yaml Example
+
 ```yaml
 ---
 
 ```
 
 ## Playbook Examples
+
 ### Standard Role Usage
+
 ```yaml
 ---
 - name: Playbook to configure ansible controller post installation
@@ -91,8 +103,11 @@ This also speeds up the overall role.
   roles:
     - {role: redhat_cop.controller_configuration.license, when: controller_license is defined}
 ```
+
 ## License
+
 [MIT](LICENSE)
 
 ## Author
+
 [************](************)

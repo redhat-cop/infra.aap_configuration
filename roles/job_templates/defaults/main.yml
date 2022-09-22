@@ -61,7 +61,7 @@ controller_templates: []
 #  notification_templates_success: []  # optional, notification template names
 #  notification_templates_error: []  # optional, notification template names
 
-controller_configuration_job_templates_secure_logging: "{{controller_configuration_secure_logging | default('false')}}"
+controller_configuration_job_templates_secure_logging: "{{ controller_configuration_secure_logging | default('false') }}"
 controller_configuration_job_templates_async_retries: "{{ controller_configuration_async_retries | default(30) }}"
 controller_configuration_job_templates_async_delay: "{{ controller_configuration_async_delay | default(1) }}"
 ...

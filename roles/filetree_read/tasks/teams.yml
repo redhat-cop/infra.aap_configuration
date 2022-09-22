@@ -1,25 +1,25 @@
 ---
 - name: "Get list of files inside {{ filetree_controller_teams }}"
-  find:
+  ansible.builtin.find:
     paths: "{{ filetree_controller_teams }}"
     file_type: file
     recurse: true
   register: __list_files_controller_teams
 
 - name: "Read Teams definitions"
-  include_vars:
+  ansible.builtin.include_vars:
     file: "{{ item.path }}"
   loop: "{{ __list_files_controller_teams.files }}"
   register: __contents_filetree_controller_teams
 
 - name: "Populate Teams list"
-  set_fact:
+  ansible.builtin.set_fact:
     __populate_controller_teams: "{{ (__populate_controller_teams | default([])) + item.ansible_facts.controller_teams }}"
   loop: "{{ __contents_filetree_controller_teams.results }}"
   when: __contents_filetree_controller_teams.results is defined and item.ansible_facts.controller_teams is defined
 
 - name: "Set Teams Data Structure"
-  set_fact:
+  ansible.builtin.set_fact:
     controller_teams: "{{ __populate_controller_teams }}"
   when: __populate_controller_teams is defined
 ...

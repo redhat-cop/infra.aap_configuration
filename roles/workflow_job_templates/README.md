@@ -1,8 +1,11 @@
 # controller_configuration.workflow_job_templates
+
 ## Description
+
 An Ansible Role to create Workflow Job Templates on Ansible Controller.
 
 ## Requirements
+
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
@@ -12,6 +15,7 @@ Currently:
 ## Variables
 
 ### Authentication
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
@@ -23,6 +27,7 @@ Currently:
 |`workflow_job_templates`|`see below`|yes|Data structure describing your workflow job templates described below.||
 
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add Workflow Job Templates task does not include sensitive information.
@@ -34,6 +39,7 @@ workflow_job_templates_secure_logging defaults to the value of controller_config
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
+
 The following Variables set asynchronous retries for the role.
 If neither of the retries or delay or retries are set, they will default to their respective defaults.
 This allows for all items to be created, then checked that the task finishes successfully.
@@ -47,7 +53,9 @@ This also speeds up the overall role.
 |`controller_configuration_workflow_async_delay`|`controller_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ## Data Structure
+
 ### Variables For Workflow Job Template
+
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of Workflow Job Template|
@@ -79,6 +87,7 @@ This also speeds up the overall role.
 |`webhook_credential`|""|no|str|Personal Access Token for posting back the status to the service API|
 
 ### Variables For Workflow Job Template Node
+
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`workflow_job_template`|""|yes|str|The workflow job template the node exists in. Used for looking up the node, cannot be modified after creation.|
@@ -103,6 +112,7 @@ This also speeds up the overall role.
 |`skip_tags`|""|no|str|Tags to skip, applied as a prompt, if job template prompts for job tags|
 
 ### Approval node dictionary
+
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of this workflow approval template.|
@@ -110,6 +120,7 @@ This also speeds up the overall role.
 |`timeout`|0|no|int|The amount of time (in seconds) before the approval node expires and fails.|
 
 ### Surveys
+
 Refer to the [Controller Api Guide](https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Job_Templates/Job_Templates_job_templates_survey_spec_create) for more information about forming surveys
 |Variable Name|Variable Description|
 |:---:|:---:|
@@ -128,14 +139,19 @@ Refer to the [Controller Api Guide](https://docs.ansible.com/ansible-tower/lates
 |`new_question`|Boolean|
 
 ### Workflow Data Structures
+
 This role accepts two data models.
+
 #### Simplified Workflow nodes
+
 A simple straightforward easy to maintain model using the var simplified_workflow_nodes.
 However this is, not compatible with the schema option on the controller_workflow_job_template module and will result in errors.
 Uses the variable 'simplified_workflow_nodes' to describe nodes as shown below.
 
 #### Simplified Workflow Node Data structure model
+
 ##### Yaml Example
+
 ```yaml
 ---
 controller_workflows:
@@ -185,12 +201,15 @@ controller_workflows:
 ```
 
 #### Controller Export Model
+
 This model is based off of the output from awx.awx.export, that is based on the API.
 This is more complicated, However it allows the user to use the schema input on the role which runs much faster compared to the simplified model.
 This can be under the subvariable 'workflow_nodes' or under the subvariable 'related.workflow_nodes' which is the output of controller_export.
 
 #### Controller Export Data structure model
-##### Yaml Example
+
+##### Yaml Export Example
+
 ```yaml
 ---
 controller_workflows:
@@ -252,6 +271,7 @@ controller_workflows:
 ```
 
 ##### Json Example
+
 ```json
 {
   "controller_workflows": [
@@ -350,9 +370,10 @@ controller_workflows:
 }
 ```
 
-
 ## Playbook Examples
+
 ### Standard Role Usage
+
 ```yaml
 ---
 - name: Playbook to configure ansible controller post installation
@@ -372,8 +393,11 @@ controller_workflows:
     - {role: redhat_cop.controller_configuration.workflow_job_templates, when: controller_workflows is defined}
 
 ```
+
 ## License
+
 [MIT](LICENSE)
 
 ## Author
+
 [Sean Sullivan](https://github.com/sean-m-sullivan)

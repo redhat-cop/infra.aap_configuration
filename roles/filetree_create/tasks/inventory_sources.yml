@@ -1,12 +1,12 @@
 ---
 - name: "Create the output directory for inventory sources: {{ inventory_sources_output_path }}"
-  file:
+  ansible.builtin.file:
     path: "{{ inventory_sources_output_path }}"
     state: directory
     mode: '0755'
 
 - name: "Add current inventory source to the output yaml file: {{ inventory_sources_output_path }}/current_inventory_sources.yaml"
-  template:
+  ansible.builtin.template:
     src: "templates/current_inventory_sources.j2"
     dest: "{{ inventory_sources_output_path }}/current_inventory_sources.yaml"
     mode: '0644'

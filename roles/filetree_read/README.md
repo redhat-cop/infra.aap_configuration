@@ -1,18 +1,15 @@
-controller_configuration.filetree_read
-=========
+# controller_configuration.filetree_read
 
 An ansible role which reads variables from a hierarchical and scalable directory structure which is grouped based on the configuration code life-cycle. It could be used to run the role filetree_read to load variables followed by dispatch role to apply the configuration.
 
-
-Requirements
-------------
+## Requirements
 
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed Currently: awx.awx or ansible.controller and redhat_cop.controller_configuration.
 
-Role Variables
---------------
+## Role Variables
 
 ### Authentication
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
@@ -27,13 +24,14 @@ Role Variables
 |`vault_controller_oauthtoken`|""|optional|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 
 ### Organization and Environment Variables
-The following Variables set the organization where should be applied the configuration, the absolute or relative of the directory structure where the variables will be stored and the life-cycle enviroment to use.
+
+The following Variables set the organization where should be applied the configuration, the absolute or relative of the directory structure where the variables will be stored and the life-cycle environment to use.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`orgs:`|Acme|yes|This variable sets the organization where should be applied the configuration.|
 |`dir_orgs_vars:`|orgs_vars|yes|This variable sets the directory path where the variables will be store.|
-|`env:`|dev|yes|This variable sets the life-cycle enviroment to use.|
+|`env:`|dev|yes|This variable sets the life-cycle environment to use.|
 |`filetree_controller_settings`|{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_settings.d/|yes|Directory path to load controller object variables|
 |`filetree_controller_organizations`|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_organizations.d/|yes|Directory path to load controller object variables|
 |`filetree_controller_labels`|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_labels.d/|yes|Directory path to load controller object variables|
@@ -80,6 +78,7 @@ controller_templates:
 ```
 
 ### Directory and Variables Data Structure for Authentication (Optional)
+
 - It could be created in the following path encrypted variables to be loaded to authenticate against the different controllers.
 
 ```bash
@@ -102,6 +101,7 @@ vault_controller_validate_certs: false
 ```
 
 ### Directory and Variables Data Structure
+
 - A directory structure should be created to store the variables files as below:
 
 ```bash
@@ -272,21 +272,20 @@ orgs_vars/Organization1
             │   └── controller_settings_user_interface.yml (1)
             └── controller_settings.yml                    (1)
 ```
+
 > **NOTE (1):** These directories and files must belong to SuperAdmin Organization ONLY, because must have admin super powers.
 
-Role Tags
-----------------
+## Role Tags
 
 The role is designed to be used with tags, each tags correspond to an AWX or Automation Controller object to be managed by ansible.
 
 ```bash
 [ansible@demo-ctr1-dev global]$  ansible-playbook config-controller-filetree.yml --list-tags
-  play #1 (localhost): localhost	TAGS: []
+  play #1 (localhost): localhost TAGS: []
       TASK TAGS: [always, applications, credential_input_sources, credential_types, credentials, execution_environments, groups, hosts, instance_groups, inventories, inventory_sources, job_templates, labels, notifications, notifications_templates, organizations, projects, roles, schedules, settings, teams, users, workflow_job_templates]
 ```
 
-Example Playbook
-----------------
+## Example Playbook
 
 ```yaml
 ---
@@ -329,18 +328,16 @@ Example Playbook
 ```
 
 ```bash
-$ ansible-playbook config-controller-filetree.yml --tags ${CONTROLLER_OBJECT} -e "{orgs: ${ORGANIZATION}, dir_orgs_vars: orgs_vars, env: ${ENVIRONMENT} }" --vault-password-file ./.vault_pass.txt -e @orgs_vars/env/${ENVIRONMENT}/configure_connection_controller_credentials.yml
+ansible-playbook config-controller-filetree.yml --tags ${CONTROLLER_OBJECT} -e "{orgs: ${ORGANIZATION}, dir_orgs_vars: orgs_vars, env: ${ENVIRONMENT} }" --vault-password-file ./.vault_pass.txt -e @orgs_vars/env/${ENVIRONMENT}/configure_connection_controller_credentials.yml
 
 ```
 
-License
--------
+## License
 
 GPLv3+
 
-Author Information
-------------------
+## Author Information
 
 - silvinux
   - email: <silvio@redhat.com>
-  - github: https://github.com/silvinux
+  - github: <https://github.com/silvinux>

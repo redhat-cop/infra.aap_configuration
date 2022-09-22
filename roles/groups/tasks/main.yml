@@ -1,11 +1,13 @@
 ---
-- name: Add controller group
+# The group module is also an ansible.builtin module, but due to supporting both the awx.awx and automation.controller collections
+# the FQCN cannot be used here.
+- name: Add controller group  # noqa fqcn-builtins
   group:
     name:                           "{{ controller_groups_item.name | mandatory }}"
     new_name:                       "{{ controller_groups_item.new_name | default(omit, true) }}"
     description:                    "{{ controller_groups_item.description | default(omit, true) }}"
     inventory:                      "{{ controller_groups_item.inventory | mandatory }}"
-    variables:                      "{{ controller_groups_item.variables | default(omit, true) | regex_replace('[ ]{2,}','') }}"
+    variables:                      "{{ controller_groups_item.variables | default(omit, true) | regex_replace('[ ]{2,}', '') }}"
     hosts:                          "{{ controller_groups_item.hosts | default(omit, true) }}"
     children:                       "{{ controller_groups_item.children | default(omit, true) }}"
     preserve_existing_hosts:        "{{ controller_groups_item.preserve_existing_hosts | default(omit) }}"
@@ -31,7 +33,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Create Controller Group | Wait for finish the Controller Group creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __group_job_async_results_item.ansible_job_id }}"
   register: __group_job_async_result
   until: __group_job_async_result.finished

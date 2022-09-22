@@ -1,19 +1,16 @@
-controller_configuration.object_diff
-=========
+# controller_configuration.object_diff
 
 An ansible role to manage the object diff of the AWX or Automation Controller configuration. This role leverage the controller_object_diff.py lookup plugin of the redhat_cop.controller_configuration, comparing two lists, one taken directly from the API and the other one from the git repository, and it could be used to delete objects in the AWX or Automation Controller that are not defined in the git repository list.
 
-
-Requirements
-------------
+## Requirements
 
 `ansible-galaxy collection install -r tests/collections/requirements.yml` to be installed. Currently: `awx.awx` or `ansible.controller` and `redhat_cop.controller_configuration`.
 
-Role Variables
---------------
+## Role Variables
 
 ### Organization and Environment Variables
-The following Variables set the organization where should be applied the configuration, the absolute or relative of the directory structure where the variables will be stored and the life-cycle enviroment to use.
+
+The following Variables set the organization where should be applied the configuration, the absolute or relative of the directory structure where the variables will be stored and the life-cycle environment to use.
 
 | Variable Name | Default Value | Required | Description |
 | :------------ | :-----------: | :------: | :---------- |
@@ -21,8 +18,7 @@ The following Variables set the organization where should be applied the configu
 | `drop_user_external_accounts` | `False` | no | When is true, all users will be taken to compare with SCM configuration as code |
 | `drop_teams` | `False` | no | When is true, all teams will be taken to compare with SCM configuration as code |
 
-Role Tags
-----------------
+## Role Tags
 
 The role is designed to be used with tags, each tags correspond to an AWX or Automation Controller object to be managed by ansible.
 
@@ -34,8 +30,7 @@ $ ansible-playbook object_diff.yml --list-tags
 
 ```
 
-Example Playbook
-----------------
+## Example Playbook
 
 ```bash
 ---
@@ -64,24 +59,22 @@ Example Playbook
 $ ansible-playbook drop_diff.yml --tags ${CONTROLLER_OBJECT} -e "{orgs: ${ORGANIZATION}, dir_orgs_vars: orgs_vars, env: ${ENVIRONMENT} }" --vault-password-file ./.vault_pass.txt -e @orgs_vars/env/${ENVIRONMENT}/configure_connection_controller_credentials.yml ${OTHER}
 ```
 
-License
--------
+## License
 
 GPLv3+
 
-Author Information
-------------------
+## Author Information
 
 - silvinux
   - email: <silvio@redhat.com>
-  - github: https://github.com/silvinux
+  - github: <https://github.com/silvinux>
 
 - Ivan Aragonés:
   - email: <iaragone@redhat.com>
-  - github: https://github.com/ivarmu
+  - github: <https://github.com/ivarmu>
 
-Important things to take into account
--------------------------------------
+## Important things to take into account
+
 - Issues:
   - Users and Teams must be managed by users with privileges.
   - Due to the Team Object doesn't return from API any field related to external account on Controller API, which help to filter if the teams comes from an External Source and not to be deleted by the Object Diff Ansible automation process.
