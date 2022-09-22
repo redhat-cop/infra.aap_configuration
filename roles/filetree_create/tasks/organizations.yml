@@ -1,15 +1,11 @@
 ---
 - name: "Get current Organizations from the API"
   set_fact:
-<<<<<<< HEAD
-    orgs_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/organizations/',
+    orgs_lookvar: "{{ query(controller_api_plugin, 'api/v2/organizations/',
                             query_params={'order_by': 'id'},
                             host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
                             return_all=true, max_objects=query_controller_api_max_objects)
                    }}"
-=======
-    orgs_lookvar: "{{ query(controller_api_plugin, 'api/v2/organizations/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) }}"
->>>>>>> c1a1936227ebf5173ab8bd205b809de44bc653ba
 
 - name: "Create the output directory for organizations: {{ output_path }}/{{ current_organization_dir.name }}"
   file:
