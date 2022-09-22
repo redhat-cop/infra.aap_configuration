@@ -1,9 +1,15 @@
 ---
+- name: "Get list of files inside {{ filetree_controller_instance_groups }}"
+  find:
+    paths: "{{ filetree_controller_instance_groups }}"
+    file_type: file
+    recurse: true
+  register: __list_files_controller_instance_groups
+
 - name: "Read Instance Groups definitions"
   include_vars:
-    file: "{{ item.src }}"
-  with_filetree: "{{ filetree_controller_instance_groups }}"
-  when: item.state == 'file'
+    file: "{{ item.path }}"
+  loop: "{{ __list_files_controller_instance_groups.files }}"
   register: __contents_filetree_controller_instance_groups
 
 - name: "Populate Instance Groups list"

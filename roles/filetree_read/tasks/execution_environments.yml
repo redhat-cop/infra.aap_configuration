@@ -1,9 +1,15 @@
 ---
+- name: "Get list of files inside {{ filetree_controller_execution_environments }}"
+  find:
+    paths: "{{ filetree_controller_execution_environments }}"
+    file_type: file
+    recurse: true
+  register: __list_files_controller_execution_environments
+
 - name: "Read Execution Environments definitions"
   include_vars:
-    file: "{{ item.src }}"
-  with_filetree: "{{ filetree_controller_execution_environments }}"
-  when: item.state == 'file'
+    file: "{{ item.path }}"
+  loop: "{{ __list_files_controller_execution_environments.files }}"
   register: __contents_filetree_controller_execution_environments
 
 - name: "Populate Execution Environments list"

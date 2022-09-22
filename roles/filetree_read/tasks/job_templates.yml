@@ -1,9 +1,15 @@
 ---
+- name: "Get list of files inside {{ filetree_controller_templates }}"
+  find:
+    paths: "{{ filetree_controller_templates }}"
+    file_type: file
+    recurse: true
+  register: __list_files_controller_templates
+
 - name: "Read Job Templates definitions"
   include_vars:
-    file: "{{ item.src }}"
-  with_filetree: "{{ filetree_controller_templates }}"
-  when: item.state == 'file'
+    file: "{{ item.path }}"
+  loop: "{{ __list_files_controller_templates.files }}"
   register: __contents_filetree_controller_templates
 
 - name: "Populate Job Templates list"

@@ -1,9 +1,15 @@
 ---
+- name: "Get list of files inside {{ filetree_controller_organizations }}"
+  find:
+    paths: "{{ filetree_controller_organizations }}"
+    file_type: file
+    recurse: true
+  register: __list_files_controller_organizations
+
 - name: "Read Organization definitions"
   include_vars:
-    file: "{{ item.src }}"
-  with_filetree: "{{ filetree_controller_organizations }}"
-  when: item.state == 'file'
+    file: "{{ item.path }}"
+  loop: "{{ __list_files_controller_organizations.files }}"
   register: __contents_filetree_controller_organizations
 
 - name: "Populate Organizations list"

@@ -1,9 +1,15 @@
 ---
+- name: "Get list of files inside {{ filetree_controller_user_accounts }}"
+  find:
+    paths: "{{ filetree_controller_user_accounts }}"
+    file_type: file
+    recurse: true
+  register: __list_files_controller_user_accounts
+
 - name: "Read User Accounts definitions"
   include_vars:
-    file: "{{ item.src }}"
-  with_filetree: "{{ filetree_controller_user_accounts }}"
-  when: item.state == 'file'
+    file: "{{ item.path }}"
+  loop: "{{ __list_files_controller_user_accounts.files }}"
   register: __contents_filetree_controller_user_accounts
 
 - name: "Populate User Accounts list"
