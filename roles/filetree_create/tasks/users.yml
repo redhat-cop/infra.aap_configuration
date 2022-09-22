@@ -1,14 +1,10 @@
 ---
 - name: "Get current Users from the API"
   set_fact:
-<<<<<<< HEAD
-    users_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/users/',
+    users_lookvar: "{{ query(controller_api_plugin, 'api/v2/users/',
                              host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
                              return_all=true, max_objects=query_controller_api_max_objects)
                     }}"
-=======
-    users_lookvar: "{{ query(controller_api_plugin, 'api/v2/users/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) }}"
->>>>>>> c1a1936227ebf5173ab8bd205b809de44bc653ba
 
 - name: "Add the users the Organizations information"
   set_fact:

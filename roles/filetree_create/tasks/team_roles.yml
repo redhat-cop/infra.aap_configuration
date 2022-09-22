@@ -1,14 +1,10 @@
 ---
 - name: "Get current Team Roles from the API"
   set_fact:
-<<<<<<< HEAD
-    team_roles_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/teams/' + teamid +'/roles/',
+    team_roles_lookvar: "{{ query(controller_api_plugin, 'api/v2/teams/' + teamid +'/roles/',
                                   host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
                                   return_all=true, max_objects=query_controller_api_max_objects)
                          }}"
-=======
-    team_roles_lookvar: "{{ query(controller_api_plugin, 'api/v2/teams/' + teamid +'/roles/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) }}"
->>>>>>> c1a1936227ebf5173ab8bd205b809de44bc653ba
 
 - name: "Create the output directory for team roles: {{ output_path }}"
   file:

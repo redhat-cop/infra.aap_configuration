@@ -1,8 +1,7 @@
 ---
 - name: "Get the inventoryes from the API"
   set_fact:
-<<<<<<< HEAD
-    inventory_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/inventories/',
+    inventory_lookvar: "{{ query(controller_api_plugin, 'api/v2/inventories/',
                                  query_params={
                                    'not__kind': 'smart',
                                    'order_by': 'organization,id'
@@ -13,39 +12,6 @@
                         }}"
 
 - name: "Create the output directory for inventories: {{ output_path }}/<ORGANIZATION_NAME>/inventories"
-=======
-    inventory_lookvar: "{{ query(controller_api_plugin, 'api/v2/inventories/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects, query_params={
-                          'not__kind': 'smart',
-                          'order_by': 'organization'
-                        }
-                      )
-             }}"
-
-- name: "Translate the inventories to a useful structure"
-  set_fact:
-    current_inventories: "{{ (current_inventories | default({})) | combine({(inventory_lookvar_item_organization | default('ORGANIZATIONLESS', true)): (current_inventories[inventory_lookvar_item_organization] | default([])) + [{
-        'has_inventory_sources': inventory_lookvar_item.has_inventory_sources,
-        'id': inventory_lookvar_item.id,
-        'name': inventory_lookvar_item.name,
-        'description': inventory_lookvar_item.description,
-        'organization': inventory_lookvar_item_organization,
-        'host_filter': inventory_lookvar_item.host_filter,
-        'kind': inventory_lookvar_item.kind,
-        'variables': inventory_lookvar_item.variables,
-        'inventory_sources': query(controller_api_plugin, inventory_lookvar_item.related.inventory_sources, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) if inventory_lookvar_item.has_inventory_sources else [],
-        'hosts': query(controller_api_plugin, inventory_lookvar_item.related.hosts, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) if not inventory_lookvar_item.has_inventory_sources else [],
-        'groups': query(controller_api_plugin, inventory_lookvar_item.related.groups, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) if not inventory_lookvar_item.has_inventory_sources else []
-      }]}) }}"
-    needed_paths: "{{ ((needed_paths | default([])) + [inventory_lookvar_item_organization]) | flatten | unique }}"
-  vars:
-    inventory_lookvar_item_organization: "{{ lookup(controller_api_plugin, 'api/v2/organizations/'+(inventory_lookvar_item.organization|string), host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true)['name'] }}"
-  loop: "{{ inventory_lookvar }}"
-  loop_control:
-    loop_var: inventory_lookvar_item
-    label: "{{ inventory_lookvar_item_organization }} - {{ inventory_lookvar_item.name }}"
-
-- name: "Create the output directory for inventories: {{ output_path }}/<ORGANIZATION_NAME>"
->>>>>>> c1a1936227ebf5173ab8bd205b809de44bc653ba
   file:
     path: "{{ output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
     state: directory
