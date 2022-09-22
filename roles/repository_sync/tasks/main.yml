@@ -1,24 +1,31 @@
 ---
-- name: Sync Automation Hub repository
+- name: Sync Automation Hub certified repository
   ah_repository_sync:
-    name:           "{{ __repository_item.name }}"
-    wait:           "{{ __repository_item.wait | default(false)  }}"
-    interval:       "{{ __repository_item.interval | default(1) }}"
-    timeout:        "{{ __repository_item.timeout | default(omit) }}"
+    name:           "rh-certified"
+    wait:           "{{ ah_repository_certified.wait | default(false)  }}"
+    interval:       "{{ ah_repository_certified.interval | default(1) }}"
+    timeout:        "{{ ah_repository_certified.timeout | default(omit) }}"
     ah_host:        "{{ ah_host | default(ah_hostname) }}"
     ah_username:    "{{ ah_username | default(omit) }}"
     ah_password:    "{{ ah_password | default(omit) }}"
     ah_token:       "{{ ah_token    | default(omit) }}"
     ah_path_prefix: "{{ ah_path_prefix | default(omit) }}"
     ah_verify_ssl:  "{{ ah_validate_certs | default(omit) }}"
-  when: _ah_repositories != []
-  loop: "{{ _ah_repositories }}"
-  loop_control:
-    loop_var: "__repository_item"
+  when: ah_repository_certified is defined
   no_log: "{{ ah_configuration_repository_secure_logging }}"
-  vars:
-    ansible_async_dir: '/tmp/.ansible_async'
-    _ah_repositories:
-      - "{{ ah_repository_certified | combine({'name': 'rh-certified'}) }}"
-      - "{{ ah_repository_community | combine({'name': 'community'}) }}"
+
+- name: Sync Automation Hub community repository
+  ah_repository_sync:
+    name:           "community"
+    wait:           "{{ ah_repository_community.wait | default(false)  }}"
+    interval:       "{{ ah_repository_community.interval | default(1) }}"
+    timeout:        "{{ ah_repository_community.timeout | default(omit) }}"
+    ah_host:        "{{ ah_host | default(ah_hostname) }}"
+    ah_username:    "{{ ah_username | default(omit) }}"
+    ah_password:    "{{ ah_password | default(omit) }}"
+    ah_token:       "{{ ah_token    | default(omit) }}"
+    ah_path_prefix: "{{ ah_path_prefix | default(omit) }}"
+    ah_verify_ssl:  "{{ ah_validate_certs | default(omit) }}"
+  when: ah_repository_community is defined
+  no_log: "{{ ah_configuration_repository_secure_logging }}"
 ...
