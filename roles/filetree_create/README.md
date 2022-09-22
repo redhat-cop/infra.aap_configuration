@@ -15,7 +15,10 @@ Role Variables
 
 The following variables are required for that role to work properly:
 
-- **`output_path`**: The path to the output directory where all the generated `yaml` files with the corresponding Objects as code will be written to. The default path is `/tmp/filetree_output`.
+| Variable Name | Default Value | Required | Description |
+| :------------ | :-----------: | :------: | :---------- |
+| `controller_api_plugin` | `ansible.controller` | yes | Full path for the controller_api_plugin to be used. <br/> Can have two possible values: <br/>&nbsp;&nbsp;- awx.awx.controller_api             # For the community Collection version <br/>&nbsp;&nbsp;- ansible.controller.controller_api  # For the Red Hat Certified Collection version|
+| `output_path` | `/tmp/filetree_output` | yes | The path to the output directory where all the generated `yaml` files with the corresponding Objects as code will be written to. |
 
 Dependencies
 ------------

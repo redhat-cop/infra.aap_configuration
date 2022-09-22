@@ -9,6 +9,7 @@
                     }}"
     needed_paths: "{{ ((needed_paths | default([])) + [(workflow_job_template_organization|regex_replace('/','_'))]) | flatten | unique }}"
   vars:
+<<<<<<< HEAD
     workflow_job_template_organization: "{{ query('ansible.controller.controller_api', wfjtn_lookvar_item.related.workflow_job_template,
                                                   host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs
                                             )[0].summary_fields.organization.name | default('ORGANIZATIONLESS')
@@ -17,6 +18,10 @@
                   host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
                   return_all=true, max_objects=query_controller_api_max_objects)
          }}"
+=======
+    workflow_job_template_organization: "{{ query(controller_api_plugin, wfjtn_lookvar_item.related.workflow_job_template, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs)[0].summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+  loop: "{{ query(controller_api_plugin, 'api/v2/workflow_job_template_nodes/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) }}"
+>>>>>>> c1a1936227ebf5173ab8bd205b809de44bc653ba
   loop_control:
     loop_var: wfjtn_lookvar_item
     label: "{{ workflow_job_template_organization + ' - ' + wfjtn_lookvar_item.summary_fields.workflow_job_template.name }}"
@@ -37,8 +42,13 @@
     dest: "{{ output_path }}/{{ workflow_job_template_organization }}/workflow_job_template_nodes/{{ workflow_job_template_name }}.yaml"
     mode: '0644'
   vars:
+<<<<<<< HEAD
     workflow_job_template_name: "{{ current_wfjtn_asset_value.key | regex_replace('/','_') }}"
     workflow_job_template_organization: "{{ current_wfjtn_asset_value.value.organization | regex_replace('/','_') }}"
+=======
+    workflow_job_template_name: "{{ current_wfjtn_asset_value.key }}"
+    # workflow_job_template_organization: "{{ query(controller_api_plugin, current_wfjtn_asset_value.value.wfjtn_url, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs)[0].summary_fields.organization.name | default('ToDo: The WF node  must have an organization') }}"
+>>>>>>> c1a1936227ebf5173ab8bd205b809de44bc653ba
   loop: "{{ wfjtn_lookvar | default({}) | dict2items }}"
   loop_control:
     loop_var: current_wfjtn_asset_value

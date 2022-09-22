@@ -1,10 +1,14 @@
 ---
 - name: "Get current Execution Environments from the API"
   set_fact:
+<<<<<<< HEAD
     execution_environments_lookvar: "{{ query('ansible.controller.controller_api', 'api/v2/execution_environments/',
                                               host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
                                               return_all=true, max_objects=query_controller_api_max_objects)
                                      }}"
+=======
+    execution_environments_lookvar: "{{ query(controller_api_plugin, 'api/v2/execution_environments/', host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) }}"
+>>>>>>> c1a1936227ebf5173ab8bd205b809de44bc653ba
 
 - name: "Create the output directory for execution environments: {{ output_path }}"
   file:

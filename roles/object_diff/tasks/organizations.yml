@@ -1,7 +1,7 @@
 ---
 - name: "Gets current Organizations configured"
   set_fact:
-    __controller_api_organizations: "{{ query('ansible.controller.controller_api', 'organizations',
+    __controller_api_organizations: "{{ query(controller_api_plugin, 'organizations',
       host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs) }}"
 
 - name: "OBJECT DIFF: Find the difference of Organizations between what is on the Controller versus curated list."
