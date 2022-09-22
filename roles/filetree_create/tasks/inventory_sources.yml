@@ -1,14 +1,14 @@
 ---
-- name: "Create the output directory for inventory sources: {{ output_path }}"
+- name: "Create the output directory for inventory sources: {{ inventory_sources_output_path }}"
   file:
-    path: "{{ output_path }}"
+    path: "{{ inventory_sources_output_path }}"
     state: directory
     mode: '0755'
 
-- name: "Add current inventory source to the output yaml file: {{ output_path }}/current_inventory_sources.yaml"
+- name: "Add current inventory source to the output yaml file: {{ inventory_sources_output_path }}/current_inventory_sources.yaml"
   template:
     src: "templates/current_inventory_sources.j2"
-    dest: "{{ output_path }}/current_inventory_sources.yaml"
+    dest: "{{ inventory_sources_output_path }}/current_inventory_sources.yaml"
     mode: '0644'
   when: current_inventory_sources_asset_value | length > 0
 ...

@@ -32,7 +32,4 @@
   loop_control:
     loop_var: current_workflow_job_templates_asset_value
     label: "{{ output_path }}/{{ workflow_job_template_organization }}/workflow_job_templates/{{ workflow_job_template_id }}_{{ workflow_job_template_name }}.yaml"
-
-- name: "Set the workflow_job_template's nodes"
-  include_tasks: "workflow_job_template_nodes.yml"
 ...

@@ -1,14 +1,14 @@
 ---
-- name: "Create the output directory for groups: {{ output_path }}"
+- name: "Create the output directory for groups: {{ groups_output_path }}"
   file:
-    path: "{{ output_path }}"
+    path: "{{ groups_output_path }}"
     state: directory
     mode: '0755'
 
-- name: "Add current groups to the output yaml file: {{ output_path }}/current_groups.yaml"
+- name: "Add current groups to the output yaml file: {{ groups_output_path }}/current_groups.yaml"
   template:
     src: "templates/current_groups.j2"
-    dest: "{{ output_path }}/current_groups.yaml"
+    dest: "{{ groups_output_path }}/current_groups.yaml"
     mode: '0644'
   when: current_groups_asset_value | length > 0
 ...
