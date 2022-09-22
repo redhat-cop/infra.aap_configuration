@@ -40,8 +40,8 @@
   pre_tasks:
 
     - name: Include vars from configs directory
-      include_vars:
-        dir: "{{ controller_configs_dir | default((lookup('env','CONTROLLER_CONFIGS_DIR') == '') | ternary('./configs', lookup('env','CONTROLLER_CONFIGS_DIR'))) }}"
+      ansible.builtin.include_vars:
+        dir: "{{ controller_configs_dir | default((lookup('env', 'CONTROLLER_CONFIGS_DIR') == '') | ternary('./configs', lookup('env', 'CONTROLLER_CONFIGS_DIR'))) }}"
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
       tags:
@@ -75,32 +75,32 @@
   tasks:
 
     - name: Add Controller Settings Individually
-      include_role:
+      ansible.builtin.include_role:
         name: settings
       vars:
         controller_settings: "{{ controller_settings_individuale }}"
       when: controller_settings_individuale is defined
 
     - name: Run ad hoc commands
-      include_role:
+      ansible.builtin.include_role:
         name: ad_hoc_command
       when: controller_ad_hoc_commands is defined
 
     - name: Cancel Ad hoc commands
-      include_tasks: "./tasks/ad_hoc_cancel.yml"
+      ansible.builtin.include_tasks: "./tasks/ad_hoc_cancel.yml"
       when: controller_ad_hoc_commands is defined
 
     - name: Launch Controller Jobs
-      include_role:
+      ansible.builtin.include_role:
         name: job_launch
       when: controller_launch_jobs is defined
 
     - name: Show launched Controller jobs
-      debug:
+      ansible.builtin.debug:
         var: launched_controller_jobs
 
     - name: Launch Controller workflows
-      include_role:
+      ansible.builtin.include_role:
         name: workflow_launch
       when: controller_workflow_launch_jobs is defined
 ...

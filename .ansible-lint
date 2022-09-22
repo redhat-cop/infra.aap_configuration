@@ -5,15 +5,16 @@
 # exclude_paths:
 #  - roles/master_role_example/
 exclude_paths:
-- '.github/'
-- 'roles/master_role_example/'
-- 'changelogs/'
+  - '.github/'
+  - 'roles/master_role_example/'
+  - 'changelogs/'
 parseable: true
 use_default_rules: true
 # https://github.com/ansible/ansible-lint/issues/808
 # with verbosity set to 1, its dumping 'unknown file type messages'
 # verbosity: 1
-skip_list:
+skip_list: []
+# With the move of the .yamllint.yml to TLD ansible-lint now picks up our config so no need to exclude it.
 # YAML: Ansible lint doing yaml checks that we were already doing but without config.
-- yaml
+# - yaml
 ...

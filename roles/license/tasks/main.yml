@@ -2,12 +2,12 @@
 # tasks file for license role
 
 - name: Ensure manifest is set
-  assert:
+  ansible.builtin.assert:
     that: controller_license.manifest_file is defined or controller_license.manifest is defined or controller_license.manifest_url is defined or controller_license.manifest_content is defined
     fail_msg: "Must set a source for the manifest. Please set 'manifest_file', 'manifest_url' or 'manifest_content'"
 
 - name: Move manifest file to temporary location
-  copy:
+  ansible.builtin.copy:
     src: "{{ controller_license.manifest_file | default(controller_license.manifest) }}"
     dest: "{{ __controller_manifest_path }}"
     mode: 0600
@@ -15,7 +15,7 @@
     - controller_license.manifest_file is defined or controller_license.manifest is defined
 
 - name: Fetch manifest from URL
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ controller_license.manifest_url }}"
     dest: "{{ __controller_manifest_path }}"
     username: "{{ controller_license.manifest_username | default(omit) }}"
@@ -27,8 +27,8 @@
     - not controller_license.manifest is defined
 
 - name: Create manifest file from base64 encoded content
-  copy:
-    content: "{{ controller_license.manifest_content | b64decode }}"
+  ansible.builtin.template:
+    src: controller_manifest.j2
     dest: "{{ __controller_manifest_path }}"
     mode: 0600
   when:

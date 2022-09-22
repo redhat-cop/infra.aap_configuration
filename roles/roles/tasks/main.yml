@@ -40,7 +40,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Configure Roles | Wait for finish the Roles creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __controller_role_job_async_results_item.ansible_job_id }}"
   register: __controller_role_job_async_result
   until: __controller_role_job_async_result.finished

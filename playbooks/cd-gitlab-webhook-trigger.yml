@@ -1,10 +1,11 @@
 ---
-- hosts: localhost
+- name: Gitlab Webhook Trigger Playbook
+  hosts: localhost
   connection: local
   gather_facts: false
   tasks:
     - name: "Get the modified files over the dirs from all the received commits"
-      set_fact:
+      ansible.builtin.set_fact:
         env: "{{ tower_webhook_payload.ref.split('/')[2] }}"
         orgs: "{{ tower_webhook_payload.project.name }}"
         list_of_dirs: "{{ ((tower_webhook_payload.commits | map(attribute='added') | list) +
@@ -12,15 +13,15 @@
                            (tower_webhook_payload.commits | map(attribute='removed') | list))
                        | flatten }}"
     - name: "Get the Organization and the tags to run the CasC"
-      set_fact:
-        org_dirs_dict: "{{ (org_dirs_dict | default({})) | combine({input_var[0]: (((org_dirs_dict[input_var[0]] | default([])) + [input_var[1]] ) | unique ) }) }}"
+      ansible.builtin.set_fact:
+        org_dirs_dict: "{{ (org_dirs_dict | default({})) | combine({input_var[0]: (((org_dirs_dict[input_var[0]] | default([])) + [input_var[1]]) | unique)}) }}"
       vars:
         input_var: "{{ item | regex_search('/([^/]*)/env/(?:[^/]*)/controller_(.*).d/', '\\1', '\\2') }}"
       loop: "{{ list_of_dirs }}"
       when: input_var | type_debug is match('list')
 
     - name: Configure Controller Job Launch | Launch launch_jobs creation
-      include_role:
+      ansible.builtin.include_role:
         name: redhat_cop.controller_configuration.job_launch
       vars:
         controller_launch_jobs:

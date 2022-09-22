@@ -7,6 +7,7 @@ We welcome contributions from the community. Here are a few ways you can help us
 If you see something you'd like changed, but aren't sure how to change it, submit an issue describing what you'd like to see.
 
 ## Working Locally
+
 Ensure you install the awx collections, so that roles and playbooks can be properly linted:
 `ansible-galaxy collection install awx.awx -p collections/`
 
@@ -29,7 +30,7 @@ If you feel like getting your hands dirty, feel free to make the change yourself
 2. Create a branch named appropriately for the change you are going to make.
 3. Make your code change.
 4. If you are creating a new role, please add a test for it in our [testing playbook.](https://github.com/redhat-cop/controller_configuration/blob/devel/examples/configure_controller.yml) by adding a new role entry and adding the appropriate yaml file with test data in the controller_configs directory.
-5. Add a changelog fragment in `changelogs/fragments` as per https://docs.ansible.com/ansible/latest/community/development_process.html#changelogs
+5. Add a changelog fragment in `changelogs/fragments` as per <https://docs.ansible.com/ansible/latest/community/development_process.html#changelogs>
 6. Push your code change up to your forked repo.
 7. Open a Pull Request to merge your changes to this repo. The comment box will be filled in automatically via a template.
 8. All Pull Requests will be subject to Ansible and Yaml Linting checks. Please make sure that your code complies and fix any warnings that arise. These are Checks that appear at the bottom of your Pull Request.

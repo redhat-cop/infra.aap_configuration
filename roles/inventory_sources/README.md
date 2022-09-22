@@ -1,9 +1,11 @@
 # controller_configuration.inventory_sources
 
 ## Description
+
 An Ansible role to create inventory sources on Ansible Controller.
 
 ## Requirements
+
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
@@ -13,6 +15,7 @@ Currently:
 ## Variables
 
 ### Authentication
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
@@ -24,6 +27,7 @@ Currently:
 |`controller_inventory_sources`|`see below`|yes|Data structure describing your inventory sources Described below.||
 
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add inventory_source task does not include sensitive information.
@@ -35,6 +39,7 @@ controller_configuration_inventory_sources_secure_logging defaults to the value 
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
+
 The following Variables set asynchronous retries for the role.
 If neither of the retries or delay or retries are set, they will default to their respective defaults.
 This allows for all items to be created, then checked that the task finishes successfully.
@@ -48,9 +53,11 @@ This also speeds up the overall role.
 |`controller_configuration_inventory_sources_async_delay`|`controller_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ### Formating Variables
+
 Variables can use a standard Jinja templating format to describe the resource.
 
 Example:
+
 ```json
 {{ variable }}
 ```
@@ -58,13 +65,17 @@ Example:
 Because of this it is difficult to provide controller with the required format for these fields.
 
 The workaround is to use the following format:
+
 ```json
 {  { variable }}
 ```
+
 The role will strip the double space between the curly bracket in order to provide controller with the correct format for the Variables.
 
 ## Data Structure
-### Variables
+
+### Inventory Sources Variables
+
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`name`|""|yes|The name to use for the inventory source.|
@@ -95,7 +106,9 @@ The role will strip the double space between the curly bracket in order to provi
 |`notification_templates_error`|""|no|The notifications on error to use for this inventory source in a list.|
 
 ### Standard Inventory Source Data Structure
+
 #### Json Example
+
 ```json
 {
   "controller_inventory_sources": [
@@ -113,7 +126,9 @@ The role will strip the double space between the curly bracket in order to provi
 }
 
 ```
+
 #### Yaml Example
+
 ```yaml
 ---
 controller_inventory_sources:
@@ -127,8 +142,11 @@ controller_inventory_sources:
     update_cache_timeout: 0
 
 ```
+
 ## Playbook Examples
+
 ### Standard Role Usage
+
 ```yaml
 ---
 - name: Playbook to configure ansible controller post installation
@@ -148,10 +166,12 @@ controller_inventory_sources:
     - {role: redhat_cop.controller_configuration.inventory_sources, when: controller_inventory_sources is defined}
 ```
 
-# License
+## License
+
 [MIT](LICENSE)
 
-# Author
+## Author
+
 [Edward Quail](mailto:equail@redhat.com)
 
 [Andrew J. Huffman](https://github.com/ahuffman)
