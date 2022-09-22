@@ -1,12 +1,12 @@
 ---
 - name: Get the organization ID
   set_fact:
-    __controller_organization_id: "{{ lookup('ansible.controller.controller_api', 'organizations', query_params={ 'name': orgs },
+    __controller_organization_id: "{{ lookup(controller_api_plugin, 'organizations', query_params={ 'name': orgs },
       host=controller_hostname, oauth_token=oauthtoken, verify_ssl=false) }}"
 
 - name: "OBJECT DIFF: Get the API list of all Inventories"
   set_fact:
-    __controller_api_inventory_sources: "{{ query('ansible.controller.controller_api', 'inventory_sources',
+    __controller_api_inventory_sources: "{{ query(controller_api_plugin, 'inventory_sources',
       query_params={ 'organization': __controller_organization_id.id },
       host=controller_hostname, oauth_token=oauthtoken, verify_ssl=false) }}"
 

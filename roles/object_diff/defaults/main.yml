@@ -47,4 +47,5 @@ controller_configuration_object_diff_tasks:
   - {name: credentials, var: controller_credentials, tags: credentials}
   - {name: credential_types, var: controller_credential_types, tags: credential_types}
   - {name: organizations, var: controller_organizations, tags: organizations}
+
 ...

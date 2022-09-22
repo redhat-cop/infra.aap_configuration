@@ -1,7 +1,7 @@
 ---
 - name: "Get the API list of all {{ differential_item.name }} in the Default Organization"
   set_fact:
-    controller_api_results: "{{ lookup('awx.awx.controller_api', differential_item.name, query_params={ 'organization': controller_organization_id.id } ,host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
+    controller_api_results: "{{ lookup(controller_api_plugin, differential_item.name, query_params={ 'organization': controller_organization_id.id } ,host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
 
 - name: "Find the difference of {{ differential_item.name }} between what is on the Controller versus curated list."
   set_fact:
