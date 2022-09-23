@@ -3,6 +3,38 @@ controller_workflows:
   - name: "{{ current_workflow_job_templates_asset_value.name }}"
     description: "{{ current_workflow_job_templates_asset_value.description }}"
     organization: "{{ current_workflow_job_templates_asset_value.summary_fields.organization.name | default('ToDo: The WF \'' + current_workflow_job_templates_asset_value.name + '\' must belong to an organization') }}"
+    simplified_workflow_nodes:
+{% for node in query(controller_api_plugin, 'api/v2/workflow_job_template_nodes/',
+                     query_params={'workflow_job_template': current_workflow_job_templates_asset_value.id},
+                     host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
+                     return_all=true, max_objects=query_controller_api_max_objects) %}
+      - identifier: "{{ node.identifier }}"
+        workflow_job_template: "{{ node.summary_fields.workflow_job_template.name }}"
+        unified_job_template: "{{ node.summary_fields.unified_job_template.name | default('ToDo: The node is pointing to a deleted Job Template') }}"
+{% if node.job_type %}
+        job_type: "{{ node.job_type }}"
+{% endif %}
+        organization: "{{ current_workflow_job_templates_asset_value.summary_fields.organization.name | default('ToDo: The WF \'' + current_workflow_job_templates_asset_value.name + '\' must belong to an organization') }}"
+        all_parents_must_converge: "{{ node.all_parents_must_converge }}"
+{% if node.success_nodes is defined and node.success_nodes | length > 0 %}
+        success_nodes:
+{% for success in node.success_nodes %}
+          - {{ query(controller_api_plugin, 'workflow_job_template_nodes/'+(success | string), host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs)[0].identifier }}
+{% endfor %}
+{% endif %}
+{% if node.always_nodes and node.always_nodes | length > 0 %}
+        always_nodes:
+{% for always in node.always_nodes %}
+          - {{ query(controller_api_plugin, 'workflow_job_template_nodes/'+(always | string), host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs)[0].identifier }}
+{% endfor %}
+{% endif %}
+{% if node.failure_nodes and node.failure_nodes | length > 0 %}
+        failure_nodes:
+{% for failure in node.failure_nodes %}
+          - {{ query(controller_api_plugin, 'workflow_job_template_nodes/'+(failure | string), host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs)[0].identifier }}
+{% endfor %}
+{% endif %}
+{% endfor %}
     survey_enabled: "{{ current_workflow_job_templates_asset_value.survey_enabled }}"
     ask_variables_on_launch: "{{ current_workflow_job_templates_asset_value.ask_variables_on_launch }}"
     allow_simultaneous: "{{ current_workflow_job_templates_asset_value.allow_simultaneous }}"
