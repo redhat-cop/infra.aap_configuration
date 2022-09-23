@@ -1,8 +1,11 @@
 # controller_configuration.credentials
+
 ## Description
+
 An Ansible Role to create Credentials on Ansible Controller.
 
 ## Requirements
+
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
@@ -12,6 +15,7 @@ Currently:
 ## Variables
 
 ### Authentication
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
@@ -23,6 +27,7 @@ Currently:
 |`controller_credentials`|`see below`|yes|Data structure describing your credentials Described below.||
 
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add credentials task does not include sensitive information.
@@ -34,6 +39,7 @@ controller_configuration_credentials_secure_logging defaults to the value of con
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
+
 The following Variables set asynchronous retries for the role.
 If neither of the retries or delay or retries are set, they will default to their respective defaults.
 This allows for all items to be created, then checked that the task finishes successfully.
@@ -47,7 +53,9 @@ This also speeds up the overall role.
 |`controller_configuration_credentials_async_delay`|`controller_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ## Data Structure
-### Variables
+
+### Credential Variables
+
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`name`|""|yes|Name of Credential|
@@ -63,6 +71,7 @@ This also speeds up the overall role.
 |`update_secrets`|true|no|bool| True will always change password if user specifies password, even if API gives $encrypted$ for password. False will only set the password if other values change too.|
 
 ### Credential types
+
 |Credential types|
 |:---:|
 |Amazon Web Services|
@@ -84,7 +93,9 @@ This also speeds up the overall role.
 |VMware vCenter|
 
 ### Standard Organization Data Structure
+
 #### Json Example
+
 ```json
 ---
 {
@@ -102,7 +113,9 @@ This also speeds up the overall role.
     ]
 }
 ```
+
 #### Yaml Example
+
 ```yaml
 ---
 controller_credentials:
@@ -121,8 +134,11 @@ controller_credentials:
     password: password
     become_method: sudo
 ```
+
 ## Playbook Examples
+
 ### Standard Role Usage
+
 ```yaml
 ---
 - name: Playbook to configure ansible controller post installation
@@ -141,9 +157,12 @@ controller_credentials:
   roles:
     - {role: redhat_cop.controller_configuration.credentials, when: controller_credentials is defined}
 ```
+
 ## License
+
 [MIT](LICENSE)
 
 ## Author
+
 [Andrew J. Huffman](https://github.com/ahuffman)
 [Sean Sullivan](https://github.com/sean-m-sullivan)

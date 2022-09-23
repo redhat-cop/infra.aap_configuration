@@ -7,7 +7,7 @@
     inventory:              "{{ __controller_host_item.inventory | mandatory }}"
     enabled:                "{{ __controller_host_item.enabled | default(omit) }}"
     state:                  "{{ __controller_host_item.state | default(controller_state | default('present')) }}"
-    variables:              "{{ __controller_host_item.variables | default(omit, true) | regex_replace('[ ]{2,}','') }}"
+    variables:              "{{ __controller_host_item.variables | default(omit, true) | regex_replace('[ ]{2,}', '') }}"
 
     # Role Standard Options
     controller_host:        "{{ controller_hostname | default(omit, true) }}"
@@ -28,7 +28,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Configure Controller Hosts | Wait for finish the Hosts creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __host_job_async_results_item.ansible_job_id }}"
   register: __host_job_async_result
   until: __host_job_async_result.finished

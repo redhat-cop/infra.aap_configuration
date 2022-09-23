@@ -27,7 +27,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Create Controller Credential Input Sources | Wait for finish the Controller Credential Input Sources creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __credential_input_sources_job_async_results_item.ansible_job_id }}"
   register: __credential_input_sources_job_async_result
   until: __credential_input_sources_job_async_result.finished

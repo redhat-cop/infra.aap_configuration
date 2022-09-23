@@ -4,9 +4,9 @@
     name:                       "{{ __controller_inventory_item.name | mandatory }}"
     copy_from:                  "{{ __controller_inventory_item.copy_from | default(omit, true) }}"
     description:                "{{ __controller_inventory_item.description | default(omit, true) }}"
-    organization:               "{{ __controller_inventory_item.organization.name | default( __controller_inventory_item.organization ) | mandatory }}"
+    organization:               "{{ __controller_inventory_item.organization.name | default(__controller_inventory_item.organization) | mandatory }}"
     instance_groups:            "{{ __controller_inventory_item.instance_groups | default(omit, true) }}"
-    variables:                  "{{ __controller_inventory_item.variables | default(omit, true) | regex_replace('[ ]{2,}','') }}"
+    variables:                  "{{ __controller_inventory_item.variables | default(omit, true) | regex_replace('[ ]{2,}', '') }}"
     kind:                       "{{ __controller_inventory_item.kind | default(omit, true) }}"
     host_filter:                "{{ __controller_inventory_item.host_filter | default(omit, true) }}"
     state:                      "{{ __controller_inventory_item.state | default(controller_state | default('present')) }}"
@@ -30,7 +30,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Create Controller inventories | Wait for finish the inventories creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __inventories_job_async_result_item.ansible_job_id }}"
   register: __inventories_job_async_result
   until: __inventories_job_async_result.finished

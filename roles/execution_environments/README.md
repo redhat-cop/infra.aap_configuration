@@ -1,8 +1,11 @@
 # controller_configuration.execution_environments
+
 ## Description
+
 An Ansible Role to create execution_environments on Ansible Controller.
 
 ## Requirements
+
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
@@ -12,6 +15,7 @@ Currently:
 ## Variables
 
 ### Authentication
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
@@ -23,6 +27,7 @@ Currently:
 |`controller_execution_environments`|`see below`|yes|Data structure describing your organization or organizations Described below.||
 
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add execution_environments task does not include sensitive information.
@@ -34,6 +39,7 @@ controller_configuration_execution_environments_secure_logging defaults to the v
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
+
 The following Variables set asynchronous retries for the role.
 If neither of the retries or delay or retries are set, they will default to their respective defaults.
 This allows for all items to be created, then checked that the task finishes successfully.
@@ -47,7 +53,9 @@ This also speeds up the overall role.
 |`controller_configuration_execution_environments_async_delay`|`controller_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ## Data Structure
-### Variables
+
+### Execution Environment Variables
+
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of Job Template|
@@ -58,10 +66,10 @@ This also speeds up the overall role.
 |`pull`|"missing"|no|choice("always", "missing", "never")|Determine image pull behavior|
 |`state`|`present`|no|str|Desired state of the resource.|
 
-
-
 ### Standard Project Data Structure
+
 #### Json Example
+
 ```json
 {
   "controller_execution_environments": [
@@ -72,7 +80,9 @@ This also speeds up the overall role.
   ]
 }
 ```
+
 #### Yaml Example
+
 ```yaml
 ---
 controller_execution_environments:
@@ -81,7 +91,9 @@ controller_execution_environments:
 ```
 
 ## Playbook Examples
+
 ### Standard Role Usage
+
 ```yaml
 ---
 - name: Add Execution Environments to controller
@@ -98,8 +110,11 @@ controller_execution_environments:
       include_role:
         name: redhat_cop.controller_configuration.execution_environments
 ```
+
 ## License
+
 [MIT](LICENSE)
 
 ## Author
+
 [Tom Page](https://github.com/Tompage1994)

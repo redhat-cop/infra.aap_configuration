@@ -10,5 +10,5 @@
 
 # These are the default variables specific to the **** role
 
-controller_configuration_jobs_cancel_secure_logging: "{{controller_configuration_secure_logging | default('false')}}"
+controller_configuration_jobs_cancel_secure_logging: "{{ controller_configuration_secure_logging | default('false') }}"
 ...

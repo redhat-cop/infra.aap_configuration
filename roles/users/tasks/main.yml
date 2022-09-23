@@ -1,5 +1,7 @@
 ---
-- name: Add controller user
+# The user module is also an ansible.builtin module, but due to supporting both the awx.awx and automation.controller collections
+# the FQCN cannot be used here.
+- name: Add controller user  # noqa fqcn-builtins
   user:
     username:                 "{{ __controller_user_accounts_item.user | default(__controller_user_accounts_item.username) | mandatory }}"
     # the 'true' in the second default leads to no password being set if the default password is empty
@@ -32,7 +34,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Configure Users | Wait for finish the Users creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __controller_user_accounts_job_async_results_item.ansible_job_id }}"
   register: __controller_user_accounts_job_async_result
   until: __controller_user_accounts_job_async_result.finished

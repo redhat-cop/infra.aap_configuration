@@ -1,8 +1,11 @@
 # controller_configuration.ad_hoc_command_cancel
+
 ## Description
+
 An Ansible Role to cancel a list of ad hoc commands on Ansible Controller.
 
 ## Requirements
+
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
@@ -12,6 +15,7 @@ Currently:
 ## Variables
 
 ### Authentication
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
@@ -23,6 +27,7 @@ Currently:
 |`controller_ad_hoc_commands_cancel`|`see below`|yes|Data structure describing your ad hoc jobs to cancel Described below.||
 
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add ad hoc commands cancel task does not include sensitive information.
@@ -34,7 +39,9 @@ controller_configuration_ad_hoc_command_secure_logging defaults to the value of 
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ## Data Structure
-### Variables
+
+### Ad Hoc Command Cancel Variables
+
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`id`|""|no|int|ID of the command to cancel Recommended to be in a separate list of ID's see example, defaults to output of ad_hoc_command_role of controller_ad_hoc_commands_output.|
@@ -42,9 +49,10 @@ controller_configuration_ad_hoc_command_secure_logging defaults to the value of 
 |`interval`|2|no|int|Limit to use for the ad hoc command.|
 |`timeout`|""|yes|int|Credential to use for ad hoc command.|
 
-
 ### Standard Project Data Structure
+
 #### Yaml Example
+
 ```yaml
 ---
 controller_ad_hoc_commands_cancel:
@@ -60,7 +68,9 @@ controller_ad_hoc_commands_cancel:
 ```
 
 ## Playbook Examples
+
 ### Standard Role Usage
+
 ```yaml
 ---
 - name: Playbook to configure ansible controller post installation
@@ -79,8 +89,11 @@ controller_ad_hoc_commands_cancel:
   roles:
     - {role: redhat_cop.controller_configuration.ad_hoc_command_cancel, when: controller_ad_hoc_commands is defined}
 ```
+
 ## License
+
 [MIT](LICENSE)
 
 ## Author
+
 [Sean Sullivan](https://github.com/sean-m-sullivan)

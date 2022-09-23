@@ -1,8 +1,11 @@
 # controller_configuration.credential_types
+
 ## Description
+
 An Ansible Role to create Credential Types on Ansible Controller.
 
 ## Requirements
+
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
@@ -12,6 +15,7 @@ Currently:
 ## Variables
 
 ### Authentication
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
@@ -23,6 +27,7 @@ Currently:
 |`controller_credential_types`|`see below`|yes|Data structure describing your credential types Described below.||
 
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add credential type task does not include sensitive information.
@@ -34,6 +39,7 @@ controller_configuration_credential_types_secure_logging defaults to the value o
 |`controller_configuration_credential_types_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
+
 The following Variables set asynchronous retries for the role.
 If neither of the retries or delay or retries are set, they will default to their respective defaults.
 This allows for all items to be created, then checked that the task finishes successfully.
@@ -47,7 +53,9 @@ This also speeds up the overall role.
 |`controller_configuration_credential_types_async_delay`|`controller_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ## Data Structure
-### Variables
+
+### Credential Type Variables
+
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`name`|""|yes|Name of Credential Type|
@@ -58,9 +66,11 @@ This also speeds up the overall role.
 |`state`|`present`|no|Desired state of the resource.|
 
 ### Formating Injectors
+
 Injectors use a standard Jinja templating format to describe the resource.
 
 Example:
+
 ```json
 {{ variable }}
 ```
@@ -68,11 +78,13 @@ Example:
 Because of this it is difficult to provide controller with the required format for these fields.
 
 The workaround is easier to do in yaml with unsafe syntax, to read more about this check out the [documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_advanced_syntax.html):
+
 ```yaml
 !unsafe '{{ variable }}'
 ```
 
 If you want to use json you will have to use the following format:
+
 ```json
 {  { variable }}
 ```
@@ -80,9 +92,11 @@ If you want to use json you will have to use the following format:
 The role will strip the double space between the curly bracket in order to provide controller with the correct format for the Injectors.
 
 ### Input and Injector Schema
-The following detais the data format to use for inputs and injectors. These can be in either YAML or JSON For the most up to date information and more details see [Custom Credential Types - Ansible Controller Documentation](https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html)
+
+The following details the data format to use for inputs and injectors. These can be in either YAML or JSON For the most up to date information and more details see [Custom Credential Types - Ansible Controller Documentation](https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html)
 
 #### Input Schema
+
 ```yaml
 fields:
   - type: string
@@ -96,7 +110,9 @@ required:
   - username
   - password
 ```
+
 #### Injector Schema
+
 ```json
 {
   "file": {
@@ -112,7 +128,9 @@ required:
 ```
 
 ### Standard Organization Data Structure
+
 #### Json Example
+
 ```json
 {
     "controller_credential_types": [
@@ -153,7 +171,9 @@ required:
     ]
 }
 ```
+
 #### Yaml Example
+
 ```yaml
 ---
 controller_credential_types:
@@ -179,8 +199,11 @@ controller_credential_types:
       rest_username_env: !unsafe "{{ rest_username }}"
       rest_password_env: !unsafe "{{ rest_password }}"
 ```
+
 ## Playbook Examples
+
 ### Standard Role Usage
+
 ```yaml
 - name: Playbook to configure ansible controller post installation
   hosts: localhost
@@ -198,8 +221,11 @@ controller_credential_types:
   roles:
     - {role: redhat_cop.controller_configuration.credential_types, when: controller_credential_types is defined}
 ```
+
 ## License
+
 [MIT](LICENSE)
 
 ## Author
+
 [Sean Sullivan](https://github.com/sean-m-sullivan)

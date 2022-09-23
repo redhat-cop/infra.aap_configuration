@@ -1,8 +1,11 @@
 # controller_configuration.job_templates
+
 ## Description
+
 An Ansible Role to create Job Templates on Ansible Controller.
 
 ## Requirements
+
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
@@ -12,6 +15,7 @@ Currently:
 ## Variables
 
 ### Authentication
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
@@ -23,6 +27,7 @@ Currently:
 |`controller_templates`|`see below`|yes|Data structure describing your job template or job templates Described below.||
 
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add job_template task does not include sensitive information.
@@ -34,6 +39,7 @@ controller_configuration_job_templates_secure_logging defaults to the value of c
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
+
 The following Variables set asynchronous retries for the role.
 If neither of the retries or delay or retries are set, they will default to their respective defaults.
 This allows for all items to be created, then checked that the task finishes successfully.
@@ -47,7 +53,9 @@ This also speeds up the overall role.
 |`controller_configuration_job_templates_async_delay`|`controller_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ## Data Structure
-### Variables
+
+### Job Template Variables
+
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of Job Template|
@@ -100,9 +108,10 @@ This also speeds up the overall role.
 |`notification_templates_error`|""|no|list|The notifications on error to use for this organization in a list.|
 |`state`|`present`|no|str|Desired state of the resource.|
 
-
 ### Surveys
+
 Refer to the [controller Api Guide](https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Job_Templates/Job_Templates_job_templates_survey_spec_create) for more information about forming surveys
+
 |Variable Name|Variable Description|
 |:---:|:---:|
 |`name`|Name of the survey|
@@ -120,7 +129,9 @@ Refer to the [controller Api Guide](https://docs.ansible.com/ansible-tower/lates
 |`new_question`|Boolean|
 
 ### Standard Project Data Structure
+
 #### Json Example
+
 ```json
 {
     "controller_templates": [
@@ -158,7 +169,9 @@ Refer to the [controller Api Guide](https://docs.ansible.com/ansible-tower/lates
     ]
 }
 ```
+
 #### Yaml Example
+
 ```yaml
 ---
 controller_templates:
@@ -186,8 +199,11 @@ controller_templates:
   notification_templates_error:
   - Slack_for_testing
 ```
+
 ### Survey Data Structure
-#### Json Example
+
+#### Survey Json Example
+
 ```json
 {
     "name": "Basic Survey",
@@ -232,8 +248,11 @@ controller_templates:
     ]
   }
 ```
+
 ## Playbook Examples
+
 ### Standard Role Usage
+
 ```yaml
 ---
 - name: Playbook to configure ansible controller post installation
@@ -252,8 +271,11 @@ controller_templates:
   roles:
     - {role: redhat_cop.controller_configuration.job_templates, when: controller_templates is defined}
 ```
+
 ## License
+
 [MIT](LICENSE)
 
 ## Author
+
 [Sean Sullivan](https://github.com/sean-m-sullivan)

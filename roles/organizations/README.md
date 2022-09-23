@@ -1,8 +1,11 @@
 # controller_configuration.organizations
+
 ## Description
+
 An Ansible Role to create Organizations on Ansible Controller.
 
 ## Requirements
+
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
@@ -12,6 +15,7 @@ Currently:
 ## Variables
 
 ### Authentication
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
@@ -23,6 +27,7 @@ Currently:
 |`controller_organizations`|`see below`|yes|Data structure describing your organization or organizations Described below.||
 
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add organization task does not include sensitive information.
@@ -34,6 +39,7 @@ controller_configuration_organizations_secure_logging defaults to the value of c
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
+
 The following Variables set asynchronous retries for the role.
 If neither of the retries or delay or retries are set, they will default to their respective defaults.
 This allows for all items to be created, then checked that the task finishes successfully.
@@ -47,9 +53,11 @@ This also speeds up the overall role.
 |`controller_configuration_organizations_async_delay`|`controller_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ## Organization Data Structure
-This role accepts two data models. A simple straightforward easy to maintain model, and another based on the controller api. The 2nd one is more complicated and includes more detail, and is compatiable with controller import/export.
 
-### Variables
+This role accepts two data models. A simple straightforward easy to maintain model, and another based on the controller api. The 2nd one is more complicated and includes more detail, and is compatible with controller import/export.
+
+### Organization Variables
+
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`name`|""|yes|Name of Organization|
@@ -67,7 +75,9 @@ This role accepts two data models. A simple straightforward easy to maintain mod
 |`assign_galaxy_credentials_to_org`|`True`|no|Boolean to indicate whether credentials should be assigned or not. It should be noted that credentials must exist before adding it. |
 
 ### Standard Organization Data Structure model
+
 #### Json Example
+
 ```json
 {
     "controller_organizations": [
@@ -78,7 +88,7 @@ This role accepts two data models. A simple straightforward easy to maintain mod
       {
         "name": "Automation Group",
         "description": "This is the Automation Group",
-        "custom_virtualenv": "/opt/cust/enviroment/",
+        "custom_virtualenv": "/opt/cust/environment/",
         "max_hosts": 10,
         "galaxy_credentials": "Automation Hub",
         "notification_templates_error": [
@@ -88,7 +98,9 @@ This role accepts two data models. A simple straightforward easy to maintain mod
     ]
 }
 ```
+
 #### Yaml Example
+
 ```yaml
 ---
 controller_organizations:
@@ -96,12 +108,14 @@ controller_organizations:
   description: This is the Default Group
 - name: Automation Group
   description: This is the Automation Group
-  custom_virtualenv: "/opt/cust/enviroment/"
+  custom_virtualenv: "/opt/cust/environment/"
   max_hosts: 10
 ```
 
 #### Controller Export Data structure model
-##### Yaml Example
+
+##### Export Yaml Example
+
 ```yaml
 ---
 controller_organizations:
@@ -129,7 +143,9 @@ controller_organizations:
 ```
 
 ## Playbook Examples
+
 ### Standard Role Usage
+
 ```yaml
 ---
 - name: Playbook to configure ansible controller post installation
@@ -148,8 +164,11 @@ controller_organizations:
   roles:
     - {role: redhat_cop.controller_configuration.organizations, when: controller_organizations is defined}
 ```
+
 ## License
+
 [MIT](LICENSE)
 
 ## Author
+
 [Sean Sullivan](https://github.com/sean-m-sullivan)

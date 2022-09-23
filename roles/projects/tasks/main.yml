@@ -8,7 +8,7 @@
     scm_url:                              "{{ __controller_project_item.scm_url | default(omit, true) }}"
     default_environment:                  "{{ __controller_project_item.default_environment | default(omit, true) }}"
     local_path:                           "{{ __controller_project_item.local_path | default(omit, true) }}"
-    scm_branch:                           "{{ __controller_project_item.scm_branch | default(omit, true)  }}"
+    scm_branch:                           "{{ __controller_project_item.scm_branch | default(omit, true) }}"
     scm_refspec:                          "{{ __controller_project_item.scm_refspec | default(omit, true) }}"
     credential:                           "{{ __controller_project_item.credential.name | default(__controller_project_item.credential | default(__controller_project_item.scm_credential | default(omit, true))) }}"
     scm_clean:                            "{{ __controller_project_item.scm_clean | default(omit) }}"
@@ -19,14 +19,14 @@
     allow_override:                       "{{ __controller_project_item.allow_override | default(omit) }}"
     timeout:                              "{{ __controller_project_item.job_timeout | default(__controller_project_item.timeout | default(omit, true)) }}"
     custom_virtualenv:                    "{{ __controller_project_item.custom_virtualenv | default(omit, true) }}"
-    organization:                         "{{ __controller_project_item.organization.name | default( __controller_project_item.organization | default(omit) ) }}"
+    organization:                         "{{ __controller_project_item.organization.name | default(__controller_project_item.organization | default(omit)) }}"
     state:                                "{{ __controller_project_item.state | default(controller_state | default('present')) }}"
     wait:                                 "{{ __controller_project_item.wait | default(omit) }}"
     update_project:                       "{{ __controller_project_item.update_project | default(omit) }}"
     interval:                             "{{ __controller_project_item.interval | default(controller_configuration_projects_async_delay) }}"
-    notification_templates_started:       "{{ __controller_project_item.notification_templates_started | default(__controller_project_item.related.notification_templates_started | default([]) | map(attribute='name') | list ) | default(omit, true) }}"
-    notification_templates_success:       "{{ __controller_project_item.notification_templates_success | default(__controller_project_item.related.notification_templates_success | default([]) | map(attribute='name') | list ) | default(omit, true) }}"
-    notification_templates_error:         "{{ __controller_project_item.notification_templates_error | default(__controller_project_item.related.notification_templates_error | default([]) | map(attribute='name') | list ) | default(omit, true) }}"
+    notification_templates_started:       "{{ __controller_project_item.notification_templates_started | default(__controller_project_item.related.notification_templates_started | default([]) | map(attribute='name') | list) | default(omit, true) }}"
+    notification_templates_success:       "{{ __controller_project_item.notification_templates_success | default(__controller_project_item.related.notification_templates_success | default([]) | map(attribute='name') | list) | default(omit, true) }}"
+    notification_templates_error:         "{{ __controller_project_item.notification_templates_error | default(__controller_project_item.related.notification_templates_error | default([]) | map(attribute='name') | list) | default(omit, true) }}"
 
     # Role Standard Options
     controller_username:                  "{{ controller_username | default(omit, true) }}"
@@ -47,7 +47,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Configure Controller Projects | Wait for finish the projects creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __projects_job_async_results_item.ansible_job_id }}"
   register: __projects_job_async_result
   until: __projects_job_async_result.finished
