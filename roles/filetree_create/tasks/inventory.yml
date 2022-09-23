@@ -1,44 +1,40 @@
 ---
 - name: "Get the inventories from the API"
-  set_fact:
+  ansible.builtin.set_fact:
     inventory_lookvar: "{{ query(controller_api_plugin, 'api/v2/inventories/',
-                                 query_params={
-                                   'not__kind': 'smart',
-                                   'order_by': 'organization,id'
-                                 },
+                                 query_params={'not__kind': 'smart', 'order_by': 'organization,id'},
                                  host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
-                                 return_all=true, max_objects=query_controller_api_max_objects
-                           )
+                                 return_all=true, max_objects=query_controller_api_max_objects)
                         }}"
 
 - name: "Create the output directory for inventories: {{ output_path }}/<ORGANIZATION_NAME>/inventories"
-  file:
+  ansible.builtin.file:
     path: "{{ output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
     state: directory
     mode: '0755'
   vars:
     inventory_organization: "{{ needed_path.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
-    inventory_name: "{{ needed_path.name | regex_replace('/','_') }}"
+    inventory_name: "{{ needed_path.name | regex_replace('/', '_') }}"
   loop: "{{ inventory_lookvar }}"
   loop_control:
     loop_var: needed_path
     label: "{{ output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
 
 - name: "Add current inventories to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/inventories"
-  template:
+  ansible.builtin.template:
     src: "templates/current_inventories.j2"
     dest: "{{ output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}/{{ current_inventories_asset_value.id }}_{{ inventory_name }}.yaml"
     mode: '0644'
   vars:
     inventory_organization: "{{ current_inventories_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
-    inventory_name: "{{ current_inventories_asset_value.name | regex_replace('/','_') }}"
+    inventory_name: "{{ current_inventories_asset_value.name | regex_replace('/', '_') }}"
   loop: "{{ inventory_lookvar }}"
   loop_control:
     loop_var: current_inventories_asset_value
     label: "{{ output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}/{{ current_inventories_asset_value.id }}_{{ inventory_name }}.yaml"
 
 - name: "Set the inventory's inventory sources"
-  include_tasks: "inventory_sources.yml"
+  ansible.builtin.include_tasks: "inventory_sources.yml"
   vars:
     inventory_organization: "{{ current_inventory_sources.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
     inventory_name: "{{ current_inventory_sources.name | regex_replace('/','_') }}"
@@ -54,7 +50,7 @@
     label: "{{ inventory_sources_output_path }}"
 
 - name: "Set the inventory's hosts"
-  include_tasks: "hosts.yml"
+  ansible.builtin.include_tasks: "hosts.yml"
   vars:
     inventory_organization: "{{ current_inventory_hosts.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
     inventory_name: "{{ current_inventory_hosts.name | regex_replace('/','_') }}"
@@ -70,7 +66,7 @@
     label: "{{ hosts_output_path }}"
 
 - name: "Set the inventory's groups"
-  include_tasks: "groups.yml"
+  ansible.builtin.include_tasks: "groups.yml"
   vars:
     inventory_organization: "{{ current_inventory_groups.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
     inventory_name: "{{ current_inventory_groups.name | regex_replace('/','_') }}"

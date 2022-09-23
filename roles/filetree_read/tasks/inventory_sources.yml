@@ -1,25 +1,25 @@
 ---
 - name: "Get list of files inside {{ filetree_controller_inventory_sources }}"
-  find:
+  ansible.builtin.find:
     paths: "{{ filetree_controller_inventory_sources }}"
     file_type: file
     recurse: true
   register: __list_files_controller_inventory_sources
 
 - name: "Read Inventory Source definitions"
-  include_vars:
+  ansible.builtin.include_vars:
     file: "{{ item.path }}"
   loop: "{{ __list_files_controller_inventory_sources.files }}"
   register: __contents_filetree_controller_inventory_sources
 
 - name: "Populate Inventory Source list"
-  set_fact:
+  ansible.builtin.set_fact:
     __populate_controller_inventory_sources: "{{ (__populate_controller_inventory_sources | default([])) + item.ansible_facts.controller_inventory_sources }}"
   loop: "{{ __contents_filetree_controller_inventory_sources.results }}"
   when: __contents_filetree_controller_inventory_sources.results is defined and item.ansible_facts.controller_inventory_sources is defined
 
 - name: "Set Inventory Source Data Structure"
-  set_fact:
+  ansible.builtin.set_fact:
     controller_inventory_sources: "{{ __populate_controller_inventory_sources }}"
   when: __populate_controller_inventory_sources is defined
 ...

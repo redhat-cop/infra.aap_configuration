@@ -1,19 +1,19 @@
 ---
 - name: "Get current Team Roles from the API"
-  set_fact:
-    team_roles_lookvar: "{{ query(controller_api_plugin, 'api/v2/teams/' + teamid +'/roles/',
+  ansible.builtin.set_fact:
+    team_roles_lookvar: "{{ query(controller_api_plugin, 'api/v2/teams/' + teamid + '/roles/',
                                   host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
                                   return_all=true, max_objects=query_controller_api_max_objects)
                          }}"
 
 - name: "Create the output directory for team roles: {{ output_path }}"
-  file:
+  ansible.builtin.file:
     path: "{{ output_path }}"
     state: directory
     mode: '0755'
 
 - name: "Add current roles to the output yaml file"
-  template:
+  ansible.builtin.template:
     src: "templates/current_team_roles.j2"
     dest: "{{ output_path }}/current_roles_{{ teamname }}.yaml"
     mode: '0644'

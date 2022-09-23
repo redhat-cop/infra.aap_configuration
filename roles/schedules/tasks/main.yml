@@ -39,7 +39,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Configure Schedules | Wait for finish the Schedules creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __controller_schedule_job_async_results_item.ansible_job_id }}"
   register: __controller_schedule_job_async_result
   until: __controller_schedule_job_async_result.finished

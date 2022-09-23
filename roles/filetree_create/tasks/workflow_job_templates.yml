@@ -1,6 +1,6 @@
 ---
 - name: "Get current Workflow Job Templates from the API"
-  set_fact:
+  ansible.builtin.set_fact:
     workflow_job_templates_lookvar: "{{ query(controller_api_plugin, 'api/v2/workflow_job_templates/',
                                               query_params={'order_by': 'organization,id'},
                                               host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
@@ -8,26 +8,26 @@
                                      }}"
 
 - name: "Create the output directory for workflow job templates: {{ output_path }}/<ORGANIZATION_NAME>/workflow_job_templates"
-  file:
+  ansible.builtin.file:
     path: "{{ output_path }}/{{ needed_path }}/workflow_job_templates/"
     state: directory
     mode: '0755'
   loop: "{{ (workflow_job_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
-            + (['ORGANIZATIONLESS'] if ((workflow_job_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0 ) else [])
+            + (['ORGANIZATIONLESS'] if ((workflow_job_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
          }}"
   loop_control:
     loop_var: needed_path
     label: "{{ output_path }}/{{ needed_path }}/workflow_job_templates/"
 
 - name: "Add current workflow job templates to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/workflow_job_templates"
-  template:
+  ansible.builtin.template:
     src: "templates/current_workflow_job_templates.j2"
     dest: "{{ output_path }}/{{ workflow_job_template_organization }}/workflow_job_templates/{{ workflow_job_template_id }}_{{ workflow_job_template_name }}.yaml"
     mode: '0644'
   vars:
     workflow_job_template_organization: "{{ current_workflow_job_templates_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
     workflow_job_template_id: "{{ current_workflow_job_templates_asset_value.id }}"
-    workflow_job_template_name: "{{ current_workflow_job_templates_asset_value.name | regex_replace('/','_') }}"
+    workflow_job_template_name: "{{ current_workflow_job_templates_asset_value.name | regex_replace('/', '_') }}"
   loop: "{{ workflow_job_templates_lookvar }}"
   loop_control:
     loop_var: current_workflow_job_templates_asset_value

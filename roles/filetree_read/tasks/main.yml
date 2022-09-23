@@ -1,9 +1,10 @@
 ---
 # tasks file for filetree_read
 
-- block:
+- name: "Setup authentication (block)"
+  block:
     - name: "Get the Authentication Token for the future requests"
-      uri:
+      ansible.builtin.uri:
         url: "https://{{ controller_hostname }}/api/v2/tokens/"
         user: "{{ controller_username }}"
         password: "{{ controller_password }}"
@@ -14,7 +15,7 @@
       register: authtoken_res
 
     - name: "Set the oauth token to be used since now"
-      set_fact:
+      ansible.builtin.set_fact:
         controller_oauthtoken: "{{ authtoken_res.json.token }}"
         oauthtoken_url: "{{ authtoken_res.json.url }}"
       no_log: true
@@ -24,7 +25,7 @@
 
 
 - name: "Include Tasks to config {{  __task_filetree_read.name }}"
-  include_tasks: "{{  __task_filetree_read.name }}.yml"
+  ansible.builtin.include_tasks: "{{  __task_filetree_read.name }}.yml"
   args:
     apply:
       tags: "{{  __task_filetree_read.tags }}"

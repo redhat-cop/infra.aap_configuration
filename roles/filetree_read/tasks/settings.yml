@@ -1,25 +1,25 @@
 ---
 - name: "Get list of files inside {{ filetree_controller_settings }}"
-  find:
+  ansible.builtin.find:
     paths: "{{ filetree_controller_settings }}"
     file_type: file
     recurse: true
   register: __list_files_controller_settings
 
 - name: "Read Settings definitions"
-  include_vars:
+  ansible.builtin.include_vars:
     file: "{{ item.path }}"
   loop: "{{ __list_files_controller_settings.files }}"
   register: __contents_filetree_controller_settings
 
 - name: "Populate Settings list"
-  set_fact:
+  ansible.builtin.set_fact:
     __populate_controller_settings: "{{ (__populate_controller_settings | default([])) + item.ansible_facts.controller_settings }}"
   loop: "{{ __contents_filetree_controller_settings.results }}"
   when: __contents_filetree_controller_settings.results is defined and item.ansible_facts.controller_settings is defined
 
 - name: "Set Settings Data Structure"
-  set_fact:
+  ansible.builtin.set_fact:
     controller_settings: "{{ __populate_controller_settings }}"
   when: __populate_controller_settings is defined
 ...

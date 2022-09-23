@@ -1,12 +1,11 @@
 ---
-
 # Launch Controller Job
 - name: Launch a Controller Job
   job_launch:
     name:                     "{{ __job_launch_item.name | mandatory }}"
     job_type:                 "{{ __job_launch_item.job_type | default(omit, true) }}"
     inventory:                "{{ __job_launch_item.inventory | default(omit, true) }}"
-    organization:             "{{ __job_launch_item.organization.name | default( __job_launch_item.organization | default(omit, true)) }}"
+    organization:             "{{ __job_launch_item.organization.name | default(__job_launch_item.organization | default(omit, true)) }}"
     credentials:              "{{ __job_launch_item.credentials | default(omit, true) }}"
     extra_vars:               "{{ __job_launch_item.extra_vars | default(omit, true) }}"
     limit:                    "{{ __job_launch_item.limit | default(omit, true) }}"

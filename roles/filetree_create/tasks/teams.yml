@@ -1,6 +1,6 @@
 ---
 - name: "Get current Teams from the API"
-  set_fact:
+  ansible.builtin.set_fact:
     teams_lookvar: "{{ query(controller_api_plugin, 'api/v2/teams/',
                              query_params={'order_by': 'organization,id'},
                              host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
@@ -8,33 +8,33 @@
                     }}"
 
 - name: "Create the output directory for teams: {{ output_path }}/<ORGANIZATION_NAME>/teams"
-  file:
+  ansible.builtin.file:
     path: "{{ output_path }}/{{ needed_path }}/teams"
     state: directory
     mode: '0755'
   loop: "{{ (teams_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
-            + (['ORGANIZATIONLESS'] if ((teams_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0 ) else [])
+            + (['ORGANIZATIONLESS'] if ((teams_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
          }}"
   loop_control:
     loop_var: needed_path
     label: "{{ output_path }}/{{ needed_path }}/teams"
 
 - name: "Add current teams to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/teams"
-  template:
+  ansible.builtin.template:
     src: "templates/current_teams.j2"
     dest: "{{ output_path }}/{{ team_organization }}/teams/{{ team_id }}_{{ team_name }}.yaml"
     mode: '0644'
   vars:
     team_organization: "{{ current_teams_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}"
     team_id: "{{ current_teams_asset_value.id }}"
-    team_name: "{{ current_teams_asset_value.name | regex_replace('/','_') }}"
+    team_name: "{{ current_teams_asset_value.name | regex_replace('/', '_') }}"
   loop: "{{ teams_lookvar }}"
   loop_control:
     loop_var: current_teams_asset_value
     label: "{{ output_path }}/{{ team_organization }}/teams/{{ team_id }}_{{ team_name }}.yaml"
 
 - name: "Set the team's roles"
-  include_tasks: "team_roles.yml"
+  ansible.builtin.include_tasks: "team_roles.yml"
   vars:
     teamname: "{{ current_team.name }}"
     teamid: "{{ current_team.id }}"

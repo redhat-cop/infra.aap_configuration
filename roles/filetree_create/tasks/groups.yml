@@ -1,12 +1,12 @@
 ---
 - name: "Create the output directory for groups: {{ groups_output_path }}"
-  file:
+  ansible.builtin.file:
     path: "{{ groups_output_path }}"
     state: directory
     mode: '0755'
 
 - name: "Add current groups to the output yaml file: {{ groups_output_path }}/current_groups.yaml"
-  template:
+  ansible.builtin.template:
     src: "templates/current_groups.j2"
     dest: "{{ groups_output_path }}/current_groups.yaml"
     mode: '0644'

@@ -19,7 +19,7 @@ controller_credential_types: []
 #  kind: "cloud"  # or "net"
 #  state: present  # optional, choices: present, absent
 
-controller_configuration_credential_types_secure_logging: "{{controller_configuration_secure_logging | default('false')}}"
+controller_configuration_credential_types_secure_logging: "{{ controller_configuration_secure_logging | default('false') }}"
 controller_configuration_credential_types_async_retries: "{{ controller_configuration_async_retries | default(30) }}"
 controller_configuration_credential_types_async_delay: "{{ controller_configuration_async_delay | default(1) }}"
 ...

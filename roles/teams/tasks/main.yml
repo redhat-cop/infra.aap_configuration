@@ -4,7 +4,7 @@
     name:                     "{{ __controller_team_item.name | mandatory }}"
     new_name:                 "{{ __controller_team_item.new_name | default(omit, true) }}"
     description:              "{{ __controller_team_item.description | default(omit, true) }}"
-    organization:             "{{ __controller_team_item.organization.name | default( __controller_team_item.organization ) | mandatory }}"
+    organization:             "{{ __controller_team_item.organization.name | default(__controller_team_item.organization) | mandatory }}"
     state:                    "{{ __controller_team_item.state | default(controller_state | default('present')) }}"
 
     # Role Standard Options
@@ -26,7 +26,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Configure Teams | Wait for finish the Teams creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __controller_team_job_async_results_item.ansible_job_id }}"
   register: __controller_team_job_async_result
   until: __controller_team_job_async_result.finished

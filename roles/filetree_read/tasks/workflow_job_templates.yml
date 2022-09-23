@@ -1,25 +1,25 @@
 ---
 - name: "Get list of files inside {{ filetree_controller_templates }}"
-  find:
+  ansible.builtin.find:
     paths: "{{ filetree_controller_workflow_job_templates }}"
     file_type: file
     recurse: true
   register: __list_files_controller_workflow_job_templates
 
 - name: "Read Workflow Job Templates definitions"
-  include_vars:
+  ansible.builtin.include_vars:
     file: "{{ item.path }}"
   loop: "{{ __list_files_controller_workflow_job_templates.files }}"
   register: __contents_filetree_controller_workflow_job_templates
 
 - name: "Populate Workflow Job Templates list"
-  set_fact:
+  ansible.builtin.set_fact:
     __populate_controller_workflow_job_templates: "{{ (__populate_controller_workflow_job_templates | default([])) + item.ansible_facts.controller_workflows }}"
   loop: "{{ __contents_filetree_controller_workflow_job_templates.results }}"
   when: __contents_filetree_controller_workflow_job_templates.results is defined and item.ansible_facts.controller_workflows is defined
 
 - name: "Set Job Templates Data Structure"
-  set_fact:
+  ansible.builtin.set_fact:
     controller_workflows: "{{ __populate_controller_workflow_job_templates }}"
   when: __populate_controller_workflow_job_templates is defined
 ...

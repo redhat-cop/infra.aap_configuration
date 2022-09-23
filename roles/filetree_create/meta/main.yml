@@ -17,7 +17,7 @@ galaxy_info:
   # - CC-BY-4.0
   license: GPL3+
 
-  min_ansible_version: 2.10
+  min_ansible_version: "2.10"
 
   # If this a Container Enabled role, provide the minimum Ansible Container version.
   # min_ansible_container_version:
@@ -29,7 +29,7 @@ galaxy_info:
   # https://galaxy.ansible.com/api/v1/platforms/
   #
   platforms:
-    - name: "RHEL"
+    - name: "EL"
       versions:
         - "all"
 

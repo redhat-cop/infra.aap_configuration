@@ -1,25 +1,25 @@
 ---
 - name: "Get list of files inside {{ filetree_controller_organizations }}"
-  find:
+  ansible.builtin.find:
     paths: "{{ filetree_controller_organizations }}"
     file_type: file
     recurse: true
   register: __list_files_controller_organizations
 
 - name: "Read Organization definitions"
-  include_vars:
+  ansible.builtin.include_vars:
     file: "{{ item.path }}"
   loop: "{{ __list_files_controller_organizations.files }}"
   register: __contents_filetree_controller_organizations
 
 - name: "Populate Organizations list"
-  set_fact:
+  ansible.builtin.set_fact:
     __populate_controller_organizations: "{{ (__populate_controller_organizations | default([])) + item.ansible_facts.controller_organizations }}"
   loop: "{{ __contents_filetree_controller_organizations.results }}"
   when: __contents_filetree_controller_organizations.results is defined and item.ansible_facts.controller_organizations is defined
 
 - name: "Set Organization Data Structure"
-  set_fact:
+  ansible.builtin.set_fact:
     controller_organizations: "{{ __populate_controller_organizations }}"
   when: __populate_controller_organizations is defined
 ...

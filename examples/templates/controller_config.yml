@@ -44,49 +44,49 @@
 
   tasks:
     - name: Include task for managing LDAP settings
-      include_tasks: tasks/manage_controller_settings.yml
+      ansible.builtin.include_tasks: tasks/manage_controller_settings.yml
       tags:
         - never
         - alltags
         - settings
 
     - name: Include task for managing instance groups
-      include_tasks: tasks/manage_instance_groups.yml
+      ansible.builtin.include_tasks: tasks/manage_instance_groups.yml
       tags:
         - never
         - alltags
         - instancegroups
 
     - name: Include task for managing credential types
-      include_tasks: tasks/manage_credential_types.yml
+      ansible.builtin.include_tasks: tasks/manage_credential_types.yml
       tags:
         - never
         - alltags
         - credtypes
 
     - name: Include task for managing organizations
-      include_tasks: tasks/manage_organizations.yml
+      ansible.builtin.include_tasks: tasks/manage_organizations.yml
       tags:
         - never
         - alltags
         - orgs
 
     - name: Include task for managing users
-      include_tasks: tasks/manage_users.yml
+      ansible.builtin.include_tasks: tasks/manage_users.yml
       tags:
         - never
         - alltags
         - users
 
     - name: Include task for managing teams
-      include_tasks: tasks/manage_teams.yml
+      ansible.builtin.include_tasks: tasks/manage_teams.yml
       tags:
         - never
         - alltags
         - teams
 
     - name: Include task for managing credentials
-      include_tasks: tasks/manage_credentials.yml
+      ansible.builtin.include_tasks: tasks/manage_credentials.yml
       tags:
         - never
         - alltags
@@ -94,91 +94,91 @@
 
     # Add Orgs a second time to associate the Galaxy / Automation Hub credentials with the Org for project sync
     - name: Include task for managing organizations
-      include_tasks: tasks/manage_organizations.yml
+      ansible.builtin.include_tasks: tasks/manage_organizations.yml
       tags:
         - never
         - alltags
         - orgs
 
     - name: Include task for manging execution environments
-      include_tasks: tasks/manage_ees.yml
+      ansible.builtin.include_tasks: tasks/manage_ees.yml
       tags:
         - never
         - alltags
         - ees
 
     - name: Include task for managing projects
-      include_tasks: tasks/manage_projects.yml
+      ansible.builtin.include_tasks: tasks/manage_projects.yml
       tags:
         - never
         - alltags
         - projects
 
     - name: Include task for managing labels
-      include_tasks: tasks/manage_labels.yml
+      ansible.builtin.include_tasks: tasks/manage_labels.yml
       tags:
         - never
         - alltags
         - labels
 
     - name: Include task for managing inventories
-      include_tasks: tasks/manage_inventories.yml
+      ansible.builtin.include_tasks: tasks/manage_inventories.yml
       tags:
         - never
         - alltags
         - inventory
 
     - name: Include task for managing inventories
-      include_tasks: tasks/manage_inventory_sources.yml
+      ansible.builtin.include_tasks: tasks/manage_inventory_sources.yml
       tags:
         - never
         - alltags
         - inventorysources
 
     - name: Include task for managing hosts
-      include_tasks: tasks/manage_hosts.yml
+      ansible.builtin.include_tasks: tasks/manage_hosts.yml
       tags:
         - never
         - alltags
         - hosts
 
     - name: Include task for managing groups
-      include_tasks: tasks/manage_groups.yml
+      ansible.builtin.include_tasks: tasks/manage_groups.yml
       tags:
         - never
         - alltags
         - groups
 
     - name: Include task for managing notification templates
-      include_tasks: tasks/manage_notification_templates.yml
+      ansible.builtin.include_tasks: tasks/manage_notification_templates.yml
       tags:
         - never
         - alltags
         - notifications
 
     - name: Include task for managing job templates
-      include_tasks: tasks/manage_job_templates.yml
+      ansible.builtin.include_tasks: tasks/manage_job_templates.yml
       tags:
         - never
         - alltags
         - jobtemplates
 
     - name: Include task for managing workflow templates
-      include_tasks: tasks/manage_workflow_templates.yml
+      ansible.builtin.include_tasks: tasks/manage_workflow_templates.yml
       tags:
         - never
         - alltags
         - workflows
 
     - name: Include task for managing schedules
-      include_tasks: tasks/manage_schedules.yml
+      ansible.builtin.include_tasks: tasks/manage_schedules.yml
       tags:
         - never
         - alltags
         - schedules
 
     - name: Include task for managing roles
-      include_tasks: tasks/manage_roles.yml
+      ansible.builtin.include_tasks: tasks/manage_roles.yml
       tags:
         - never
         - alltags

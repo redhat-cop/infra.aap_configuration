@@ -5,10 +5,10 @@
     new_name:                       "{{ __controller_notification_item.new_name | default(omit, true) }}"
     copy_from:                      "{{ __controller_notification_item.copy_from | default(omit, true) }}"
     description:                    "{{ __controller_notification_item.description | default(omit, true) }}"
-    organization:                   "{{ __controller_notification_item.organization.name | default( __controller_notification_item.organization ) }}"
+    organization:                   "{{ __controller_notification_item.organization.name | default(__controller_notification_item.organization) }}"
     notification_type:              "{{ __controller_notification_item.notification_type | default(omit, true) }}"
     notification_configuration:     "{{ __controller_notification_item.notification_configuration | default(omit, true) }}"
-    messages:                       "{{ __controller_notification_item.messages | default(omit, true) | regex_replace('[ ]{2,}','') }}"
+    messages:                       "{{ __controller_notification_item.messages | default(omit, true) | regex_replace('[ ]{2,}', '') }}"
     state:                          "{{ __controller_notification_item.state | default(controller_state | default('present')) }}"
 
     # Role Standard Options
@@ -30,7 +30,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Configure notifications | Wait for finish the notifications creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __controller_notification_job_async_results_item.ansible_job_id }}"
   register: __controller_notification_job_async_result
   until: __controller_notification_job_async_result.finished

@@ -1,8 +1,11 @@
 # controller_configuration.job_launch
+
 ## Description
+
 An Ansible Role to launch a job template on Ansible Controller.
 
 ## Requirements
+
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
@@ -12,6 +15,7 @@ Currently:
 ## Variables
 
 ### Authentication
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
@@ -23,6 +27,7 @@ Currently:
 |`controller_launch_jobs`|`see below`|yes|Data structure describing the jobs to launch Described below.||
 
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the job launch task does not include sensitive information.
@@ -34,7 +39,9 @@ controller_configuration_job_launch_secure_logging defaults to the value of cont
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ## Data Structure
-### Variables
+
+### Job Launch Variables
+
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|The name or id of the project to update.|
@@ -55,7 +62,9 @@ controller_configuration_job_launch_secure_logging defaults to the value of cont
 |`timeout`|""|no|int|If waiting for the job to complete this will abort after this amount of seconds.|
 
 ### Standard Project Data Structure
+
 #### Yaml Example
+
 ```yaml
 ---
 controller_launch_jobs:
@@ -64,7 +73,9 @@ controller_launch_jobs:
 ```
 
 ## Playbook Examples
+
 ### Standard Role Usage
+
 ```yaml
 ---
 - name: Playbook to configure ansible controller post installation
@@ -83,8 +94,11 @@ controller_launch_jobs:
   roles:
     - {role: redhat_cop.controller_configuration.job_launch, when: controller_launch_jobs is defined}
 ```
+
 ## License
+
 [MIT](LICENSE)
 
 ## Author
+
 [Sean Sullivan](https://github.com/sean-m-sullivan)

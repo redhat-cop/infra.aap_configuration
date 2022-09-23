@@ -1,8 +1,11 @@
 # controller_configuration.teams
+
 ## Description
+
 An Ansible Role to create Teams on Ansible Controller.
 
 ## Requirements
+
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
@@ -12,6 +15,7 @@ Currently:
 ## Variables
 
 ### Authentication
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
@@ -23,6 +27,7 @@ Currently:
 |`controller_teams`|`see below`|yes|Data structure describing your Teams described below.||
 
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add teams task does not include sensitive information.
@@ -34,6 +39,7 @@ The role defaults to False as normally the add teams task does not include sensi
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
+
 The following Variables set asynchronous retries for the role.
 If neither of the retries or delay or retries are set, they will default to their respective defaults.
 This allows for all items to be created, then checked that the task finishes successfully.
@@ -47,6 +53,7 @@ This also speeds up the overall role.
 |`controller_configuration_teams_async_delay`|`controller_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ### Data structure `controller_teams:` should include following vars
+
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`||yes|str|The desired team name to create or modify|
@@ -56,7 +63,9 @@ This also speeds up the overall role.
 |`state`|`present`|no|str|Desired state of the resource.|
 
 ## Playbook Examples
+
 ### Standard Role Usage
+
 ``` yaml
 ---
 - name: Playbook to configure ansible controller post installation
@@ -77,8 +86,10 @@ This also speeds up the overall role.
 ```
 
 ## License
+
 [MIT](License)
 
 ## Author
+
 [Andrew J. Huffman](https://github.com/ahuffman)
 [Kedar Kulkarni](https://github.com/kedark3)

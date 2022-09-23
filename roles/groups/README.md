@@ -1,8 +1,11 @@
 # controller_configuration.groups
+
 ## Description
+
 An Ansible Role to create Groups on Ansible Controller.
 
 ## Requirements
+
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
 Currently:
   awx.awx
@@ -12,6 +15,7 @@ Currently:
 ## Variables
 
 ### Authentication
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
@@ -23,6 +27,7 @@ Currently:
 |`controller_groups`|`see below`|yes|Data structure describing your group or groups Described below.||
 
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add groups task does not include sensitive information.
@@ -34,6 +39,7 @@ controller_configuration_groups_secure_logging defaults to the value of controll
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
+
 The following Variables set asynchronous retries for the role.
 If neither of the retries or delay or retries are set, they will default to their respective defaults.
 This allows for all items to be created, then checked that the task finishes successfully.
@@ -47,9 +53,11 @@ This also speeds up the overall role.
 |`controller_configuration_groups_async_delay`|`controller_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ### Formating Variables
+
 Variables can use a standard Jinja templating format to describe the resource.
 
 Example:
+
 ```json
 {{ variable }}
 ```
@@ -57,13 +65,17 @@ Example:
 Because of this it is difficult to provide controller with the required format for these fields.
 
 The workaround is to use the following format:
+
 ```json
 {  { variable }}
 ```
+
 The role will strip the double space between the curly bracket in order to provide controller with the correct format for the Variables.
 
 ## Data Structure
-### Variables
+
+### Group Variables
+
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`name`|""|yes|Name of Group|
@@ -75,9 +87,10 @@ The role will strip the double space between the curly bracket in order to provi
 |`children`|""|no|  List of groups that should be nested inside in this group|
 |`state`|`present`|no|Desired state of the resource.|
 
-
 ### Standard Organization Data Structure
+
 #### Json Example
+
 ```json
 {
     "controller_groups": [
@@ -92,7 +105,9 @@ The role will strip the double space between the curly bracket in order to provi
     ]
 }
 ```
+
 #### Yaml Example
+
 ```yaml
 ---
 controller_groups:
@@ -112,7 +127,9 @@ controller_groups:
 ```
 
 ## Playbook Examples
+
 ### Standard Role Usage
+
 ```yaml
 ---
 - name: Playbook to configure ansible controller post installation
@@ -131,10 +148,13 @@ controller_groups:
   roles:
     - {role: redhat_cop.controller_configuration.groups, when: controller_groups is defined}
 ```
+
 ## License
+
 [MIT](LICENSE)
 
 ## Author
+
 [Wei-Yen Tan](https://github.com/weiyentan)
 [Andrew J. Huffman](https://github.com/ahuffman)
 [Sean Sullivan](https://github.com/sean-m-sullivan)
