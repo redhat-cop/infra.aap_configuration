@@ -51,7 +51,7 @@
   loop: "{{ inventory_lookvar }}"
   loop_control:
     loop_var: current_inventory_sources
-    label: "{{ output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
+    label: "{{ inventory_sources_output_path }}"
 
 - name: "Set the inventory's hosts"
   include_tasks: "hosts.yml"
@@ -67,7 +67,7 @@
   loop: "{{ inventory_lookvar }}"
   loop_control:
     loop_var: current_inventory_hosts
-    label: "{{ output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
+    label: "{{ hosts_output_path }}"
 
 - name: "Set the inventory's groups"
   include_tasks: "groups.yml"
@@ -83,5 +83,5 @@
   loop: "{{ inventory_lookvar }}"
   loop_control:
     loop_var: current_inventory_groups
-    label: "{{ output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
+    label: "{{ groups_output_path }}"
 ...
