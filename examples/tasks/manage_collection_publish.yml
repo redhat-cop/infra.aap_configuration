@@ -1,11 +1,11 @@
 ---
 - name: Include vars
-  include_vars: ../vars/ah_collection_publish.yml
+  ansible.builtin.include_vars: ../vars/ah_collection_publish.yml
   tags:
     - publish
 
 - name: Import ah_configuration role
-  import_role:
+  ansible.builtin.import_role:
     name: redhat_cop.ah_configuration.publish
   tags:
     - publish

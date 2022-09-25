@@ -31,7 +31,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Create User | Wait for finish the user creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __users_job_async_result_item.ansible_job_id }}"
   register: __users_job_async_result
   until: __users_job_async_result.finished

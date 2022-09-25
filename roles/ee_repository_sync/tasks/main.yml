@@ -25,7 +25,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "EE Repository Sync | Wait for finish the ee_repository_sync to finish"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __ee_repository_syncs_job_async_result_item.ansible_job_id }}"
   register: __ee_repository_syncs_job_async_result
   until: __ee_repository_syncs_job_async_result.finished

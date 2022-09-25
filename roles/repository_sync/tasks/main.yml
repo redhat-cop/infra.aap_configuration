@@ -2,13 +2,13 @@
 - name: Sync Automation Hub certified repository
   ah_repository_sync:
     name:           "rh-certified"
-    wait:           "{{ ah_repository_certified.wait | default(false)  }}"
+    wait:           "{{ ah_repository_certified.wait | default(false) }}"
     interval:       "{{ ah_repository_certified.interval | default(1) }}"
     timeout:        "{{ ah_repository_certified.timeout | default(omit) }}"
     ah_host:        "{{ ah_host | default(ah_hostname) }}"
     ah_username:    "{{ ah_username | default(omit) }}"
     ah_password:    "{{ ah_password | default(omit) }}"
-    ah_token:       "{{ ah_token    | default(omit) }}"
+    ah_token:       "{{ ah_token | default(omit) }}"
     ah_path_prefix: "{{ ah_path_prefix | default(omit) }}"
     ah_verify_ssl:  "{{ ah_validate_certs | default(omit) }}"
   when: ah_repository_certified is defined
@@ -17,13 +17,13 @@
 - name: Sync Automation Hub community repository
   ah_repository_sync:
     name:           "community"
-    wait:           "{{ ah_repository_community.wait | default(false)  }}"
+    wait:           "{{ ah_repository_community.wait | default(false) }}"
     interval:       "{{ ah_repository_community.interval | default(1) }}"
     timeout:        "{{ ah_repository_community.timeout | default(omit) }}"
     ah_host:        "{{ ah_host | default(ah_hostname) }}"
     ah_username:    "{{ ah_username | default(omit) }}"
     ah_password:    "{{ ah_password | default(omit) }}"
-    ah_token:       "{{ ah_token    | default(omit) }}"
+    ah_token:       "{{ ah_token | default(omit) }}"
     ah_path_prefix: "{{ ah_path_prefix | default(omit) }}"
     ah_verify_ssl:  "{{ ah_validate_certs | default(omit) }}"
   when: ah_repository_community is defined

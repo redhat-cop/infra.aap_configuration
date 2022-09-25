@@ -32,7 +32,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Create EE Repository | Wait for finish the ee_repository creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __ee_repositories_job_async_result_item.ansible_job_id }}"
   register: __ee_repositories_job_async_result
   until: __ee_repositories_job_async_result.finished

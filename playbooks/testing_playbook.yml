@@ -7,7 +7,7 @@
     - redhat_cop.ah_configuration
   pre_tasks:
     - name: Include vars from ah_configs directory
-      include_vars:
+      ansible.builtin.include_vars:
         dir: ./ah_configs
         extensions: ["yml"]
       tags:
@@ -29,18 +29,18 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Create ansible config file
-      include_role:
+      ansible.builtin.include_role:
         name: ansible_config
 
     - name: Create namespace
-      include_role:
+      ansible.builtin.include_role:
         name: namespace
 
-#    - name: Publish Collections
-#      include_role:
-#        name: publish
-#      vars:
-#        ah_auto_approve: true
+    #  - name: Publish Collections
+    #    ansible.builtin.include_role:
+    #      name: publish
+    #    vars:
+    #      ah_auto_approve: true
 
     - name: Remove collection
       ah_collection:

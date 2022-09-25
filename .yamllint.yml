@@ -3,20 +3,23 @@ extends: default
 
 ignore: |
   changelogs
-  .github
 
 rules:
   # 80 chars should be enough, but don't fail if a line is longer
   line-length: disable
-  colons: disable
+  colons:
+    max-spaces-before: 0
+    max-spaces-after: -1
   document-end: {present: true}
   indentation:
-    level: warning
+    level: error
     indent-sequences: consistent
   truthy:
+    level: error
     allowed-values:
-      - 'True'
-      - 'False'
-      - 'true'
-      - 'false'
+    - 'True'
+    - 'False'
+    - 'true'
+    - 'false'
+    - 'on'
 ...
