@@ -1,11 +1,11 @@
-Private Automation Hub Configuration Example Playbook
-=========
+# Private Automation Hub Configuration Example Playbook
 
 A single playbook and multiple task and vars files which can be used to define your Private Automation Hub configuration as code.  Update the vars files to define your objects and run the playbook to deploy your changes to your Private Automation Hub cluster(s).
 
 Use of some tags may require that you include other tags; for example if adding a collection but you haven't already added the correct collection namespace.
 
 Available tags:
+
 - groups
 - users
 - namespaces
@@ -18,15 +18,13 @@ Available tags:
 - repos
 - reposync
 
-Requirements
-------------
+## Requirements
 
 This content utilizes the ah_configuration collection.  You will need connectivity to a Private Automation Hub server which has synchronized these collections or to the internet so that the collections can be installed.
 
 You will also need Private Automation Hub credentials with sufficient permissions to create the objects you define as code.  This will need to be a local account within the cluster and not an externally authenticated account.
 
-Variables
---------------
+## Variables
 
 `pah_configure.yml`:
 
@@ -126,13 +124,11 @@ Variables
 
         This is an optional variable.  Review the ah_configuration for information on it's use.  Omit if not needed.
 
-Dependencies
-------------
+## Dependencies
 
 You will need the `ah_configuration` collection.
 
-Playbook Execution
-----------------
+## Playbook Execution
 
 You can run this playbook from ansible cli or as a Job Template (future use case) in AAP's Controller.
 
@@ -148,13 +144,10 @@ From the command line to define all objects:
 
     ansible-navigator run pah_configure.yml
 
-
-License
--------
+## License
 
 BSD
 
-Author Information
-------------------
+## Author Information
 
 [Tony Reveal](https://github.com/tonyreveal)
