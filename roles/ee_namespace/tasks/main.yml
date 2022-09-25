@@ -26,7 +26,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Create EE Namespace | Wait for finish the ee_namespace creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __ee_namespaces_job_async_result_item.ansible_job_id }}"
   register: __ee_namespaces_job_async_result
   until: __ee_namespaces_job_async_result.finished
