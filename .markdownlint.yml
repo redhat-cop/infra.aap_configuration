@@ -1,0 +1,21 @@
+---
+default: true
+
+# MD003/heading-style/header-style - Heading style
+# This will ensure that the heading format is consistent across all markdown files
+MD003:
+  style: "atx"
+
+# MD013/line-length - Line length
+# Setting to false to match the yamllint setting
+MD013: false
+
+# MD046/code-block-style - Code block style
+# This will ensure that code block format is consistent across all markdown files
+MD0046:
+  style: fenced
+
+MD033:
+  allowed_elements:
+    - "br"
+...
