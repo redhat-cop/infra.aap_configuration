@@ -1,20 +1,21 @@
 ---
-- block:
-  - name: "Get the Authentication Token for the future requests"
-    ansible.builtin.uri:
-      url: "https://{{ controller_hostname }}/api/v2/tokens/"
-      user: "{{ controller_username }}"
-      password: "{{ controller_password }}"
-      method: POST
-      force_basic_auth: true
-      validate_certs: "{{ controller_validate_certs }}"
-      status_code: 201
-    register: authtoken_res
+- name: Generate oauth otken (block)
+  block:
+    - name: "Get the Authentication Token for the future requests"
+      ansible.builtin.uri:
+        url: "https://{{ controller_hostname }}/api/v2/tokens/"
+        user: "{{ controller_username }}"
+        password: "{{ controller_password }}"
+        method: POST
+        force_basic_auth: true
+        validate_certs: "{{ controller_validate_certs }}"
+        status_code: 201
+      register: authtoken_res
 
-  - name: "Set the oauth token to be used since now"
-    ansible.builtin.set_fact:
-      controller_oauthtoken: "{{ authtoken_res.json.token }}"
-      controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
+    - name: "Set the oauth token to be used since now"
+      ansible.builtin.set_fact:
+        controller_oauthtoken: "{{ authtoken_res.json.token }}"
+        controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
   when: controller_oauthtoken is not defined
 
