@@ -25,24 +25,24 @@
     # The tasks do not use the podman collection because it may not be
     # available on the testing system.
     - name: Ensure a small container image is available
-      command:
+      ansible.builtin.command:
         cmd: "podman pull {{ fake_image }}"
       changed_when: true
 
     - name: Ensure the image has the correct tag
-      command:
+      ansible.builtin.command:
         cmd: "podman tag {{ fake_image }} {{ ah_host }}/{{ repository }}:{{ tag }}"
       changed_when: true
 
     - name: Ensure the image is pushed in private automation hub
-      command:
+      ansible.builtin.command:
         cmd: "podman push --tls-verify=false --remove-signatures
               --creds={{ ah_username }}:{{ ah_password }}
               {{ ah_host }}/{{ repository }}:{{ tag }}"
       changed_when: true
 
     - name: Ensure the images are removed
-      command:
+      ansible.builtin.command:
         cmd: "podman rmi {{ fake_image }} {{ ah_host }}/{{ repository }}:{{ tag }}"
       changed_when: true
 
@@ -66,11 +66,11 @@
 
     # Preparing a README file
     - name: Ensure a temporary file exists
-      tempfile:
+      ansible.builtin.tempfile:
       register: tempfile
 
     - name: Ensure some contents are stored in the temporary file
-      copy:
+      ansible.builtin.copy:
         dest: "{{ tempfile['path'] }}"
         mode: 0600
         content: |
@@ -146,7 +146,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Ensure the temporary file is removed
-      file:
+      ansible.builtin.file:
         path: "{{ tempfile['path'] }}"
         state: absent
 

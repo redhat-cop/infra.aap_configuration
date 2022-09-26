@@ -9,6 +9,7 @@
     ah_host:          "{{ ah_host | default(ah_hostname) }}"
     ah_username:      "{{ ah_username | default(omit) }}"
     ah_password:      "{{ ah_password | default(omit) }}"
+    ah_token:         "{{ ah_token | default(omit) }}"
     ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
     validate_certs:   "{{ ah_validate_certs | default(omit) }}"
   loop: "{{ ah_groups }}"
@@ -23,7 +24,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Create Group | Wait for finish the group creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __groups_job_async_result_item.ansible_job_id }}"
   register: __groups_job_async_result
   until: __groups_job_async_result.finished
@@ -60,7 +61,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Create Group | Wait for finish the group creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __group_perms_job_async_result_item.ansible_job_id }}"
   register: __group_perms_job_async_result
   until: __group_perms_job_async_result.finished
@@ -73,5 +74,4 @@
   no_log: "{{ ah_configuration_group_secure_logging }}"
   vars:
     ansible_async_dir: '/tmp/.ansible_async'
-
 ...

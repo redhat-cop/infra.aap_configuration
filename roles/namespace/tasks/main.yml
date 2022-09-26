@@ -31,7 +31,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Create Namespace | Wait for finish the namespace creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __namespaces_job_async_result_item.ansible_job_id }}"
   register: __namespaces_job_async_result
   until: __namespaces_job_async_result.finished
