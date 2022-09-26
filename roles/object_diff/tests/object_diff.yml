@@ -3,5 +3,6 @@
   connection: local
   gather_facts: false
   roles:
+    - redhat_cop.controller_configuration.filetree_read
     - redhat_cop.controller_configuration.object_diff
 ...

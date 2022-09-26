@@ -3,7 +3,7 @@
   ansible.builtin.set_fact:
     __controller_api_current_user_check_is_admin: "{{ lookup(controller_api_plugin, 'users',
                                                               query_params={'username': controller_username},
-                                                              host=controller_hostname, oauth_token=oauthtoken, verify_ssl=false)
+                                                              host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=false)
                                                    }}"
 
 - name: "Role differences (block)"

@@ -3,7 +3,7 @@
   ansible.builtin.set_fact:
     teams_lookvar: "{{ query(controller_api_plugin, 'api/v2/teams/',
                              query_params={'order_by': 'organization,id'},
-                             host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
+                             host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                              return_all=true, max_objects=query_controller_api_max_objects)
                     }}"
 
