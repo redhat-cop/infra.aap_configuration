@@ -42,10 +42,9 @@ This also speeds up the overall role.
 |`ah_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
 |`ah_configuration_ee_repository_async_delay`|`ah_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
-
 ## Data Structure
 
-### Variables
+### Repository Variables
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|

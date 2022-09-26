@@ -27,10 +27,10 @@ If you feel like getting your hands dirty, feel free to make the change yourself
 2. Create a branch named appropriately for the change you are going to make.
 3. Make your code change.
 4. If you are creating a new role, please add a test for it in our [testing playbook.](https://github.com/redhat-cop/ah_configuration/blob/devel/playbooks/testing_playbook.yml) by adding a new role entry and adding the appropriate yaml file with test data in the ah_configs directory.
-5. Add a changelog fragment in `changelogs/fragments` as per https://docs.ansible.com/ansible/latest/community/development_process.html#changelogs
+5. Add a changelog fragment in `changelogs/fragments` as per <https://docs.ansible.com/ansible/latest/community/development_process.html#changelogs>
 6. Push your code change up to your forked repo.
 7. Open a Pull Request to merge your changes to this repo. The comment box will be filled in automatically via a template.
-8. All Pull Requests will be subject to Ansible and Yaml Linting checks. Please make sure that your code complies and fix any warnings that arise. These are Checks that apear at the bottom of your Pull Request.
+8. All Pull Requests will be subject to Ansible and Yaml Linting checks. Please make sure that your code complies and fix any warnings that arise. These are checks that appear at the bottom of your Pull Request.
 9. All Pull requests are subject to Testing against being used in automation hub. As above there is a check at the bottom of your pull request for this named integration.
 
 See [Using Pull Requests](https://help.github.com/articles/using-pull-requests/) got more information on how to use GitHub PRs.
@@ -38,4 +38,5 @@ See [Using Pull Requests](https://help.github.com/articles/using-pull-requests/)
 For an in depth guide on how to contribute see [this article](https://opensource.com/article/19/7/create-pull-request-github)
 
 ## Automation Hub API Spec
+
 For development purposes it can help to have a version of the Automation Hub API spec available to you. You can find this by navigating to `https://<AH_HOST>/api/galaxy/v3/openapi.yaml`. VSCode extensions exist to render this file using Swagger.
