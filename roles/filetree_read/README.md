@@ -312,7 +312,7 @@ The role is designed to be used with tags, each tags correspond to an AWX or Aut
         - name: "Set the oauth token to be used since now"
           ansible.builtin.set_fact:
             controller_oauthtoken: "{{ authtoken_res.json.token }}"
-            oauthtoken_url: "{{ authtoken_res.json.url }}"
+            controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
           no_log: true
       when: controller_oauthtoken is not defined
 
@@ -347,14 +347,14 @@ The role is designed to be used with tags, each tags correspond to an AWX or Aut
   post_tasks:
     - name: "Delete the Authentication Token used"
       ansible.builtin.uri:
-        url: "https://{{ controller_hostname }}{{ oauthtoken_url }}"
+        url: "https://{{ controller_hostname }}{{ controller_oauthtoken_url }}"
         user: "{{ controller_username }}"
         password: "{{ controller_password }}"
         method: DELETE
         force_basic_auth: true
         validate_certs: "{{ controller_validate_certs }}"
         status_code: 204
-      when: oauthtoken_url is defined
+      when: controller_oauthtoken_url is defined
 ...
 
 ```
