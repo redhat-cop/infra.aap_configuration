@@ -1,47 +1,30 @@
-# controller_configuration.projects
+# ah_configuration.projects
 ## Description
-An Ansible Role to run all roles on Ansible Controller.
-
-## Requirements
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
-Currently:
-  awx.awx
-  or
-  ansible.controller
+An Ansible Role to run all roles on Ansible Automation Hub
 
 ## Variables
-Each role has its own variables, for information on those please see each role which this role will call. This role has one key variable `controller_configuration_dispatcher_roles` and its default value is shown below:
+Each role has its own variables, for information on those please see each role which this role will call. This role has one key variable `ah_configuration_dispatcher_roles` and its default value is shown below:
 
 ```yaml
-controller_configuration_dispatcher_roles:
-  - {role: settings, var: controller_settings, tags: settings}
-  - {role: organizations, var: controller_organizations, tags: organizations}
-  - {role: labels, var: controller_labels, tags: labels}
-  - {role: users, var: controller_user_accounts, tags: users}
-  - {role: teams, var: controller_teams, tags: teams}
-  - {role: credential_types, var: controller_credential_types, tags: credential_types}
-  - {role: credentials, var: controller_credentials, tags: credentials}
-  - {role: credential_input_sources, var: controller_credential_input_sources, tags: credential_input_sources}
-  - {role: notification_templates, var: controller_notifications, tags: notification_templates}
-  - {role: projects, var: controller_projects, tags: projects}
-  - {role: execution_environments, var: controller_execution_environments, tags: execution_environments}
-  - {role: applications, var: controller_applications, tags: applications}
-  - {role: inventories, var: controller_inventories, tags: inventories}
-  - {role: instance_groups, var: controller_instance_groups, tags: instance_groups}
-  - {role: project_update, var: controller_projects, tags: projects}
-  - {role: inventory_sources, var: controller_inventory_sources, tags: inventory_sources}
-  - {role: inventory_source_update, var: controller_inventory_sources, tags: inventory_sources}
-  - {role: hosts, var: controller_hosts, tags: hosts}
-  - {role: groups, var: controller_groups, tags: inventories}
-  - {role: job_templates, var: controller_templates, tags: job_templates}
-  - {role: workflow_job_templates, var: controller_workflows, tags: workflow_job_templates}
-  - {role: schedules, var: controller_schedules, tags: schedules}
-  - {role: roles, var: controller_roles, tags: roles}
+ah_configuration_dispatcher_roles:
+  - {role: ansible_config, var: [ ansible_config_list, automation_hub_list ], tags: config}
+  - {role: collection, var: [ah_collections], tags: collections}
+  - {role: ee_image, var: [ah_ee_images], tags: images}
+  - {role: ee_namespace, var: [ah_ee_namespaces], tags: namespaces}
+  - {role: ee_registry, var: [ah_ee_registries], tags: registries}
+  - {role: ee_registry_index, var: [ah_ee_registries], tags: indices}
+  - {role: ee_registry_sync, var: [ah_ee_registries], tags: regsync}
+  - {role: ee_repository, var: [ah_ee_repositories], tags: repos}
+  - {role: ee_repository_sync, var: [ah_ee_repository_sync], tags: reposync}
+  - {role: namespace, var: [ah_namespaces], tags: namespace}
+  - {role: publish, var: [ah_collections], tags: publish}
+  - {role: user, var: [ah_users], tags: users}
+  - {role: group, var: [ah_groups], tags: groups}
 ```
 
 Note that each item has three elements:
-- `role` which is the name of the role within redhat_cop.controller_configuration
-- `var` which is the variable which is used in that role. We use this to prevent the role being called if the variable is not set
+- `role` which is the name of the role within redhat_cop.ah_configuration
+- `var` which is the variable or variables in that role. We use this to prevent the role being called if the variable is not set
 - `tags` the tags which are applied to the role so it is possible to apply tags to a playbook using the dispatcher with these tags.
 
 It is possible to redefine this variable with a subset of roles or with different tags. In general we suggest keeping the same structure and perhaps just using a subset.
@@ -50,12 +33,12 @@ It is possible to redefine this variable with a subset of roles or with differen
 ### Authentication
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
-|`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
-|`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
-|`controller_username`|""|yes|Admin User on the Ansible Controller Server.||
-|`controller_password`|""|yes|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
-|`controller_oauthtoken`|""|yes|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`ah_host`|""|yes|URL to the Automation Hub or Galaxy Server. (alias: `ah_hostname`)|127.0.0.1|
+|`ah_username`|""|yes|Admin User on the Automation Hub or Galaxy Server.||
+|`ah_password`|""|yes|Automation Hub Admin User's password on the Automation Hub Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
+|`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`ah_validate_certs`|`False`|no|Whether or not to validate the Ansible Automation Hub Server's SSL certificate.||
+|`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 
 ### Secure Logging Variables
 The role defaults to False as normally most projects task does not include sensitive information.
@@ -63,7 +46,8 @@ Each role the dispatch role calls has a separate variable which can be turned on
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`controller_configuration_secure_logging`|""|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
+ah_configuration_ee_registry_secure_logging|`False`|no|Whether or not to include the sensitive Registry role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`ah_configuration_secure_logging`|""|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
 The following Variables set asynchronous retries for the role.
@@ -73,31 +57,32 @@ This also speeds up the overall role. Each individual role has its own variable 
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`controller_configuration_async_retries`|30|no|This variable sets the number of retries to attempt for the role globally.|
-|`controller_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
+|`ah_configuration_async_retries`|30|no|This variable sets the number of retries to attempt for the role globally.|
+|`ah_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
 
 ## Playbook Examples
 ### Standard Role Usage
 ```yaml
 ---
-- name: Playbook to configure ansible controller post installation
+- name: Playbook to configure Ansible Automation Hub post installation
   hosts: localhost
   connection: local
-  # Define following vars here, or in controller_configs/controller_auth.yml
-  # controller_hostname: ansible-controller-web-svc-test-project.example.com
-  # controller_username: admin
-  # controller_password: changeme
+  # Define following vars here, or in ah_configs/controller_auth.yml
+  # ah_hostname: ansible-ah-web-svc-test-project.example.com
+  # ah_username: admin
+  # ah_password: changeme
   pre_tasks:
-    - name: Include vars from controller_configs directory
+    - name: Include vars from ah_configs directory
       include_vars:
         dir: ./yaml
-        ignore_files: [controller_config.yml.template]
+        ignore_files: [ah_config.yml.template]
         extensions: ["yml"]
   roles:
-    - redhat_cop.controller_configuration.dispatch
+    - redhat_cop.ah_configuration.dispatch
 ```
 ## License
 [MIT](LICENSE)
 
 ## Author
+[Alan Wong](https://github.com/alawong)
 [Tom Page](https://github.com/Tompage1994)
