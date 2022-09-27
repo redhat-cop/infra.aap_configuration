@@ -20,6 +20,7 @@ These are the sub options for the vars `ah_repository_certified` and `ah_reposit
 |`proxy_url`|""|no|Proxy URL to use for the connection.||
 |`proxy_username`|""|no|Proxy URL to use for the connection.||
 |`proxy_password`|""|no|Proxy URL to use for the connection.||
+|`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 |`download_concurrency`|"10"|no| Number of concurrent collections to download.||
 |`rate_limit`|"8"|no|Limits total download rate in requests per second||
 |`signed_only`|"False"|no|Only download signed collections|True|
@@ -40,7 +41,7 @@ ah_configuration_repository_secure_logging defaults to the value of ah_configura
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`ah_configuration_repository_secure_logging`|`False`|no|Whether or not to include the sensitive Namepsace role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`ah_configuration_repository_secure_logging`|`False`|no|Whether or not to include the sensitive Namespace role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`ah_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ## Data Structure

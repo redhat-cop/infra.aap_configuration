@@ -1,8 +1,11 @@
 # redhat_cop.ah_configuration.ee_registry
+
 ## Description
+
 An Ansible Role to create EE Registries in Automation Hub.
 
 ## Variables
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`ah_host`|""|yes|URL to the Automation Hub or Galaxy Server. (alias: `ah_hostname`)|127.0.0.1|
@@ -13,8 +16,8 @@ An Ansible Role to create EE Registries in Automation Hub.
 |`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 |`ah_ee_registries`|`see below`|yes|Data structure describing your ee_registries, described below.||
 
-
 ### Secure Logging Variables
+
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add ee_registry task does not include sensitive information.
@@ -25,8 +28,8 @@ ah_configuration_ee_registry_secure_logging defaults to the value of ah_configur
 |`ah_configuration_ee_registry_secure_logging`|`False`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`ah_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
-
 ### Asynchronous Retry Variables
+
 The following Variables set asynchronous retries for the role.
 If neither of the retries or delay or retries are set, they will default to their respective defaults.
 This allows for all items to be created, then checked that the task finishes successfully.
@@ -39,9 +42,10 @@ This also speeds up the overall role.
 |`ah_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
 |`ah_configuration_ee_registry_async_delay`|`ah_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
-
 ## Data Structure
-### Variables
+
+### EE Registry Variables
+
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Registry name. Must be lower case containing only alphanumeric characters and underscores.|
@@ -60,6 +64,7 @@ This also speeds up the overall role.
 ### Standard Project Data Structure
 
 #### Yaml Example
+
 ```yaml
 ---
 ah_ee_registries:
@@ -68,7 +73,9 @@ ah_ee_registries:
 ```
 
 ## Playbook Examples
+
 ### Standard Role Usage
+
 ```yaml
 ---
 - name: Add ee_registry to Automation Hub
@@ -90,8 +97,11 @@ ah_ee_registries:
   roles:
     - ../../ee_registry
 ```
+
 ## License
+
 [GPLv3+](LICENSE)
 
 ## Author
+
 [Tom Page](https://github.com/Tompage1994/)
