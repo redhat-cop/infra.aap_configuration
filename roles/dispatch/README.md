@@ -10,16 +10,15 @@ ah_configuration_dispatcher_roles:
   - {role: ansible_config, var: [ ansible_config_list, automation_hub_list ], tags: config}
   - {role: collection, var: [ah_collections], tags: collections}
   - {role: ee_image, var: [ah_ee_images], tags: images}
-  - {role: ee_namespace, var: [ah_ee_namespaces], tags: namespaces}
   - {role: ee_registry, var: [ah_ee_registries], tags: registries}
   - {role: ee_registry_index, var: [ah_ee_registries], tags: indices}
   - {role: ee_registry_sync, var: [ah_ee_registries], tags: regsync}
   - {role: ee_repository, var: [ah_ee_repositories], tags: repos}
   - {role: ee_repository_sync, var: [ah_ee_repository_sync], tags: reposync}
-  - {role: namespace, var: [ah_namespaces], tags: namespace}
+  - {role: namespace, var: [ah_ee_namespaces], tags: namespaces}
+  - {role: group, var: [ah_groups], tags: groups}
   - {role: publish, var: [ah_collections], tags: publish}
   - {role: user, var: [ah_users], tags: users}
-  - {role: group, var: [ah_groups], tags: groups}
 ```
 
 Note that each item has three elements:
