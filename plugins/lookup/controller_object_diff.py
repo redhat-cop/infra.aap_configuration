@@ -170,7 +170,7 @@ class LookupModule(LookupBase):
                 item.update({"unified_job_template": item["summary_fields"]["unified_job_template"]["name"]})
                 item.update({"workflow_job_template": item["summary_fields"]["workflow_job_template"]["name"]})
                 item.pop("summary_fields")
-        elif api_list[0]["type"] != "organization" and api_list[0]["type"] != "user":
+        elif api_list[0]["type"] != "organization" and api_list[0]["type"] != "user" and api_list[0]["type"] != "credential_type":
             for item in api_list_reduced:
                 item.update({"organization": item["summary_fields"]["organization"]["name"]})
                 item.pop("summary_fields")

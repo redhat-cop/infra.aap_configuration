@@ -48,4 +48,6 @@ controller_configuration_object_diff_tasks:
   - {name: credential_types, var: controller_credential_types, tags: credential_types}
   - {name: organizations, var: controller_organizations, tags: organizations}
 
+controller_configuration_object_diff_secure_logging: "{{ controller_configuration_secure_logging | default('false') }}"
+
 ...

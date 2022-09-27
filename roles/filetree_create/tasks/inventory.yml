@@ -3,7 +3,7 @@
   ansible.builtin.set_fact:
     inventory_lookvar: "{{ query(controller_api_plugin, 'api/v2/inventories/',
                                  query_params={'not__kind': 'smart', 'order_by': 'organization,id'},
-                                 host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
+                                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                  return_all=true, max_objects=query_controller_api_max_objects)
                         }}"
 
@@ -40,7 +40,7 @@
     inventory_name: "{{ current_inventory_sources.name | regex_replace('/','_') }}"
     inventory_sources_output_path: "{{ output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
     current_inventory_sources_asset_value: "{{ query(controller_api_plugin, current_inventory_sources.related.inventory_sources,
-                                                          host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
+                                                          host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                                           return_all=true, max_objects=query_controller_api_max_objects
                                                     ) if current_inventory_sources.has_inventory_sources else []
                                             }}"
@@ -56,7 +56,7 @@
     inventory_name: "{{ current_inventory_hosts.name | regex_replace('/','_') }}"
     hosts_output_path: "{{ output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
     current_hosts_asset_value: "{{ query(controller_api_plugin, current_inventory_hosts.related.hosts,
-                                              host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
+                                              host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                               return_all=true, max_objects=query_controller_api_max_objects
                                         ) if not current_inventory_hosts.has_inventory_sources else []
                                 }}"
@@ -72,7 +72,7 @@
     inventory_name: "{{ current_inventory_groups.name | regex_replace('/','_') }}"
     groups_output_path: "{{ output_path }}/{{ inventory_organization }}/inventories/{{ inventory_name }}"
     current_groups_asset_value: "{{ query(controller_api_plugin, current_inventory_groups.related.groups,
-                                               host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
+                                               host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                                return_all=true, max_objects=query_controller_api_max_objects
                                          ) if not current_inventory_groups.has_inventory_sources else []
                                  }}"

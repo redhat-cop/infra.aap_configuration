@@ -2,7 +2,7 @@
 - name: "Get current Users from the API"
   ansible.builtin.set_fact:
     users_lookvar: "{{ query(controller_api_plugin, 'api/v2/users/',
-                             host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs,
+                             host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                              return_all=true, max_objects=query_controller_api_max_objects)
                     }}"
 
@@ -10,7 +10,7 @@
   ansible.builtin.set_fact:
     current_users: "{{ (current_users | default([])) + [user_lookvar_item | combine({'organizations': user_lookvar_item_organizations})] }}"
   vars:
-    user_lookvar_item_organizations: "{{ query(controller_api_plugin, user_lookvar_item.related.organizations, host=controller_hostname, oauth_token=oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) | selectattr('name', 'defined') | map(attribute='name') }}"
+    user_lookvar_item_organizations: "{{ query(controller_api_plugin, user_lookvar_item.related.organizations, host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs, return_all=true, max_objects=query_controller_api_max_objects) | selectattr('name', 'defined') | map(attribute='name') }}"
   loop: "{{ users_lookvar }}"
   loop_control:
     loop_var: user_lookvar_item
