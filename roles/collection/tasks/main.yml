@@ -1,4 +1,5 @@
 # Update or destroy Automation Hub Collection
+---
 - name: Update or destroy Automation Hub Collection
   collection:
     namespace:             "{{ __collection.namespace }}"
@@ -27,7 +28,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Update/Destroy collection | Wait for finish the update/destruction of collection"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __collections_job_async_result_item.ansible_job_id }}"
   register: __collections_job_async_result
   until: __collections_job_async_result.finished

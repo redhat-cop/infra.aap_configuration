@@ -16,6 +16,7 @@
     ah_host:          "{{ ah_host | default(ah_hostname) }}"
     ah_username:      "{{ ah_username | default(omit) }}"
     ah_password:      "{{ ah_password | default(omit) }}"
+    ah_token:         "{{ ah_token | default(omit) }}"
     ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
     validate_certs:   "{{ ah_validate_certs | default(omit) }}"
   loop: "{{ ah_users }}"
@@ -30,7 +31,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Create User | Wait for finish the user creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __users_job_async_result_item.ansible_job_id }}"
   register: __users_job_async_result
   until: __users_job_async_result.finished

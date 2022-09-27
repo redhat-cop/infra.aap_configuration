@@ -11,6 +11,7 @@
     ah_username:            "{{ ah_username | default(omit) }}"
     ah_password:            "{{ ah_password | default(omit) }}"
     ah_path_prefix:         "{{ ah_path_prefix | default(omit) }}"
+    ah_token:               "{{ ah_token | default(omit) }}"
     validate_certs:         "{{ ah_validate_certs | default(omit) }}"
   loop: "{{ ah_ee_registries }}"
   loop_control:
@@ -24,7 +25,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: "Index EE Registry | Wait for finish the ee_registry_index creation"
-  async_status:
+  ansible.builtin.async_status:
     jid: "{{ __ee_registry_indexes_job_async_result_item.ansible_job_id }}"
   register: __ee_registry_indexes_job_async_result
   until: __ee_registry_indexes_job_async_result.finished
