@@ -14,6 +14,9 @@ An Ansible Role to create EE Registries in Automation Hub.
 |`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 |`ah_validate_certs`|`False`|no|Whether or not to validate the Ansible Automation Hub Server's SSL certificate.||
 |`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
+|`proxy_url`|""|no|str|The URL for the proxy|
+|`proxy_username`|""|no|str|The username for the proxy authentication|
+|`proxy_password`|""|no|str|The password for the proxy authentication|
 |`ah_ee_registries`|`see below`|yes|Data structure describing your ee_registries, described below.||
 
 ### Secure Logging Variables
@@ -54,9 +57,6 @@ This also speeds up the overall role.
 |`username`|""|no|str|The username for authentication to the registry|
 |`password`|""|no|str|The password for authentication to the registry|
 |`tls_validation`|""|no|str|Whether to use TLS when connecting to the registry|
-|`proxy_url`|""|no|str|The URL for the proxy|
-|`proxy_username`|""|no|str|The username for the proxy authentication|
-|`proxy_password`|""|no|str|The password for the proxy authentication|
 |`download_concurrency`|""|no|str|Number of concurrent collections to download|
 |`rate_limit`|""|no|str|Limits total download rate in requests per second.|
 |`state`|`present`|no|str|Desired state of the ee_registry.|
