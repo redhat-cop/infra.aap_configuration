@@ -1,8 +1,11 @@
 # ah_configuration.projects
+
 ## Description
+
 An Ansible Role to run all roles on Ansible Automation Hub
 
 ## Variables
+
 Each role has its own variables, for information on those please see each role which this role will call. This role has one key variable `ah_configuration_dispatcher_roles` and its default value is shown below:
 
 ```yaml
@@ -30,6 +33,7 @@ It is possible to redefine this variable with a subset of roles or with differen
 
 
 ### Authentication
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`ah_host`|""|yes|URL to the Automation Hub or Galaxy Server. (alias: `ah_hostname`)|127.0.0.1|
@@ -40,6 +44,7 @@ It is possible to redefine this variable with a subset of roles or with differen
 |`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 
 ### Secure Logging Variables
+
 The role defaults to False as normally most projects task does not include sensitive information.
 Each role the dispatch role calls has a separate variable which can be turned on to enforce secure logging for that role but defaults to the value of controller_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it. If neither value is set then each role has a default value of true or false depending on the Red Hat COP suggestions.
 
@@ -49,6 +54,7 @@ ah_configuration_ee_registry_secure_logging|`False`|no|Whether or not to include
 |`ah_configuration_secure_logging`|""|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
+
 The following Variables set asynchronous retries for the role.
 If neither of the retries or delay or retries are set, they will default to their respective defaults.
 This allows for all items to be created, then checked that the task finishes successfully.
@@ -61,6 +67,7 @@ This also speeds up the overall role. Each individual role has its own variable 
 
 ## Playbook Examples
 ### Standard Role Usage
+
 ```yaml
 ---
 - name: Playbook to configure Ansible Automation Hub post installation
@@ -79,9 +86,12 @@ This also speeds up the overall role. Each individual role has its own variable 
   roles:
     - redhat_cop.ah_configuration.dispatch
 ```
+
 ## License
+
 [MIT](LICENSE)
 
 ## Author
+
 [Alan Wong](https://github.com/alawong)
 [Tom Page](https://github.com/Tompage1994)
