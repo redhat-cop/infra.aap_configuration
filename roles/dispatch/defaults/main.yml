@@ -12,5 +12,4 @@ ah_configuration_dispatcher_roles:
   - {role: group, var: [ah_groups], tags: groups}
   - {role: publish, var: [ah_collections], tags: publish}
   - {role: user, var: [ah_users], tags: users}
-
 ...
