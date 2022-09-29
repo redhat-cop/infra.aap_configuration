@@ -15,7 +15,7 @@
 - name: "Add current roles to the output yaml file"
   ansible.builtin.template:
     src: "templates/current_team_roles.j2"
-    dest: "{{ output_path }}/current_roles_{{ teamname }}.yaml"
+    dest: "{{ output_path }}/current_roles_{{ teamname | regex_replace('/', '_') }}.yaml"
     mode: '0644'
   vars:
     current_team_roles_asset_value: "{{ team_roles_lookvar }}"

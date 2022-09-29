@@ -8,12 +8,13 @@
 - name: "Add current roles to the output yaml file"
   ansible.builtin.template:
     src: "templates/current_roles.j2"
-    dest: "{{ output_path }}/current_roles_{{ current_user_roles.key }}.yaml"
+    dest: "{{ __dest }}"
     mode: '0644'
+  vars:
+    main_object_type: "{{ object_type }}"
+    __dest: "{{ output_path }}/current_roles_{{ current_user_roles.key | regex_replace('/', '_') }}.yaml"
   loop: "{{ current_asset_value | dict2items }}"
   loop_control:
     loop_var: current_user_roles
-    label: "{{ current_user_roles.key }} at file {{ output_path }}/current_roles_{{ current_user_roles.key }}.yaml"
-  vars:
-    main_object_type: "{{ object_type }}"
+    label: "{{ current_user_roles.key }} at file {{ __dest }}"
 ...

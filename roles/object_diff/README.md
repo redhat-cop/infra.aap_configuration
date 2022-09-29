@@ -65,13 +65,9 @@ GPLv3+
 
 ## Author Information
 
-- silvinux
-  - email: <silvio@redhat.com>
-  - github: <https://github.com/silvinux>
+- [Silvio Perez](https://github.com/silvinux)
 
-- Ivan Aragonés:
-  - email: <iaragone@redhat.com>
-  - github: <https://github.com/ivarmu>
+- [Ivan Aragonés](https://github.com/ivarmu)
 
 ## Important things to take into account
 

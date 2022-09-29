@@ -370,6 +370,4 @@ GPLv3+
 
 ## Author Information
 
-- silvinux
-  - email: <silvio@redhat.com>
-  - github: <https://github.com/silvinux>
+- [Silvio Perez](https://github.com/silvinux)

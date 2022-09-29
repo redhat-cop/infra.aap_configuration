@@ -18,25 +18,28 @@
 
 - name: "Create the output directory for users: {{ output_path }}/<ORGANIZATION_NAME>"
   ansible.builtin.file:
-    path: "{{ output_path }}/{{ current_user_dir }}"
+    path: "{{ __path }}"
     state: directory
     mode: '0755'
+  vars:
+    __path: "{{ output_path }}/{{ current_user_dir | regex_replace('/', '_') }}"
   loop: "{{ current_users | selectattr('organizations', 'defined') | map(attribute='organizations') | flatten | unique }}"
   loop_control:
     loop_var: current_user_dir
-    label: "{{ output_path }}/{{ current_user_dir }}"
+    label: "{{ __path }}"
 
 - name: "Add current users to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_users_<USERNAME>.yaml"
   ansible.builtin.template:
     src: "templates/current_users.j2"
-    dest: "{{ output_path }}/{{ current_user_dir.1 }}/current_users_{{ current_user_dir.0.username }}.yaml"
+    dest: "{{ __dest }}"
     mode: '0644'
   vars:
     current_users_asset_value: "{{ current_user_dir.0 }}"
+    __dest: "{{ output_path }}/{{ current_user_dir.1 | regex_replace('/', '_') }}/current_users_{{ current_user_dir.0.username | regex_replace('/', '_') }}.yaml"
   loop: "{{ current_users | subelements('organizations') }}"
   loop_control:
     loop_var: current_user_dir
-    label: "{{ output_path }}/{{ current_user_dir.1 }}/current_users_{{ current_user_dir.0.username }}.yaml"
+    label: "{{ __dest }}"
 
 - name: "Set the user's roles"
   ansible.builtin.include_tasks: "user_roles.yml"
