@@ -1,6 +1,6 @@
 ---
 - name: Include vars
-  ansible.builtin.include_vars: ../vars/ah_users
+  ansible.builtin.include_vars: ../vars/ah_users.yml
   tags:
     - users
 
