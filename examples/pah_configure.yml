@@ -69,7 +69,7 @@
         - repos
 
     - name: Include task to manage execution environment repository sync
-      include_tasks: tasks/manage_ee_repository_sync
+      include_tasks: tasks/manage_ee_repository_sync.yml
       tags:
         - reposync
 ...
