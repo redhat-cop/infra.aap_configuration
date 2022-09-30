@@ -1,6 +1,6 @@
 ---
 # This workflow action will run pre-commit, which will execute ansible and yaml linting
-# See .github/workflow-config/.pre-commit-config.yml for what hooks are executed
+# See .pre-commit-config.yml for what hooks are executed
 name: Yaml and Ansible Lint
 
 on: [push, pull_request]  # yamllint disable-line rule:truthy
