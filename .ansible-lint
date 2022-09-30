@@ -14,7 +14,14 @@ use_default_rules: true
 # with verbosity set to 1, its dumping 'unknown file type messages'
 # verbosity: 1
 skip_list: []
-# With the move of the .yamllint.yml to TLD ansible-lint now picks up our config so no need to exclude it.
-# YAML: Ansible lint doing yaml checks that we were already doing but without config.
-# - yaml
+kinds:
+  - playbooks: "**/examples/templates/*.{yml,yaml}"
+  - playbooks: "**/examples/*.{yml,yaml}"
+  - playbooks: "**/examples/automatetheautomation/*.{yml,yaml}"
+  - tasks: "**/examples/tasks/*.yml"
+  - vars: "**/examples/automatetheautomation/orgs_vars/**/*.yml"
+  - vars: "**/examples/configs/*.yml"
+  - vars: "**/examples/configs_export_model/*.yml"
+  - vars: "**/examples/vars/*.yml"
+  - vars: "**/roles/**/tests/configs/*.yml"
 ...
