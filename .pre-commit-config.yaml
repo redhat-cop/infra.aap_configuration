@@ -26,6 +26,9 @@ repos:
         entry: "ansible-lint"
         args:
           - "--profile=production"
+        additional_dependencies:
+          - "ansible-core>=2.13"
+          - "yamllint>=1.26,<2.0"
   - repo: https://github.com/DavidAnson/markdownlint-cli2
     rev: v0.5.1
     hooks:
