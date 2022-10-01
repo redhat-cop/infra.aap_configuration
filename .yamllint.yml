@@ -13,13 +13,12 @@ rules:
   document-end: {present: true}
   indentation:
     level: error
-    indent-sequences: consistent
+    # Require indentation https://redhat-cop.github.io/automation-good-practices/#_yaml_and_jinja2_syntax
+    indent-sequences: true
   truthy:
     level: error
+    # Allow only YAML 1.2 booleans https://redhat-cop.github.io/automation-good-practices/#_yaml_and_jinja2_syntax
     allowed-values:
-    - 'True'
-    - 'False'
-    - 'true'
-    - 'false'
-    - 'on'
+      - 'true'
+      - 'false'
 ...
