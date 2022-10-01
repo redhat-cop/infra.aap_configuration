@@ -1,5 +1,5 @@
 ---
 controller_organizations:
-- name: Default
-  description: Default
+  - name: Default
+    description: Default
 ...

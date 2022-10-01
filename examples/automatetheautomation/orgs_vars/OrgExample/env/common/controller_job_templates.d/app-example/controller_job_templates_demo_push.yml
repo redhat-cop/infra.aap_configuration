@@ -27,7 +27,7 @@ controller_templates:
     execution_environment: "Default execution environment"
     instance_groups:
       - Container_Groups_Instance
-    survey_enabled: True
+    survey_enabled: true
     survey_spec:
       name: 'TEST'
       description: 'Test'
