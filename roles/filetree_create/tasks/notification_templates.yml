@@ -8,23 +8,27 @@
 
 - name: "Create the output directory for notification templates: {{ output_path }}/<ORGANIZATION_NAME>/notification_templates"
   ansible.builtin.file:
-    path: "{{ output_path }}/{{ needed_path }}/notification_templates"
+    path: "{{ __path }}"
     state: directory
     mode: '0755'
+  vars:
+    __path: "{{ output_path }}/{{ needed_path | regex_replace('/', '_') }}/notification_templates"
   loop: "{{ (notification_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
             + (['ORGANIZATIONLESS'] if ((notification_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
          }}"
   loop_control:
     loop_var: needed_path
-    label: "{{ output_path }}/{{ needed_path }}/notification_templates"
+    label: "{{ __path }}"
 
 - name: "Add current notification templates to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/current_notification_templates.yaml"
   ansible.builtin.template:
     src: "templates/current_notification_templates.j2"
-    dest: "{{ output_path }}/{{ current_notification_templates_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}/notification_templates/{{ current_notification_templates_asset_value.name | regex_replace('/', '_') }}.yaml"
+    dest: "{{ __dest }}"
     mode: '0644'
+  vars:
+    __dest: "{{ output_path }}/{{ (current_notification_templates_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true)) | regex_replace('/', '_') }}/notification_templates/{{ current_notification_templates_asset_value.name | regex_replace('/', '_') }}.yaml"
   loop: "{{ notification_templates_lookvar }}"
   loop_control:
     loop_var: current_notification_templates_asset_value
-    label: "{{ output_path }}/{{ current_notification_templates_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}/notification_templates/{{ current_notification_templates_asset_value.name | regex_replace('/', '_') }}.yaml"
+    label: "{{ __dest }}"
 ...

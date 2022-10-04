@@ -9,6 +9,6 @@ controller_notification_templates:
 {{ current_notification_templates_asset_value.notification_configuration | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
 {% if current_notification_templates_asset_value.messages is defined and current_notification_templates_asset_value.messages %}
     messages:
-{{ current_notification_templates_asset_value.messages | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
+{{ current_notification_templates_asset_value.messages | to_nice_yaml(indent=2) | indent(width=6, first=True) | replace("'{{", "!unsafe \'{{") }}
 {% endif %}
 ...

@@ -9,21 +9,25 @@
 
 - name: "Create the output directory for organizations: {{ output_path }}/{{ current_organization_dir.name }}"
   ansible.builtin.file:
-    path: "{{ output_path }}/{{ current_organization_dir.name }}"
+    path: "{{ __path }}"
     state: directory
     mode: '0755'
+  vars:
+    __path: "{{ output_path }}/{{ current_organization_dir.name | regex_replace('/', '_') }}"
   loop: "{{ orgs_lookvar }}"
   loop_control:
     loop_var: current_organization_dir
-    label: "{{ output_path }}/{{ current_organization_dir.name }}"
+    label: "{{ __path }}"
 
 - name: "Add current organizations to the output yaml file"
   ansible.builtin.template:
     src: "templates/current_organizations.j2"
-    dest: "{{ output_path }}/{{ current_organization.name }}/current_organization.yaml"
+    dest: "{{ __dest }}"
     mode: '0644'
+  vars:
+    __dest: "{{ output_path }}/{{ current_organization.name | regex_replace('/', '_') }}/current_organization.yaml"
   loop: "{{ orgs_lookvar }}"
   loop_control:
     loop_var: current_organization
-    label: "{{ output_path }}/{{ current_organization.name }}/current_organization.yaml"
+    label: "{{ __dest }}"
 ...

@@ -40,6 +40,4 @@ GPLv3+
 
 ## Author Information
 
-- Ivan Aragonés:
-  - email: <iaragone@redhat.com>
-  - github: <https://github.com/ivarmu>
+- [Ivan Aragonés](https://github.com/ivarmu)
