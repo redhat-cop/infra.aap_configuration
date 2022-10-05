@@ -280,17 +280,22 @@ The role is designed to be used with tags, each tags correspond to an AWX or Aut
   vars:
     controller_configuration_projects_async_retries: 60
     controller_configuration_projects_async_delay: 2
+    controller_username: "{{ vault_controller_username | default(lookup('env', 'CONTROLLER_USERNAME')) }}"
+    controller_password: "{{ vault_controller_password | default(lookup('env', 'CONTROLLER_PASSWORD')) }}"
+    controller_hostname: "{{ vault_controller_hostname | default(lookup('env', 'CONTROLLER_HOST')) }}"
+    controller_validate_certs: "{{ vault_controller_validate_certs | default(lookup('env', 'CONTROLLER_VERIFY_SSL')) }}"
+
   pre_tasks:
     - name: "Setup authentication (block)"
       block:
         - name: "Get the Authentication Token for the future requests"
           ansible.builtin.uri:
-            url: "https://{{ vault_controller_hostname }}/api/v2/tokens/"
-            user: "{{ vault_controller_username }}"
-            password: "{{ vault_controller_password }}"
+            url: "https://{{ controller_hostname }}/api/v2/tokens/"
+            user: "{{ controller_username }}"
+            password: "{{ controller_password }}"
             method: POST
             force_basic_auth: true
-            validate_certs: "{{ vault_controller_validate_certs }}"
+            validate_certs: "{{ controller_validate_certs }}"
             status_code: 201
           register: authtoken_res
 
@@ -332,12 +337,12 @@ The role is designed to be used with tags, each tags correspond to an AWX or Aut
   post_tasks:
     - name: "Delete the Authentication Token used"
       ansible.builtin.uri:
-        url: "https://{{ vault_controller_hostname }}{{ controller_oauthtoken_url }}"
-        user: "{{ vault_controller_username }}"
-        password: "{{ vault_controller_password }}"
+        url: "https://{{ controller_hostname }}{{ controller_oauthtoken_url }}"
+        user: "{{ controller_username }}"
+        password: "{{ controller_password }}"
         method: DELETE
         force_basic_auth: true
-        validate_certs: "{{ vault_controller_validate_certs }}"
+        validate_certs: "{{ controller_validate_certs }}"
         status_code: 204
       when: controller_oauthtoken_url is defined
 ...
