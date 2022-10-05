@@ -1,5 +1,0 @@
----
-minor_changes:
-  - created a role from ah_collection module
-  - add `ah_token` so `repository_sync` that was missing
-...

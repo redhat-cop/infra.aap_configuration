@@ -5,6 +5,19 @@ redhat_cop.ah_configuration Release Notes
 .. contents:: Topics
 
 
+v0.9.2-beta
+===========
+
+Minor Changes
+-------------
+
+- Add markdown linter
+- Fix all linter reported errors
+- Move linter configurations to root directory
+- Update linter versions
+- add `ah_token` so `repository_sync` that was missing
+- created a role from ah_collection module
+
 v0.9.1
 ======
 
