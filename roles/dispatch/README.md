@@ -18,7 +18,7 @@ The key variable in this role is `ah_configuration_dispatcher_roles`. The defaul
 
 ```yaml
 ah_configuration_dispatcher_roles:
-  - {role: ansible_config, var: [ ansible_config_list, automation_hub_list ], tags: config}
+  - {role: ansible_config, var: [ansible_config_list, automation_hub_list], tags: config}
   - {role: collection, var: [ah_collections], tags: collections}
   - {role: ee_image, var: [ah_ee_images], tags: images}
   - {role: ee_registry, var: [ah_ee_registries], tags: registries}
