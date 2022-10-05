@@ -8,21 +8,6 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 
 ## Role Variables
 
-### Authentication
-
-|Variable Name|Default Value|Required|Description|Example|
-|:---:|:---:|:---:|:---:|:---:|
-|`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
-|`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
-|`controller_username`|""|yes|Admin User on the Ansible Controller Server.||
-|`controller_password`|""|yes|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
-|`controller_oauthtoken`|""|yes|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`vault_controller_hostname`|""|optional|URL to the Ansible Controller Server.|127.0.0.1|
-|`vault_controller_validate_certs`|`True`|optional|Whether or not to validate the Ansible Controller Server's SSL certificate.||
-|`vault_controller_username`|""|optional|Admin User on the Ansible Controller Server.||
-|`vault_controller_password`|""|optional|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
-|`vault_controller_oauthtoken`|""|optional|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-
 ### Organization and Environment Variables
 
 The following Variables set the organization where should be applied the configuration, the absolute or relative of the directory structure where the variables will be stored and the life-cycle environment to use.
@@ -300,12 +285,12 @@ The role is designed to be used with tags, each tags correspond to an AWX or Aut
       block:
         - name: "Get the Authentication Token for the future requests"
           ansible.builtin.uri:
-            url: "https://{{ controller_hostname }}/api/v2/tokens/"
-            user: "{{ controller_username }}"
-            password: "{{ controller_password }}"
+            url: "https://{{ vault_controller_hostname }}/api/v2/tokens/"
+            user: "{{ vault_controller_username }}"
+            password: "{{ vault_controller_password }}"
             method: POST
             force_basic_auth: true
-            validate_certs: "{{ controller_validate_certs }}"
+            validate_certs: "{{ vault_controller_validate_certs }}"
             status_code: 201
           register: authtoken_res
 
@@ -347,12 +332,12 @@ The role is designed to be used with tags, each tags correspond to an AWX or Aut
   post_tasks:
     - name: "Delete the Authentication Token used"
       ansible.builtin.uri:
-        url: "https://{{ controller_hostname }}{{ controller_oauthtoken_url }}"
-        user: "{{ controller_username }}"
-        password: "{{ controller_password }}"
+        url: "https://{{ vault_controller_hostname }}{{ controller_oauthtoken_url }}"
+        user: "{{ vault_controller_username }}"
+        password: "{{ vault_controller_password }}"
         method: DELETE
         force_basic_auth: true
-        validate_certs: "{{ controller_validate_certs }}"
+        validate_certs: "{{ vault_controller_validate_certs }}"
         status_code: 204
       when: controller_oauthtoken_url is defined
 ...

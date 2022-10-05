@@ -3,7 +3,7 @@
   ansible.builtin.set_fact:
     __controller_api_current_user_check_is_admin: "{{ lookup(controller_api_plugin, 'users',
                                                               query_params={'username': controller_username},
-                                                              host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=false)
+                                                              host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)
                                                    }}"
 
 - name: "Role differences (block)"
@@ -13,7 +13,7 @@
       ansible.builtin.set_fact:
         __controller_api_roles: "{{ query(controller_api_plugin, 'roles',
                                           host=controller_hostname, username=controller_username,
-                                          password=controller_password, verify_ssl=false)
+                                          password=controller_password, verify_ssl=controller_validate_certs)
                                  }}"
 
     - name: "OBJECT DIFF: Find the difference of Roles between what is on the Controller versus CasC on SCM"
