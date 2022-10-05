@@ -8,11 +8,11 @@ An Ansible Role to run all roles for which variables are found on Ansible Automa
 
 This collection is most useful for experienced AAP2 users who want to quickly configure a Automation Hub instance.
 
-If you are new to AAP2 and/or to the redhat_cop.ah_configuration collection, it is highly recommended that you ensure that you're familiar with both AAP2 and the collection, before using this role. 
+If you are new to AAP2 and/or to the redhat_cop.ah_configuration collection, it is highly recommended that you ensure that you're familiar with both AAP2 and the collection, before using this role.
 
 ## Variables
 
-Each role that is called also has its own variables. For information on those, please see the README documents for those roles. 
+Each role that is called also has its own variables. For information on those, please see the README documents for those roles.
 
 The key variable in this role is `ah_configuration_dispatcher_roles`. The default value is shown below:
 
@@ -33,6 +33,7 @@ ah_configuration_dispatcher_roles:
 ```
 
 Each item within the variable has three elements:
+
 - `role` which is the name of the role within redhat_cop.ah_configuration
 - `var` which is the variable or variables in that role. We use this to prevent the role being called if the variable is not set.
 - `tags` the tags which are applied to the role so it is possible to apply tags to a playbook using the dispatcher with these tags.
@@ -73,6 +74,7 @@ This also speeds up the overall role. Each individual role has its own variable 
 |`ah_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
 
 ## Playbook Examples
+
 ### Standard Role Usage
 
 ```yaml
