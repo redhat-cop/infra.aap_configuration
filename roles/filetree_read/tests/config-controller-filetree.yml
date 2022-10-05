@@ -10,12 +10,12 @@
       block:
         - name: "Get the Authentication Token for the future requests"
           ansible.builtin.uri:
-            url: "https://{{ controller_hostname }}/api/v2/tokens/"
-            user: "{{ controller_username }}"
-            password: "{{ controller_password }}"
+            url: "https://{{ vault_controller_hostname }}/api/v2/tokens/"
+            user: "{{ vault_controller_username }}"
+            password: "{{ vault_controller_password }}"
             method: POST
             force_basic_auth: true
-            validate_certs: "{{ controller_validate_certs }}"
+            validate_certs: "{{ vault_controller_validate_certs }}"
             status_code: 201
           register: authtoken_res
 
@@ -57,12 +57,12 @@
   post_tasks:
     - name: "Delete the Authentication Token used"
       ansible.builtin.uri:
-        url: "https://{{ controller_hostname }}{{ controller_oauthtoken_url }}"
-        user: "{{ controller_username }}"
-        password: "{{ controller_password }}"
+        url: "https://{{ vault_controller_hostname }}{{ controller_oauthtoken_url }}"
+        user: "{{ vault_controller_username }}"
+        password: "{{ vault_controller_password }}"
         method: DELETE
         force_basic_auth: true
-        validate_certs: "{{ controller_validate_certs }}"
+        validate_certs: "{{ vault_controller_validate_certs }}"
         status_code: 204
       when: controller_oauthtoken_url is defined
 ...
