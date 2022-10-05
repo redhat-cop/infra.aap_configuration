@@ -6,7 +6,9 @@ controller_projects:
 {% if current_projects_asset_value.scm_type %}
     scm_type: "{{ current_projects_asset_value.scm_type }}"
     scm_url: "{{ current_projects_asset_value.scm_url }}"
-    scm_credential: "{{ current_projects_asset_value.summary_fields.credential.name | default('ToDo: The project \'' + current_projects_asset_value.name + '\' is missing the SCM credential') }}"
+{% if current_projects_asset_value.summary_fields.credential is defined %}
+    scm_credential: "{{ current_projects_asset_value.summary_fields.credential.name }}"
+{% endif %}
     scm_branch: "{{ current_projects_asset_value.scm_branch }}"
     scm_clean: "{{ current_projects_asset_value.scm_clean }}"
     scm_delete_on_update: "{{ current_projects_asset_value.scm_delete_on_update }}"
