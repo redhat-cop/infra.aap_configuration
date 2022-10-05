@@ -170,3 +170,16 @@ releases:
     fragments:
     - api_lookup.yml
     release_date: '2022-07-28'
+  0.9.2-beta:
+    changes:
+      minor_changes:
+      - Add markdown linter
+      - Fix all linter reported errors
+      - Move linter configurations to root directory
+      - Update linter versions
+      - add `ah_token` so `repository_sync` that was missing
+      - created a role from ah_collection module
+    fragments:
+    - collection.yml
+    - update_linting.yml
+    release_date: '2022-10-01'
