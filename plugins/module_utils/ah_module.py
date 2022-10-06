@@ -554,7 +554,7 @@ class AHModule(AnsibleModule):
         i = 0
         while i < 5:
             if not response:
-                time.sleep(1)
+                time.sleep(15)
                 response = self.post_endpoint("{0}/{1}".format(endpoint, approvalEndpoint), None, **{"return_none_on_404": True})
                 i += 1
             else:
