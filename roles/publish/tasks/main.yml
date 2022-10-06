@@ -19,7 +19,7 @@
     src:  "{{ __ah_collection_item.collection_local_path }}/"
     dest: "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}"
     remote_src: true
-    mode: 0644
+    mode: 0755
   loop: "{{ ah_collections }}"
   loop_control:
     loop_var: "__ah_collection_item"
@@ -122,7 +122,7 @@
   loop_control:
     loop_var: "__ah_collection_file"
   no_log: "{{ ah_configuration_publish_secure_logging }}"
-  when: ah_auto_approve
+  when: not ah_auto_approve
   register: approval
   retries: 3
   delay: 2
