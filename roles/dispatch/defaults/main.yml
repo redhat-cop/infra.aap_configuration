@@ -10,13 +10,13 @@ controller_configuration_dispatcher_roles:
   - {role: credential_input_sources, var: controller_credential_input_sources, tags: credential_input_sources}
   - {role: notification_templates, var: controller_notifications, tags: notification_templates}
   - {role: projects, var: controller_projects, tags: projects}
-  - {role: execution_environments, var: controller_execution_environments, tags: execution_environments}
-  - {role: applications, var: controller_applications, tags: applications}
   - {role: inventories, var: controller_inventories, tags: inventories}
-  - {role: instance_groups, var: controller_instance_groups, tags: instance_groups}
-  - {role: project_update, var: controller_projects, tags: projects}
   - {role: inventory_sources, var: controller_inventory_sources, tags: inventory_sources}
   - {role: inventory_source_update, var: controller_inventory_sources, tags: inventory_sources}
+  - {role: execution_environments, var: controller_execution_environments, tags: execution_environments}
+  - {role: applications, var: controller_applications, tags: applications}
+  - {role: instance_groups, var: controller_instance_groups, tags: instance_groups}
+  - {role: project_update, var: controller_projects, tags: projects}
   - {role: hosts, var: controller_hosts, tags: hosts}
   - {role: groups, var: controller_groups, tags: inventories}
   - {role: job_templates, var: controller_templates, tags: job_templates}
