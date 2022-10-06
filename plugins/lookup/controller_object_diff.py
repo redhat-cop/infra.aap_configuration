@@ -117,7 +117,7 @@ class LookupModule(LookupBase):
             return [api_list]
 
         # Set Keys to keep for each list. Depending on type
-        if api_list[0]["type"] == "organization":
+        if api_list[0]["type"] == "organization" or api_list[0]["type"] == "credential_type":
             keys_to_keep = ["name"]
             api_keys_to_keep = ["name"]
         elif api_list[0]["type"] == "user":
@@ -159,6 +159,11 @@ class LookupModule(LookupBase):
         if api_list[0]["type"] == "group" or api_list[0]["type"] == "host":
             for item in api_list_reduced:
                 item.update({"inventory": item["summary_fields"]["inventory"]["name"]})
+                item.pop("summary_fields")
+        elif api_list[0]["type"] == "inventory_source":
+            for item in api_list_reduced:
+                item.update({"inventory": item["summary_fields"]["inventory"]["name"]})
+                item.update({"organization": item["summary_fields"]["organization"]["name"]})
                 item.pop("summary_fields")
         elif api_list[0]["type"] == "credential":
             for item in api_list_reduced:
