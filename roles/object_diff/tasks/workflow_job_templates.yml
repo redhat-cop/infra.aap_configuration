@@ -3,14 +3,14 @@
   ansible.builtin.set_fact:
     __controller_organization_id: "{{ lookup(controller_api_plugin, 'organizations',
                                               query_params={'name': orgs},
-                                              host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=false)
+                                              host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)
                                    }}"
 
 - name: "OBJECT DIFF: Get the API list of all Workflow Job Templates"
   ansible.builtin.set_fact:
     __controller_api_workflow_job_templates: "{{ query(controller_api_plugin, 'workflow_job_templates',
                                                         query_params={'organization': __controller_organization_id.id},
-                                                        host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=false)
+                                                        host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)
                                               }}"
 
 - name: "OBJECT DIFF: Find the difference of Workflow Job Templates between what is on the Controller versus CasC on SCM"

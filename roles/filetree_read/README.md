@@ -8,21 +8,6 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 
 ## Role Variables
 
-### Authentication
-
-|Variable Name|Default Value|Required|Description|Example|
-|:---:|:---:|:---:|:---:|:---:|
-|`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
-|`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
-|`controller_username`|""|yes|Admin User on the Ansible Controller Server.||
-|`controller_password`|""|yes|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
-|`controller_oauthtoken`|""|yes|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`vault_controller_hostname`|""|optional|URL to the Ansible Controller Server.|127.0.0.1|
-|`vault_controller_validate_certs`|`True`|optional|Whether or not to validate the Ansible Controller Server's SSL certificate.||
-|`vault_controller_username`|""|optional|Admin User on the Ansible Controller Server.||
-|`vault_controller_password`|""|optional|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook.||
-|`vault_controller_oauthtoken`|""|optional|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-
 ### Organization and Environment Variables
 
 The following Variables set the organization where should be applied the configuration, the absolute or relative of the directory structure where the variables will be stored and the life-cycle environment to use.
@@ -295,6 +280,11 @@ The role is designed to be used with tags, each tags correspond to an AWX or Aut
   vars:
     controller_configuration_projects_async_retries: 60
     controller_configuration_projects_async_delay: 2
+    controller_username: "{{ vault_controller_username | default(lookup('env', 'CONTROLLER_USERNAME')) }}"
+    controller_password: "{{ vault_controller_password | default(lookup('env', 'CONTROLLER_PASSWORD')) }}"
+    controller_hostname: "{{ vault_controller_hostname | default(lookup('env', 'CONTROLLER_HOST')) }}"
+    controller_validate_certs: "{{ vault_controller_validate_certs | default(lookup('env', 'CONTROLLER_VERIFY_SSL')) }}"
+
   pre_tasks:
     - name: "Setup authentication (block)"
       block:
