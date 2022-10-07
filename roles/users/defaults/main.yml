@@ -13,15 +13,15 @@
 # list of dicts describing Controller users
 controller_user_accounts: []
 # possible fields:
-# - username: "user_name"  # mandatory
-#  password: "redhat"  # optional (write only, will mark task as changed)
-#  email: "somebody@dev.null"  # optional
-#  first_name: "Jim"  # optional
-#  last_name: "Smith"  # optional
-#  is_superuser: false  # optional, boolean
-#  is_auditor: false  # optional, boolean
-#  organization: Default # optional
-#  state: present  # optional, choices: present, absent
+# - username: "user_name"  
+#  password: "redhat"  
+#  email: "somebody@dev.null"  
+#  first_name: "Jim"  
+#  last_name: "Smith"  
+#  is_superuser: false  
+#  is_auditor: false  
+#  organization: Default 
+#  state: present  
 
 # if you're too lazy to give your users a password, this is the default they will get
 # set this variable to something false and there won't be a default password

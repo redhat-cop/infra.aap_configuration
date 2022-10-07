@@ -13,27 +13,27 @@
 # list of dict describing Controller projects
 controller_projects: []
 # possible fields:
-# - name: "project_name"  # mandatory
-#  description: "some description"  # optional
-#  organization: "organization_name"  # optional
-#  scm_type: manual  # optional, choices: manual, git, hg, svn, insights
-#  scm_url:  # optional, URI
-#  local_path:  # optional, URI
-#  scm_branch:  # optional, str
-#  scm_refspec:  # optional, str
-#  scm_credential: "credential_name"  # optional
-#  scm_clean: false  # optional, boolean
-#  scm_delete_on_update: false  # optional, boolean
-#  scm_update_on_launch: false  # optional, boolean
+# - name: "project_name"  
+#  description: "some description"  
+#  organization: "organization_name"  
+#  scm_type: manual  
+#  scm_url:  
+#  local_path:  
+#  scm_branch:  
+#  scm_refspec:  
+#  scm_credential: "credential_name"  
+#  scm_clean: false  
+#  scm_delete_on_update: false  
+#  scm_update_on_launch: false  
 #  scm_update_cache_timeout:       "{{ controller_projects_item.scm_update_cache_timeout | default(omit) }}"
-#  allow_override: false  # optional, boolean
-#  timeout: 0  # optional, integer in seconds
-#  custom_virtualenv: "/var/lib/awx/myvenv"  # optional, absolute path to custom virtualenv
-#  wait: true  # optional, boolean
-#  notification_templates_started: []  # optional, list of notification template names
-#  notification_templates_success: []  # optional, list of notification template names
-#  notification_templates_error:   []  # optional, list of notification template names
-#  state: present  # optional, choices: present, absent
+#  allow_override: false  
+#  timeout: 0  
+#  custom_virtualenv: "/var/lib/awx/myvenv"  
+#  wait: true  
+#  notification_templates_started: []  
+#  notification_templates_success: []  
+#  notification_templates_error:   []  
+#  state: present  
 
 controller_configuration_projects_secure_logging: "{{ controller_configuration_secure_logging | default('false') }}"
 controller_configuration_projects_async_retries: "{{ controller_configuration_async_retries | default(30) }}"

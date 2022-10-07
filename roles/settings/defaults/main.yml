@@ -13,7 +13,7 @@
 # list of dicts (or a single dict) describing the Controller settings
 controller_settings: []
 # possible fields:
-# - settings:  # either this field or name/value is mandatory
+# - settings:  
 #    SETTING_NAME: setting_value
 # - name: "SETTING_NAME"
 #  value: SETTING_VALUE
