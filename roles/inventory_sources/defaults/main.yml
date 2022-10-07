@@ -11,30 +11,6 @@
 # These are the default variables specific to the license role
 # list of dict to describe Controller inventory sources
 controller_inventory_sources: []
-# - name: "inv_source_name"  
-#  inventory: "inventory_name"  
-#  organization: "Default"  
-#  new_name: "new_name"  
-#  description: "some description"  
-#  source: ""  
-#  source_project: "project_name"  
-#  source_path: "inventory/hosts"  
-#  source_script: "some_custom_script"  
-#  source_vars: {}  
-#  credential: "credential_name"  
-#  overwrite: false  
-#  overwrite_vars: false  
-#  custom_virtualenv: "/var/lib/awx/myvirtualenv"  
-#  timeout: 0  
-#  verbosity: 0  
-#  update_on_launch: false  
-#  update_cache_timeout: 0  
-#  update_on_project_update: false  
-#  notification_templates_started: []  
-#  notification_templates_success: []  
-#  notification_templates_error: []  
-#  state: present  
-
 controller_configuration_inventory_sources_secure_logging: "{{controller_configuration_secure_logging | default('false')}}"
 controller_configuration_inventory_sources_async_retries: "{{ controller_configuration_async_retries | default(30) }}"
 controller_configuration_inventory_sources_async_delay: "{{ controller_configuration_async_delay | default(1) }}"

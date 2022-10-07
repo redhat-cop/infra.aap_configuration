@@ -12,52 +12,6 @@
 
 # list of dicts describing Controller workflow templates
 controller_workflows: []
-# - name: "workflow_template_name"  
-#  new_name: "new_name"  
-#  description: "some description"  
-#  extra_vars:  
-#  allow_simultaneous: false  
-#  organization: "organization_name"  
-#  ask_variables_on_launch: false  
-#  inventory: "inventory_name"  
-#  limit:  
-#  labels:  
-#  scm_branch:  
-#  ask_variables_on_launch: false  
-#  ask_scm_branch_on_launch: false  
-#  ask_limit_on_launch: false  
-#  webhook_service:   
-#  webhook_credential:   
-#  survey_enabled: false  
-#  survey: {} 
-#  state: present  
-#  notification_templates_started: []  
-#  notification_templates_success: []  
-#  notification_templates_error: []  
-#  notification_templates_approvals: []  
-#  workflow_nodes: [] 
-#  - identifier : 
-#    extra_data:  
-#    inventory: "inventory_name"  
-#    scm_branch:  
-#    job_type:  
-#    job_tags:  
-#    skip_tags: 
-#    limit:  
-#    diff_mode: false  
-#    verbosity: 0  
-#    credentials: [] 
-#    workflow_job_template: "workflow_template_name"  
-#    unified_job_template : Can be a job template, project, inventory source, etc.  
-#    approval_node: 
-#    workflow : "workflow_template_name"  
-#    state: present  
-#    all_parents_must_converge : false  
-#    organization: "organization_name"  
-#    always_nodes: [] 
-#    success_nodes: [] 
-#    failure_nodes: [] 
-
 workflow_job_templates_secure_logging: "{{controller_configuration_secure_logging | default('false') }}"
 controller_configuration_workflow_async_retries: "{{ controller_configuration_async_retries | default(30) }}"
 controller_configuration_workflow_async_delay: "{{ controller_configuration_async_delay | default(1) }}"

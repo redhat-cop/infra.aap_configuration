@@ -8,17 +8,6 @@
 # controller_config_file: ""
 # controller_validate_certs: false
 controller_instance_groups: []
-# - name: "instance_group_name"  
-#  new_name: "new_name"  
-#  credential: "credential_name"  
-#  policy_instance_percentage: 100  
-#  policy_instance_minimum: 100  
-#  policy_instance_list: "exact_match_instances"  
-#  pod_spec_override: "pod_specfication"  
-#  instances: [] 
-#  state: 
-# These are the default variables specific to the **** role
-
 controller_configuration_instance_groups_secure_logging: "{{controller_configuration_secure_logging | default('false')}}"
 controller_configuration_instance_groups_async_retries: "{{ controller_configuration_async_retries | default(30) }}"
 controller_configuration_instance_groups_async_delay: "{{ controller_configuration_async_delay | default(1) }}"

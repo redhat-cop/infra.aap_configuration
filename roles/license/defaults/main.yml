@@ -11,9 +11,4 @@
 # These are the default variables specific to the license role
 
 controller_configuration_license_secure_logging: "{{controller_configuration_secure_logging | default('false')}}"
-
-# Example license datastructure but no sensible default.
-# controller_license:
-#  manifest: "{{ playbook_dir }}/controller_manifest/manifest_redhat_cop_controller_configuration_manifest.zip"
-#  eula_accepted: true  
 ...
