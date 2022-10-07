@@ -1,0 +1,16 @@
+---
+- name: Run dispatch job to Automation Hub
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  pre_tasks:
+    - name: Include vars from ah_configs directory
+      include_vars:
+        dir: ./configs
+        extensions: ["yml"]
+      tags: always
+
+  roles:
+    - ../../dispatch
+...
