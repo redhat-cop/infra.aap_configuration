@@ -11,14 +11,6 @@
 # These are the default variables specific to the license role
 # list of dicts describing Controller credential input sources
 controller_credential_input_sources: []
-# possible values:
-# - target_credential: "credential_name"  # mandatory
-#  input_field_name: "input_field_name"  # mandatory
-#  source_credential: "credential_name"  # optional
-#  description: "input source desc"  # optional
-#  metadata: "{}"  # optional, a JSON or YAML string
-#  state: present  # optional, choices: present, absent
-
 controller_configuration_credential_input_sources_secure_logging: "{{ controller_configuration_secure_logging | default('false') }}"
 controller_configuration_credential_input_sources_async_retries: "{{ controller_configuration_async_retries | default(30) }}"
 controller_configuration_credential_input_sources_async_delay: "{{ controller_configuration_async_delay | default(1) }}"
