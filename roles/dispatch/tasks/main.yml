@@ -1,0 +1,13 @@
+---
+
+- name: "Run redhat_cop.ah_configuration.{{ __role.role }} role"
+  ansible.builtin.include_role:
+    name: "{{ __role.role }}"
+    apply:
+      tags: "{{ __role.tags }}"
+  when: hostvars[inventory_hostname][__role.var] | length > 0
+  tags: always
+  loop: "{{ ah_configuration_dispatcher_roles }}"
+  loop_control:
+    loop_var: __role
+...
