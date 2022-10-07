@@ -5,8 +5,8 @@ redhat_cop.ah_configuration Release Notes
 .. contents:: Topics
 
 
-v0.9.2-beta
-===========
+v0.9.2
+======
 
 Minor Changes
 -------------
@@ -17,6 +17,23 @@ Minor Changes
 - Update linter versions
 - add `ah_token` so `repository_sync` that was missing
 - created a role from ah_collection module
+
+Deprecated Features
+-------------------
+
+- ah_token auth for modules
+
+Bugfixes
+--------
+
+- Fixed a major bug that was preventing publish role from uploading new versions without removing all prior versions.
+
+Known Issues
+------------
+
+- ah_overwrite_existing when set to true, will sometimes cause errors due to the time it takes to delete namespaces
+- ah_token does not work in every module (errors saying parameter is not supported)
+- auto_approve does not work when publishing new collections (throws error)
 
 v0.9.1
 ======
