@@ -72,6 +72,7 @@
   redhat_cop.ah_configuration.ah_collection:
     namespace:          "{{ (__ah_collection_file | basename).split('-')[0] }}"
     name:               "{{ (__ah_collection_file | basename).split('-')[1] }}"
+    version:            "{{ (__ah_collection_file | basename).split('-')[2:] | join('-') | splitext | first | splitext | first }}"
     path:               "{{ __ah_collection_file }}"
     auto_approve:       "{{ ah_auto_approve }}"
     overwrite_existing: "{{ ah_overwrite_existing }}"
