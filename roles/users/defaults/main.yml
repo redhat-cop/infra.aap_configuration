@@ -12,17 +12,6 @@
 
 # list of dicts describing Controller users
 controller_user_accounts: []
-# possible fields:
-# - username: "user_name"  
-#  password: "redhat"  
-#  email: "somebody@dev.null"  
-#  first_name: "Jim"  
-#  last_name: "Smith"  
-#  is_superuser: false  
-#  is_auditor: false  
-#  organization: Default 
-#  state: present  
-
 # if you're too lazy to give your users a password, this is the default they will get
 # set this variable to something false and there won't be a default password
 controller_user_default_password: "change_me"

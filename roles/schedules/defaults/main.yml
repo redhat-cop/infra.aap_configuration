@@ -12,24 +12,6 @@
 
 # list of dict describing Controller schedules:
 controller_schedules: []
-# possible fields:
-# - name: "schedule_name"  
-#  new_name: "new_name"  
-#  description: "some description"  
-#  rrule: "DTSTART:20191219T130551Z RRULE:FREQ=WEEKLY;INTERVAL=1;COUNT=1"  
-#  extra_data: {}  
-#  inventory: "inventory_name"  
-#  scm_branch:  
-#  job_type:  
-#  job_tags: "tag1,tag2"  
-#  skip_tags: "tag3,tag4"  
-#  limit:  
-#  diff_mode: false  
-#  verbosity: 0  
-#  unified_job_template: "job_template_name"  
-#  enabled: true  
-#  state: present  
-
 controller_configuration_schedules_secure_logging: "{{controller_configuration_secure_logging | default('false')}}"
 controller_configuration_schedules_async_retries: "{{ controller_configuration_async_retries | default(30) }}"
 controller_configuration_schedules_async_delay: "{{ controller_configuration_async_delay | default(1) }}"

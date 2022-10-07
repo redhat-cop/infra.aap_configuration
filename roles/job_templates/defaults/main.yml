@@ -12,55 +12,6 @@
 
 # list of dict describing Controller job templates:
 controller_templates: []
-# possible fields:
-# - name: "job_template_name"  
-#  new_name: "new_name"  
-#  description: "some description"  
-#  job_type:  
-#  ask_job_type_on_launch: false  
-#  inventory: "inventory_name"  
-#  ask_inventory_on_launch: false  
-#  organization: "organization_name"  
-#  project: "project_name"  
-#  playbook: "playbook.yml"  
-#  scm_branch:  
-#  ask_scm_branch_on_launch: false  
-#  credentials:  
-#  - "credential_name"
-#  ask_credential_on_launch: false  
-#  forks:  
-#  limit:  
-#  ask_limit_on_launch: false  
-#  verbosity: 0  
-#  ask_verbosity_on_launch: false  
-#  extra_vars:  
-#  ask_variables_on_launch: false  
-#  job_tags:  
-#  ask_tags_on_launch: false  
-#  skip_tags:  
-#  ask_skip_tags_on_launch: false  
-#  force_handlers: false  
-#  start_at_task:  
-#  diff_mode: false  
-#  ask_diff_mode_on_launch: false  
-#  use_fact_cache: false  
-#  host_config_key:  
-#  survey_enabled: false  
-#  survey_spec: {} 
-#  become_enabled: false  
-#  allow_simultaneous: false  
-#  timeout:  
-#  custom_virtualenv: "/var/lib/awx/myvenv"  
-#  job_slice_count: 1  
-#  webhook_service:   
-#  webhook_credential:   
-#  labels: [] 
-#  state: present  
-#  instance_groups: 
-#  notification_templates_started: []  
-#  notification_templates_success: []  
-#  notification_templates_error: []  
-
 controller_configuration_job_templates_secure_logging: "{{controller_configuration_secure_logging | default('false')}}"
 controller_configuration_job_templates_async_retries: "{{ controller_configuration_async_retries | default(30) }}"
 controller_configuration_job_templates_async_delay: "{{ controller_configuration_async_delay | default(1) }}"
