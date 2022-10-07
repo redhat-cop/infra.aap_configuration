@@ -1,0 +1,10 @@
+---
+bugfixes:
+  - Fixed a major bug that was preventing publish role from uploading new versions without removing all prior versions.
+known_issues:
+  - auto_approve does not work when publishing new collections (throws error)
+  - ah_overwrite_existing when set to true, will sometimes cause errors due to the time it takes to delete namespaces
+  - ah_token does not work in every module (errors saying parameter is not supported)
+deprecated_features:
+  - ah_token auth for modules
+...
