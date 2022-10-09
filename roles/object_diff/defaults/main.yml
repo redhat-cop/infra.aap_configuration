@@ -8,7 +8,7 @@ controller_hostname: "{{ vault_controller_hostname | default(lookup('env', 'CONT
 controller_validate_certs: "{{ vault_controller_validate_certs | default(lookup('env', 'CONTROLLER_VERIFY_SSL')) }}"
 
 # populate_controller_api_user_accounts_without_external_accounts
-drop_user_external_accounts: true
+drop_user_external_accounts: false
 
 # Automation Controller Object Lists
 controller_settings: []
