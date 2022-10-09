@@ -34,7 +34,7 @@ controller_roles: []
 filetree_controller_settings: "{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_settings.d/"
 filetree_controller_organizations: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_organizations.d/"
 filetree_controller_labels: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_labels.d/"
-filetree_controller_user_accounts: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_users.d/"
+filetree_controller_user_accounts: "{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_users.d/"
 filetree_controller_teams: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_teams.d/"
 filetree_controller_credential_types: "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_credential_types.d/"
 filetree_controller_credentials: "{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_credentials.d/"
