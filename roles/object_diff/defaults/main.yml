@@ -2,7 +2,7 @@
 # defaults file for object_diff
 
 # populate_controller_api_user_accounts_without_external_accounts
-drop_user_external_accounts: true
+drop_user_external_accounts: false
 
 # Automation Controller Object Lists
 controller_settings: []
