@@ -1,7 +1,7 @@
 ---
 # The group module is also an ansible.builtin module, but due to supporting both the awx.awx and automation.controller collections
 # the FQCN cannot be used here.
-- name: Add controller group  # noqa fqcn-builtins
+- name: Add controller group  # noqa fqcn[action-core]
   group:
     name:                           "{{ controller_groups_item.name | mandatory }}"
     new_name:                       "{{ controller_groups_item.new_name | default(omit, true) }}"
