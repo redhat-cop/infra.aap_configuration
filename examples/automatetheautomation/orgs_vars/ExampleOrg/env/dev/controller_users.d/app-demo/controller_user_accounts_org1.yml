@@ -5,11 +5,11 @@ controller_user_accounts:
     email: "adminorg1@example.com"
     firstname: "adminorg1"
     lastname: "adminorg1"
-    is_auditor: False
-    is_superuser: False
+    is_auditor: false
+    is_superuser: false
 
   - username: "userorg1"
     password: "password"
     email: "userorg1@example.com"
-    is_superuser: False
+    is_superuser: false
 ...

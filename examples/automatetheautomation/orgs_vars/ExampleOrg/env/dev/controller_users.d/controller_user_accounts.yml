@@ -5,7 +5,7 @@ controller_user_accounts:
     email: "admin@example.com"
     firstname: "admin"
     lastname: "admin"
-    is_auditor: False
-    is_superuser: True
-    update_secrets: False
+    is_auditor: false
+    is_superuser: true
+    update_secrets: false
 ...
