@@ -10,9 +10,10 @@ controller_inventory_sources:
 {% if inventory_source.source_path %}
     source_path: "{{ inventory_source.source_path }}"
 {% endif %}
-{% if inventory_source.source_vars %}
-    source_vars: "{{ inventory_source.source_vars | replace("'{{", "!unsafe \'{{") }}"
-{% endif %}
+{% if inventory_source.source_vars and inventory_source.source_vars != '---' %}
+    source_vars:
+      {{ inventory_source.source_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") }}
+{%- endif %}
     inventory: "{{ inventory_source.summary_fields.inventory.name }}"
     update_on_launch: "{{ inventory_source.update_on_launch }}"
     overwrite: "{{ inventory_source.overwrite }}"
