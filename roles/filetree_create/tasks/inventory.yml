@@ -7,7 +7,7 @@
                                  return_all=true, max_objects=query_controller_api_max_objects)
                         }}"
 
-- name: "Create the output directory for inventories: {{ output_path | regex_replace('/', '_') }}/<ORGANIZATION_NAME>/inventories"
+- name: "Create the output directory for inventories: {{ output_path }}/<ORGANIZATION_NAME>/inventories"
   ansible.builtin.file:
     path: "{{ __path }}"
     state: directory
@@ -21,7 +21,7 @@
     loop_var: needed_path
     label: "{{ __path }}"
 
-- name: "Add current inventories to the output yaml file: {{ output_path | regex_replace('/', '_') }}/<ORGANIZATION_NAME>/inventories"
+- name: "Add current inventories to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/inventories"
   ansible.builtin.template:
     src: "templates/current_inventories.j2"
     dest: "{{ __dest }}"
