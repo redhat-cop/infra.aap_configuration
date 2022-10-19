@@ -63,16 +63,30 @@ $ ansible-playbook object_diff.yml --list-tags
             controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
       no_log: "{{ controller_configuration_object_diff_secure_logging }}"
       when: controller_oauthtoken is not defined
+      tags:
+        - always
 
   roles:
     - role: redhat_cop.controller_configuration.filetree_read
     - role: redhat_cop.controller_configuration.object_diff
+      vars:
+        controller_configuration_object_diff_tasks:
+          - {name: workflow_job_templates, var: controller_workflows, tags: workflow_job_templates}
+          - {name: job_templates, var: controller_templates, tags: job_templates}
+          - {name: user_accounts, var: controller_user_accounts, tags: users}
+          - {name: groups, var: controller_groups, tags: groups}
+          - {name: hosts, var: controller_hosts, tags: hosts}
+          - {name: inventory_sources, var: controller_inventory_sources, tags: inventory_sources}
+          - {name: inventories, var: controller_inventories, tags: inventories}
+          - {name: projects, var: controller_projects, tags: projects}
+          - {name: credentials, var: controller_credentials, tags: credentials}
+          - {name: credential_types, var: controller_credential_types, tags: credential_types}
+          - {name: organizations, var: controller_organizations, tags: organizations}
     - role: redhat_cop.controller_configuration.dispatch
       vars:
         controller_configuration_dispatcher_roles:
           - {role: workflow_job_templates, var: controller_workflows, tags: workflow_job_templates}
           - {role: job_templates, var: controller_templates, tags: job_templates}
-          - {role: teams, var: controller_teams, tags: teams}
           - {role: users, var: controller_user_accounts, tags: users}
           - {role: groups, var: controller_groups, tags: inventories}
           - {role: hosts, var: controller_hosts, tags: hosts}

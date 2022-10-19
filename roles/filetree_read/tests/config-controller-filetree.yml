@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: all
   connection: local
   gather_facts: false
   vars:
@@ -30,6 +30,8 @@
             controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
       no_log: "{{ controller_configuration_filetree_read_secure_logging | default('false') }}"
       when: controller_oauthtoken is not defined
+      tags:
+        - always
 
     - block:
         - name: Include Tasks to load Galaxy credentials to be added to Organizations

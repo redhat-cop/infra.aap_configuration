@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: all
   connection: local
   gather_facts: false
   vars:
@@ -28,6 +28,8 @@
             controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
       no_log: "{{ controller_configuration_filetree_create_secure_logging | default('false') }}"
       when: controller_oauthtoken is not defined
+      tags:
+        - always
 
   roles:
     - redhat_cop.controller_configuration.filetree_create

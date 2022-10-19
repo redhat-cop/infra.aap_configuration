@@ -25,7 +25,7 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
 
 ```yaml
 ---
-- hosts: localhost
+- hosts: all
   connection: local
   gather_facts: false
   vars:
@@ -54,6 +54,8 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
             controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
       no_log: "{{ controller_configuration_filetree_create_secure_logging | default('false') }}"
       when: controller_oauthtoken is not defined
+      tags:
+        - always
 
 
   roles:
