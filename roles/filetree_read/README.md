@@ -20,7 +20,7 @@ The following Variables set the organization where should be applied the configu
 |`filetree_controller_settings`|{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_settings.d/|yes|Directory path to load controller object variables|
 |`filetree_controller_organizations`|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_organizations.d/|yes|Directory path to load controller object variables|
 |`filetree_controller_labels`|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_labels.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_user_accounts`| "{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_users.d/|
+|`filetree_controller_user_accounts`| {{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_users.d/|
 |`filetree_controller_teams`| {{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_teams.d/|yes|Directory path to load controller object variables|
 |`filetree_controller_credential_types`| {{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_credential_types.d/|yes|Directory path to load controller object variables|
 |`filetree_controller_credentials`| {{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_credentials.d/|yes|Directory path to load controller object variables|
@@ -157,11 +157,6 @@ orgs_vars/Organization1
     │   │   │   ├── controller_teams_org1.yml
     │   │   │   └── controller_teams_org2.yml
     │   │   └── controller_teams.yml
-    │   ├── controller_users.d
-    │   │   ├── app-demo
-    │   │   │   ├── controller_user_accounts_org1.yml
-    │   │   │   └── controller_user_accounts_org2.yml
-    │   │   └── controller_user_accounts.yml
     │   └── controller_workflow_job_templates.d
     │       ├── app-casc
     │       │   └── controller_workflow_job_templates_casc.yml
@@ -199,6 +194,11 @@ orgs_vars/Organization1
     │   │   ├── app-example
     │   │   │   └── controller_instance_groups_otlc.yml
     │   │   └── controller_instance_groups.yml
+    │   ├── controller_users.d
+    │   │   ├── app-demo
+    │   │   │   ├── controller_user_accounts_org1.yml
+    │   │   │   └── controller_user_accounts_org2.yml
+    │   │   └── controller_user_accounts.yml
     │   ├── controller_inventory_sources.d
     │   │   ├── app-examples
     │   │   │   ├── controller_inventory_sources_sourcea_dev.yml
@@ -242,6 +242,11 @@ orgs_vars/Organization1
         │   ├── app-example
         │   │   └── controller_instance_groups_otlc.yml
         │   └── controller_instance_groups.yml
+        ├── controller_users.d
+        │   ├── app-demo
+        │   │   ├── controller_user_accounts_org1.yml
+        │   │   └── controller_user_accounts_org2.yml
+        │   └── controller_user_accounts.yml
         ├── controller_inventory_sources.d
         │   ├── app-examples
         │   │   ├── controller_inventory_sources_sourcea_dev.yml
@@ -274,7 +279,7 @@ The role is designed to be used with tags, each tags correspond to an AWX or Aut
 
 ```yaml
 ---
-- hosts: localhost
+- hosts: all
   connection: local
   gather_facts: false
   vars:
@@ -305,6 +310,8 @@ The role is designed to be used with tags, each tags correspond to an AWX or Aut
             controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
           no_log: true
       when: controller_oauthtoken is not defined
+      tags:
+        - always
 
     - block:
         - name: Include Tasks to load Galaxy credentials to be added to Organizations

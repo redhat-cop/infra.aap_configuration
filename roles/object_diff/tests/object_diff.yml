@@ -29,7 +29,8 @@
             controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
       no_log: "{{ controller_configuration_object_diff_secure_logging }}"
       when: controller_oauthtoken is not defined
-
+      tags:
+        - always
   roles:
     - redhat_cop.controller_configuration.filetree_read
     - redhat_cop.controller_configuration.object_diff
