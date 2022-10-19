@@ -7,7 +7,7 @@
                                 return_all=true, max_objects=query_controller_api_max_objects)
                        }}"
 
-- name: "Create the output directory for projects: {{ output_path }}/<ORGANIZATION_NAME>/projects"
+- name: "Create the <ORGANIZATION_NAME>/projects output directory for projects in {{ output_path }}"
   ansible.builtin.file:
     path: "{{ __path }}"
     state: directory
@@ -21,7 +21,7 @@
     loop_var: needed_path
     label: "{{ __path }}"
 
-- name: "Add current projects to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/projects"
+- name: "Add current projects to the <ORGANIZATION_NAME>/projects output file in {{ output_path }}"
   ansible.builtin.template:
     src: "templates/current_projects.j2"
     dest: "{{ __dest }}"

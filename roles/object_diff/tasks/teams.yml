@@ -7,6 +7,8 @@
                                                    }}"
 
 - name: "Team differences (block)"
+  when:
+    - __controller_api_current_user_check_is_admin.is_superuser
   block:
     - name: Get the organization ID
       ansible.builtin.set_fact:
@@ -15,7 +17,7 @@
                                                   host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)
                                        }}"
 
-    - name: "OBJECT DIFF: Get the API list of all teams {{ orgs }} Organization"
+    - name: "OBJECT DIFF: Get the API list of all teams in Organization {{ orgs }}"
       ansible.builtin.set_fact:
         __controller_api_teams: "{{ query(controller_api_plugin, 'teams',
                                           query_params={'organization': __controller_organization_id.id},
@@ -34,6 +36,4 @@
     - name: "OBJECT DIFF: Sets the difference of Teams between what is on the Controller versus CasC on SCM"
       ansible.builtin.set_fact:
         controller_teams: "{{ __teams_difference }}"
-  when:
-    - __controller_api_current_user_check_is_admin.is_superuser
 ...

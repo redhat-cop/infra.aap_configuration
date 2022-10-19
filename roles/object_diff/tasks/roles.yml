@@ -7,6 +7,8 @@
                                                    }}"
 
 - name: "Role differences (block)"
+  when:
+    - __controller_api_current_user_check_is_admin.is_superuser
   block:
 
     - name: "OBJECT DIFF: Get the API list of all roles"
@@ -26,7 +28,4 @@
     - name: "OBJECT DIFF: Sets differences between Roles what is on the Controller versus CasC on SCM"
       ansible.builtin.set_fact:
         controller_roles: "{{ __roles_difference }}"
-
-  when:
-    - __controller_api_current_user_check_is_admin.is_superuser
 ...

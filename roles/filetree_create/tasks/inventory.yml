@@ -7,7 +7,7 @@
                                  return_all=true, max_objects=query_controller_api_max_objects)
                         }}"
 
-- name: "Create the output directory for inventories: {{ output_path }}/<ORGANIZATION_NAME>/inventories"
+- name: "Create the <ORGANIZATION_NAME>/inventories output directory for inventories in {{ output_path | regex_replace('/', '_') }}"
   ansible.builtin.file:
     path: "{{ __path }}"
     state: directory
@@ -21,7 +21,7 @@
     loop_var: needed_path
     label: "{{ __path }}"
 
-- name: "Add current inventories to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/inventories"
+- name: "Add current inventories to the <ORGANIZATION_NAME>/inventories output yaml file in {{ output_path | regex_replace('/', '_') }}"
   ansible.builtin.template:
     src: "templates/current_inventories.j2"
     dest: "{{ __dest }}"
@@ -39,12 +39,12 @@
   ansible.builtin.include_tasks: "inventory_sources.yml"
   vars:
     inventory_organization: "{{ current_inventory_sources.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
-    inventory_name: "{{ current_inventory_sources.name | regex_replace('/','_') }}"
+    inventory_name: "{{ current_inventory_sources.name | regex_replace('/', '_') }}"
     inventory_sources_output_path: "{{ output_path }}/{{ inventory_organization | regex_replace('/', '_') }}/inventories/{{ inventory_name | regex_replace('/', '_') }}"
     current_inventory_sources_asset_value: "{{ query(controller_api_plugin, current_inventory_sources.related.inventory_sources,
                                                           host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
-                                                          return_all=true, max_objects=query_controller_api_max_objects
-                                                    ) if current_inventory_sources.has_inventory_sources else []
+                                                          return_all=true, max_objects=query_controller_api_max_objects)
+                                                    if current_inventory_sources.has_inventory_sources else []
                                             }}"
   loop: "{{ inventory_lookvar }}"
   loop_control:
@@ -55,12 +55,12 @@
   ansible.builtin.include_tasks: "hosts.yml"
   vars:
     inventory_organization: "{{ current_inventory_hosts.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
-    inventory_name: "{{ current_inventory_hosts.name | regex_replace('/','_') }}"
+    inventory_name: "{{ current_inventory_hosts.name | regex_replace('/', '_') }}"
     hosts_output_path: "{{ output_path }}/{{ inventory_organization | regex_replace('/', '_') }}/inventories/{{ inventory_name | regex_replace('/', '_') }}"
     current_hosts_asset_value: "{{ query(controller_api_plugin, current_inventory_hosts.related.hosts,
                                               host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
-                                              return_all=true, max_objects=query_controller_api_max_objects
-                                        ) if not current_inventory_hosts.has_inventory_sources else []
+                                              return_all=true, max_objects=query_controller_api_max_objects)
+                                        if not current_inventory_hosts.has_inventory_sources else []
                                 }}"
   loop: "{{ inventory_lookvar }}"
   loop_control:
@@ -71,12 +71,12 @@
   ansible.builtin.include_tasks: "groups.yml"
   vars:
     inventory_organization: "{{ current_inventory_groups.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
-    inventory_name: "{{ current_inventory_groups.name | regex_replace('/','_') }}"
+    inventory_name: "{{ current_inventory_groups.name | regex_replace('/', '_') }}"
     groups_output_path: "{{ output_path }}/{{ inventory_organization | regex_replace('/', '_') }}/inventories/{{ inventory_name | regex_replace('/', '_') }}"
     current_groups_asset_value: "{{ query(controller_api_plugin, current_inventory_groups.related.groups,
                                                host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
-                                               return_all=true, max_objects=query_controller_api_max_objects
-                                         ) if not current_inventory_groups.has_inventory_sources else []
+                                               return_all=true, max_objects=query_controller_api_max_objects)
+                                         if not current_inventory_groups.has_inventory_sources else []
                                  }}"
   loop: "{{ inventory_lookvar }}"
   loop_control:
