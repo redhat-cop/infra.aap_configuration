@@ -2,7 +2,7 @@
 controller_inventories:
   - name: "{{ current_inventories_asset_value.name }}"
     description: "{{ current_inventories_asset_value.description }}"
-    organization: "{{ current_inventories_asset_value.organization }}"
+    organization: "{{ inventory_organization }}"
 {% if current_inventories_asset_value.host_filter %}
     host_filter: "{{ current_inventories_asset_value.host_filter }}"
 {% endif %}

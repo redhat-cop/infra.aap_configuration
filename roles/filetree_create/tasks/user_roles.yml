@@ -19,4 +19,5 @@
     mode: '0644'
   vars:
     current_user_roles_asset_value: "{{ user_roles_lookvar }}"
+  when: user_roles_lookvar | length > 0
 ...

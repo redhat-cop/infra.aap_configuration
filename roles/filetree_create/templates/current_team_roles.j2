@@ -14,8 +14,7 @@ controller_roles:
 {% elif role.summary_fields.resource_type is match('inventory') %}
     inventory: "{{ role.summary_fields.resource_name }}"
 {% endif %}
-    roles:
-      - "{{ role.name }}"
+    role: "{{ role.name | lower }}"
 {% endif %}
 {% endfor %}
 ...
