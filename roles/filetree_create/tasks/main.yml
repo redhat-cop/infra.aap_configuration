@@ -1,6 +1,8 @@
 ---
 # tasks file for filetree_create
 - name: "Check requirements (block)"
+  tags:
+    - always
   block:
     - name: "Check installed collections (block)"
       block:
@@ -42,9 +44,6 @@
       loop: "{{ input_tag }}"
       loop_control:
         loop_var: tag_item
-
-  tags:
-    - always
 
 - name: "Include Tasks to get all objects of type {{ input_tag }}"
   ansible.builtin.include_tasks: all.yml

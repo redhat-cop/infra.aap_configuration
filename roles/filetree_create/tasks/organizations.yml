@@ -7,7 +7,7 @@
                             return_all=true, max_objects=query_controller_api_max_objects)
                    }}"
 
-- name: "Create the output directory for organizations: {{ output_path }}/{{ current_organization_dir.name }}"
+- name: "Create the output directory for organizations: {{ output_path + '/' + current_organization_dir.name }}"
   ansible.builtin.file:
     path: "{{ __path }}"
     state: directory

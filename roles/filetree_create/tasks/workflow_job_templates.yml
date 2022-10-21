@@ -7,7 +7,7 @@
                                               return_all=true, max_objects=query_controller_api_max_objects)
                                      }}"
 
-- name: "Create the output directory for workflow job templates: {{ output_path }}/<ORGANIZATION_NAME>/workflow_job_templates"
+- name: "Create the <ORGANIZATION_NAME>/workflow_job_templates output directory for workflow job templates in {{ output_path }}"
   ansible.builtin.file:
     path: "{{ __path }}"
     state: directory
@@ -21,7 +21,7 @@
     loop_var: needed_path
     label: "{{ __path }}"
 
-- name: "Add current workflow job templates to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/workflow_job_templates"
+- name: "Add current workflow job templates to the <ORGANIZATION_NAME>/workflow_job_templates output file in {{ output_path }}"
   ansible.builtin.template:
     src: "templates/current_workflow_job_templates.j2"
     dest: "{{ __dest }}"

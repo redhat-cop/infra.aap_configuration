@@ -16,7 +16,7 @@
     loop_var: user_lookvar_item
     label: "User {{ user_lookvar_item.username }}"
 
-- name: "Create the output directory for users: {{ output_path }}/<ORGANIZATION_NAME>"
+- name: "Create the <ORGANIZATION_NAME> output directory for users in {{ output_path }}"
   ansible.builtin.file:
     path: "{{ __path }}"
     state: directory
@@ -28,7 +28,7 @@
     loop_var: current_user_dir
     label: "{{ __path }}"
 
-- name: "Add current users to the output yaml file: {{ output_path }}/<ORGANIZATION_NAME>/users/<USERNAME>.yaml"
+- name: "Add current users to the <ORGANIZATION_NAME>/<USERNAME>.yaml output file in {{ output_path }}"
   ansible.builtin.template:
     src: "templates/current_users.j2"
     dest: "{{ __dest }}"
