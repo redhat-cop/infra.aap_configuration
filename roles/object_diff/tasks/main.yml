@@ -1,6 +1,8 @@
 ---
 # tasks file for object_diff
 - name: "Check requirements (block)"
+  tags:
+    - always
   block:
     - name: "Check installed collections (block)"
       block:
@@ -24,14 +26,12 @@
         - name: "Show the plugin we are using"
           ansible.builtin.debug:
             msg: "Using the 'controller_api' plugin from: {{ controller_api_plugin }}"
-  tags:
-    - always
 
-- name: "Include Tasks to get OBJECT DIFF {{  __task_diff.name }}"
-  ansible.builtin.include_tasks: "{{  __task_diff.name }}.yml"
+- name: "Include Tasks to get OBJECT DIFF {{ __task_diff.name }}"
+  ansible.builtin.include_tasks: "{{ __task_diff.name }}.yml"
   args:
     apply:
-      tags: "{{  __task_diff.tags }}"
+      tags: "{{ __task_diff.tags }}"
   tags: always
   loop: "{{ controller_configuration_object_diff_tasks }}"
   loop_control:

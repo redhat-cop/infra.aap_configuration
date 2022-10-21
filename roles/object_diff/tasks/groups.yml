@@ -29,6 +29,7 @@
     loop_var: current_inventory
 
 - name: "Group differences (block)"
+  when: __controller_api_groups is defined
   block:
     - name: "OBJECT DIFF: Find the difference of Groups between what is on the Controller versus CasC on SCM"
       ansible.builtin.set_fact:
@@ -41,6 +42,4 @@
     - name: "OBJECT DIFF: Set the inventory key at the correct place"
       ansible.builtin.set_fact:
         controller_groups: "{{ __groups_difference }}"
-
-  when: __controller_api_groups is defined
 ...

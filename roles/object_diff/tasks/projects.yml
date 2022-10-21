@@ -6,7 +6,7 @@
                                               host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)
                                    }}"
 
-- name: "OBJECT DIFF: Get the API list of all Projects {{ orgs }} Organization"
+- name: "OBJECT DIFF: Get the API list of all Projects in Organization {{ orgs }}"
   ansible.builtin.set_fact:
     __controller_api_projects: "{{ query(controller_api_plugin, 'projects',
                                           query_params={'organization': __controller_organization_id.id},

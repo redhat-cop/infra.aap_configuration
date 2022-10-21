@@ -63,7 +63,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 # Create links between workflow node
-- name: loop over nodes in schema to add to workflow templates
+- name: Loop over nodes in schema to add to workflow templates
   ansible.builtin.include_tasks: "add_workflows_schema.yml"
   loop: "{{ controller_workflows }}"
   loop_control:

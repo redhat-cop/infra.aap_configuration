@@ -5,7 +5,7 @@
     state: directory
     mode: '0755'
 
-- name: "Add current groups to the output yaml file: {{ groups_output_path }}/current_groups.yaml"
+- name: "Add current groups to the current_groups.yaml output file in {{ groups_output_path }}"
   ansible.builtin.template:
     src: "templates/current_groups.j2"
     dest: "{{ groups_output_path }}/current_groups.yaml"
