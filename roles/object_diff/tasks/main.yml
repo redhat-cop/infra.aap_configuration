@@ -27,6 +27,14 @@
           ansible.builtin.debug:
             msg: "Using the 'controller_api' plugin from: {{ controller_api_plugin }}"
 
+- name: "Check if the connection is to an Ansible Tower or to Automation Platform"
+  ansible.builtin.set_fact:
+    is_aap: "{{ lookup(controller_api_plugin, 'ping',
+                       host=controller_hostname, oauth_token=controller_oauthtoken,
+                       verify_ssl=controller_validate_certs).version is version('4.0.0', '>=') }}"
+  tags:
+    - always
+
 - name: "Include Tasks to get OBJECT DIFF {{ __task_diff.name }}"
   ansible.builtin.include_tasks: "{{ __task_diff.name }}.yml"
   args:

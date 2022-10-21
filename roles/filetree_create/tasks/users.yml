@@ -22,20 +22,20 @@
     state: directory
     mode: '0755'
   vars:
-    __path: "{{ output_path }}/{{ current_user_dir | regex_replace('/', '_') }}"
+    __path: "{{ output_path }}/{{ current_user_dir | regex_replace('/', '_') }}/users"
   loop: "{{ current_users | selectattr('organizations', 'defined') | map(attribute='organizations') | flatten | unique }}"
   loop_control:
     loop_var: current_user_dir
     label: "{{ __path }}"
 
-- name: "Add current users to the <ORGANIZATION_NAME>/current_users_<USERNAME>.yaml output file in {{ output_path }}"
+- name: "Add current users to the <ORGANIZATION_NAME>/<USERNAME>.yaml output file in {{ output_path }}"
   ansible.builtin.template:
     src: "templates/current_users.j2"
     dest: "{{ __dest }}"
     mode: '0644'
   vars:
     current_users_asset_value: "{{ current_user_dir.0 }}"
-    __dest: "{{ output_path }}/{{ current_user_dir.1 | regex_replace('/', '_') }}/current_users_{{ current_user_dir.0.username | regex_replace('/', '_') }}.yaml"
+    __dest: "{{ output_path }}/{{ current_user_dir.1 | regex_replace('/', '_') }}/users/{{ current_user_dir.0.username | regex_replace('/', '_') }}.yaml"
   loop: "{{ current_users | subelements('organizations') }}"
   loop_control:
     loop_var: current_user_dir
@@ -46,4 +46,5 @@
   vars:
     username: "{{ item.username }}"
   loop: "{{ users_lookvar }}"
+  when: not item.is_superuser
 ...

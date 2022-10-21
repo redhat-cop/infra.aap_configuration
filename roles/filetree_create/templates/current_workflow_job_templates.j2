@@ -3,6 +3,7 @@ controller_workflows:
   - name: "{{ current_workflow_job_templates_asset_value.name }}"
     description: "{{ current_workflow_job_templates_asset_value.description }}"
     organization: "{{ current_workflow_job_templates_asset_value.summary_fields.organization.name | default('ToDo: The WF \'' + current_workflow_job_templates_asset_value.name + '\' must belong to an organization') }}"
+    state: "present"
     simplified_workflow_nodes:
 {% for node in query(controller_api_plugin, 'api/v2/workflow_job_template_nodes/',
                      query_params={'workflow_job_template': current_workflow_job_templates_asset_value.id},
