@@ -13,6 +13,12 @@ controller_roles:
     job_template: "{{ role.summary_fields.resource_name }}"
 {% elif role.summary_fields.resource_type is match('inventory') %}
     inventory: "{{ role.summary_fields.resource_name }}"
+{% elif role.summary_fields.resource_type is match('workflow_job_template') %}
+    workflow_job_template: "{{ role.summary_fields.resource_name }}"
+{% elif role.summary_fields.resource_type is match('project') %}
+    project: "{{ role.summary_fields.resource_name }}"
+{% elif role.summary_fields.resource_type is match('credential') %}
+    credential: "{{ role.summary_fields.resource_name }}"
 {% endif %}
     role: "{{ role.name | lower }}"
 {% endif %}
