@@ -13,7 +13,10 @@ use_default_rules: true
 # https://github.com/ansible/ansible-lint/issues/808
 # with verbosity set to 1, its dumping 'unknown file type messages'
 # verbosity: 1
-skip_list: []
+skip_list:
+  # Skipping fqcn[action] because this collection supports using either the awx.awx or ansible.controller collection
+  #   so a FQCN cannot be used in module names
+  - fqcn[action]
 kinds:
   - playbooks: "**/examples/templates/*.{yml,yaml}"
   - playbooks: "**/examples/*.{yml,yaml}"
