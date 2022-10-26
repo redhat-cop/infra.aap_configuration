@@ -1,7 +1,7 @@
 ---
 - name: "Get current Settings from the API"
   ansible.builtin.set_fact:
-    all_settings: "{{ query(controller_api_plugin, 'api/v2/settings/all/',
+    changed_settings: "{{ query(controller_api_plugin, 'api/v2/settings/changed/',
                             host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                             return_all=true, max_objects=query_controller_api_max_objects)
                        }}"
