@@ -32,4 +32,7 @@ controller_templates:
 {% if is_aap %}
     execution_environment: "{{ current_job_templates_asset_value.summary_fields.execution_environment.name | default(omit) }}"
 {% endif %}
+{% if not is_aap %}
+    custom_virtualenv: "{{ current_job_templates_asset_value.custom_virtualenv | default(omit) }}"
+{% endif %}
 ...

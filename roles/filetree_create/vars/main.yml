@@ -2,6 +2,7 @@
 # vars file for filetree_create
 valid_tags:
   - all
+  - settings
   - credentials
   - credential_types
   - execution_environments
