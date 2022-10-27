@@ -15,7 +15,7 @@ Currently:
 ### Authentication
 
 |Variable Name|Default Value|Required|Description|Example|
-|:---:|:---:|:---:|:---:|:---:|
+|:---|:---:|:---:|:---|:---|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
 |`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
 |`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
