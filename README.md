@@ -23,14 +23,13 @@ The AWX.AWX OR ANSIBLE.CONTROLLER collections MUST be installed in order for thi
 
 ## Redhat Communities of Practice Configuration Collections Suite
 
-
 |Collection Name|Purpose|
 |:---:|:---:|
 |[Controller Configuration](https://galaxy.ansible.com/redhat_cop/controller_configuration)|Automation controller configuration|
 |[Hub Configuration](https://galaxy.ansible.com/redhat_cop/ah_configuration)|Automation hub configuration|
 |[EE Utilities](https://galaxy.ansible.com/redhat_cop/ee_utilities)|Execution Environment creation utilities|
 |[AAP installation Utilities](https://galaxy.ansible.com/redhat_cop/aap_utilities)|Ansible Automation Platform Utilities|
-|[AAP Configuration Template](https://galaxy.ansible.com/redhat_cop/aap_configuration_template)|Configuration Template for this suite|
+|[AAP Configuration Template](https://github.com/redhat-cop/aap_configuration_template)|Configuration Template for this suite|
 
 ## Included content
 
