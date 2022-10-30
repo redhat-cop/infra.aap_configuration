@@ -1,4 +1,6 @@
 ---
+controller_configuration_inventory_source_update_async_retries: 60
+controller_configuration_inventory_source_update_async_delay: 2
 controller_inventory_sources:
   - name: RHVM-01
     source: scm
