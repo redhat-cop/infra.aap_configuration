@@ -1,4 +1,6 @@
 ---
+controller_configuration_projects_async_retries: 60
+controller_configuration_projects_async_delay: 2
 controller_projects:
   - name: Test Project
     scm_type: git
