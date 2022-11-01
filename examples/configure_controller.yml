@@ -128,13 +128,13 @@
 
     - name: "Error out on empty list"
       ansible.builtin.set_fact:
-        error_empty_diff: "{{ lookup('controller_object_diff', api_list=controller_api_results, compare_list=differential_test_items, warn_on_empty_api=false) }}"
+        error_empty_diff: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff', api_list=controller_api_results, compare_list=differential_test_items, warn_on_empty_api=false) }}"
       ignore_errors: true
       register: error_results
 
     - name: "Warn out on empty list"
       ansible.builtin.set_fact:
-        warn_empty_diff: "{{ lookup('controller_object_diff', api_list=controller_api_results, compare_list=differential_test_items) }}"
+        warn_empty_diff: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff', api_list=controller_api_results, compare_list=differential_test_items) }}"
       register: warn_results
 
     - name: "Assert that the empty list error correctly"
