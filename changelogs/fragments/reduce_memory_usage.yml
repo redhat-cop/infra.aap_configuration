@@ -1,7 +1,0 @@
----
-bugfixes:
-  - Reduce the memory usage on the filetree_create role.
-minor_changes:
-  - Organize the output in directories (one per each object type).
-  - Add the current object ID to the corresponding output yaml filename.
-...

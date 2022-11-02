@@ -5,6 +5,27 @@ redhat_cop.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v2.1.8
+======
+
+Minor Changes
+-------------
+
+- Add a way to detect which of `awx.awx` or `ansible.controller` collection is installed. Added to the playbooks and examples.
+- Add markdown linter
+- Add the current object ID to the corresponding output yaml filename.
+- Fix all linter reported errors
+- Move linter configurations to root directory
+- Organize the output in directories (one per each object type).
+- Remove json_query and jmespath dependency from filetree_create role.
+- Update linter versions
+
+Bugfixes
+--------
+
+- Fixed optional lists to default to omit if the list is empty.
+- Reduce the memory usage on the filetree_create role.
+
 v2.1.7
 ======
 
