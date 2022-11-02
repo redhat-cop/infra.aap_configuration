@@ -297,3 +297,25 @@ releases:
     - inventory_sources.yml
     - schedule_role.yml
     release_date: '2022-08-30'
+  2.1.8:
+    changes:
+      bugfixes:
+      - Fixed optional lists to default to omit if the list is empty.
+      - Reduce the memory usage on the filetree_create role.
+      minor_changes:
+      - Add a way to detect which of `awx.awx` or `ansible.controller` collection
+        is installed. Added to the playbooks and examples.
+      - Add markdown linter
+      - Add the current object ID to the corresponding output yaml filename.
+      - Fix all linter reported errors
+      - Move linter configurations to root directory
+      - Organize the output in directories (one per each object type).
+      - Remove json_query and jmespath dependency from filetree_create role.
+      - Update linter versions
+    fragments:
+    - awx_awx-ansible_controller-independence.yml
+    - default_list_changes.yml
+    - reduce_memory_usage.yml
+    - remove_json_query_dependency.yml
+    - update_linting.yml
+    release_date: '2022-11-02'
