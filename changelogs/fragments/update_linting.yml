@@ -1,7 +1,0 @@
----
-minor_changes:
-    - Update linter versions
-    - Move linter configurations to root directory
-    - Add markdown linter
-    - Fix all linter reported errors
-...

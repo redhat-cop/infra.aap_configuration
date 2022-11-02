@@ -1,4 +1,0 @@
----
-minor_changes:
-    - Add a way to detect which of `awx.awx` or `ansible.controller` collection is installed. Added to the playbooks and examples.
-...
