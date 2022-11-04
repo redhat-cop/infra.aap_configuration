@@ -3,8 +3,8 @@
 
 - name: Ensure manifest is set
   ansible.builtin.assert:
-    that: controller_license.manifest_file is defined or controller_license.manifest is defined or controller_license.manifest_url is defined or controller_license.manifest_content is defined
-    fail_msg: "Must set a source for the manifest. Please set 'manifest_file', 'manifest_url' or 'manifest_content'"
+    that: controller_license.manifest_file is defined or controller_license.manifest is defined or controller_license.manifest_url is defined or controller_license.manifest_content is defined or controller_license.pool_id is defined
+    fail_msg: "Must set a source for the manifest or pool. Please set 'manifest_file', 'manifest_url', 'manifest_content', or 'pool_id'"
 
 - name: Move manifest file to temporary location
   ansible.builtin.copy:
@@ -39,8 +39,9 @@
 
 - name: Install the Controller license
   license:
-    manifest:                       "{{ __controller_manifest_path }}"
+    manifest:                       "{{ __controller_manifest_path | default(omit) }}"
     eula_accepted:                  "{{ controller_license.eula_accepted | default(omit) }}"  # Depreciated only for Tower 3.8.x or lower
+    pool_id:                        "{{ controller_license.pool_id | default(omit) }}"
     force:                          "{{ controller_license.force | default(omit) }}"
 
     # Role Standard Options

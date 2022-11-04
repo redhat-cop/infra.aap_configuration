@@ -16,6 +16,13 @@ controller_templates:
     verbosity: 2
     extra_vars:
       target_hosts: infra-ansible-tower-01.example.com
+    ask_execution_environment_on_launch: true
+    ask_forks_on_launch: true
+    ask_instance_groups_on_launch: true
+    ask_job_slice_count_on_launch: true
+    ask_labels_on_launch: true
+    ask_timeout_on_launch: true
+    prevent_instance_group_fallback: true
   - name: Demo Job Template
     project: Test Project
     job_type: run
@@ -26,6 +33,14 @@ controller_templates:
     verbosity: 0
     inventory: localhost
     execution_environment: "My EE"
+    ask_inventory_on_launch: true
+    ask_execution_environment_on_launch: true
+    ask_forks_on_launch: true
+    ask_instance_groups_on_launch: true
+    ask_job_slice_count_on_launch: true
+    ask_labels_on_launch: true
+    ask_timeout_on_launch: true
+    prevent_instance_group_fallback: true
     survey_spec:
       name: ''
       description: ''
