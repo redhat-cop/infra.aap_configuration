@@ -72,6 +72,11 @@ This also speeds up the overall role.
 |`inventory`|""|no|str|Inventory applied as a prompt, assuming job template prompts for inventory|
 |`limit`|""|no|str|Limit applied as a prompt, assuming job template prompts for limit|
 |`labels`|""|no|str|The labels applied to this job template|
+|`ask_labels_on_launch`|""|no|bool|Prompt user for labels on launch.|
+|`job_tags`|""|no|str|Comma separated list of the tags to use for the workflow job template.|
+|`skip_tags`|""|no|str|Comma separated list of the tags to skip for the workflow job template.|
+|`ask_tags_on_launch`|""|no|bool|Prompt user for job tags on launch.|
+|`ask_skip_tags_on_launch`|""|no|bool|Prompt user for job tags to skip on launch.|
 |`notification_templates_approvals`|""|no|list|The notifications on approval to use for this organization in a list.|
 |`notification_templates_error`|""|no|list|The notifications on error to use for this organization in a list.|
 |`notification_templates_started`|""|no|list|The notifications on started to use for this organization in a list.|
@@ -93,6 +98,13 @@ This also speeds up the overall role.
 |`workflow_job_template`|""|yes|str|The workflow job template the node exists in. Used for looking up the node, cannot be modified after creation.|
 |`identifier`|""|yes|str|An identifier for this node that is unique within its workflow. It is copied to workflow job nodes corresponding to this node. This functions the same as the name field for other resources, however if it is not set, it will be set to a random UUID4 value. Recommended to use Column and row numbers for identifiers such as Node401. [Refer to this documentation for more](https://github.com/ansible/awx/blob/devel/docs/workflow.md)|
 |`unified_job_template`|""|no|str|Name of unified job template to run in the workflow. Can be a job template, project, inventory source, etc. This parameter is mutually exclusive with approval_node.|
+|`lookup_organization`|""|no|str|Organization the inventories, job templates, projects, or workflows the items exists in. Used to help lookup the object, for organization roles see organization. If not provided, will lookup by name only, which does not work with duplicates.|
+|`execution_environment`|Job Template default|no|str|Execution Environment applied as a prompt. Job Template default used if not set. Only allowed if `ask_execution_environment_on_launch` set to true on Job Template|
+|`forks`|Job Template default|no|str|Forks applied as a prompt. Job Template default used if not set. Only allowed if `ask_forks_on_launch` set to true on Job Template|
+|`instance_groups`|Job Template default|no|str| List of Instance Groups applied as a prompt. Job Template default used if not set. Only allowed if `ask_instance_groups_on_launch` set to true on Job Template|
+|`job_slice_count`|Job Template default|no|str|Job Slice Count to use in the job run. Job Template default used if not set. Only allowed if `ask_job_slice_count_on_launch` set to true on Job Template|
+|`labels`|Job Template default|no|list|List of labels to use in the job run. Job Template default used if not set. Only allowed if `ask_labels_on_launch` set to true on Job Template|
+|`timeout`|Job Template default|no|str|Timeout to use in the job run. Job Template default used if not set. Only allowed if `ask_timeout_on_launch` set to true on Job Template|
 |`approval_node`|""|no|str|A dictionary of Name, description, and timeout values for the approval node. This parameter is mutually exclusive with unified_job_template.|
 |`organization`|""|no|str|The organization of the workflow job template the node exists in. Used for looking up the workflow, not a direct model field.|
 |`all_parents_must_converge`|""|no|bool|If enabled then the node will only run if all of the parent nodes have met the criteria to reach this node|

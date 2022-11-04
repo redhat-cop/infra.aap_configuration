@@ -90,6 +90,13 @@ This also speeds up the overall role.
 |`ask_verbosity_on_launch`|""|no|bool|Prompt user to choose a verbosity level on launch.|
 |`ask_inventory_on_launch`|""|no|bool|Prompt user for inventory on launch.|
 |`ask_credential_on_launch`|""|no|bool|Prompt user for credential on launch.|
+|`ask_execution_environment_on_launch`|""|no|bool|Prompt user for execution environment on launch.|
+|`ask_forks_on_launch`|""|no|bool|Prompt user for forks on launch.|
+|`ask_instance_groups_on_launch`|""|no|bool|Prompt user for instance groups on launch.|
+|`ask_job_slice_count_on_launch`|""|no|bool|Prompt user for job slice count on launch.|
+|`ask_labels_on_launch`|""|no|bool|Prompt user for labels on launch.|
+|`ask_timeout_on_launch`|""|no|bool|Prompt user for timeout on launch.|
+|`prevent_instance_group_fallback`|""|no|bool|Prevent falling back to instance groups set on the associated inventory or organization.|
 |`survey_enabled`|""|no|bool|Enable a survey on the job template.|
 |`survey_spec`|""|no|dict|JSON/YAML dict formatted survey definition.|
 |`survey`|""|no|dict|JSON/YAML dict formatted survey definition. Alias of survey_spec|

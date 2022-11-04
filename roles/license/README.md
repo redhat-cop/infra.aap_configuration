@@ -50,6 +50,7 @@ controller_configuration_license_secure_logging defaults to the value of control
 |`manifest`|""|no|obj|DEPRECATED - changed to `manifest_file` (still works as an alias)|
 |`manifest_username`|""|no|obj|Optional username for access to `manifest_url`|
 |`manifest_password`|""|no|obj|Optional password for access to `manifest_url`|
+|`pool_id`|""|no|str|Red Hat or Red Hat Satellite pool_id to attach to|
 |`eula_accepted`|""|yes|bool|DEPRECATED since Tower 3.8 - Whether to accept the End User License Agreement for Ansible controller|
 |`force`|`False`|no|bool|By default, the license manifest will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.|
 

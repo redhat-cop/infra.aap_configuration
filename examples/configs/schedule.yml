@@ -8,4 +8,12 @@ controller_schedules:
     description: Another demonstration
     unified_job_template: Demo Job Template
     rrule: "DTSTART:20200101T000000Z RRULE:FREQ=HOURLY;INTERVAL=3"
+    execution_environment: My EE
+    forks: 2
+    instance_groups:
+      - test_instance_group
+    labels:
+      - differential
+      - differential2
+    timeout: 165
 ...

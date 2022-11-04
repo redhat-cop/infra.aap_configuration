@@ -66,6 +66,13 @@ This also speeds up the overall role.
 |`inventory`|""|no|str|Inventory applied to job template, assuming the job template prompts for an inventory.|
 |`credentials`|""|no|list|List of credentials applied as a prompt, assuming job template prompts for credentials|
 |`scm_branch`|Project default|no|str|Branch to use in the job run. Project default used if not set. Only allowed if `allow_override` set to true on project|
+|`execution_environment`|Job Template default|no|str|Execution Environment applied as a prompt. Job Template default used if not set. Only allowed if `ask_execution_environment_on_launch` set to true on Job Template|
+|`forks`|Job Template default|no|str|Forks applied as a prompt. Job Template default used if not set. Only allowed if `ask_forks_on_launch` set to true on Job Template|
+|`instance_groups`|Job Template default|no|str| List of Instance Groups applied as a prompt. Job Template default used if not set. Only allowed if `ask_instance_groups_on_launch` set to true on Job Template|
+|`job_slice_count`|Job Template default|no|str|Job Slice Count to use in the job run. Job Template default used if not set. Only allowed if `ask_job_slice_count_on_launch` set to true on Job Template|
+|`labels`|Job Template default|no|list|List of labels to use in the job run. Job Template default used if not set. Only allowed if `ask_labels_on_launch` set to true on Job Template|
+|`timeout`|Job Template default|no|str|Timeout to use in the job run. Job Template default used if not set. Only allowed if `ask_timeout_on_launch` set to true on Job Template|
+
 |`job_type`|Job template default|no|str|The job type used for the job template.|
 |`job_tags`|""|no|str|Comma separated list of tags to apply to the job|
 |`skip_tags`|""|no|str|Comma separated list of tags to skip for the job|
