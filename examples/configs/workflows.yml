@@ -33,9 +33,8 @@ controller_workflows:
       - all_parents_must_converge: false
         identifier: node201
         unified_job_template: test-template-1
-        forks: 2
         instance_groups:
-          - test_instance_group
+          - default
         labels:
           - differential
           - differential2

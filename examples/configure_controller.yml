@@ -44,9 +44,13 @@
         validate_certs: "{{ controller_validate_certs }}"
       register: result
       until: result.status == 200
-      retries: 20
+      retries: 10
       delay: 30
       ignore_errors: true
+
+    - name: "Show result of ping"
+      ansible.builtin.debug:
+        var: result
 
     - name: Sleep for 60 seconds and allow awx to come up.
       ansible.builtin.wait_for:
