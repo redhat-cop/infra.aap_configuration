@@ -86,6 +86,7 @@ The role will strip the double space between the curly bracket in order to provi
 |`variables`|`False`|no|Variables for the inventory.|
 |`kind`|`False`|no|The kind of inventory. Currently choices are '' and 'smart'|
 |`host_filter`|`False`|no|The host filter field, useful only when 'kind=smart'|
+|`prevent_instance_group_fallback`|`False`|no|Prevent falling back to instance groups set on the organization|
 |`state`|`present`|no|Desired state of the resource.|
 
 ### Standard Inventory Data Structure

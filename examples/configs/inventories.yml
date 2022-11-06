@@ -16,6 +16,7 @@ controller_inventories:
   - name: RHVM-02
     organization: Satellite
     description: created by Ansible Playbook - for RHVM-02
+    prevent_instance_group_fallback: true
   - name: Test Inventory - Smart
     organization: Default
     description: created by Ansible Playbook
