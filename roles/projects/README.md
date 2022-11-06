@@ -69,6 +69,7 @@ This also speeds up the overall role.
 |`scm_branch`|""|no|The branch to use for the SCM resource.|
 |`scm_refspec`|""|no|The refspec to use for the SCM resource.|
 |`credential`|""|no|Name of the credential to use with this SCM resource.|
+|`signature_validation_credential`|""|no|Name of the credential to use for signature validation. If signature validation credential is provided, signature validation will be enabled.|
 |`scm_clean`|""|no|Remove local modifications before updating.|
 |`scm_delete_on_update`|""|no|Remove the repository completely before updating.|
 |`scm_track_submodules`|""|no|Track submodules latest commit on specified branch.|

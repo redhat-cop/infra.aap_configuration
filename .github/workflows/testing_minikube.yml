@@ -8,18 +8,12 @@ jobs:
     name: Deploy Tower to Minikube and run tests
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout awx operator
-        uses: actions/checkout@v2
-        with:
-          repository: ansible/awx-operator
 
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          path: controller_configuration
 
       - name: "Install dependencies"
-        run: pip install -r controller_configuration/.github/requirements.txt
+        run: pip install -r .github/requirements.txt
 
       - name: Setup Minikube
         uses: manusa/actions-setup-minikube@v2.4.2
@@ -35,17 +29,27 @@ jobs:
 
       - name: Setup awx operator
         run: |
-          minikube kubectl get deployments
           minikube kubectl create secret generic awx-admin-password -- --from-literal=password=password
           minikube addons enable ingress
           alias kubectl="minikube kubectl --"
-          make deploy NAMESPACE=default
-          kubectl apply -f controller_configuration/.github/workflow-config/kube/awx_def.yml
+
+      - name: kustomize awx operator
+        working-directory: .github/workflow-config
+        run: kustomize build . | kubectl apply -f -
 
       - name: Wait / Sleep
         uses: jakejarvis/wait-action@v0.1.0
         with:
-          time: '180s'
+          time: '30s'
+
+      - name: kustomize awx
+        working-directory: .github/workflow-config/kube
+        run: kustomize build . | kubectl apply -f -
+
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '30s'
 
       - name: Check service URL
         uses: nick-invision/retry@v2
@@ -68,14 +72,8 @@ jobs:
       - name: Display Versions
         run: which python && pip --version && ansible --version
 
-      - name: Checkout
-        uses: actions/checkout@v2
-
       - name: "Install Galaxy dependencies"
         run: ansible-galaxy collection install -r .github/collections/requirements.yml
-
-      - name: Check service password
-        run: echo "Service password is ${{ steps.service-password.outputs.SERVICEPASSWORD }}"
 
       - name: "Perform playbook tests"
         run: ansible-playbook examples/configure_controller.yml -e controller_hostname=${{ steps.service-url.outputs.SERVICEURL }}

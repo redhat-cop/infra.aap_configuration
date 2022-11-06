@@ -57,6 +57,12 @@ controller_configuration_job_launch_secure_logging defaults to the value of cont
 |`verbosity`|""|no|int|Verbosity level for this job run.|
 |`diff_mode`|""|no|str|Show the changes made by Ansible tasks where supported.|
 |`credential_passwords`|""|no|str|Passwords for credentials which are set to prompt on launch.|
+|`execution_environment`|Job Template default|no|str|Execution Environment applied as a prompt. Job Template default used if not set. Only allowed if `ask_execution_environment_on_launch` set to true on Job Template|
+|`forks`|Job Template default|no|str|Forks applied as a prompt. Job Template default used if not set. Only allowed if `ask_forks_on_launch` set to true on Job Template|
+|`instance_groups`|Job Template default|no|str| List of Instance Groups applied as a prompt. Job Template default used if not set. Only allowed if `ask_instance_groups_on_launch` set to true on Job Template|
+|`job_slice_count`|Job Template default|no|str|Job Slice Count to use in the job run. Job Template default used if not set. Only allowed if `ask_job_slice_count_on_launch` set to true on Job Template|
+|`labels`|Job Template default|no|list|List of labels to use in the job run. Job Template default used if not set. Only allowed if `ask_labels_on_launch` set to true on Job Template|
+|`job_timeout`|Job Template default|no|str|Timeout to use in the job run. Job Template default used if not set. Only allowed if `ask_timeout_on_launch` set to true on Job Template|
 |`wait`|""|no|bool|Wait for the job to complete.|
 |`interval`|2|no|int|The interval to request an update from controller.|
 |`timeout`|""|no|int|If waiting for the job to complete this will abort after this amount of seconds.|
