@@ -163,7 +163,7 @@ controller_inventory_sources:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.inventory_sources, when: controller_inventory_sources is defined}
+    - {role: infra.controller_configuration.inventory_sources, when: controller_inventory_sources is defined}
 ```
 
 ## License

@@ -7,7 +7,7 @@
     controller_validate_certs: false
   collections:
     - awx.awx
-    - redhat_cop.controller_configuration
+    - infra.controller_configuration
   # Define following vars here, or in configs/controller_auth.yml
   # controller_hostname: controller.example.com
   # controller_username: admin

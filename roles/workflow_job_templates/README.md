@@ -402,7 +402,7 @@ controller_workflows:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.workflow_job_templates, when: controller_workflows is defined}
+    - {role: infra.controller_configuration.workflow_job_templates, when: controller_workflows is defined}
 
 ```
 

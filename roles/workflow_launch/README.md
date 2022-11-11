@@ -85,7 +85,7 @@ controller_workflow_launch_jobs:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.workflow_launch, when: controller_workflow_launch_jobs is defined}
+    - {role: infra.controller_configuration.workflow_launch, when: controller_workflow_launch_jobs is defined}
 
 ```
 

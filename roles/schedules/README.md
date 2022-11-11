@@ -138,7 +138,7 @@ controller_schedules:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.schedules, when: controller_schedules is defined}
+    - {role: infra.controller_configuration.schedules, when: controller_schedules is defined}
 ```
 
 ## License

@@ -32,7 +32,7 @@
         - always
 
   roles:
-    - redhat_cop.controller_configuration.filetree_create
+    - infra.controller_configuration.filetree_create
 
   post_tasks:
     - name: "Delete the Authentication Token used"

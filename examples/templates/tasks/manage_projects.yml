@@ -6,7 +6,7 @@
     - alltags
 
 - import_role:
-    name: redhat_cop.controller_configuration.projects
+    name: infra.controller_configuration.projects
   tags:
     - projects
     - alltags

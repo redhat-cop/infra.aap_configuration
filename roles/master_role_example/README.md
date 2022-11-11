@@ -101,7 +101,7 @@ This also speeds up the overall role.
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.license, when: controller_license is defined}
+    - {role: infra.controller_configuration.license, when: controller_license is defined}
 ```
 
 ## License

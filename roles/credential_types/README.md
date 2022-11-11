@@ -219,7 +219,7 @@ controller_credential_types:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.credential_types, when: controller_credential_types is defined}
+    - {role: infra.controller_configuration.credential_types, when: controller_credential_types is defined}
 ```
 
 ## License

@@ -17,13 +17,13 @@ Currently:
 The following command will invoke the playbook with the awx collection
 
 ```console
-ansible-playbook redhat_cop.controller_configuration.configure_awx.yml
+ansible-playbook infra.controller_configuration.configure_awx.yml
 ```
 
 The following command will invoke the playbook with the ansible.controller collection
 
 ```console
-ansible-playbook redhat_cop.controller_configuration.configure_controller.yml
+ansible-playbook infra.controller_configuration.configure_controller.yml
 ```
 
 ## Examples

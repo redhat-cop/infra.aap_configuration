@@ -136,7 +136,7 @@ controller_hosts:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.hosts, when: controller_hosts is defined}
+    - {role: infra.controller_configuration.hosts, when: controller_hosts is defined}
 ```
 
 ## License

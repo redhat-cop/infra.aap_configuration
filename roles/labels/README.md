@@ -113,7 +113,7 @@ controller_labels:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.labels, when: controller_labels is defined}
+    - {role: infra.controller_configuration.labels, when: controller_labels is defined}
 ```
 
 ## License

@@ -87,7 +87,7 @@ controller_ad_hoc_commands_cancel:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.ad_hoc_command_cancel, when: controller_ad_hoc_commands is defined}
+    - {role: infra.controller_configuration.ad_hoc_command_cancel, when: controller_ad_hoc_commands is defined}
 ```
 
 ## License

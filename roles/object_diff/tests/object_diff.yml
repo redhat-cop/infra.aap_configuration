@@ -32,8 +32,8 @@
       tags:
         - always
   roles:
-    - redhat_cop.controller_configuration.filetree_read
-    - redhat_cop.controller_configuration.object_diff
+    - infra.controller_configuration.filetree_read
+    - infra.controller_configuration.object_diff
 
   post_tasks:
     - name: "Delete the Authentication Token used"

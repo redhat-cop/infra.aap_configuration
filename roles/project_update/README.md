@@ -114,7 +114,7 @@ controller_projects:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.project_update, when: controller_projects is defined}
+    - {role: infra.controller_configuration.project_update, when: controller_projects is defined}
 
 ```
 

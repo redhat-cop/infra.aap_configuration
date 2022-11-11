@@ -6,7 +6,7 @@
     - alltags
 
 - import_role:
-    name: redhat_cop.controller_configuration.workflow_job_templates
+    name: infra.controller_configuration.workflow_job_templates
   tags:
     - workflows
     - alltags

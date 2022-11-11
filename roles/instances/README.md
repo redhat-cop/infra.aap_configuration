@@ -98,7 +98,7 @@ controller_instances:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.instances, when: controller_instances is defined}
+    - {role: infra.controller_configuration.instances, when: controller_instances is defined}
 ```
 
 ## License

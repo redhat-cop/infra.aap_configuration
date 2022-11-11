@@ -1,0 +1,26 @@
+---
+namespace: infra
+name: controller_configuration
+version: 2.1.9
+description: A collection of roles to manage Ansible Controller
+readme: README.md
+authors:
+    - Tom Page @Tompage1994
+    - Sean Sullivan @sean-m-sullivan
+    - David Danielsson @djdanielsson
+repository: https://github.com/redhat-cop/controller_configuration
+issues: https://github.com/redhat-cop/controller_configuration/issues
+build_ignore:
+    - galaxy.yml.j2
+    - release.yml
+    - .github
+    - .ansiblelint.yml
+    - .yamllint.yml
+license:
+    - GPL-3.0-or-later
+tags:
+    - controller
+    - collection
+    - controller_configuration
+    - automation_platform
+...

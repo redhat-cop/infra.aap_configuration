@@ -162,7 +162,7 @@ controller_organizations:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.organizations, when: controller_organizations is defined}
+    - {role: infra.controller_configuration.organizations, when: controller_organizations is defined}
 ```
 
 ## License
