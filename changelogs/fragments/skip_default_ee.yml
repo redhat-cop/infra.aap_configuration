@@ -1,0 +1,2 @@
+minor_changes:
+  - created variable assign_default_ee_to_org to skip adding default ee to orgs for first time creation.
