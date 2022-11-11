@@ -319,3 +319,13 @@ releases:
     - remove_json_query_dependency.yml
     - update_linting.yml
     release_date: '2022-11-02'
+  2.1.9:
+    changes:
+      major_changes:
+      - Added instance role to add instances using the new awx.awx.instance module.
+      minor_changes:
+      - Update options on inventories, job templates, liscence, projects, schedules,
+        and workflow_job_templates roles to match latest awx.awx release
+    fragments:
+    - update_options.yml
+    release_date: '2022-11-11'

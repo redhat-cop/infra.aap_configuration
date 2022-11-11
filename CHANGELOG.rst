@@ -5,6 +5,19 @@ redhat_cop.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v2.1.9
+======
+
+Major Changes
+-------------
+
+- Added instance role to add instances using the new awx.awx.instance module.
+
+Minor Changes
+-------------
+
+- Update options on inventories, job templates, liscence, projects, schedules, and workflow_job_templates roles to match latest awx.awx release
+
 v2.1.8
 ======
 
