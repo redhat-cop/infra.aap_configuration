@@ -1,7 +1,0 @@
----
-minor_changes:
-  - Update options on inventories, job templates, liscence, projects, schedules, and workflow_job_templates roles to match latest awx.awx release
-
-major_changes:
-  - Added instance role to add instances using the new awx.awx.instance module.
-...
