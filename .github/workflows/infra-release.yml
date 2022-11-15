@@ -1,0 +1,69 @@
+---
+name: tarball-release
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      ANSIBLE_FORCE_COLOR: 1
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: redhat_cop tarball creation
+        run: ansible-playbook .github/workflow-config/release_tarball.yml
+          -e namespace=${{ github.repository_owner }}
+          -e github_tag=${{ github.ref_name }}
+          -e collection_repo=https://github.com/${{ github.repository }}
+          --verbose --skip-tags=install,cleanup
+
+      - name: infra tarball creation
+        run: ansible-playbook .github/workflow-config/release_tarball.yml
+          -e namespace=infra
+          -e github_tag=${{ github.ref_name }}
+          -e collection_repo=https://github.com/${{ github.repository }}
+          --verbose --skip-tags=install,cleanup
+
+      - name: run ls
+        run: ls
+
+      - name: Set namespace
+        run: |
+          echo "NAMESPACE=$(sed 's/-/_/g' <<< ${{ github.repository_owner }})" >> $GITHUB_OUTPUT
+        id: namespace
+
+      - name: Display namespace
+        run: echo "namespace is ${{ steps.namespace.outputs.NAMESPACE }}"
+
+      - name: run ls
+        run: ls
+
+      - name: Upload files to tag
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: infra-controller_configuration-${{ github.ref_name }}.tar.gz
+          tag: ${{ github.ref }}
+          overwrite: true
+
+      - name: Upload files to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ steps.namespace.outputs.NAMESPACE }}-controller_configuration-${{ github.ref_name }}.tar.gz
+          tag: ${{ github.ref }}
+          overwrite: true
+
+...
