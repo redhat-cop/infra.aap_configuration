@@ -1,0 +1,5 @@
+breaking_changes:
+  - rewrote playbooks/controller_configure.yml and removed all other playbooks
+
+minor_changes:
+  - removed all examples from repo outside of readmes

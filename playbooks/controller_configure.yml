@@ -1,0 +1,17 @@
+---
+- name: Playbook to configure ansible controller post installation
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Include vars from configs directory
+      ansible.builtin.include_vars:
+        dir: "{{ controller_configs_dir | default((lookup('env', 'CONTROLLER_CONFIGS_DIR') == '') | ternary('./configs', lookup('env', 'CONTROLLER_CONFIGS_DIR'))) }}"
+        ignore_files: [controller_config.yml.template]
+        extensions: ["yml"]
+      tags:
+        - always
+
+    - name: Call dispatch role
+      ansible.builtin.include_role:
+        name: infra.controller_configuration.dispatch
+...
