@@ -5,7 +5,7 @@
 
 - name: "Find the difference between what is on the Controller versus curated list of {{ differential_item.name }}"
   ansible.builtin.set_fact:
-    set_absent_diff: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff', api_list=controller_api_results, compare_list=differential_item.differential_test_items, with_present=differential_item.with_present) }}"
+    set_absent_diff: "{{ lookup('controller_object_diff', api_list=controller_api_results, compare_list=differential_item.differential_test_items, with_present=differential_item.with_present) }}"
 
 - name: Display set_absent_diff
   ansible.builtin.debug:
