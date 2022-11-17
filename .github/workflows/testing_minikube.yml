@@ -76,8 +76,8 @@ jobs:
         run: ansible-galaxy collection install -r .github/collections/requirements.yml
 
       - name: "Perform playbook tests"
-        run: ansible-playbook examples/configure_controller.yml -e controller_hostname=${{ steps.service-url.outputs.SERVICEURL }}
+        run: ansible-playbook .github/tests/configure_controller.yml -e controller_hostname=${{ steps.service-url.outputs.SERVICEURL }}
 
       - name: "Perform export model playbook tests"
-        run: ansible-playbook examples/configure_controller_export_model.yml -e controller_hostname=${{ steps.service-url.outputs.SERVICEURL }}
+        run: ansible-playbook .github/tests/configure_controller_export_model.yml -e controller_hostname=${{ steps.service-url.outputs.SERVICEURL }}
 ...
