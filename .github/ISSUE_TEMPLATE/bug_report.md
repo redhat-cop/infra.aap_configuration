@@ -67,3 +67,5 @@ Include a [minimum complete verifiable example] with:
 ```paste below
 
 ```
+
+[minimum complete verifiable example]: http://stackoverflow.com/help/mcve
