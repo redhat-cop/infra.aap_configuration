@@ -1,0 +1,13 @@
+---
+# Ref: https://help.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository#configuring-the-template-chooser
+blank_issues_enabled: false # default is true
+contact_links:
+  - name: Feature requests
+    url: https://github.com/redhat-cop/ah_configuration/discussions/categories/ideas
+    about: Suggest an idea for this project
+  - name: Discussions
+    url: https://github.com/redhat-cop/ah_configuration/discussions
+    about: Any kind of questions should go on the forum.
+  - name: Ansible Code of Conduct
+    url: https://docs.ansible.com/ansible/latest/community/code_of_conduct.html
+    about: Be nice to other members of the community. Behave.

@@ -5,7 +5,7 @@
   connection: local
   vars:
     collection_namespace: "{{ namespace  | lower | regex_replace('-','_') }}"
-    collection_name: controller_configuration
+    collection_name: ah_configuration
     collection_version: "{{ github_tag | regex_search('(\\d.\\d.\\d.*)') }}"
     collection_repo:  undef
     api_key: undef

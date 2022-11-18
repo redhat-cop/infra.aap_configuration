@@ -19,6 +19,10 @@ Python's pre-commit tool can be installed, and hooks installed, to cleanup white
 
 Please see pre-commit documentation for further explanation: [Pre-commit](https://pre-commit.com/)
 
+## Automation Hub API Spec
+
+ For development purposes it can help to have a version of the Automation Hub API spec available to you. You can find this by navigating to `https://<AH_HOST>/api/galaxy/v3/openapi.yaml`. VSCode extensions exist to render this file using Swagger.
+
 ## Submit a Pull Request
 
 If you feel like getting your hands dirty, feel free to make the change yourself. Here's how:
@@ -37,6 +41,25 @@ See [Using Pull Requests](https://help.github.com/articles/using-pull-requests/)
 
 For an in depth guide on how to contribute see [this article](https://opensource.com/article/19/7/create-pull-request-github)
 
-## Automation Hub API Spec
+Note that we follow the [Automation Good Practices](https://redhat-cop.github.io/automation-good-practices) and so are you expected to do.
 
-For development purposes it can help to have a version of the Automation Hub API spec available to you. You can find this by navigating to `https://<AH_HOST>/api/galaxy/v3/openapi.yaml`. VSCode extensions exist to render this file using Swagger.
+Use Github [discussions] forum or for a live chat experience try
+Matrix room [#aap_config_as_code:ansible.com](https://matrix.to/#/#aap_config_as_code:ansible.com).
+
+For the full list of Ansible IRC and Mailing list, please see the
+[Ansible Communication] page.
+Release announcements will be made to the [Ansible Announce] list.
+
+Possible security bugs should be reported via email
+to <mailto:security@ansible.com>.
+
+## Code of Conduct
+
+As with all Ansible projects, we have a [Code of Conduct].
+
+[ansible announce](https://groups.google.com/forum/#!forum/ansible-announce)
+[ansible communication](https://docs.ansible.com/ansible/latest/community/communication.html)
+[code of conduct](https://docs.ansible.com/ansible/latest/community/code_of_conduct.html)
+[creating your fork on github](https://guides.github.com/activities/forking/)
+[discussions](https://github.com/redhat-cop/ah_configuration/discussions)
+[supported ansible versions](https://docs.ansible.com/ansible-core/devel/reference_appendices/release_and_maintenance.html#ansible-core-release-cycle)

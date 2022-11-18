@@ -54,7 +54,7 @@ If the functionality of Automation Hub is extended in the future, and more varia
 ### Secure Logging Variables
 
 The role defaults to False as normally most projects task does not include sensitive information.
-Each role the dispatch role calls has a separate variable which can be turned on to enforce secure logging for that role but defaults to the value of controller_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it. If neither value is set then each role has a default value of true or false depending on the Red Hat COP suggestions.
+Each role the dispatch role calls has a separate variable which can be turned on to enforce secure logging for that role but defaults to the value of ah_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it. If neither value is set then each role has a default value of true or false depending on the Red Hat COP suggestions.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
