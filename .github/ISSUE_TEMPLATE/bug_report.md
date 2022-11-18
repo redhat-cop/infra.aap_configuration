@@ -37,18 +37,6 @@ Controller version
 
 <!--- Provide all relevant information below, e.g. target OS versions, network device firmware, etc. -->
 
-# STEPS TO REPRODUCE
-
-<!--- Describe exactly how to reproduce the problem, using a minimal test-case -->
-
-<!--- Paste example playbooks or commands between triple backticks below -->
-
-```console (paste below)
-
-```
-
-<!--- HINT: You can paste gist.github.com links for larger files -->
-
 # Desired Behavior
 
 <!--- Describe what you expected to happen when running the steps above -->
@@ -60,12 +48,31 @@ Controller version
 Please give some details of what is actually happening.
 Include a [minimum complete verifiable example] with:
 
-- playbook
+- playbook / task
+- configuration file / list
+- error
 
 <!--- Paste verbatim command output between triple backticks -->
 
-```paste below
+```console (error)
 
 ```
+
+# STEPS TO REPRODUCE
+
+<!--- Describe exactly how to reproduce the problem, using a minimal test-case -->
+
+<!--- Paste example playbooks or commands between triple backticks below -->
+
+```yaml (playbook/task)
+
+```
+
+```yaml (config/list/array/variables)
+
+```
+
+<!--- HINT: You can paste gist.github.com links for larger files -->
+
 
 [minimum complete verifiable example]: http://stackoverflow.com/help/mcve
