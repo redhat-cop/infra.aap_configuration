@@ -54,9 +54,9 @@ to <mailto:security@ansible.com>.
 
 As with all Ansible projects, we have a [Code of Conduct].
 
-[ansible announce]: https://groups.google.com/forum/#!forum/ansible-announce
-[ansible communication]: https://docs.ansible.com/ansible/latest/community/communication.html
-[code of conduct]: https://docs.ansible.com/ansible/latest/community/code_of_conduct.html
-[creating your fork on github]: https://guides.github.com/activities/forking/
-[discussions]: https://github.com/redhat-cop/controller_configuration/discussions
-[supported ansible versions]: https://docs.ansible.com/ansible-core/devel/reference_appendices/release_and_maintenance.html#ansible-core-release-cycle
+[ansible announce](https://groups.google.com/forum/#!forum/ansible-announce)
+[ansible communication](https://docs.ansible.com/ansible/latest/community/communication.html)
+[code of conduct](https://docs.ansible.com/ansible/latest/community/code_of_conduct.html)
+[creating your fork on github](https://guides.github.com/activities/forking/)
+[discussions](https://github.com/redhat-cop/controller_configuration/discussions)
+[supported ansible versions](https://docs.ansible.com/ansible-core/devel/reference_appendices/release_and_maintenance.html#ansible-core-release-cycle)
