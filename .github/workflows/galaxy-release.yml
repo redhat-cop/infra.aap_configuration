@@ -28,7 +28,7 @@ jobs:
       - name: Publish to galaxy
         run: ansible-playbook .github/workflow-config/release.yml
           -e namespace=${{ github.repository_owner }}
-          -e github_tag=${{ github.ref }}
+          -e github_tag=${{ github.ref_name }}
           -e api_key=${{ secrets.ANSIBLE_GALAXY_APIKEY }}
           -e collection_repo=https://github.com/${{ github.repository }}
           --verbose --skip-tags=install,cleanup
