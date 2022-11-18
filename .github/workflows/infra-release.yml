@@ -54,7 +54,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: infra-controller_configuration-${{ github.ref_name }}.tar.gz
+          file: infra-cah_configuration-${{ github.ref_name }}.tar.gz
           tag: ${{ github.ref }}
           overwrite: true
 
@@ -62,7 +62,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ steps.namespace.outputs.NAMESPACE }}-controller_configuration-${{ github.ref_name }}.tar.gz
+          file: ${{ steps.namespace.outputs.NAMESPACE }}-ah_configuration-${{ github.ref_name }}.tar.gz
           tag: ${{ github.ref }}
           overwrite: true
 
