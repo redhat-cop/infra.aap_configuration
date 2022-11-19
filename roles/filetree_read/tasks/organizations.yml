@@ -8,15 +8,19 @@
 
 - name: "Read Organization definitions"
   ansible.builtin.include_vars:
-    file: "{{ item.path }}"
+    file: "{{ __read_organizations_definitions_item.path }}"
   loop: "{{ __list_files_controller_organizations.files }}"
+  loop_control:
+    loop_var: __read_organizations_definitions_item
   register: __contents_filetree_controller_organizations
 
 - name: "Populate Organizations list"
   ansible.builtin.set_fact:
-    __populate_controller_organizations: "{{ (__populate_controller_organizations | default([])) + item.ansible_facts.controller_organizations }}"
+    __populate_controller_organizations: "{{ (__populate_controller_organizations | default([])) + __populate_organizations_list_item.ansible_facts.controller_organizations }}"
   loop: "{{ __contents_filetree_controller_organizations.results }}"
-  when: __contents_filetree_controller_organizations.results is defined and item.ansible_facts.controller_organizations is defined
+  loop_control:
+    loop_var: __populate_organizations_list_item
+  when: __contents_filetree_controller_organizations.results is defined and __populate_organizations_list_item.ansible_facts.controller_organizations is defined
 
 - name: "Set Organization Data Structure"
   ansible.builtin.set_fact:

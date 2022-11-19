@@ -8,15 +8,19 @@
 
 - name: "Read Teams definitions"
   ansible.builtin.include_vars:
-    file: "{{ item.path }}"
+    file: "{{ __read_teams_definitions_item.path }}"
   loop: "{{ __list_files_controller_teams.files }}"
+  loop_control:
+    loop_var: __read_teams_definitions_item
   register: __contents_filetree_controller_teams
 
 - name: "Populate Teams list"
   ansible.builtin.set_fact:
-    __populate_controller_teams: "{{ (__populate_controller_teams | default([])) + item.ansible_facts.controller_teams }}"
+    __populate_controller_teams: "{{ (__populate_controller_teams | default([])) + __populate_teams_list_item.ansible_facts.controller_teams }}"
   loop: "{{ __contents_filetree_controller_teams.results }}"
-  when: __contents_filetree_controller_teams.results is defined and item.ansible_facts.controller_teams is defined
+  loop_control:
+    loop_var: __populate_teams_list_item
+  when: __contents_filetree_controller_teams.results is defined and __populate_teams_list_item.ansible_facts.controller_teams is defined
 
 - name: "Set Teams Data Structure"
   ansible.builtin.set_fact:

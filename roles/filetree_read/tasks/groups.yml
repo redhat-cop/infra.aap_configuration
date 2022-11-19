@@ -8,15 +8,19 @@
 
 - name: "Read Groups definitions"
   ansible.builtin.include_vars:
-    file: "{{ item.path }}"
+    file: "{{ __read_groups_definitions_item.path }}"
   loop: "{{ __list_files_controller_groups.files }}"
+  loop_control:
+    loop_var: __read_groups_definitions_item
   register: __contents_filetree_controller_groups
 
 - name: "Populate Groups list"
   ansible.builtin.set_fact:
-    __populate_controller_groups: "{{ (__populate_controller_groups | default([])) + item.ansible_facts.controller_groups }}"
+    __populate_controller_groups: "{{ (__populate_controller_groups | default([])) + __populate_groups_list_item.ansible_facts.controller_groups }}"
   loop: "{{ __contents_filetree_controller_groups.results }}"
-  when: __contents_filetree_controller_groups.results is defined and item.ansible_facts.controller_groups is defined
+  loop_control:
+    loop_var: __populate_groups_list_item
+  when: __contents_filetree_controller_groups.results is defined and __populate_groups_list_item.ansible_facts.controller_groups is defined
 
 - name: "Set Groups Data Structure"
   ansible.builtin.set_fact:

@@ -8,15 +8,19 @@
 
 - name: "Read Projects definitions"
   ansible.builtin.include_vars:
-    file: "{{ item.path }}"
+    file: "{{ __read_projects_definitions_item.path }}"
   loop: "{{ __list_files_controller_projects.files }}"
+  loop_control:
+    loop_var: __read_projects_definitions_item
   register: __contents_filetree_controller_projects
 
 - name: "Populate Projects list"
   ansible.builtin.set_fact:
-    __populate_controller_projects: "{{ (__populate_controller_projects | default([])) + item.ansible_facts.controller_projects }}"
+    __populate_controller_projects: "{{ (__populate_controller_projects | default([])) + __populate_projects_list_item.ansible_facts.controller_projects }}"
   loop: "{{ __contents_filetree_controller_projects.results }}"
-  when: __contents_filetree_controller_projects.results is defined and item.ansible_facts.controller_projects is defined
+  loop_control:
+    loop_var: __populate_projects_list_item
+  when: __contents_filetree_controller_projects.results is defined and __populate_projects_list_item.ansible_facts.controller_projects is defined
 
 - name: "Set Projects Data Structure"
   ansible.builtin.set_fact:
