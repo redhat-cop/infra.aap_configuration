@@ -24,7 +24,6 @@
 
 - name: "Segregated Instance Groups list when controller_location is defined"
   block:
-  when: controller_location is defined and __populate_controller_instance_groups is defined
     - name: "Populate Instance Groups list by _common objects"
       ansible.builtin.set_fact:
         __populate_controller_instance_groups_common: "{{ (__populate_controller_instance_groups_common | default([])) + [__populate_instance_groups_list_common_item] }}"
@@ -50,6 +49,7 @@
       ansible.builtin.set_fact:
         __populate_controller_instance_groups: "{{ __populate_controller_instance_groups_total }}"
       when: __populate_controller_instance_groups_total is defined
+  when: controller_location is defined and __populate_controller_instance_groups is defined
 
 - name: "Set Instance Groups Data Structure"
   ansible.builtin.set_fact:
