@@ -22,7 +22,7 @@
     loop_var: __populate_execution_environments_list_item
   when: __contents_filetree_controller_execution_environments.results is defined and __populate_execution_environments_list_item.ansible_facts.controller_execution_environments is defined
 
-- name: "Segrated Execution Environments list when controller_location is defined"
+- name: "Segregated Execution Environments list when controller_location is defined"
   block:
     - name: "Populate Execution Environments list by _common objects"
       ansible.builtin.set_fact:

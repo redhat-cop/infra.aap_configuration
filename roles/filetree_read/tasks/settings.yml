@@ -22,7 +22,7 @@
     loop_var: __populate_settings_list_item
   when: __contents_filetree_controller_settings.results is defined and __populate_settings_list_item.ansible_facts.controller_settings is defined
 
-- name: "Segrated Settings list when controller_location is defined"
+- name: "Segregated Settings list when controller_location is defined"
   block:
     - name: "Populate Settings list by _common objects"
       ansible.builtin.set_fact:
