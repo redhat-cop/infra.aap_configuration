@@ -23,6 +23,7 @@
   when: __contents_filetree_controller_inventory_sources.results is defined and __populate_inventory_sources_list_item.ansible_facts.controller_inventory_sources is defined
 
 - name: "Segregated Inventory Sources list when controller_location is defined"
+  when: controller_location is defined and __populate_controller_inventory_sources is defined
   block:
     - name: "Populate Inventory Sources list by _common objects"
       ansible.builtin.set_fact:
@@ -49,7 +50,6 @@
       ansible.builtin.set_fact:
         __populate_controller_inventory_sources: "{{ __populate_controller_inventory_sources_total }}"
       when: __populate_controller_inventory_sources_total is defined
-  when: controller_location is defined and __populate_controller_inventory_sources is defined
 
 - name: "Set Inventory Sources Data Structure"
   ansible.builtin.set_fact:

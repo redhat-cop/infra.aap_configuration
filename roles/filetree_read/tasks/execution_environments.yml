@@ -23,6 +23,7 @@
   when: __contents_filetree_controller_execution_environments.results is defined and __populate_execution_environments_list_item.ansible_facts.controller_execution_environments is defined
 
 - name: "Segregated Execution Environments list when controller_location is defined"
+  when: controller_location is defined and __populate_controller_execution_environments is defined
   block:
     - name: "Populate Execution Environments list by _common objects"
       ansible.builtin.set_fact:
@@ -49,7 +50,6 @@
       ansible.builtin.set_fact:
         __populate_controller_execution_environments: "{{ __populate_controller_execution_environments_total }}"
       when: __populate_controller_execution_environments_total is defined
-  when: controller_location is defined and __populate_controller_execution_environments is defined
 
 - name: "Set Execution Environments Data Structure"
   ansible.builtin.set_fact:
