@@ -25,24 +25,25 @@
 
     - name: "Sets Organization differences"
       vars:
-        __api_url_users: "api/{{ controller_api_version }}/organizations/{{ __org.name | urlencode }}/users/"
-        __api_url_admins: "api/{{ controller_api_version }}/organizations/{{ __org.name | urlencode }}/admins/"
-        __api_url_inventories: "api/{{ controller_api_version }}/organizations/{{ __org.name | urlencode }}/inventories/"
-        __api_url_teams: "api/{{ controller_api_version }}/organizations/{{ __org.name | urlencode }}/teams/"
-        __api_url_projects: "api/{{ controller_api_version }}/organizations/{{ __org.name | urlencode }}/projects/"
-        __api_url_job_templates: "api/{{ controller_api_version }}/organizations/{{ __org.name | urlencode }}/job_templates/"
-        __api_url_workflow_job_templates: "api/{{ controller_api_version }}/organizations/{{ __org.name | urlencode }}/workflow_job_templates/"
+        __bool_thereare_users: "{{ query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/users/',
+                          host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }}"
+        __bool_thereare_admins: "{{ query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/admins/',
+                           host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }}"
+        __bool_thereare_inventories: "{{ query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/inventories/',
+                                host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }}"
+        __bool_thereare_teams: "{{ query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/teams/',
+                          host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }}"
+        __bool_thereare_projects: "{{ query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/projects/',
+                             host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }}"
+        __bool_thereare_job_templates: "{{ query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/job_templates/',
+                                  host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }}"
+        __bool_thereare_workflow_job_templates: "{{ query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/workflow_job_templates/',
+                                           host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }}"
       ansible.builtin.set_fact:
         controller_organizations: "{{ controller_organizations | combine(__org) }}"
       loop: "{{ __organizations_difference }}"
       loop_control:
         loop_var: __org
       when: protect_not_empty_orgs is not defined or not protect_not_empty_orgs or
-        ( {{ query(controller_api_plugin, __api_url_users, host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }} and
-          {{ query(controller_api_plugin, __api_url_admins, host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }} and
-          {{ query(controller_api_plugin, __api_url_inventories, host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }} and
-          {{ query(controller_api_plugin, __api_url_teams, host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }} and
-          {{ query(controller_api_plugin, __api_url_projects, host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }} and
-          {{ query(controller_api_plugin, __api_url_job_templates, host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }} and
-          {{ query(controller_api_plugin, __api_url_workflow_job_templates, host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }})
+          (__bool_thereare_users and __bool_admins and __bool_inventories and __bool_teams and __bool_projects and __bool_job_templates and __bool_workflow_job_templates)
 ...
