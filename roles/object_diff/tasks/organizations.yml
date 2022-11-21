@@ -25,13 +25,13 @@
 
     - name: "Sets Organization differences"
       vars:
-        __api_url_users: "api/v2/organizations/{{ __org.name}}/users/"
-        __api_url_admins: "api/v2/organizations/{{ __org.name}}/admins/"
-        __api_url_inventories: "api/v2/organizations/{{ __org.name}}/inventories/"
-        __api_url_teams: "api/v2/organizations/{{ __org.name}}/teams/"
-        __api_url_projects: "api/v2/organizations/{{ __org.name}}/projects/"
-        __api_url_job_templates: "api/v2/organizations/{{ __org.name}}/job_templates/"
-        __api_url_workflow_job_templates: "api/v2/organizations/{{ __org.name}}/workflow_job_templates/"
+        __api_url_users: "api/{{ controller_api_version }}/organizations/{{ __org.name | urlencode }}/users/"
+        __api_url_admins: "api/{{ controller_api_version }}/organizations/{{ __org.name | urlencode }}/admins/"
+        __api_url_inventories: "api/{{ controller_api_version }}/organizations/{{ __org.name | urlencode }}/inventories/"
+        __api_url_teams: "api/{{ controller_api_version }}/organizations/{{ __org.name | urlencode }}/teams/"
+        __api_url_projects: "api/{{ controller_api_version }}/organizations/{{ __org.name | urlencode }}/projects/"
+        __api_url_job_templates: "api/{{ controller_api_version }}/organizations/{{ __org.name | urlencode }}/job_templates/"
+        __api_url_workflow_job_templates: "api/{{ controller_api_version }}/organizations/{{ __org.name | urlencode }}/workflow_job_templates/"
       ansible.builtin.set_fact:
         controller_organizations: "{{ controller_organizations | combine(__org) }}"
       loop: "{{ __organizations_difference }}"
