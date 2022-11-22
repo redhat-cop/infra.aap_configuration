@@ -24,34 +24,28 @@
                                      }}"
 
     - name: "Set list __list_orgs_empty when protect_not_empty_orgs"
-      vars:
-        __bool_empty_users: "{{ query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/users/',
-                          host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }}"
-        __bool_empty_admins: "{{ query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/admins/',
-                           host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }}"
-        __bool_empty_inventories: "{{ query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/inventories/',
-                                host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }}"
-        __bool_empty_teams: "{{ query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/teams/',
-                          host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }}"
-        __bool_empty_projects: "{{ query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/projects/',
-                             host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }}"
-        __bool_empty_job_templates: "{{ query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/job_templates/',
-                                  host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }}"
-        __bool_empty_workflow_job_templates: "{{ query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/workflow_job_templates/',
-                                           host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0 }}"
       ansible.builtin.set_fact:
         __list_empty_orgs: "{{ __list_empty_orgs | default([]) + [__org.name] }}"
       loop: "{{ __organizations_difference }}"
       loop_control:
         loop_var: __org
-      when: protect_not_empty_orgs is defined and protect_not_empty_orgs and
-            __bool_empty_users and
-            __bool_empty_admins and
-            __bool_empty_inventories and
-            __bool_empty_teams and
-            __bool_empty_projects and
-            __bool_empty_job_templates and
-            __bool_empty_workflow_job_templates
+      when:
+        - protect_not_empty_orgs is defined
+        - protect_not_empty_orgs
+        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/users/',
+                host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0
+        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/admins/',
+                host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0
+        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/inventories/',
+                host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0
+        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/teams/',
+                host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0
+        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/projects/',
+                host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0
+        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/job_templates/',
+                host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0
+        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/workflow_job_templates/',
+                host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0
 
     - name: "Sets Organization differences"
       ansible.builtin.set_fact:
