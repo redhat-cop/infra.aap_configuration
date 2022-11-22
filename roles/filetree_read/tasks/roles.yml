@@ -8,15 +8,19 @@
 
 - name: "Read Roles definitions"
   ansible.builtin.include_vars:
-    file: "{{ item.path }}"
+    file: "{{ __read_roles_definitions_item.path }}"
   loop: "{{ __list_files_controller_roles.files }}"
+  loop_control:
+    loop_var: __read_roles_definitions_item
   register: __contents_filetree_controller_roles
 
 - name: "Populate Roles list"
   ansible.builtin.set_fact:
-    __populate_controller_roles: "{{ (__populate_controller_roles | default([])) + item.ansible_facts.controller_roles }}"
+    __populate_controller_roles: "{{ (__populate_controller_roles | default([])) + __populate_roles_list_item.ansible_facts.controller_roles }}"
   loop: "{{ __contents_filetree_controller_roles.results }}"
-  when: __contents_filetree_controller_roles.results is defined and item.ansible_facts.controller_roles is defined
+  loop_control:
+    loop_var: __populate_roles_list_item
+  when: __contents_filetree_controller_roles.results is defined and __populate_roles_list_item.ansible_facts.controller_roles is defined
 
 - name: "Set Roles Data Structure"
   ansible.builtin.set_fact:

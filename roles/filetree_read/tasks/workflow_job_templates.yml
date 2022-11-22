@@ -1,5 +1,5 @@
 ---
-- name: "Get list of files inside {{ filetree_controller_templates }}"
+- name: "Get list of files inside {{ filetree_controller_workflow_job_templates }}"
   ansible.builtin.find:
     paths: "{{ filetree_controller_workflow_job_templates }}"
     file_type: file
@@ -8,15 +8,19 @@
 
 - name: "Read Workflow Job Templates definitions"
   ansible.builtin.include_vars:
-    file: "{{ item.path }}"
+    file: "{{ __read_credentials_definitions_item.path }}"
   loop: "{{ __list_files_controller_workflow_job_templates.files }}"
+  loop_control:
+    loop_var: __read_credentials_definitions_item
   register: __contents_filetree_controller_workflow_job_templates
 
 - name: "Populate Workflow Job Templates list"
   ansible.builtin.set_fact:
-    __populate_controller_workflow_job_templates: "{{ (__populate_controller_workflow_job_templates | default([])) + item.ansible_facts.controller_workflows }}"
+    __populate_controller_workflow_job_templates: "{{ (__populate_controller_workflow_job_templates | default([])) + __populate_credentials_list_item.ansible_facts.controller_workflows }}"
   loop: "{{ __contents_filetree_controller_workflow_job_templates.results }}"
-  when: __contents_filetree_controller_workflow_job_templates.results is defined and item.ansible_facts.controller_workflows is defined
+  loop_control:
+    loop_var: __populate_credentials_list_item
+  when: __contents_filetree_controller_workflow_job_templates.results is defined and __populate_credentials_list_item.ansible_facts.controller_workflows is defined
 
 - name: "Set Job Templates Data Structure"
   ansible.builtin.set_fact:

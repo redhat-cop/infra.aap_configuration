@@ -8,15 +8,19 @@
 
 - name: "Read Notifications definitions"
   ansible.builtin.include_vars:
-    file: "{{ item.path }}"
+    file: "{{ __read_notifications_definitions_item.path }}"
   loop: "{{ __list_files_controller_notifications.files }}"
+  loop_control:
+    loop_var: __read_notifications_definitions_item
   register: __contents_filetree_controller_notifications
 
 - name: "Populate Notifications list"
   ansible.builtin.set_fact:
-    __populate_controller_notifications: "{{ (__populate_controller_notifications | default([])) + item.ansible_facts.controller_notifications }}"
+    __populate_controller_notifications: "{{ (__populate_controller_notifications | default([])) + __populate_notifications_list_item.ansible_facts.controller_notifications }}"
   loop: "{{ __contents_filetree_controller_notifications.results }}"
-  when: __contents_filetree_controller_notifications.results is defined and item.ansible_facts.controller_notifications is defined
+  loop_control:
+    loop_var: __populate_notifications_list_item
+  when: __contents_filetree_controller_notifications.results is defined and __populate_notifications_list_item.ansible_facts.controller_notifications is defined
 
 - name: "Set Notifications Data Structure"
   ansible.builtin.set_fact:
