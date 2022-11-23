@@ -1,0 +1,22 @@
+---
+# https://github.com/marketplace/actions/issues-helper
+name: Issue Remove Labels
+
+on:
+  issues:
+    types: [edited, reopened, labeled]
+  issue_comment:
+    types: [created, edited]
+
+jobs:
+  remove-inactive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: remove inactive
+        if: github.event.issue.state == 'open' && github.event.issue.user != 'github-actions'
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'remove-labels'
+          issue-number: ${{ github.event.issue.number }}
+          labels: 'inactive'
+...
