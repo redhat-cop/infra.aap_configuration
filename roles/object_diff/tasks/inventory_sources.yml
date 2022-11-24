@@ -6,14 +6,14 @@
                                              host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)
                                    }}"
 
-- name: "OBJECT DIFF: Get the API list of all Inventory Sources"
+- name: "Get the API list of all Inventory Sources"
   ansible.builtin.set_fact:
     __controller_api_inventory_sources: "{{ query(controller_api_plugin, 'inventory_sources',
                                                   query_params={'organization': __controller_organization_id.id},
                                                   host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)
                                          }}"
 
-- name: "OBJECT DIFF: Find the difference of Inventory Sources between what is on the Controller versus CasC on SCM"
+- name: "Find the difference of Inventory Sources between what is on the Controller versus CasC on SCM"
   ansible.builtin.set_fact:
     __inventory_sources_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
                                                 api_list=__controller_api_inventory_sources,
@@ -21,7 +21,7 @@
                                                 with_present=false, set_absent=true)
                                      }}"
 
-- name: "OBJECT DIFF: Set inventory_sources' list to be configured"
+- name: "Set inventory_sources' list to be configured"
   ansible.builtin.set_fact:
     controller_inventory_sources: "{{ __inventory_sources_difference }}"
 ...

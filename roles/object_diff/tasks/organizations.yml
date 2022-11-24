@@ -4,7 +4,7 @@
     __controller_api_organizations: "{{ query(controller_api_plugin, 'organizations',
       host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) }}"
 
-- name: "OBJECT DIFF: Find the difference of Organizations between what is on the Controller versus curated list."
+- name: "Find the difference of Organizations between what is on the Controller versus curated list."
   ansible.builtin.set_fact:
     __organizations_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
                                             api_list=__controller_api_organizations, compare_list=controller_organizations,
