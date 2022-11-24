@@ -6,7 +6,7 @@
                                             host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)
                                  }}"
 
-- name: "OBJECT DIFF: Get the API list of all inventories"
+- name: "Get the API list of all inventories"
   ansible.builtin.set_fact:
     __controller_api_inventories: "{{ query(controller_api_plugin, 'inventories',
                                             query_params={'organization': controller_organization_id.id,
@@ -16,7 +16,7 @@
                                             host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)
                                    }}"
 
-- name: "OBJECT DIFF: Get the API list of all groups in the inventories at organization {{ orgs }}"
+- name: "Get the API list of all groups in the inventories at organization {{ orgs }}"
   ansible.builtin.set_fact:
     __controller_api_groups: "{{ (__controller_api_groups | default([])) + query(controller_api_plugin, 'groups',
                                           query_params={'inventory': current_inventory.id},
@@ -29,7 +29,7 @@
 - name: "Group differences (block)"
   when: __controller_api_groups is defined
   block:
-    - name: "OBJECT DIFF: Find the difference of Groups between what is on the Controller versus CasC on SCM"
+    - name: "Find the difference of Groups between what is on the Controller versus CasC on SCM"
       ansible.builtin.set_fact:
         __groups_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
                                         query_params={'summary_fields.inventory.organization_id': controller_organization_id.id},
@@ -37,7 +37,7 @@
                                         with_present=false, set_absent=true)
                               }}"
 
-    - name: "OBJECT DIFF: Set the inventory key at the correct place"
+    - name: "Set the inventory key at the correct place"
       ansible.builtin.set_fact:
         controller_groups: "{{ __groups_difference }}"
 ...
