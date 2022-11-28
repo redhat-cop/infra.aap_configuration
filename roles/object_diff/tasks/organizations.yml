@@ -49,9 +49,13 @@
 
     - name: "Sets Organization differences"
       ansible.builtin.set_fact:
-        controller_organizations: "{{ controller_organizations | combine(__org) }}"
+        __controller_organizations: "{{ __controller_organizations | default([]) + [__org] }}"
       loop: "{{ __organizations_difference }}"
       loop_control:
         loop_var: __org
       when: protect_not_empty_orgs is not defined or not protect_not_empty_orgs or __org.name in __list_empty_orgs
+
+    - name: "Set organization's list to be configured"
+      ansible.builtin.set_fact:
+        controller_organizations: "{{ __controller_organizations }}"
 ...
