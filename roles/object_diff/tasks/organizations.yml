@@ -25,10 +25,10 @@
 
     - name: "Set list __list_orgs_empty when protect_not_empty_orgs"
       ansible.builtin.set_fact:
-        __list_empty_orgs: "{{ __list_empty_orgs | default([]) + [__org.name] }}"
+        __list_empty_orgs: "{{ __list_empty_orgs | default([]) + [__organizations_difference_list_empty_item.name] }}"
       loop: "{{ __organizations_difference }}"
       loop_control:
-        loop_var: __org
+        loop_var: __organizations_difference_list_empty_item
       when:
         - protect_not_empty_orgs is defined
         - protect_not_empty_orgs
@@ -47,11 +47,16 @@
         - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/workflow_job_templates/',
                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0
 
-    - name: "Sets Organization differences"
+    - name: "Set Organization differences"
       ansible.builtin.set_fact:
-        controller_organizations: "{{ controller_organizations | combine(__org) }}"
+        __controller_organizations: "{{ __controller_organizations | default([]) + [__organizations_difference_item] }}"
       loop: "{{ __organizations_difference }}"
       loop_control:
-        loop_var: __org
-      when: protect_not_empty_orgs is not defined or not protect_not_empty_orgs or __org.name in __list_empty_orgs
+        loop_var: __organizations_difference_item
+      when: __organizations_difference is defined and (protect_not_empty_orgs is not defined or not protect_not_empty_orgs or __organizations_difference_item.name in __list_empty_orgs)
+
+    - name: "Set organization's list to be configured"
+      ansible.builtin.set_fact:
+        controller_organizations: "{{ __controller_organizations }}"
+      when: __controller_organizations is defined
 ...
