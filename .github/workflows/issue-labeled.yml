@@ -1,0 +1,22 @@
+---
+# https://github.com/marketplace/actions/issues-helper
+name: Issue Labeled
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  issue-labeled:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create comment
+        uses: actions-cool/issues-helper@v3
+        if: github.event.label.name == 'inactive' || github.event.label.name == 'need info'
+        with:
+          actions: 'create-comment'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Hello @${{ github.event.issue.user.login }}. Please ensure that you have filled out the issue template as much as possible and have answered any further questions asked. If you have not done so in the next 7 days this issue will be automatically closed.'
+...
