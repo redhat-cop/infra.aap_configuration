@@ -18,13 +18,6 @@
         dest: "{{ repo_base_dir }}/galaxy.yml"
         mode: '0644'
 
-    - name: Update changelog
-      command:
-        cmd: antsibull-changelog release --verbose --version {{ collection_version }}
-        chdir: "{{ repo_base_dir }}"
-      register: update_changelog
-      changed_when: "update_changelog.rc != 2"
-
     - name: build collection
       command:
         cmd: ansible-galaxy collection build

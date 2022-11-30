@@ -1,0 +1,33 @@
+---
+- name: release collection
+  hosts: localhost
+  gather_facts: False
+  connection: local
+  vars:
+    collection_namespace: "{{ namespace  | lower | regex_replace('-','_') }}"
+    collection_name: controller_configuration
+    collection_version: "{{ github_tag | regex_search('(\\d.\\d.\\d.*)') }}"
+    collection_repo:  undef
+    api_key: undef
+    repo_base_dir: "{{ playbook_dir }}/../.."
+
+  tasks:
+    - name: create galaxy.yml
+      template:
+        src: "{{ repo_base_dir }}/galaxy.yml.j2"
+        dest: "{{ repo_base_dir }}/galaxy.yml"
+        mode: '0644'
+
+    - name: Update changelog
+      command:
+        cmd: antsibull-changelog release --verbose --version {{ collection_version }}
+        chdir: "{{ repo_base_dir }}"
+      register: update_changelog
+      changed_when: "update_changelog.rc != 2"
+
+    - name: remove galaxy.yml
+      file:
+        path: "{{ repo_base_dir }}/galaxy.yml"
+        state: absent
+      tags: cleanup
+...

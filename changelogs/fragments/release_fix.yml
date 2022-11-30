@@ -1,0 +1,4 @@
+breaking_changes:
+  - infra.controller_configuration 2.2.3 is broken, it is aap_utilities release. We are bumping the version to minimize the issues.
+minor_changes:
+  - Update release process to avoid problems that have happened and automate it.
