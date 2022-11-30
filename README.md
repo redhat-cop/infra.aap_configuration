@@ -163,7 +163,7 @@ More information about contributing can be found in our [Contribution Guidelines
 ## Code of Conduct
 
 This collection follows the Ansible project's
-[Code of Conduct](https://docs.ansible.com/ansible/devel/community/code_of_conduct.html).
+[Code of Conduct](https://docs.ansible.com/ansible/latest/community/code_of_conduct.html).
 Please read and familiarize yourself with this document.
 
 ## Licensing
