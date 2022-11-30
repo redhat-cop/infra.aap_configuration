@@ -8,15 +8,19 @@
 
 - name: "Read Inventories definitions"
   ansible.builtin.include_vars:
-    file: "{{ item.path }}"
+    file: "{{ __read_inventories_definitions_item.path }}"
   loop: "{{ __list_files_controller_inventories.files }}"
+  loop_control:
+    loop_var: __read_inventories_definitions_item
   register: __contents_filetree_controller_inventories
 
 - name: "Populate Inventories list"
   ansible.builtin.set_fact:
-    __populate_controller_inventories: "{{ (__populate_controller_inventories | default([])) + item.ansible_facts.controller_inventories }}"
+    __populate_controller_inventories: "{{ (__populate_controller_inventories | default([])) + __populate_inventories_list_item.ansible_facts.controller_inventories }}"
   loop: "{{ __contents_filetree_controller_inventories.results }}"
-  when: __contents_filetree_controller_inventories.results is defined and item.ansible_facts.controller_inventories is defined
+  loop_control:
+    loop_var: __populate_inventories_list_item
+  when: __contents_filetree_controller_inventories.results is defined and __populate_inventories_list_item.ansible_facts.controller_inventories is defined
 
 - name: "Set Inventories Data Structure"
   ansible.builtin.set_fact:

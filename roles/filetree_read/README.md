@@ -17,6 +17,7 @@ The following Variables set the organization where should be applied the configu
 |`orgs:`|Acme|yes|This variable sets the organization where should be applied the configuration.|
 |`dir_orgs_vars:`|orgs_vars|yes|This variable sets the directory path where the variables will be store.|
 |`env:`|dev|yes|This variable sets the life-cycle environment to use.|
+|`controller_location:`|''|no|This variable sets object localtion. It is useful when the configuration need to be replicated in an active/passive sites architecture|
 |`filetree_controller_settings`|{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_settings.d/|yes|Directory path to load controller object variables|
 |`filetree_controller_organizations`|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_organizations.d/|yes|Directory path to load controller object variables|
 |`filetree_controller_labels`|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_labels.d/|yes|Directory path to load controller object variables|

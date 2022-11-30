@@ -39,3 +39,24 @@ If you feel like getting your hands dirty, feel free to make the change yourself
 See [Using Pull Requests](https://help.github.com/articles/using-pull-requests/) got more information on how to use GitHub PRs.
 
 For an in depth guide on how to contribute see [this article](https://opensource.com/article/19/7/create-pull-request-github)
+
+Use Github [discussions] forum or for a live chat experience try
+Matrix room [#aap_config_as_code:ansible.com](https://matrix.to/#/#aap_config_as_code:ansible.com).
+
+For the full list of Ansible IRC and Mailing list, please see the
+[Ansible Communication] page.
+Release announcements will be made to the [Ansible Announce] list.
+
+Possible security bugs should be reported via email
+to <mailto:security@ansible.com>.
+
+## Code of Conduct
+
+As with all Ansible projects, we have a [Code of Conduct].
+
+[ansible announce](https://groups.google.com/forum/#!forum/ansible-announce)
+[ansible communication](https://docs.ansible.com/ansible/latest/community/communication.html)
+[code of conduct](https://docs.ansible.com/ansible/latest/community/code_of_conduct.html)
+[creating your fork on github](https://guides.github.com/activities/forking/)
+[discussions](https://github.com/redhat-cop/controller_configuration/discussions)
+[supported ansible versions](https://docs.ansible.com/ansible-core/devel/reference_appendices/release_and_maintenance.html#ansible-core-release-cycle)
