@@ -2,7 +2,6 @@
 # tasks file for filetree_read
 - name: "Init controller variables"
   ansible.builtin.set_fact:
-  tags: always
     controller_settings: []
     controller_organizations: []
     controller_labels: []
@@ -24,6 +23,7 @@
     controller_workflow_job_templates: []
     controller_schedules: []
     controller_roles: []
+  tags: always
 
 - name: "Include Tasks to config {{ __task_filetree_read.name }}"
   ansible.builtin.include_tasks: "{{ __task_filetree_read.name }}.yml"
