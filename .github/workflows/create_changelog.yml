@@ -25,7 +25,7 @@ jobs:
       - name: Install ansible-base and changelog
         run: pip install ansible antsibull-changelog
 
-      - name: Publish to galaxy
+      - name: Create Changelog
         run: ansible-playbook .github/workflow-config/create_changelog.yml
           -e namespace=${{ github.repository_owner }}
           -e github_tag=${{ github.ref_name }}
