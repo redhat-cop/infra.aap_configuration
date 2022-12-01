@@ -1,2 +1,0 @@
-removed_features:
-  - update_on_project_update in inventory_source as an option due to the awx module no longer supports this option.

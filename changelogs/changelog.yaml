@@ -329,3 +329,20 @@ releases:
     fragments:
     - update_options.yml
     release_date: '2022-11-11'
+  2.2.4:
+    changes:
+      breaking_changes:
+      - infra.controller_configuration 2.2.3 is broken, it is aap_utilities release.
+        We are bumping the version to minimize the issues.
+      - rewrote playbooks/controller_configure.yml and removed all other playbooks
+      minor_changes:
+      - Update release process to avoid problems that have happened and automate it.
+      - removed all examples from repo outside of readmes
+      removed_features:
+      - update_on_project_update in inventory_source as an option due to the awx module
+        no longer supports this option.
+    fragments:
+    - release_fix.yml
+    - remove_examples.yml
+    - removed_ update_on_project_update.yml
+    release_date: '2022-11-30'
