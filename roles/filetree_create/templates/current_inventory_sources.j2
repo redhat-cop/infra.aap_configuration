@@ -20,7 +20,6 @@ controller_inventory_sources:
 {% if inventory_source.credential %}
     credential: "{{ inventory_source.credential }}"
 {% endif %}
-{% endfor %}
     notification_templates_error:
 {% for notification_error  in query(controller_api_plugin, inventory_source.related.notification_templates_error,
                      host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
@@ -38,5 +37,6 @@ controller_inventory_sources:
                      host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                      return_all=true, max_objects=query_controller_api_max_objects) %}
       - "{{ notification_success.name }}"
+{% endfor %}
 {% endfor %}
 ...
