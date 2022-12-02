@@ -1,0 +1,5 @@
+---
+controller_labels:
+  - name: "{{ current_labels_asset_value.name }}"
+    organization: "{{ current_labels_asset_value.summary_fields.organization.name | default('ToDo: The label \'' + current_labels_asset_value.name + '\' must have an organization') }}"
+...
