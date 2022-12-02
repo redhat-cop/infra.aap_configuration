@@ -35,4 +35,30 @@ controller_templates:
 {% if not is_aap %}
     custom_virtualenv: "{{ current_job_templates_asset_value.custom_virtualenv | default(omit) }}"
 {% endif %}
+    labels:
+{% for label in query(controller_api_plugin, current_job_templates_asset_value.related.labels,
+                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                     return_all=true, max_objects=query_controller_api_max_objects) %}
+      - "{{ label.name }}"
+{% endfor %}
+    notification_templates_error:
+{% for notification_error  in query(controller_api_plugin, current_job_templates_asset_value.related.notification_templates_error,
+                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                     return_all=true, max_objects=query_controller_api_max_objects) %}
+      - "{{ notification_error.name }}"
+{% endfor %}
+    notification_templates_started:
+{% for notification_started  in query(controller_api_plugin, current_job_templates_asset_value.related.notification_templates_started,
+                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                     return_all=true, max_objects=query_controller_api_max_objects) %}
+      - "{{ notification_started.name }}"
+{% endfor %}
+    notification_templates_success:
+{% for notification_success  in query(controller_api_plugin, current_job_templates_asset_value.related.notification_templates_success,
+                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                     return_all=true, max_objects=query_controller_api_max_objects) %}
+      - "{{ notification_success.name }}"
+{% endfor %}
+    survey_enabled: {{ current_job_templates_asset_value.survey_enabled }}
+    survey_spec: {{ query(controller_api_plugin, current_job_templates_asset_value.related.survey_spec, host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)[0] }}
 ...

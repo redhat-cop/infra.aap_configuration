@@ -1,0 +1,38 @@
+---
+- name: "Get current Labels from the API"
+  ansible.builtin.set_fact:
+    labels_lookvar: "{{ query(controller_api_plugin, 'api/v2/labels/',
+                                query_params={'order_by': 'organization,id'},
+                                host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                                return_all=true, max_objects=query_controller_api_max_objects)
+                       }}"
+
+- name: "Create the <ORGANIZATION_NAME>/labels output directory for labels in {{ output_path }}"
+  ansible.builtin.file:
+    path: "{{ __path }}"
+    state: directory
+    mode: '0755'
+  vars:
+    __path: "{{ output_path }}/{{ needed_path | regex_replace('/', '_') }}/labels"
+  loop: "{{ (labels_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
+            + (['ORGANIZATIONLESS'] if ((labels_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
+         }}"
+  loop_control:
+    loop_var: needed_path
+    label: "{{ __path }}"
+
+- name: "Add current labels to the <ORGANIZATION_NAME>/labels output file in {{ output_path }}"
+  ansible.builtin.template:
+    src: "templates/current_labels.j2"
+    dest: "{{ __dest }}"
+    mode: '0644'
+  vars:
+    label_organization: "{{ current_labels_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}"
+    label_id: "{{ current_labels_asset_value.id }}"
+    label_name: "{{ current_labels_asset_value.name | regex_replace('/', '_') }}"
+    __dest: "{{ output_path }}/{{ label_organization | regex_replace('/', '_') }}/labels/{{ label_id }}_{{ label_name | regex_replace('/', '_') }}.yaml"
+  loop: "{{ labels_lookvar }}"
+  loop_control:
+    loop_var: current_labels_asset_value
+    label: "{{ __dest }}"
+...

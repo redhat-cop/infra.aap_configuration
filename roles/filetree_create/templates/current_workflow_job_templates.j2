@@ -41,4 +41,36 @@ controller_workflows:
     allow_simultaneous: "{{ current_workflow_job_templates_asset_value.allow_simultaneous }}"
     scm_branch: "{{ current_workflow_job_templates_asset_value.scm_branch }}"
     webhook_service: "{{ current_workflow_job_templates_asset_value.webhook_service }}"
+    labels:
+{% for label in query(controller_api_plugin, current_workflow_job_templates_asset_value.related.labels,
+                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                     return_all=true, max_objects=query_controller_api_max_objects) %}
+      - "{{ label.name }}"
+{% endfor %}
+    notification_templates_error:
+{% for notification_error  in query(controller_api_plugin, current_workflow_job_templates_asset_value.related.notification_templates_error,
+                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                     return_all=true, max_objects=query_controller_api_max_objects) %}
+      - "{{ notification_error.name }}"
+{% endfor %}
+    notification_templates_started:
+{% for notification_started  in query(controller_api_plugin, current_workflow_job_templates_asset_value.related.notification_templates_started,
+                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                     return_all=true, max_objects=query_controller_api_max_objects) %}
+      - "{{ notification_started.name }}"
+{% endfor %}
+    notification_templates_success:
+{% for notification_success  in query(controller_api_plugin, current_workflow_job_templates_asset_value.related.notification_templates_success,
+                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                     return_all=true, max_objects=query_controller_api_max_objects) %}
+      - "{{ notification_success.name }}"
+{% endfor %}
+    notification_templates_approvals:
+{% for notification_approvals  in query(controller_api_plugin, current_workflow_job_templates_asset_value.related.notification_templates_approvals,
+                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                     return_all=true, max_objects=query_controller_api_max_objects) %}
+      - "{{ notification_approvals.name }}"
+{% endfor %}
+    survey_enabled: {{ current_workflow_job_templates_asset_value.survey_enabled }}
+    survey_spec: {{ query(controller_api_plugin, current_workflow_job_templates_asset_value.related.survey_spec, host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)[0] }}
 ...

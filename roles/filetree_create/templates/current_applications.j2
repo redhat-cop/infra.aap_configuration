@@ -1,0 +1,11 @@
+---
+controller_applications:
+  - name: "{{ current_applications_asset_value.name }}"
+    description: "{{ current_applications_asset_value.description }}"
+    organization: "{{ current_applications_asset_value.summary_fields.organization.name | default('ToDo: The application \'' + current_applications_asset_value.name + '\' must have an organization') }}"
+    authorization_grant_type: "{{ current_applications_asset_value.authorization_grant_type }}"
+    redirect_uris: "{{ current_applications_asset_value.redirect_uris }}"
+    skip_authorization: "{{ current_applications_asset_value.skip_authorization }}"
+    client_id: "{{ current_applications_asset_value.client_id }}"
+    client_type: "{{ current_applications_asset_value.client_type }}"
+...
