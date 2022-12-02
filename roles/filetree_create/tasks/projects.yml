@@ -31,6 +31,15 @@
     project_id: "{{ current_projects_asset_value.id }}"
     project_name: "{{ current_projects_asset_value.name | regex_replace('/', '_') }}"
     __dest: "{{ output_path }}/{{ project_organization | regex_replace('/', '_') }}/projects/{{ project_id }}_{{ project_name | regex_replace('/', '_') }}.yaml"
+    query_notification_error: "{{ query(controller_api_plugin, current_projects_asset_value.related.notification_templates_error,
+                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                     return_all=true, max_objects=query_controller_api_max_objects) }}"
+    query_notification_started: "{{ query(controller_api_plugin, current_projects_asset_value.related.notification_templates_started,
+                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                     return_all=true, max_objects=query_controller_api_max_objects) }}"
+    query_notification_success: "{{ query(controller_api_plugin, current_projects_asset_value.related.notification_templates_success,
+                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                     return_all=true, max_objects=query_controller_api_max_objects) }}"
   loop: "{{ projects_lookvar }}"
   loop_control:
     loop_var: current_projects_asset_value

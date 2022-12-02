@@ -41,4 +41,36 @@ controller_workflows:
     allow_simultaneous: "{{ current_workflow_job_templates_asset_value.allow_simultaneous }}"
     scm_branch: "{{ current_workflow_job_templates_asset_value.scm_branch }}"
     webhook_service: "{{ current_workflow_job_templates_asset_value.webhook_service }}"
+{% if query_labels | length > 0 %}
+    labels:
+{% for label in query_labels %}
+      - "{{ label.name }}"
+{% endfor %}
+{% endif %}
+{% if query_notification_error | length > 0 %}
+    notification_templates_error:
+{% for notification_error  in query_notification_error %}
+      - "{{ notification_error.name }}"
+{% endfor %}
+{% endif %}
+{% if query_notification_started | length > 0 %}
+    notification_templates_started:
+{% for notification_started  in query_notification_started %}
+      - "{{ notification_started.name }}"
+{% endfor %}
+{% endif %}
+{% if query_notification_success | length > 0 %}
+    notification_templates_success:
+{% for notification_success  in query_notification_success %}
+      - "{{ notification_success.name }}"
+{% endfor %}
+{% endif %}
+{% if query_notification_approvals | length > 0 %}
+    notification_templates_approvals:
+{% for notification_approval  in query_notification_approvals %}
+      - "{{ notification_approval.name }}"
+{% endfor %}
+{% endif %}
+    survey_enabled: {{ current_workflow_job_templates_asset_value.survey_enabled }}
+    survey_spec: {{ query(controller_api_plugin, current_workflow_job_templates_asset_value.related.survey_spec, host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)[0] }}
 ...

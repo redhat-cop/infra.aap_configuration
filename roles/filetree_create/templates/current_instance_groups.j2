@@ -1,0 +1,14 @@
+---
+controller_instance_groups:
+{% for ig in current_instance_groups_asset_value %}
+  - name: "{{ ig.name }}"
+    policy_instance_minimum: "{{ ig.policy_instance_minimum }}"
+    policy_instance_percentage: "{{ ig.policy_instance_percentage }}"
+    instances:
+{% for instance in query(controller_api_plugin, ig.related.instances,
+                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                     return_all=true, max_objects=query_controller_api_max_objects) %}
+      - "{{ instance.hostname }}"
+{% endfor %}
+{% endfor %}
+...
