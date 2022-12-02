@@ -132,7 +132,7 @@ Controller token module would be invoked with this code:
 
 Every Ansible Controller instance has it's own particularities and needs. Every administrator team has it's own practices and costumes. This collection allows to addapt to every needs, from small to large scale, having the objects distributed across multiple environments and leveraging Automation Webhook that can be used to link a Git repository and Ansible automation natively.
 
-A complete example of how to use all of the roles present in the collection is available at the following [README.md](examples/automatetheautomation/README.md), where all the phases to allow CI/CD for the Controller Configuration are provided.
+A complete example of how to use all of the roles present in the collection is available at the following [README.md](roles/filetree_create/automatetheautomation.md), where all the phases to allow CI/CD for the Controller Configuration are provided.
 
 #### Scale at your needs
 
@@ -141,7 +141,11 @@ The input data can be organized in a very flexible way, letting the user to use 
 ### Controller Export
 
 The awx command line can export json that is compatible with this collection.
-More details can be found [here](examples/configs_export_model/README.md)
+More details can be found [here](EXPORT_README.md)
+
+### Template Example
+
+A Template to use in order to start using the collections can be found [here](https://github.com/redhat-cop/aap_configuration_template)
 
 ### See Also
 
