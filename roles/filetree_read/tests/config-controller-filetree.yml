@@ -37,11 +37,6 @@
 
   post_tasks:
     - block:
-        - name: Include Tasks to load Galaxy credentials to be added to Organizations
-          ansible.builtin.include_role:
-            name: redhat_cop.controller_configuration.filetree_read
-            tasks_from: organizations.yml
-
         - name: Include Tasks to add Galaxy credentials to Organizations
           ansible.builtin.include_role:
             name: redhat_cop.controller_configuration.dispatch
