@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-lookup: controller_object_diff
+name: controller_object_diff
 author: "Sean Sullivan (@sean-m-sullivan)"
 short_description: Return difference for objects from Controller API
 requirements:
@@ -20,11 +20,13 @@ options:
       - The list of objects returned from the controller api.
       - Requires at least two items in the list
     type: list
+    elements: dict
     required: True
   compare_list:
     description:
       - The list of objects to compare the api_list to.
     type: list
+    elements: dict
     required: True
   set_absent:
     description:
@@ -57,7 +59,7 @@ EXAMPLES = """
       controller_organization_id.id } ,host=controller_hostname, username=controller_username,
       password=controller_password, verify_ssl=false) }}"
 
-- name: "Get the API in a list form. Useful for making sure the results of one item is set to a list.
+- name: "Get the API in a list form. Useful for making sure the results of one item is set to a list."
   set_fact:
     controller_api_results: "{{ query('awx.awx.controller_api', 'inventories', query_params={ 'organization':
       controller_organization_id.id } ,host=controller_hostname, username=controller_username,
