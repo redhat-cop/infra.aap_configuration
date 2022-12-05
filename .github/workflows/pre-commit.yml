@@ -1,25 +1,35 @@
 ---
 # This workflow action will run pre-commit, which will execute ansible and yaml linting
 # See .pre-commit-config.yaml for what hooks are executed
-name: Yaml and Ansible Lint
+name: pre-commit tests
 
-on: [push, pull_request]
+
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: "0 6 * * *"
 
 jobs:
   pre-commit:
+    uses: sean-m-sullivan/infra_git_ci_cd/.github/workflows/pre-commit.yml@main
+  sanity:
+    uses: sean-m-sullivan/infra_git_ci_cd/.github/workflows/sanity.yml@main
+    with:
+      collection_namespace: redhat_cop
+      collection_name: controller_configuration
+      collection_version: 1.0.0
+      collection_repo: https://github.com/redhat-cop/controller_configuration/
+  all_green:
+    if: ${{ always() }}
+    needs:
+      - pre-commit
+      - sanity
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-    - name: Install Collections
-      run: |
-        sudo apt install software-properties-common
-        sudo apt-add-repository --yes --update ppa:ansible/ansible
-        pip install --upgrade ansible
-        ansible-galaxy collection install -f -r .github/collections/requirements.yml
-        sudo cp -a collections/ansible_collections/awx/awx/plugins/. plugins/
-        ansible-config view -vvv
-    - uses: pre-commit/action@v2.0.0
+      - run: >-
+          python -c "assert set([
+          '${{ needs.pre-commit.result }}',
+          '${{ needs.sanity.result }}',
+          ]) == {'success'}"
 ...
