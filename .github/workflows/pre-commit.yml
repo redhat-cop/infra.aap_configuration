@@ -12,9 +12,9 @@ on:
 
 jobs:
   pre-commit:
-    uses: sean-m-sullivan/infra_git_ci_cd/.github/workflows/pre-commit.yml@main
+    uses: "sean-m-sullivan/infra_git_ci_cd/.github/workflows/pre-commit.yml@main"
   sanity:
-    uses: sean-m-sullivan/infra_git_ci_cd/.github/workflows/sanity.yml@main
+    uses: "sean-m-sullivan/infra_git_ci_cd/.github/workflows/sanity.yml@main"
     with:
       collection_namespace: redhat_cop
       collection_name: controller_configuration
