@@ -10,9 +10,9 @@ on:
 
 jobs:
   pre-commit:
-    uses: sean-m-sullivan/infra_git_ci_cd/.github/workflows/pre-commit.yml@main
+    uses: redhat-cop/ansible_collections_tooling/.github/workflows/pre-commit.yml@main
   sanity:
-    uses: sean-m-sullivan/infra_git_ci_cd/.github/workflows/sanity.yml@main
+    uses: redhat-cop/ansible_collections_tooling/.github/workflows/sanity.yml@main
     with:
       collection_namespace: redhat_cop
       collection_name: controller_configuration
@@ -32,7 +32,7 @@ jobs:
   cop_release:
     needs:
       - prechecks
-    uses: sean-m-sullivan/infra_git_ci_cd/.github/workflows/release.yml@main
+    uses: redhat-cop/ansible_collections_tooling/.github/workflows/release.yml@main
     with:
       collection_namespace: redhat_cop
       collection_name: controller_configuration
@@ -44,7 +44,7 @@ jobs:
   infra_release:
     needs:
       - cop_release
-    uses: sean-m-sullivan/infra_git_ci_cd/.github/workflows/release.yml@main
+    uses: redhat-cop/ansible_collections_tooling/.github/workflows/release.yml@main
     with:
       collection_namespace: infra
       collection_name: controller_configuration
@@ -67,7 +67,7 @@ jobs:
   changelog:
     needs:
       - release_check
-    uses: sean-m-sullivan/infra_git_ci_cd/.github/workflows/create_changelog.yml@main
+    uses: redhat-cop/ansible_collections_tooling/.github/workflows/create_changelog.yml@main
     with:
       collection_namespace: infra
       collection_name: controller_configuration
