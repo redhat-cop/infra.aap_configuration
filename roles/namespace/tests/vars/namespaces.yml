@@ -11,7 +11,7 @@ ah_namespaces:
         url: "http://www.google.com"
     groups:
       - name: system:partner-engineers
-        object_permissions:
+        object_roles:
           - "change_namespace"
           - "upload_to_namespace"
 ...
