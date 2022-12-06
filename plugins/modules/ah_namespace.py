@@ -175,8 +175,9 @@ def main():
             new_fields[field_name] = field_val
 
     # Backwards compatibility for older versions of AH
-    if new_fields["groups"] and new_fields["groups"]["object_roles"]:
-        new_fields["groups"]["object_permissions"] = new_fields["groups"]["object_roles"]
+    if new_fields["groups"]:
+        for group in new_fields["groups"]:
+            group["object_permissions"] = group["object_roles"]
 
     # If the state was present and we can let the module build or update the existing item, this will return on its own
     module.create_or_update_if_needed(
