@@ -90,8 +90,9 @@ options:
           required: True
         object_roles:
           description:
-            - List of Permisions granted to the group.
-            - Applicable options are `change_namespace`, `upload_to_namespace`
+            - List of roles granted to the group.
+            - Applicable options are `collection_admin`, `collection_publisher`, `collection_curator`, `collection_namespace_owner`
+            - In older versions of AH, this was object_permissions and applicable options were `change_namespace`, `upload_to_namespace`
           type: list
           elements: str
           required: True
