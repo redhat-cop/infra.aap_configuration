@@ -247,7 +247,8 @@ def main():
                         p = p[len("container."):]
                     if p in PERM_NAMES:
                         perms.append(p)
-                group.data["object_permissions"] = perms
+                group.data["object_permissions"] = perms  # Leaving in for backwards compatibility
+                group.data["object_roles"] = perms
                 group_ids.append(group.data)
             else:
                 error_groups.append(group_name)

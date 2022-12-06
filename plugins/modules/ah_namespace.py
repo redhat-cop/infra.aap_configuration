@@ -78,7 +78,7 @@ options:
           required: True
     groups:
       description:
-        - A list of dictionaries of the Names and object_permissions values for groups that control the Namespace.
+        - A list of dictionaries of the Names and object_roles values for groups that control the Namespace.
       type: list
       elements: dict
       default: []
@@ -88,7 +88,7 @@ options:
             - Group Name or ID.
           type: str
           required: True
-        object_permissions:
+        object_roles:
           description:
             - List of Permisions granted to the group.
             - Applicable options are `change_namespace`, `upload_to_namespace`
@@ -113,7 +113,7 @@ EXAMPLES = """
         url: "http://www.redhat.com"
     groups:
       - name: system:partner-engineers
-        object_permissions:
+        object_roles:
           - "change_namespace"
           - "upload_to_namespace"
 
@@ -135,7 +135,7 @@ def main():
         links=dict(type="list", elements="dict"),
         groups=dict(type="list", elements="dict", default=[], options=dict(
             name=dict(required=True),
-            object_permissions=dict(type="list", elements="str", required=True)
+            object_roles=dict(type="list", elements="str", required=True)
         )),
         state=dict(choices=["present", "absent"], default="present"),
     )
@@ -173,6 +173,10 @@ def main():
         field_val = module.params.get(field_name)
         if field_val is not None:
             new_fields[field_name] = field_val
+
+    # Backwards compatibility for older versions of AH
+    if new_fields["groups"] and new_fields["groups"]["object_roles"]:
+        new_fields["groups"]["object_permissions"] = new_fields["groups"]["object_roles"]
 
     # If the state was present and we can let the module build or update the existing item, this will return on its own
     module.create_or_update_if_needed(
