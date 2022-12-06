@@ -14,6 +14,6 @@ jobs:
           - stable-4.5
           - stable-4.6
           - master
-    uses: "redhat-cop/ah_configuration/.github/workflows/ci_standalone_versioned.yml@devel"
+    uses: "./.github/workflows/ci_standalone_versioned.yml"
     with:
       galaxy_ng_version: ${{ matrix.galaxy_ng_version }}
