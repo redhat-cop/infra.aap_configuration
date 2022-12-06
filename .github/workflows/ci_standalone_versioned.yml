@@ -1,6 +1,13 @@
 ---
-name: Test roles and modules with galaxy_ng v4.4
-on: [push, pull_request]
+name: Test roles and modules with galaxy_ng
+
+on:
+  workflow_call:
+    inputs:
+      galaxy_ng_version:
+        description: The version to pull of galaxy_ng
+        required: true
+        type: string
 
 jobs:
 
@@ -14,14 +21,14 @@ jobs:
         with:
           repository: ansible/galaxy_ng
           path: galaxy_ng
-          ref: stable-4.4
+          ref: ${{ inputs.galaxy_ng_version }}
 
       - name: "Checkout ansible-hub-ui"
         uses: actions/checkout@v2
         with:
           repository: ansible/ansible-hub-ui
           path: ansible-hub-ui
-          ref: stable-4.4
+          ref: ${{ inputs.galaxy_ng_version }}
 
       - uses: actions/setup-python@v2
         with:
