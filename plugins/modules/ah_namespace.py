@@ -95,6 +95,8 @@ options:
           type: list
           elements: str
           required: True
+          aliases:
+            - object_permissions
 
 extends_documentation_fragment: infra.ah_configuration.auth
 """
@@ -135,7 +137,7 @@ def main():
         links=dict(type="list", elements="dict"),
         groups=dict(type="list", elements="dict", default=[], options=dict(
             name=dict(required=True),
-            object_roles=dict(type="list", elements="str", required=True)
+            object_roles=dict(type="list", elements="str", required=True, aliases=["object_permissions"])
         )),
         state=dict(choices=["present", "absent"], default="present"),
     )
