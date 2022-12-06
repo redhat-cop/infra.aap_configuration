@@ -1,4 +1,4 @@
-# redhat_cop.ah_configuration.ee_repository
+# infra.ah_configuration.ee_repository
 
 ## Description
 

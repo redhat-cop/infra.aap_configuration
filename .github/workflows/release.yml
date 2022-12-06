@@ -1,0 +1,78 @@
+---
+# This workflow action will run pre-commit, which will execute ansible and yaml linting
+# See .pre-commit-config.yaml for what hooks are executed
+name: Release
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  pre-commit:
+    uses: redhat-cop/ansible_collections_tooling/.github/workflows/pre-commit.yml@main
+  sanity:
+    uses: redhat-cop/ansible_collections_tooling/.github/workflows/sanity.yml@main
+    with:
+      collection_namespace: infra
+      collection_name: ah_configuration
+      collection_version: 1.0.0
+      collection_repo: https://github.com/redhat-cop/ah_configuration/
+  prechecks:
+    needs:
+      - pre-commit
+      - sanity
+    runs-on: ubuntu-latest
+    steps:
+      - run: >-
+          python -c "assert set([
+          '${{ needs.pre-commit.result }}',
+          '${{ needs.sanity.result }}',
+          ]) == {'success'}"
+  cop_release:
+    needs:
+      - prechecks
+    uses: redhat-cop/ansible_collections_tooling/.github/workflows/release.yml@main
+    with:
+      collection_namespace: redhat_cop
+      collection_name: ah_configuration
+      collection_version: ${{ github.ref_name }}
+      collection_repo: https://github.com/redhat-cop/ah_configuration/
+    secrets:
+      api_key: ${{ secrets.ANSIBLE_GALAXY_APIKEY }}
+      token: ${{ secrets.GITHUB_TOKEN }}
+  infra_release:
+    needs:
+      - cop_release
+    uses: redhat-cop/ansible_collections_tooling/.github/workflows/release.yml@main
+    with:
+      collection_namespace: infra
+      collection_name: ah_configuration
+      collection_version: ${{ github.ref_name }}
+      collection_repo: https://github.com/redhat-cop/ah_configuration/
+    secrets:
+      api_key: ${{ secrets.GALAXY_INFRA_KEY }}
+      token: ${{ secrets.GITHUB_TOKEN }}
+  release_check:
+    needs:
+      - cop_release
+      - infra_release
+    runs-on: ubuntu-latest
+    steps:
+      - run: >-
+          python -c "assert set([
+          '${{ needs.infra_release.result }}',
+          '${{ needs.cop_release.result }}',
+          ]) == {'success'}"
+  changelog:
+    needs:
+      - release_check
+    uses: redhat-cop/ansible_collections_tooling/.github/workflows/create_changelog.yml@main
+    with:
+      collection_namespace: infra
+      collection_name: ah_configuration
+      collection_version: ${{ github.ref_name }}
+      collection_repo: https://github.com/redhat-cop/ah_configuration/
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+...

@@ -1,4 +1,4 @@
-# redhat_cop.ah_configuration.collection
+# infra.ah_configuration.collection
 
 ## Description
 
@@ -15,7 +15,7 @@ These are the sub options for the vars `ah_collections` which are dictionaries w
 |`path`|""|no|Collection artifact file path.||
 |`wait`|"true"|no|Waits for the collection to be uploaded||
 |`auto_approve`|"true"|no|Approves a collection and requires version to be set.||
-|`overwrite_existing`|"true"|no|Overwrites an existing collection and requires version to be set.||
+|`overwrite_existing`|"false"|no|Overwrites an existing collection and requires version to be set.||
 |`state`|"present"|no|Desired state of the resource||
 
 ### Secure Logging Variables

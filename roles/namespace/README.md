@@ -1,4 +1,4 @@
-# redhat_cop.ah_configuration.namespace
+# infra.ah_configuration.namespace
 
 ## Description
 

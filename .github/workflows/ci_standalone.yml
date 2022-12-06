@@ -1,5 +1,5 @@
 ---
-name: Standalone
+name: Test roles and modules
 on: [push, pull_request]
 
 jobs:
@@ -75,20 +75,22 @@ jobs:
       - name: give stack some time to spin up
         run: sleep 240
 
-      - name: Install collection
-        run: |
-          cp .github/workflow-config/galaxy.yml galaxy.yml
-          ansible-galaxy collection build
-          ansible-galaxy collection install redhat_cop-ah_configuration-0.0.1-devel.tar.gz
+      - name: Build and install the collection
+        uses: redhat-cop/ansible_collections_tooling/actions/build_ansible_collection@main
+        with:
+          collection_namespace: infra
+          collection_name: ah_configuration
+          collection_version: 1.0.0
+          collection_repo: https://github.com/redhat-cop/ah_configuration/
 
       - name: "Perform playbook tests"
-        run: ansible-playbook playbooks/testing_playbook.yml -v
+        run: ansible-playbook .github/tests/playbooks/testing_playbook.yml -v
 
       - name: "Perform playbook tests"
-        run: ansible-playbook playbooks/testing_playbook_user.yml -v
+        run: ansible-playbook .github/tests/playbooks/testing_playbook_user.yml -v
 
       - name: "Perform playbook tests"
-        run: ansible-playbook playbooks/testing_playbook_ee_namespace.yml -v
+        run: ansible-playbook .github/tests/playbooks/testing_playbook_ee_namespace.yml -v
 
       - name: "Perform playbook tests"
-        run: ansible-playbook playbooks/testing_playbook_ee_repository.yml -v
+        run: ansible-playbook .github/tests/playbooks/testing_playbook_ee_repository.yml -v

@@ -1,4 +1,4 @@
-# redhat_cop.ah_configuration.user
+# infra.ah_configuration.user
 
 ## Description
 

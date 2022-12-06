@@ -1,4 +1,4 @@
-# redhat_cop.ah_configuration.ee_registry_index
+# infra.ah_configuration.ee_registry_index
 
 ## Description
 

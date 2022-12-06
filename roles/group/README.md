@@ -1,4 +1,4 @@
-# redhat_cop.ah_configuration.group
+# infra.ah_configuration.group
 
 ## Description
 
