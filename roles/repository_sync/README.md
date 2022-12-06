@@ -1,4 +1,4 @@
-# redhat_cop.ah_configuration.repository_sync
+# infra.ah_configuration.repository_sync
 
 ## Description
 
@@ -40,7 +40,7 @@ ah_repository_certified:
 ah_repository_community:
   url: https://galaxy.ansible.com/api/
   requirements:
-    - redhat_cop.ah_configuration
+    - infra.ah_configuration
     - redhat_cop.controller_configuration
     - redhat_cop.aap_utilities
     - redhat_cop.ee_utilities

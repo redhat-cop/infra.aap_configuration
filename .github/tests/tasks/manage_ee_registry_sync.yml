@@ -6,7 +6,7 @@
 
 - name: Import ah_configuration role
   ansible.builtin.import_role:
-    name: redhat_cop.ah_configuration.ee_registry_sync
+    name: infra.ah_configuration.ee_registry_sync
   tags:
     - regsync
 ...

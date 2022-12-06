@@ -26,7 +26,7 @@ class AHPulpObject(object):
     :type data: dict
     """
 
-    def __init__(self, API_object, data={}):
+    def __init__(self, API_object, data=None):
         """Initialize the module."""
         # The API endpoint is the last component of the URL and allows access
         # to the object API:
@@ -51,7 +51,7 @@ class AHPulpObject(object):
         #      "pulp_created": "2021-08-16T09:22:40.249903Z",
         #      "pulp_href": "/pulp/api/v3/pulp_container/namespaces/017bc08f-99f7-4fc6-859c-3cff0713e39b/"
         #   }
-        self.data = data
+        self.data = data if data else {}
 
         # Is the class instance has been initialized with a valid object?
         self.exists = True if data else False
@@ -95,10 +95,17 @@ class AHPulpObject(object):
             error_msg = self.api.extract_error_msg(response)
             if error_msg:
                 fail_msg = "Unable to get {object_type} {name}: {code}: {error}".format(
-                    object_type=self.object_type, name=name, code=response["status_code"], error=error_msg
+                    object_type=self.object_type,
+                    name=name,
+                    code=response["status_code"],
+                    error=error_msg,
                 )
             else:
-                fail_msg = "Unable to get {object_type} {name}: {code}".format(object_type=self.object_type, name=name, code=response["status_code"])
+                fail_msg = "Unable to get {object_type} {name}: {code}".format(
+                    object_type=self.object_type,
+                    name=name,
+                    code=response["status_code"],
+                )
             self.api.fail_json(msg=fail_msg)
 
         if "count" not in response["json"] or "results" not in response["json"]:
@@ -170,7 +177,12 @@ class AHPulpObject(object):
 
         if response["status_code"] in [202, 204]:
             if auto_exit:
-                json_output = {"name": self.name, "href": self.href, "type": self.object_type, "changed": True}
+                json_output = {
+                    "name": self.name,
+                    "href": self.href,
+                    "type": self.object_type,
+                    "changed": True,
+                }
                 self.api.exit_json(**json_output)
             self.exists = False
             self.data = {}
@@ -180,7 +192,11 @@ class AHPulpObject(object):
         if error_msg:
             fail_msg = "Unable to delete {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg)
         else:
-            fail_msg = "Unable to delete {object_type} {name}: {code}".format(object_type=self.object_type, name=self.name, code=response["status_code"])
+            fail_msg = "Unable to delete {object_type} {name}: {code}".format(
+                object_type=self.object_type,
+                name=self.name,
+                code=response["status_code"],
+            )
         if exit_on_error:
             self.api.fail_json(msg=fail_msg)
         else:
@@ -202,7 +218,11 @@ class AHPulpObject(object):
         if self.api.check_mode:
             self.data.update(new_item)
             if auto_exit:
-                json_output = {"name": self.name, "type": self.object_type, "changed": True}
+                json_output = {
+                    "name": self.name,
+                    "type": self.object_type,
+                    "changed": True,
+                }
                 self.api.exit_json(**json_output)
             return True
 
@@ -219,14 +239,25 @@ class AHPulpObject(object):
             if self.name_field not in self.data:
                 self.data[self.name_field] = new_item[self.name_field]
             if auto_exit:
-                json_output = {"name": self.name, "href": self.href, "type": self.object_type, "changed": True}
+                json_output = {
+                    "name": self.name,
+                    "href": self.href,
+                    "type": self.object_type,
+                    "changed": True,
+                }
                 self.api.exit_json(**json_output)
             return True
 
         error_msg = self.api.extract_error_msg(response)
         if error_msg:
             self.fail_json(msg="Unable to create {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg))
-        self.fail_json(msg="Unable to create {object_type} {name}: {code}".format(object_type=self.object_type, name=self.name, code=response["status_code"]))
+        self.fail_json(
+            msg="Unable to create {object_type} {name}: {code}".format(
+                object_type=self.object_type,
+                name=self.name,
+                code=response["status_code"],
+            )
+        )
 
     def object_are_different(self, old, new):
         for k in new.keys():
@@ -268,14 +299,24 @@ class AHPulpObject(object):
 
         if not needs_patch:
             if auto_exit:
-                json_output = {"name": self.name, "href": self.href, "type": self.object_type, "changed": False}
+                json_output = {
+                    "name": self.name,
+                    "href": self.href,
+                    "type": self.object_type,
+                    "changed": False,
+                }
                 self.api.exit_json(**json_output)
             return False
 
         if self.api.check_mode:
             self.data.update(new_item)
             if auto_exit:
-                json_output = {"name": self.name, "href": self.href, "type": self.object_type, "changed": True}
+                json_output = {
+                    "name": self.name,
+                    "href": self.href,
+                    "type": self.object_type,
+                    "changed": True,
+                }
                 self.api.exit_json(**json_output)
             return True
 
@@ -289,14 +330,25 @@ class AHPulpObject(object):
             self.exists = True
             self.data.update(new_item)
             if auto_exit:
-                json_output = {"name": self.name, "href": self.href, "type": self.object_type, "changed": True}
+                json_output = {
+                    "name": self.name,
+                    "href": self.href,
+                    "type": self.object_type,
+                    "changed": True,
+                }
                 self.api.exit_json(**json_output)
             return True
 
         error_msg = self.api.extract_error_msg(response)
         if error_msg:
             self.fail_json(msg="Unable to update {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg))
-        self.fail_json(msg="Unable to update {object_type} {name}: {code}".format(object_type=self.object_type, name=self.name, code=response["status_code"]))
+        self.fail_json(
+            msg="Unable to update {object_type} {name}: {code}".format(
+                object_type=self.object_type,
+                name=self.name,
+                code=response["status_code"],
+            )
+        )
 
 
 class AHPulpEENamespace(AHPulpObject):
@@ -328,7 +380,7 @@ class AHPulpEENamespace(AHPulpObject):
         ``DELETE /pulp/api/v3/pulp_container/namespaces/dd54d0df-cd88-420b-922a-43a0725a20fc/``
     """
 
-    def __init__(self, API_object, data={}):
+    def __init__(self, API_object, data=None):
         """Initialize the object."""
         super(AHPulpEENamespace, self).__init__(API_object, data)
         self.endpoint = "pulp_container/namespaces"
@@ -375,7 +427,7 @@ class AHPulpEERemote(AHPulpObject):
         ``DELETE /pulp/api/v3/remotes/container/container/d610ec76-ec86-427e-89d4-4d28c37515e1/``
     """
 
-    def __init__(self, API_object, data={}):
+    def __init__(self, API_object, data=None):
         """Initialize the object."""
         super(AHPulpEERemote, self).__init__(API_object, data)
         self.endpoint = "remotes/container/container"
@@ -427,7 +479,7 @@ class AHPulpEERepository(AHPulpObject):
         ``DELETE /pulp/api/v3/distributions/container/container/d610ec76-ec86-427e-89d4-4d28c37515e1/``
     """
 
-    def __init__(self, API_object, data={}):
+    def __init__(self, API_object, data=None):
         """Initialize the object."""
         super(AHPulpEERepository, self).__init__(API_object, data)
         self.endpoint = "distributions/container/container"
@@ -511,7 +563,12 @@ class AHPulpEERepository(AHPulpObject):
 
         if self.api.check_mode:
             if auto_exit:
-                json_output = {"name": self.name, "digest": digest, "type": "image", "changed": True}
+                json_output = {
+                    "name": self.name,
+                    "digest": digest,
+                    "type": "image",
+                    "changed": True,
+                }
                 self.api.exit_json(**json_output)
             return
 
@@ -523,7 +580,12 @@ class AHPulpEERepository(AHPulpObject):
 
         if response["status_code"] in [202, 204]:
             if auto_exit:
-                json_output = {"name": self.name, "digest": digest, "type": "image", "changed": True}
+                json_output = {
+                    "name": self.name,
+                    "digest": digest,
+                    "type": "image",
+                    "changed": True,
+                }
                 self.api.exit_json(**json_output)
             return
 
@@ -531,12 +593,18 @@ class AHPulpEERepository(AHPulpObject):
         if error_msg:
             self.api.fail_json(
                 msg="Unable to delete image from {object_type} {name}: {digest}: {error}".format(
-                    object_type=self.object_type, name=self.name, digest=digest, error=error_msg
+                    object_type=self.object_type,
+                    name=self.name,
+                    digest=digest,
+                    error=error_msg,
                 )
             )
         self.api.fail_json(
             msg="Unable to delete image from {object_type} {name}: {digest}: {code}".format(
-                object_type=self.object_type, name=self.name, digest=digest, code=response["status_code"]
+                object_type=self.object_type,
+                name=self.name,
+                digest=digest,
+                code=response["status_code"],
             )
         )
 
@@ -556,13 +624,24 @@ class AHPulpEERepository(AHPulpObject):
         """
         if not self.exists:
             if auto_exit:
-                json_output = {"digest": digest, "tag": tag, "type": "image", "changed": False}
+                json_output = {
+                    "digest": digest,
+                    "tag": tag,
+                    "type": "image",
+                    "changed": False,
+                }
                 self.api.exit_json(**json_output)
             return False
 
         if self.api.check_mode:
             if auto_exit:
-                json_output = {"name": self.name, "digest": digest, "tag": tag, "type": "image", "changed": True}
+                json_output = {
+                    "name": self.name,
+                    "digest": digest,
+                    "tag": tag,
+                    "type": "image",
+                    "changed": True,
+                }
                 self.api.exit_json(**json_output)
             return True
 
@@ -574,13 +653,25 @@ class AHPulpEERepository(AHPulpObject):
 
         if response["status_code"] in [202, 204]:
             if auto_exit:
-                json_output = {"name": self.name, "digest": digest, "tag": tag, "type": "image", "changed": True}
+                json_output = {
+                    "name": self.name,
+                    "digest": digest,
+                    "tag": tag,
+                    "type": "image",
+                    "changed": True,
+                }
                 self.api.exit_json(**json_output)
             return True
 
         if response["status_code"] >= 400:
             if auto_exit:
-                json_output = {"name": self.name, "digest": digest, "tag": tag, "type": "image", "changed": False}
+                json_output = {
+                    "name": self.name,
+                    "digest": digest,
+                    "tag": tag,
+                    "type": "image",
+                    "changed": False,
+                }
                 self.api.exit_json(**json_output)
             return False
 
@@ -588,12 +679,20 @@ class AHPulpEERepository(AHPulpObject):
         if error_msg:
             self.api.fail_json(
                 msg="Unable to delete image tag {tag} from {object_type} {name}: {digest}: {error}".format(
-                    tag=tag, object_type=self.object_type, name=self.name, digest=digest, error=error_msg
+                    tag=tag,
+                    object_type=self.object_type,
+                    name=self.name,
+                    digest=digest,
+                    error=error_msg,
                 )
             )
         self.api.fail_json(
             msg="Unable to delete image tag {tag} from {object_type} {name}: {digest}: {code}".format(
-                tag=tag, object_type=self.object_type, name=self.name, digest=digest, code=response["status_code"]
+                tag=tag,
+                object_type=self.object_type,
+                name=self.name,
+                digest=digest,
+                code=response["status_code"],
             )
         )
 
@@ -613,13 +712,24 @@ class AHPulpEERepository(AHPulpObject):
         """
         if not self.exists:
             if auto_exit:
-                json_output = {"digest": digest, "tag": tag, "type": "image", "changed": False}
+                json_output = {
+                    "digest": digest,
+                    "tag": tag,
+                    "type": "image",
+                    "changed": False,
+                }
                 self.api.exit_json(**json_output)
             return False
 
         if self.api.check_mode:
             if auto_exit:
-                json_output = {"name": self.name, "digest": digest, "tag": tag, "type": "image", "changed": True}
+                json_output = {
+                    "name": self.name,
+                    "digest": digest,
+                    "tag": tag,
+                    "type": "image",
+                    "changed": True,
+                }
                 self.api.exit_json(**json_output)
             return True
 
@@ -631,7 +741,13 @@ class AHPulpEERepository(AHPulpObject):
 
         if response["status_code"] in [202, 204]:
             if auto_exit:
-                json_output = {"name": self.name, "digest": digest, "tag": tag, "type": "image", "changed": True}
+                json_output = {
+                    "name": self.name,
+                    "digest": digest,
+                    "tag": tag,
+                    "type": "image",
+                    "changed": True,
+                }
                 self.api.exit_json(**json_output)
             return True
 
@@ -639,12 +755,20 @@ class AHPulpEERepository(AHPulpObject):
         if error_msg:
             self.api.fail_json(
                 msg="Unable to add image tag {tag} to {object_type} {name}: {digest}: {error}".format(
-                    tag=tag, object_type=self.object_type, name=self.name, digest=digest, error=error_msg
+                    tag=tag,
+                    object_type=self.object_type,
+                    name=self.name,
+                    digest=digest,
+                    error=error_msg,
                 )
             )
         self.api.fail_json(
             msg="Unable to add image tag {tag} to {object_type} {name}: {digest}: {code}".format(
-                tag=tag, object_type=self.object_type, name=self.name, digest=digest, code=response["status_code"]
+                tag=tag,
+                object_type=self.object_type,
+                name=self.name,
+                digest=digest,
+                code=response["status_code"],
             )
         )
 
@@ -683,15 +807,15 @@ class AHPulpTask(AHPulpObject):
 
     """
 
-    def __init__(self, API_object, data={}):
+    def __init__(self, API_object, data=None):
         """Initialize the object."""
         super(AHPulpTask, self).__init__(API_object, data)
         self.endpoint = "tasks"
         self.object_type = "task"
         self.name_field = "name"
 
-    def get_object(self, task):
-        url = self.api.build_pulp_url("{endpoint}/{task_id}".format(endpoint=self.endpoint, task_id=task.split("/")[-2]))
+    def get_object(self, name):
+        url = self.api.build_pulp_url("{endpoint}/{task_id}".format(endpoint=self.endpoint, task_id=name.split("/")[-2]))
         try:
             response = self.api.make_request("GET", url)
         except AHAPIModuleError as e:
@@ -701,10 +825,17 @@ class AHPulpTask(AHPulpObject):
             error_msg = self.api.extract_error_msg(response)
             if error_msg:
                 fail_msg = "Unable to get {object_type} {name}: {code}: {error}".format(
-                    object_type=self.object_type, name=self.href, code=response["status_code"], error=error_msg
+                    object_type=self.object_type,
+                    name=self.href,
+                    code=response["status_code"],
+                    error=error_msg,
                 )
             else:
-                fail_msg = "Unable to get {object_type} {name}: {code}".format(object_type=self.object_type, name=self.href, code=response["status_code"])
+                fail_msg = "Unable to get {object_type} {name}: {code}".format(
+                    object_type=self.object_type,
+                    name=self.href,
+                    code=response["status_code"],
+                )
             self.api.fail_json(msg=fail_msg)
 
         self.data = response["json"]
@@ -732,10 +863,17 @@ class AHPulpTask(AHPulpObject):
             error_msg = self.api.extract_error_msg(response)
             if error_msg:
                 fail_msg = "Unable to get {object_type} {parent_task}: {code}: {error}".format(
-                    object_type=self.object_type, parent_task=parent_task, code=response["status_code"], error=error_msg
+                    object_type=self.object_type,
+                    parent_task=parent_task,
+                    code=response["status_code"],
+                    error=error_msg,
                 )
             else:
-                fail_msg = "Unable to get {object_type} {pt}: {code}".format(object_type=self.object_type, pt=parent_task, code=response["status_code"])
+                fail_msg = "Unable to get {object_type} {pt}: {code}".format(
+                    object_type=self.object_type,
+                    pt=parent_task,
+                    code=response["status_code"],
+                )
             self.api.fail_json(msg=fail_msg)
 
         return response["json"]["results"]
@@ -750,7 +888,12 @@ class AHPulpTask(AHPulpObject):
                 if childTask["error"]:
                     task_status = "Complete"
                     error_output = childTask["error"]["description"].split(",")
-                    self.api.fail_json(status=error_output[0], msg=error_output[1], url=error_output[2], traceback=childTask["error"]["traceback"])
+                    self.api.fail_json(
+                        status=error_output[0],
+                        msg=error_output[1],
+                        url=error_output[2],
+                        traceback=childTask["error"]["traceback"],
+                    )
                 complete &= childTask["state"] == "completed"
             if complete:
                 task_status = "Complete"

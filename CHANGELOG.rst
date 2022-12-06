@@ -1,5 +1,5 @@
 =========================================
-redhat_cop.ah_configuration Release Notes
+infra.ah_configuration Release Notes
 =========================================
 
 .. contents:: Topics
@@ -112,7 +112,7 @@ Breaking Changes / Porting Guide
 New Modules
 -----------
 
-- redhat_cop.ah_configuration.ah_ee_registry - Manage private automation hub execution environment remote registries.
+- infra.ah_configuration.ah_ee_registry - Manage private automation hub execution environment remote registries.
 
 v0.6.1
 ======

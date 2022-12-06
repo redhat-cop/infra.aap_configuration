@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 DOCUMENTATION = """
-lookup: ah_api
+name: ah_api
 author: Tom Page (@Tompage1994)
 short_description: Search the API for objects
 requirements:
@@ -71,7 +71,7 @@ options:
       - If a list view returns more an max_objects an exception will be raised
     type: integer
     default: 1000
-extends_documentation_fragment: redhat_cop.ah_configuration.auth_plugin
+extends_documentation_fragment: infra.ah_configuration.auth_plugin
 notes:
   - If the query is not filtered properly this can cause a performance impact.
   - Two options take multiple terms. 'ee_images' and 'collection'. See the _terms choices above or the examples below for more details.
@@ -80,20 +80,20 @@ notes:
 EXAMPLES = """
 - name: Report the usernames of all users
   debug:
-    msg: "Users: {{ query('redhat_cop.ah_configuration.ah_api', 'users', return_all=true) | map(attribute='username') | list }}"
+    msg: "Users: {{ query('infra.ah_configuration.ah_api', 'users', return_all=true) | map(attribute='username') | list }}"
 
 - name: List all collection namespaces by the devops team
   debug:
-    msg: "{{ lookup('redhat_cop.ah_configuration.ah_api', 'namespaces', host='https://ah.example.com', username='ansible',
+    msg: "{{ lookup('infra.ah_configuration.ah_api', 'namespaces', host='https://ah.example.com', username='ansible',
               password='Passw0rd123', verify_ssl=false, query_params={'company': 'Devops'}) }}"
 
 - name: Get the list of tags for my_ee
   set_fact:
-    my_ee_tags: "{{ lookup('redhat_cop.ah_configuration.ah_api', 'ee_images', 'my_ee') | map(attribute='tags') | list | flatten }}"
+    my_ee_tags: "{{ lookup('infra.ah_configuration.ah_api', 'ee_images', 'my_ee') | map(attribute='tags') | list | flatten }}"
 
-- name: Get the list of versions for redhat_cop.ah_configuration in the published repo
+- name: Get the list of versions for infra.ah_configuration in the published repo
   set_fact:
-    collection_versions: "{{ lookup('redhat_cop.ah_configuration.ah_api', 'collection', 'published', 'redhat_cop',
+    collection_versions: "{{ lookup('infra.ah_configuration.ah_api', 'collection', 'published', 'redhat_cop',
                             'ah_configuration').all_versions | map(attribute='version') | list }}"
 """
 
@@ -133,7 +133,12 @@ class LookupModule(LookupBase):
                 module_params[module_param] = opt_val
 
         # Create our module
-        module = AHAPIModule(argument_spec={}, direct_params=module_params, error_callback=self.handle_error, warn_callback=self.warn_callback)
+        module = AHAPIModule(
+            argument_spec={},
+            direct_params=module_params,
+            error_callback=self.handle_error,
+            warn_callback=self.warn_callback,
+        )
 
         endpoints = {
             "ee_images": "/api/{prefix}/_ui/v1/execution-environments/repositories/{ee_repository}/_content/images/",
@@ -159,7 +164,12 @@ class LookupModule(LookupBase):
         elif terms[0] == "collection":
             if len(terms) != 4:
                 raise AnsibleError("4 terms are required with: 'collection', <repository>, <namespace>, <name>")
-            endpoint = endpoints[terms[0]].format(prefix=module.path_prefix, repository=terms[1], namespace=terms[2], name=terms[3])
+            endpoint = endpoints[terms[0]].format(
+                prefix=module.path_prefix,
+                repository=terms[1],
+                namespace=terms[2],
+                name=terms[3],
+            )
         else:
             endpoint = endpoints[terms[0]].format(prefix=module.path_prefix)
 
@@ -189,7 +199,11 @@ class LookupModule(LookupBase):
                 if return_data["meta"]["count"] > self.get_option("max_objects"):
                     raise AnsibleError(
                         "List view at {0} returned {1} objects, which is more than the maximum allowed "
-                        "by max_objects, {2}".format(terms[0], return_data["meta"]["count"], self.get_option("max_objects"))
+                        "by max_objects, {2}".format(
+                            terms[0],
+                            return_data["meta"]["count"],
+                            self.get_option("max_objects"),
+                        )
                     )
 
                 next_page = module._build_url("", endpoint=return_data["links"]["next"])
@@ -226,7 +240,11 @@ class LookupModule(LookupBase):
                 if return_data["count"] > self.get_option("max_objects"):
                     raise AnsibleError(
                         "List view at {0} returned {1} objects, which is more than the maximum allowed "
-                        "by max_objects, {2}".format(terms[0], return_data["count"], self.get_option("max_objects"))
+                        "by max_objects, {2}".format(
+                            terms[0],
+                            return_data["count"],
+                            self.get_option("max_objects"),
+                        )
                     )
 
                 next_page = module.host_url._replace(path=return_data["next"])

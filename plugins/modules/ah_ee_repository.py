@@ -57,11 +57,13 @@ options:
       - The tags to pull in.
     type: list
     elements: str
+    default: []
   exclude_tags:
     description:
       - The tags to avoid pulling in.
     type: list
     elements: str
+    default: []
   readme:
     description:
       - README text in Markdown format for the repository.
@@ -85,12 +87,12 @@ notes:
   - Only works with private automation hub v4.3.2 or later for local repositories and v4.4.0 for remote repositories.
   - The module cannot be use to create repositories.
     Use C(podman push) for example to create repositories.
-extends_documentation_fragment: redhat_cop.ah_configuration.auth_ui
+extends_documentation_fragment: infra.ah_configuration.auth_ui
 """
 
 EXAMPLES = r"""
 - name: Ensure the repository description and README are set
-  redhat_cop.ah_configuration.ah_ee_repository:
+  infra.ah_configuration.ah_ee_repository:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8
     state: present
     description: Supported execution environment
@@ -104,7 +106,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the repository README is set
-  redhat_cop.ah_configuration.ah_ee_repository:
+  infra.ah_configuration.ah_ee_repository:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8
     state: present
     readme_file: README.md
@@ -113,7 +115,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the repository has the new name
-  redhat_cop.ah_configuration.ah_ee_repository:
+  infra.ah_configuration.ah_ee_repository:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8
     new_name: aap-20/supported
     delete_namespace_if_empty: false
@@ -123,7 +125,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the repository is removed
-  redhat_cop.ah_configuration.ah_ee_repository:
+  infra.ah_configuration.ah_ee_repository:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8
     state: absent
     ah_host: hub.example.com
@@ -131,7 +133,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Add a remote repository from quayio registry
-  redhat_cop.ah_configuration.ah_ee_repository:
+  infra.ah_configuration.ah_ee_repository:
     name: myrepo
     upstream_name: repo
     registry: quayio
@@ -171,7 +173,14 @@ def delete_empty_namespace(module, repository_name):
         namespace_pulp.delete(auto_exit=False)
 
 
-def rename_repository(module, repository_pulp, remote_pulp, old_name, new_name, delete_namespace_if_empty=True):
+def rename_repository(
+    module,
+    repository_pulp,
+    remote_pulp,
+    old_name,
+    new_name,
+    delete_namespace_if_empty=True,
+):
     """Rename the given repository.
 
     :param module: The API object that the function uses to access the API.
@@ -213,7 +222,10 @@ def main():
     module = AHAPIModule(
         argument_spec=argument_spec,
         supports_check_mode=True,
-        mutually_exclusive=[("readme", "readme_file"), ("include_tags", "exclude_tags")],
+        mutually_exclusive=[
+            ("readme", "readme_file"),
+            ("include_tags", "exclude_tags"),
+        ],
         required_by={"registry": "upstream_name"},
     )
 
@@ -278,7 +290,14 @@ def main():
                 name = new_name
                 repository_ui.get_object(name)
         elif repository_pulp.exists:
-            rename_repository(module, repository_pulp, remote_pulp, name, new_name, delete_namespace_if_empty)
+            rename_repository(
+                module,
+                repository_pulp,
+                remote_pulp,
+                name,
+                new_name,
+                delete_namespace_if_empty,
+            )
             name = new_name
             changed = True
 
@@ -336,13 +355,21 @@ def main():
         changed = True
 
     if readme is None:
-        json_output = {"name": name, "type": repository_pulp.object_type, "changed": changed}
+        json_output = {
+            "name": name,
+            "type": repository_pulp.object_type,
+            "changed": changed,
+        }
         module.exit_json(**json_output)
 
     # API (GET): /api/galaxy/_ui/v1/execution-environments/repositories/<name>/_content/readme/
     # API (PUT): /api/galaxy/_ui/v1/execution-environments/repositories/<name>/_content/readme/
     updated = repository_ui.update_readme(readme, auto_exit=False)
-    json_output = {"name": name, "type": repository_ui.object_type, "changed": changed or updated}
+    json_output = {
+        "name": name,
+        "type": repository_ui.object_type,
+        "changed": changed or updated,
+    }
     module.exit_json(**json_output)
 
 

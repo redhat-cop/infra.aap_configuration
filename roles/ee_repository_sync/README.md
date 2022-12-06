@@ -1,4 +1,4 @@
-# redhat_cop.ah_configuration.ee_repository_sync
+# infra.ah_configuration.ee_repository_sync
 
 ## Description
 

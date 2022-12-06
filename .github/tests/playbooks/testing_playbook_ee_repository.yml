@@ -5,7 +5,7 @@
   become: false
   gather_facts: false
   collections:
-    - redhat_cop.ah_configuration
+    - infra.ah_configuration
   vars:
     ah_host: hub.lab.example.com
     ah_username: admin

@@ -11,13 +11,16 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-ANSIBLE_METADATA = {"metadata_version": "1.1", "status": ["preview"], "supported_by": "community"}
+ANSIBLE_METADATA = {
+    "metadata_version": "1.1",
+    "status": ["preview"],
+    "supported_by": "community",
+}
 
 DOCUMENTATION = """
 ---
 module: ah_token
 author: "John Westcott IV (@john-westcott-iv), Sean Sullivan (@sean-m-sullivan)"
-version_added: "2.10"
 short_description: create, update, or destroy Automation Hub tokens.
 description:
     - Create or destroy Automation Hub tokens. See
@@ -37,7 +40,7 @@ options:
       choices: ["present", "absent"]
       default: "present"
       type: str
-extends_documentation_fragment: redhat_cop.ah_configuration.auth
+extends_documentation_fragment: infra.ah_configuration.auth
 """
 
 EXAMPLES = """

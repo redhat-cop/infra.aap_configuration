@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
   collections:
-    - redhat_cop.ah_configuration
+    - infra.ah_configuration
 
   vars:
     target_state: "present"

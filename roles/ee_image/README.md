@@ -1,4 +1,4 @@
-# redhat_cop.ah_configuration.ee_image
+# infra.ah_configuration.ee_image
 
 ## Description
 

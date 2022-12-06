@@ -9,7 +9,11 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-ANSIBLE_METADATA = {"metadata_version": "1.1", "status": ["preview"], "supported_by": "community"}
+ANSIBLE_METADATA = {
+    "metadata_version": "1.1",
+    "status": ["preview"],
+    "supported_by": "community",
+}
 
 
 DOCUMENTATION = r"""
@@ -43,7 +47,7 @@ options:
         - If waiting for the registry to update this will abort after this
           amount of seconds
       type: int
-extends_documentation_fragment: redhat_cop.ah_configuration.auth_ui
+extends_documentation_fragment: infra.ah_configuration.auth_ui
 """
 
 

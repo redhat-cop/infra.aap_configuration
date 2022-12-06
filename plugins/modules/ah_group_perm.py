@@ -55,21 +55,21 @@ options:
     default: present
     choices: [absent, present]
 seealso:
-  - module: redhat_cop.ah_configuration.ah_group
-  - module: redhat_cop.ah_configuration.ah_user
+  - module: infra.ah_configuration.ah_group
+  - module: infra.ah_configuration.ah_user
 notes:
   - Supports C(check_mode).
   - The container permissions (C(change_containernamespace_perms),
     C(change_container), C(change_image_tag), C(create_container), and
     C(push_container)) are only available with private automation hub v4.3.2 or
     later.
-extends_documentation_fragment: redhat_cop.ah_configuration.auth_ui
+extends_documentation_fragment: infra.ah_configuration.auth_ui
 """
 
 
 EXAMPLES = r"""
 - name: Ensure the operators have the correct permissions to manage users
-  redhat_cop.ah_configuration.ah_group_perm:
+  infra.ah_configuration.ah_group_perm:
     name: operators
     perms:
       - add_user
@@ -82,7 +82,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the administrators have all the permissions
-  redhat_cop.ah_configuration.ah_group_perm:
+  infra.ah_configuration.ah_group_perm:
     name: administrators
     perms: "*"
     state: present
@@ -91,7 +91,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the developers cannot manage groups nor users
-  redhat_cop.ah_configuration.ah_group_perm:
+  infra.ah_configuration.ah_group_perm:
     name: developers
     perms:
       - add_user

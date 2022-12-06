@@ -1,25 +1,35 @@
 ---
 # This workflow action will run pre-commit, which will execute ansible and yaml linting
-# See .pre-commit-config.yml for what hooks are executed
-name: Yaml and Ansible Lint
+# See .pre-commit-config.yaml for what hooks are executed
+name: pre-commit tests
 
-on: [push, pull_request]  # yamllint disable-line rule:truthy
+
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: "0 6 * * *"
 
 jobs:
   pre-commit:
+    uses: "redhat-cop/ansible_collections_tooling/.github/workflows/pre-commit.yml@main"
+  sanity:
+    uses: "redhat-cop/ansible_collections_tooling/.github/workflows/sanity.yml@main"
+    with:
+      collection_namespace: infra
+      collection_name: ah_configuration
+      collection_version: 1.0.0
+      collection_repo: https://github.com/redhat-cop/ah_configuration/
+  all_green:
+    if: ${{ always() }}
+    needs:
+      - pre-commit
+      - sanity
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-      - name: Install Pre-reqs
-        # cp is to make ansible-lint into thinking that awx.awx plugins are part of the collection so it lints properly.
-        run: |
-          sudo apt install software-properties-common
-          sudo apt-add-repository --yes --update ppa:ansible/ansible
-          pip install --upgrade ansible
-          cp .github/workflow-config/galaxy.yml galaxy.yml
-          ansible-config view -vvv
-  #        ansible-galaxy collection build
-  #        ansible-galaxy collection install *.tar.gz -f
-      - uses: pre-commit/action@v2.0.3
+      - run: >-
+          python -c "assert set([
+          '${{ needs.pre-commit.result }}',
+          '${{ needs.sanity.result }}',
+          ]) == {'success'}"
 ...

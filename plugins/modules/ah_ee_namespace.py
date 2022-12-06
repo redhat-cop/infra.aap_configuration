@@ -59,12 +59,12 @@ notes:
   - When the module creates a namespace, the private automation hub web UI does not display that new namespace.
     You must first create a repository in the namespace, with C(podman push) for example, for the web UI to show the namespace.
   - When the module grants access to a group, the permissions associated to that group apply.
-extends_documentation_fragment: redhat_cop.ah_configuration.auth_ui
+extends_documentation_fragment: infra.ah_configuration.auth_ui
 """
 
 EXAMPLES = r"""
 - name: Ensure the namespace exists
-  redhat_cop.ah_configuration.ah_ee_namespace:
+  infra.ah_configuration.ah_ee_namespace:
     name: ansible-automation-platform-20-early-access
     state: present
     ah_host: hub.example.com
@@ -72,7 +72,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the namespace has a new name
-  redhat_cop.ah_configuration.ah_ee_namespace:
+  infra.ah_configuration.ah_ee_namespace:
     name: ansible-automation-platform-20-early-access
     new_name: custom-ee-01
     state: present
@@ -81,7 +81,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the namespace is removed
-  redhat_cop.ah_configuration.ah_ee_namespace:
+  infra.ah_configuration.ah_ee_namespace:
     name: custom-ee-01
     state: absent
     ah_host: hub.example.com
@@ -89,7 +89,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure only the operators group can manage the namespace
-  redhat_cop.ah_configuration.ah_ee_namespace:
+  infra.ah_configuration.ah_ee_namespace:
     name: ansible-automation-platform-20-early-access
     state: present
     groups:
@@ -100,7 +100,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the managers group can also manage the namespace
-  redhat_cop.ah_configuration.ah_ee_namespace:
+  infra.ah_configuration.ah_ee_namespace:
     name: ansible-automation-platform-20-early-access
     state: present
     groups:
@@ -161,7 +161,11 @@ def rename_namespace(module, src_namespace_pulp, dest_namespace_pulp, dest_names
         dest_namespace_ui = AHUIEENamespace(module)
         try:
             dest_namespace_ui.get_object(dest_namespace_name, exit_on_error=False)
-            dest_namespace_ui.update_groups({"groups": src_namespace_ui.data["groups"]}, auto_exit=False, exit_on_error=False)
+            dest_namespace_ui.update_groups(
+                {"groups": src_namespace_ui.data["groups"]},
+                auto_exit=False,
+                exit_on_error=False,
+            )
         except AHAPIModuleError as e:
             # Roll back
             try:
@@ -240,7 +244,7 @@ def main():
                 perms = []
                 for p in group.get_perms():
                     if p.startswith("container."):
-                        p = p[len("container.") :]
+                        p = p[len("container."):]
                     if p in PERM_NAMES:
                         perms.append(p)
                 group.data["object_permissions"] = perms
@@ -318,9 +322,17 @@ def main():
     # API (PUT): /api/galaxy/_ui/v1/execution-environments/namespaces/<name>/
     updated = namespace_ui.update_groups({"groups": group_ids}, auto_exit=False)
     if changed or updated:
-        json_output = {"name": namespace_ui.name, "type": namespace_ui.object_type, "changed": True}
+        json_output = {
+            "name": namespace_ui.name,
+            "type": namespace_ui.object_type,
+            "changed": True,
+        }
     else:
-        json_output = {"name": namespace_ui.name, "type": namespace_ui.object_type, "changed": False}
+        json_output = {
+            "name": namespace_ui.name,
+            "type": namespace_ui.object_type,
+            "changed": False,
+        }
     module.exit_json(**json_output)
 
 

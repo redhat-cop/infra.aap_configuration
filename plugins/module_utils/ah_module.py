@@ -3,7 +3,12 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from ansible.module_utils.basic import AnsibleModule, env_fallback
-from ansible.module_utils.urls import Request, SSLValidationError, ConnectionError, fetch_file
+from ansible.module_utils.urls import (
+    Request,
+    SSLValidationError,
+    ConnectionError,
+    fetch_file,
+)
 from ansible.module_utils.six import string_types
 from ansible.module_utils.six import PY2, PY3
 from ansible.module_utils.six.moves.urllib.parse import urlparse, urlencode
@@ -30,12 +35,30 @@ class AHModule(AnsibleModule):
     url = None
     session = None
     AUTH_ARGSPEC = dict(
-        ah_host=dict(required=False, aliases=["ah_hostname"], fallback=(env_fallback, ["AH_HOST"])),
+        ah_host=dict(
+            required=False,
+            aliases=["ah_hostname"],
+            fallback=(env_fallback, ["AH_HOST"]),
+        ),
         ah_username=dict(required=False, fallback=(env_fallback, ["AH_USERNAME"])),
         ah_password=dict(no_log=True, required=False, fallback=(env_fallback, ["AH_PASSWORD"])),
-        ah_path_prefix=dict(required=False, fallback=(env_fallback, ["GALAXY_API_PATH_PREFIX"])),
-        validate_certs=dict(type="bool", aliases=["ah_verify_ssl"], required=False, fallback=(env_fallback, ["AH_VERIFY_SSL"])),
-        ah_token=dict(type="raw", no_log=True, required=False, fallback=(env_fallback, ["AH_API_TOKEN"])),
+        ah_path_prefix=dict(
+            required=False,
+            default="galaxy",
+            fallback=(env_fallback, ["GALAXY_API_PATH_PREFIX"]),
+        ),
+        validate_certs=dict(
+            type="bool",
+            aliases=["ah_verify_ssl"],
+            required=False,
+            fallback=(env_fallback, ["AH_VERIFY_SSL"]),
+        ),
+        ah_token=dict(
+            type="raw",
+            no_log=True,
+            required=False,
+            fallback=(env_fallback, ["AH_API_TOKEN"]),
+        ),
     )
     ENCRYPTED_STRING = "$encrypted$"
     short_params = {
@@ -176,8 +199,8 @@ class AHModule(AnsibleModule):
             # If we have a oauth token, we just use a bearer header
             headers["Authorization"] = "Token {0}".format(self.oauth_token)
         elif self.basic_auth:
-            basic_str = base64.b64encode("{}:{}".format(self.username, self.password).encode("ascii"))
-            headers["Authorization"] = "Basic {}".format(basic_str.decode("ascii"))
+            basic_str = base64.b64encode("{0}:{1}".format(self.username, self.password).encode("ascii"))
+            headers["Authorization"] = "Basic {0}".format(basic_str.decode("ascii"))
         if method in ["POST", "PUT", "PATCH"]:
             headers.setdefault("Content-Type", "application/json")
             kwargs["headers"] = headers
@@ -192,7 +215,14 @@ class AHModule(AnsibleModule):
             data = kwargs.get("data", None)
 
         try:
-            response = self.session.open(method, url.geturl(), headers=headers, validate_certs=self.verify_ssl, follow_redirects=True, data=data)
+            response = self.session.open(
+                method,
+                url.geturl(),
+                headers=headers,
+                validate_certs=self.verify_ssl,
+                follow_redirects=True,
+                data=data,
+            )
         except (SSLValidationError) as ssl_err:
             self.fail_json(msg="Could not establish a secure connection to your host ({1}): {0}.".format(url.netloc, ssl_err))
         except (ConnectionError) as con_err:
@@ -219,7 +249,10 @@ class AHModule(AnsibleModule):
                     # JSONDecodeError only available on Python 3.5+
                     except ValueError:
                         return {"status_code": he.code, "text": page_data}
-                self.fail_json(msg="The requested object could not be found at {0}.".format(url.path), response=he)
+                self.fail_json(
+                    msg="The requested object could not be found at {0}.".format(url.path),
+                    response=he,
+                )
             # Sanity check: Did we get a 405 response?
             # A 405 means we used a method that isn't allowed. Usually this is a bad request, but it requires special treatment because the
             # API sends it as a logic error in a few situations (e.g. trying to cancel a job that isn't running).
@@ -350,12 +383,15 @@ class AHModule(AnsibleModule):
                 except HTTPError:
                     test_url = self.build_url("namespaces").geturl()
                     self.basic_auth = True
-                    basic_str = base64.b64encode("{}:{}".format(self.username, self.password).encode("ascii"))
+                    basic_str = base64.b64encode("{0}:{1}".format(self.username, self.password).encode("ascii"))
                     response = self.session.open(
                         "GET",
                         test_url,
                         validate_certs=self.verify_ssl,
-                        headers={"Content-Type": "application/json", "Authorization": "Basic {}".format(basic_str.decode("ascii"))},
+                        headers={
+                            "Content-Type": "application/json",
+                            "Authorization": "Basic {0}".format(basic_str.decode("ascii")),
+                        },
                     )
             except HTTPError as he:
                 try:
@@ -381,7 +417,7 @@ class AHModule(AnsibleModule):
 
     def existing_item_add_url(self, existing_item, endpoint, key="url"):
         # Add url and type to response as its missing in current iteration of Automation Hub.
-        existing_item[key] = "{0}{1}/".format(self.build_url(endpoint).geturl()[len(self.host) :], existing_item["name"])
+        existing_item[key] = "{0}{1}/".format(self.build_url(endpoint).geturl()[len(self.host):], existing_item["name"])
         existing_item["type"] = endpoint
         return existing_item
 
@@ -475,14 +511,35 @@ class AHModule(AnsibleModule):
     ):
         if existing_item:
             return self.update_if_needed(
-                existing_item, new_item, on_update=on_update, auto_exit=auto_exit, associations=associations, require_id=require_id, fixed_url=fixed_url
+                existing_item,
+                new_item,
+                on_update=on_update,
+                auto_exit=auto_exit,
+                associations=associations,
+                require_id=require_id,
+                fixed_url=fixed_url,
             )
         else:
             return self.create_if_needed(
-                existing_item, new_item, endpoint, on_create=on_create, item_type=item_type, auto_exit=auto_exit, associations=associations
+                existing_item,
+                new_item,
+                endpoint,
+                on_create=on_create,
+                item_type=item_type,
+                auto_exit=auto_exit,
+                associations=associations,
             )
 
-    def create_if_needed(self, existing_item, new_item, endpoint, on_create=None, auto_exit=True, item_type="unknown", associations=None):
+    def create_if_needed(
+        self,
+        existing_item,
+        new_item,
+        endpoint,
+        on_create=None,
+        auto_exit=True,
+        item_type="unknown",
+        associations=None,
+    ):
 
         # This will exit from the module on its own
         # If the method successfully creates an item and on_create param is defined,
@@ -517,7 +574,10 @@ class AHModule(AnsibleModule):
                         self.json_output["name"] = response["json"][key]
                 if item_type != "token":
                     self.json_output["id"] = response["json"]["id"]
-                    item_url = "{0}{1}/".format(self.build_url(endpoint).geturl()[len(self.host) :], new_item["name"])
+                    item_url = "{0}{1}/".format(
+                        self.build_url(endpoint).geturl()[len(self.host):],
+                        new_item["name"],
+                    )
                 self.json_output["changed"] = True
             else:
                 if "json" in response and "__all__" in response["json"]:
@@ -594,7 +654,11 @@ class AHModule(AnsibleModule):
         del part["MIME-Version"]
         part.set_param("name", "file", header="Content-Disposition")
         if filename:
-            part.set_param("filename", to_native(os.path.basename(filename)), header="Content-Disposition")
+            part.set_param(
+                "filename",
+                to_native(os.path.basename(filename)),
+                header="Content-Disposition",
+            )
 
         m.attach(part)
 
@@ -607,7 +671,7 @@ class AHModule(AnsibleModule):
             # We cannot just call ``as_string`` since it provides no way
             # to specify ``maxheaderlen``
             # cStringIO seems to be required here
-            fp = cStringIO()  # noqa: F821
+            fp = cStringIO()  # noqa: F821 # pylint: disable=undefined-variable
             # Ensure headers are not split over multiple lines
             g = email.generator.Generator(fp, maxheaderlen=0)
             g.flatten(m)
@@ -624,7 +688,10 @@ class AHModule(AnsibleModule):
             # Py2
             parser = email.parser.HeaderParser().parsestr
 
-        return (parser(headers)["content-type"], b_content)  # Message converts to native strings
+        return (
+            parser(headers)["content-type"],
+            b_content,
+        )  # Message converts to native strings
 
     def getFileContent(self, path):
         try:
@@ -632,7 +699,7 @@ class AHModule(AnsibleModule):
                 b_file_data = f.read()
             return to_text(b_file_data)
         except FileNotFoundError:
-            self.fail_json(msg="No such file found on the local filesystem: '{}'".format(path))
+            self.fail_json(msg="No such file found on the local filesystem: '{0}'".format(path))
 
     def wait_for_complete(self, task_url):
         endpoint = task_url
@@ -655,7 +722,16 @@ class AHModule(AnsibleModule):
             os.rename(tmppath, path)
             self.add_cleanup_file(path)
         ct, body = self.prepare_multipart(path)
-        response = self.make_request("POST", endpoint, **{"data": body, "headers": {"Content-Type": str(ct)}, "binary": True, "return_errors_on_404": True})
+        response = self.make_request(
+            "POST",
+            endpoint,
+            **{
+                "data": body,
+                "headers": {"Content-Type": str(ct)},
+                "binary": True,
+                "return_errors_on_404": True,
+            }
+        )
         if response["status_code"] in [202]:
             self.json_output["path"] = path
             self.json_output["changed"] = True
@@ -672,7 +748,16 @@ class AHModule(AnsibleModule):
             else:
                 self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["status_code"]))
 
-    def update_if_needed(self, existing_item, new_item, on_update=None, auto_exit=True, associations=None, require_id=True, fixed_url=None):
+    def update_if_needed(
+        self,
+        existing_item,
+        new_item,
+        on_update=None,
+        auto_exit=True,
+        associations=None,
+        require_id=True,
+        fixed_url=None,
+    ):
         # This will exit from the module on its own
         # If the method successfully updates an item and on_update param is defined,
         #   the on_update parameter will be called as a method pasing in this object and the json from the response
@@ -703,11 +788,22 @@ class AHModule(AnsibleModule):
                 if response["status_code"] == 200:
                     # compare apples-to-apples, old API data to new API data
                     # but do so considering the fields given in parameters
-                    self.json_output["changed"] = self.objects_could_be_different(existing_item, response["json"], field_set=new_item.keys(), warning=True)
+                    self.json_output["changed"] = self.objects_could_be_different(
+                        existing_item,
+                        response["json"],
+                        field_set=new_item.keys(),
+                        warning=True,
+                    )
                 elif "json" in response and "__all__" in response["json"]:
                     self.fail_json(msg=response["json"]["__all__"])
                 else:
-                    self.fail_json(**{"msg": "Unable to update {0} {1}, see response".format(item_type, item_name), "response": response, "input": new_item})
+                    self.fail_json(
+                        **{
+                            "msg": "Unable to update {0} {1}, see response".format(item_type, item_name),
+                            "response": response,
+                            "input": new_item,
+                        }
+                    )
 
         else:
             raise RuntimeError("update_if_needed called incorrectly without existing_item")
@@ -805,7 +901,7 @@ class AHModule(AnsibleModule):
         if len(sample["json"]["data"]) > 1:
             sample["json"]["data"] = sample["json"]["data"][:2] + ["...more results snipped..."]
         url = self.build_url(endpoint, query_params)
-        display_endpoint = url.geturl()[len(self.host) :]  # truncate to not include the base URL
+        display_endpoint = url.geturl()[len(self.host):]  # truncate to not include the base URL
         self.fail_json(
             msg="Request to {0} returned {1} items, expected 1".format(display_endpoint, response["json"]["meta"]["count"]),
             query=query_params,
@@ -845,7 +941,17 @@ class AHModule(AnsibleModule):
         elif os.path.isfile(b_output_path):
             self.fail_json(msg="the output collection directory {0} is a file - aborting".format(to_native(output_path)))
 
-        output_build = self.run_command(["ansible-galaxy", "collection", "build", path, "--output-path", output_path, (None, "--force")[force]])
+        output_build = self.run_command(
+            [
+                "ansible-galaxy",
+                "collection",
+                "build",
+                path,
+                "--output-path",
+                output_path,
+                (None, "--force")[force],
+            ]
+        )
         if output_build[0] == 0:
             self.json_output["path"] = "/" + "/".join(output_build[1].split("/")[1:])[:-1]
             self.json_output["changed"] = True

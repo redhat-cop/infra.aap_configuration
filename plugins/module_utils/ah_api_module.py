@@ -45,11 +45,24 @@ class AHAPIModule(AnsibleModule):
     """Ansible module for managing private automation hub servers."""
 
     AUTH_ARGSPEC = dict(
-        ah_host=dict(required=False, aliases=["ah_hostname"], fallback=(env_fallback, ["AH_HOST"])),
+        ah_host=dict(
+            required=False,
+            aliases=["ah_hostname"],
+            fallback=(env_fallback, ["AH_HOST"]),
+        ),
         ah_username=dict(required=False, fallback=(env_fallback, ["AH_USERNAME"])),
         ah_password=dict(no_log=True, required=False, fallback=(env_fallback, ["AH_PASSWORD"])),
-        ah_path_prefix=dict(required=False, fallback=(env_fallback, ["GALAXY_API_PATH_PREFIX"])),
-        validate_certs=dict(type="bool", aliases=["ah_verify_ssl"], required=False, fallback=(env_fallback, ["AH_VERIFY_SSL"])),
+        ah_path_prefix=dict(
+            required=False,
+            default="galaxy",
+            fallback=(env_fallback, ["GALAXY_API_PATH_PREFIX"]),
+        ),
+        validate_certs=dict(
+            type="bool",
+            aliases=["ah_verify_ssl"],
+            required=False,
+            fallback=(env_fallback, ["AH_VERIFY_SSL"]),
+        ),
     )
     short_params = {
         "host": "ah_host",
@@ -99,7 +112,11 @@ class AHAPIModule(AnsibleModule):
         except Exception as e:
             self.fail_json(msg="Unable to resolve ah_host ({host}): {error}".format(host=self.host_url.hostname, error=e))
 
-        self.headers = {"referer": self.host, "Content-Type": "application/json", "Accept": "application/json"}
+        self.headers = {
+            "referer": self.host,
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        }
         self.session = Request(validate_certs=self.verify_ssl, headers=self.headers)
 
         # Define the API paths
@@ -267,7 +284,7 @@ class AHAPIModule(AnsibleModule):
         # A background task has been triggered. Check if the task is completed
         if response.status == 202 and "task" in response_json and wait_for_task:
             url = url._replace(path=response_json["task"], query="")
-            for _ in range(5):
+            for _count in range(5):
                 time.sleep(3)
                 bg_task = self.make_request("GET", url)
                 if "state" in bg_task["json"] and bg_task["json"]["state"].lower().startswith("complete"):
@@ -382,7 +399,12 @@ class AHAPIModule(AnsibleModule):
 
         try:
             try:
-                response = self.make_request_raw_reponse("POST", url, data={"username": self.username, "password": self.password}, headers=header)
+                response = self.make_request_raw_reponse(
+                    "POST",
+                    url,
+                    data={"username": self.username, "password": self.password},
+                    headers=header,
+                )
                 for h in response.getheaders():
                     if h[0].lower() == "set-cookie":
                         k, v = h[1].split("=", 1)
@@ -392,8 +414,8 @@ class AHAPIModule(AnsibleModule):
                             break
             except AHAPIModuleError:
                 test_url = self.build_ui_url("me")
-                basic_str = base64.b64encode("{}:{}".format(self.username, self.password).encode("ascii"))
-                header = {"Authorization": "Basic {}".format(basic_str.decode("ascii"))}
+                basic_str = base64.b64encode("{0}:{1}".format(self.username, self.password).encode("ascii"))
+                header = {"Authorization": "Basic {0}".format(basic_str.decode("ascii"))}
                 response = self.make_request_raw_reponse("GET", test_url, headers=header)
                 self.headers.update(header)
         except AHAPIModuleError as e:
@@ -406,7 +428,7 @@ class AHAPIModule(AnsibleModule):
                 b_file_data = f.read()
             return to_text(b_file_data)
         except FileNotFoundError:
-            self.fail_json(msg="No such file found on the local filesystem: '{}'".format(path))
+            self.fail_json(msg="No such file found on the local filesystem: '{0}'".format(path))
 
     def logout(self):
         if not self.authenticated:
@@ -417,7 +439,11 @@ class AHAPIModule(AnsibleModule):
             self.make_request_raw_reponse("POST", url)
         except AHAPIModuleError:
             pass
-        self.headers = {"referer": self.host, "Content-Type": "application/json", "Accept": "application/json"}
+        self.headers = {
+            "referer": self.host,
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        }
         self.session = Request(validate_certs=self.verify_ssl, headers=self.headers)
         self.authenticated = False
 

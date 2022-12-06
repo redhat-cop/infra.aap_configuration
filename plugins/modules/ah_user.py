@@ -72,16 +72,16 @@ options:
     default: present
     choices: [absent, present]
 seealso:
-  - module: redhat_cop.ah_configuration.ah_group_perm
-  - module: redhat_cop.ah_configuration.ah_group
+  - module: infra.ah_configuration.ah_group_perm
+  - module: infra.ah_configuration.ah_group
 notes:
   - Supports C(check_mode).
-extends_documentation_fragment: redhat_cop.ah_configuration.auth_ui
+extends_documentation_fragment: infra.ah_configuration.auth_ui
 """
 
 EXAMPLES = r"""
 - name: Ensure the user exists
-  redhat_cop.ah_configuration.ah_user:
+  infra.ah_configuration.ah_user:
     username: lvasquez
     first_name: Lena
     last_name: Vasquez
@@ -95,7 +95,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the user is removed
-  redhat_cop.ah_configuration.ah_user:
+  infra.ah_configuration.ah_user:
     username:  dwilde
     state: absent
     ah_host: hub.example.com
@@ -103,7 +103,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the user only belongs to the operators and developers groups
-  redhat_cop.ah_configuration.ah_user:
+  infra.ah_configuration.ah_user:
     username: qhazelrigg
     state: present
     groups:
@@ -115,7 +115,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the user is added to the managers group
-  redhat_cop.ah_configuration.ah_user:
+  infra.ah_configuration.ah_user:
     username: chorwitz
     state: present
     groups:
@@ -126,7 +126,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the password is changed
-  redhat_cop.ah_configuration.ah_user:
+  infra.ah_configuration.ah_user:
     username: jziglar
     state: present
     password: bQtVeBUK2F
@@ -135,7 +135,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the user is a super user
-  redhat_cop.ah_configuration.ah_user:
+  infra.ah_configuration.ah_user:
     username:  ekrob
     state: present
     is_superuser: true

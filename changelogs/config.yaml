@@ -28,7 +28,7 @@ sections:
   - Bugfixes
 - - known_issues
   - Known Issues
-title: redhat_cop.ah_configuration
+title: infra.ah_configuration
 trivial_section_name: trivial
 use_fqcn: true
 ...

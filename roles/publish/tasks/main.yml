@@ -29,7 +29,7 @@
     - __ah_collection_item.collection_local_path is defined
 
 - name: Build Collections
-  redhat_cop.ah_configuration.ah_build:
+  infra.ah_configuration.ah_build:
     path:        "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}"
     output_path: "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}"
     force: true
@@ -69,7 +69,7 @@
   when: ah_collection_list is not defined
 
 - name: Publish Collections
-  redhat_cop.ah_configuration.ah_collection:
+  infra.ah_configuration.ah_collection:
     namespace:          "{{ (__ah_collection_file | basename).split('-')[0] }}"
     name:               "{{ (__ah_collection_file | basename).split('-')[1] }}"
     version:            "{{ (__ah_collection_file | basename).split('-')[2:] | join('-') | splitext | first | splitext | first }}"
@@ -109,7 +109,7 @@
     ansible_async_dir: '/tmp/.ansible_async'
 
 - name: Approve Collections
-  redhat_cop.ah_configuration.ah_approval:
+  infra.ah_configuration.ah_approval:
     namespace:      "{{ (__ah_collection_file | basename).split('-')[0] }}"
     name:           "{{ (__ah_collection_file | basename).split('-')[1] }}"
     version:        "{{ (__ah_collection_file | basename).split('-')[2:] | join('-') | splitext | first | splitext | first }}"

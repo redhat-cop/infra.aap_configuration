@@ -9,7 +9,11 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-ANSIBLE_METADATA = {"metadata_version": "1.1", "status": ["preview"], "supported_by": "community"}
+ANSIBLE_METADATA = {
+    "metadata_version": "1.1",
+    "status": ["preview"],
+    "supported_by": "community",
+}
 
 
 DOCUMENTATION = """
@@ -55,7 +59,7 @@ options:
         - Overwrites an existing collection.
         - Requires version to be set.
       type: bool
-      default: true
+      default: false
     state:
       description:
         - Desired state of the resource.
@@ -68,7 +72,7 @@ options:
       default: "present"
       type: str
 
-extends_documentation_fragment: redhat_cop.ah_configuration.auth
+extends_documentation_fragment: infra.ah_configuration.auth
 """
 
 

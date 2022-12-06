@@ -51,12 +51,12 @@ options:
 notes:
   - Supports C(check_mode).
   - Only works with private automation hub v4.3.2 or later.
-extends_documentation_fragment: redhat_cop.ah_configuration.auth_ui
+extends_documentation_fragment: infra.ah_configuration.auth_ui
 """
 
 EXAMPLES = r"""
 - name: Ensure the image has the additional tags
-  redhat_cop.ah_configuration.ah_ee_image:
+  infra.ah_configuration.ah_ee_image:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8:2.0.0-15
     state: present
     tags:
@@ -68,7 +68,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Replace all the image tags
-  redhat_cop.ah_configuration.ah_ee_image:
+  infra.ah_configuration.ah_ee_image:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8:2.0.0-15
     state: present
     append: false
@@ -80,7 +80,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the image does not exist
-  redhat_cop.ah_configuration.ah_ee_image:
+  infra.ah_configuration.ah_ee_image:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8:2.0
     state: absent
     ah_host: hub.example.com
@@ -168,14 +168,24 @@ def main():
         repository_pulp.create_tag(image_ui.digest, t, auto_exit=False)
 
     if append:
-        json_output = {"name": name, "tag": tag, "type": "image", "changed": True if tags_to_add else False}
+        json_output = {
+            "name": name,
+            "tag": tag,
+            "type": "image",
+            "changed": True if tags_to_add else False,
+        }
         module.exit_json(**json_output)
 
     # Removing tags from the image
     tags_to_remove = current_tags - new_tags
     for t in tags_to_remove:
         repository_pulp.delete_tag(image_ui.digest, t, auto_exit=False)
-    json_output = {"name": name, "tag": tag, "type": "image", "changed": True if tags_to_remove or tags_to_add else False}
+    json_output = {
+        "name": name,
+        "tag": tag,
+        "type": "image",
+        "changed": True if tags_to_remove or tags_to_add else False,
+    }
     module.exit_json(**json_output)
 
 

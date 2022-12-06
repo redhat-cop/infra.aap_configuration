@@ -34,18 +34,22 @@ options:
     type: str
   url:
     description:
-      - The URL of the remote registry
+      - The URL of the remote registry.
+      - Required if state=present
     type: str
-    required: true
   username:
     description:
       - The username to authenticate to the registry with
+    type: str
   password:
     description:
       - The password to authenticate to the registry with
+    type: str
   tls_validation:
     description:
       - Whether to validate TLS when connecting to the remote registry
+    default: True
+    type: bool
   client_key:
     description:
       - A PEM encoded private key file used for authentication.
@@ -87,14 +91,15 @@ options:
   proxy_password:
     description:
       - Proxy URL to use for the connection
+    type: str
   download_concurrency:
-      description:
-        - Number of concurrent collections to download.
-      type: str
+    description:
+      - Number of concurrent collections to download.
+    type: str
   rate_limit:
-      description:
-        - Limits total download rate in requests per second.
-      type: str
+    description:
+      - Limits total download rate in requests per second.
+    type: str
   state:
     description:
       - If C(absent), then the module deletes the registry.
@@ -106,12 +111,12 @@ options:
 notes:
   - Supports C(check_mode).
   - Only works with private automation hub v4.4.0 or later.
-extends_documentation_fragment: redhat_cop.ah_configuration.auth_ui
+extends_documentation_fragment: infra.ah_configuration.auth_ui
 """
 
 EXAMPLES = r"""
 - name: Add a remote registry to AH
-  redhat_cop.ah_configuration.ah_ee_registry:
+  infra.ah_configuration.ah_ee_registry:
     name: my_quayio
     state: present
     url: https://quay.io/my/registry
@@ -120,7 +125,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Add a remote registry which requires auth to AH
-  redhat_cop.ah_configuration.ah_ee_registry:
+  infra.ah_configuration.ah_ee_registry:
     name: my_quayio_auth
     state: present
     url: https://quay.io/my/registry
@@ -131,7 +136,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Remove a remote registry from AH
-  redhat_cop.ah_configuration.ah_ee_registry:
+  infra.ah_configuration.ah_ee_registry:
     name: examplehub
     state: absent
     ah_host: hub.example.com
@@ -151,17 +156,17 @@ def main():
         new_name=dict(),
         url=dict(),
         username=dict(),
-        password=dict(),
+        password=dict(no_log=True),
         tls_validation=dict(type="bool", default=True),
-        client_key=dict(no_log="true"),
+        client_key=dict(no_log=True),
         client_cert=dict(),
         ca_cert=dict(),
-        client_key_path=dict(),
+        client_key_path=dict(no_log=False),
         client_cert_path=dict(),
         ca_cert_path=dict(),
         proxy_url=dict(),
         proxy_username=dict(),
-        proxy_password=dict(),
+        proxy_password=dict(no_log=True),
         download_concurrency=dict(),
         rate_limit=dict(),
         state=dict(choices=["present", "absent"], default="present"),
@@ -171,7 +176,14 @@ def main():
     module = AHAPIModule(
         argument_spec=argument_spec,
         supports_check_mode=True,
-        mutually_exclusive=[("client_key", "client_key_path"), ("client_cert", "client_cert_path"), ("ca_cert", "ca_cert_path")],
+        mutually_exclusive=[
+            ("client_key", "client_key_path"),
+            ("client_cert", "client_cert_path"),
+            ("ca_cert", "ca_cert_path"),
+        ],
+        required_if=[
+            ['state', 'present', ('url',)]
+        ]
     )
 
     # Extract our parameters
@@ -214,7 +226,7 @@ def main():
         "client_cert",
         "ca_cert",
     ):
-        path_val = module.params.get("{}_path".format(field_name))
+        path_val = module.params.get("{0}_path".format(field_name))
         if path_val is not None:
             field_val = module.getFileContent(path_val)
             new_fields[field_name] = field_val

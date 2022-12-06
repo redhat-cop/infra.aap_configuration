@@ -36,16 +36,16 @@ options:
     default: present
     choices: [absent, present]
 seealso:
-  - module: redhat_cop.ah_configuration.ah_group_perm
-  - module: redhat_cop.ah_configuration.ah_user
+  - module: infra.ah_configuration.ah_group_perm
+  - module: infra.ah_configuration.ah_user
 notes:
   - Supports C(check_mode).
-extends_documentation_fragment: redhat_cop.ah_configuration.auth_ui
+extends_documentation_fragment: infra.ah_configuration.auth_ui
 """
 
 EXAMPLES = r"""
 - name: Ensure the group exists
-  redhat_cop.ah_configuration.ah_group:
+  infra.ah_configuration.ah_group:
     name: administrators
     state: present
     ah_host: hub.example.com
@@ -53,7 +53,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the group is removed
-  redhat_cop.ah_configuration.ah_group:
+  infra.ah_configuration.ah_group:
     name: operators
     state: absent
     ah_host: hub.example.com
