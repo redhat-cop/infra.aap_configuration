@@ -162,7 +162,7 @@ def main():
         for group in groups:
             group_obj = {"name": group}
             group_obj["object_permissions"] = ["change_namespace", "upload_to_namespace"]  # Old style of group object
-            group_obj["object_roles"] = ["collection_namespace_owner"]  # New style of group object
+            group_obj["object_roles"] = ["galaxy.collection_namespace_owner"]  # New style of group object
             new_fields["groups"].append(group_obj)
 
     # If the state was present and we can let the module build or update the existing item, this will return on its own

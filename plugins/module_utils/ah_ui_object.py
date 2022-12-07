@@ -866,7 +866,7 @@ class AHUIEENamespace(AHUIObject):
                         return True
                     break
             else:
-                if len(n["object_roles"]) or len(n["object_permissions"]):
+                if ("object_roles" in n and len(n["object_roles"])) or ("object_permissions" in n and len(n["object_permissions"])):
                     return True
         return False
 
