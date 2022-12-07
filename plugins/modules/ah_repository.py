@@ -213,7 +213,6 @@ def main():
         "client_key",
         "client_cert",
         "ca_cert",
-        "signed_only",
         "proxy_url",
         "proxy_username",
         "proxy_password",
@@ -223,6 +222,11 @@ def main():
         field_val = module.params.get(field_name)
         if field_val is not None:
             new_fields[field_name] = field_val
+
+    # Treated separately for AAP2.1 so it isn't applied to the API
+    signed_only = module.params.get("signed_only")
+    if signed_only:
+        new_fields["signed_only"] = signed_only
 
     for field_name in (
         "client_key",
