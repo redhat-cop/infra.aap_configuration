@@ -1,5 +1,6 @@
 ---
-- name: infra.ah_configuration
-- name: redhat_cop.tower_configuration
-- name: ansible.windows
+collections:
+  - name: infra.ah_configuration
+  - name: redhat_cop.tower_configuration
+  - name: ansible.windows
 ...
