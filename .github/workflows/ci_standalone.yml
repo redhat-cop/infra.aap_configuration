@@ -8,8 +8,6 @@ jobs:
       fail-fast: false
       matrix:
         galaxy_ng_version:
-          - stable-4.2
-          - stable-4.3
           - stable-4.4
           - stable-4.5
           - stable-4.6
