@@ -14,7 +14,7 @@
     ah_validate_certs: false
     repository: test-namespace/ee-minimal-rhel8
     tag: latest
-    fake_image: quay.io/ansible/http-test-container:latest
+    fake_image: quay.io/ansible/http-test-container:2.0.0
 
   tasks:
     # Preparing an image:
