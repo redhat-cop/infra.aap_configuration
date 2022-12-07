@@ -7,7 +7,8 @@
   collections:
     - infra.ah_configuration
   vars:
-    ah_host: hub.lab.example.com
+    ah_host: localhost:8002
+    ah_hostname: http://localhost:8002/
     ah_username: admin
     ah_password: redhat
     ah_path_prefix: galaxy
