@@ -56,7 +56,7 @@ This also speeds up the overall role.
 |`avatar_url`|"public"|yes|str|Namespace logo URL.|
 |`resources`|""|no|str|Namespace resource page in Markdown format.|
 |`links`|[]|no|list|A list of dictionaries of Name and url values for links related the Namespace. See below for details.|
-|`groups`|[]|yes|list|A list of dictionaries of the Names and object_roles values for groups that control the Namespace. See below for details.|
+|`groups`|[]|yes|list|A list of dictionaries of the Names of groups that own the Namespace.|
 |`state`|`present`|no|str|Desired state of the namespace.|
 
 #### Links
@@ -65,13 +65,6 @@ This also speeds up the overall role.
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Link Text.|
 |`description`|""|yes|str|Link URL.|
-
-#### Groups
-
-|Variable Name|Default Value|Required|Type|Description|
-|:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|Group Name or ID.|
-|`object_roles`|""|yes|list|List of Permissions granted to the group. Choices of 'change_namespace', 'upload_to_namespace'|
 
 ### Standard Project Data Structure
 

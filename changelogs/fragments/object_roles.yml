@@ -1,6 +1,6 @@
 ---
 minor_changes:
-  - object_permissions renamed to object_roles under groups in ah_namespace module as per API changes. Designed to be backwards compatible for previous APIs
+  - groups option of ah_namespace module changed to accept just the names of groups who own the namespace
 bugfixes:
   - Updated ah_ee_namespace to use object_roles instead of object_permissions when inspecting group permissions
 ...

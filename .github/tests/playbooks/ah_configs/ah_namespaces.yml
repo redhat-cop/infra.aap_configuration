@@ -10,8 +10,5 @@ ah_namespaces:
       - name: "Nothing"
         url: "https://github.com/ansible/awx"
     groups:
-      - name: system:partner-engineers  # Galaxy: system:partner-engineers AH: admins
-        object_roles:
-          - "change_namespace"
-          - "upload_to_namespace"
+      - system:partner-engineers
 ...

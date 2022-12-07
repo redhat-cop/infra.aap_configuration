@@ -78,26 +78,10 @@ options:
           required: True
     groups:
       description:
-        - A list of dictionaries of the Names and object_roles values for groups that control the Namespace.
+        - A list of groups that have privileges on the Namespace.
       type: list
-      elements: dict
+      elements: str
       default: []
-      suboptions:
-        name:
-          description:
-            - Group Name or ID.
-          type: str
-          required: True
-        object_roles:
-          description:
-            - List of roles granted to the group.
-            - Applicable options are `collection_admin`, `collection_publisher`, `collection_curator`, `collection_namespace_owner`
-            - In older versions of AH, this was object_permissions and applicable options were `change_namespace`, `upload_to_namespace`
-          type: list
-          elements: str
-          required: True
-          aliases:
-            - object_permissions
 
 extends_documentation_fragment: infra.ah_configuration.auth
 """
@@ -115,10 +99,8 @@ EXAMPLES = """
       - name: "homepage"
         url: "http://www.redhat.com"
     groups:
-      - name: system:partner-engineers
-        object_roles:
-          - "change_namespace"
-          - "upload_to_namespace"
+      - system:partner-engineers
+      - admins
 
 """
 
@@ -136,10 +118,7 @@ def main():
         avatar_url=dict(),
         resources=dict(),
         links=dict(type="list", elements="dict"),
-        groups=dict(type="list", elements="dict", default=[], options=dict(
-            name=dict(required=True),
-            object_roles=dict(type="list", elements="str", required=True, aliases=["object_permissions"])
-        )),
+        groups=dict(type="list", elements="str", default=[]),
         state=dict(choices=["present", "absent"], default="present"),
     )
 
@@ -171,16 +150,19 @@ def main():
         "avatar_url",
         "resources",
         "links",
-        "groups",
     ):
         field_val = module.params.get(field_name)
         if field_val is not None:
             new_fields[field_name] = field_val
 
     # Backwards compatibility for older versions of AH
-    if new_fields["groups"]:
-        for group in new_fields["groups"]:
-            group["object_permissions"] = group["object_roles"]
+    groups = module.params.get("groups")
+    new_fields["groups"] = []
+    if groups:
+        for group in groups:
+            group_obj = {"name": group}
+            group_obj["object_permissions"] = ["change_namespace", "upload_to_namespace"]  # Old style of group object
+            group_obj["object_roles"] = ["collection_namespace_owner"]  # New style of group object
 
     # If the state was present and we can let the module build or update the existing item, this will return on its own
     module.create_or_update_if_needed(
