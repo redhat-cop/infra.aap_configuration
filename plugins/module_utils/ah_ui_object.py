@@ -861,7 +861,8 @@ class AHUIEENamespace(AHUIObject):
         for n in new:
             for o in old:
                 if o["id"] == n["id"]:
-                    if (o["object_roles"] and set(o["object_roles"]) != set(n["object_roles"])) or (o["object_permissions"] and set(o["object_permissions"]) != set(n["object_permissions"])):
+                    if ("object_roles" in o and set(o["object_roles"]) != set(n["object_roles"])) or \
+                            ("object_permissions" in o and set(o["object_permissions"]) != set(n["object_permissions"])):
                         return True
                     break
             else:
