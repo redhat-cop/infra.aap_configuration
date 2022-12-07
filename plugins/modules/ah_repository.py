@@ -235,7 +235,7 @@ def main():
             new_fields[field_name] = field_val
 
     # If the state was present and we can let the module build or update the existing item, this will return on its own
-    endpoint = "api/galaxy/content/{0}/v3/sync/config".format(name)
+    endpoint = "api/{0}/content/{1}/v3/sync/config".format(module.path_prefix, name)
     existing_item = module.get_only(endpoint, name_or_id=name, key="req_url")
     module.create_or_update_if_needed(
         existing_item,
