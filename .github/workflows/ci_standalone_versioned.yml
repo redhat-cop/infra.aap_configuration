@@ -93,13 +93,13 @@ jobs:
           collection_repo: https://github.com/redhat-cop/ah_configuration/
 
       - name: "Perform playbook tests"
-        run: ansible-playbook .github/tests/playbooks/testing_playbook.yml -v
+        run: ansible-playbook .github/tests/playbooks/testing_playbook.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
 
       - name: "Perform playbook tests"
-        run: ansible-playbook .github/tests/playbooks/testing_playbook_user.yml -v
+        run: ansible-playbook .github/tests/playbooks/testing_playbook_user.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
 
       - name: "Perform playbook tests"
-        run: ansible-playbook .github/tests/playbooks/testing_playbook_ee_namespace.yml -v
+        run: ansible-playbook .github/tests/playbooks/testing_playbook_ee_namespace.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
 
       - name: "Perform playbook tests"
-        run: ansible-playbook .github/tests/playbooks/testing_playbook_ee_repository.yml -v
+        run: ansible-playbook .github/tests/playbooks/testing_playbook_ee_repository.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
