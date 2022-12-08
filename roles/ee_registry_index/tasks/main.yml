@@ -11,7 +11,6 @@
     ah_username:            "{{ ah_username | default(omit) }}"
     ah_password:            "{{ ah_password | default(omit) }}"
     ah_path_prefix:         "{{ ah_path_prefix | default(omit) }}"
-    ah_token:               "{{ ah_token | default(omit) }}"
     validate_certs:         "{{ ah_validate_certs | default(omit) }}"
   loop: "{{ ah_ee_registries }}"
   loop_control:
