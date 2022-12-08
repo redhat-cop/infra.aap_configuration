@@ -86,7 +86,7 @@ def main():
     interval = module.params.get("interval")
     timeout = module.params.get("timeout")
 
-    sync_endpoint = "api/galaxy/content/{0}/v3/sync".format(name)
+    sync_endpoint = "api/{0}/content/{1}/v3/sync".format(module.path_prefix, name)
     config_endpoint = "{0}/config".format(sync_endpoint)
 
     repository = module.get_only(config_endpoint, name_or_id=name, key="req_url")

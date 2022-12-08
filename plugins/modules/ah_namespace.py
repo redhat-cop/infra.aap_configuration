@@ -78,23 +78,10 @@ options:
           required: True
     groups:
       description:
-        - A list of dictionaries of the Names and object_permissions values for groups that control the Namespace.
+        - A list of groups that have privileges on the Namespace.
       type: list
-      elements: dict
+      elements: str
       default: []
-      suboptions:
-        name:
-          description:
-            - Group Name or ID.
-          type: str
-          required: True
-        object_permissions:
-          description:
-            - List of Permisions granted to the group.
-            - Applicable options are `change_namespace`, `upload_to_namespace`
-          type: list
-          elements: str
-          required: True
 
 extends_documentation_fragment: infra.ah_configuration.auth
 """
@@ -112,10 +99,8 @@ EXAMPLES = """
       - name: "homepage"
         url: "http://www.redhat.com"
     groups:
-      - name: system:partner-engineers
-        object_permissions:
-          - "change_namespace"
-          - "upload_to_namespace"
+      - system:partner-engineers
+      - admins
 
 """
 
@@ -133,10 +118,7 @@ def main():
         avatar_url=dict(),
         resources=dict(),
         links=dict(type="list", elements="dict"),
-        groups=dict(type="list", elements="dict", default=[], options=dict(
-            name=dict(required=True),
-            object_permissions=dict(type="list", elements="str", required=True)
-        )),
+        groups=dict(type="list", elements="str", default=[]),
         state=dict(choices=["present", "absent"], default="present"),
     )
 
@@ -168,11 +150,20 @@ def main():
         "avatar_url",
         "resources",
         "links",
-        "groups",
     ):
         field_val = module.params.get(field_name)
         if field_val is not None:
             new_fields[field_name] = field_val
+
+    # Backwards compatibility for older versions of AH
+    groups = module.params.get("groups")
+    new_fields["groups"] = []
+    if groups:
+        for group in groups:
+            group_obj = {"name": group}
+            group_obj["object_permissions"] = ["change_namespace", "upload_to_namespace"]  # Old style of group object
+            group_obj["object_roles"] = ["galaxy.collection_namespace_owner"]  # New style of group object
+            new_fields["groups"].append(group_obj)
 
     # If the state was present and we can let the module build or update the existing item, this will return on its own
     module.create_or_update_if_needed(

@@ -44,47 +44,49 @@
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
+    - block:
+        # Testing permission assignment
+        - name: Ensure group operators has perms view
+          ah_group_perm:
+            name: operators
+            state: present
+            perms:
+              - view_user
+              - view_group
+              - view_collectionremote
+              - upload_to_namespace
+            ah_host: "{{ ah_hostname }}"
+            ah_username: "{{ ah_username }}"
+            ah_password: "{{ ah_password }}"
+            ah_path_prefix: "{{ ah_path_prefix }}"
+            validate_certs: "{{ ah_validate_certs }}"
 
-    # Testing permission assignment
-    - name: Ensure group operators has perms view
-      ah_group_perm:
-        name: operators
-        state: present
-        perms:
-          - view_user
-          - view_group
-          - view_collectionremote
-          - upload_to_namespace
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
+        - name: Ensure group administrators has all perms
+          ah_group_perm:
+            name: administrators
+            state: present
+            perms: "*"
+            ah_host: "{{ ah_hostname }}"
+            ah_username: "{{ ah_username }}"
+            ah_password: "{{ ah_password }}"
+            ah_path_prefix: "{{ ah_path_prefix }}"
+            validate_certs: "{{ ah_validate_certs }}"
 
-    - name: Ensure group administrators has all perms
-      ah_group_perm:
-        name: administrators
-        state: present
-        perms: "*"
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
+        # Testing permission removal
+        - name: Ensure group administrators has no perms on collection remote
+          ah_group_perm:
+            name: administrators
+            state: absent
+            perms:
+              - change_collectionremote
+              - view_collectionremote
+            ah_host: "{{ ah_hostname }}"
+            ah_username: "{{ ah_username }}"
+            ah_password: "{{ ah_password }}"
+            ah_path_prefix: "{{ ah_path_prefix }}"
+            validate_certs: "{{ ah_validate_certs }}"
 
-    # Testing permission removal
-    - name: Ensure group administrators has no perms on collection remote
-      ah_group_perm:
-        name: administrators
-        state: absent
-        perms:
-          - change_collectionremote
-          - view_collectionremote
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
+      when: galaxy_ng_version == "stable-4.4" or galaxy_ng_version == "stable-4.5"
 
     # Testing user creation
     - name: Ensure user operator1 exists (no group, no details)

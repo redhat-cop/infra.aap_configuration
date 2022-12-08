@@ -59,6 +59,7 @@ seealso:
   - module: infra.ah_configuration.ah_user
 notes:
   - Supports C(check_mode).
+  - This module only works up to Automation Hub version 4.5 (AAP 2.2)
   - The container permissions (C(change_containernamespace_perms),
     C(change_container), C(change_image_tag), C(create_container), and
     C(push_container)) are only available with private automation hub v4.3.2 or

@@ -100,7 +100,8 @@
         name: myreg
         url: https://registry.redhat.io
         ah_host: "{{ ah_hostname }}"
-        ah_token: "{{ ah_token }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 

@@ -7,14 +7,15 @@
   collections:
     - infra.ah_configuration
   vars:
-    ah_host: hub.lab.example.com
+    ah_host: localhost:8002
+    ah_hostname: http://localhost:8002/
     ah_username: admin
     ah_password: redhat
     ah_path_prefix: galaxy
     ah_validate_certs: false
     repository: test-namespace/ee-minimal-rhel8
     tag: latest
-    fake_image: quay.io/ansible/http-test-container:latest
+    fake_image: quay.io/ansible/http-test-container:2.0.0
 
   tasks:
     # Preparing an image:

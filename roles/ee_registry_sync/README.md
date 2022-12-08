@@ -11,7 +11,6 @@ An Ansible Role to sync EE Registries in Automation Hub.
 |`ah_host`|""|yes|URL to the Automation Hub or Galaxy Server. (alias: `ah_hostname`)|127.0.0.1|
 |`ah_username`|""|yes|Admin User on the Automation Hub or Galaxy Server.||
 |`ah_password`|""|yes|Automation Hub Admin User's password on the Automation Hub Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
-|`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 |`ah_validate_certs`|`False`|no|Whether or not to validate the Ansible Automation Hub Server's SSL certificate.||
 |`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 |`ah_ee_registries`|`see below`|yes|Data structure describing your ee_registries, described below. (Note this is the same as for the `ee_registries` role and the variable can be combined||

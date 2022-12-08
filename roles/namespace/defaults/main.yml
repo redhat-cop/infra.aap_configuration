@@ -22,7 +22,7 @@ ah_namespaces: []
 #        url: "url"
 #    groups: #both fields mandatory when using groups
 #      - name: "group_name"
-#        object_permissions: #Possible options below
+#        object_roles: #Possible options below
 #          - # mandatory, choices: change_namespace, upload_to_namespace
 
 ah_configuration_namespace_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
