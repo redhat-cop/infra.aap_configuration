@@ -39,7 +39,7 @@
     - name: Download a Collection
       ansible.builtin.get_url:
         url: https://github.com/redhat-cop/ah_configuration/releases/download/0.9.2/infra-ah_configuration-0.9.2.tar.gz
-        dest: infra-ah_configuration-0.9.2.tar.gz
+        dest: /tmp/infra-ah_configuration-0.9.2.tar.gz
 
     - name: Upload Collection
       ansible.builtin.include_role:

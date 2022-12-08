@@ -2,7 +2,7 @@
 ah_collections:
   - namespace: infra
     name: ah_configuration
-    path: infra-ah_configuration-0.9.2.tar.gz
+    path: /tmp/infra-ah_configuration-0.9.2.tar.gz
     wait: true
     auto_approve: true
 
