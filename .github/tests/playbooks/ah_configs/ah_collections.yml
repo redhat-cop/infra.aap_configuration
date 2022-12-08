@@ -1,7 +1,10 @@
 ---
 ah_collections:
-  - collection_name: collection_test
-    git_url: https://github.com/sean-m-sullivan/collection_test
+  - namespace: infra
+    name: ah_configuration
+    path: infra-ah_configuration-0.9.2.tar.gz
+    wait: true
+    auto_approve: true
 
 ansible_config_path: "{{ ah_configuration_working_dir }}/ansible.cfg"
 ...

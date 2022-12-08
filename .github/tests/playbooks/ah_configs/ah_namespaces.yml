@@ -11,4 +11,5 @@ ah_namespaces:
         url: "https://github.com/ansible/awx"
     groups:
       - system:partner-engineers
+  - name: infra
 ...
