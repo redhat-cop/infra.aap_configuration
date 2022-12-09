@@ -43,7 +43,7 @@
 
     - name: Upload Collection
       ansible.builtin.include_role:
-        name: collections
+        name: collection
 
     #  - name: Publish Collections
     #    ansible.builtin.include_role:
