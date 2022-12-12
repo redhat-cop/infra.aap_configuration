@@ -9,6 +9,8 @@
     policy_instance_percentage:     "{{ __controller_instance_group_item.policy_instance_percentage | default(omit, true) }}"
     policy_instance_minimum:        "{{ __controller_instance_group_item.policy_instance_minimum | default(omit, true) }}"
     policy_instance_list:           "{{ __controller_instance_group_item.policy_instance_list | default(omit, true) }}"
+    max_concurrent_jobs:            "{{ __controller_instance_group_item.max_concurrent_jobs | default(omit, true) }}"
+    max_forks:                      "{{ __controller_instance_group_item.max_forks | default(omit, true) }}"
     pod_spec_override:              "{{ __controller_instance_group_item.pod_spec_override | default(omit, true) }}"
     instances:                      "{{ __controller_instance_group_item.instances | default(omit, true) }}"
     state:                          "{{ __controller_instance_group_item.state | default(controller_state | default('present')) }}"
