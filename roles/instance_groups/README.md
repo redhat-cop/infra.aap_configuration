@@ -65,6 +65,8 @@ This also speeds up the overall role.
 |`policy_instance_percentage`|""|no|int|Minimum percentage of all instances that will be automatically assigned to this group when new instances come online.|
 |`policy_instance_minimum`|""|no|int|Static minimum number of Instances that will be automatically assign to this group when new instances come online.|
 |`policy_instance_list`|""|no|list|List of exact-match Instances that will be assigned to this group.|
+|`max_concurrent_jobs`|0|no|int|Maximum number of concurrent jobs to run on this group. Zero means no limit.|
+|`max_forks`|0|no|int|Max forks to execute on this group. Zero means no limit.|
 |`pod_spec_override`|""|no|str|A custom Kubernetes or OpenShift Pod specification.|
 |`instances`|""|no|list|The instances associated with this instance_group.|
 |`state`|`present`|no|str|Desired state of the resource.|
