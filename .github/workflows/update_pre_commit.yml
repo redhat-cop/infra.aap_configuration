@@ -10,7 +10,7 @@ on:
 
 jobs:
   pre-commit:
-    uses: "redhat-cop/ansible_collections_tooling/.github/workflows/update_precommit.yml@main"
+    uses: "sean-m-sullivan/ansible_collections_tooling/.github/workflows/update_precommit.yml@main"
     with:
       github_actor: ${{ github.actor }}
     secrets:
