@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Add max_forks, max_concurrent_jobs as options to instance_groups role
+...
