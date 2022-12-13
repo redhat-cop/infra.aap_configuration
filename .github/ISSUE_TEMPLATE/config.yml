@@ -8,6 +8,9 @@ contact_links:
   - name: Discussions
     url: https://github.com/redhat-cop/controller_configuration/discussions
     about: Any kind of questions should go on the forum.
+  - name: Matrix room
+    url: https://matrix.to/#/#aap_config_as_code:ansible.com
+    about: Matrix room for questions and discussion.
   - name: Ansible Code of Conduct
     url: https://docs.ansible.com/ansible/latest/community/code_of_conduct.html
     about: Be nice to other members of the community. Behave.
