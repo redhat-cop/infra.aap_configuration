@@ -1,0 +1,4 @@
+---
+minor_changes:
+  -  Improve template to export settings with filetree_create role. Settings will be in yaml format.
+...
