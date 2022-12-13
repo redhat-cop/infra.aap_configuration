@@ -1,4 +1,5 @@
 ---
 controller_settings:
-  - settings: "{{ changed_settings[0] | replace('\'AUTH_LDAP_GROUP_TYPE_PARAMS\': {}', '\'AUTH_LDAP_GROUP_TYPE_PARAMS\': {\'name_attr\': \'cn\', \'member_attr\': \'member\'}') }}"
+  - settings:
+{{ changed_settings[0] | replace('\'AUTH_LDAP_GROUP_TYPE_PARAMS\': {}', '\'AUTH_LDAP_GROUP_TYPE_PARAMS\': {\'name_attr\': \'cn\', \'member_attr\': \'member\'}') | replace("'", '"') | replace(': True', ': true') | replace(': False', ': false') | replace(': None', ': null') | from_json | to_nice_yaml | indent(width=6, first=True) }}
 ...
