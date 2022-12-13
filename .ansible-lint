@@ -17,6 +17,7 @@ skip_list:
   # Skipping fqcn[action] because this collection supports using either the awx.awx or ansible.controller collection
   #   so a FQCN cannot be used in module names
   - fqcn[action]
+  - meta-unsupported-ansible  # This collection with the appropriate awx.awx or ansible.controller still works with older ansible.
 kinds:
   - playbooks: "**/examples/templates/*.{yml,yaml}"
   - playbooks: "**/examples/*.{yml,yaml}"
