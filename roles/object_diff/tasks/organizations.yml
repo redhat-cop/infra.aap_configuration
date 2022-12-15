@@ -23,7 +23,7 @@
                                                 with_present=false, set_absent=true)
                                      }}"
 
-    - name: "Set list __list_orgs_empty when protect_not_empty_orgs"
+    - name: "Set list __list_empty_orgs when protect_not_empty_orgs"
       ansible.builtin.set_fact:
         __list_empty_orgs: "{{ __list_empty_orgs | default([]) + [__organizations_difference_list_empty_item.name] }}"
       loop: "{{ __organizations_difference }}"
@@ -32,19 +32,19 @@
       when:
         - protect_not_empty_orgs is defined
         - protect_not_empty_orgs
-        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/users/',
+        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__organizations_difference_list_empty_item.name | urlencode) + '/users/',
                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0
-        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/admins/',
+        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__organizations_difference_list_empty_item.name | urlencode) + '/admins/',
                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0
-        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/inventories/',
+        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__organizations_difference_list_empty_item.name | urlencode) + '/inventories/',
                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0
-        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/teams/',
+        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__organizations_difference_list_empty_item.name | urlencode) + '/teams/',
                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0
-        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/projects/',
+        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__organizations_difference_list_empty_item.name | urlencode) + '/projects/',
                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0
-        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/job_templates/',
+        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__organizations_difference_list_empty_item.name | urlencode) + '/job_templates/',
                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0
-        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__org.name | urlencode) + '/workflow_job_templates/',
+        - query(controller_api_plugin, 'api/' + controller_api_version + '/organizations/' + (__organizations_difference_list_empty_item.name | urlencode) + '/workflow_job_templates/',
                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs) | length == 0
 
     - name: "Set Organization differences"
@@ -53,7 +53,9 @@
       loop: "{{ __organizations_difference }}"
       loop_control:
         loop_var: __organizations_difference_item
-      when: __organizations_difference is defined and (protect_not_empty_orgs is not defined or not protect_not_empty_orgs or __organizations_difference_item.name in __list_empty_orgs)
+      when:
+        - __organizations_difference is defined
+        - protect_not_empty_orgs is not defined or not protect_not_empty_orgs or (__list_empty_orgs is defined and __organizations_difference_item.name in __list_empty_orgs)
 
     - name: "Set organization's list to be configured"
       ansible.builtin.set_fact:
