@@ -1,7 +1,7 @@
 # Update or destroy Automation Hub Collection
 ---
 - name: Update or destroy Automation Hub Collection
-  collection:
+  ah_collection:
     namespace:             "{{ __collection.namespace }}"
     name:                  "{{ __collection.name }}"
     version:               "{{ __collection.version | default(omit) }}"
@@ -19,26 +19,30 @@
   loop: "{{ ah_collections }}"
   loop_control:
     loop_var: "__collection"
-  no_log: "{{ ah_configuration_namespace_secure_logging }}"
-  async: 1000
-  poll: 0
+  no_log: "{{ ah_configuration_collection_secure_logging }}"
+  # async: 1000
+  # poll: 0
   register: __collections_job_async
   changed_when: not __collections_job_async.changed
   vars:
     ansible_async_dir: '/tmp/.ansible_async'
+
+- name: Sleep for 10 seconds and continue with play
+  ansible.builtin.wait_for:
+    timeout: 10
 
 - name: "Update/Destroy collection | Wait for finish the update/destruction of collection"
   ansible.builtin.async_status:
     jid: "{{ __collections_job_async_result_item.ansible_job_id }}"
   register: __collections_job_async_result
   until: __collections_job_async_result.finished
-  retries: "{{ ah_configuration_user_async_retries }}"
-  delay: "{{ ah_configuration_user_async_delay }}"
+  retries: "{{ ah_configuration_collection_async_retries }}"
+  delay: "{{ ah_configuration_collection_async_delay }}"
   loop: "{{ __collections_job_async.results }}"
   loop_control:
     loop_var: __collections_job_async_result_item
   when: __collections_job_async_result_item.ansible_job_id is defined
-  no_log: "{{ ah_configuration_user_secure_logging }}"
+  no_log: "{{ ah_configuration_collection_secure_logging }}"
   vars:
     ansible_async_dir: '/tmp/.ansible_async'
 ...
