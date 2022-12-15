@@ -1,10 +1,13 @@
 ---
 ah_collections:
-  - namespace: infra
+  - namespace: redhat_cop
     name: ah_configuration
-    path: /tmp/infra-ah_configuration-0.9.2.tar.gz
+    path: /home/runner/work/ah_configuration/ah_configuration/redhat_cop-ah_configuration-1.0.0.tar.gz
+    version: 1.0.0
     wait: true
     auto_approve: true
 
 ansible_config_path: "{{ ah_configuration_working_dir }}/ansible.cfg"
+ah_configuration_collection_async_retries: 50
+ah_configuration_collection_async_delay: 3
 ...
