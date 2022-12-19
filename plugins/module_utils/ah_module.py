@@ -612,7 +612,7 @@ class AHModule(AnsibleModule):
         response = self.post_endpoint("{0}/{1}".format(endpoint, approvalEndpoint), None, **{"return_none_on_404": True})
 
         i = 0
-        while timeout == None or i < timeout:
+        while timeout is None or i < timeout:
             if not response:
                 time.sleep(interval)
                 response = self.post_endpoint("{0}/{1}".format(endpoint, approvalEndpoint), None, **{"return_none_on_404": True})

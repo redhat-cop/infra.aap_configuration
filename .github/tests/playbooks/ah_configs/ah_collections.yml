@@ -6,6 +6,7 @@ ah_collections:
     version: 1.0.0
     wait: true
     auto_approve: true
+    timeout: 180
 
 ansible_config_path: "{{ ah_configuration_working_dir }}/ansible.cfg"
 ah_configuration_collection_async_retries: 50
