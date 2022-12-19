@@ -15,6 +15,8 @@ These are the sub options for the vars `ah_collections` which are dictionaries w
 |`path`|""|no|Collection artifact file path.||
 |`wait`|"true"|no|Waits for the collection to be uploaded||
 |`auto_approve`|"true"|no|Approves a collection and requires version to be set.||
+|`timeout`|"true"||Maximum time to wait for the collection approval||
+|`interval`|"true"|10|Interval at which approval is checked||
 |`overwrite_existing`|"false"|no|Overwrites an existing collection and requires version to be set.||
 |`state`|"present"|no|Desired state of the resource||
 

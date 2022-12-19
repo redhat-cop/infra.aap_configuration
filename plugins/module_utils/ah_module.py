@@ -602,7 +602,7 @@ class AHModule(AnsibleModule):
             last_data = response["json"]
             return last_data
 
-    def approve(self, endpoint, auto_exit=True):
+    def approve(self, endpoint, timeout=None, interval=10.0, auto_exit=True):
 
         approvalEndpoint = "move/staging/published"
 
@@ -612,11 +612,11 @@ class AHModule(AnsibleModule):
         response = self.post_endpoint("{0}/{1}".format(endpoint, approvalEndpoint), None, **{"return_none_on_404": True})
 
         i = 0
-        while i < 5:
+        while timeout == None or i < timeout:
             if not response:
-                time.sleep(15)
+                time.sleep(interval)
                 response = self.post_endpoint("{0}/{1}".format(endpoint, approvalEndpoint), None, **{"return_none_on_404": True})
-                i += 1
+                i += interval
             else:
                 break
 

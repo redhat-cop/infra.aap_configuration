@@ -54,6 +54,17 @@ options:
         - Requires version to be set.
       type: bool
       default: true
+    interval:
+      description:
+        - The interval to request an update from Automation Hub when waiting for approval.
+      required: False
+      default: 10
+      type: float
+    timeout:
+      description:
+        - Waiting for the approval will abort after this
+          amount of seconds
+      type: int
     overwrite_existing:
       description:
         - Overwrites an existing collection.
@@ -103,6 +114,8 @@ def main():
         name=dict(required=True),
         path=dict(),
         wait=dict(type="bool", default=True),
+        interval=dict(default=10.0, type="float"),
+        timeout=dict(default=None, type="int"),
         auto_approve=dict(type="bool", default=True),
         overwrite_existing=dict(type="bool", default=False),
         version=dict(),
@@ -117,6 +130,8 @@ def main():
     name = module.params.get("name")
     path = module.params.get("path")
     wait = module.params.get("wait")
+    interval = module.params.get("interval")
+    timeout = module.params.get("timeout")
     overwrite_existing = module.params.get("overwrite_existing")
     auto_approve = module.params.get("auto_approve")
     version = module.params.get("version")
@@ -159,6 +174,8 @@ def main():
             if auto_approve:
                 module.approve(
                     endpoint=collection_endpoint,
+                    timeout=timeout,
+                    interval=interval
                 )
         elif existing_item is None:
             module.upload(path, "artifacts/collections", wait, item_type="collections")
@@ -166,6 +183,8 @@ def main():
             if auto_approve:
                 module.approve(
                     endpoint=collection_endpoint,
+                    timeout=timeout,
+                    interval=interval
                 )
         else:
             module.json_output["changed"] = False
