@@ -41,6 +41,10 @@ controller_workflows:
     allow_simultaneous: "{{ current_workflow_job_templates_asset_value.allow_simultaneous }}"
     scm_branch: "{{ current_workflow_job_templates_asset_value.scm_branch }}"
     webhook_service: "{{ current_workflow_job_templates_asset_value.webhook_service }}"
+{% if current_workflow_job_templates_asset_value.extra_vars and current_workflow_job_templates_asset_value.extra_vars != '---' and current_workflow_job_templates_asset_value.extra_vars != '' %}
+    extra_vars:
+      {{ current_workflow_job_templates_asset_value.extra_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") }}
+{%- endif %}
 {% if query_labels | length > 0 %}
     labels:
 {% for label in query_labels %}

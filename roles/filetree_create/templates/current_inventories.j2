@@ -9,8 +9,8 @@ controller_inventories:
 {% if current_inventories_asset_value.kind %}
     kind: "{{ current_inventories_asset_value.kind }}"
 {% endif %}
-{% if current_inventories_asset_value.variables and current_inventories_asset_value.variables != '---' %}
+{% if current_inventories_asset_value.variables and current_inventories_asset_value.variables != '---' and current_inventories_asset_value.variables != '' %}
     variables:
-      {{ current_inventories_asset_value.variables | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) }}
+      {{ current_inventories_asset_value.variables | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") }}
 {%- endif %}
 ...

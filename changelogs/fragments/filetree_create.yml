@@ -1,4 +1,5 @@
 ---
 minor_changes:
   - Improve template to export settings with filetree_create role. Settings will be in yaml format.
+  - Add or fix some variables or extra_vars exported from objects like notifications, inventory, inventory_source, hosts, groups, jt or wjt.
 ...

@@ -4,5 +4,9 @@ controller_hosts:
   - name: "{{ host.name }}"
     description: "{{ host.description }}"
     inventory: "{{ host.summary_fields.inventory.name | default('ToDo: The host \'' + host.name + '\' must have an associated inventory') }}"
+{% if host.variables and host.variables != '---' and host.variables != '' %}
+    variables:
+      {{ host.variables | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") }}
+{%- endif %}
 {% endfor %}
 ...
