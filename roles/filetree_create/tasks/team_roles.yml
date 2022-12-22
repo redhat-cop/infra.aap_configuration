@@ -8,14 +8,14 @@
 
 - name: "Create the output directory for team roles: {{ output_path }}"
   ansible.builtin.file:
-    path: "{{ output_path }}"
+    path: "{{ output_path }}/team_roles"
     state: directory
     mode: '0755'
 
 - name: "Add current roles to the output yaml file"
   ansible.builtin.template:
     src: "templates/current_team_roles.j2"
-    dest: "{{ output_path }}/current_roles_{{ teamname | regex_replace('/', '_') }}.yaml"
+    dest: "{{ output_path }}/team_roles/current_roles_{{ teamname | regex_replace('/', '_') }}.yaml"
     mode: '0644'
   vars:
     current_team_roles_asset_value: "{{ team_roles_lookvar }}"
