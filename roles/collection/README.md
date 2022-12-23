@@ -15,6 +15,8 @@ These are the sub options for the vars `ah_collections` which are dictionaries w
 |`path`|""|no|Collection artifact file path.||
 |`wait`|"true"|no|Waits for the collection to be uploaded||
 |`auto_approve`|"true"|no|Approves a collection and requires version to be set.||
+|`timeout`|"true"||Maximum time to wait for the collection approval||
+|`interval`|"true"|10|Interval at which approval is checked||
 |`overwrite_existing`|"false"|no|Overwrites an existing collection and requires version to be set.||
 |`state`|"present"|no|Desired state of the resource||
 
@@ -27,7 +29,7 @@ ah_configuration_repository_secure_logging defaults to the value of ah_configura
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`ah_configuration_repository_secure_logging`|`False`|no|Whether or not to include the sensitive Namespace role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`ah_configuration_collection_secure_logging`|`False`|no|Whether or not to include the sensitive collection role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`ah_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ## Data Structure

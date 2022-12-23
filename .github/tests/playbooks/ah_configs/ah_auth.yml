@@ -5,4 +5,5 @@ ah_username: admin
 ah_password: admin
 ah_validate_certs: false
 ah_path_prefix: 'automation-hub'  # AH: galaxy Galaxy: automation-hub
+ah_configuration_namespace_secure_logging: false
 ...
