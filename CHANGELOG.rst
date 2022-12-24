@@ -1,9 +1,33 @@
-=========================================
+====================================
 infra.ah_configuration Release Notes
-=========================================
+====================================
 
 .. contents:: Topics
 
+
+v1.0.0
+======
+
+Minor Changes
+-------------
+
+- Added timeout and interval for waiting for auto approval on ah_collection module.
+- Added timeout and interval for waiting for auto approval on collection role.
+- Changed default of overwrite_existing var in collection role to False to match module
+- groups option of ah_namespace module changed to accept just the names of groups who own the namespace
+
+Bugfixes
+--------
+
+- Enforced type checking on groups option of ah_namespace
+- Fixed doc issue in ah_collection module where overwrite_existing option was reported with default True when functionality was False
+- Fixed doc issue in ah_collection_upload module where wait option was reported with default True when functionality was False
+- Fixed doc issue in collection role where ah_overwrite_existing option was reported with default True when functionality was False
+- Removed ah_token from roles where the modules don't accept it
+- Secret fields (password, client_key, proxy_password) set to no_log in ah_ee_registry module
+- Updated ah_ee_namespace to use object_roles instead of object_permissions when inspecting group permissions
+- token option in ah_repository set as no_log to prevent exposure of secret
+- url field explicitly required when state=present in ah_ee_registry module
 
 v0.9.2
 ======

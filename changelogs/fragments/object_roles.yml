@@ -1,7 +1,0 @@
----
-minor_changes:
-  - groups option of ah_namespace module changed to accept just the names of groups who own the namespace
-bugfixes:
-  - Updated ah_ee_namespace to use object_roles instead of object_permissions when inspecting group permissions
-  - Removed ah_token from roles where the modules don't accept it
-...

@@ -1,5 +1,0 @@
----
-minor_changes:
-  - Added timeout and interval for waiting for auto approval on ah_collection module.
-  - Added timeout and interval for waiting for auto approval on collection role.
-...
