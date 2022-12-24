@@ -91,7 +91,7 @@ jobs:
         id: build
         uses: redhat-cop/ansible_collections_tooling/actions/build_ansible_collection@main
         with:
-          collection_namespace: redhat_cop
+          collection_namespace: infra
           collection_name: ah_configuration
           collection_version: 1.0.0
           collection_repo: https://github.com/redhat-cop/ah_configuration/
