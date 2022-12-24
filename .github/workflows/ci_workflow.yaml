@@ -1,11 +1,12 @@
 ---
-name: Run Test Playbooks Minikube
+name: Run Test Playbooks on AWX
 
-on: [push, pull_request]
+on:
+  workflow_call
 
 jobs:
   Integration-test:
-    name: Deploy Tower to Minikube and run tests
+    name: Deploy AWX to Minikube and run tests
     runs-on: ubuntu-latest
     steps:
 
