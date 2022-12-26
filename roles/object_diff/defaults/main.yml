@@ -3,6 +3,7 @@
 
 # populate_controller_api_user_accounts_without_external_accounts
 drop_user_external_accounts: false
+query_controller_api_max_objects: 10000
 
 # Automation Controller Object Lists
 controller_settings: []
