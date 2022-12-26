@@ -9,18 +9,6 @@ on:
       - published
 
 jobs:
-  release:
-    uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline.yml@main"
-    with:
-      collection_namespace: infra
-      collection_namespace_2: redhat_cop
-      collection_name: ah_configuration
-      collection_version: ${{ github.ref_name }}
-      collection_repo: https://github.com/redhat-cop/ah_configuration/
-    secrets:
-      galaxy_api_key: ${{ secrets.ANSIBLE_GALAXY_APIKEY }}
-      infra_api_key: ${{ secrets.GALAXY_INFRA_KEY }}
-      token: ${{ secrets.GITHUB_TOKEN }}
   ci_standalone:
     strategy:
       fail-fast: false
@@ -33,4 +21,19 @@ jobs:
     uses: "./.github/workflows/ci_standalone_versioned.yml"
     with:
       galaxy_ng_version: ${{ matrix.galaxy_ng_version }}
+  release:
+    needs:
+      - ci_standalone
+    uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline.yml@main"
+    with:
+      collection_namespace: infra
+      collection_namespace_2: redhat_cop
+      collection_name: ah_configuration
+      collection_version: ${{ github.ref_name }}
+      collection_repo: https://github.com/redhat-cop/ah_configuration/
+    secrets:
+      galaxy_api_key: ${{ secrets.ANSIBLE_GALAXY_APIKEY }}
+      infra_api_key: ${{ secrets.GALAXY_INFRA_KEY }}
+      token: ${{ secrets.GITHUB_TOKEN }}
+
 ...
