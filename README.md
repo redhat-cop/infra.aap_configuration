@@ -1,7 +1,6 @@
 # Redhat Communties of Practice Automation Hub Configuration Collection
 
-![Ansible Lint](https://github.com/redhat-cop/ah_configuration/workflows/Yaml%20and%20Ansible%20Lint/badge.svg)
-![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
+[![pre-commit tests](https://github.com/redhat-cop/ah_configuration/actions/workflows/pre-commit.yml/badge.svg?branch=devel)](https://github.com/redhat-cop/ah_configuration/actions/workflows/pre-commit.yml)
 ![Code style: flake8](https://img.shields.io/badge/Code%20style-flake8-orange)
 <!-- Further CI badges go here as above -->
 
