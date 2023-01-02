@@ -42,6 +42,7 @@ options:
     path:
       description:
         - Collection artifact file path.
+        - If version is not specified, version will be derived from file name.
       type: str
     wait:
       description:
@@ -92,7 +93,7 @@ EXAMPLES = """
   ah_collection:
     namespace: awx
     name: awx
-    path: /var/tmp/collections/awx_awx-15.0.0.tar.gz
+    path: /var/tmp/collections/awx-awx-15.0.0.tar.gz
 
 
 - name: Remove collection
@@ -136,6 +137,13 @@ def main():
     auto_approve = module.params.get("auto_approve")
     version = module.params.get("version")
     state = module.params.get("state")
+
+    # approval needs a version, if one is not defined find it from the filename.
+    if auto_approve:
+        if version:
+            pass
+        else:
+            version = path.split("-")[-1].replace('.tar.gz', '')
 
     # Attempt to look up an existing item based on the provided data
     if version:

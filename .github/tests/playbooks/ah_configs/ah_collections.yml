@@ -3,7 +3,6 @@ ah_collections:
   - namespace: redhat_cop
     name: ah_configuration
     path: /home/runner/work/ah_configuration/ah_configuration/redhat_cop-ah_configuration-1.0.0.tar.gz
-    version: 1.0.0
     wait: true
     auto_approve: "{{ galaxy_ng_version != 'stable-4.4' and galaxy_ng_version != 'stable-4.5' }}"
     timeout: 180

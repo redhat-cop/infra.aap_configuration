@@ -11,7 +11,7 @@ These are the sub options for the vars `ah_collections` which are dictionaries w
 |:---:|:---:|:---:|:---:|:---:|
 |`namespace`|""|yes|Namespace name. Must be lower case containing only alphanumeric characters and underscores.|"awx"|
 |`name`|""|yes|Collection name. Must be lower case containing only alphanumeric characters and underscores.||
-|`version`|""|no|Collection Version. Must be lower case containing only alphanumeric characters and underscores.||
+|`version`|""|no|Collection Version. Must be lower case containing only alphanumeric characters and underscores. If not provided and 'auto_approve' true, will be derived from the path.||
 |`path`|""|no|Collection artifact file path.||
 |`wait`|"true"|no|Waits for the collection to be uploaded||
 |`auto_approve`|"true"|no|Approves a collection and requires version to be set.||

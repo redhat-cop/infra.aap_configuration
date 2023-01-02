@@ -117,7 +117,7 @@ class AHAPIModule(AnsibleModule):
             "Content-Type": "application/json",
             "Accept": "application/json",
         }
-        self.session = Request(validate_certs=self.verify_ssl, headers=self.headers)
+        self.session = Request(validate_certs=self.verify_ssl, headers=self.headers, follow_redirects=True)
 
         # Define the API paths
         self.galaxy_path_prefix = "/api/{prefix}".format(prefix=self.path_prefix.strip("/"))
