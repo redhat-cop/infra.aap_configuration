@@ -16,7 +16,7 @@ The following Variables set the organization where should be applied the configu
 | :------------ | :-----------: | :------: | :---------- |
 | `controller_api_plugin` | `ansible.controller` | yes | Full path for the controller_api_plugin to be used. <br/> Can have two possible values: <br/>&nbsp;&nbsp;- awx.awx.controller_api             # For the community Collection version <br/>&nbsp;&nbsp;- ansible.controller.controller_api  # For the Red Hat Certified Collection version|
 | `drop_user_external_accounts` | `False` | no | When is true, all users will be taken to compare with SCM configuration as code |
-| `drop_teams` | `False` | no | When is true, all teams will be taken to compare with SCM configuration as code |
+<!--- | `drop_teams` | `False` | no | When is true, all teams will be taken to compare with SCM configuration as code | -->
 | `protect_not_empty_orgs` | `N/A` | no | When is true, orgs which are not empty, will not be removed |
 
 ## Role Tags
@@ -30,6 +30,10 @@ $ ansible-playbook object_diff.yml --list-tags
       TASK TAGS: [credentials, credential_types, groups, hosts, inventories, inventory_sources, job_templates, organizations, projects, teams, users, workflow_job_templates]
 
 ```
+
+## IMPORTANT
+
+To correctly manage `roles`, they can only be defined by a super-admin organization, so all the roles in the Ansible Controller instance are managed by only one organization.
 
 ## Example Playbook
 
@@ -122,6 +126,8 @@ GPLv3+
 - [Silvio Perez](https://github.com/silvinux)
 
 - [Ivan Aragonés](https://github.com/ivarmu)
+
+- [Adonis García](https://github.com/adonisgarciac)
 
 ## Important things to take into account
 
