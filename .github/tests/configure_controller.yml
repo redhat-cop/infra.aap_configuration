@@ -4,6 +4,7 @@
   connection: local
   vars:
     controller_validate_certs: false
+    controller_configuration_secure_logging: false
   # Define following vars here, or in configs/controller_auth.yml
   # controller_hostname: controller.example.com
   # controller_username: admin

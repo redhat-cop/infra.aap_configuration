@@ -1,0 +1,8 @@
+---
+name: Run Test Playbooks on AWX workflow
+on: [push, pull_request]
+
+jobs:
+  Integration-test:
+    uses: "./.github/workflows/ci_workflow.yaml"
+...

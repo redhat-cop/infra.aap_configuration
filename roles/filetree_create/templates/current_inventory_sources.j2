@@ -3,6 +3,7 @@ controller_inventory_sources:
 {% for inventory_source in current_inventory_sources_asset_value %}
   - name: "{{ inventory_source.name }}"
     description: "{{ inventory_source.description }}"
+    organization: "{{ inventory_source.summary_fields.organization.name }}"
     source: "{{ inventory_source.source | default('ToDo: The source of the inventory_source was originally missing and must be specified',true) }}"
 {% if inventory_source.source_project %}
     source_project: "{{ inventory_source.summary_fields.source_project.name }}"
@@ -10,7 +11,7 @@ controller_inventory_sources:
 {% if inventory_source.source_path %}
     source_path: "{{ inventory_source.source_path }}"
 {% endif %}
-{% if inventory_source.source_vars and inventory_source.source_vars != '---' %}
+{% if inventory_source.source_vars and inventory_source.source_vars != '---' and inventory_source.source_vars != '' %}
     source_vars:
       {{ inventory_source.source_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") }}
 {%- endif %}
@@ -18,7 +19,7 @@ controller_inventory_sources:
     update_on_launch: "{{ inventory_source.update_on_launch }}"
     overwrite: "{{ inventory_source.overwrite }}"
 {% if inventory_source.credential %}
-    credential: "{{ inventory_source.credential }}"
+    credential: "{{ inventory_source.summary_fields.credential.name }}"
 {% endif %}
 {% set query_notification_error = query(controller_api_plugin, inventory_source.related.notification_templates_error,
                      host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,

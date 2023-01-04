@@ -139,14 +139,14 @@ orgs_vars/Organization1
     │   │       ├── controller_projects_inventory_sourcea_prod.yml
     │   │       ├── controller_projects_inventory_sourceb_dev.yml
     │   │       └── controller_projects_inventory_sourceb_prod.yml
-    │   ├── controller_roles.d
-    │   │   ├── app-example
-    │   │   │   ├── controller_roles_cmdb_approvals.yml
-    │   │   │   ├── controller_roles_inventories.yml
-    │   │   │   ├── controller_roles_inventory_wf_update.yml
-    │   │   │   ├── controller_roles_teams.yml
-    │   │   │   └── controller_roles_users.yml
-    │   │   └── controller_roles.yml
+    │   ├── controller_roles.d                                  (1)
+    │   │   ├── app-example                                     (1)
+    │   │   │   ├── controller_roles_cmdb_approvals.yml         (1)
+    │   │   │   ├── controller_roles_inventories.yml            (1)
+    │   │   │   ├── controller_roles_inventory_wf_update.yml    (1)
+    │   │   │   ├── controller_roles_teams.yml                  (1)
+    │   │   │   └── controller_roles_users.yml                  (1)
+    │   │   └── controller_roles.yml                            (1)
     │   ├── controller_schedules.d
     │   │   ├── app-casc
     │   │   │   └── controller_schedules_casc.yml
@@ -207,13 +207,13 @@ orgs_vars/Organization1
     │   │   │   ├── controller_inventory_sources_sourceb_dev.yml
     │   │   │   └── controller_inventory_sources_sourceb_prod.yml
     │   │   └── controller_inventory_sources.yml
-    │   └── controller_settings.d                           (1)
-    │       ├── app-examples                                (1)
-    │       │   ├── controller_settings_jobs.yml            (1)
-    │       │   ├── controller_settings_ldap.yml            (1)
-    │       │   ├── controller_settings_system.yml          (1)
-    │       │   └── controller_settings_user_interface.yml  (1)
-    │       └── controller_settings.yml                     (1)
+    │   └── controller_settings.d                               (2)
+    │       ├── app-examples                                    (2)
+    │       │   ├── controller_settings_jobs.yml                (2)
+    │       │   ├── controller_settings_ldap.yml                (2)
+    │       │   ├── controller_settings_system.yml              (2)
+    │       │   └── controller_settings_user_interface.yml      (2)
+    │       └── controller_settings.yml                         (2)
     └── demo-prd
         ├── controller_credentials.d
         │   ├── app-examples
@@ -255,16 +255,18 @@ orgs_vars/Organization1
         │   │   ├── controller_inventory_sources_sourceb_dev.yml
         │   │   └── controller_inventory_sources_sourceb_prod.yml
         │   └── controller_inventory_sources.yml
-        └── controller_settings.d                          (1)
-            ├── app-examples                               (1)
-            │   ├── controller_settings_jobs.yml           (1)
-            │   ├── controller_settings_ldap.yml           (1)
-            │   ├── controller_settings_system.yml         (1)
-            │   └── controller_settings_user_interface.yml (1)
-            └── controller_settings.yml                    (1)
+        └── controller_settings.d                               (2)
+            ├── app-examples                                    (2)
+            │   ├── controller_settings_jobs.yml                (2)
+            │   ├── controller_settings_ldap.yml                (2)
+            │   ├── controller_settings_system.yml              (2)
+            │   └── controller_settings_user_interface.yml      (2)
+            └── controller_settings.yml                         (2)
 ```
 
-> **NOTE (1):** These directories and files must belong to SuperAdmin Organization ONLY, because must have admin super powers.
+> **NOTE (1):** These directory and files may belong to SuperAdmin Organization ONLY. If any other organization defines it's own `roles`, they must duplicate the ones given by the SuperAdmin Organization or they will be dropped.
+>
+> **NOTE (2):** These directories and files must belong to SuperAdmin Organization ONLY, because must have admin super powers.
 
 ## Role Tags
 

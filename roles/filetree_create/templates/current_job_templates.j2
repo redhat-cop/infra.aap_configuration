@@ -21,14 +21,10 @@ controller_templates:
     ask_tags_on_launch: "{{ current_job_templates_asset_value.ask_tags_on_launch }}"
     ask_verbosity_on_launch: "{{ current_job_templates_asset_value.ask_verbosity_on_launch }}"
     ask_variables_on_launch: "{{ current_job_templates_asset_value.ask_variables_on_launch }}"
-{% if (current_job_templates_asset_value.extra_vars | length) > 3 %}
+{% if current_job_templates_asset_value.extra_vars and current_job_templates_asset_value.extra_vars != '---' and current_job_templates_asset_value.extra_vars != '' %}
     extra_vars:
-{% if (current_job_templates_asset_value.extra_vars[0] is match('{')) %}
-{{ current_job_templates_asset_value.extra_vars | from_json | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
-{% else %}
-{{ current_job_templates_asset_value.extra_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=True) }}
-{% endif %}
-{%- endif -%}
+      {{ current_job_templates_asset_value.extra_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") }}
+{%- endif %}
 {% if is_aap %}
     execution_environment: "{{ current_job_templates_asset_value.summary_fields.execution_environment.name | default(omit) }}"
 {% endif %}

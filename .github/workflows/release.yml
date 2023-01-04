@@ -9,7 +9,11 @@ on:
       - published
 
 jobs:
+  integration-test:
+    uses: "./.github/workflows/ci_workflow.yaml"
   release:
+    needs:
+      - integration-test
     uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline.yml@main"
     with:
       collection_namespace: infra
