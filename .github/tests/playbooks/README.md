@@ -132,14 +132,14 @@ This procedure has been tested with **gitlab** git server
 
 You have make the following configurations in order to configure CD integration:
 
-1. Configure a Project and a job template with [webhook](https://docs.ansible.com/automation-controller/latest/html/userguide/webhooks.html#id2) property enabled in the Controller pointing to the playbook in charge of CD, you can find an example [here](cd-gitlab-webhook-trigger.yml).
+1. Configure a Project and a job template with [webhook](https://docs.ansible.com/automation-controller/latest/html/userguide/webhooks.html#id2) property enabled in the Controller pointing to the playbook in charge of CD, you can find an example [here](https://github.com/redhat-cop/controller_configuration/blob/devel/.github/tests/playbooks/cd_gitlab_webhook_trigger.yml).
 
 2. Configure [project webhook](https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html) on the project where defined configurations are hosted.
 
 ## License
 
-[MIT](LICENSE)
+[MIT](https://github.com/redhat-cop/controller_configuration#licensing)
 
 ## Author
 
-[Sean Sullivan](https://github.com/sean-m-sullivan)
+[Sean Sullivan](https://github.com/sean-m-sullivan/)

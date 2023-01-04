@@ -91,7 +91,7 @@ controller_workflow_launch_jobs:
 
 ## License
 
-[MIT](LICENSE)
+[MIT](https://github.com/redhat-cop/controller_configuration#licensing)
 
 ## Author
 
