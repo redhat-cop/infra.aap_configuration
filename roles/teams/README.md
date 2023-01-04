@@ -87,7 +87,7 @@ This also speeds up the overall role.
 
 ## License
 
-[MIT](License)
+[MIT](https://github.com/redhat-cop/controller_configuration#licensing)
 
 ## Author
 

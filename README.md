@@ -94,7 +94,7 @@ You can also specify authentication by a combination of either:
 - `controller_hostname`, `controller_oauthtoken`
 
 The OAuth2 token is the preferred method. You can obtain the token through the preferred `controller_token` module, or through the
-AWX CLI [login](https://docs.ansible.com/automation-controller/latest/html/controllercli/authentication.html)
+AWX CLI [login](https://docs.ansible.com/automation-controller/latest/html/controllerapi/authentication.html)
 command.
 
 These can be specified via (from highest to lowest precedence):

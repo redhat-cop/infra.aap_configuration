@@ -108,7 +108,7 @@ This also speeds up the overall role. Each individual role has its own variable 
 
 ## License
 
-[MIT](LICENSE)
+[MIT](https://github.com/redhat-cop/controller_configuration#licensing)
 
 ## Author
 

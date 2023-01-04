@@ -101,7 +101,7 @@ controller_ad_hoc_commands:
 
 ## License
 
-[MIT](LICENSE)
+[MIT](https://github.com/redhat-cop/controller_configuration#licensing)
 
 ## Author
 
