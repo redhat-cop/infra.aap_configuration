@@ -13,14 +13,46 @@
 
     - name: "Get the API list of all roles"
       ansible.builtin.set_fact:
-        __controller_api_roles: "{{ query(controller_api_plugin, 'roles',
-                                          host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)
+        __controller_api_roles: "{{ (__controller_api_roles | default([])) + [{
+                                      'users': current_users,
+                                      'teams': current_teams,
+                                      'name': current_role.name,
+                                      'role': current_role.name,
+                                      'type': current_role.type,
+                                      'resource_type': (current_role.summary_fields.resource_type|default('no_resource_type')),
+                                      (current_role.summary_fields.resource_type|default('no_resource_type')): (current_role.summary_fields.resource_name|default('no_resource_name'))
+                                    }]
                                  }}"
+      vars:
+        current_users: "{{ query(controller_api_plugin, current_role.related.users,
+                                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                                 return_all=true, max_objects=query_controller_api_max_objects) | map(attribute='username')
+                        }}"
+        current_teams: "{{ query(controller_api_plugin, current_role.related.teams,
+                                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                                 return_all=true, max_objects=query_controller_api_max_objects) | map(attribute='name')
+                        }}"
+      loop: "{{ query(controller_api_plugin, 'roles',
+                      host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                      return_all=true, max_objects=query_controller_api_max_objects)
+             }}"
+      loop_control:
+        loop_var: current_role
+
+    - name: "Explode the roles for users"
+      ansible.builtin.set_fact:
+        __full_controller_api_roles: "{{ (__full_controller_api_roles | default([])) + [item.0 | combine({'user': item.1})] }}"
+      loop: "{{ (__controller_api_roles | subelements('users')) }}"
+
+    - name: "Explode the roles for teams"
+      ansible.builtin.set_fact:
+        __full_controller_api_roles: "{{ (__full_controller_api_roles | default([])) + [item.0 | combine({'team': item.1})] }}"
+      loop: "{{ (__controller_api_roles | subelements('teams')) }}"
 
     - name: "Find the difference of Roles between what is on the Controller versus CasC on SCM"
       ansible.builtin.set_fact:
         __roles_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
-                                        api_list=__controller_api_roles, compare_list=controller_roles,
+                                        api_list=__full_controller_api_roles, compare_list=controller_roles,
                                         with_present=false, set_absent=true)
                              }}"
 
