@@ -105,7 +105,7 @@ ah_users:
 
 ## License
 
-[GPLv3+](LICENSE)
+[GPLv3+](https://github.com/redhat-cop/ah_configuration#licensing)
 
 ## Author
 

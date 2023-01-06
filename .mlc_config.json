@@ -1,0 +1,13 @@
+{
+    "ignorePatterns": [
+      {
+        "pattern": "^https://cloud.redhat.com"
+      },
+      {
+        "pattern": "^https://console.redhat.com"
+      },
+      {
+        "pattern": "^https://sso.redhat.com"
+      }
+    ]
+}

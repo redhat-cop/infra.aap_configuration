@@ -98,7 +98,7 @@ This also speeds up the overall role. Each individual role has its own variable 
 
 ## License
 
-[MIT](LICENSE)
+[GPLv3+](https://github.com/redhat-cop/ah_configuration#licensing)
 
 ## Author
 
