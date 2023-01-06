@@ -1,6 +1,6 @@
 # Red Hat Communities of Practice Controller Configuration Collection
 
-![Ansible Lint](https://github.com/redhat-cop/controller_configuration/workflows/Yaml%20and%20Ansible%20Lint/badge.svg)
+![pre-commit tests](https://github.com/redhat-cop/controller_configuration/actions/workflows/pre-commit.yml/badge.svg)
 ![Galaxy Release](https://github.com/redhat-cop/controller_configuration/workflows/galaxy-release/badge.svg)
 <!-- Further CI badges go here as above -->
 
