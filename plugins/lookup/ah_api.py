@@ -175,6 +175,8 @@ class LookupModule(LookupBase):
 
         url = module._build_url("", endpoint=endpoint, query_params=self.get_option("query_params", {}))
 
+        if not (module.username and module.password):
+            raise AnsibleError("Username and Password must be provided to this plugin")
         module.authenticate()
         response = module.make_request("GET", url)
 
