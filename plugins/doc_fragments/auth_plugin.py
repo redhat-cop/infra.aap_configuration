@@ -25,11 +25,6 @@ options:
     description: The password for your controller user.
     env:
     - name: AH_PASSWORD
-  oauth_token:
-    description:
-    - The OAuth token to use.
-    env:
-    - name: AH_OAUTH_TOKEN
   path_prefix:
     description:
     - API path used to access the api.
