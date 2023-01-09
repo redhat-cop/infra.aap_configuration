@@ -1,4 +1,5 @@
 ---
 minor_changes:
   - Collection module and role - add way to get version from path for auto approval if not provided.
+  - Update Publish role to be namespace agnostic.
 ...

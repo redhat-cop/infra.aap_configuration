@@ -36,20 +36,15 @@
       ansible.builtin.include_role:
         name: namespace
 
-    - name: Download a Collection
-      ansible.builtin.get_url:
-        url: https://github.com/redhat-cop/ah_configuration/releases/download/0.9.2/infra-ah_configuration-0.9.2.tar.gz
-        dest: /tmp/infra-ah_configuration-0.9.2.tar.gz
-
     - name: Upload Collection
       ansible.builtin.include_role:
         name: collection
 
-    #  - name: Publish Collections
-    #    ansible.builtin.include_role:
-    #      name: publish
-    #    vars:
-    #      ah_auto_approve: true
+    - name: Publish Collections
+      ansible.builtin.include_role:
+        name: publish
+      vars:
+        ah_collections: "{{ ah_git_collections }}"
 
     - name: Remove collection
       ah_collection:

@@ -4,8 +4,12 @@ ah_collections:
     name: ah_configuration
     path: /home/runner/work/ah_configuration/ah_configuration/redhat_cop-ah_configuration-1.0.0.tar.gz
     wait: true
-    auto_approve: "{{ galaxy_ng_version != 'stable-4.4' and galaxy_ng_version != 'stable-4.5' }}"
+    auto_approve: true
     timeout: 180
+
+ah_git_collections:
+  - collection_name: collection_test
+    git_url: https://github.com/sean-m-sullivan/collection_test
 
 ansible_config_path: "{{ ah_configuration_working_dir }}/ansible.cfg"
 ah_configuration_collection_async_retries: 50
