@@ -52,6 +52,9 @@ jobs:
       - name: workaround github worker permissions issues
         run: sed -i.bak 's/PIP_EDITABLE_INSTALL=1/PIP_EDITABLE_INSTALL=0/' galaxy_ng/.compose.env
 
+      - name: workaround to enable collection approval for 4.4/4.5
+        run: sed -i.bak 's/PULP_GALAXY_REQUIRE_CONTENT_APPROVAL=false/PULP_GALAXY_REQUIRE_CONTENT_APPROVAL=true/' galaxy_ng/dev/standalone/galaxy_ng.env
+
       - name: workaround github worker permissions issues
         run: sed -i.bak 's/WITH_DEV_INSTALL=1/WITH_DEV_INSTALL=0/' galaxy_ng/.compose.env
 
