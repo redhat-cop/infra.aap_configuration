@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Renamed the field `update` to `do_update` to avoid colliding with the Python dict update method
+...
