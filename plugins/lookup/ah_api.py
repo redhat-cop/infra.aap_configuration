@@ -21,8 +21,8 @@ options:
       - "'ee_namespaces'"
       - "'ee_registries'"
       - "'ee_repositories'"
-      - "'collections'"
-      - "'collection', [repository={published, rh_certified, community}], [collection_namespace], [collection_name]"
+      - "'collections', [repository={published, rh_certified, validated, community}, default=published]"
+      - "'collection', [repository={published, rh_certified, validated, community}], [collection_namespace], [collection_name]"
       - "'groups'"
       - "'namespaces'"
       - "'repository_community'"
@@ -145,7 +145,7 @@ class LookupModule(LookupBase):
             "ee_namespaces": "/pulp/api/v3/pulp_container/namespaces/",
             "ee_registries": "/api/{prefix}/_ui/v1/registry/",
             "ee_repositories": "/api/{prefix}/_ui/v1/execution-environments/repositories/",
-            "collections": "/api/{prefix}/v3/collections/",
+            "collections": "/api/{prefix}/v3/plugin/ansible/content/{repository}/collections/index/",
             "collection": "/api/{prefix}/_ui/v1/repo/{repository}/{namespace}/{name}",
             "groups": "/api/{prefix}/_ui/v1/groups/",
             "namespaces": "/api/{prefix}/v3/namespaces/",
@@ -161,6 +161,15 @@ class LookupModule(LookupBase):
             if len(terms) != 2:
                 raise AnsibleError("A second term for the name of the ee repository is required")
             endpoint = endpoints[terms[0]].format(prefix=module.path_prefix, ee_repository=terms[1])
+        elif terms[0] == "collections":
+            if len(terms) > 2:
+                raise AnsibleError("2 terms are required with: 'collection', <repository>")
+            elif len(terms) == 1:
+                terms += ['published']
+            endpoint = endpoints[terms[0]].format(
+                prefix=module.path_prefix,
+                repository=terms[1]
+            )
         elif terms[0] == "collection":
             if len(terms) != 4:
                 raise AnsibleError("4 terms are required with: 'collection', <repository>, <namespace>, <name>")
