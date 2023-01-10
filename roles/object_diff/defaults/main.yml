@@ -32,6 +32,7 @@ controller_roles: []
 controller_configuration_object_diff_tasks:
   - {name: workflow_job_templates, var: controller_workflows, tags: workflow_job_templates}
   - {name: job_templates, var: controller_templates, tags: job_templates}
+  - {name: roles, var: controller_roles, tags: roles}
   - {name: teams, var: controller_teams, tags: teams}
   - {name: user_accounts, var: controller_user_accounts, tags: users}
   - {name: groups, var: controller_groups, tags: groups}
