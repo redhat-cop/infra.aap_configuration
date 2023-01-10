@@ -248,8 +248,8 @@ class LookupModule(LookupBase):
                 item.update({"organization": item["summary_fields"]["organization"]["name"]})
                 item.pop("summary_fields")
 
-        self.display.warning("compare_list_reduced: {0}".format(compare_list_reduced))
-        self.display.warning("api_list_reduced: {0}".format(api_list_reduced))
+        self.display.v("compare_list_reduced: {0}".format(compare_list_reduced))
+        self.display.v("api_list_reduced: {0}".format(api_list_reduced))
 
         # Find difference between lists
         if api_list[0]["type"] != "role":
