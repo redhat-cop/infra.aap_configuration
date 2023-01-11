@@ -5,6 +5,22 @@ infra.ah_configuration Release Notes
 .. contents:: Topics
 
 
+v1.0.1
+======
+
+Minor Changes
+-------------
+
+- Added option to pull all collections from a specific repository
+- Collection module and role - add way to get version from path for auto approval if not provided.
+- Update Publish role to be namespace agnostic.
+
+Bugfixes
+--------
+
+- Checks for username and password passed to api lookup plugin
+- Removed incorrect reference to oauth token abilities for api lookup plugin.
+
 v1.0.0
 ======
 
