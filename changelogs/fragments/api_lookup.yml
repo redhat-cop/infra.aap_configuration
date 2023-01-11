@@ -1,7 +1,0 @@
----
-minor_changes:
-  - Added option to pull all collections from a specific repository
-bugfixes:
-  - Checks for username and password passed to api lookup plugin
-  - Removed incorrect reference to oauth token abilities for api lookup plugin.
-...

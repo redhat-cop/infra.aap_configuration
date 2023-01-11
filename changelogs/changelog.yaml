@@ -228,3 +228,17 @@ releases:
     - linting.yml
     - object_roles.yml
     release_date: '2022-12-24'
+  1.0.1:
+    changes:
+      bugfixes:
+      - Checks for username and password passed to api lookup plugin
+      - Removed incorrect reference to oauth token abilities for api lookup plugin.
+      minor_changes:
+      - Added option to pull all collections from a specific repository
+      - Collection module and role - add way to get version from path for auto approval
+        if not provided.
+      - Update Publish role to be namespace agnostic.
+    fragments:
+    - api_lookup.yml
+    - approval.yaml
+    release_date: '2023-01-11'
