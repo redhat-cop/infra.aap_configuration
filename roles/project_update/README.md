@@ -63,7 +63,7 @@ This also speeds up the overall role.
 |`wait`|""|no|str|Wait for the project to complete.|
 |`interval`|`controller_configuration_project_update_async_delay`|no|str|The interval to request an update from controller.|
 |`timeout`|""|no|str|If waiting for the job to complete this will abort after this amount of seconds.|
-|`do_update`|false|no|bool|If defined and true, the project update will be executed, otherwise it won't.|
+|`update_project`|false|no|bool|If defined and true, the project update will be executed, otherwise it won't.|
 
 ### Standard Project Data Structure
 
