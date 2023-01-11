@@ -21,7 +21,7 @@
   no_log: "{{ controller_configuration_project_update_secure_logging }}"
   when:
     - controller_projects is defined
-    - __project_update_update_item.update
+    - __project_update_update_item.update_project | default(false)
     - __project_update_update_item.state | default('present') != "absent"
   async: 1000
   poll: 0

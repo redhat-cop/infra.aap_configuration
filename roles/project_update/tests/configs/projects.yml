@@ -7,7 +7,7 @@ controller_projects:
     scm_clean: true
     description: Test Project 1
     organization: Satellite
-    update: true
+    update_project: true
     wait: true
   - name: Test Project 2
     scm_type: git
