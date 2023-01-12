@@ -24,7 +24,7 @@ controller_instance_groups: []
 controller_hosts: []
 controller_groups: []
 controller_templates: []
-controller_workflow_job_templates: []
+controller_workflows: []
 controller_schedules: []
 controller_roles: []
 

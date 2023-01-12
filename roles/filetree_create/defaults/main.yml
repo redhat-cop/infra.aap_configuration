@@ -15,7 +15,7 @@ controller_schedules: []
 controller_settings: []
 controller_teams: []
 controller_user_accounts: []
-controller_workflow_job_templates: []
+controller_workflows: []
 
 # Output directory path
 output_path: "/tmp/filetree_output"
