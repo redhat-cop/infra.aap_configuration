@@ -223,6 +223,7 @@ class AHPulpObject(object):
                     "type": self.object_type,
                     "changed": True,
                 }
+                json_output.update(self.data)
                 self.api.exit_json(**json_output)
             return True
 
@@ -230,7 +231,7 @@ class AHPulpObject(object):
         try:
             response = self.api.make_request("POST", url, data=new_item)
         except AHAPIModuleError as e:
-            self.api.fail_json(msg="Create error: {error}".format(error=e))
+            self.api.fail_json(msg="Create error: {error}, url: {url}".format(error=e, url=url.geturl()))
 
         if response["status_code"] in [200, 201]:
             self.exists = True
@@ -245,6 +246,7 @@ class AHPulpObject(object):
                     "type": self.object_type,
                     "changed": True,
                 }
+                json_output.update(self.data)
                 self.api.exit_json(**json_output)
             return True
 
@@ -287,11 +289,6 @@ class AHPulpObject(object):
         # requests. Making sure that it is present.
         if self.name_field not in new_item:
             new_item[self.name_field] = self.name
-        if "base_path" not in new_item:
-            if "base_path" in self.data:
-                new_item["base_path"] = self.data["base_path"]
-            else:
-                new_item["base_path"] = self.name
 
         # Check to see if anything within the item requires the item to be
         # updated.
@@ -305,6 +302,7 @@ class AHPulpObject(object):
                     "type": self.object_type,
                     "changed": False,
                 }
+                json_output.update(self.data)
                 self.api.exit_json(**json_output)
             return False
 
@@ -317,6 +315,7 @@ class AHPulpObject(object):
                     "type": self.object_type,
                     "changed": True,
                 }
+                json_output.update(self.data)
                 self.api.exit_json(**json_output)
             return True
 
@@ -336,6 +335,7 @@ class AHPulpObject(object):
                     "type": self.object_type,
                     "changed": True,
                 }
+                json_output.update(self.data)
                 self.api.exit_json(**json_output)
             return True
 
@@ -349,6 +349,48 @@ class AHPulpObject(object):
                 code=response["status_code"],
             )
         )
+
+
+class AHPulpRolePerm(AHPulpObject):
+    """Manage the roles that contain permisions with the Pulp API.
+
+    The :py:class:``AHPulpRolePerm`` creates and deletes namespaces.
+
+    Getting the details of a role:
+        ``GET /pulp/api/v3/roles/?name=<name>`` ::
+            {
+                "count": 1,
+                "next": null,
+                "previous": null,
+                "results": [
+                    {
+                        "pulp_href": "/api/galaxy/pulp/api/v3/roles/2b43c4c2-a9ef-4828-8653-c3bb69a49709/",
+                        "pulp_created": "2022-12-28T21:13:53.428816Z",
+                        "name": "galaxy.stuff.mcsutffins",
+                        "description": null,
+                        "permissions": [
+                            "galaxy.add_containerregistryremote"
+                        ],
+                        "locked": false
+                    }
+                ]
+            }
+
+    Create a namespace:
+        ``POST /api/galaxy/pulp/api/v3/roles/``
+    Update a namespace:
+        ``POST/PATCH /api/galaxy/pulp/api/v3/roles/dd54d0df-cd88-420b-922a-43a0725a20fc/``
+    Delete a namespace:
+        ``DELETE /api/galaxy/pulp/api/v3/roles/dd54d0df-cd88-420b-922a-43a0725a20fc/``
+    """
+
+    def __init__(self, API_object, data=None):
+        """Initialize the object."""
+        super(AHPulpRolePerm, self).__init__(API_object, data)
+        self.endpoint = "roles"
+        self.object_type = "role"
+        self.name_field = "name"
+        self.perms = []
 
 
 class AHPulpEENamespace(AHPulpObject):

@@ -35,6 +35,17 @@
         ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
+    # Testing namespace creation
+    - name: Ensure namespace1 EE namespace exists
+      ah_ee_namespace:
+        name: namespace1
+        state: present
+        ah_host: "{{ ah_hostname }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
     - block:
         - name: Ensure group operators has some perms
           ah_group_perm:
@@ -61,56 +72,45 @@
             ah_path_prefix: "{{ ah_path_prefix }}"
             validate_certs: "{{ ah_validate_certs }}"
 
+        # Testing permissions assignment
+        - name: Ensure group administrators has perms on namespace1
+          ah_ee_namespace:
+            name: namespace1
+            state: present
+            groups:
+              - administrators
+            ah_host: "{{ ah_hostname }}"
+            ah_username: "{{ ah_username }}"
+            ah_password: "{{ ah_password }}"
+            ah_path_prefix: "{{ ah_path_prefix }}"
+            validate_certs: "{{ ah_validate_certs }}"
+
+        - name: Ensure group operators has also perms on namespace1
+          ah_ee_namespace:
+            name: namespace1
+            state: present
+            groups:
+              - operators
+            ah_host: "{{ ah_hostname }}"
+            ah_username: "{{ ah_username }}"
+            ah_password: "{{ ah_password }}"
+            ah_path_prefix: "{{ ah_path_prefix }}"
+            validate_certs: "{{ ah_validate_certs }}"
+
+        - name: Ensure only group operators has perms on namespace1
+          ah_ee_namespace:
+            name: namespace1
+            state: present
+            append: false
+            groups:
+              - operators
+            ah_host: "{{ ah_hostname }}"
+            ah_username: "{{ ah_username }}"
+            ah_password: "{{ ah_password }}"
+            ah_path_prefix: "{{ ah_path_prefix }}"
+            validate_certs: "{{ ah_validate_certs }}"
+
       when: galaxy_ng_version == "stable-4.4" or galaxy_ng_version == "stable-4.5"
-
-    # Testing namespace creation
-    - name: Ensure namespace1 EE namespace exists
-      ah_ee_namespace:
-        name: namespace1
-        state: present
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-    # Testing permissions assignment
-    - name: Ensure group administrators has perms on namespace1
-      ah_ee_namespace:
-        name: namespace1
-        state: present
-        groups:
-          - administrators
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-    - name: Ensure group operators has also perms on namespace1
-      ah_ee_namespace:
-        name: namespace1
-        state: present
-        groups:
-          - operators
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-    - name: Ensure only group operators has perms on namespace1
-      ah_ee_namespace:
-        name: namespace1
-        state: present
-        append: false
-        groups:
-          - operators
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
 
     # Testing namespace renaming
     - name: Ensure namespace1 has a new name (namespace2)

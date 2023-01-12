@@ -59,7 +59,7 @@
         url: https://galaxy.ansible.com/api/
         requirements:
           - name: infra.ah_configuration
-          - name: redhat_cop.tower_configuration
+          - name: infra.controller_configuration
         ah_host: "{{ ah_hostname }}"
         ah_token: "{{ ah_token }}"
         ah_path_prefix: "{{ ah_path_prefix }}"

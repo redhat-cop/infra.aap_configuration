@@ -93,7 +93,7 @@ EXAMPLES = """
 
 - name: Get the list of versions for infra.ah_configuration in the published repo
   set_fact:
-    collection_versions: "{{ lookup('infra.ah_configuration.ah_api', 'collection', 'published', 'redhat_cop',
+    collection_versions: "{{ lookup('infra.ah_configuration.ah_api', 'collection', 'published', 'infra',
                             'ah_configuration').all_versions | map(attribute='version') | list }}"
 """
 

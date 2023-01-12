@@ -44,6 +44,24 @@
         ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
+
+    - block:
+        - name: Create role of permisions
+          ah_role:
+            name: galaxy.stuff.mcstuffins
+            perms:
+              - add_user
+              - change_user
+              - delete_user
+              - view_user
+            state: present
+            ah_host: "{{ ah_hostname }}"
+            ah_username: "{{ ah_username }}"
+            ah_password: "{{ ah_password }}"
+            ah_path_prefix: "{{ ah_path_prefix }}"
+            validate_certs: "{{ ah_validate_certs }}"
+      when: galaxy_ng_version == "stable-4.6" or galaxy_ng_version == "master"
+
     - block:
         # Testing permission assignment
         - name: Ensure group operators has perms view

@@ -22,7 +22,7 @@ Click the `Content` button to see the list of content included in this collectio
 
 ## Installing this collection
 
-You can install the redhat_cop ah_configuration collection with the Ansible Galaxy CLI:
+You can install the infra ah_configuration collection with the Ansible Galaxy CLI:
 
 ```bash
 ansible-galaxy collection install infra.ah_configuration

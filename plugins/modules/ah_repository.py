@@ -142,7 +142,7 @@ EXAMPLES = """
     url: https://galaxy.ansible.com/api/
     requirements:
       - infra.ah_configuration
-      - redhat_cop.tower_configuration
+      - infra.controller_configuration
 
 - name: Configure community repo from a file
   ah_repository:

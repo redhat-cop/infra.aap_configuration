@@ -10,8 +10,8 @@
     ah_host: localhost:8002
     ah_hostname: http://localhost:8002/
     ah_username: admin
-    ah_password: redhat
-    ah_path_prefix: galaxy
+    ah_password: admin
+    ah_path_prefix: 'automation-hub'
     ah_validate_certs: false
     repository: test-namespace/ee-minimal-rhel8
     tag: latest
