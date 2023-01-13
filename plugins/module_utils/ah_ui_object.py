@@ -157,7 +157,7 @@ class AHUIObject(object):
                 return True
         return False
 
-    def get_object(self, name, exit_on_error=True):
+    def get_object(self, name, vers, exit_on_error=True):
         """Retrieve a single object from a GET API call.
 
         Upon completion, :py:attr:``self.exists`` is set to ``True`` if the
@@ -1043,6 +1043,89 @@ class AHUIEERepository(AHUIObject):
         self.object_type = "repository"
         self.name_field = "name"
 
+    def get_object(self, name, vers, exit_on_error=True):
+        """Retrieve a single object from a GET API call.
+
+        Upon completion, :py:attr:``self.exists`` is set to ``True`` if the
+        object exists or ``False`` if not.
+        :py:attr:``self.data`` contains the retrieved object (or ``{}`` if
+        the requested object does not exist)
+
+        :param name: Name of the object to retrieve.
+        :type name: str
+        :param exit_on_error: If ``True`` (the default), exit the module on API
+                              error. Otherwise, raise the
+                              :py:class:``AHAPIModuleError`` exception.
+        :type exit_on_error: bool
+
+        :raises AHAPIModuleError: An API error occured. That exception is only
+                                  raised when ``exit_on_error`` is ``False``.
+        """
+        query = {self.name_field: name, "limit": "1000"}
+        self.vers = vers
+        if vers < "4.7":
+            url = self.api.build_ui_url(self.endpoint, query_params=query)
+        else:
+            url = self.api.build_plugin_url(self.endpoint, query_params=query)
+
+        try:
+            response = self.api.make_request("GET", url)
+        except AHAPIModuleError as e:
+            if exit_on_error:
+                self.api.fail_json(msg="GET error: {error}".format(error=e))
+            else:
+                raise
+
+        if response["status_code"] != 200:
+            error_msg = self.api.extract_error_msg(response)
+            if error_msg:
+                fail_msg = "Unable to get {object_type} {name}: {code}: {error}".format(
+                    object_type=self.object_type,
+                    name=name,
+                    code=response["status_code"],
+                    error=error_msg,
+                )
+            else:
+                fail_msg = "Unable to get {object_type} {name}: {code}".format(
+                    object_type=self.object_type,
+                    name=name,
+                    code=response["status_code"],
+                )
+            if exit_on_error:
+                self.api.fail_json(msg=fail_msg)
+            else:
+                raise AHAPIModuleError(fail_msg)
+
+        if "meta" not in response["json"] or "count" not in response["json"]["meta"] or "data" not in response["json"]:
+            fail_msg = "Unable to get {object_type} {name}: the endpoint did not provide count and results".format(object_type=self.object_type, name=name)
+            if exit_on_error:
+                self.api.fail_json(msg=fail_msg)
+            else:
+                raise AHAPIModuleError(fail_msg)
+
+        if response["json"]["meta"]["count"] == 0:
+            self.data = {}
+            self.exists = False
+            return
+
+        if response["json"]["meta"]["count"] > 1:
+            # Only one object should be returned. If more that one is returned,
+            # then look for the requested name in the returned list.
+            for asset in response["json"]["data"]:
+                if self.name_field in asset and asset[self.name_field] == name:
+                    self.data = asset
+                    self.exists = True
+                    return
+            self.data = {}
+            self.exists = False
+            return
+
+        self.data = response["json"]["data"][0]
+        # Make sure the object name is available in the response
+        if self.name_field not in self.data:
+            self.data[self.name_field] = name
+        self.exists = True
+
     @property
     def id_endpoint(self):
         """Return the object's endpoint."""
@@ -1068,7 +1151,10 @@ class AHUIEERepository(AHUIObject):
         :rtype: bool
         """
 
-        url = self.api.build_ui_url("{endpoint}/_content/sync".format(endpoint=self.id_endpoint))
+        if self.vers < "4.7":
+            url = self.api.build_ui_url("{endpoint}/_content/sync".format(endpoint=self.id_endpoint))
+        else:
+            url = self.api.build_plugin_url("{endpoint}/_content/sync".format(endpoint=self.id_endpoint))
         try:
             response = self.api.make_request("POST", url, wait_for_task=False)
         except AHAPIModuleError as e:
@@ -1137,7 +1223,10 @@ class AHUIEERepository(AHUIObject):
         if not self.exists:
             return ""
 
-        url = self.api.build_ui_url("{endpoint}/_content/readme".format(endpoint=self.id_endpoint))
+        if self.vers < "4.7":
+            url = self.api.build_ui_url("{endpoint}/_content/readme".format(endpoint=self.id_endpoint))
+        else:
+            url = self.api.build_plugin_url("{endpoint}/_content/readme".format(endpoint=self.id_endpoint))
         try:
             response = self.api.make_request("GET", url)
         except AHAPIModuleError as e:
@@ -1193,7 +1282,10 @@ class AHUIEERepository(AHUIObject):
                 self.api.exit_json(**json_output)
             return True
 
-        url = self.api.build_ui_url("{endpoint}/_content/readme".format(endpoint=self.id_endpoint))
+        if self.vers < "4.7":
+            url = self.api.build_ui_url("{endpoint}/_content/readme".format(endpoint=self.id_endpoint))
+        else:
+            url = self.api.build_plugin_url("{endpoint}/_content/readme".format(endpoint=self.id_endpoint))
         try:
             response = self.api.make_request("PUT", url, data={"text": readme})
         except AHAPIModuleError as e:
@@ -1464,7 +1556,7 @@ class AHUIEEImage(AHUIObject):
             return self.endpoint
         return "{endpoint}/{name}/_content/images/".format(endpoint=self.endpoint, name=name)
 
-    def get_tag(self, name, tag):
+    def get_tag(self, name, tag, vers):
         """Retrieve the image associated with the given repository and tag.
 
         Upon completion, if the object exists, then :py:attr:``self.digest`` is
@@ -1480,7 +1572,11 @@ class AHUIEEImage(AHUIObject):
         """
         self.image_name = name
         self.tag = tag
-        url = self.api.build_ui_url(self.id_endpoint, query_params={"limit": 1000})
+        self.vers = vers
+        if vers < "4.7":
+            url = self.api.build_ui_url(self.id_endpoint, query_params={"limit": 1000})
+        else:
+            url = self.api.build_plugin_url(self.id_endpoint, query_params={"limit": 1000})
         try:
             response = self.api.make_request("GET", url)
         except AHAPIModuleError as e:

@@ -91,7 +91,7 @@ jobs:
         id: build
         uses: redhat-cop/ansible_collections_tooling/actions/build_ansible_collection@main
         with:
-          collection_namespace: infra
+          collection_namespace: redhat_cop
           collection_name: ah_configuration
           collection_version: 1.0.0
           collection_repo: https://github.com/redhat-cop/ah_configuration/
@@ -106,6 +106,5 @@ jobs:
         run: ansible-playbook .github/tests/playbooks/testing_playbook_ee_namespace.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
         if: ${{ inputs.galaxy_ng_version == 'stable-4.4' || inputs.galaxy_ng_version == 'stable-4.5'  }}  # ee_namespace APIs have changed in 4.6 so need to revisit this (see #183)
 
-      # TODO: Need to explore this some more and get this working again (see #184)
-      # - name: "Perform playbook repository tests"
-      #   run: ansible-playbook .github/tests/playbooks/testing_playbook_ee_repository.yml -vv -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
+      - name: "Perform playbook repository tests"
+        run: ansible-playbook .github/tests/playbooks/testing_playbook_ee_repository.yml -vv -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
