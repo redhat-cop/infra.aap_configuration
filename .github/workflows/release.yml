@@ -31,9 +31,11 @@ jobs:
       collection_name: ah_configuration
       collection_version: ${{ github.ref_name }}
       collection_repo: https://github.com/redhat-cop/ah_configuration/
+      quay_username: redhat_cop
     secrets:
       galaxy_api_key: ${{ secrets.ANSIBLE_GALAXY_APIKEY }}
       infra_api_key: ${{ secrets.GALAXY_INFRA_KEY }}
       token: ${{ secrets.GITHUB_TOKEN }}
+      quay_token: ${{ secrets.quay_token }}
 
 ...
