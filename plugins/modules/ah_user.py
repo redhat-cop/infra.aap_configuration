@@ -179,11 +179,12 @@ def main():
 
     # Authenticate
     module.authenticate()
+    vers = module.get_server_version()
     user = AHUIUser(module)
 
     # Get the user details from its name.
     # API (GET): /api/galaxy/_ui/v1/users/?username=<user_name>
-    user.get_object(username)
+    user.get_object(username, vers)
 
     # Removing the user
     if state == "absent":
@@ -200,7 +201,7 @@ def main():
     if groups is not None:
         error_groups = []
         for group_name in groups:
-            group.get_object(group_name)
+            group.get_object(group_name, vers)
             if group.exists:
                 group_ids.append(group.data)
             else:

@@ -82,11 +82,12 @@ def main():
 
     # Authenticate
     module.authenticate()
+    vers = module.get_server_version()
     group = AHUIGroup(module)
 
     # Get the group details from its name.
     # API (GET): /api/galaxy/_ui/v1/groups/?name=<group_name>
-    group.get_object(name)
+    group.get_object(name, vers)
 
     # Removing the group
     if state == "absent":

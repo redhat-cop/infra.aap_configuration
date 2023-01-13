@@ -87,8 +87,9 @@ def main():
     timeout = module.params.get("timeout")
 
     module.authenticate()
+    vers = module.get_server_version()
     repository = AHUIEERepository(module)
-    repository.get_object(name)
+    repository.get_object(name, vers)
 
     repository.sync(wait, interval, timeout)
 

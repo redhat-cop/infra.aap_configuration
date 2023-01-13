@@ -122,6 +122,7 @@ class AHAPIModule(AnsibleModule):
         # Define the API paths
         self.galaxy_path_prefix = "/api/{prefix}".format(prefix=self.path_prefix.strip("/"))
         self.ui_path_prefix = "{galaxy_prefix}/_ui/v1".format(galaxy_prefix=self.galaxy_path_prefix)
+        self.plugin_path_prefix = "{galaxy_prefix}/v3/plugin".format(galaxy_prefix=self.galaxy_path_prefix)
         self.authenticate()
         vers = self.get_server_version()
         if vers < "4.6":
@@ -166,6 +167,16 @@ class AHAPIModule(AnsibleModule):
         :rtype: :py:class:``urllib.parse.ParseResult``
         """
         return self._build_url(self.ui_path_prefix, endpoint, query_params)
+
+    def build_plugin_url(self, endpoint, query_params=None):
+        """Return the URL of the given endpoint in the UI API.
+
+        :param endpoint: Usually the API object name ("users", "groups", ...)
+        :type endpoint: str
+        :return: The full URL built from the given endpoint.
+        :rtype: :py:class:``urllib.parse.ParseResult``
+        """
+        return self._build_url(self.plugin_path_prefix, endpoint, query_params)
 
     def build_pulp_url(self, endpoint, query_params=None):
         """Return the URL of the given endpoint in the Pulp API.
