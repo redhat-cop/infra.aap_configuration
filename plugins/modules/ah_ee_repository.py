@@ -225,7 +225,7 @@ def main():
 
         # Get the registry id
         registry_obj = AHUIEERegistry(module)
-        registry_obj.get_object(registry)
+        registry_obj.get_object(registry, vers)
 
         new_fields = {}
         new_fields["registry"] = registry_obj.id
@@ -239,7 +239,7 @@ def main():
 
         remote = AHUIEERemote(module)
         if repository_ui.exists:
-            remote.get_object(repository_ui.data["pulp"]["repository"]["remote"]["pulp_id"])
+            remote.get_object(repository_ui.data["pulp"]["repository"]["remote"]["pulp_id"], vers)
 
         new_fields["name"] = name
 

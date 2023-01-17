@@ -128,7 +128,7 @@ PERM_NAMES = [
 ]
 
 
-def rename_namespace(module, src_namespace_pulp, dest_namespace_pulp, dest_namespace_name):
+def rename_namespace(module, src_namespace_pulp, dest_namespace_pulp, dest_namespace_name, vers):
     """Rename the given namespace.
 
     The Pulp API does not provide a method to rename namespaces. That function
@@ -151,7 +151,7 @@ def rename_namespace(module, src_namespace_pulp, dest_namespace_pulp, dest_names
     # Get the source namespace details (groups) that are needed to create
     # a similar destination namespace.
     src_namespace_ui = AHUIEENamespace(module)
-    src_namespace_ui.get_object(src_namespace_pulp.name)
+    src_namespace_ui.get_object(src_namespace_pulp.name, vers)
 
     # Create the destination namespace (Pulp)
     dest_namespace_pulp.create({"name": dest_namespace_name}, auto_exit=False)
@@ -160,7 +160,7 @@ def rename_namespace(module, src_namespace_pulp, dest_namespace_pulp, dest_names
     if "groups" in src_namespace_ui.data and len(src_namespace_ui.data["groups"]):
         dest_namespace_ui = AHUIEENamespace(module)
         try:
-            dest_namespace_ui.get_object(dest_namespace_name, exit_on_error=False)
+            dest_namespace_ui.get_object(dest_namespace_name, vers, exit_on_error=False)
             dest_namespace_ui.update_groups(
                 {"groups": src_namespace_ui.data["groups"]},
                 auto_exit=False,
@@ -238,7 +238,7 @@ def main():
     if groups is not None:
         error_groups = []
         for group_name in groups:
-            group.get_object(group_name)
+            group.get_object(group_name, vers)
             if group.exists:
                 group.load_perms()
                 perms = []
@@ -287,7 +287,7 @@ def main():
                 module.fail_json(msg="The namespace {namespace} (`new_name') already exists".format(namespace=new_name))
             else:
                 # Case 5
-                rename_namespace(module, namespace_pulp, new_namespace_pulp, new_name)
+                rename_namespace(module, namespace_pulp, new_namespace_pulp, new_name, vers)
                 namespace_pulp = new_namespace_pulp
                 name = new_name
                 changed = True
@@ -311,7 +311,7 @@ def main():
 
     # Get the namespace details from its name.
     # API (GET): /api/galaxy/_ui/v1/execution-environments/namespaces/<name>/
-    namespace_ui.get_object(name)
+    namespace_ui.get_object(name, vers)
 
     # Add the already assigned groups to the list of groups to update
     if append and "groups" in namespace_ui.data:

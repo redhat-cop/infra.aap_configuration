@@ -87,8 +87,9 @@ def main():
     timeout = module.params.get("timeout")
 
     module.authenticate()
+    vers = module.get_server_version()
     registry = AHUIEERegistry(module)
-    registry.get_object(name)
+    registry.get_object(name, vers)
 
     registry.sync(wait, interval, timeout)
 

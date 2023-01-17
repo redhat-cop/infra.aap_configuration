@@ -193,11 +193,12 @@ def main():
 
     # Authenticate
     module.authenticate()
+    vers = module.get_server_version()
     registry = AHUIEERegistry(module)
 
     # Removing the registry
     if state == "absent":
-        registry.get_object(name)
+        registry.get_object(name, vers)
         registry.delete()
 
     # Create the data that gets sent for create and update
@@ -233,7 +234,7 @@ def main():
 
     # API (POST): /api/galaxy/_ui/v1/registry/
     # API (PUT): /api/galaxy/_ui/v1/registry/<PK#>/
-    registry.get_object(new_fields["name"])
+    registry.get_object(new_fields["name"], vers)
     registry.create_or_update(new_fields)
 
 

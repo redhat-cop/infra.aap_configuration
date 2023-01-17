@@ -48,12 +48,10 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Repository name. Must be lower case containing only alphanumeric characters and underscores.|
-|`new_name`|""|yes|str|Setting this option will change the existing name (looked up via the name field.|
 |`description`|""|yes|str|Description to use for the Repository.|
 |`readme`|""|no|str|The readme for the ee repository. (mutex with readme_file)|
 |`readme_file`|""|no|str|The file location for the readme for the ee repository. (mutex with readme)|
 |`state`|`present`|no|str|Desired state of the ee_repository.|
-|`delete_namespace_if_empty`|""|no|bool|If C(false), then the module keeps the namespace even if it is empty.|
 |`registry`|""|no|str|The remote registry that the repository belongs in.|
 |`upstream_name`|""|no|str|The name of the image upstream.|
 |`include_tags`|""|no|str|The tags to pull in.|
