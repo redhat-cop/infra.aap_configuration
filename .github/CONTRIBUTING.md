@@ -30,7 +30,7 @@ If you feel like getting your hands dirty, feel free to make the change yourself
 1. Fork the repo on Github, and then clone it locally.
 2. Create a branch named appropriately for the change you are going to make.
 3. Make your code change.
-4. If you are creating a new role, please add a test for it in our [testing playbook.](https://github.com/redhat-cop/ah_configuration/blob/devel/playbooks/testing_playbook.yml) by adding a new role entry and adding the appropriate yaml file with test data in the ah_configs directory.
+4. If you are creating a new role, please add a test for it in our [testing playbooks.](https://github.com/redhat-cop/ah_configuration/blob/devel/playbooks/) by adding a new role entry and adding the appropriate yaml file with test data in the ah_configs directory.
 5. Add a changelog fragment in `changelogs/fragments` as per <https://docs.ansible.com/ansible/latest/community/development_process.html#changelogs>
 6. Push your code change up to your forked repo.
 7. Open a Pull Request to merge your changes to this repo. The comment box will be filled in automatically via a template.
