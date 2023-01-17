@@ -197,7 +197,7 @@ def main():
             module.fail_json(msg="Unknown perm ({perm}) defined".format(perm=perm))
 
     group = AHUIGroup(module)
-    group.get_object(name)
+    group.get_object(name, vers)
     if not group.exists:
         module.fail_json(msg="Unknown group: {group}".format(group=name))
 

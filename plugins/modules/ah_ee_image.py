@@ -139,7 +139,8 @@ def main():
 
     # Get the repository details from the name and tag.
     # API (GET): /api/galaxy/_ui/v1/execution-environments/repositories/<name>/_content/images/
-    image_ui.get_tag(name, tag)
+    vers = module.get_server_version()
+    image_ui.get_tag(name, tag, vers)
 
     # Removing the image
     if state == "absent":

@@ -28,18 +28,6 @@ options:
       - Name of the repository to remove or modify.
     required: true
     type: str
-  new_name:
-    description:
-      - New name for the repository. Setting this option changes the name of the repository which current name is set in C(name).
-    type: str
-  delete_namespace_if_empty:
-    description:
-      - If C(true), then the module deletes the original namespace if it is empty after the repository has been deleted or moved.
-      - If C(false), then the module keeps the namespace even if it is empty.
-      - Use C(false) when you plan to re-use the namespace and you want to preserve its parameters, such as the group permissions.
-      - Only used when C(new_name) is set or C(state) is C(absent).
-    type: bool
-    default: true
   description:
     description:
       - Text that describes the repository.
@@ -114,16 +102,6 @@ EXAMPLES = r"""
     ah_username: admin
     ah_password: Sup3r53cr3t
 
-- name: Ensure the repository has the new name
-  infra.ah_configuration.ah_ee_repository:
-    name: ansible-automation-platform-20-early-access/ee-supported-rhel8
-    new_name: aap-20/supported
-    delete_namespace_if_empty: false
-    state: present
-    ah_host: hub.example.com
-    ah_username: admin
-    ah_password: Sup3r53cr3t
-
 - name: Ensure the repository is removed
   infra.ah_configuration.ah_ee_repository:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8
@@ -173,41 +151,9 @@ def delete_empty_namespace(module, repository_name):
         namespace_pulp.delete(auto_exit=False)
 
 
-def rename_repository(
-    module,
-    repository_pulp,
-    remote_pulp,
-    old_name,
-    new_name,
-    delete_namespace_if_empty=True,
-):
-    """Rename the given repository.
-
-    :param module: The API object that the function uses to access the API.
-    :type module: :py:class:``ah_api_module.AHAPIModule``
-    :param repository_pulp: The Pulp object that represents the repository
-                            to rename.
-    :type repository_pulp: :py:class:``ah_pulp_object.AHPulpEERepository``
-    :param old_name: Current name of the repository to rename.
-    :type old_name: str
-    :param new_name: New name of the repository.
-    :type new_name: str
-    :param delete_namespace_if_empty: If ``True``, then the function deletes
-                                      the original namespace if its empty.
-    :type delete_namespace_if_empty: bool
-    """
-    repository_pulp.update({"name": new_name, "base_path": new_name}, auto_exit=False)
-    if remote_pulp:
-        remote_pulp.update({"name": new_name})
-    if delete_namespace_if_empty:
-        delete_empty_namespace(module, old_name)
-
-
 def main():
     argument_spec = dict(
         name=dict(required=True),
-        new_name=dict(),
-        delete_namespace_if_empty=dict(type="bool", default=True),
         description=dict(),
         registry=dict(),
         upstream_name=dict(),
@@ -231,8 +177,6 @@ def main():
 
     # Extract our parameters
     name = module.params.get("name")
-    new_name = module.params.get("new_name")
-    delete_namespace_if_empty = module.params.get("delete_namespace_if_empty")
     description = module.params.get("description")
     registry = module.params.get("registry")
     readme = module.params.get("readme")
@@ -262,51 +206,26 @@ def main():
 
     # Get the repository details from its name.
     # API (GET): /api/galaxy/_ui/v1/execution-environments/repositories/<name>/
-    repository_ui.get_object(name)
+    repository_ui.get_object(name, vers)
 
     # Removing the repository
     if state == "absent":
-        repository_ui.delete()
+        repository_pulp.delete()
 
     changed = False
 
-    remote_pulp = AHPulpEERepository(module)
     if registry:
+        remote_pulp = AHPulpEERepository(module)
         remote_pulp.get_object(name)
-
-    if new_name and new_name != name:
-        new_repository_pulp = AHPulpEERepository(module)
-        new_repository_pulp.get_object(new_name)
-        if new_repository_pulp.exists:
-            if repository_pulp.exists:
-                # Both repositories in `name` and `new_name` cannot exist.
-                # Cannot rename a repo when the destination already exists.
-                module.fail_json(msg="The repository {repository} (`new_name') already exists".format(repository=new_name))
-            else:
-                # Only the repository defined in `new_name` exists. Renaming is
-                # already done. Use that `new_name` repository for the rest of
-                # the module.
-                repository_pulp = new_repository_pulp
-                name = new_name
-                repository_ui.get_object(name)
-        elif repository_pulp.exists:
-            rename_repository(
-                module,
-                repository_pulp,
-                remote_pulp,
-                name,
-                new_name,
-                delete_namespace_if_empty,
-            )
-            name = new_name
-            changed = True
+    else:
+        remote_pulp = None
 
     # If registry is set this is a remote repository
     if registry:
 
         # Get the registry id
         registry_obj = AHUIEERegistry(module)
-        registry_obj.get_object(registry)
+        registry_obj.get_object(registry, vers)
 
         new_fields = {}
         new_fields["registry"] = registry_obj.id
@@ -320,7 +239,7 @@ def main():
 
         remote = AHUIEERemote(module)
         if repository_ui.exists:
-            remote.get_object(repository_ui.data["pulp"]["repository"]["remote"]["pulp_id"])
+            remote.get_object(repository_ui.data["pulp"]["repository"]["remote"]["pulp_id"], vers)
 
         new_fields["name"] = name
 
@@ -334,7 +253,7 @@ def main():
             )
 
     repository_pulp.get_object(name)
-    repository_ui.get_object(name)
+    repository_ui.get_object(name, vers)
 
     # If a README file is given, verify that it exists and then read it.
     if readme_file is not None:
@@ -351,7 +270,7 @@ def main():
         except Exception as e:
             module.fail_json(msg="Cannot read {file}: {error}".format(file=readme_file, error=e))
 
-    if description is not None and repository_pulp.update({"description": description}, auto_exit=False):
+    if description is not None and repository_pulp.update({"description": description, "base_path": name}, auto_exit=False):
         changed = True
 
     if readme is None:
@@ -361,7 +280,7 @@ def main():
             "changed": changed,
         }
         module.exit_json(**json_output)
-
+    # API (GET): /api/automation-hub/v3/plugin/execution-environments/repositories/{{ content_path }}/_content/readme/
     # API (GET): /api/galaxy/_ui/v1/execution-environments/repositories/<name>/_content/readme/
     # API (PUT): /api/galaxy/_ui/v1/execution-environments/repositories/<name>/_content/readme/
     updated = repository_ui.update_readme(readme, auto_exit=False)

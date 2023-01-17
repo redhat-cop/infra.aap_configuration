@@ -689,7 +689,7 @@ class AHPulpEERepository(AHPulpObject):
 
         url = self.api.host_url._replace(path="{endpoint}untag/".format(endpoint=self.repository_endpoint))
         try:
-            response = self.api.make_request("POST", url, data={"digest": digest, "tag": tag})
+            response = self.api.make_request("POST", url, data={"tag": tag})
         except AHAPIModuleError as e:
             self.api.fail_json(msg="Untag error: {error}".format(error=e))
 
