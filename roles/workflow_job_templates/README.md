@@ -71,6 +71,8 @@ This also speeds up the overall role.
 |`allow_simultaneous`|""|no|bool|Allow simultaneous runs of the workflow job template.|
 |`inventory`|""|no|str|Inventory applied as a prompt, assuming job template prompts for inventory|
 |`limit`|""|no|str|Limit applied as a prompt, assuming job template prompts for limit|
+<!-- Disabling link check because the CI can't work out that this is a valid link -->
+<!-- markdown-link-check-disable-next-line -->
 |`labels`|""|no|str|The labels applied to this job template. NOTE: Labels must be created with the [labels](/roles/labels) role first, an error will occur if the label supplied to this role does not exist.|
 |`ask_labels_on_launch`|""|no|bool|Prompt user for labels on launch.|
 |`job_tags`|""|no|str|Comma separated list of the tags to use for the workflow job template.|
@@ -103,6 +105,8 @@ This also speeds up the overall role.
 |`forks`|Job Template default|no|str|Forks applied as a prompt. Job Template default used if not set. Only allowed if `ask_forks_on_launch` set to true on Job Template|
 |`instance_groups`|Job Template default|no|str| List of Instance Groups applied as a prompt. Job Template default used if not set. Only allowed if `ask_instance_groups_on_launch` set to true on Job Template|
 |`job_slice_count`|Job Template default|no|str|Job Slice Count to use in the job run. Job Template default used if not set. Only allowed if `ask_job_slice_count_on_launch` set to true on Job Template|
+<!-- Disabling link check because the CI can't work out that this is a valid link -->
+<!-- markdown-link-check-disable-next-line -->
 |`labels`|Job Template default|no|list|List of labels to use in the job run. Job Template default used if not set. Only allowed if `ask_labels_on_launch` set to true on Job Template. NOTE: Labels must be created with the [labels](/roles/labels) role first, an error will occur if the label supplied to this role does not exist.|
 |`timeout`|Job Template default|no|str|Timeout to use in the job run. Job Template default used if not set. Only allowed if `ask_timeout_on_launch` set to true on Job Template|
 |`approval_node`|""|no|str|A dictionary of Name, description, and timeout values for the approval node. This parameter is mutually exclusive with unified_job_template.|

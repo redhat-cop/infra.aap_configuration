@@ -108,6 +108,8 @@ This also speeds up the overall role.
 |`webhook_service`|""|no|str|Service that webhook requests will be accepted from (github, gitlab)|
 |`webhook_credential`|""|no|str|Personal Access Token for posting back the status to the service API|
 |`scm_branch`|""|no|str|Branch to use in job run. Project default used if blank. Only allowed if project allow_override field is set to true.|
+<!-- Disabling link check because the CI can't work out that this is a valid link -->
+<!-- markdown-link-check-disable-next-line -->
 |`labels`|""|no|list|The labels applied to this job template. NOTE: Labels must be created with the [labels](/roles/labels) role first, an error will occur if the label supplied to this role does not exist.|
 |`custom_virtualenv`|""|no|str|Local absolute file path containing a custom Python virtualenv to use.|
 |`notification_templates_started`|""|no|list|The notifications on started to use for this organization in a list.|
