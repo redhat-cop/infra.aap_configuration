@@ -138,4 +138,7 @@ differential_items:
       - name: Simple workflow schema2
         organization: Default
         state: absent
+      - name: Simple workflow schema no state defined
+        organization: Default
+        state: absent
 ...
