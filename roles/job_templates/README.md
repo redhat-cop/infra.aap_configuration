@@ -185,6 +185,7 @@ controller_templates:
 - name: Survey Template with vars
   job_type: run
   inventory: Demo Inventory
+  execution_environment: my_exec_env
   survey_enabled: true
   survey: "{{ lookup('template', 'template_surveys/basic_survey.json') | regex_replace('\\n', '') }}"
   project: controller Config
