@@ -1,4 +1,3 @@
-
 ---
 # This workflow action will run pre-commit, which will execute ansible and yaml linting
 # See .pre-commit-config.yaml for what hooks are executed
