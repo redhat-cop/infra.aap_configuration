@@ -13,7 +13,8 @@ use_default_rules: true
 # https://github.com/ansible/ansible-lint/issues/808
 # with verbosity set to 1, its dumping 'unknown file type messages'
 # verbosity: 1
-skip_list: []
+skip_list:
+  - meta-unsupported-ansible
 kinds:
   - playbooks: "**/examples/*.{yml,yaml}"
   - tasks: "**/examples/tasks/*.yml"
