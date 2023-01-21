@@ -13,7 +13,7 @@ An Ansible Role to sync EE Registries in Automation Hub.
 |`ah_password`|""|yes|Automation Hub Admin User's password on the Automation Hub Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`ah_validate_certs`|`False`|no|Whether or not to validate the Ansible Automation Hub Server's SSL certificate.||
 |`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
-|`ah_ee_registries`|`see below`|yes|Data structure describing your ee_registries, described below. (Note this is the same as for the `ee_registries` role and the variable can be combined||
+|`ah_ee_registries`|`see below`|yes|Data structure describing your ee_registries, described below. (Note this is the same as for the `ee_registries` role and the variable can be combined. Note that this role will only do anything if the `sync` suboption of this variable is set to true.||
 
 ### Secure Logging Variables
 
@@ -48,6 +48,7 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Registry name. Must be lower case containing only alphanumeric characters and underscores.|
+|`sync`|false|no|bool|Whether to sync the ee_registry. By default it will not sync unless this is set to true.|
 |`wait`|true|no|str|Whether to wait for the sync to complete|
 |`interval`|`ah_configuration_ee_registry_sync_async_delay`|no|str|The interval which the sync task will be checked for completion|
 |`timeout`|""|no|str|How long to wait for the sync task to complete|

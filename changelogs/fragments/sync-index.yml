@@ -1,0 +1,5 @@
+---
+breaking_changes:
+  - Introduces a `sync` option to the ee_registry_sync role on the `ah_ee_registries` variable which by default is false and which is required true to sync the registry.
+  - Introduces an `index` option to the ee_registry_index role on the `ah_ee_registries` variable which by default is false and which is required true to index the registry.
+...
