@@ -15,6 +15,7 @@
   loop: "{{ ah_ee_registries }}"
   loop_control:
     loop_var: "__ee_registry_item"
+  when: __ee_registry_item.index | default(false)
   no_log: "{{ ah_configuration_ee_registry_secure_logging }}"
   async: 1000
   poll: 0
