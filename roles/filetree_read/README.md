@@ -21,7 +21,7 @@ The following Variables set the organization where should be applied the configu
 |`filetree_controller_settings`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_settings.d/|yes|Directory path to load controller object variables|
 |`filetree_controller_organizations`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_organizations.d/|yes|Directory path to load controller object variables|
 |`filetree_controller_labels`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_labels.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_user_accounts`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_users.d/|
+|`filetree_controller_user_accounts`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_users.d/|yes|Directory path to load controller object variables|
 |`filetree_controller_teams`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_teams.d/|yes|Directory path to load controller object variables|
 |`filetree_controller_credential_types`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_credential_types.d/|yes|Directory path to load controller object variables|
 |`filetree_controller_credentials`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_credentials.d/|yes|Directory path to load controller object variables|
