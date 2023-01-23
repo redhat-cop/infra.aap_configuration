@@ -90,6 +90,11 @@ def main():
     vers = module.get_server_version()
     registry = AHUIEERegistry(module)
     registry.get_object(name, vers)
+    if vers > "4.7.0":
+        registry.id_field = "id"
+
+    if not registry.exists:
+        module.fail_json(msg="The registery with name: {name}, was not found.".format(name=name))
 
     registry.sync(wait, interval, timeout)
 

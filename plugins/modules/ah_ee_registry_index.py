@@ -91,7 +91,12 @@ def main():
     module.authenticate()
     vers = module.get_server_version()
     registry = AHUIEERegistry(module)
+    if vers > "4.7.0":
+        registry.id_field = "id"
     registry.get_object(name, vers)
+
+    if not registry.exists:
+        module.fail_json(msg="The registery with name: {name}, was not found.".format(name=name))
 
     registry.index(wait, interval, timeout)
 

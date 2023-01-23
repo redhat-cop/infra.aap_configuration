@@ -28,10 +28,6 @@ options:
       - Name of the registry to remove or modify.
     required: true
     type: str
-  new_name:
-    description:
-      - New name for the registry. Setting this option changes the name of the registry which current name is set in C(name).
-    type: str
   url:
     description:
       - The URL of the remote registry.
@@ -153,7 +149,6 @@ from ..module_utils.ah_ui_object import AHUIEERegistry
 def main():
     argument_spec = dict(
         name=dict(required=True),
-        new_name=dict(),
         url=dict(),
         username=dict(),
         password=dict(no_log=True),
@@ -188,14 +183,14 @@ def main():
 
     # Extract our parameters
     name = module.params.get("name")
-    new_name = module.params.get("new_name")
     state = module.params.get("state")
 
     # Authenticate
     module.authenticate()
     vers = module.get_server_version()
     registry = AHUIEERegistry(module)
-
+    if vers > "4.7.0":
+        registry.id_field = "id"
     # Removing the registry
     if state == "absent":
         registry.get_object(name, vers)
@@ -203,7 +198,7 @@ def main():
 
     # Create the data that gets sent for create and update
     new_fields = {}
-    new_fields["name"] = new_name if new_name else (registry.name if (registry and registry.name) else name)
+    new_fields["name"] = registry.name if (registry and registry.name) else name
     for field_name in (
         "url",
         "username",

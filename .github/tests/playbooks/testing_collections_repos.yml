@@ -1,0 +1,39 @@
+---
+- name: Testing Repos
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  collections:
+    - infra.ah_configuration
+  pre_tasks:
+    - name: Include vars from ah_configs directory
+      ansible.builtin.include_vars:
+        dir: ./ah_configs
+        extensions: ["yml"]
+      tags:
+        - always
+
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: "{{ ah_configuration_working_dir }}"
+        state: directory
+        mode: '0755'
+
+  tasks:
+
+    - name: repository creation
+      ansible.builtin.include_role:
+        name: repository
+
+    - name: repository creation with file
+      ansible.builtin.include_role:
+        name: repository
+      vars:
+        ah_repository_community:
+          url: https://galaxy.ansible.com/api/
+          requirements_file: files/collection_requirement_file.yml
+
+    - name: repository sync
+      ansible.builtin.include_role:
+        name: repository_sync
+...

@@ -312,7 +312,7 @@ class AHUIObject(object):
         try:
             response = self.api.make_request("POST", url, data=new_item)
         except AHAPIModuleError as e:
-            self.api.fail_json(msg="Create error: {error}".format(error=e))
+            self.api.fail_json(msg="Create error: {error}, url: {url}, data: {data}".format(error=e, url=url, data=new_item))
 
         if response["status_code"] in [200, 201]:
             self.exists = True
@@ -386,12 +386,11 @@ class AHUIObject(object):
                 }
                 self.api.exit_json(**json_output)
             return True
-
         url = self.api.build_ui_url(self.id_endpoint)
         try:
             response = self.api.make_request("PUT", url, data=new_item)
         except AHAPIModuleError as e:
-            self.api.fail_json(msg="Update error: {error}".format(error=e))
+            self.api.fail_json(msg="Update error: {error}, url: {url}, data: {data}".format(error=e, url=url, data=new_item))
 
         if response["status_code"] == 200:
             self.exists = True
@@ -1072,7 +1071,7 @@ class AHUIEERepository(AHUIObject):
             response = self.api.make_request("GET", url)
         except AHAPIModuleError as e:
             if exit_on_error:
-                self.api.fail_json(msg="GET error: {error}".format(error=e))
+                self.api.fail_json(msg="GET error: {error}, url: {url}".format(error=e, url=url))
             else:
                 raise
 
@@ -1442,7 +1441,6 @@ class AHUIEERegistry(AHUIObject):
                  ``True``.
         :rtype: bool
         """
-
         url = self.api.build_ui_url("{endpoint}/index".format(endpoint=self.id_endpoint))
         try:
             response = self.api.make_request("POST", url)

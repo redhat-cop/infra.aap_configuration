@@ -7,7 +7,7 @@
   collections:
     - infra.ah_configuration
   vars:
-    ah_host: localhost:5001
+    hub_host: localhost:5001
     ah_hostname: http://localhost:8002/
     ah_username: admin
     ah_password: admin
@@ -16,7 +16,13 @@
     repository: test-namespace/ee-minimal-rhel8
     tag: latest
     fake_image: quay.io/ansible/http-test-container:2.0.0
-
+  pre_tasks:
+    - name: Include vars from ah_configs directory
+      ansible.builtin.include_vars:
+        dir: ./ah_configs
+        extensions: ["yml"]
+      tags:
+        - always
   tasks:
     # Preparing an image:
     # - Pulling a small image from Quay (does not matter what image it is)
@@ -32,38 +38,15 @@
 
     - name: Ensure the image has the correct tag
       ansible.builtin.command:
-        cmd: "podman tag {{ fake_image }} {{ ah_host }}/{{ repository }}:{{ tag }}"
+        cmd: "podman tag {{ fake_image }} {{ hub_host }}/{{ repository }}:{{ tag }}"
       changed_when: true
 
     - name: Ensure the image is pushed in private automation hub
       ansible.builtin.command:
         cmd: "podman push --tls-verify=false --remove-signatures
               --creds={{ ah_username }}:{{ ah_password }}
-              {{ ah_host }}/{{ repository }}:{{ tag }}"
+              {{ hub_host }}/{{ repository }}:{{ tag }}"
       changed_when: true
-
-    - name: Ensure the images are removed
-      ansible.builtin.command:
-        cmd: "podman rmi {{ fake_image }} {{ ah_host }}/{{ repository }}:{{ tag }}"
-      changed_when: true
-
-    # Adding a description and a README file to the repository
-    - name: Ensure the repository has a description and a README file
-      ah_ee_repository:
-        name: "{{ repository }}"
-        # Testing with UTF-8 characters
-        description: To jest jakiś opis
-        readme: |
-          # Min avrättningsmiljö
-
-          * bullet 1
-          * bullet 2
-        state: present
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
 
     # Preparing a README file
     - name: Ensure a temporary file exists
@@ -80,82 +63,87 @@
           * bullet 1
           * bullet 2
 
-    # Testing updating the repository README file from a local file
-    - name: Ensure the repository README file it set from a local file
-      ah_ee_repository:
-        name: "{{ repository }}"
-        readme_file: "{{ tempfile['path'] }}"
-        state: present
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
+    - name: Registery creation
+      ansible.builtin.include_role:
+        name: ee_registry
+
+    - name: Repository creation
+      ansible.builtin.include_role:
+        name: ee_repository
+
+    - name: Repository sync
+      ansible.builtin.include_role:
+        name: ee_repository_sync
+
+    - name: Registery Index
+      ansible.builtin.include_role:
+        name: ee_registry_index
+
+    - name: Registery sync
+      ansible.builtin.include_role:
+        name: ee_registry_sync
+
+    - name: Tag image
+      ansible.builtin.include_role:
+        name: ee_image
+      vars:
+        ah_ee_images:
+          # Testing adding tags to the image
+          - name: "test-namespace/ee-minimal-rhel8:latest"
+            tags:
+              - v2
+              - "2.0"
+
+    - name: Append Tags to image
+      ansible.builtin.include_role:
+        name: ee_image
+      vars:
+        ah_ee_images:
+          # Testing adding tags to the image
+          - name: "test-namespace/ee-minimal-rhel8:latest"
+            append: false
+            tags:
+              - prod2
+              - prod2.0
+
+    - name: Reset Tag
+      ansible.builtin.include_role:
+        name: ee_image
+      vars:
+        ah_ee_images:
+          # Testing adding tags to the image
+          - name: "test-namespace/ee-minimal-rhel8:prod2"
+            state: present
+            append: false
+            tags: latest
+
+    - name: Remove image
+      ansible.builtin.include_role:
+        name: ee_image
+      vars:
+        ah_ee_images:
+          # Testing adding tags to the image
+          - name: "test-namespace/ee-minimal-rhel8:latest"
+            state: absent
+
+    # Testing repository deletion
+    - name: Ensure the repository does not exist
+      ansible.builtin.include_role:
+        name: ee_repository
+      vars:
+        ah_ee_repositories:
+          - name: config_as_code_ee
+            state: absent
+          - name: test-namespace/ee-minimal-rhel8
+            state: absent
 
     - name: Ensure the temporary file is removed
       ansible.builtin.file:
         path: "{{ tempfile['path'] }}"
         state: absent
 
-    # Testing adding tags to the image
-    - name: Ensure the repository image has the additionnal required tags
-      ah_ee_image:
-        name: "{{ repository }}:{{ tag }}"
-        state: present
-        tags:
-          - v2
-          - "2.0"
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-    - name: Ensure the repository image has a defined set of tags
-      ah_ee_image:
-        name: "{{ repository }}:{{ tag }}"
-        state: present
-        append: false
-        tags:
-          - prod2
-          - prod2.0
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-    - name: Reset the original tag
-      ah_ee_image:
-        name: "{{ repository }}:prod2"
-        state: present
-        append: false
-        tags: "{{ tag }}"
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-    - name: Ensure the image does not exist
-      ah_ee_image:
-        name: "{{ repository }}:{{ tag }}"
-        state: absent
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-
-    # Testing repository deletion
-    - name: Ensure the repository does not exist
-      ah_ee_repository:
-        name: "{{ repository }}"
-        state: absent
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
+    - name: Ensure the images are removed
+      ansible.builtin.command:
+        cmd: "podman rmi {{ fake_image }} {{ hub_host }}/{{ repository }}:{{ tag }}"
+      changed_when: true
 ...

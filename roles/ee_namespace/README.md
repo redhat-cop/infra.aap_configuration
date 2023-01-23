@@ -3,6 +3,7 @@
 ## Description
 
 An Ansible Role to create Namespaces in Automation Hub.
+This was depreciated with AAP 2.4 and Galaxy NG 4.6.3+, and removed from the API so it is no longer functional. Please use the ee_repository to achieve the same functionality.
 
 ## Variables
 

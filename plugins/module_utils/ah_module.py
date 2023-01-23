@@ -432,17 +432,16 @@ class AHModule(AnsibleModule):
         if existing_item:
             if existing_item["type"] == "token":
                 response = self.delete_endpoint(existing_item["endpoint"])
-        elif existing_item:
-            # If we have an item, we can try to delete it
-            try:
-                item_url = existing_item["url"]
-                item_type = existing_item["type"]
-                item_id = existing_item["id"]
-                item_name = self.get_item_name(existing_item, allow_unknown=True)
-            except KeyError as ke:
-                self.fail_json(msg="Unable to process delete of item due to missing data {0}".format(ke))
-
-            response = self.delete_endpoint(item_url)
+            else:
+                # If we have an item, we can try to delete it
+                try:
+                    item_url = existing_item["url"]
+                    item_type = existing_item["type"]
+                    item_id = existing_item["id"]
+                    item_name = self.get_item_name(existing_item, allow_unknown=True)
+                except KeyError as ke:
+                    self.fail_json(msg="Unable to process delete of item due to missing data {0}".format(ke))
+                response = self.delete_endpoint(item_url)
         else:
             if auto_exit:
                 self.exit_json(**self.json_output)

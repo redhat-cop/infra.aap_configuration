@@ -1,0 +1,42 @@
+---
+ah_users:
+  # Ensure user operator1 exists (no group, no details)
+  - username: operator1
+  # Ensure user admin1 exists (all details, two groups)
+  - username: admin1
+    # Testing with UTF-8 characters
+    first_name: Czesława
+    last_name: Dąbrowski
+    email: cdabrowski@example.com
+    password: vs9mrD55NP
+    groups:
+      - operators
+      - administrators
+  # Testing user update\
+  - username: admin1
+    first_name: Róża
+    is_superuser: true
+  # Testing group membership
+  - username: operator1
+    groups: operators
+    state: present
+  # Ensure operator1 is member of group operators and managers
+  - username: operator1
+    groups:
+      - managers
+    append: true
+  # Ensure operator1 is member of group administrators only
+  - username: operator1
+    groups:
+      - administrators
+    append: false
+  # Ensure operator1 is member of no group
+  - username: operator1
+    groups: []
+    append: false
+  # Testing password change
+  - username: operator1
+    password: test123456
+  - username: operator1
+    state: absent
+...

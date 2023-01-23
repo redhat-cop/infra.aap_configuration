@@ -930,12 +930,15 @@ class AHPulpTask(AHPulpObject):
                 if childTask["error"]:
                     task_status = "Complete"
                     error_output = childTask["error"]["description"].split(",")
-                    self.api.fail_json(
-                        status=error_output[0],
-                        msg=error_output[1],
-                        url=error_output[2],
-                        traceback=childTask["error"]["traceback"],
-                    )
+                    if len(error_output) == 3:
+                        self.api.fail_json(
+                            status=error_output[0],
+                            msg=error_output[1],
+                            url=error_output[2],
+                            traceback=childTask["error"]["traceback"],
+                        )
+                    else:
+                        self.api.fail_json(msg="Error in tasks. tasks: {children}".format(children=children))
                 complete &= childTask["state"] == "completed"
             if complete:
                 task_status = "Complete"
@@ -943,5 +946,5 @@ class AHPulpTask(AHPulpObject):
             time.sleep(interval)
             elapsed = time.time() - start
             if timeout and elapsed > timeout:
-                self.api.fail_json(msg="Timed out awaiting task completion", children=children)
+                self.api.fail_json(msg="Timed out awaiting task completion. tasks: {children}".format(children=children))
         return task_status

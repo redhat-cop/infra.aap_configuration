@@ -12,202 +12,57 @@
     ah_password: admin
     ah_path_prefix: 'automation-hub'
     ah_validate_certs: false
-
+  pre_tasks:
+    - name: Include vars from ah_configs directory
+      ansible.builtin.include_vars:
+        dir: ./ah_configs
+        extensions: ["yml"]
+      tags:
+        - always
   tasks:
     # Testing group creation
-    - name: Ensure group operators exists
-      ah_group:
-        name: operators
-        state: present
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-    - name: Ensure group administrators exists
-      ah_group:
-        name: administrators
-        state: present
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-    - name: Ensure group managers exists
-      ah_group:
-        name: managers
-        state: present
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
+    - name: Test group creation
+      ansible.builtin.include_role:
+        name: group
+      vars:
+        ah_groups:
+          - name: operators
+          - name: administrators
+          - name: managers
+          - name: deleteme
 
     - block:
-        - name: Create role of permisions
-          ah_role:
-            name: galaxy.stuff.mcstuffins
-            perms:
-              - add_user
-              - change_user
-              - delete_user
-              - view_user
-            state: present
-            ah_host: "{{ ah_hostname }}"
-            ah_username: "{{ ah_username }}"
-            ah_password: "{{ ah_password }}"
-            ah_path_prefix: "{{ ah_path_prefix }}"
-            validate_certs: "{{ ah_validate_certs }}"
+        - name: Test role creation
+          ansible.builtin.include_role:
+            name: role
       when: galaxy_ng_version == "stable-4.6" or galaxy_ng_version == "master"
 
     - block:
-        # Testing permission assignment
-        - name: Ensure group operators has perms view
-          ah_group_perm:
-            name: operators
-            state: present
-            perms:
-              - view_user
-              - view_group
-              - view_collectionremote
-              - upload_to_namespace
-            ah_host: "{{ ah_hostname }}"
-            ah_username: "{{ ah_username }}"
-            ah_password: "{{ ah_password }}"
-            ah_path_prefix: "{{ ah_path_prefix }}"
-            validate_certs: "{{ ah_validate_certs }}"
-
-        - name: Ensure group administrators has all perms
-          ah_group_perm:
-            name: administrators
-            state: present
-            perms: "*"
-            ah_host: "{{ ah_hostname }}"
-            ah_username: "{{ ah_username }}"
-            ah_password: "{{ ah_password }}"
-            ah_path_prefix: "{{ ah_path_prefix }}"
-            validate_certs: "{{ ah_validate_certs }}"
-
-        # Testing permission removal
-        - name: Ensure group administrators has no perms on collection remote
-          ah_group_perm:
-            name: administrators
-            state: absent
-            perms:
-              - change_collectionremote
-              - view_collectionremote
-            ah_host: "{{ ah_hostname }}"
-            ah_username: "{{ ah_username }}"
-            ah_password: "{{ ah_password }}"
-            ah_path_prefix: "{{ ah_path_prefix }}"
-            validate_certs: "{{ ah_validate_certs }}"
-
+        # Testing Group creation and perms in 4.5
+        - name: Test group creation
+          ansible.builtin.include_role:
+            name: group
+          vars:
+            ah_groups:
+              - name: operators
+                perms:
+                  - view_user
+                  - view_group
+                  - view_collectionremote
+                  - upload_to_namespace
+              - name: administrators
+                perms: "*"
+              - name: managers
+                perms:
+                  - change_collectionremote
+                  - view_collectionremote
+              - name: deleteme
+                state: absent
       when: galaxy_ng_version == "stable-4.4" or galaxy_ng_version == "stable-4.5"
 
-    # Testing user creation
-    - name: Ensure user operator1 exists (no group, no details)
-      ah_user:
-        username: operator1
-        state: present
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-    - name: Ensure user admin1 exists (all details, two groups)
-      ah_user:
-        username: admin1
-        # Testing with UTF-8 characters
-        first_name: Czesława
-        last_name: Dąbrowski
-        email: cdabrowski@example.com
-        password: vs9mrD55NP
-        groups:
-          - operators
-          - administrators
-        state: present
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-    # Testing user update
-    - name: Ensure user admin1 first name is Jean
-      ah_user:
-        username: admin1
-        first_name: Róża
-        state: present
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-    # Testing group membership
-    - name: Ensure operator1 is member of group operators
-      ah_user:
-        username: operator1
-        groups: operators
-        state: present
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-    - name: Ensure operator1 is member of group operators and managers
-      ah_user:
-        username: operator1
-        groups:
-          - managers
-        append: true
-        state: present
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-    - name: Ensure operator1 is member of group administrators only
-      ah_user:
-        username: operator1
-        groups:
-          - administrators
-        append: false
-        state: present
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-    - name: Ensure operator1 is member of no group
-      ah_user:
-        username: operator1
-        groups: []
-        append: false
-        state: present
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-    # Testing password change
-    - name: Ensure operator1 password is test123456
-      ah_user:
-        username: operator1
-        password: test123456
-        state: present
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
+    - name: Test User creation
+      ansible.builtin.include_role:
+        name: user
 
     # Testing deletion
     - name: Ensure the administrators group is deleted
@@ -234,19 +89,15 @@
         - admin1
         - test123
 
-    - name: Ensure the groups are deleted
-      ah_group:
-        name: "{{ item }}"
-        state: absent
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-      loop:
-        - foobar
-        - test123
-        - administrators
-        - operators
-        - managers
+    - name: Test group deletion
+      ansible.builtin.include_role:
+        name: group
+      vars:
+        ah_groups:
+          - name: operators
+          - name: administrators
+          - name: managers
+          - name: deleteme
+          - name: foobar
+          - name: test123
 ...

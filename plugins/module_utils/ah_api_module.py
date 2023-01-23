@@ -124,8 +124,8 @@ class AHAPIModule(AnsibleModule):
         self.ui_path_prefix = "{galaxy_prefix}/_ui/v1".format(galaxy_prefix=self.galaxy_path_prefix)
         self.plugin_path_prefix = "{galaxy_prefix}/v3/plugin".format(galaxy_prefix=self.galaxy_path_prefix)
         self.authenticate()
-        vers = self.get_server_version()
-        if vers < "4.6":
+        self.server_version = self.get_server_version()
+        if self.server_version < "4.6":
             self.pulp_path_prefix = "/pulp/api/v3"
         else:
             self.pulp_path_prefix = "{galaxy_prefix}/pulp/api/v3".format(galaxy_prefix=self.galaxy_path_prefix)

@@ -20,6 +20,8 @@ short_description: Manage private automation hub execution environment namespace
 description:
   - Create, rename, and delete execution environment namespaces.
   - Grant group access to namespaces.
+  - This was depreciated with AAP 2.4 and Galaxy NG 4.6.3+, and removed from the API so it is no longer functional.
+  - Please use the ee_repository to achieve the same functionality.
 version_added: '0.4.3'
 author: Herve Quatremain (@herve4m)
 options:
@@ -219,7 +221,9 @@ def main():
 
     # Only recent versions support execution environment
     vers = module.get_server_version()
-    if vers < "4.3.2":
+    if vers > "4.6.3":
+        module.fail_json(msg="This module requires private automation hub version 4.6.2 or earlier. Your version is {vers}".format(vers=vers))
+    elif vers < "4.3.2":
         module.fail_json(msg="This module requires private automation hub version 4.3.2 or later. Your version is {vers}".format(vers=vers))
 
     # Process the object from the Pulp API (delete or create)

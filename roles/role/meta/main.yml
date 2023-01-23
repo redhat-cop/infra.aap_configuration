@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: "group"
-  author: "Tom Page"
-  description: "An Ansible Role to manage groups in Automation Hub."
+  role_name: "role"
+  author: Sean Sullivan
+  description: "An Ansible Role to manage roles in Automation Hub."
   company: "Red Hat"
 
   # If the issue tracker for your role is not on github, uncomment the
@@ -33,8 +33,8 @@ galaxy_info:
     - "automationhub"
     - "galaxy"
     - "configuration"
-    - "group"
-    - "groups"
+    - "role"
+    - "roles"
 
 dependencies: []
 # List your role dependencies here, one per line. Be sure to remove the '[]' above,

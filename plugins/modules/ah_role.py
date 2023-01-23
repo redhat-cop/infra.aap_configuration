@@ -48,7 +48,6 @@ options:
       - You can also grant or revoke all permissions with C(*) or C(all).
     type: list
     elements: str
-    required: true
   state:
     description:
       - If C(absent), then the module removes the listed permissions from the
@@ -70,7 +69,7 @@ extends_documentation_fragment: infra.ah_configuration.auth_ui
 
 EXAMPLES = r"""
 - name: Ensure the operators have the correct permissions to manage users
-  infra.ah_configuration.ah_group_roles:
+  infra.ah_configuration.ah_role:
     name: galaxy.operators
     perms:
       - add_user
@@ -83,7 +82,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the administrators have all the permissions
-  infra.ah_configuration.ah_group_roles:
+  infra.ah_configuration.ah_role:
     name: galaxy.administrators
     perms: "*"
     state: present
@@ -92,7 +91,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the developers cannot manage groups nor users
-  infra.ah_configuration.ah_group_roles:
+  infra.ah_configuration.ah_role:
     name: galaxy.developers
     perms:
       - add_user
@@ -159,7 +158,7 @@ def main():
     argument_spec = dict(
         name=dict(required=True),
         description=dict(),
-        perms=dict(type="list", elements="str", required=True),
+        perms=dict(type="list", elements="str"),
         state=dict(choices=["present", "absent"], default="present"),
     )
 
@@ -182,26 +181,28 @@ def main():
 
     # Process the object from the Pulp API (delete or create)
     role_pulp = AHPulpRolePerm(module)
+    role_pulp.get_object(name)
+
+    # Remove the role
+    if state == "absent":
+        role_pulp.delete()
 
     # Convert the given permission list to a list of internal names
     role_perms = []
     perm_ah_names = [v for v in FRIENDLY_PERM_NAMES.values() if v != "all"]
-    for perm in perms:
-        if perm == "*" or perm == "all":
-            role_perms = perm_ah_names
-            break
-        if perm in FRIENDLY_PERM_NAMES:
-            role_perms.append(FRIENDLY_PERM_NAMES[perm])
-        elif perm in perm_ah_names:
-            role_perms.append(perm)
-        else:
-            module.fail_json(msg="Unknown perm ({perm}) defined".format(perm=perm))
-
-    role_pulp.get_object(name)
-
-    # Removing the permissions
-    if state == "absent":
-        role_pulp.delete()
+    if perms is not None:
+        for perm in perms:
+            if perm == "*" or perm == "all":
+                role_perms = perm_ah_names
+                break
+            if perm in FRIENDLY_PERM_NAMES:
+                role_perms.append(FRIENDLY_PERM_NAMES[perm])
+            elif perm in perm_ah_names:
+                role_perms.append(perm)
+            else:
+                module.fail_json(msg="Unknown perm ({perm}) defined".format(perm=perm))
+    else:
+        module.fail_json(msg="Permsions are required if not using state absent.")
 
     if not role_pulp.exists:
         role_data = {
