@@ -15,6 +15,7 @@
   loop: "{{ ah_ee_repositories }}"
   loop_control:
     loop_var: "__ee_repository_item"
+  when: __ee_repository_item.sync | default(false)
   no_log: "{{ ah_configuration_ee_repository_secure_logging }}"
   async: 1000
   poll: 0

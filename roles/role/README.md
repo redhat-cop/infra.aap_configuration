@@ -1,8 +1,8 @@
-# infra.ah_configuration.group
+# infra.ah_configuration.role
 
 ## Description
 
-An Ansible Role to create groups in Automation Hub.
+An Ansible Role to create role permisions in Automation Hub.
 
 ## Variables
 
@@ -13,7 +13,7 @@ An Ansible Role to create groups in Automation Hub.
 |`ah_password`|""|yes|Automation Hub Admin User's password on the Automation Hub Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`ah_validate_certs`|`False`|no|Whether or not to validate the Ansible Automation Hub Server's SSL certificate.||
 |`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
-|`ah_groups`|`see below`|yes|Data structure describing your groups, described below.||
+|`ah_roles`|`see below`|yes|Data structure describing your role permisions, described below.||
 
 ### Secure Logging Variables
 
@@ -24,7 +24,7 @@ ah_configuration_group_secure_logging defaults to the value of ah_configuration_
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`ah_configuration_group_secure_logging`|`False`|no|Whether or not to include the sensitive Namespace role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`ah_configuration_role_secure_logging`|`False`|no|Whether or not to include the sensitive Namespace role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`ah_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
@@ -37,9 +37,9 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`ah_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
-|`ah_configuration_group_async_retries`|`ah_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
+|`ah_configuration_role_async_retries`|`ah_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
 |`ah_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
-|`ah_configuration_group_async_delay`|`ah_configuration_async_delay`|no|This sets the delay between retries for the role.|
+|`ah_configuration_role_async_delay`|`ah_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ## Data Structure
 
@@ -47,8 +47,9 @@ This also speeds up the overall role.
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|Group Name. Must be lower case containing only alphanumeric characters and underscores.|
-|`perms`|""|yes|str|The list of permissions to add to or remove from the given group. See below for options.|
+|`name`|""|yes|str|Group Name. Must be lower case containing only alphanumeric characters and underscores. Must start with 'galaxy.'.|
+|`description`|""|yes|str|The description of the permision role.|
+|`perms`|""|yes|str|The list of permissions for the given role. See below for options.|
 |`state`|`present`|no|str|Desired state of the group.|
 <!-- |`new_name`|""|yes|str|Setting this option will change the existing name (looked up via the name field.| -->
 #### perms
@@ -72,9 +73,14 @@ The module accepts the following roles:
 
 ```yaml
 ---
-ah_groups:
-  - name: group1
-    state: present
+ah_roles:
+  - name: galaxy.stuff.mcstuffins
+    description: test
+    perms:
+      - add_user
+      - change_user
+      - delete_user
+      - view_user
 ```
 
 ## Playbook Examples
@@ -83,7 +89,7 @@ ah_groups:
 
 ```yaml
 ---
-- name: Add group to Automation Hub
+- name: Add roles to Automation Hub
   hosts: localhost
   connection: local
   gather_facts: false
@@ -100,7 +106,7 @@ ah_groups:
       tags:
         - always
   roles:
-    - ../../group
+    - ../../role
 ```
 
 ## License

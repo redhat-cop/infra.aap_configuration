@@ -4,7 +4,6 @@
 - name: Add Automation Hub EE Registry
   ah_ee_registry:
     name:                   "{{ __ee_registry_item.name }}"
-    new_name:               "{{ __ee_registry_item.new_name | default(omit) }}"
     url:                    "{{ __ee_registry_item.url }}"
     username:               "{{ __ee_registry_item.username | default(omit) }}"
     password:               "{{ __ee_registry_item.password | default(omit) }}"
