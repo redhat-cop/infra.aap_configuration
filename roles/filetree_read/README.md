@@ -12,33 +12,33 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 
 The following Variables set the organization where should be applied the configuration, the absolute or relative of the directory structure where the variables will be stored and the life-cycle environment to use.
 
-|Variable Name|Default Value|Required|Description|
-|:---:|:---:|:---:|:---:|
-|`orgs:`|Acme|yes|This variable sets the organization where should be applied the configuration.|
-|`dir_orgs_vars:`|orgs_vars|yes|This variable sets the directory path where the variables will be store.|
-|`env:`|dev|yes|This variable sets the life-cycle environment to use.|
-|`controller_location:`|''|no|This variable sets object localtion. It is useful when the configuration need to be replicated in an active/passive sites architecture|
-|`filetree_controller_settings`|{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_settings.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_organizations`|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_organizations.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_labels`|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_labels.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_user_accounts`| {{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_users.d/|
-|`filetree_controller_teams`| {{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_teams.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_credential_types`| {{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_credential_types.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_credentials`| {{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_credentials.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_credential_input_sources`| {{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_credential_input_sources.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_notifications`| {{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_notification_templates.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_projects`| {{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_projects.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_execution_environments`| {{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_execution_environments.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_applications`| {{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_applications.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_inventories`| {{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_inventories.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_inventory_sources`| {{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_inventory_sources.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_instance_groups`| {{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_instance_groups.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_hosts`| {{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_hosts.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_groups`| {{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_groups.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_templates`| {{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_job_templates.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_workflow_job_templates`| {{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_workflow_job_templates.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_schedules`| {{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_schedules.d/|yes|Directory path to load controller object variables|
-|`filetree_controller_roles`| {{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_roles.d/|yes|Directory path to load controller object variables|
+|Variable Name|Type|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|:---:|
+|`orgs:`|String|Acme|yes|This variable sets the organization where should be applied the configuration.|
+|`dir_orgs_vars:`|String|orgs_vars|yes|This variable sets the directory path where the variables will be store.|
+|`env:`|String|dev|yes|This variable sets the life-cycle environment to use.|
+|`controller_location:`|String|''|no|This variable sets object localtion. It is useful when the configuration need to be replicated in an active/passive sites architecture|
+|`filetree_controller_settings`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_settings.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_organizations`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_organizations.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_labels`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_labels.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_user_accounts`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_users.d/|
+|`filetree_controller_teams`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_teams.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_credential_types`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_credential_types.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_credentials`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_credentials.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_credential_input_sources`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_credential_input_sources.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_notifications`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_notification_templates.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_projects`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_projects.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_execution_environments`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_execution_environments.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_applications`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_applications.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_inventories`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_inventories.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_inventory_sources`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_inventory_sources.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_instance_groups`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_instance_groups.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_hosts`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_hosts.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_groups`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_groups.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_templates`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_job_templates.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_workflow_job_templates`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_workflow_job_templates.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_schedules`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_schedules.d/|yes|Directory path to load controller object variables|
+|`filetree_controller_roles`|String/List(String)|{{ dir_orgs_vars }}/{{ orgs }}/env/common/controller_roles.d/|yes|Directory path to load controller object variables|
 
 ### Data Structure
 
