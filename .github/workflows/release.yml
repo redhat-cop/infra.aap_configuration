@@ -21,6 +21,9 @@ jobs:
     uses: "./.github/workflows/ci_standalone_versioned.yml"
     with:
       galaxy_ng_version: ${{ matrix.galaxy_ng_version }}
+    secrets:
+      redhat_catalog_username: ${{ secrets.REDHAT_CATALOG_USERNAME }}
+      redhat_catalog_password: ${{ secrets.REDHAT_CATALOG_PASSWORD }}
   release:
     needs:
       - ci_standalone
