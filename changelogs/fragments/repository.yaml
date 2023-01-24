@@ -1,8 +1,0 @@
----
-breaking_changes:
-  - removed the options of new_name and delete_namespace_if_empty from ah_ee_repository. This is due to limitations of the API that broke pushing images to old repository name.
-minor_changes:
-  - updated ah_ee_image to work with galaxy 4.7+
-  - updated ah_ee_repository to work with galaxy 4.6+
-  - updated UI get_object method to use version variable.
-...
