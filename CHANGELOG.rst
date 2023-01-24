@@ -5,6 +5,39 @@ infra.ah_configuration Release Notes
 .. contents:: Topics
 
 
+v1.1.0
+======
+
+Minor Changes
+-------------
+
+- Added ansible role 'role' for creating roles of group permsions.
+- Fixed issue with ah_ee_repository working on newer versions.
+- Fixed issue with ah_namespace delete
+- Updated ah_collection_upload to exit properly.
+- Updated ah_role to not require permisions in order to allow for deletion.
+- Updated testing coverage.
+- add the ah_role module to add role permisions.
+- added better error catching to ah_ee_registery_index/sync to handle when a registery is not found.
+- ah_ee_repository include/exclude tags are no longer mutually exclusive
+- updated UI get_object method to use version variable.
+- updated ah_ee_image to work with galaxy 4.7+
+- updated ah_ee_repository to work with galaxy 4.6+
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Introduces a `sync` option to the ee_registry_sync role on the `ah_ee_registries` variable which by default is false and which is required true to sync the registry.
+- Introduces a `sync` option to the ee_repository_sync role on the `ah_ee_repositories` variable which by default is false and which is required true to sync the repository.
+- Introduces an `index` option to the ee_registry_index role on the `ah_ee_registries` variable which by default is false and which is required true to index the registry.
+- Removed ah_ee_registry new name option. This affected underlying images indexed from the registery leaving them abandoned, and subsequent indexes of the renamned registery would fail.
+- removed the options of new_name and delete_namespace_if_empty from ah_ee_repository. This is due to limitations of the API that broke pushing images to old repository name.
+
+New Modules
+-----------
+
+- infra.ah_configuration.ah_role - Manage a role of group permissions
+
 v1.0.1
 ======
 

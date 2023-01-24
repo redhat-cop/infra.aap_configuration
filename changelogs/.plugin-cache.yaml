@@ -95,6 +95,11 @@ plugins:
       name: ah_repository_sync
       namespace: ''
       version_added: null
+    ah_role:
+      description: Manage a role of group permissions
+      name: ah_role
+      namespace: ''
+      version_added: 1.1.0
     ah_token:
       description: create, update, or destroy Automation Hub tokens.
       name: ah_token
@@ -110,4 +115,4 @@ plugins:
   strategy: {}
   test: {}
   vars: {}
-version: 1.0.1
+version: 1.1.0
