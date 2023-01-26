@@ -6,6 +6,7 @@
                                  host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                  return_all=true, max_objects=query_controller_api_max_objects)
                         }}"
+  no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
 - name: "Create the <ORGANIZATION_NAME>/inventories output directory for inventories in {{ output_path }}"
   ansible.builtin.file:
@@ -50,6 +51,7 @@
   loop_control:
     loop_var: current_inventory_sources
     label: "{{ inventory_sources_output_path }}"
+  no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
 - name: "Set the inventory's hosts"
   ansible.builtin.include_tasks: "hosts.yml"
@@ -66,6 +68,7 @@
   loop_control:
     loop_var: current_inventory_hosts
     label: "{{ hosts_output_path }}"
+  no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
 - name: "Set the inventory's groups"
   ansible.builtin.include_tasks: "groups.yml"
@@ -82,4 +85,5 @@
   loop_control:
     loop_var: current_inventory_groups
     label: "{{ groups_output_path }}"
+  no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 ...

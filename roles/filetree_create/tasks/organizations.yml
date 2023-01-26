@@ -6,6 +6,7 @@
                             host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                             return_all=true, max_objects=query_controller_api_max_objects)
                    }}"
+  no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
 - name: "Create the output directory for organizations: {{ output_path + '/' + current_organization_dir.name }}"
   ansible.builtin.file:
@@ -42,4 +43,5 @@
   loop_control:
     loop_var: current_organization
     label: "{{ __dest }}"
+  no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 ...
