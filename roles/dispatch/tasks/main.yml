@@ -15,11 +15,8 @@
 
 - name: Include Tasks to add Galaxy credentials and Execution Environments to Organizations
   ansible.builtin.include_role:
-    name: dispatch
+    name: organizations
     apply:
       tags:
         - organizations
-  vars:
-    controller_configuration_dispatcher_roles:
-      - {role: organizations, var: controller_organizations, tags: organizations}
 ...
