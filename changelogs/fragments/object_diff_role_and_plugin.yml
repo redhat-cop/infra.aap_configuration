@@ -1,7 +1,0 @@
----
-minor_changes:
-  - Renamed variable controller_workflow_job_templates to controller_workflows (the previos one was not used at all).
-  - Add roles object to object_diff role and controller_object_diff lookup plugin.
-  - "return_all: true has been added to return the maximum of max_objects=query_controller_api_max_objects objects."
-  - Fix one query with controller_password to change it and set oauth_token=controller_oauthtoken.
-...
