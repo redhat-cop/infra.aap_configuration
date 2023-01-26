@@ -15,7 +15,7 @@
 
 - name: Include Tasks to add Galaxy credentials and Execution Environments to Organizations
   ansible.builtin.include_role:
-    name: redhat_cop.controller_configuration.dispatch
+    name: dispatch
     apply:
       tags:
         - organizations
