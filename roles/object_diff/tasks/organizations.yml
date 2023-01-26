@@ -5,6 +5,7 @@
                                                               query_params={'username': controller_username},
                                                               host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)
                                                    }}"
+  no_log: "{{ controller_configuration_object_diff_secure_logging }}"
 
 - name: "Role differences (block)"
   when:
@@ -16,6 +17,7 @@
                                                   host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                                   return_all=true, max_objects=query_controller_api_max_objects)
                                          }}"
+      no_log: "{{ controller_configuration_object_diff_secure_logging }}"
 
     - name: "Find the difference of Organizations between what is on the Controller versus curated list."
       ansible.builtin.set_fact:
@@ -30,6 +32,7 @@
       loop: "{{ __organizations_difference }}"
       loop_control:
         loop_var: __organizations_difference_list_empty_item
+      no_log: "{{ controller_configuration_object_diff_secure_logging }}"
       when:
         - protect_not_empty_orgs is defined
         - protect_not_empty_orgs

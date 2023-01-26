@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Add no_log everywhere controller_api_plugin is used to avoid to expose sensitive information in case of crashes.
+...
