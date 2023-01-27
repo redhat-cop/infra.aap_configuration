@@ -1,7 +1,0 @@
----
-minor_changes:
-  - Renamed variable controller_workflow_job_templates to controller_workflows (the previos one was not used at all).
-  - Improve template to export settings with filetree_create role. Settings will be in yaml format.
-  - Add or fix some variables or extra_vars exported from objects like notifications, inventory, inventory_source, hosts, groups, jt or wjt.
-  - Add no_log everywhere controller_api_plugin is used to avoid to expose sensitive information in case of crashes.
-...
