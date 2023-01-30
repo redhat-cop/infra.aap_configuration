@@ -1,0 +1,3 @@
+minor_changes:
+  - "Add new type of objects for object_diff role:  applications, execution environments, instance groups, notifications and schedules"
+
