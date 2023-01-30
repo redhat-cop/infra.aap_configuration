@@ -5,6 +5,7 @@
                                              query_params={'name': orgs},
                                              host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)
                                    }}"
+  no_log: "{{ controller_configuration_object_diff_secure_logging }}"
 
 - name: "Get the API list of all Inventory Sources"
   ansible.builtin.set_fact:
@@ -13,6 +14,7 @@
                                                   host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                                   return_all=true, max_objects=query_controller_api_max_objects)
                                          }}"
+  no_log: "{{ controller_configuration_object_diff_secure_logging }}"
 
 - name: "Find the difference of Inventory Sources between what is on the Controller versus CasC on SCM"
   ansible.builtin.set_fact:

@@ -32,6 +32,7 @@
     is_aap: "{{ lookup(controller_api_plugin, 'ping',
                        host=controller_hostname, oauth_token=controller_oauthtoken,
                        verify_ssl=controller_validate_certs).version is version('4.0.0', '>=') }}"
+  no_log: "{{ controller_configuration_object_diff_secure_logging }}"
   tags:
     - always
 

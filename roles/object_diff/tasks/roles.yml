@@ -5,6 +5,7 @@
                                                               query_params={'username': controller_username},
                                                               host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)
                                                    }}"
+  no_log: "{{ controller_configuration_object_diff_secure_logging }}"
 
 - name: "Role differences (block)"
   when:
@@ -38,6 +39,7 @@
              }}"
       loop_control:
         loop_var: current_role
+      no_log: "{{ controller_configuration_object_diff_secure_logging }}"
 
     - name: "Explode the roles for users"
       ansible.builtin.set_fact:

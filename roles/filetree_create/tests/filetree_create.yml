@@ -26,7 +26,7 @@
           ansible.builtin.set_fact:
             controller_oauthtoken: "{{ authtoken_res.json.token }}"
             controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
-      no_log: "{{ controller_configuration_filetree_create_secure_logging | default('false') }}"
+      no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
       when: controller_oauthtoken is not defined
       tags:
         - always
