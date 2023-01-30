@@ -256,8 +256,13 @@ class LookupModule(LookupBase):
             for item in list_to_remove:
                 compare_list_reduced.remove(item)
             compare_list_reduced.extend(list_to_extend)
-        elif (api_list[0]["type"] != "organization" and api_list[0]["type"] != "user" and api_list[0]["type"] != "credential_type"
-              and api_list[0]["type"] != "schedule" and api_list[0]["type"] != "instance_group"):
+        elif (
+            api_list[0]["type"] != "organization"
+            and api_list[0]["type"] != "user"
+            and api_list[0]["type"] != "credential_type"
+            and api_list[0]["type"] != "schedule"
+            and api_list[0]["type"] != "instance_group"
+        ):
             for item in api_list_reduced:
                 item.update({"organization": item["summary_fields"]["organization"]["name"]})
                 item.pop("summary_fields")
