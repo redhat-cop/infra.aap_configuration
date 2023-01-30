@@ -1,0 +1,2 @@
+minor_changes:
+  - fixed an extra blank line in schedules readme that was breaking the table
