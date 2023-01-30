@@ -72,7 +72,6 @@ This also speeds up the overall role.
 |`job_slice_count`|Job Template default|no|str|Job Slice Count to use in the job run. Job Template default used if not set. Only allowed if `ask_job_slice_count_on_launch` set to true on Job Template|
 |`labels`|Job Template default|no|list|List of labels to use in the job run. Job Template default used if not set. Only allowed if `ask_labels_on_launch` set to true on Job Template|
 |`timeout`|Job Template default|no|str|Timeout to use in the job run. Job Template default used if not set. Only allowed if `ask_timeout_on_launch` set to true on Job Template|
-
 |`job_type`|Job template default|no|str|The job type used for the job template.|
 |`job_tags`|""|no|str|Comma separated list of tags to apply to the job|
 |`skip_tags`|""|no|str|Comma separated list of tags to skip for the job|
