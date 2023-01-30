@@ -5,6 +5,30 @@ redhat_cop.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v2.2.5
+======
+
+Minor Changes
+-------------
+
+- Add max_forks, max_concurrent_jobs as options to instance_groups role
+- Add no_log everywhere controller_api_plugin is used to avoid to expose sensitive information in case of crashes.
+- Add no_log everywhere controller_api_plugin is used to avoid to expose sensitive information in case of crashes.
+- Add or fix some variables or extra_vars exported from objects like notifications, inventory, inventory_source, hosts, groups, jt or wjt.
+- Add roles object to object_diff role and controller_object_diff lookup plugin.
+- Fix one query with controller_password to change it and set oauth_token=controller_oauthtoken.
+- Fixed typos in README.md.
+- Improve template to export settings with filetree_create role. Settings will be in yaml format.
+- Renamed the field `update` to `update_project` to avoid colliding with the Python dict update method
+- Renamed variable controller_workflow_job_templates to controller_workflows (the previos one was not used at all).
+- Renamed variable controller_workflow_job_templates to controller_workflows (the previos one was not used at all).
+- return_all: true has been added to return the maximum of max_objects=query_controller_api_max_objects objects.
+
+Bugfixes
+--------
+
+- Enable the ability to define simple_workflow_nodes on workflow_job_templates without the need to set the `state` on a workflow_job_template (https://github.com/redhat-cop/controller_configuration/issues/297).
+
 v2.2.4
 ======
 
