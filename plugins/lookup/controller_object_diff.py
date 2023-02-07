@@ -120,7 +120,7 @@ class LookupModule(LookupBase):
             return [api_list]
 
         # Set Keys to keep for each list. Depending on type
-        if api_list[0]["type"] == "organization" or api_list[0]["type"] == "credential_type":
+        if api_list[0]["type"] == "organization" or api_list[0]["type"] == "credential_type" or api_list[0]["type"] == "instance_group":
             keys_to_keep = ["name"]
             api_keys_to_keep = ["name"]
         elif api_list[0]["type"] == "user":
@@ -132,6 +132,12 @@ class LookupModule(LookupBase):
         elif api_list[0]["type"] == "group" or api_list[0]["type"] == "host":
             keys_to_keep = ["name", "inventory"]
             api_keys_to_keep = ["name", "summary_fields"]
+        elif api_list[0]["type"] == "schedule":
+            keys_to_keep = ["name", "unified_job_template"]
+            api_keys_to_keep = ["name", "summary_fields"]
+        elif api_list[0]["type"] == "execution_environment":
+            keys_to_keep = ["name", "organization", "image"]
+            api_keys_to_keep = ["name", "summary_fields", "image"]
         elif api_list[0]["type"] == "role":
             pass
         else:
@@ -158,12 +164,15 @@ class LookupModule(LookupBase):
                         self.handle_error(msg="Key: '{0}' missing from item in api_list. Does this object come from the api? item: {1}".format(key, item))
 
         # Reduce list to name and organization
-        if api_list[0]["type"] != "role":
-            compare_list_reduced = [{key: item[key] for key in keys_to_keep} for item in compare_list]
-            api_list_reduced = [{key: item[key] for key in api_keys_to_keep} for item in api_list]
-        else:
+        if api_list[0]["type"] == "role":
             compare_list_reduced = copy.deepcopy(compare_list)
             api_list_reduced = copy.deepcopy(api_list)
+        elif api_list[0]["type"] == "instance_group":
+            compare_list_reduced = [{key: item[key] for key in keys_to_keep} for item in compare_list]
+            api_list_reduced = [{key: item[key] for key in api_keys_to_keep} for item in api_list if item["summary_fields"]["user_capabilities"]["delete"]]
+        else:
+            compare_list_reduced = [{key: item[key] for key in keys_to_keep} for item in compare_list]
+            api_list_reduced = [{key: item[key] for key in api_keys_to_keep} for item in api_list]
 
         # Convert summary field name into org name Only if not type organization
         if api_list[0]["type"] == "group" or api_list[0]["type"] == "host":
@@ -184,6 +193,10 @@ class LookupModule(LookupBase):
             for item in api_list_reduced:
                 item.update({"unified_job_template": item["summary_fields"]["unified_job_template"]["name"]})
                 item.update({"workflow_job_template": item["summary_fields"]["workflow_job_template"]["name"]})
+                item.pop("summary_fields")
+        elif api_list[0]["type"] == "schedule":
+            for item in api_list_reduced:
+                item.update({"unified_job_template": item["summary_fields"]["unified_job_template"]["name"]})
                 item.pop("summary_fields")
         elif api_list[0]["type"] == "role":
             for item in api_list_reduced:
@@ -243,7 +256,13 @@ class LookupModule(LookupBase):
             for item in list_to_remove:
                 compare_list_reduced.remove(item)
             compare_list_reduced.extend(list_to_extend)
-        elif api_list[0]["type"] != "organization" and api_list[0]["type"] != "user" and api_list[0]["type"] != "credential_type":
+        elif (
+            api_list[0]["type"] != "organization"
+            and api_list[0]["type"] != "user"
+            and api_list[0]["type"] != "credential_type"
+            and api_list[0]["type"] != "schedule"
+            and api_list[0]["type"] != "instance_group"
+        ):
             for item in api_list_reduced:
                 item.update({"organization": item["summary_fields"]["organization"]["name"]})
                 item.pop("summary_fields")
