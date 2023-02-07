@@ -13,7 +13,7 @@
     forks:                          "{{ __controller_schedule_item.forks | default(omit, true) }}"
     instance_groups:                "{{ __controller_schedule_item.instance_groups | default(omit, true) }}"
     job_slice_count:                "{{ __controller_schedule_item.job_slice_count | default(omit, true) }}"
-    labels:                         "{{ __controller_schedule_item.labels | default(__controller_schedule_item.related.labels | default([]) | map(attribute='name') | list) | default(omit, true) }}"
+    labels:                         "{{ __controller_schedule_item.labels | default(__controller_schedule_item.related.labels | default([]) | map(attribute='name') | list) | default(omit) }}"
     timeout:                        "{{ __controller_schedule_item.timeout | default(omit, true) }}"
     job_type:                       "{{ __controller_schedule_item.job_type | default(omit, true) }}"
     job_tags:                       "{{ __controller_schedule_item.job_tags | default(omit, true) }}"
