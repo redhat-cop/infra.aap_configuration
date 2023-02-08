@@ -84,7 +84,7 @@ ah_ee_namespaces:
   # ah_token: changeme
   pre_tasks:
     - name: Include vars from ah_configs directory
-      include_vars:
+      ansible.builtin.include_vars:
         dir: ./vars
         extensions: ["yml"]
       tags:
