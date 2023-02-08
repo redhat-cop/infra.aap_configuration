@@ -52,7 +52,7 @@
     webhook_service:                      "{{ __controller_template_item.webhook_service | default(omit, true) }}"
     webhook_credential:                   "{{ __controller_template_item.webhook_credential | default(omit, true) }}"
     scm_branch:                           "{{ __controller_template_item.scm_branch | default(omit, true) }}"
-    labels:                               "{{ __controller_template_item.labels | default(__controller_template_item.related.labels | default([]) | map(attribute='name') | list) | default(omit, true) }}"
+    labels:                               "{{ __controller_template_item.labels | default(__controller_template_item.related.labels | default([]) | map(attribute='name') | list) | default(omit) }}"
     state:                                "{{ __controller_template_item.state | default(controller_state | default('present')) }}"
     notification_templates_started:       "{{ __controller_template_item.notification_templates_started | default(__controller_template_item.related.notification_templates_started | default([]) | map(attribute='name') | list) | default(omit, true) }}"
     notification_templates_success:       "{{ __controller_template_item.notification_templates_success | default(__controller_template_item.related.notification_templates_success | default([]) | map(attribute='name') | list) | default(omit, true) }}"

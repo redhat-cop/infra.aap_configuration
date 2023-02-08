@@ -12,7 +12,7 @@
     ask_variables_on_launch:            "{{ __workflow_loop_item.ask_variables_on_launch | default(omit) }}"  # only supported starting from Ansible 2.9
     inventory:                          "{{ __workflow_loop_item.inventory.name | default(__workflow_loop_item.inventory | default(omit, true)) }}"
     limit:                              "{{ __workflow_loop_item.limit | default(omit, true) }}"
-    labels:                             "{{ __workflow_loop_item.labels | default(__workflow_loop_item.related.labels | default([]) | map(attribute='name') | list) | default(omit, true) }}"
+    labels:                             "{{ __workflow_loop_item.labels | default(__workflow_loop_item.related.labels | default([]) | map(attribute='name') | list) | default(omit) }}"
     scm_branch:                         "{{ __workflow_loop_item.scm_branch | default(omit, true) }}"
     ask_inventory_on_launch:            "{{ __workflow_loop_item.ask_inventory_on_launch | default(omit) }}"
     ask_scm_branch_on_launch:           "{{ __workflow_loop_item.ask_scm_branch_on_launch | default(omit) }}"
