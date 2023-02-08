@@ -28,12 +28,12 @@ jobs:
       - name: Build and install the collection
         uses: redhat-cop/ansible_collections_tooling/actions/build_ansible_collection@main
         with:
-          collection_namespace: ${{ inputs.collection_namespace }}
-          collection_name: ${{ inputs.collection_name }}
-          collection_version: ${{ inputs.collection_version }}
-          collection_repo: ${{ inputs.collection_repo }}
+          collection_namespace: ${{ env.collection_namespace }}
+          collection_name: ${{ env.collection_name }}
+          collection_version: ${{ env.collection_version }}
+          collection_repo: ${{ env.collection_repo }}
       - name: Install collection dependencies
-        run: ansible-galaxy collection install ${{ inputs.collection_dependencies }} -p /home/runner/collections
+        run: ansible-galaxy collection install ${{ env.collection_dependencies }} -p /home/runner/collections
         if: inputs.collection_dependencies
       - uses: pre-commit/action@v3.0.0
 ...
