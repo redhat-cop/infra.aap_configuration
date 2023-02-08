@@ -1,6 +1,6 @@
 ---
 - name: Include EE vars
-  include_vars: ../vars/controller_ees.yml
+  ansible.builtin.include_vars: ../vars/controller_ees.yml
   tags:
     - ees
     - alltags

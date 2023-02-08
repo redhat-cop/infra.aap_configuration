@@ -1,6 +1,6 @@
 ---
 - name: Include LDAP settings vars
-  include_vars: ../vars/controller_ldap_configuration.json
+  ansible.builtin.include_vars: ../vars/controller_ldap_configuration.json
   tags:
     - settings
     - alltags
@@ -12,7 +12,7 @@
     - alltags
 
 - name: Include credential types vars
-  include_vars: ../vars/controller_ldap_configuration.json
+  ansible.builtin.include_vars: ../vars/controller_ldap_configuration.json
   tags:
     - settings
     - alltags

@@ -1,6 +1,6 @@
 ---
 - name: Include roles vars
-  include_vars: ../vars/controller_roles.yml
+  ansible.builtin.include_vars: ../vars/controller_roles.yml
   tags:
     - roles
     - alltags

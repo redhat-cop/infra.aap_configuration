@@ -1,6 +1,6 @@
 ---
 - name: Include inventory sources vars
-  include_vars: ../vars/controller_inventory_sources.yml
+  ansible.builtin.include_vars: ../vars/controller_inventory_sources.yml
   tags:
     - inventorysources
     - alltags
