@@ -34,6 +34,6 @@ jobs:
           collection_repo: ${{ env.collection_repo }}
       - name: Install collection dependencies
         run: ansible-galaxy collection install ${{ env.collection_dependencies }} -p /home/runner/collections
-        if: inputs.collection_dependencies
+        if: env.collection_dependencies
       - uses: pre-commit/action@v3.0.0
 ...
