@@ -1,6 +1,6 @@
 ---
 - name: Include schedules vars
-  include_vars: ../vars/controller_schedules.yml
+  ansible.builtin.include_vars: ../vars/controller_schedules.yml
   tags:
     - schedules
     - alltags

@@ -14,7 +14,7 @@
 
   pre_tasks:
     - name: Include vars from controller_configs directory
-      include_vars:
+      ansible.builtin.include_vars:
         dir: ./config
         extensions: ["yml"]
 

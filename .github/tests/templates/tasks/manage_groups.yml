@@ -1,6 +1,6 @@
 ---
 - name: Include groups vars
-  include_vars: ../vars/controller_groups.yml
+  ansible.builtin.include_vars: ../vars/controller_groups.yml
   tags:
     - groups
     - alltags

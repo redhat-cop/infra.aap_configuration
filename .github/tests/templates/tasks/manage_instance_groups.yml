@@ -1,6 +1,6 @@
 ---
 - name: Include instance group vars
-  include_vars: ../vars/controller_instance_groups.yml
+  ansible.builtin.include_vars: ../vars/controller_instance_groups.yml
   tags:
     - instancegroups
     - alltags
