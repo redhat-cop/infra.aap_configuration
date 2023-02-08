@@ -33,7 +33,7 @@ jobs:
           collection_version: ${{ inputs.collection_version }}
           collection_repo: ${{ inputs.collection_repo }}
       - name: Install collection dependencies
-        runs: ansible-galaxy collection install ${{ inputs.collection_dependencies }} -p /home/runner/collections
+        run: ansible-galaxy collection install ${{ inputs.collection_dependencies }} -p /home/runner/collections
         if: inputs.collection_dependencies
       - uses: pre-commit/action@v3.0.0
 ...
