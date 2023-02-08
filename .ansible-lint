@@ -15,6 +15,7 @@ use_default_rules: true
 # verbosity: 1
 skip_list:
   - meta-unsupported-ansible
+  - fqcn[keyword]
 kinds:
   - playbooks: "**/examples/*.{yml,yaml}"
   - tasks: "**/examples/tasks/*.yml"
