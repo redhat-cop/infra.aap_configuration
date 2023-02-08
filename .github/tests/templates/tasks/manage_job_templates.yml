@@ -1,6 +1,6 @@
 ---
 - name: Include job templates vars
-  include_vars: ../vars/controller_job_templates.yml
+  ansible.builtin.include_vars: ../vars/controller_job_templates.yml
   tags:
     - jobtemplates
     - alltags

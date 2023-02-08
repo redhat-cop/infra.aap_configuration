@@ -11,6 +11,10 @@
 
   pre_tasks:
     - name: "Setup authentication (block)"
+      no_log: "{{ controller_configuration_object_diff_secure_logging }}"
+      when: controller_oauthtoken is not defined
+      tags:
+        - always
       block:
         - name: "Get the Authentication Token for the future requests"
           ansible.builtin.uri:
@@ -27,13 +31,9 @@
           ansible.builtin.set_fact:
             controller_oauthtoken: "{{ authtoken_res.json.token }}"
             controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
-      no_log: "{{ controller_configuration_object_diff_secure_logging }}"
-      when: controller_oauthtoken is not defined
-      tags:
-        - always
   roles:
-    - redhat_cop.controller_configuration.filetree_read
-    - redhat_cop.controller_configuration.object_diff
+    - infra.controller_configuration.filetree_read
+    - infra.controller_configuration.object_diff
 
   post_tasks:
     - name: "Delete the Authentication Token used"

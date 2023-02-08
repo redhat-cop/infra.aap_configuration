@@ -1,6 +1,6 @@
 ---
 - name: Include hosts vars
-  include_vars: ../vars/controller_hosts.yml
+  ansible.builtin.include_vars: ../vars/controller_hosts.yml
   tags:
     - hosts
     - alltags

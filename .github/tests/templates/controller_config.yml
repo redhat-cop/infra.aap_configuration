@@ -40,7 +40,7 @@
 
   pre_tasks:
     - name: Include Vars
-      include_vars: "vars/controller_vars.yml"
+      ansible.builtin.include_vars: "vars/controller_vars.yml"
 
   tasks:
     - name: Include task for managing LDAP settings

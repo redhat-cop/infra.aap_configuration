@@ -1,6 +1,6 @@
 ---
 - name: Include workflows vars
-  include_vars: ../vars/controller_workflows.yml
+  ansible.builtin.include_vars: ../vars/controller_workflows.yml
   tags:
     - workflows
     - alltags

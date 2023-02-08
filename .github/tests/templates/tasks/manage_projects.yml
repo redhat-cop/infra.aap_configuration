@@ -1,6 +1,6 @@
 ---
 - name: Include projects vars
-  include_vars: ../vars/controller_projects.yml
+  ansible.builtin.include_vars: ../vars/controller_projects.yml
   tags:
     - projects
     - alltags

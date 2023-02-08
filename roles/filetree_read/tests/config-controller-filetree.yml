@@ -11,6 +11,10 @@
     controller_validate_certs: "{{ vault_controller_validate_certs | default(lookup('env', 'CONTROLLER_VERIFY_SSL')) }}"
   pre_tasks:
     - name: "Setup authentication (block)"
+      no_log: "{{ controller_configuration_filetree_read_secure_logging | default('false') }}"
+      when: controller_oauthtoken is not defined
+      tags:
+        - always
       block:
         - name: "Get the Authentication Token for the future requests"
           ansible.builtin.uri:
@@ -27,27 +31,24 @@
           ansible.builtin.set_fact:
             controller_oauthtoken: "{{ authtoken_res.json.token }}"
             controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
-      no_log: "{{ controller_configuration_filetree_read_secure_logging | default('false') }}"
-      when: controller_oauthtoken is not defined
-      tags:
-        - always
   roles:
-    - {role: redhat_cop.controller_configuration.filetree_read, assign_galaxy_credentials_to_org: false}
-    - {role: redhat_cop.controller_configuration.dispatch, assign_galaxy_credentials_to_org: false}
+    - {role: infra.controller_configuration.filetree_read, assign_galaxy_credentials_to_org: false}
+    - {role: infra.controller_configuration.dispatch, assign_galaxy_credentials_to_org: false}
 
   post_tasks:
-    - block:
+    - name: Add galaxy creds
+      tags:
+        - organizations
+      block:
         - name: Include Tasks to add Galaxy credentials to Organizations
           ansible.builtin.include_role:
-            name: redhat_cop.controller_configuration.dispatch
+            name: infra.controller_configuration.dispatch
             apply:
               tags:
                 - organizations
           vars:
             controller_configuration_dispatcher_roles:
               - {role: organizations, var: controller_organizations, tags: organizations}
-      tags:
-        - organizations
 
     - name: "Delete the Authentication Token used"
       ansible.builtin.uri:

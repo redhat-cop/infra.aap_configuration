@@ -11,6 +11,10 @@
 
   pre_tasks:
     - name: "Setup authentication (block)"
+      no_log: "{{ controller_configuration_object_diff_secure_logging }}"
+      when: controller_oauthtoken is not defined
+      tags:
+        - always
       block:
         - name: "Get the Authentication Token for the future requests"
           ansible.builtin.uri:
@@ -27,15 +31,11 @@
           ansible.builtin.set_fact:
             controller_oauthtoken: "{{ authtoken_res.json.token }}"
             controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
-      no_log: "{{ controller_configuration_object_diff_secure_logging }}"
-      when: controller_oauthtoken is not defined
-      tags:
-        - always
 
   roles:
-    - role: redhat_cop.controller_configuration.filetree_read
-    - role: redhat_cop.controller_configuration.object_diff
-    - role: redhat_cop.controller_configuration.dispatch
+    - role: infra.controller_configuration.filetree_read
+    - role: infra.controller_configuration.object_diff
+    - role: infra.controller_configuration.dispatch
       vars:
         controller_configuration_dispatcher_roles:
           - {role: workflow_job_templates, var: controller_workflows, tags: workflow_job_templates}

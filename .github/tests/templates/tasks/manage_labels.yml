@@ -1,6 +1,6 @@
 ---
 - name: Include labels vars
-  include_vars: ../vars/controller_labels.yml
+  ansible.builtin.include_vars: ../vars/controller_labels.yml
   tags:
     - labels
     - alltags
