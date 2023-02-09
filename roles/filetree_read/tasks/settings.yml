@@ -20,6 +20,7 @@
   loop: "{{ __contents_filetree_controller_settings.results }}"
   loop_control:
     loop_var: __populate_settings_list_item
+  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
   when: __contents_filetree_controller_settings.results is defined and __populate_settings_list_item.ansible_facts.controller_settings is defined
 
 - name: "Segregated Settings list when controller_location is defined"
@@ -31,6 +32,7 @@
       loop: "{{ __populate_controller_settings }}"
       loop_control:
         loop_var: __populate_settings_list_common_item
+      no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
       when: "__populate_settings_list_common_item.controller_location is not defined"
 
     - name: "Populate Settings list by __site objects"
@@ -39,20 +41,24 @@
       loop: "{{ __populate_controller_settings }}"
       loop_control:
         loop_var: __populate_settings_list_site_item
+      no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
       when: "__populate_settings_list_site_item.controller_location is defined and __populate_settings_list_site_item.controller_location == controller_location"
 
     - name: "Concatenate Settings list common + site"
       ansible.builtin.set_fact:
         __populate_controller_settings_total: "{{ __populate_controller_settings_common | default([]) + __populate_controller_settings_site }}"
+      no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
       when: __populate_controller_settings_site is defined
 
     - name: "Set Settings Data Structure common + site concatenated"
       ansible.builtin.set_fact:
         __populate_controller_settings: "{{ __populate_controller_settings_total }}"
+      no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
       when: __populate_controller_settings_total is defined
 
 - name: "Set Settings Data Structure"
   ansible.builtin.set_fact:
     controller_settings: "{{ __populate_controller_settings }}"
+  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
   when: __populate_controller_settings is defined
 ...

@@ -20,10 +20,12 @@
   loop: "{{ __contents_filetree_controller_inventories.results }}"
   loop_control:
     loop_var: __populate_inventories_list_item
+  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
   when: __contents_filetree_controller_inventories.results is defined and __populate_inventories_list_item.ansible_facts.controller_inventories is defined
 
 - name: "Set Inventories Data Structure"
   ansible.builtin.set_fact:
     controller_inventories: "{{ __populate_controller_inventories }}"
+  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
   when: __populate_controller_inventories is defined
 ...

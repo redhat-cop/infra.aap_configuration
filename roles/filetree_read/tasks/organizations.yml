@@ -20,10 +20,12 @@
   loop: "{{ __contents_filetree_controller_organizations.results }}"
   loop_control:
     loop_var: __populate_organizations_list_item
+  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
   when: __contents_filetree_controller_organizations.results is defined and __populate_organizations_list_item.ansible_facts.controller_organizations is defined
 
 - name: "Set Organization Data Structure"
   ansible.builtin.set_fact:
     controller_organizations: "{{ __populate_controller_organizations }}"
+  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
   when: __populate_controller_organizations is defined
 ...
