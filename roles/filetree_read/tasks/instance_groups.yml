@@ -20,6 +20,7 @@
   loop: "{{ __contents_filetree_controller_instance_groups.results }}"
   loop_control:
     loop_var: __populate_instance_groups_list_item
+  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
   when: __contents_filetree_controller_instance_groups.results is defined and __populate_instance_groups_list_item.ansible_facts.controller_instance_groups is defined
 
 - name: "Segregated Instance Groups list when controller_location is defined"
@@ -31,6 +32,7 @@
       loop: "{{ __populate_controller_instance_groups }}"
       loop_control:
         loop_var: __populate_instance_groups_list_common_item
+      no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
       when: "__populate_instance_groups_list_common_item.controller_location is not defined"
 
     - name: "Populate Instance Groups list by __site objects"
@@ -39,20 +41,24 @@
       loop: "{{ __populate_controller_instance_groups }}"
       loop_control:
         loop_var: __populate_instance_groups_list_site_item
+      no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
       when: "__populate_instance_groups_list_site_item.controller_location is defined and __populate_instance_groups_list_site_item.controller_location == controller_location"
 
     - name: "Concatenate Instance Groups list common + site"
       ansible.builtin.set_fact:
         __populate_controller_instance_groups_total: "{{ __populate_controller_instance_groups_common | default([]) + __populate_controller_instance_groups_site }}"
+      no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
       when: __populate_controller_instance_groups_site is defined
 
     - name: "Set Instance Groups Data Structure common + site concatenated"
       ansible.builtin.set_fact:
         __populate_controller_instance_groups: "{{ __populate_controller_instance_groups_total }}"
+      no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
       when: __populate_controller_instance_groups_total is defined
 
 - name: "Set Instance Groups Data Structure"
   ansible.builtin.set_fact:
     controller_instance_groups: "{{ __populate_controller_instance_groups }}"
+  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
   when: __populate_controller_instance_groups is defined
 ...

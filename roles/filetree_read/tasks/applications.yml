@@ -20,10 +20,12 @@
   loop: "{{ __contents_filetree_controller_applications.results }}"
   loop_control:
     loop_var: __populate_applications_list_item
+  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
   when: __contents_filetree_controller_applications.results is defined and __populate_applications_list_item.ansible_facts.controller_applications is defined
 
 - name: "Set Applications Data Structure"
   ansible.builtin.set_fact:
     controller_applications: "{{ __populate_controller_applications }}"
+  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
   when: __populate_controller_applications is defined
 ...

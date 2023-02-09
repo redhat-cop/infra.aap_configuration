@@ -20,6 +20,7 @@
   loop: "{{ __contents_filetree_controller_inventory_sources.results }}"
   loop_control:
     loop_var: __populate_inventory_sources_list_item
+  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
   when: __contents_filetree_controller_inventory_sources.results is defined and __populate_inventory_sources_list_item.ansible_facts.controller_inventory_sources is defined
 
 - name: "Segregated Inventory Sources list when controller_location is defined"
@@ -31,6 +32,7 @@
       loop: "{{ __populate_controller_inventory_sources }}"
       loop_control:
         loop_var: __populate_inventory_sources_list_common_item
+      no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
       when: "__populate_inventory_sources_list_common_item.controller_location is not defined"
 
     - name: "Populate Inventory Sources list by __site objects"
@@ -39,20 +41,24 @@
       loop: "{{ __populate_controller_inventory_sources }}"
       loop_control:
         loop_var: __populate_inventory_sources_list_site_item
+      no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
       when: "__populate_inventory_sources_list_site_item.controller_location is defined and __populate_inventory_sources_list_site_item.controller_location == controller_location"
 
     - name: "Concatenate Inventory Sources list common + site"
       ansible.builtin.set_fact:
         __populate_controller_inventory_sources_total: "{{ __populate_controller_inventory_sources_common | default([]) + __populate_controller_inventory_sources_site }}"
+      no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
       when: __populate_controller_inventory_sources_site is defined
 
     - name: "Set Inventory Sources Data Structure common + site concatenated"
       ansible.builtin.set_fact:
         __populate_controller_inventory_sources: "{{ __populate_controller_inventory_sources_total }}"
+      no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
       when: __populate_controller_inventory_sources_total is defined
 
 - name: "Set Inventory Sources Data Structure"
   ansible.builtin.set_fact:
     controller_inventory_sources: "{{ __populate_controller_inventory_sources }}"
+  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
   when: __populate_controller_inventory_sources is defined
 ...

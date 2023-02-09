@@ -20,10 +20,12 @@
   loop: "{{ __contents_filetree_controller_labels.results }}"
   loop_control:
     loop_var: __populate_labels_list_item
+  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
   when: __contents_filetree_controller_labels.results is defined and __populate_labels_list_item.ansible_facts.controller_labels is defined
 
 - name: "Set Labels Data Structure"
   ansible.builtin.set_fact:
     controller_labels: "{{ __populate_controller_labels }}"
+  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
   when: __populate_controller_labels is defined
 ...

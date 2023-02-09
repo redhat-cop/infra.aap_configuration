@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - "Add no_log to all tasks that populates data to avoid exposing encrypted data"
+...
