@@ -5,6 +5,7 @@
 orgs: "Acme"
 dir_orgs_vars: orgs_vars
 env: dev
+controller_configuration_filetree_read_secure_logging: "{{ controller_configuration_secure_logging | default(true) }}"
 
 # Controller lists
 
