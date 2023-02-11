@@ -5,7 +5,7 @@
     name: "{{ __role.role }}"
     apply:
       tags: "{{ __role.tags }}"
-  when: hostvars[inventory_hostname][__role.var] | length > 0
+  when: hostvars[inventory_hostname][__role.var] is defined
   tags: always
   loop: "{{ ah_configuration_dispatcher_roles }}"
   loop_control:

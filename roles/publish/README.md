@@ -75,7 +75,7 @@ ah_auto_approve: true
 
 ```yaml
 ---
-- name: Add namespace to Automation Hub
+- name: Build and add collection to Automation Hub
   hosts: localhost
   connection: local
   gather_facts: false
@@ -92,7 +92,7 @@ ah_auto_approve: true
       tags:
         - always
   roles:
-    - ../../publish
+    - infra.ah_configuration.publish
 ```
 
 ## License

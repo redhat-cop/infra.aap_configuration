@@ -40,15 +40,13 @@ ah_configuration_repository_secure_logging defaults to the value of ah_configura
 
 ```yaml
 ---
-collection:
-  namespace: 'awx'
-  name: 'awx'
-  path: /var/tmp/collections/awx_awx-15.0.0.tar.gz
-  state: present
+ah_collections:
+  - namespace: 'awx'
+    name: 'awx'
+    path: /var/tmp/collections/awx_awx-15.0.0.tar.gz
+    state: present
 
-- name: Remove collection
-  ah_collection:
-    namespace: test_collection
+  - namespace: test_collection
     name: test
     version: 4.1.2
     state: absent
