@@ -14,7 +14,7 @@ use_default_rules: true
 # with verbosity set to 1, its dumping 'unknown file type messages'
 # verbosity: 1
 skip_list:
-  - meta-unsupported-ansible
+  - meta-runtime
   - fqcn[keyword]
 kinds:
   - playbooks: "**/examples/*.{yml,yaml}"
