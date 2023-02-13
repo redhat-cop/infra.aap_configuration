@@ -155,6 +155,14 @@ A Template to use in order to start using the collections can be found [here](ht
 
 For details on changes between versions, please see [the changelog for this collection](CHANGELOG.rst).
 
+## Releasing, Versioning and Deprecation
+
+This collection follows [Semantic Versioning](https://semver.org/). More details on versioning can be found [in the Ansible docs](https://docs.ansible.com/ansible/latest/dev_guide/developing_collections.html#collection-versions).
+
+We plan to regularly release new minor or bugfix versions once new features or bugfixes have been implemented.
+
+Releasing the current major version happens from the `devel` branch.
+
 ## Roadmap
 
 Adding the ability to use direct output from the awx export command in the roles along with the current data model.
