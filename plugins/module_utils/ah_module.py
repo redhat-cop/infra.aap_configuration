@@ -15,7 +15,6 @@ from ansible.module_utils.six.moves.urllib.parse import urlparse, urlencode
 from ansible.module_utils.six.moves.urllib.error import HTTPError
 from ansible.module_utils.six.moves.http_cookiejar import CookieJar
 from ansible.module_utils._text import to_bytes, to_native, to_text
-from ansible.module_utils.compat.importlib import import_module  # noqa F401
 import os.path
 from socket import gethostbyname
 import re
