@@ -20,7 +20,7 @@
     forks:                          "{{ __workflow_loop_node_item.forks | default(omit, true) }}"
     instance_groups:                "{{ __workflow_loop_node_item.instance_groups | default(omit, true) }}"
     job_slice_count:                "{{ __workflow_loop_node_item.job_slice_count | default(omit, true) }}"
-    labels:                         "{{ __workflow_loop_node_item.labels | default(__workflow_loop_node_item.related.labels | default([]) | map(attribute='name') | list) | default(omit) }}"
+    labels:                         "{{ __workflow_loop_node_item.labels | default(__workflow_loop_node_item.related.labels | default([]) | map(attribute='name') | list if __workflow_loop_node_item.related.labels is defined else omit) }}"
     timeout:                        "{{ __workflow_loop_node_item.timeout | default(omit, true) }}"
     approval_node:                  "{{ __workflow_loop_node_item.approval_node | default(omit, true) }}"
     workflow:                       "{{ __workflow_loop_item.name | mandatory }}"        # Workflow job template name to associate with
