@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- name: Filetree Create Test
+  hosts: all
   connection: local
   gather_facts: false
   vars:
