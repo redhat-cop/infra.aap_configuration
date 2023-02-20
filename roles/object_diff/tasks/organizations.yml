@@ -63,6 +63,5 @@
 
     - name: "Set organization's list to be configured"
       ansible.builtin.set_fact:
-        controller_organizations: "{{ __controller_organizations }}"
-      when: __controller_organizations is defined
+        controller_organizations: "{{ __controller_organizations | default([]) }}"
 ...
