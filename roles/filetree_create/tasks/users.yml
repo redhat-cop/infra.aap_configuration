@@ -7,7 +7,7 @@
                     }}"
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
-- name: "Add the users the Organizations information"
+- name: "Add the users the Organizations information"  # noqa jinja[spacing]
   ansible.builtin.set_fact:
     current_users: "{{ (current_users | default([])) + [user_lookvar_item | combine({'organizations': user_lookvar_item_organizations})] }}"
   vars:

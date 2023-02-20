@@ -22,7 +22,6 @@ skip_list:
   - role-name[path]
 warn_list:
   - jinja[invalid]  # Temporarily adding this due to https://github.com/ansible/ansible-lint/issues/3048
-  - jinja[spacing]  # Would be set to warn by default and the only flagged issues are fairly unfixable
 kinds:
   - playbooks: "**/examples/templates/*.{yml,yaml}"
   - playbooks: "**/examples/*.{yml,yaml}"

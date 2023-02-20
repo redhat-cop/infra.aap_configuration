@@ -20,7 +20,7 @@
                                      }}"
 
 
-- name: "Get WF and JT IDs"
+- name: "Get WF and JT IDs"  # noqa jinja[spacing]
   ansible.builtin.set_fact:
     __controller_api_templates_ids: '{{ __controller_api_job_templates | selectattr("id", "defined") | map(attribute="id") | flatten | unique  +  __controller_api_workflow_job_templates | selectattr("id", "defined") | map(attribute="id") | flatten | unique }}'
 
