@@ -12,7 +12,7 @@
     - __controller_api_current_user_check_is_admin.is_superuser
   block:
 
-    - name: "Get the API list of all roles"
+    - name: "Get the API list of all roles"  # noqa jinja[spacing]
       ansible.builtin.set_fact:
         __controller_api_roles: "{{ (__controller_api_roles | default([])) + [{
                                       'users': current_users,
