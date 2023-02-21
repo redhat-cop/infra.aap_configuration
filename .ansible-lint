@@ -14,8 +14,12 @@ use_default_rules: true
 # with verbosity set to 1, its dumping 'unknown file type messages'
 # verbosity: 1
 skip_list:
-  - meta-runtime
+  - meta-unsupported-ansible
+  - meta-runtime  # This collection with the appropriate awx.awx or ansible.controller still works with older ansible.
   - fqcn[keyword]
+  - role-name[path]
+warn_list:
+  - jinja[invalid]  # Temporarily adding this due to https://github.com/ansible/ansible-lint/issues/3048
 kinds:
   - playbooks: "**/examples/*.{yml,yaml}"
   - tasks: "**/examples/tasks/*.yml"
