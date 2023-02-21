@@ -45,7 +45,7 @@ controller_configuration_ad_hoc_command_secure_logging defaults to the value of 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`job_type`|"run"|no|str|Job_type to use for the ad hoc command. Either run or check.|
-|`inventory`|""|str|yes|Inventory to use for the ad hoc command.|
+|`inventory`|""|yes|str|Inventory to use for the ad hoc command.|
 |`limit`|`False`|no|str|Limit to use for the ad hoc command.|
 |`credential`|""|yes|str|Credential to use for ad hoc command.|
 |`execution_environment`|""|no|str|Execution Environment to use for ad hoc command.|

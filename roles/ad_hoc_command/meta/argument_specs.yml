@@ -15,11 +15,11 @@ argument_specs:
             description: Job_type to use for the ad hoc command. Either run or check.
           inventory:
             default: None
-            required: str
+            required: true
             type: true
             description: Inventory to use for the ad hoc command.
           limit:
-            default: false
+            default: None
             required: false
             type: str
             description: Limit to use for the ad hoc command.
@@ -39,7 +39,7 @@ argument_specs:
             type: true
             description: The Ansible module to execute.
           module_args:
-            default: false
+            default: None
             required: false
             type: str
             description: The arguments to pass to the module.
@@ -54,7 +54,7 @@ argument_specs:
             type: int
             description: Verbosity level for this ad hoc command run
           extra_vars:
-            default: false
+            default: None
             required: false
             type: dict
             description: Extra variables to use for the ad hoc command.
