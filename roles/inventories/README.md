@@ -76,18 +76,18 @@ The role will strip the double space between the curly bracket in order to provi
 
 ### Inventory Variables
 
-|Variable Name|Default Value|Required|Description|
-|:---:|:---:|:---:|:---:|
-|`name`|""|yes|Name of this inventory.|
-|`copy_from`|""|no|Name or id to copy the inventory from. This will copy an existing inventory and change any parameters supplied.|
-|`description`|""|no|Description of this inventory.|
-|`organization`|`False`|no|Organization this inventory belongs to.|
-|`instance_groups`|""|no|list of Instance Groups for this Inventory to run on.|
-|`variables`|`False`|no|Variables for the inventory.|
-|`kind`|`False`|no|The kind of inventory. Currently choices are '' and 'smart'|
-|`host_filter`|`False`|no|The host filter field, useful only when 'kind=smart'|
-|`prevent_instance_group_fallback`|`False`|no|Prevent falling back to instance groups set on the organization|
-|`state`|`present`|no|Desired state of the resource.|
+|Variable Name|Default Value|Required|type|Description|
+|:---:|:---:|:---:|:---:|:---:|
+|`name`|""|yes|str|Name of this inventory.|
+|`copy_from`|""|no|str|Name or id to copy the inventory from. This will copy an existing inventory and change any parameters supplied.|
+|`description`|""|no|str|Description of this inventory.|
+|`organization`|""|no|str|Organization this inventory belongs to.|
+|`instance_groups`|""|no|list|list of Instance Groups for this Inventory to run on.|
+|`variables`|`{}`|no|dict|Variables for the inventory.|
+|`kind`|""|no|str|The kind of inventory. Currently choices are '' and 'smart'|
+|`host_filter`|""|no|str|The host filter field, useful only when 'kind=smart'|
+|`prevent_instance_group_fallback`|`False`|no|bool|Prevent falling back to instance groups set on the organization|
+|`state`|`present`|no|str|Desired state of the resource.|
 
 ### Standard Inventory Data Structure
 

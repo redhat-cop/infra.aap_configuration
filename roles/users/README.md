@@ -25,6 +25,7 @@ Currently:
 |`controller_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.|||
 |`controller_user_accounts`|`see below`|yes|Data structure describing your user entries described below.||
+|`controller_user_default_password`|""|no|Global variable to set the password for all users.||
 
 ### Secure Logging Variables
 
@@ -59,8 +60,7 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`username`|""|yes|str|The username of the user|
-|`password`|""|no|str|The password of the user|
-|`controller_user_default_password`|""|no|str|Global variable to set the password for all users.|
+|`password`|"{{ controller_user_default_password }}"|no|str|The password of the user|
 |`email`|""|yes|str|The email of the user|
 |`first_name`|""|no|str|The first name of the user|
 |`last_name`|""|no|str|The last name of the user|

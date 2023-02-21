@@ -35,7 +35,7 @@ controller_configuration_ad_hoc_command_secure_logging defaults to the value of 
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`controller_configuration_ad_hoc_command_secure_logging`|`False`|no|Whether or not to include the sensitive ad_hoc_command role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`controller_configuration_ad_hoc_command_cancel_secure_logging`|`False`|no|Whether or not to include the sensitive ad_hoc_command_cancel role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ## Data Structure
@@ -44,10 +44,10 @@ controller_configuration_ad_hoc_command_secure_logging defaults to the value of 
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`id`|""|no|int|ID of the command to cancel Recommended to be in a separate list of ID's see example, defaults to output of ad_hoc_command_role of controller_ad_hoc_commands_output.|
-|`fail_if_not_running`|""|no|bool|Fail loudly if the I(command_id) can not be canceled.|
-|`interval`|2|no|int|Limit to use for the ad hoc command.|
-|`timeout`|""|yes|int|Credential to use for ad hoc command.|
+|`id`|""|yes|int|ID of the command to cancel Recommended to be in a separate list of ID's see example, defaults to output of ad_hoc_command_role of controller_ad_hoc_commands_output.|
+|`fail_if_not_running`|`False`|no|bool|Fail loudly if the I(command_id) can not be canceled.|
+|`interval`|1|no|int|The interval in seconds, to request an update from.|
+|`timeout`|0|no|int|Maximum time in seconds to wait for a job to finish, 0 means wait until it is finished regardless.|
 
 ### Standard Project Data Structure
 
