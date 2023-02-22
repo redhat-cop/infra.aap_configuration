@@ -30,12 +30,11 @@ argument_specs:
             elements: str
             description: list of Instance Groups for this Inventory to run on.
           variables:
-            default: false
             required: false
             type: dict
             description: Variables for the inventory.
           kind:
-            default: false
+            default: ""
             required: false
             type: str
             choices:
