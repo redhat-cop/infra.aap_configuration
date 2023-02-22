@@ -17,7 +17,6 @@ argument_specs:
             type: str
             description: Name of the organization for the application
           description:
-            default: None
             required: false
             type: str
             description: Description to use for the application.
@@ -32,7 +31,6 @@ argument_specs:
             type: str
             description: Application client type, "confidential" or "public"
           redirect_uris:
-            default: None
             required: false
             type: str
             description: Allowed urls list, space separated. Required with "authorization-code" grant type

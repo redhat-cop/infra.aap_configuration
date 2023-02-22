@@ -10,37 +10,30 @@ argument_specs:
         elements: dict
         options:
           manifest_file:
-            default: None
             required: false
             type: str
             description: File path to a Red Hat subscription manifest (a .zip file)
           manifest_url:
-            default: None
             required: false
             type: str
             description: URL containing a Red Hat subscription manifest (a .zip file)
           manifest_content:
-            default: None
             required: false
             type: str
             description: Base64 encoded content of Red Hat subscription manifest
           manifest:
-            default: None
             required: false
             type: str
             description: DEPRECATED - changed to `manifest_file` (still works as an alias)
           manifest_username:
-            default: None
             required: false
             type: str
             description: Optional username for access to `manifest_url`
           manifest_password:
-            default: None
             required: false
             type: str
             description: Optional password for access to `manifest_url`
           pool_id:
-            default: None
             required: false
             type: str
             description: Red Hat or Red Hat Satellite pool_id to attach to

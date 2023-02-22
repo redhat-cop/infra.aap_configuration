@@ -13,32 +13,26 @@ argument_specs:
             type: str
             description: Name of group
           organization:
-            default: None
             required: false
             type: str
             description: Organization the project belongs to.
           inventory:
-            default: None
             required: false
             type: str
             description: Inventory to use for the job ran with this workflow, only used if prompt for inventory is set.
           limit:
-            default: None
             required: false
             type: str
             description: Limit to use for the job_template.
           scm_branch:
-            default: None
             required: false
             type: str
             description: A specific of the SCM project to run the template on.
           extra_vars:
-            default: None
             required: false
             type: dict
             description: Any extra vars required to launch the job. ask_extra_vars needs to be set to True via controller_job_template module.
           wait:
-            default: None
             required: false
             type: bool
             description: Wait for the job to complete.
@@ -48,7 +42,6 @@ argument_specs:
             type: float
             description: The interval to request an update from controller.
           timeout:
-            default: None
             required: false
             type: int
             description: If waiting for the update to complete this will abort after this amount of seconds.

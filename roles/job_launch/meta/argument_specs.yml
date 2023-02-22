@@ -13,7 +13,6 @@ argument_specs:
             type: str
             description: Name or ID of job to launch
           job_type:
-            default: None
             required: false
             type: str
             description: Job_type to use for the job, only used if prompt for job_type is set. Run or Check are the options.
@@ -21,57 +20,46 @@ argument_specs:
               - run
               - check
           inventory:
-            default: None
             required: false
             type: str
             description: Inventory to use for the job, only used if prompt for inventory is set.
           organization:
-            default: None
             required: false
             type: str
             description: Organization the inventory belongs to.
           credentials:
-            default: None
             required: false
             type: list
             description: TCredential to use for job, only used if prompt for credential is set.
           extra_vars:
-            default: None
             required: false
             type: dict
             description: extra_vars to use for the Job Template. ask_extra_vars needs to be set to True via controller_job_template module.
           limit:
-            default: None
             required: false
             type: str
             description: Limit to use for the job_template.
           tags:
-            default: None
             required: false
             type: str
             description: Specific tags to use for from playbook.
           scm_branch:
-            default: None
             required: false
             type: str
             description: A specific of the SCM project to run the template on.
           skip_tags:
-            default: None
             required: false
             type: str
             description: Specific tags to skip from the playbook.
           verbosity:
-            default: None
             required: false
             type: int
             description: Verbosity level for this job run.
           diff_mode:
-            default: None
             required: false
             type: bool
             description: Show the changes made by Ansible tasks where supported.
           credential_passwords:
-            default: None
             required: false
             type: str
             description: Passwords for credentials which are set to prompt on launch.
@@ -106,7 +94,6 @@ argument_specs:
             type: int
             description: Timeout to use in the job run. Job Template default used if not set. Only allowed if `ask_timeout_on_launch` set to true on Job Template
           wait:
-            default: None
             required: false
             type: bool
             description: Wait for the job to complete.
@@ -116,7 +103,6 @@ argument_specs:
             type: float
             description: The interval to request an update from controller.
           timeout:
-            default: None
             required: false
             type: int
             description: If waiting for the job to complete this will abort after this amount of seconds.

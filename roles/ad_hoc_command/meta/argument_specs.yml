@@ -18,7 +18,6 @@ argument_specs:
             type: str
             description: Inventory to use for the ad hoc command.
           limit:
-            default: None
             required: false
             type: str
             description: Limit to use for the ad hoc command.
@@ -27,7 +26,6 @@ argument_specs:
             type: str
             description: Credential to use for ad hoc command.
           execution_environment:
-            default: None
             required: false
             type: str
             description: Execution Environment to use for ad hoc command.
@@ -36,7 +34,6 @@ argument_specs:
             type: str
             description: The Ansible module to execute.
           module_args:
-            default: None
             required: false
             type: str
             description: The arguments to pass to the module.
@@ -51,17 +48,14 @@ argument_specs:
             type: int
             description: Verbosity level for this ad hoc command run
           extra_vars:
-            default: None
             required: false
             type: dict
             description: Extra variables to use for the ad hoc command.
           become_enabled:
-            default: None
             required: false
             type: bool
             description: If the become flag should be set.
           diff_mode:
-            default: None
             required: false
             type: bool
             description: Show the changes made by Ansible tasks where supported
@@ -76,7 +70,6 @@ argument_specs:
             type: int
             description: The interval to request an update from controller.
           timeout:
-            default: None
             required: false
             type: int
             description: If waiting for the command to complete this will abort after this amount of seconds.

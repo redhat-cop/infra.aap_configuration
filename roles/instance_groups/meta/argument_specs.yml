@@ -13,12 +13,10 @@ argument_specs:
             type: str
             description: Name of instance group
           new_name:
-            default: None
             required: false
             type: str
             description: Name of instance group, used in updating
           credential:
-            default: None
             required: false
             type: str
             description: Credential to authenticate with Kubernetes or OpenShift. Must be of type "Kubernetes/OpenShift API Bearer Token". Will make instance part of a Container Group.
@@ -28,17 +26,14 @@ argument_specs:
             type: bool
             description: Signifies that this InstanceGroup should act as a ContainerGroup. If no credential is specified, the underlying Pod's ServiceAccount will be used.
           policy_instance_percentage:
-            default: None
             required: false
             type: int
             description: Minimum percentage of all instances that will be automatically assigned to this group when new instances come online.
           policy_instance_minimum:
-            default: None
             required: false
             type: int
             description: Static minimum number of Instances that will be automatically assign to this group when new instances come online.
           policy_instance_list:
-            default: None
             required: false
             type: list
             elements: str
@@ -54,12 +49,10 @@ argument_specs:
             type: int
             description: Max forks to execute on this group. Zero means no limit.
           pod_spec_override:
-            default: None
             required: false
             type: str
             description: A custom Kubernetes or OpenShift Pod specification.
           instances:
-            default: None
             required: false
             type: list
             elements: str

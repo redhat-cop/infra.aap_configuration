@@ -13,7 +13,6 @@ argument_specs:
             type: str
             description: Name of execution environment
           description:
-            default: None
             required: false
             type: str
             description: Description to use for the execution environment.
@@ -22,12 +21,10 @@ argument_specs:
             type: str
             description: Container image to use for the execution environment
           organization:
-            default: None
             required: false
             type: str
             description: The organization the execution environment belongs to.
           credential:
-            default: None
             required: false
             type: str
             description: Name of the credential to use for the execution environment.

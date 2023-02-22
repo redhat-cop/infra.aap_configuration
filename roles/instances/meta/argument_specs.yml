@@ -13,7 +13,6 @@ argument_specs:
             type: str
             description: Hostname of this instance.
           capacity_adjustment:
-            default: None
             required: false
             type: float
             description: Capacity adjustment between 0 and 1.
@@ -28,17 +27,14 @@ argument_specs:
             type: bool
             description: If true, will be managed by instance group policy.
           node_type:
-            default: None
             required: false
             type: str
             description: Role that this node plays in the mesh. Most likely Execution. Current options are 'execution'.
           node_state:
-            default: None
             required: false
             type: str
             description: Indicates the current life cycle stage of this instance. Current options are 'installed' and 'deprovisioning'.
           listener_port:
-            default: None
             required: false
             type: int
             description: Port that Receptor will listen for incoming connections on.

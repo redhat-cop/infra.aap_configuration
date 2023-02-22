@@ -13,22 +13,18 @@ argument_specs:
             type: str
             description: Name of inventory
           copy_from:
-            default: None
             required: false
             type: str
             description: Name or id to copy the inventory from. This will copy an existing inventory and change any parameters supplied.
           description:
-            default: None
             required: false
             type: str
             description: Description to use for the inventory.
           organization:
-            default: None
             required: false
             type: str
             description: Organization this inventory belongs to.
           instance_groups:
-            default: None
             required: false
             type: list
             elements: str

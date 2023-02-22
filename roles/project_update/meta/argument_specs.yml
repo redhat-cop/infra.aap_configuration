@@ -13,12 +13,10 @@ argument_specs:
             type: str
             description: Name of group
           organization:
-            default: None
             required: false
             type: str
             description: Organization the project belongs to.
           wait:
-            default: None
             required: false
             type: bool
             description: Wait for the job to complete.
@@ -28,7 +26,6 @@ argument_specs:
             type: float
             description: The interval to request an update from controller.
           timeout:
-            default: None
             required: false
             type: int
             description: If waiting for the update to complete this will abort after this amount of seconds.

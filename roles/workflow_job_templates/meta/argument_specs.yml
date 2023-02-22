@@ -13,141 +13,114 @@ argument_specs:
             type: str
             description: Name of workflow_job_template
           new_name:
-            default: None
             type: str
             required: false
             description: Setting this option will change the existing name (looked up via the name field).
           copy_from:
-            default: None
             required: false
             type: str
             description: Name or id to copy the workflow_job_template from. This will copy an existing workflow_job_template and change any parameters supplied.
           description:
-            default: None
             required: false
             type: str
             description: Description to use for the workflow_job_template.
           organization:
-            default: None
             required: false
             type: str
             description: Organization this workflow_job_template belongs to.
           inventory:
-            default: None
             required: false
             type: str
             description: Name of the inventory to use for the job template.
           limit:
-            default: None
             required: false
             type: str
             description: A host pattern to further constrain the list of hosts managed or affected by the playbook
           extra_vars:
-            default: None
             required: false
             type: dict
             description: Specify extra_vars for the template.
           job_tags:
-            default: None
             required: false
             type: str
             description: Comma separated list of the tags to use for the job template.
           ask_variables_on_launch:
-            default: None
             required: false
             type: bool
             description: Prompt user for extra_vars on launch.
           ask_limit_on_launch:
-            default: None
             required: false
             type: bool
             description: Prompt user for a limit on launch.
           ask_tags_on_launch:
-            default: None
             required: false
             type: bool
             description: Prompt user for job tags on launch.
           ask_skip_tags_on_launch:
-            default: None
             required: false
             type: bool
             description: Prompt user for job tags to skip on launch.
           ask_inventory_on_launch:
-            default: None
             required: false
             type: bool
             description: Prompt user for inventory on launch.
           ask_labels_on_launch:
-            default: None
             required: false
             type: bool
             description: Prompt user for labels on launch.
           ask_scm_branch_on_launch:
-            default: None
             required: false
             type: bool
             description: Prompt user for scm branch on launch.
           survey_enabled:
-            default: None
             required: false
             type: bool
             description: Enable a survey on the job template.
           survey_spec:
-            default: None
             required: false
             type: dict
             description: JSON/YAML dict formatted survey definition.
           survey:
-            default: None
             required: false
             type: dict
             description: JSON/YAML dict formatted survey definition. Alias of survey_spec
           allow_simultaneous:
-            default: None
             required: false
             type: bool
             description: Allow simultaneous runs of the job template.
           webhook_service:
-            default: None
             required: false
             type: str
             description: Service that webhook requests will be accepted from (github, gitlab)
           webhook_credential:
-            default: None
             required: false
             type: str
             description: Personal Access Token for posting back the status to the service API
           scm_branch:
-            default: None
             required: false
             type: str
             description: Branch to use in job run. Project default used if blank. Only allowed if project allow_override field is set to true.
           labels:
-            default: None
             required: false
             type:  list
             elements: str
             description: The labels applied to this job template.
           notification_templates_approvals:
-            default: None
             required: false
             type: list
             elements: str
             description: The notifications on approval to use for this organization in a list.
           notification_templates_started:
-            default: None
             required: false
             type: list
             elements: str
             description: The notifications on started to use for this organization in a list.
           notification_templates_success:
-            default: None
             required: false
             type: list
             elements: str
             description: The notifications on success to use for this organization in a list.
           notification_templates_error:
-            default: None
             required: false
             type: list
             elements: str
@@ -158,7 +131,6 @@ argument_specs:
             type: str
             description: Desired state of the resource.
           simplified_workflow_nodes:
-            default: None
             required: false
             type: list
             elements: dict

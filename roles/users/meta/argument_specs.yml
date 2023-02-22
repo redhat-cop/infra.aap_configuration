@@ -17,17 +17,14 @@ argument_specs:
             type: str
             description: Password of user, defaults to "{{ controller_user_default_password }}" if not set
           email:
-            default: None
             required: false
             type: str
             description: email of the user
           first_name:
-            default: None
             required: false
             type: str
             description: first_name of the user
           last_name:
-            default: None
             required: false
             type: str
             description: last_name of the user
@@ -47,7 +44,6 @@ argument_specs:
             type: bool
             description: True will always change password if user specifies password, even if API gives $encrypted$ for password. False will only set the password if other values change too.
           organization:
-            default: None
             required: false
             type: str
             description: Organization this user belongs to.

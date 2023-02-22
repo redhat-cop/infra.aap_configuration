@@ -17,17 +17,14 @@ argument_specs:
             type: str
             description: Name of field which will be written by the input source
           source_credential:
-            default: None
             required: false
             type: str
             description: Name of the source credential which points to a credential source
           metadata:
-            default: None
             required: false
             type: dict
             description: The metadata applied to the source.
           description:
-            default: None
             required: false
             type: str
             description: Description to use for the credential input source.

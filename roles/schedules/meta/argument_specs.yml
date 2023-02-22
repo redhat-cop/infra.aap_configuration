@@ -13,12 +13,10 @@ argument_specs:
             type: str
             description: Name of schedule
           new_name:
-            default: None
             type: str
             required: false
             description: Setting this option will change the existing name (looked up via the name field).
           description:
-            default: None
             required: false
             type: str
             description: Description to use for the schedule.
@@ -27,17 +25,14 @@ argument_specs:
             type: str
             description: A value representing the schedules iCal recurrence rule. See the awx.awx.schedule plugin for help constructing this value
           extra_data:
-            default: None
             required: false
             type: dict
             description: Extra vars for the job template. Only allowed if prompt on launch
           inventory:
-            default: None
             required: false
             type: str
             description: Inventory applied to job template, assuming the job template prompts for an inventory.
           credentials:
-            default: None
             required: false
             type: list
             description: List of credentials applied as a prompt, assuming job template prompts for credentials
@@ -82,17 +77,14 @@ argument_specs:
             type: str
             description: The job type used for the job template.
           job_tags:
-            default: None
             required: false
             type: str
             description: Comma separated list of tags to apply to the job
           skip_tags:
-            default: None
             required: false
             type: str
             description: Comma separated list of tags to skip for the job
           limit:
-            default: None
             required: false
             type: str
             description: A host pattern to constrain the list of hosts managed or affected by the playbook
@@ -114,12 +106,10 @@ argument_specs:
               - 5
             description: Level of verbosity for the job. Only allowed if configured to prompt on launch
           unified_job_template:
-            default: None
             required: false
             type: str
             description: The name of object that is being targeted by the schedule. Example objects include projects, inventory sources, and templates. Required if state='present.
           organization:
-            default: None
             required: false
             type: str
             description: The organization the unified job template exists in. Used for looking up the unified job template, not a direct model field.

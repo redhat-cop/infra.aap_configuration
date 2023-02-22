@@ -13,12 +13,10 @@ argument_specs:
             type: str
             description: Name of group
           new_name:
-            default: None
             required: false
             type: str
             description: Name of group, used in updating
           description:
-            default: None
             required: false
             type: str
             description: Description to use for the group.
@@ -27,18 +25,15 @@ argument_specs:
             type: str
             description: Name of inventory the group should be made a member of.
           variables:
-            default: None
             required: false
             type: dict
             description: variables applicable to group.
           hosts:
-            default: None
             required: false
             type: list
             elements: str
             description: hosts (list) in group
           children:
-            default: None
             required: false
             type: list
             elements: str

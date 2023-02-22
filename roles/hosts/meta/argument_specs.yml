@@ -13,12 +13,10 @@ argument_specs:
             type: str
             description: Name of host
           new_name:
-            default: None
             required: false
             type: str
             description: Name of host, used in updating
           description:
-            default: None
             required: false
             type: str
             description: Description to use for the host.
@@ -27,7 +25,6 @@ argument_specs:
             type: str
             description: Name of inventory the host should be made a member of.
           variables:
-            default: None
             required: false
             type: dict
             description: variables applicable to host.

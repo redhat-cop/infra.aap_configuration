@@ -13,17 +13,14 @@ argument_specs:
             type: str
             description: Name of team
           new_name:
-            default: None
             type: str
             required: false
             description: Setting this option will change the existing name (looked up via the name field).
           description:
-            default: None
             required: false
             type: str
             description: Description to use for the team.
           organization:
-            default: None
             required: false
             type: str
             description: Organization this team belongs to.

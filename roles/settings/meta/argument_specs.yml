@@ -8,17 +8,14 @@ argument_specs:
         type: raw
         options:
           settings:
-            default: None
             required: false
             type: dict
             description: Dict of multiple settings to set (This is the preferable method)
           name:
-            default: None
             required: false
             type: str
             description: Name of setting
           value:
-            default: None
             required: false
             type: str
             description: Value of the setting

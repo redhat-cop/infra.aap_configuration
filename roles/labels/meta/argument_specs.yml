@@ -9,17 +9,14 @@ argument_specs:
         elements: dict
         options:
           name:
-            default: None
             type: str
             required: true
             description: Name of label
           new_name:
-            default: None
             type: str
             required: false
             description: Setting this option will change the existing name (looked up via the name field).
           organization:
-            default: None
             type: str
             required: false
             description: Organization this label belongs to.

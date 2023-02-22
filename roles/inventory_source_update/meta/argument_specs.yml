@@ -17,12 +17,10 @@ argument_specs:
             type: str
             description: Name or id of the inventory that contains the inventory source(s) to update.
           organization:
-            default: None
             required: false
             type: str
             description: Name of the inventory source's inventory's organization.
           wait:
-            default: None
             required: false
             type: bool
             description: Wait for the job to complete.
@@ -32,7 +30,6 @@ argument_specs:
             type: int
             description: The interval to request an update from controller.
           timeout:
-            default: None
             required: false
             type: int
             description: If waiting for the job to complete this will abort after this amount of seconds.

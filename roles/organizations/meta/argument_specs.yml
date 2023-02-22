@@ -13,57 +13,47 @@ argument_specs:
             type: str
             description: Name of organization
           description:
-            default: None
             required: false
             type: str
             description: Description to use for the organization.
           custom_virtualenv:
-            default: None
             required: false
             type: str
             description: Local absolute file path containing a custom Python virtualenv to use.
           max_hosts:
-            default: None
             required: false
             type: int
             description: The max hosts allowed in this organization.
           instance_groups:
-            default: None
             required: false
             type: list
             elements: str
             description: list of Instance Groups for this Organization to run on.
           galaxy_credentials:
-            default: None
             required: false
             type: list
             elements: str
             description: The credentials to use with private automationhub.
           default_environment:
-            default: None
             required: false
             type: str
             description: Default Execution Environment to use for jobs owned by the Organization.
           notification_templates_started:
-            default: None
             required: false
             type: list
             elements: str
             description: The notifications on started to use for this organization in a list.
           notification_templates_success:
-            default: None
             required: false
             type: list
             elements: str
             description: The notifications on success to use for this organization in a list.
           notification_templates_error:
-            default: None
             required: false
             type: list
             elements: str
             description: The notifications on error to use for this organization in a list.
           notification_templates_approvals:
-            default: None
             required: false
             type: list
             elements: str
