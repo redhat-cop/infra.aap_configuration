@@ -128,6 +128,10 @@ argument_specs:
             required: false
             type: str
             description: Unused in this role
+          state:
+            required: false
+            type: str
+            description: Unused in this role
 
       # Async variables
       controller_configuration_inventory_source_updates_async_retries:

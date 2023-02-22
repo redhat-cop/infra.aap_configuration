@@ -45,12 +45,6 @@ argument_specs:
           scm_type:
             required: false
             type: str
-            choices:
-              - manual
-              - git
-              - svn
-              - insights
-              - archive
             description: Unused in this role
           scm_url:
             required: false
@@ -124,7 +118,6 @@ argument_specs:
             elements: str
             description: Unused in this role
           state:
-            default: "{{ controller_state | default('present') }}"
             required: false
             type: str
             description: Unused in this role
