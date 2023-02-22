@@ -25,7 +25,7 @@ argument_specs:
             type: bool
             description: Wait for the job to complete.
           interval:
-            default: "{{ controller_configuration_inventory_source_update_async_delay }}"
+            default: "{{ controller_configuration_inventory_source_update_async_delay | default(controller_configuration_async_retries | default(30)) }}"
             required: false
             type: int
             description: The interval to request an update from controller.
@@ -33,6 +33,101 @@ argument_specs:
             required: false
             type: int
             description: If waiting for the job to complete this will abort after this amount of seconds.
+          new_name:
+            required: false
+            type: str
+            description: Unused in this role
+          description:
+            required: false
+            type: str
+            description: Unused in this role
+          source:
+            required: false
+            type: str
+            choices:
+              - scm
+              - ec2
+              - gce
+              - azure_rm
+              - vmware
+              - satellite6
+              - openstack
+              - rhv
+              - controller
+              - insights
+            description: Unused in this role
+          source_path:
+            required: false
+            type: str
+            description: Unused in this role
+          source_vars:
+            required: false
+            type: dict
+            description: Unused in this role
+          enabled_var:
+            required: false
+            type: str
+            description: Unused in this role
+          enabled_value:
+            required: false
+            type: str
+            description: Unused in this role
+          host_filter:
+            required: false
+            type: str
+            description: Unused in this role
+          credential:
+            required: false
+            type: str
+            description: Unused in this role
+          execution_environment:
+            required: false
+            type: str
+            description: Unused in this role
+          overwrite:
+            required: false
+            type: bool
+            description: Unused in this role
+          overwrite_vars:
+            required: false
+            type: bool
+            description: Unused in this role
+          custom_virtualenv:
+            required: false
+            type: str
+            description: Unused in this role
+          verbosity:
+            required: false
+            type: int
+            choices:
+              - 0
+              - 1
+              - 2
+            description: Unused in this role
+          update_on_launch:
+            required: false
+            type: bool
+            description: Unused in this role
+          update_cache_timeout:
+            required: false
+            type: bool
+            description: Unused in this role
+          source_project:
+            required: false
+            type: str
+            description: Unused in this role
+          notification_templates_started:
+            required: false
+            type: bool
+            description: Unused in this role
+          notification_templates_success:
+            required: false
+            type: str
+            description: Unused in this role
+          notification_templates_error:
+            required: false
+            type: str
+            description: Unused in this role
 
       # Async variables
       controller_configuration_inventory_source_updates_async_retries:

@@ -105,7 +105,7 @@ argument_specs:
             description: Time in seconds to consider an inventory sync to be current.
           source_project:
             required: false
-            type: bool
+            type: str
             description: Project to use as source with scm option
           notification_templates_started:
             required: false
@@ -119,6 +119,14 @@ argument_specs:
             required: false
             type: str
             description: The notifications on error to use for this inventory source in a list.
+          wait:
+            required: false
+            type: bool
+            description: Unused for this role
+          interval:
+            required: false
+            type: int
+            description: Unused for this role
           state:
             default: "{{ controller_state | default('present') }}"
             required: false
