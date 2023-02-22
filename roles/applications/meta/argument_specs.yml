@@ -9,12 +9,10 @@ argument_specs:
         elements: dict
         options:
           name:
-            default: None
             required: true
             type: str
             description: Name of application
           organization:
-            default: None
             required: true
             type: str
             description: Name of the organization for the application
@@ -25,12 +23,12 @@ argument_specs:
             description: Description to use for the application.
           authorization_grant_type:
             default: password
-            required: true
+            required: false
             type: str
             description: Grant type for tokens in this application, "password" or "authorization-code"
           client_type:
             default: public
-            required: true
+            required: false
             type: str
             description: Application client type, "confidential" or "public"
           redirect_uris:
@@ -40,18 +38,18 @@ argument_specs:
             description: Allowed urls list, space separated. Required with "authorization-code" grant type
           skip_authorization:
             default: false
-            required: true
+            required: false
             type: bool
             description: Set True to skip authorization step for completely trusted applications.
           state:
-            default: "{{ controller_state }}"
+            default: "{{ controller_state | default('present') }}"
             required: false
             type: str
             description: Desired state of the application.
 
       # Async variables
       controller_configuration_applications_async_retries:
-        default: "{{ controller_configuration_async_retries }}"
+        default: "{{ controller_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
       controller_configuration_async_retries:
@@ -59,7 +57,7 @@ argument_specs:
         required: false
         description: This variable sets number of retries across all roles as a default.
       controller_configuration_applications_async_delay:
-        default: "{{ controller_configuration_async_retries }}"
+        default: "{{ controller_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
       controller_configuration_async_delay:
@@ -70,7 +68,7 @@ argument_specs:
 
       # No_log variables
       controller_configuration_applications_secure_logging:
-        default: "{{ controller_configuration_secure_logging }}"
+        default: "{{ controller_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
         description: Whether or falset to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
@@ -88,7 +86,7 @@ argument_specs:
         type: str
       controller_hostname:
         default: None
-        required: true
+        required: false
         description: URL to the Ansible Controller Server.
         type: str
       controller_validate_certs:

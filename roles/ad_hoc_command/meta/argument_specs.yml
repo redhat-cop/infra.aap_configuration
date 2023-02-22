@@ -14,9 +14,8 @@ argument_specs:
             type: str
             description: Job_type to use for the ad hoc command. Either run or check.
           inventory:
-            default: None
             required: true
-            type: true
+            type: str
             description: Inventory to use for the ad hoc command.
           limit:
             default: None
@@ -24,7 +23,6 @@ argument_specs:
             type: str
             description: Limit to use for the ad hoc command.
           credential:
-            default: None
             required: true
             type: str
             description: Credential to use for ad hoc command.
@@ -34,9 +32,8 @@ argument_specs:
             type: str
             description: Execution Environment to use for ad hoc command.
           module_name:
-            default: None
-            required: str
-            type: true
+            required: true
+            type: str
             description: The Ansible module to execute.
           module_args:
             default: None
@@ -45,7 +42,7 @@ argument_specs:
             description: The arguments to pass to the module.
           forks:
             default: 0
-            required: true
+            required: false
             type: int
             description: The number of forks to use for this ad hoc execution.
           verbosity:
@@ -86,7 +83,7 @@ argument_specs:
 
       # No_log variables
       controller_configuration_ad_hoc_command_secure_logging:
-        default: "{{ controller_configuration_secure_logging }}"
+        default: "{{ controller_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
         description: Whether or not to include the sensitive ad_hoc_command role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
@@ -104,7 +101,7 @@ argument_specs:
         type: str
       controller_hostname:
         default: None
-        required: true
+        required: false
         description: URL to the Ansible Controller Server.
         type: str
       controller_validate_certs:

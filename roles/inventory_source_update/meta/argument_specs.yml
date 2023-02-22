@@ -9,12 +9,10 @@ argument_specs:
         elements: dict
         options:
           name:
-            default: None
             required: true
             type: str
             description: Name of inventory_source
           inventory:
-            default: None
             required: true
             type: str
             description: Name or id of the inventory that contains the inventory source(s) to update.
@@ -41,7 +39,7 @@ argument_specs:
 
       # Async variables
       controller_configuration_inventory_source_updates_async_retries:
-        default: "{{ controller_configuration_async_retries }}"
+        default: "{{ controller_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
       controller_configuration_async_retries:
@@ -49,7 +47,7 @@ argument_specs:
         required: false
         description: This variable sets number of retries across all roles as a default.
       controller_configuration_inventory_source_updates_async_delay:
-        default: "{{ controller_configuration_async_retries }}"
+        default: "{{ controller_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
       controller_configuration_async_delay:
@@ -60,7 +58,7 @@ argument_specs:
 
       # No_log variables
       controller_configuration_inventory_source_updates_secure_logging:
-        default: "{{ controller_configuration_secure_logging }}"
+        default: "{{ controller_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
         description: Whether or falset to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
@@ -78,7 +76,7 @@ argument_specs:
         type: str
       controller_hostname:
         default: None
-        required: true
+        required: false
         description: URL to the Ansible Controller Server.
         type: str
       controller_validate_certs:

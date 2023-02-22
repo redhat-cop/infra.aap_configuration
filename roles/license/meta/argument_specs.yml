@@ -45,7 +45,6 @@ argument_specs:
             type: str
             description: Red Hat or Red Hat Satellite pool_id to attach to
           eula_accepted:
-            default: None
             required: true
             type: bool
             description: DEPRECATED since Tower 3.8 - Whether to accept the End User License Agreement for Ansible controller
@@ -57,7 +56,7 @@ argument_specs:
 
       # No_log variables
       controller_configuration_labels_secure_logging:
-        default: "{{ controller_configuration_secure_logging }}"
+        default: "{{ controller_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
         description: Whether or falset to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
@@ -75,7 +74,7 @@ argument_specs:
         type: str
       controller_hostname:
         default: None
-        required: true
+        required: false
         description: URL to the Ansible Controller Server.
         type: str
       controller_validate_certs:
