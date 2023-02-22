@@ -99,7 +99,7 @@
       ansible.builtin.include_role:
         name: jobs_cancel
       vars:
-        controller_cancel_jobs: "{{ launched_controller_jobs.results }}"
+        controller_cancel_jobs: "{{ launched_controller_jobs.results | map(attribute='id') }}"
       when: launched_controller_jobs is defined
 
     - name: Launch Controller workflows
