@@ -30,7 +30,7 @@
   vars:
     ansible_async_dir: '/tmp/.ansible_async'
 
-- name: "Configure Inventory Source | Wait for finish the Inventory Source creation"
+- name: "Controller inventory source update | Wait for finish of the inventory source update"
   ansible.builtin.async_status:
     jid: "{{ __inventory_source_update_async_results_item.ansible_job_id }}"
   register: __inventory_source_update_async_result
