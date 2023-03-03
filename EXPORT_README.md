@@ -2,7 +2,7 @@
 
 ## Description
 
-This is documentation on how to use a the Automation Controller export commands in development.
+This is documentation on how to use a the Automation Controller export commands in development. You can also look at the role [roles](roles/filetree_create/README.md) as another method to export data
 
 This command allows exporting all available endpoints for Automation Controller for use in importing, templates, backups and many other uses.
 
