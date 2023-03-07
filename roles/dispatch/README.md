@@ -1,4 +1,4 @@
-# controller_configuration.projects
+# controller_configuration.dispatch
 
 ## Description
 
