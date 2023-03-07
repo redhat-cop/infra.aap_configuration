@@ -7,51 +7,51 @@ argument_specs:
         description: Data structure describing your users
         type: list
         elements: dict
-        options:
-          username:
-            required: true
-            type: str
-            description: Username of user
-          password:
-            required: true
-            type: str
-            description: Password of user, defaults to "{{ controller_user_default_password }}" if not set
-          email:
-            required: false
-            type: str
-            description: email of the user
-          first_name:
-            required: false
-            type: str
-            description: first_name of the user
-          last_name:
-            required: false
-            type: str
-            description: last_name of the user
-          is_superuser:
-            default: false
-            required: false
-            type: bool
-            description: Whether the user is a superuser
-          is_system_auditor:
-            default: false
-            required: false
-            type: bool
-            description: Whether the user is an auditor
-          update_secrets:
-            default: true
-            required: false
-            type: bool
-            description: True will always change password if user specifies password, even if API gives $encrypted$ for password. False will only set the password if other values change too.
-          organization:
-            required: false
-            type: str
-            description: Organization this user belongs to.
-          state:
-            default: "{{ controller_state | default('present') }}"
-            required: false
-            type: str
-            description: Desired state of the resource.
+        # options:
+        #   username:
+        #     required: true
+        #     type: str
+        #     description: Username of user
+        #   password:
+        #     required: true
+        #     type: str
+        #     description: Password of user, defaults to "{{ controller_user_default_password }}" if not set
+        #   email:
+        #     required: false
+        #     type: str
+        #     description: email of the user
+        #   first_name:
+        #     required: false
+        #     type: str
+        #     description: first_name of the user
+        #   last_name:
+        #     required: false
+        #     type: str
+        #     description: last_name of the user
+        #   is_superuser:
+        #     default: false
+        #     required: false
+        #     type: bool
+        #     description: Whether the user is a superuser
+        #   is_system_auditor:
+        #     default: false
+        #     required: false
+        #     type: bool
+        #     description: Whether the user is an auditor
+        #   update_secrets:
+        #     default: true
+        #     required: false
+        #     type: bool
+        #     description: True will always change password if user specifies password, even if API gives $encrypted$ for password. False will only set the password if other values change too.
+        #   organization:
+        #     required: false
+        #     type: str
+        #     description: Organization this user belongs to.
+        #   state:
+        #     default: "{{ controller_state | default('present') }}"
+        #     required: false
+        #     type: str
+        #     description: Desired state of the resource.
 
       controller_user_default_password:
         default: None

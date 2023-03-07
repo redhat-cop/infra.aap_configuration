@@ -7,120 +7,120 @@ argument_specs:
         description: Data structure describing your project_updates
         type: list
         elements: dict
-        options:
-          name:
-            required: true
-            type: str
-            description: Name of group
-          organization:
-            required: false
-            type: str
-            description: Organization the project belongs to.
-          wait:
-            required: false
-            type: bool
-            description: Wait for the job to complete.
-          interval:
-            default: "{{ controller_configuration_project_update_async_delay }}"
-            required: false
-            type: float
-            description: The interval to request an update from controller.
-          timeout:
-            required: false
-            type: int
-            description: If waiting for the update to complete this will abort after this amount of seconds.
-          update_project:
-            default: false
-            required: false
-            type: bool
-            description: If defined and true, the project update will be executed, otherwise it won't.
-          copy_from:
-            required: false
-            type: str
-            description: Unused in this role
-          description:
-            required: false
-            type: str
-            description: Unused in this role
-          scm_type:
-            required: false
-            type: str
-            description: Unused in this role
-          scm_url:
-            required: false
-            type: str
-            description: Unused in this role
-          default_environment:
-            required: false
-            type: str
-            description: Unused in this role
-          local_path:
-            required: false
-            type: str
-            description: Unused in this role
-          scm_branch:
-            required: false
-            type: str
-            description: Unused in this role
-          scm_refspec:
-            required: false
-            type: str
-            description: Unused in this role
-          credential:
-            required: false
-            type: str
-            description: Unused in this role
-          signature_validation_credential:
-            required: false
-            type: str
-            description: Unused in this role
-          scm_clean:
-            required: false
-            type: bool
-            description: Unused in this role
-          scm_delete_on_update:
-            required: false
-            type: bool
-            description: Unused in this role
-          scm_track_submodules:
-            required: false
-            type: bool
-            description: Unused in this role
-          scm_update_on_launch:
-            required: false
-            type: bool
-            description: Unused in this role
-          scm_update_cache_timeout:
-            required: false
-            type: int
-            description: Unused in this role
-          allow_override:
-            required: false
-            type: bool
-            description: Unused in this role
-          custom_virtualenv:
-            required: false
-            type: str
-            description: Unused in this role
-          notification_templates_started:
-            required: false
-            type: list
-            elements: str
-            description: Unused in this role
-          notification_templates_success:
-            required: false
-            type: list
-            elements: str
-            description: Unused in this role
-          notification_templates_error:
-            required: false
-            type: list
-            elements: str
-            description: Unused in this role
-          state:
-            required: false
-            type: str
-            description: Unused in this role
+        # options:
+        #   name:
+        #     required: true
+        #     type: str
+        #     description: Name of group
+        #   organization:
+        #     required: false
+        #     type: str
+        #     description: Organization the project belongs to.
+        #   wait:
+        #     required: false
+        #     type: bool
+        #     description: Wait for the job to complete.
+        #   interval:
+        #     default: "{{ controller_configuration_project_update_async_delay }}"
+        #     required: false
+        #     type: float
+        #     description: The interval to request an update from controller.
+        #   timeout:
+        #     required: false
+        #     type: int
+        #     description: If waiting for the update to complete this will abort after this amount of seconds.
+        #   update_project:
+        #     default: false
+        #     required: false
+        #     type: bool
+        #     description: If defined and true, the project update will be executed, otherwise it won't.
+        #   copy_from:
+        #     required: false
+        #     type: str
+        #     description: Unused in this role
+        #   description:
+        #     required: false
+        #     type: str
+        #     description: Unused in this role
+        #   scm_type:
+        #     required: false
+        #     type: str
+        #     description: Unused in this role
+        #   scm_url:
+        #     required: false
+        #     type: str
+        #     description: Unused in this role
+        #   default_environment:
+        #     required: false
+        #     type: str
+        #     description: Unused in this role
+        #   local_path:
+        #     required: false
+        #     type: str
+        #     description: Unused in this role
+        #   scm_branch:
+        #     required: false
+        #     type: str
+        #     description: Unused in this role
+        #   scm_refspec:
+        #     required: false
+        #     type: str
+        #     description: Unused in this role
+        #   credential:
+        #     required: false
+        #     type: str
+        #     description: Unused in this role
+        #   signature_validation_credential:
+        #     required: false
+        #     type: str
+        #     description: Unused in this role
+        #   scm_clean:
+        #     required: false
+        #     type: bool
+        #     description: Unused in this role
+        #   scm_delete_on_update:
+        #     required: false
+        #     type: bool
+        #     description: Unused in this role
+        #   scm_track_submodules:
+        #     required: false
+        #     type: bool
+        #     description: Unused in this role
+        #   scm_update_on_launch:
+        #     required: false
+        #     type: bool
+        #     description: Unused in this role
+        #   scm_update_cache_timeout:
+        #     required: false
+        #     type: int
+        #     description: Unused in this role
+        #   allow_override:
+        #     required: false
+        #     type: bool
+        #     description: Unused in this role
+        #   custom_virtualenv:
+        #     required: false
+        #     type: str
+        #     description: Unused in this role
+        #   notification_templates_started:
+        #     required: false
+        #     type: list
+        #     elements: str
+        #     description: Unused in this role
+        #   notification_templates_success:
+        #     required: false
+        #     type: list
+        #     elements: str
+        #     description: Unused in this role
+        #   notification_templates_error:
+        #     required: false
+        #     type: list
+        #     elements: str
+        #     description: Unused in this role
+        #   state:
+        #     required: false
+        #     type: str
+        #     description: Unused in this role
 
       # Async variables
       controller_configuration_project_update_async_retries:

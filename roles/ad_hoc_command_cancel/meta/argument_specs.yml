@@ -7,26 +7,26 @@ argument_specs:
         description: Data structure describing your ad hoc jobs to cancel
         type: list
         elements: dict
-        options:
-          id:
-            required: true
-            type: int
-            description: ID of the command to cancel
-          fail_if_not_running:
-            default: false
-            required: false
-            type: bool
-            description: Fail loudly if the command can not be canceled.
-          interval:
-            default: 0
-            required: false
-            type: int
-            description: The interval in seconds, to request an update from.
-          timeout:
-            default: 0
-            required: false
-            type: int
-            description: Maximum time in seconds to wait for a job to finish, 0 means wait until it is finished regardless.
+        # options:
+        #   id:
+        #     required: true
+        #     type: int
+        #     description: ID of the command to cancel
+        #   fail_if_not_running:
+        #     default: false
+        #     required: false
+        #     type: bool
+        #     description: Fail loudly if the command can not be canceled.
+        #   interval:
+        #     default: 0
+        #     required: false
+        #     type: int
+        #     description: The interval in seconds, to request an update from.
+        #   timeout:
+        #     default: 0
+        #     required: false
+        #     type: int
+        #     description: Maximum time in seconds to wait for a job to finish, 0 means wait until it is finished regardless.
 
       # No_log variables
       controller_configuration_ad_hoc_command_cancel_secure_logging:

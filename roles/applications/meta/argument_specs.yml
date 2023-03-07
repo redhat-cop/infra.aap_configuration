@@ -7,43 +7,43 @@ argument_specs:
         description: Data structure describing your applications
         type: list
         elements: dict
-        options:
-          name:
-            required: true
-            type: str
-            description: Name of application
-          organization:
-            required: true
-            type: str
-            description: Name of the organization for the application
-          description:
-            required: false
-            type: str
-            description: Description to use for the application.
-          authorization_grant_type:
-            default: password
-            required: false
-            type: str
-            description: Grant type for tokens in this application, "password" or "authorization-code"
-          client_type:
-            default: public
-            required: false
-            type: str
-            description: Application client type, "confidential" or "public"
-          redirect_uris:
-            required: false
-            type: str
-            description: Allowed urls list, space separated. Required with "authorization-code" grant type
-          skip_authorization:
-            default: false
-            required: false
-            type: bool
-            description: Set True to skip authorization step for completely trusted applications.
-          state:
-            default: "{{ controller_state | default('present') }}"
-            required: false
-            type: str
-            description: Desired state of the application.
+        # options:
+        #   name:
+        #     required: true
+        #     type: str
+        #     description: Name of application
+        #   organization:
+        #     required: true
+        #     type: str
+        #     description: Name of the organization for the application
+        #   description:
+        #     required: false
+        #     type: str
+        #     description: Description to use for the application.
+        #   authorization_grant_type:
+        #     default: password
+        #     required: false
+        #     type: str
+        #     description: Grant type for tokens in this application, "password" or "authorization-code"
+        #   client_type:
+        #     default: public
+        #     required: false
+        #     type: str
+        #     description: Application client type, "confidential" or "public"
+        #   redirect_uris:
+        #     required: false
+        #     type: str
+        #     description: Allowed urls list, space separated. Required with "authorization-code" grant type
+        #   skip_authorization:
+        #     default: false
+        #     required: false
+        #     type: bool
+        #     description: Set True to skip authorization step for completely trusted applications.
+        #   state:
+        #     default: "{{ controller_state | default('present') }}"
+        #     required: false
+        #     type: str
+        #     description: Desired state of the application.
 
       # Async variables
       controller_configuration_applications_async_retries:

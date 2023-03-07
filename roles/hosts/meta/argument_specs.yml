@@ -7,37 +7,37 @@ argument_specs:
         description: Data structure describing your hosts
         type: list
         elements: dict
-        options:
-          name:
-            required: true
-            type: str
-            description: Name of host
-          new_name:
-            required: false
-            type: str
-            description: Name of host, used in updating
-          description:
-            required: false
-            type: str
-            description: Description to use for the host.
-          inventory:
-            required: true
-            type: str
-            description: Name of inventory the host should be made a member of.
-          variables:
-            required: false
-            type: dict
-            description: variables applicable to host.
-          enabled:
-            default: false
-            required: false
-            type: bool
-            description: Whether the host is enabled
-          state:
-            default: "{{ controller_state | default('present') }}"
-            required: false
-            type: str
-            description: Desired state of the resource.
+        # options:
+        #   name:
+        #     required: true
+        #     type: str
+        #     description: Name of host
+        #   new_name:
+        #     required: false
+        #     type: str
+        #     description: Name of host, used in updating
+        #   description:
+        #     required: false
+        #     type: str
+        #     description: Description to use for the host.
+        #   inventory:
+        #     required: true
+        #     type: str
+        #     description: Name of inventory the host should be made a member of.
+        #   variables:
+        #     required: false
+        #     type: dict
+        #     description: variables applicable to host.
+        #   enabled:
+        #     default: false
+        #     required: false
+        #     type: bool
+        #     description: Whether the host is enabled
+        #   state:
+        #     default: "{{ controller_state | default('present') }}"
+        #     required: false
+        #     type: str
+        #     description: Desired state of the resource.
 
       # Async variables
       controller_configuration_hosts_async_retries:

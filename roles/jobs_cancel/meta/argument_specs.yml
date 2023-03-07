@@ -7,16 +7,16 @@ argument_specs:
         description: Data structure describing your jobs to cancel
         type: list
         elements: dict
-        options:
-          id:
-            required: true
-            type: int
-            description: ID of the job to cancel
-          fail_if_not_running:
-            default: false
-            required: false
-            type: bool
-            description: Fail loudly if the job can not be canceled.
+        # options:
+        #   id:
+        #     required: true
+        #     type: int
+        #     description: ID of the job to cancel
+        #   fail_if_not_running:
+        #     default: false
+        #     required: false
+        #     type: bool
+        #     description: Fail loudly if the job can not be canceled.
 
       # No_log variables
       controller_configuration_ad_hoc_command_cancel_secure_logging:

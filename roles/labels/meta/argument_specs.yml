@@ -7,24 +7,24 @@ argument_specs:
         description: Data structure describing your labels
         type: list
         elements: dict
-        options:
-          name:
-            type: str
-            required: true
-            description: Name of label
-          new_name:
-            type: str
-            required: false
-            description: Setting this option will change the existing name (looked up via the name field).
-          organization:
-            type: str
-            required: false
-            description: Organization this label belongs to.
-          state:
-            default: "{{ controller_state | default('present') }}"
-            type: str
-            required: false
-            description: Desired state of the resource.
+        # options:
+        #   name:
+        #     type: str
+        #     required: true
+        #     description: Name of label
+        #   new_name:
+        #     type: str
+        #     required: false
+        #     description: Setting this option will change the existing name (looked up via the name field).
+        #   organization:
+        #     type: str
+        #     required: false
+        #     description: Organization this label belongs to.
+        #   state:
+        #     default: "{{ controller_state | default('present') }}"
+        #     type: str
+        #     required: false
+        #     description: Desired state of the resource.
 
       # Async variables
       controller_configuration_labels_async_retries:

@@ -7,37 +7,37 @@ argument_specs:
         description: Data structure describing your instances
         type: list
         elements: dict
-        options:
-          hostname:
-            required: true
-            type: str
-            description: Hostname of this instance.
-          capacity_adjustment:
-            required: false
-            type: float
-            description: Capacity adjustment between 0 and 1.
-          enabled:
-            default: false
-            required: false
-            type: bool
-            description: If true, the instance will be enabled and used.
-          managed_by_policy:
-            default: false
-            required: false
-            type: bool
-            description: If true, will be managed by instance group policy.
-          node_type:
-            required: false
-            type: str
-            description: Role that this node plays in the mesh. Most likely Execution. Current options are 'execution'.
-          node_state:
-            required: false
-            type: str
-            description: Indicates the current life cycle stage of this instance. Current options are 'installed' and 'deprovisioning'.
-          listener_port:
-            required: false
-            type: int
-            description: Port that Receptor will listen for incoming connections on.
+        # options:
+        #   hostname:
+        #     required: true
+        #     type: str
+        #     description: Hostname of this instance.
+        #   capacity_adjustment:
+        #     required: false
+        #     type: float
+        #     description: Capacity adjustment between 0 and 1.
+        #   enabled:
+        #     default: false
+        #     required: false
+        #     type: bool
+        #     description: If true, the instance will be enabled and used.
+        #   managed_by_policy:
+        #     default: false
+        #     required: false
+        #     type: bool
+        #     description: If true, will be managed by instance group policy.
+        #   node_type:
+        #     required: false
+        #     type: str
+        #     description: Role that this node plays in the mesh. Most likely Execution. Current options are 'execution'.
+        #   node_state:
+        #     required: false
+        #     type: str
+        #     description: Indicates the current life cycle stage of this instance. Current options are 'installed' and 'deprovisioning'.
+        #   listener_port:
+        #     required: false
+        #     type: int
+        #     description: Port that Receptor will listen for incoming connections on.
 
       # Async variables
       controller_configuration_instances_async_retries:

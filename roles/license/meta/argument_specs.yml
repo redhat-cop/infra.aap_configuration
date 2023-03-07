@@ -8,44 +8,44 @@ argument_specs:
         description: Data structure describing your license for Controller
         type: list
         elements: dict
-        options:
-          manifest_file:
-            required: false
-            type: str
-            description: File path to a Red Hat subscription manifest (a .zip file)
-          manifest_url:
-            required: false
-            type: str
-            description: URL containing a Red Hat subscription manifest (a .zip file)
-          manifest_content:
-            required: false
-            type: str
-            description: Base64 encoded content of Red Hat subscription manifest
-          manifest:
-            required: false
-            type: str
-            description: DEPRECATED - changed to `manifest_file` (still works as an alias)
-          manifest_username:
-            required: false
-            type: str
-            description: Optional username for access to `manifest_url`
-          manifest_password:
-            required: false
-            type: str
-            description: Optional password for access to `manifest_url`
-          pool_id:
-            required: false
-            type: str
-            description: Red Hat or Red Hat Satellite pool_id to attach to
-          eula_accepted:
-            required: true
-            type: bool
-            description: DEPRECATED since Tower 3.8 - Whether to accept the End User License Agreement for Ansible controller
-          force:
-            default: false
-            required: false
-            type: bool
-            description: By default, the license manifest will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.
+        # options:
+        #   manifest_file:
+        #     required: false
+        #     type: str
+        #     description: File path to a Red Hat subscription manifest (a .zip file)
+        #   manifest_url:
+        #     required: false
+        #     type: str
+        #     description: URL containing a Red Hat subscription manifest (a .zip file)
+        #   manifest_content:
+        #     required: false
+        #     type: str
+        #     description: Base64 encoded content of Red Hat subscription manifest
+        #   manifest:
+        #     required: false
+        #     type: str
+        #     description: DEPRECATED - changed to `manifest_file` (still works as an alias)
+        #   manifest_username:
+        #     required: false
+        #     type: str
+        #     description: Optional username for access to `manifest_url`
+        #   manifest_password:
+        #     required: false
+        #     type: str
+        #     description: Optional password for access to `manifest_url`
+        #   pool_id:
+        #     required: false
+        #     type: str
+        #     description: Red Hat or Red Hat Satellite pool_id to attach to
+        #   eula_accepted:
+        #     required: true
+        #     type: bool
+        #     description: DEPRECATED since Tower 3.8 - Whether to accept the End User License Agreement for Ansible controller
+        #   force:
+        #     default: false
+        #     required: false
+        #     type: bool
+        #     description: By default, the license manifest will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.
 
       # No_log variables
       controller_configuration_labels_secure_logging:

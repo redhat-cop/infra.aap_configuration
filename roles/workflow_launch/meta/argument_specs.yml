@@ -7,44 +7,44 @@ argument_specs:
         description: Data structure describing your workflow_launch
         type: list
         elements: dict
-        options:
-          name:
-            required: true
-            type: str
-            description: Name of group
-          organization:
-            required: false
-            type: str
-            description: Organization the project belongs to.
-          inventory:
-            required: false
-            type: str
-            description: Inventory to use for the job ran with this workflow, only used if prompt for inventory is set.
-          limit:
-            required: false
-            type: str
-            description: Limit to use for the job_template.
-          scm_branch:
-            required: false
-            type: str
-            description: A specific of the SCM project to run the template on.
-          extra_vars:
-            required: false
-            type: dict
-            description: Any extra vars required to launch the job. ask_extra_vars needs to be set to True via controller_job_template module.
-          wait:
-            required: false
-            type: bool
-            description: Wait for the job to complete.
-          interval:
-            default: "{{ controller_configuration_workflow_launch_async_delay }}"
-            required: false
-            type: float
-            description: The interval to request an update from controller.
-          timeout:
-            required: false
-            type: int
-            description: If waiting for the update to complete this will abort after this amount of seconds.
+        # options:
+        #   name:
+        #     required: true
+        #     type: str
+        #     description: Name of group
+        #   organization:
+        #     required: false
+        #     type: str
+        #     description: Organization the project belongs to.
+        #   inventory:
+        #     required: false
+        #     type: str
+        #     description: Inventory to use for the job ran with this workflow, only used if prompt for inventory is set.
+        #   limit:
+        #     required: false
+        #     type: str
+        #     description: Limit to use for the job_template.
+        #   scm_branch:
+        #     required: false
+        #     type: str
+        #     description: A specific of the SCM project to run the template on.
+        #   extra_vars:
+        #     required: false
+        #     type: dict
+        #     description: Any extra vars required to launch the job. ask_extra_vars needs to be set to True via controller_job_template module.
+        #   wait:
+        #     required: false
+        #     type: bool
+        #     description: Wait for the job to complete.
+        #   interval:
+        #     default: "{{ controller_configuration_workflow_launch_async_delay }}"
+        #     required: false
+        #     type: float
+        #     description: The interval to request an update from controller.
+        #   timeout:
+        #     required: false
+        #     type: int
+        #     description: If waiting for the update to complete this will abort after this amount of seconds.
 
       # Async variables
       controller_configuration_workflow_launch_async_retries:

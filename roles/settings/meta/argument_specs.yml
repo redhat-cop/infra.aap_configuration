@@ -6,19 +6,19 @@ argument_specs:
       controller_settings:
         description: Data structure describing your settings. Type is list if providing name/value and type dict if providing settings.
         type: raw
-        options:
-          settings:
-            required: false
-            type: dict
-            description: Dict of multiple settings to set (This is the preferable method)
-          name:
-            required: false
-            type: str
-            description: Name of setting
-          value:
-            required: false
-            type: str
-            description: Value of the setting
+        # options:
+        #   settings:
+        #     required: false
+        #     type: dict
+        #     description: Dict of multiple settings to set (This is the preferable method)
+        #   name:
+        #     required: false
+        #     type: str
+        #     description: Name of setting
+        #   value:
+        #     required: false
+        #     type: str
+        #     description: Value of the setting
 
 
       # Async variables

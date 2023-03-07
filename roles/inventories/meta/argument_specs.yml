@@ -7,55 +7,55 @@ argument_specs:
         description: Data structure describing your inventories
         type: list
         elements: dict
-        options:
-          name:
-            required: true
-            type: str
-            description: Name of inventory
-          copy_from:
-            required: false
-            type: str
-            description: Name or id to copy the inventory from. This will copy an existing inventory and change any parameters supplied.
-          description:
-            required: false
-            type: str
-            description: Description to use for the inventory.
-          organization:
-            required: false
-            type: str
-            description: Organization this inventory belongs to.
-          instance_groups:
-            required: false
-            type: list
-            elements: str
-            description: list of Instance Groups for this Inventory to run on.
-          variables:
-            required: false
-            type: dict
-            description: Variables for the inventory.
-          kind:
-            default: ""
-            required: false
-            type: str
-            choices:
-              - ""
-              - smart
-            description: The kind of inventory. Currently choices are '' and 'smart'
-          host_filter:
-            default: false
-            required: false
-            type: str
-            description: The host filter field, useful only when 'kind=smart'
-          prevent_instance_group_fallback:
-            default: false
-            required: false
-            type: bool
-            description: Prevent falling back to instance groups set on the organization
-          state:
-            default: "{{ controller_state | default('present') }}"
-            required: false
-            type: str
-            description: Desired state of the resource.
+        # options:
+        #   name:
+        #     required: true
+        #     type: str
+        #     description: Name of inventory
+        #   copy_from:
+        #     required: false
+        #     type: str
+        #     description: Name or id to copy the inventory from. This will copy an existing inventory and change any parameters supplied.
+        #   description:
+        #     required: false
+        #     type: str
+        #     description: Description to use for the inventory.
+        #   organization:
+        #     required: false
+        #     type: str
+        #     description: Organization this inventory belongs to.
+        #   instance_groups:
+        #     required: false
+        #     type: list
+        #     elements: str
+        #     description: list of Instance Groups for this Inventory to run on.
+        #   variables:
+        #     required: false
+        #     type: dict
+        #     description: Variables for the inventory.
+        #   kind:
+        #     default: ""
+        #     required: false
+        #     type: str
+        #     choices:
+        #       - ""
+        #       - smart
+        #     description: The kind of inventory. Currently choices are '' and 'smart'
+        #   host_filter:
+        #     default: false
+        #     required: false
+        #     type: str
+        #     description: The host filter field, useful only when 'kind=smart'
+        #   prevent_instance_group_fallback:
+        #     default: false
+        #     required: false
+        #     type: bool
+        #     description: Prevent falling back to instance groups set on the organization
+        #   state:
+        #     default: "{{ controller_state | default('present') }}"
+        #     required: false
+        #     type: str
+        #     description: Desired state of the resource.
 
       # Async variables
       controller_configuration_inventories_async_retries:

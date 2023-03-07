@@ -7,28 +7,28 @@ argument_specs:
         description: Data structure describing your teams
         type: list
         elements: dict
-        options:
-          name:
-            required: true
-            type: str
-            description: Name of team
-          new_name:
-            type: str
-            required: false
-            description: Setting this option will change the existing name (looked up via the name field).
-          description:
-            required: false
-            type: str
-            description: Description to use for the team.
-          organization:
-            required: false
-            type: str
-            description: Organization this team belongs to.
-          state:
-            default: "{{ controller_state | default('present') }}"
-            required: false
-            type: str
-            description: Desired state of the resource.
+        # options:
+        #   name:
+        #     required: true
+        #     type: str
+        #     description: Name of team
+        #   new_name:
+        #     type: str
+        #     required: false
+        #     description: Setting this option will change the existing name (looked up via the name field).
+        #   description:
+        #     required: false
+        #     type: str
+        #     description: Description to use for the team.
+        #   organization:
+        #     required: false
+        #     type: str
+        #     description: Organization this team belongs to.
+        #   state:
+        #     default: "{{ controller_state | default('present') }}"
+        #     required: false
+        #     type: str
+        #     description: Desired state of the resource.
 
       # Async variables
       controller_configuration_teams_async_retries:

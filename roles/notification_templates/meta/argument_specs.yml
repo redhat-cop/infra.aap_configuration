@@ -7,45 +7,45 @@ argument_specs:
         description: Data structure describing your notification_templates
         type: list
         elements: dict
-        options:
-          name:
-            required: true
-            type: str
-            description: Name of notification_template
-          new_name:
-            required: false
-            type: str
-            description: Name of notification_template, used in updating
-          copy_from:
-            required: false
-            type: str
-            description: Name or id to copy the notification_template from. This will copy an existing notification_template and change any parameters supplied.
-          description:
-            required: false
-            type: str
-            description: Description to use for the notification_template.
-          organization:
-            required: false
-            type: str
-            description: Organization this notification_template belongs to.
-          notification_type:
-            required: false
-            type: str
-            description: The type of notification to be sent.
-          notification_configuration:
-            required: false
-            type: str
-            description: The notification configuration file. Note providing this field would disable all depreciated notification-configuration-related fields.
-          messages:
-            required: false
-            type: list
-            elements: str
-            description: Optional custom messages for notification template. Assumes any instance of two space __ are used for adding variables and removes them. Does not effect single space.
-          state:
-            default: "{{ controller_state | default('present') }}"
-            required: false
-            type: str
-            description: Desired state of the resource.
+        # options:
+        #   name:
+        #     required: true
+        #     type: str
+        #     description: Name of notification_template
+        #   new_name:
+        #     required: false
+        #     type: str
+        #     description: Name of notification_template, used in updating
+        #   copy_from:
+        #     required: false
+        #     type: str
+        #     description: Name or id to copy the notification_template from. This will copy an existing notification_template and change any parameters supplied.
+        #   description:
+        #     required: false
+        #     type: str
+        #     description: Description to use for the notification_template.
+        #   organization:
+        #     required: false
+        #     type: str
+        #     description: Organization this notification_template belongs to.
+        #   notification_type:
+        #     required: false
+        #     type: str
+        #     description: The type of notification to be sent.
+        #   notification_configuration:
+        #     required: false
+        #     type: str
+        #     description: The notification configuration file. Note providing this field would disable all depreciated notification-configuration-related fields.
+        #   messages:
+        #     required: false
+        #     type: list
+        #     elements: str
+        #     description: Optional custom messages for notification template. Assumes any instance of two space __ are used for adding variables and removes them. Does not effect single space.
+        #   state:
+        #     default: "{{ controller_state | default('present') }}"
+        #     required: false
+        #     type: str
+        #     description: Desired state of the resource.
 
       # Async variables
       controller_configuration_notification_templates_async_retries:

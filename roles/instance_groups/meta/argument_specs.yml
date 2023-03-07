@@ -7,61 +7,61 @@ argument_specs:
         description: Data structure describing your instance_groups
         type: list
         elements: dict
-        options:
-          name:
-            required: true
-            type: str
-            description: Name of instance group
-          new_name:
-            required: false
-            type: str
-            description: Name of instance group, used in updating
-          credential:
-            required: false
-            type: str
-            description: Credential to authenticate with Kubernetes or OpenShift. Must be of type "Kubernetes/OpenShift API Bearer Token". Will make instance part of a Container Group.
-          is_container_group:
-            default: false
-            required: false
-            type: bool
-            description: Signifies that this InstanceGroup should act as a ContainerGroup. If no credential is specified, the underlying Pod's ServiceAccount will be used.
-          policy_instance_percentage:
-            required: false
-            type: int
-            description: Minimum percentage of all instances that will be automatically assigned to this group when new instances come online.
-          policy_instance_minimum:
-            required: false
-            type: int
-            description: Static minimum number of Instances that will be automatically assign to this group when new instances come online.
-          policy_instance_list:
-            required: false
-            type: list
-            elements: str
-            description: List of exact-match Instances that will be assigned to this group.
-          max_concurrent_jobs:
-            default: 0
-            required: false
-            type: int
-            description: Maximum number of concurrent jobs to run on this group. Zero means no limit.
-          max_forks:
-            default: 0
-            required: false
-            type: int
-            description: Max forks to execute on this group. Zero means no limit.
-          pod_spec_override:
-            required: false
-            type: str
-            description: A custom Kubernetes or OpenShift Pod specification.
-          instances:
-            required: false
-            type: list
-            elements: str
-            description: The instances associated with this instance_group.
-          state:
-            default: "{{ controller_state | default('present') }}"
-            required: false
-            type: str
-            description: Desired state of the resource.
+        # options:
+        #   name:
+        #     required: true
+        #     type: str
+        #     description: Name of instance group
+        #   new_name:
+        #     required: false
+        #     type: str
+        #     description: Name of instance group, used in updating
+        #   credential:
+        #     required: false
+        #     type: str
+        #     description: Credential to authenticate with Kubernetes or OpenShift. Must be of type "Kubernetes/OpenShift API Bearer Token". Will make instance part of a Container Group.
+        #   is_container_group:
+        #     default: false
+        #     required: false
+        #     type: bool
+        #     description: Signifies that this InstanceGroup should act as a ContainerGroup. If no credential is specified, the underlying Pod's ServiceAccount will be used.
+        #   policy_instance_percentage:
+        #     required: false
+        #     type: int
+        #     description: Minimum percentage of all instances that will be automatically assigned to this group when new instances come online.
+        #   policy_instance_minimum:
+        #     required: false
+        #     type: int
+        #     description: Static minimum number of Instances that will be automatically assign to this group when new instances come online.
+        #   policy_instance_list:
+        #     required: false
+        #     type: list
+        #     elements: str
+        #     description: List of exact-match Instances that will be assigned to this group.
+        #   max_concurrent_jobs:
+        #     default: 0
+        #     required: false
+        #     type: int
+        #     description: Maximum number of concurrent jobs to run on this group. Zero means no limit.
+        #   max_forks:
+        #     default: 0
+        #     required: false
+        #     type: int
+        #     description: Max forks to execute on this group. Zero means no limit.
+        #   pod_spec_override:
+        #     required: false
+        #     type: str
+        #     description: A custom Kubernetes or OpenShift Pod specification.
+        #   instances:
+        #     required: false
+        #     type: list
+        #     elements: str
+        #     description: The instances associated with this instance_group.
+        #   state:
+        #     default: "{{ controller_state | default('present') }}"
+        #     required: false
+        #     type: str
+        #     description: Desired state of the resource.
 
       # Async variables
       controller_configuration_instance_groups_async_retries:

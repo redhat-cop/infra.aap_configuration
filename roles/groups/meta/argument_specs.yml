@@ -7,52 +7,52 @@ argument_specs:
         description: Data structure describing your groups
         type: list
         elements: dict
-        options:
-          name:
-            required: true
-            type: str
-            description: Name of group
-          new_name:
-            required: false
-            type: str
-            description: Name of group, used in updating
-          description:
-            required: false
-            type: str
-            description: Description to use for the group.
-          inventory:
-            required: true
-            type: str
-            description: Name of inventory the group should be made a member of.
-          variables:
-            required: false
-            type: dict
-            description: variables applicable to group.
-          hosts:
-            required: false
-            type: list
-            elements: str
-            description: hosts (list) in group
-          children:
-            required: false
-            type: list
-            elements: str
-            description: List of groups that should be nested inside in this group
-          preserve_existing_hosts:
-            default: false
-            required: false
-            type: bool
-            description: Whether to preserve existing hosts in an existing group
-          preserve_existing_children:
-            default: false
-            required: false
-            type: bool
-            description: Whether to preserve existing children in an existing group
-          state:
-            default: "{{ controller_state | default('present') }}"
-            required: false
-            type: str
-            description: Desired state of the resource.
+        # options:
+        #   name:
+        #     required: true
+        #     type: str
+        #     description: Name of group
+        #   new_name:
+        #     required: false
+        #     type: str
+        #     description: Name of group, used in updating
+        #   description:
+        #     required: false
+        #     type: str
+        #     description: Description to use for the group.
+        #   inventory:
+        #     required: true
+        #     type: str
+        #     description: Name of inventory the group should be made a member of.
+        #   variables:
+        #     required: false
+        #     type: dict
+        #     description: variables applicable to group.
+        #   hosts:
+        #     required: false
+        #     type: list
+        #     elements: str
+        #     description: hosts (list) in group
+        #   children:
+        #     required: false
+        #     type: list
+        #     elements: str
+        #     description: List of groups that should be nested inside in this group
+        #   preserve_existing_hosts:
+        #     default: false
+        #     required: false
+        #     type: bool
+        #     description: Whether to preserve existing hosts in an existing group
+        #   preserve_existing_children:
+        #     default: false
+        #     required: false
+        #     type: bool
+        #     description: Whether to preserve existing children in an existing group
+        #   state:
+        #     default: "{{ controller_state | default('present') }}"
+        #     required: false
+        #     type: str
+        #     description: Desired state of the resource.
 
       # Async variables
       controller_configuration_groups_async_retries:

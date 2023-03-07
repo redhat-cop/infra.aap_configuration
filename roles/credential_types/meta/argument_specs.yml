@@ -7,40 +7,40 @@ argument_specs:
         description: Data structure describing your credential_types
         type: list
         elements: dict
-        options:
-          name:
-            type: str
-            required: true
-            description: Name of Credential Type
-          description:
-            type: str
-            required: false
-            description: The description of the credential type to give more detail about it.
-          injectors:
-            type: dict
-            required: false
-            description: Enter injectors using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax. See below on proper formatting.
-          inputs:
-            type: dict
-            required: false
-            description: Enter inputs using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax.
-          kind:
-            default: cloud
-            type: str
-            required: false
-            choices:
-              - 'ssh'
-              - 'vault'
-              - 'net'
-              - 'scm'
-              - 'cloud'
-              - 'insights'
-            description: The type of credential type being added. Note that only cloud and net can be used for creating credential types.
-          state:
-            default: "{{ controller_state | default('present') }}"
-            type: str
-            required: false
-            description: Desired state of the resource.
+        # options:
+        #   name:
+        #     type: str
+        #     required: true
+        #     description: Name of Credential Type
+        #   description:
+        #     type: str
+        #     required: false
+        #     description: The description of the credential type to give more detail about it.
+        #   injectors:
+        #     type: dict
+        #     required: false
+        #     description: Enter injectors using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax. See below on proper formatting.
+        #   inputs:
+        #     type: dict
+        #     required: false
+        #     description: Enter inputs using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax.
+        #   kind:
+        #     default: cloud
+        #     type: str
+        #     required: false
+        #     choices:
+        #       - 'ssh'
+        #       - 'vault'
+        #       - 'net'
+        #       - 'scm'
+        #       - 'cloud'
+        #       - 'insights'
+        #     description: The type of credential type being added. Note that only cloud and net can be used for creating credential types.
+        #   state:
+        #     default: "{{ controller_state | default('present') }}"
+        #     type: str
+        #     required: false
+        #     description: Desired state of the resource.
 
       # Async variables
       controller_configuration_credential_types_async_retries:
