@@ -5,8 +5,14 @@ name: pre-commit tests
 
 
 on:
-  pull_request:
   push:
+    branches: ['*_']
+    tags:
+    - '*_'  # ending underscore for trying things
+    - 'v[0-9]+.[0-9]+.[0-9]+'  # final version
+    - 'v[0-9]+.[0-9]+.[0-9]+[abrc]+[0-9]+'  # alpha, beta, release candidate (rc)
+    - 'v[0-9]+.[0-9]+.[0-9]+.dev[0-9]+'  # development versions
+  pull_request:
   schedule:
     - cron: "0 6 * * *"
 
