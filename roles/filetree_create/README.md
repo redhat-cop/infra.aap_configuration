@@ -12,10 +12,11 @@ That role requires the following:
 
 The following variables are required for that role to work properly:
 
-| Variable Name | Default Value | Required | Description |
-| :------------ | :-----------: | :------: | :---------- |
-| `controller_api_plugin` | `ansible.controller` | yes | Full path for the controller_api_plugin to be used. <br/> Can have two possible values: <br/>&nbsp;&nbsp;- awx.awx.controller_api             # For the community Collection version <br/>&nbsp;&nbsp;- ansible.controller.controller_api  # For the Red Hat Certified Collection version|
-| `output_path` | `/tmp/filetree_output` | yes | The path to the output directory where all the generated `yaml` files with the corresponding Objects as code will be written to. |
+| Variable Name | Default Value | Required | Type | Description |
+| :------------ | :-----------: | :------: | :------: | :---------- |
+| `controller_api_plugin` | `ansible.controller` | yes | str | Full path for the controller_api_plugin to be used. <br/> Can have two possible values: <br/>&nbsp;&nbsp;- awx.awx.controller_api             # For the community Collection version <br/>&nbsp;&nbsp;- ansible.controller.controller_api  # For the Red Hat Certified Collection version|
+| `output_path` | `/tmp/filetree_output` | yes | str | The path to the output directory where all the generated `yaml` files with the corresponding Objects as code will be written to. |
+| `input_tag` | `['all']` | no | bool | The tags which are applied to the 'sub-roles'. If 'all' is in the list (the default value) then all roles will be called. |
 
 ## Dependencies
 
