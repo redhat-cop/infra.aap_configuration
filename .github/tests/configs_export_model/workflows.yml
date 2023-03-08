@@ -7,7 +7,6 @@ controller_workflows:
     survey_enabled: true
     allow_simultaneous: false
     ask_variables_on_launch: false
-    inventory:
     limit:
     scm_branch:
     ask_inventory_on_launch: false
@@ -24,12 +23,7 @@ controller_workflows:
             name: Default
             type: organization
       workflow_nodes:
-        - inventory:
-          scm_branch:
-          job_tags:
-          skip_tags:
-          limit:
-          all_parents_must_converge: false
+        - all_parents_must_converge: false
           identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
           workflow_job_template:
             organization:
@@ -76,12 +70,7 @@ controller_workflows:
               type: workflow_job_template
             identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
             type: workflow_job_template_node
-        - inventory:
-          scm_branch:
-          job_tags:
-          skip_tags:
-          limit:
-          all_parents_must_converge: false
+        - all_parents_must_converge: false
           identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
           workflow_job_template:
             organization:
@@ -125,12 +114,7 @@ controller_workflows:
               type: workflow_job_template
             identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
             type: workflow_job_template_node
-        - inventory:
-          scm_branch:
-          job_tags:
-          skip_tags:
-          limit:
-          all_parents_must_converge: false
+        - all_parents_must_converge: false
           identifier: 28910097-e606-4252-8aa9-2c1a0b8b6c92
           workflow_job_template:
             organization:
@@ -158,12 +142,7 @@ controller_workflows:
               type: workflow_job_template
             identifier: 28910097-e606-4252-8aa9-2c1a0b8b6c92
             type: workflow_job_template_node
-        - inventory:
-          scm_branch:
-          job_tags:
-          skip_tags:
-          limit:
-          all_parents_must_converge: true
+        - all_parents_must_converge: true
           identifier: ca7ffc3b-8401-4153-83bf-bb3dd918ca87
           workflow_job_template:
             organization:
@@ -191,12 +170,7 @@ controller_workflows:
               type: workflow_job_template
             identifier: ca7ffc3b-8401-4153-83bf-bb3dd918ca87
             type: workflow_job_template_node
-        - inventory:
-          scm_branch:
-          job_tags:
-          skip_tags:
-          limit:
-          all_parents_must_converge: false
+        - all_parents_must_converge: false
           identifier: 046378e5-ff53-4168-afc2-a82d87327099
           workflow_job_template:
             organization:
@@ -295,9 +269,6 @@ controller_workflows:
     state: present
     allow_simultaneous: false
     ask_variables_on_launch: false
-    inventory:
-    limit:
-    scm_branch:
     ask_inventory_on_launch: false
     ask_scm_branch_on_launch: false
     ask_limit_on_launch: false
@@ -308,12 +279,7 @@ controller_workflows:
       schedules: []
       labels: []
       workflow_nodes:
-        - inventory:
-          scm_branch:
-          job_tags:
-          skip_tags:
-          limit:
-          all_parents_must_converge: false
+        - all_parents_must_converge: false
           identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
           workflow_job_template:
             organization:
@@ -352,13 +318,7 @@ controller_workflows:
               type: workflow_job_template
             identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
             type: workflow_job_template_node
-        - extra_data: {}
-          inventory:
-          scm_branch:
-          job_tags:
-          skip_tags:
-          limit:
-          all_parents_must_converge: false
+        - all_parents_must_converge: false
           identifier: f82f1c5f-c3b5-4bc4-9e1a-d8cd1ab44c44
           workflow_job_template:
             organization:
