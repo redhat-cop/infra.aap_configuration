@@ -58,7 +58,7 @@ This also speeds up the overall role.
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|Name of Job Template|
+|`name`|""|yes|str|Name of execution environment|
 |`description`|""|no|str|Description to use for the execution environment.|
 |`image`|""|yes|str|Container image to use for the execution environment|
 |`organization`|""|no|str|The organization the execution environment belongs to.|

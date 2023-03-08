@@ -58,22 +58,22 @@ This role accepts two data models. A simple straightforward easy to maintain mod
 
 ### Organization Variables
 
-|Variable Name|Default Value|Required|Description|
-|:---:|:---:|:---:|:---:|
-|`name`|""|yes|Name of Organization|
-|`description`|`False`|no|Description of  of Organization.|
-|`custom_virtualenv`|""|no|Local absolute file path containing a custom Python virtualenv to use.|
-|`max_hosts`|""|no|The max hosts allowed in this organization.|
-|`instance_groups`|""|no|list of Instance Groups for this Organization to run on.|
-|`galaxy_credentials`|""|no|The credentials to use with private automationhub.|
-|`default_environment`|""|no|Default Execution Environment to use for jobs owned by the Organization.|
-|`notification_templates_started`|""|no|The notifications on started to use for this organization in a list.|
-|`notification_templates_success`|""|no|The notifications on success to use for this organization in a list.|
-|`notification_templates_error`|""|no|The notifications on error to use for this organization in a list.|
-|`notification_templates_approvals`|""|no|The notifications for approval to use for this organization in a list.|
-|`state`|`present`|no|Desired state of the resource.|
-|`assign_galaxy_credentials_to_org`|`True`|no|Boolean to indicate whether credentials should be assigned or not. It should be noted that credentials must exist before adding it. |
-|`assign_default_ee_to_org`|`True`|no|Boolean to indicate whether default execution environment should be assigned or not. It should be noted that execution environment must exist before adding it. |
+|Variable Name|Default Value|Required|Type|Description|
+|:---:|:---:|:---:|:---:|:---:|
+|`name`|""|yes|str|Name of Organization|
+|`description`|`False`|no|str|Description of  of Organization.|
+|`custom_virtualenv`|""|no|str|Local absolute file path containing a custom Python virtualenv to use.|
+|`max_hosts`|""|no|int|The max hosts allowed in this organization.|
+|`instance_groups`|""|no|list|list of Instance Groups for this Organization to run on.|
+|`galaxy_credentials`|""|no|list|The credentials to use with private automationhub.|
+|`default_environment`|""|no|str|Default Execution Environment to use for jobs owned by the Organization.|
+|`notification_templates_started`|""|no|list|The notifications on started to use for this organization in a list.|
+|`notification_templates_success`|""|no|list|The notifications on success to use for this organization in a list.|
+|`notification_templates_error`|""|no|list|The notifications on error to use for this organization in a list.|
+|`notification_templates_approvals`|""|no|list|The notifications for approval to use for this organization in a list.|
+|`state`|`present`|no|str|Desired state of the resource.|
+|`assign_galaxy_credentials_to_org`|`True`|no|bool|Boolean to indicate whether credentials should be assigned or not. It should be noted that credentials must exist before adding it. |
+|`assign_default_ee_to_org`|`True`|no|bool|Boolean to indicate whether default execution environment should be assigned or not. It should be noted that execution environment must exist before adding it. |
 
 ### Standard Organization Data Structure model
 

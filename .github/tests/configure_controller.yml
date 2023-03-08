@@ -95,11 +95,17 @@
       ansible.builtin.debug:
         var: launched_controller_jobs
 
+    - name: Combine id output with defaults temp
+      ansible.builtin.set_fact:
+        tmp_job: "{{ {'id': item.id} }}"
+      with_items: "{{ launched_controller_jobs.results }}"
+      register: tmp_jobs
+
     - name: Cancel Controller Jobs
       ansible.builtin.include_role:
         name: jobs_cancel
       vars:
-        controller_cancel_jobs: "{{ launched_controller_jobs.results }}"
+        controller_cancel_jobs: "{{ tmp_jobs.results | map(attribute='ansible_facts.tmp_job') | list }}"
       when: launched_controller_jobs is defined
 
     - name: Launch Controller workflows
