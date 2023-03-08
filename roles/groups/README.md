@@ -76,16 +76,18 @@ The role will strip the double space between the curly bracket in order to provi
 
 ### Group Variables
 
-|Variable Name|Default Value|Required|Description|
-|:---:|:---:|:---:|:---:|
-|`name`|""|yes|Name of Group|
-|`new_name`|""|yes|Name of Group, used in updating a Group.|
-|`description`|`False`|no|Description of  of Group.|
-|`inventory`|""|yes| Name of inventory|
-|`variables`|{}|no| variables applicable to group.|
-|`hosts`|""|no | hosts (list) in group|
-|`children`|""|no|  List of groups that should be nested inside in this group|
-|`state`|`present`|no|Desired state of the resource.|
+|Variable Name|Default Value|Required|Type|Description|
+|:---:|:---:|:---:|:---:|:---:|
+|`name`|""|yes|str|Name of Group|
+|`new_name`|""|yes|str|Name of Group, used in updating a Group.|
+|`description`|`False`|no|str|Description of the Group.|
+|`inventory`|""|yes|str|Name of inventory the group should be made a member of.|
+|`variables`|{}|no|dict|variables applicable to group.|
+|`hosts`|""|no|list|hosts (list) in group|
+|`children`|""|no|list|List of groups that should be nested inside in this group|
+|`preserve_existing_hosts`|`False`|no|bool|Whether to preserve existing hosts in an existing group|
+|`preserve_existing_children`|`False`|no|bool|Whether to preserve existing children in an existing group|
+|`state`|`present`|no|str|Desired state of the resource.|
 
 ### Standard Organization Data Structure
 

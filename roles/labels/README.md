@@ -54,12 +54,12 @@ This also speeds up the overall role.
 
 ### Labels Variables
 
-|Variable Name|Default Value|Required|Description|
-|:---:|:---:|:---:|:---:|
-|`name`|""|yes|Name of this label.|
-|`new_name`|""|no|Setting this option will change the existing name (looked up via the name field).|
-|`organization`|`False`|no|Organization this label belongs to.|
-|`state`|`present`|no|Desired state of the resource.|
+|Variable Name|Default Value|Required|type|Description|
+|:---:|:---:|:---:|:---:|:---:|
+|`name`|""|yes|str|Name of this label.|
+|`new_name`|""|no|str|Setting this option will change the existing name (looked up via the name field).|
+|`organization`|`False`|no|str|Organization this label belongs to.|
+|`state`|`present`|no|str|Desired state of the resource.|
 
 ### Standard Label Data Structure
 
