@@ -1,0 +1,77 @@
+---
+name: Test collection with AWX
+
+on:
+  workflow_call:
+    inputs:
+      awx_version:
+        description: The version to pull of awx
+        required: true
+        type: string
+env:
+  # Run docker-compose up in the background
+  COMPOSE_UP_OPTS: -d
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: "Checkout galaxy_ng"
+        uses: actions/checkout@v2
+        with:
+          repository: ansible/awx
+          path: awx
+          ref: ${{ inputs.awx_version }}
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Update apt
+        run: sudo apt -y update
+
+      - name: Install requirements
+        run: sudo apt-get install -y libsasl2-dev python3-dev libldap2-dev libssl-dev build-essential
+
+      - name: Install docker-compose
+        run: pip3 install --upgrade docker-compose
+
+      - name: collect system info
+        run: whoami; id; pwd; ls -al; uname -a ; df -h .; mount ; cat /etc/issue; docker --version ; ps aux | fgrep -i docker; ls -al /var/run/containerd/containerd.sock
+
+      - name: set the awx password in the inventory
+        run: echo "admin_password='password'" >> awx/tools/docker-compose/inventory
+
+      - name: build images
+        working-directory: awx
+        run: make docker-compose-build
+
+      - name: build stack
+        working-directory: awx
+        run: make docker-compose up
+        continue-on-error: true
+
+      - name: give some time to spin up
+        run: sleep 200
+
+      - name: Preload data
+        working-directory: awx
+        run: docker exec tools_awx_1 awx-manage create_preload_data
+
+      - name: set the awx password in the inventory
+        run: ls awx/tools/docker-compose/_sources/secrets
+
+      - name: Display Versions
+        run: which python && pip --version && ansible --version
+
+      - name: "Install Galaxy dependencies"
+        run: ansible-galaxy collection install -r .github/collections/requirements.yml
+
+      - name: "Perform playbook tests"
+        run: ansible-playbook .github/tests/configure_controller.yml -e controller_hostname=localhost:8043 -v
+
+      - name: "Perform export model playbook tests"
+        run: ansible-playbook .github/tests/configure_controller_export_model.yml -e controller_hostname=localhost:8043 -v
+...
