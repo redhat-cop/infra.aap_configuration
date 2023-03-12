@@ -37,20 +37,28 @@
           ansible.builtin.debug:
             msg: "Using the 'controller_api' plugin from: {{ controller_api_plugin }}"
 
-    - name: Wait for Controller to come up
-      ansible.builtin.uri:
-        url: "{{ controller_hostname }}/api/v2/ping"
-        status_code: 200
-      register: result
-      until: result.status == 200
-      retries: 20
-      delay: 30
-
     - name: Include vars from controller_configs directory
       ansible.builtin.include_vars:
         dir: ./configs_export_model
         ignore_files: [README.md]
         extensions: ["yml"]
+
+    - name: Wait for the controller to be up
+      uri:
+        url: "https://{{ controller_hostname }}/api/v2/mesh_visualizer/"
+        user: "{{ controller_username }}"
+        password: "{{ controller_password }}"
+        method: GET
+        validate_certs: false
+        force_basic_auth: true
+        status_code: 200
+        body_format: json
+      register: mesh_data
+      until: mesh_data.json.nodes[0].enabled
+      retries: 120
+      delay: 5
+
+
 
   roles:
     - {role: organizations, when: controller_organizations is defined, tags: organizations}
