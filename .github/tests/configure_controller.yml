@@ -38,6 +38,14 @@
           ansible.builtin.debug:
             msg: "Using the 'controller_api' plugin from: {{ controller_api_plugin }}"
 
+    - name: Include vars from configs directory
+      ansible.builtin.include_vars:
+        dir: ./configs
+        ignore_files: [controller_config.yml.template]
+        extensions: ["yml"]
+      tags:
+        - always
+
     - name: Wait for Controller to come up
       ansible.builtin.uri:
         url: "https://{{ controller_hostname }}/api/v2/ping"
@@ -49,22 +57,30 @@
       delay: 30
       ignore_errors: true
 
-    - name: "Show result of ping"
+    - name: Wait for the controller node to be up
+      uri:
+        url: "https://{{ controller_hostname }}/api/v2/mesh_visualizer/"
+        user: "{{ controller_username }}"
+        password: "{{ controller_password }}"
+        method: GET
+        validate_certs: false
+        force_basic_auth: true
+        status_code: 200
+        body_format: json
+      register: mesh_data
+      until: mesh_data.json is defined
+      retries: 80
+      delay: 5
+      ignore_errors: true
+
+    - name: "Show result of mesh_visualizer"
       ansible.builtin.debug:
-        var: result
+        var: mesh_data
 
     - name: Sleep for 60 seconds and allow awx to come up.
       ansible.builtin.wait_for:
         timeout: 60
       delegate_to: localhost
-
-    - name: Include vars from configs directory
-      ansible.builtin.include_vars:
-        dir: ./configs
-        ignore_files: [controller_config.yml.template]
-        extensions: ["yml"]
-      tags:
-        - always
 
   roles:
     - dispatch  # The dispatch role calls all of the other roles.
