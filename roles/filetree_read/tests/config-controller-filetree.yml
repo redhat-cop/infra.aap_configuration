@@ -33,24 +33,10 @@
             controller_oauthtoken: "{{ authtoken_res.json.token }}"
             controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
   roles:
-    - {role: infra.controller_configuration.filetree_read, assign_galaxy_credentials_to_org: false}
-    - {role: infra.controller_configuration.dispatch, assign_galaxy_credentials_to_org: false}
+    - redhat_cop.controller_configuration.filetree_read
+    - redhat_cop.controller_configuration.dispatch
 
   post_tasks:
-    - name: Add galaxy creds
-      tags:
-        - organizations
-      block:
-        - name: Include Tasks to add Galaxy credentials to Organizations
-          ansible.builtin.include_role:
-            name: infra.controller_configuration.dispatch
-            apply:
-              tags:
-                - organizations
-          vars:
-            controller_configuration_dispatcher_roles:
-              - {role: organizations, var: controller_organizations, tags: organizations}
-
     - name: "Delete the Authentication Token used"
       ansible.builtin.uri:
         url: "https://{{ controller_hostname }}{{ controller_oauthtoken_url }}"
