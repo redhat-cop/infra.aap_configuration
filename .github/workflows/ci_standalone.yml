@@ -18,10 +18,12 @@ jobs:
       fail-fast: false
       matrix:
         awx_version:
-          - 21.11.0
-          - 21.12.0
+          - devel
           - 21.13.0
-          # - devel Disabled for now
+          - 21.12.0
+          - 21.11.0
+          # - 20.1.0 Diabled until working
+          # - 19.5.1 Diabled until working
     uses: "./.github/workflows/ci_standalone_versioned.yml"
     with:
       awx_version: ${{ matrix.awx_version }}

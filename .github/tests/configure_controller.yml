@@ -71,7 +71,6 @@
       until: mesh_data.json is defined
       retries: 80
       delay: 5
-      ignore_errors: true
 
     - name: "Show result of mesh_visualizer"
       ansible.builtin.debug:
