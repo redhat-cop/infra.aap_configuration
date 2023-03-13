@@ -1,0 +1,6 @@
+---
+minor_changes:
+  - removed references to redhat_cop as a collection namespace in the readme files.
+breaking_changes:
+  - updated object_diff role to use the infra namespace, that means to use the role it requires the infra version of the collection. Previous version required the redhat_cop
+...

@@ -18,7 +18,7 @@
 
 - name: "Find the difference of Workflow Job Templates between what is on the Controller versus CasC on SCM"
   ansible.builtin.set_fact:
-    __workflow_job_templates_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
+    __workflow_job_templates_difference: "{{ lookup(controller_role_plugin,
                                                     api_list=__controller_api_workflow_job_templates,
                                                     compare_list=controller_workflows,
                                                     with_present=false, set_absent=true)

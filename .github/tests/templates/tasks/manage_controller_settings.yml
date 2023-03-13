@@ -6,7 +6,7 @@
     - alltags
 
 - import_role:
-    name: redhat_cop.controller_configuration.settings
+    name: infra.controller_configuration.settings
   tags:
     - settings
     - alltags
@@ -18,7 +18,7 @@
     - alltags
 
 - import_role:
-    name: redhat_cop.controller_configuration.settings
+    name: infra.controller_configuration.settings
   tags:
     - settings
     - alltags
