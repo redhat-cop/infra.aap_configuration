@@ -33,8 +33,8 @@
             controller_oauthtoken: "{{ authtoken_res.json.token }}"
             controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
   roles:
-    - redhat_cop.controller_configuration.filetree_read
-    - redhat_cop.controller_configuration.dispatch
+    - infra.controller_configuration.filetree_read
+    - infra.controller_configuration.dispatch
 
   post_tasks:
     - name: "Delete the Authentication Token used"
