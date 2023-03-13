@@ -10,7 +10,7 @@ on:
 
 jobs:
   integration-test:
-    uses: "./.github/workflows/ci_workflow.yaml"
+    uses: "./.github/workflows/ci_standalone.yaml"
   release:
     needs:
       - integration-test

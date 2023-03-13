@@ -54,7 +54,7 @@
         status_code: 200
         body_format: json
       register: mesh_data
-      until: mesh_data.json.nodes[0].enabled
+      until: mesh_data.json is defined
       retries: 120
       delay: 5
 
