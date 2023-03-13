@@ -54,14 +54,7 @@ jobs:
         continue-on-error: true
 
       - name: give some time to spin up
-        run: sleep 200
-
-      - name: Preload data
-        working-directory: awx
-        run: docker exec tools_awx_1 awx-manage create_preload_data
-
-      - name: set the awx password in the inventory
-        run: ls awx/tools/docker-compose/_sources/secrets
+        run: sleep 30
 
       - name: Display Versions
         run: which python && pip --version && ansible --version
