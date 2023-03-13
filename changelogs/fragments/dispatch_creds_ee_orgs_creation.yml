@@ -1,0 +1,6 @@
+---
+minor_changes:
+  - Set the variables to assign_galaxy_credentials_to_org and assign_default_ee_to_org to false in the task to run all roles at dispatch role.
+  - Add task to add Galaxy credentials and Execution Environments to Organization.
+  - Adapt filetree_read role tests playbook config-controller-filetree.yml.
+...
