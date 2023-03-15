@@ -1,7 +1,7 @@
 ---
 argument_specs:
   main:
-    short_description: An Ansible Role to create credential types on Ansible Controller.
+    short_description: An Ansible Role to call other roles to create objects on Ansible Controller.
     options:
       controller_configuration_dispatcher_roles:
         default:
@@ -79,7 +79,7 @@ argument_specs:
       controller_validate_certs:
         default: true
         required: false
-        description: Whether or falset to validate the Ansible Controller Server's SSL certificate.
+        description: Whether or not to validate the Ansible Controller Server's SSL certificate.
         type: str
       controller_username:
         default: None

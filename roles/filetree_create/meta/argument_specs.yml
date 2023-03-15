@@ -1,60 +1,32 @@
 ---
 argument_specs:
   main:
-    short_description: An Ansible Role to create credential types on Ansible Controller.
+    short_description: An Ansible Role to create a local file tree of objects existing in Controller
     options:
-      controller_credential_types:
-        description: Data structure describing your credential_types
+      output_path:
+        default: "/tmp/filetree_output"
+        required: false
+        type: str
+        description: The path to the output directory where all the generated `yaml` files with the corresponding Objects as code will be written to.
+      input_tag:
+        default:
+          - all
+        required: false
         type: list
-        elements: dict
-        # options:
-        #   name:
-        #     type: str
-        #     required: true
-        #     description: Name of Credential Type
-        #   description:
-        #     type: str
-        #     required: false
-        #     description: The description of the credential type to give more detail about it.
-        #   injectors:
-        #     type: dict
-        #     required: false
-        #     description: Enter injectors using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax. See below on proper formatting.
-        #   inputs:
-        #     type: dict
-        #     required: false
-        #     description: Enter inputs using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax.
-        #   kind:
-        #     default: cloud
-        #     type: str
-        #     required: false
-        #     choices:
-        #       - 'ssh'
-        #       - 'vault'
-        #       - 'net'
-        #       - 'scm'
-        #       - 'cloud'
-        #       - 'insights'
-        #     description: The type of credential type being added. Note that only cloud and net can be used for creating credential types.
-        #   state:
-        #     default: "{{ controller_state | default('present') }}"
-        #     type: str
-        #     required: false
-        #     description: Desired state of the resource.
+        elements: str
+        description: The tags which are applied to the 'sub-roles'. If 'all' is in the list (the default value) then all roles will be called.
+      query_controller_api_max_objects:
+        default: 10000
+        required: false
+        type: int
+        description: Maximum number of objects to return from the list. If a list view returns more an max_objects an exception will be raised
+
 
       # Async variables
-      controller_configuration_credential_types_async_retries:
-        default: "{{ controller_configuration_async_retries | default(30) }}"
-        required: false
-        description: This variable sets the number of retries to attempt for the role.
       controller_configuration_async_retries:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
-      controller_configuration_credential_types_async_delay:
-        default: "{{ controller_configuration_async_delay | default(1) }}"
-        required: false
-        description: This variable sets delay between retries for the role.
       controller_configuration_async_delay:
         default: 1
         required: false
@@ -62,7 +34,7 @@ argument_specs:
 
 
       # No_log variables
-      controller_configuration_credential_types_secure_logging:
+      controller_configuration_filetree_create_secure_logging:
         default: "{{ controller_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
