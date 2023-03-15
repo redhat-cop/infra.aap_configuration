@@ -177,8 +177,6 @@ We have a community meeting every 4 weeks. Find the agenda in the [issues]https:
 
 <a target="_blank" href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;tmeid=YzQwbjhmbmR1M3VmOXQ3cjkxMm9pYXN2ajBfMjAyMzAzMTVUMTYwMDAwWiB0cGFnZUByZWRoYXQuY29t&amp;tmsrc=tpage%40redhat.com&amp;scp=ALL"><img border="0" src="https://www.google.com/calendar/images/ext/gc_button1_en-GB.gif"></a>
 
-
-
 ## Code of Conduct
 
 This collection follows the Ansible project's
