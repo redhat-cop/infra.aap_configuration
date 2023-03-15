@@ -7,12 +7,12 @@ argument_specs:
         default: false
         required: false
         type: bool
-        description:
+        description: When is true, all users will be taken to compare with SCM configuration as code
       query_controller_api_max_objects:
         default: 10000
         required: false
         type: int
-        description:
+        description: Sets the maximum number of objects to be returned from the API
       protect_not_empty_orgs:
         required: false
         type: bool
