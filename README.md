@@ -2,6 +2,7 @@
 
 ![pre-commit tests](https://github.com/redhat-cop/controller_configuration/actions/workflows/pre-commit.yml/badge.svg)
 ![Galaxy Release](https://github.com/redhat-cop/controller_configuration/workflows/galaxy-release/badge.svg)
+<!-- markdownlint-disable-line MD033 MD034 --><a target="_blank" href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;tmeid=YzQwbjhmbmR1M3VmOXQ3cjkxMm9pYXN2ajBfMjAyMzAzMTVUMTYwMDAwWiB0cGFnZUByZWRoYXQuY29t&amp;tmsrc=tpage%40redhat.com&amp;scp=ALL"><img border="0" src="https://www.google.com/calendar/images/ext/gc_button1_en-GB.gif"></a>
 <!-- Further CI badges go here as above -->
 
 This Ansible collection allows for easy interaction with an AWX or Ansible Controller server via Ansible roles using the AWX/Controller collection modules.
@@ -171,6 +172,11 @@ Adding the ability to use direct output from the awx export command in the roles
 
 We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [Controller Configuration collection repository](https://github.com/redhat-cop/controller_configuration).
 More information about contributing can be found in our [Contribution Guidelines.](https://github.com/redhat-cop/controller_configuration/blob/devel/.github/CONTRIBUTING.md)
+
+We have a community meeting every 4 weeks. Find the agenda in the [issues](https://github.com/redhat-cop/controller_configuration/issues) and the calendar invitation below:
+
+<!-- markdownlint-disable-next-line MD033 MD034 -->
+<a target="_blank" href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;tmeid=YzQwbjhmbmR1M3VmOXQ3cjkxMm9pYXN2ajBfMjAyMzAzMTVUMTYwMDAwWiB0cGFnZUByZWRoYXQuY29t&amp;tmsrc=tpage%40redhat.com&amp;scp=ALL"><img border="0" src="https://www.google.com/calendar/images/ext/gc_button1_en-GB.gif"></a>
 
 ## Code of Conduct
 
