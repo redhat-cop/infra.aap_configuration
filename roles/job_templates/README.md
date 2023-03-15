@@ -277,7 +277,7 @@ controller_templates:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.job_templates, when: controller_templates is defined}
+    - {role: infra.controller_configuration.job_templates, when: controller_templates is defined}
 ```
 
 ## License
