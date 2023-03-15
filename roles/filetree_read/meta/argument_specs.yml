@@ -7,22 +7,22 @@ argument_specs:
         type: str
         default: Acme
         required: true
-        decription: This variable sets the organization where should be applied the configuration.
+        description: This variable sets the organization where should be applied the configuration.
       dir_orgs_vars:
         type: str
         default: orgs_vars
         required: true
-        decription: This variable sets the directory path where the variables will be store.
+        description: This variable sets the directory path where the variables will be store.
       env:
         type: str
         default: dev
         required: false
-        decription: This variable sets the life-cycle environment to use.
+        description: This variable sets the life-cycle environment to use.
       controller_location:
         type: str
         default: ''
         required: false
-        decription: This variable sets object location. It is useful when the configuration need to be replicated in an active/passive sites architecture
+        description: This variable sets object location. It is useful when the configuration need to be replicated in an active/passive sites architecture
       filetree_controller_settings:
         type: raw
         default: "{{ dir_orgs_vars }}/{{ orgs }}/env/{{ env }}/controller_settings.d/"
