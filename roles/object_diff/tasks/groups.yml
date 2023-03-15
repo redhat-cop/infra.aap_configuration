@@ -36,7 +36,7 @@
   block:
     - name: "Find the difference of Groups between what is on the Controller versus CasC on SCM"
       ansible.builtin.set_fact:
-        __groups_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
+        __groups_difference: "{{ lookup(controller_role_plugin,
                                         query_params={'summary_fields.inventory.organization_id': controller_organization_id.id},
                                         api_list=__controller_api_groups, compare_list=controller_groups,
                                         with_present=false, set_absent=true)

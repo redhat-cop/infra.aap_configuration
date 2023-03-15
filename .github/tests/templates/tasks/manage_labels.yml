@@ -6,7 +6,7 @@
     - alltags
 
 - import_role:
-    name: redhat_cop.controller_configuration.labels
+    name: infra.controller_configuration.labels
   tags:
     - labels
     - alltags

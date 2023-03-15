@@ -38,10 +38,10 @@ Click the `Content` button to see the list of content included in this collectio
 
 ## Installing this collection
 
-You can install the redhat_cop.controller_configuration collection with the Ansible Galaxy CLI:
+You can install the infra.controller_configuration.collection with the Ansible Galaxy CLI:
 
 ```console
-ansible-galaxy collection install redhat_cop.controller_configuration
+ansible-galaxy collection install infra.controller_configuration
 ```
 
 You can also include it in a `requirements.yml` file and install it with `ansible-galaxy collection install -r requirements.yml`, using the format:
@@ -49,7 +49,7 @@ You can also include it in a `requirements.yml` file and install it with `ansibl
 ```yaml
 ---
 collections:
-  - name: redhat_cop.controller_configuration
+  - name: infra.controller_configuration
     # If you need a specific version of the collection, you can specify like this:
     # version: ...
 ```
@@ -62,16 +62,10 @@ If you were using a version of redhat_cop.tower_configuration, please refer to o
 
 The awx.awx or ansible.controller collection must be invoked in the playbook in order for Ansible to pick up the correct modules to use.
 
-The following command will invoke the playbook with the awx collection
+The following command will invoke the collection playbook. This is considered a starting point for the collection.
 
 ```console
-ansible-playbook redhat_cop.controller_configuration.configure_awx.yml
-```
-
-The following command will invoke the playbook with the ansible.controller collection
-
-```console
-ansible-playbook redhat_cop.controller_configuration.configure_controller.yml
+ansible-playbook infra.controller_configuration.configure_controller.yml
 ```
 
 Otherwise it will look for the modules only in your base installation. If there are errors complaining about "couldn't resolve module/action" this is the most likely cause.

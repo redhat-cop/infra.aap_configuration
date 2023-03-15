@@ -4,7 +4,7 @@ An ansible role which reads variables from a hierarchical and scalable directory
 
 ## Requirements
 
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed Currently: awx.awx or ansible.controller and redhat_cop.controller_configuration.
+ansible-galaxy collection install -r tests/collections/requirements.yml to be installed Currently: awx.awx or ansible.controller and infra.controller_configuration.
 
 ## Role Variables
 
@@ -42,9 +42,9 @@ The following Variables set the organization where should be applied the configu
 
 ### Data Structure
 
-- It accepts two data models as the roles in the redhat_cop.controller_configuration collection,a simple straightforward easy to maintain model, and another based on the controller api.
+- It accepts two data models as the roles in the infra.controller_configuration collection,a simple straightforward easy to maintain model, and another based on the controller api.
 - Variables should be stored in yaml files. It could be used vault to encrypt sensitive data when needed.
-- All variables should be taken from the awx or automation controller object roles from the redhat_cop.controller_configuration collection.
+- All variables should be taken from the awx or automation controller object roles from the infra.controller_configuration collection.
 
 ```yaml
 ---
@@ -319,7 +319,7 @@ The role is designed to be used with tags, each tags correspond to an AWX or Aut
     - block:
         - name: Include Tasks to load Galaxy credentials to be added to Organizations
           ansible.builtin.include_role:
-            name: redhat_cop.controller_configuration.filetree_read
+            name: infra.controller_configuration.filetree_read
             tasks_from: "{{ create_orgs_credentials }}"
           loop:
             - organizations.yml
@@ -329,7 +329,7 @@ The role is designed to be used with tags, each tags correspond to an AWX or Aut
 
         - name: Include Tasks to add Galaxy credentials to Organizations
           ansible.builtin.include_role:
-            name: redhat_cop.controller_configuration.dispatch
+            name: infra.controller_configuration.dispatch
             apply:
               tags:
                 - organizations
@@ -341,8 +341,8 @@ The role is designed to be used with tags, each tags correspond to an AWX or Aut
               - {role: credentials, var: controller_credentials, tags: credentials}
 
   roles:
-    - {role: redhat_cop.controller_configuration.filetree_read }
-    - {role: redhat_cop.controller_configuration.dispatch }
+    - {role: infra.controller_configuration.filetree_read }
+    - {role: infra.controller_configuration.dispatch }
 
   post_tasks:
     - name: "Delete the Authentication Token used"

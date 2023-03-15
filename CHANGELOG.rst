@@ -1,5 +1,5 @@
 =================================================
-redhat_cop.controller_configuration Release Notes
+infra.controller_configuration Release Notes
 =================================================
 
 .. contents:: Topics

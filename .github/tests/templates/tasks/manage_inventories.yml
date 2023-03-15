@@ -6,7 +6,7 @@
     - alltags
 
 - import_role:
-    name: redhat_cop.controller_configuration.inventories
+    name: infra.controller_configuration.inventories
   tags:
     - inventory
     - alltags

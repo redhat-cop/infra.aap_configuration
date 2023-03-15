@@ -60,7 +60,7 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
 
 
   roles:
-    - redhat_cop.controller_configuration.filetree_create
+    - infra.controller_configuration.filetree_create
 
   post_tasks:
     - name: "Delete the Authentication Token used"

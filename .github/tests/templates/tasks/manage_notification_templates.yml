@@ -6,7 +6,7 @@
     - alltags
 
 - import_role:
-    name: redhat_cop.controller_configuration.notification_templates
+    name: infra.controller_configuration.notification_templates
   tags:
     - notifications
     - alltags
