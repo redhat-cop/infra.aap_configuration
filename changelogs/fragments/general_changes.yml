@@ -1,8 +1,0 @@
----
-bugfixes:
-  - "add ah_token for the community repository. This commit adds that."
-
-minor_changes:
-  - "remove unused import module"
-  - "Simplify dispatch role"
-...
