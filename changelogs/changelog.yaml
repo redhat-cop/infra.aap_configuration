@@ -284,3 +284,13 @@ releases:
       name: ah_role
       namespace: ''
     release_date: '2023-01-24'
+  1.1.1:
+    changes:
+      bugfixes:
+      - add ah_token for the community repository. This commit adds that.
+      minor_changes:
+      - Simplify dispatch role
+      - remove unused import module
+    fragments:
+    - general_changes.yml
+    release_date: '2023-03-16'

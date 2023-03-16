@@ -5,6 +5,20 @@ infra.ah_configuration Release Notes
 .. contents:: Topics
 
 
+v1.1.1
+======
+
+Minor Changes
+-------------
+
+- Simplify dispatch role
+- remove unused import module
+
+Bugfixes
+--------
+
+- add ah_token for the community repository. This commit adds that.
+
 v1.1.0
 ======
 
