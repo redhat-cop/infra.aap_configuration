@@ -34,6 +34,7 @@ jobs:
       collection_version: ${{ github.ref_name }}
       collection_repo: https://github.com/redhat-cop/controller_configuration/
       quay_username: redhat_cop
+      collection_dependencies: awx.awx
     secrets:
       galaxy_api_key: ${{ secrets.ANSIBLE_GALAXY_APIKEY }}
       infra_api_key: ${{ secrets.GALAXY_INFRA_KEY }}
