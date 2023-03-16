@@ -9,8 +9,20 @@ on:
       - published
 
 jobs:
-  integration-test:
-    uses: "./.github/workflows/ci_standalone.yaml"
+  ci_standalone:
+    strategy:
+      fail-fast: false
+      matrix:
+        awx_version:
+          - devel
+          - 21.13.0
+          - 21.12.0
+          - 21.11.0
+          # - 20.1.0 Diabled until working
+          # - 19.5.1 Diabled until working
+    uses: "./.github/workflows/ci_standalone_versioned.yml"
+    with:
+      awx_version: ${{ matrix.awx_version }}
   release:
     needs:
       - integration-test
