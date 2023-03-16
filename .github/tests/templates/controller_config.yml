@@ -29,7 +29,7 @@
   gather_facts: false
   collections:
     - ansible.controller
-    - redhat_cop.controller_configuration
+    - infra.controller_configuration
 
   vars:
     absent_present: "present"

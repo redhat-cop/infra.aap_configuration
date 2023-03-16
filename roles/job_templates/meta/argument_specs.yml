@@ -272,7 +272,7 @@ argument_specs:
         default: "{{ controller_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
-        description: Whether or falset to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
+        description: Whether or not to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
       controller_configuration_secure_logging:
         default: false
         required: false
@@ -293,7 +293,7 @@ argument_specs:
       controller_validate_certs:
         default: true
         required: false
-        description: Whether or falset to validate the Ansible Controller Server's SSL certificate.
+        description: Whether or not to validate the Ansible Controller Server's SSL certificate.
         type: str
       controller_username:
         default: None

@@ -2,6 +2,7 @@
 
 ![pre-commit tests](https://github.com/redhat-cop/controller_configuration/actions/workflows/pre-commit.yml/badge.svg)
 ![Galaxy Release](https://github.com/redhat-cop/controller_configuration/workflows/galaxy-release/badge.svg)
+<!-- markdownlint-disable-line MD033 MD034 --><a target="_blank" href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;tmeid=YzQwbjhmbmR1M3VmOXQ3cjkxMm9pYXN2ajBfMjAyMzAzMTVUMTYwMDAwWiB0cGFnZUByZWRoYXQuY29t&amp;tmsrc=tpage%40redhat.com&amp;scp=ALL"><img border="0" src="https://www.google.com/calendar/images/ext/gc_button1_en-GB.gif"></a>
 <!-- Further CI badges go here as above -->
 
 This Ansible collection allows for easy interaction with an AWX or Ansible Controller server via Ansible roles using the AWX/Controller collection modules.
@@ -37,10 +38,10 @@ Click the `Content` button to see the list of content included in this collectio
 
 ## Installing this collection
 
-You can install the redhat_cop.controller_configuration collection with the Ansible Galaxy CLI:
+You can install the infra.controller_configuration.collection with the Ansible Galaxy CLI:
 
 ```console
-ansible-galaxy collection install redhat_cop.controller_configuration
+ansible-galaxy collection install infra.controller_configuration
 ```
 
 You can also include it in a `requirements.yml` file and install it with `ansible-galaxy collection install -r requirements.yml`, using the format:
@@ -48,7 +49,7 @@ You can also include it in a `requirements.yml` file and install it with `ansibl
 ```yaml
 ---
 collections:
-  - name: redhat_cop.controller_configuration
+  - name: infra.controller_configuration
     # If you need a specific version of the collection, you can specify like this:
     # version: ...
 ```
@@ -61,16 +62,10 @@ If you were using a version of redhat_cop.tower_configuration, please refer to o
 
 The awx.awx or ansible.controller collection must be invoked in the playbook in order for Ansible to pick up the correct modules to use.
 
-The following command will invoke the playbook with the awx collection
+The following command will invoke the collection playbook. This is considered a starting point for the collection.
 
 ```console
-ansible-playbook redhat_cop.controller_configuration.configure_awx.yml
-```
-
-The following command will invoke the playbook with the ansible.controller collection
-
-```console
-ansible-playbook redhat_cop.controller_configuration.configure_controller.yml
+ansible-playbook infra.controller_configuration.configure_controller.yml
 ```
 
 Otherwise it will look for the modules only in your base installation. If there are errors complaining about "couldn't resolve module/action" this is the most likely cause.
@@ -171,6 +166,11 @@ Adding the ability to use direct output from the awx export command in the roles
 
 We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [Controller Configuration collection repository](https://github.com/redhat-cop/controller_configuration).
 More information about contributing can be found in our [Contribution Guidelines.](https://github.com/redhat-cop/controller_configuration/blob/devel/.github/CONTRIBUTING.md)
+
+We have a community meeting every 4 weeks. Find the agenda in the [issues](https://github.com/redhat-cop/controller_configuration/issues) and the calendar invitation below:
+
+<!-- markdownlint-disable-next-line MD033 MD034 -->
+<a target="_blank" href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;tmeid=YzQwbjhmbmR1M3VmOXQ3cjkxMm9pYXN2ajBfMjAyMzAzMTVUMTYwMDAwWiB0cGFnZUByZWRoYXQuY29t&amp;tmsrc=tpage%40redhat.com&amp;scp=ALL"><img border="0" src="https://www.google.com/calendar/images/ext/gc_button1_en-GB.gif"></a>
 
 ## Code of Conduct
 

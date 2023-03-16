@@ -18,7 +18,7 @@
 
 - name: "Find the difference of Inventory Sources between what is on the Controller versus CasC on SCM"
   ansible.builtin.set_fact:
-    __inventory_sources_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
+    __inventory_sources_difference: "{{ lookup(controller_role_plugin,
                                                 api_list=__controller_api_inventory_sources,
                                                 compare_list=controller_inventory_sources,
                                                 with_present=false, set_absent=true)

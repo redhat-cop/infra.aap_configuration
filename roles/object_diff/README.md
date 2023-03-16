@@ -1,10 +1,10 @@
 # controller_configuration.object_diff
 
-An ansible role to manage the object diff of the AWX or Automation Controller configuration. This role leverage the controller_object_diff.py lookup plugin of the redhat_cop.controller_configuration, comparing two lists, one taken directly from the API and the other one from the git repository, and it could be used to delete objects in the AWX or Automation Controller that are not defined in the git repository list.
+An ansible role to manage the object diff of the AWX or Automation Controller configuration. This role leverage the controller_object_diff.py lookup plugin of the infra.controller_configuration, comparing two lists, one taken directly from the API and the other one from the git repository, and it could be used to delete objects in the AWX or Automation Controller that are not defined in the git repository list.
 
 ## Requirements
 
-`ansible-galaxy collection install -r tests/collections/requirements.yml` to be installed. Currently: `awx.awx` or `ansible.controller` and `redhat_cop.controller_configuration`.
+`ansible-galaxy collection install -r tests/collections/requirements.yml` to be installed. Currently: `awx.awx` or `ansible.controller` and `infra.controller_configuration`.
 
 ## Role Variables
 
@@ -73,8 +73,8 @@ To correctly manage `roles`, they can only be defined by a super-admin organizat
         - always
 
   roles:
-    - role: redhat_cop.controller_configuration.filetree_read
-    - role: redhat_cop.controller_configuration.object_diff
+    - role: infra.controller_configuration.filetree_read
+    - role: infra.controller_configuration.object_diff
       vars:
         controller_configuration_object_diff_tasks:
           - {name: workflow_job_templates, var: controller_workflows, tags: workflow_job_templates}
@@ -88,7 +88,7 @@ To correctly manage `roles`, they can only be defined by a super-admin organizat
           - {name: credentials, var: controller_credentials, tags: credentials}
           - {name: credential_types, var: controller_credential_types, tags: credential_types}
           - {name: organizations, var: controller_organizations, tags: organizations}
-    - role: redhat_cop.controller_configuration.dispatch
+    - role: infra.controller_configuration.dispatch
       vars:
         controller_configuration_dispatcher_roles:
           - {role: workflow_job_templates, var: controller_workflows, tags: workflow_job_templates}

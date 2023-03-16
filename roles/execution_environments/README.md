@@ -108,7 +108,7 @@ controller_execution_environments:
   tasks:
     - name: Add Execution Environments
       include_role:
-        name: redhat_cop.controller_configuration.execution_environments
+        name: infra.controller_configuration.execution_environments
 ```
 
 ## License

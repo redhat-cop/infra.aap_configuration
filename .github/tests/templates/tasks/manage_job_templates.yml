@@ -6,7 +6,7 @@
     - alltags
 
 - import_role:
-    name: redhat_cop.controller_configuration.job_templates
+    name: infra.controller_configuration.job_templates
   tags:
     - jobtemplates
     - alltags
