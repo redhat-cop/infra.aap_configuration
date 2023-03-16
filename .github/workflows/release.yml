@@ -25,7 +25,7 @@ jobs:
       awx_version: ${{ matrix.awx_version }}
   release:
     needs:
-      - integration-test
+      - ci_standalone
     uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline.yml@main"
     with:
       collection_namespace: infra
