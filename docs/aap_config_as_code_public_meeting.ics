@@ -1,0 +1,39 @@
+BEGIN:VCALENDAR
+CALSCALE:GREGORIAN
+VERSION:2.0
+X-WR-CALNAME:AAP config as code Public meeting
+METHOD:PUBLISH
+PRODID:-//Apple Inc.//macOS 13.2.1//EN
+BEGIN:VEVENT
+TRANSP:OPAQUE
+DTEND:20230412T160000Z
+ORGANIZER;CN="ssulliva@redhat.com";EMAIL="ssulliva@redhat.com":mailto:ss
+ ulliva@redhat.com
+UID:2k8fmfg2msr8lfi6k6g5upqt9a@google.com
+DTSTAMP:20230316T155301Z
+X-GOOGLE-CONFERENCE:https://meet.google.com/npj-fyzv-oyo
+DESCRIPTION:<a href="https://github.com/redhat-cop/controller_configurat
+ ion/issues/475">https://github.com/redhat-cop/controller_configuration/i
+ ssues/475</a>\n\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~
+ :~:~:~:~:~:~:~:~:~:~:~:~::~:~::-\nJoin with Google Meet: https://meet.go
+ ogle.com/npj-fyzv-oyo\nOr dial: (US) +1 470-722-0265 PIN: 621302239#\n\n
+ Join using SIP\n1189446461569@gmeet.redhat.com (ID: 1189446461569)\nMore
+  joining options: https://tel.meet/npj-fyzv-oyo?pin=1189446461569&hs=7\n
+ \nLearn more about Meet at: https://support.google.com/a/users/answer/92
+ 82720\n\nPlease do not edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~
+ :~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-
+STATUS:CONFIRMED
+SEQUENCE:2
+SUMMARY:AAP config as code Public meeting
+DTSTART:20230412T150000Z
+LAST-MODIFIED:20230316T155150Z
+CREATED:20230123T211213Z
+BEGIN:VALARM
+UID:4555EBDE-771F-420A-9ED8-CB6C7540E67D
+X-WR-ALARMUID:4555EBDE-771F-420A-9ED8-CB6C7540E67D
+TRIGGER:-PT10M
+DESCRIPTION:This is an event reminder
+ACTION:DISPLAY
+END:VALARM
+END:VEVENT
+END:VCALENDAR

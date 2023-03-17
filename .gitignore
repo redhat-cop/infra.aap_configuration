@@ -5,3 +5,4 @@ galaxy.yml
 *.pyc
 id_rsa*
 test
+tests/output
