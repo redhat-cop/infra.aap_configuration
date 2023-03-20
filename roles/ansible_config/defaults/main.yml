@@ -27,7 +27,7 @@ ansible_config_list:
   - header: galaxy
     keypairs:
       - key: ignore_certs
-        value: "{{ validate_certs | bool }}"
+        value: "{{ not (ah_validate_certs | default(true) | bool) }}"
 #      - key: server_list
 #        value: "{{ automation_hub_list | map(attribute="name") | join(",") }}"
 

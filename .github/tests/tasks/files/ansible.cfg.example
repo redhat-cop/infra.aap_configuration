@@ -1,0 +1,8 @@
+[galaxy]
+ignore_certs=True
+server_list=automation_hub
+
+[galaxy_server.automation_hub]
+url=https://ah.local
+auth_url=https://auth.com
+token=changeme

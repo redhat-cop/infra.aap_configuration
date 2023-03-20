@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create Namespaces in Automation Hub.
+An Ansible Role to create ansible.cfg files based on your Automation Hub servers
 
 ## Requirements
 
@@ -14,12 +14,14 @@ Currently:
 
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`ah_host`|""|yes|URL to the Automation Hub or Galaxy Server. (alias: `ah_hostname`)|127.0.0.1|
-|`ah_username`|""|yes|Admin User on the Automation Hub or Galaxy Server.||
-|`ah_password`|""|yes|Automation Hub Admin User's password on the Automation Hub Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
-|`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`ah_validate_certs`|`False`|no|Whether or not to validate the Ansible Automation Hub Server's SSL certificate.||
-|`ah_namespaces`|`see below`|yes|Data structure describing your namespaces, described below.||
+|`ansible_config_mode`|'0644'|no|str|The permissions the resulting ansible config file or directory should have.|
+|`ansible_config_owner`|""|no|str|The owner the resulting ansible config file or directory should have.|
+|`ansible_config_group`|""|no|str|The group the resulting ansible config file or directory should have.|
+|`ah_configuration_working_dir`|"/var/tmp"|no|path|Location to render the ansible config file to.|
+|`automation_hub_list`|`[]`|no|list|A list of Automation hubs and galaxies to put in the ansible config, see below for details.|
+|`ansible_config_list`|`[{"header":"galaxy","keypairs":[{"key":"ignore_certs","value":"{{ not (ah_validate_certs | bool) }}"}]}]`|no|list|A set of ansible config settings, a default is set, but can be overridden, see below for details.|
+|`ah_token`|""|no|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`ah_path_prefix`|`galaxy`|no|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 
 ### Secure Logging Variables
 
@@ -33,42 +35,30 @@ ah_configuration_ansible_config_secure_logging defaults to the value of ah_confi
 |`ah_configuration_ansible_config_secure_logging`|`False`|no|Whether or not to include the sensitive ansible config role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`ah_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
-## Data Structure
+## Data Structures
 
-### Namespaces Variables
-
-|Variable Name|Default Value|Required|Type|Description|
-|:---:|:---:|:---:|:---:|:---:|
-|`ansible_config_mode`|'0644'|no|int/str|The permissions the resulting ansible config file or directory should have.|
-|`ah_configuration_working_dir`|"/var/tmp"|no|path|Location to render the ansible config file to.|
-|`automation_hub_list`|""|yes|list|A list of Automation hubs and galaxies to put in the ansible config, see below for details.|
-|`ansible_config_list`|""|no|list|A set of ansible config settings, a default is set, but can be overridden, see below for details.|
-|`ah_validate_certs`|"false"|no|list|Set to determine if certificates should be validated.|
-
-#### automation_hub_list
+### automation_hub_list
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of the Automation Hub or Galaxy Server.|
-|`url`|""|yes|str|URL to the Automatin Hub or Galaxy Server|
-|`auth_url`|""|yes|str|URL to use for alternate authentication to the Automatin Hub or Galaxy Server.|
-|`ah_token`|""|yes|str|Automatin Hub or Galaxy Server token.|
-|`ah_username`|""|yes|str|Automatin Hub or Galaxy Server username.|
-|`ah_password`|""|yes|str|Automatin Hub or Galaxy Server password.|
+|`url`|""|yes|str|URL to the Automation Hub or Galaxy Server|
+|`auth_url`|""|no|str|URL to the authentication for Automation Hub or Galaxy Server|
+|`token`|""|no|str|Automation Hub or Galaxy Server token.|
 
-#### ansible_config_list
+### ansible_config_list
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`header`|""|yes|str|Header of the section that contains keypairs.|
-|`keypairs`|""|yes|list|List key value pairs for settings in the ansible.cfg.|
+|`keypairs`|`[]`|no|list|List key value pairs for settings in the ansible.cfg.|
 
-#### ansible_config_list[].keypairs
+### ansible_config_list[].keypairs
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`key`|""|yes|str|Key for entry under this header.|
-|`value`|""|yes|str|Value for entry for the cooresponding key.|
+|`value`|""|yes|str|Value for entry for the corresponding key.|
 
 ### Standard Project Data Structure
 
@@ -80,15 +70,15 @@ ansible_config_list:
   - header: galaxy
     keypairs:
       - key: ignore_certs
-        value: "{{ validate_certs | bool }}"
+        value: "{{ not (ah_validate_certs | bool) }}"
       - key: server_list
-        value: "{{ automation_hub_list | map(attribute="name") | join(",") }}"
+        value: "{{ automation_hub_list | map(attribute='name') | join(',') }}"
 
 automation_hub_list:
   - name: automation_hub
-    url: "{{ah_host}}/api/automation-hub/"
-    username: "{{ ah_username }}"
-    password: "{{ ah_password }}"
+    url: "{{ah_host}}/api/automation-hub/content/0000001-synclist/"
+    auth_url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+    token: changeme
 ```
 
 ## Playbook Examples

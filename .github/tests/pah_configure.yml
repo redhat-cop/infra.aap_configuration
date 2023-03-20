@@ -16,6 +16,11 @@
         - always
 
   tasks:
+    - name: Include task to manage ansible_config
+      include_tasks: tasks/manage_ansible_config.yml
+      tags:
+        - ansible_config
+
     - name: Include task to manage private automation hub groups
       include_tasks: tasks/manage_groups.yml
       tags:
