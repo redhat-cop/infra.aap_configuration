@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Ensures vars get loaded properly by dispatch role
+...
