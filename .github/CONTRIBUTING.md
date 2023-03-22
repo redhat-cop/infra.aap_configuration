@@ -15,10 +15,10 @@ Python's pre-commit tool can be installed, and hooks installed, to cleanup white
 
 1. Create a local virtual environment for controller_configurations (suggested, its your system!)
 2. Use pip to install pre-commit in your environment of choice: `pip install pre-commit`
-3. Install pre-commit hooks with `pre-commit install --install-hooks -c .pre-commit-config.yml`
+3. Install pre-commit hooks with `pre-commit install --install-hooks -c .pre-commit-config.yaml`
 4. With hooks installed, they will be run automatically when you call `git commit`, blocking commit if any hooks fail.
 5. [Optional] If you want to ignore hook failures and commit anyway, use `git commit -n`
-6. [Optional] Run pre-commit checks at any time with `pre-commit run --all -c .pre-commit-config.yml`.
+6. [Optional] Run pre-commit checks at any time with `pre-commit run --all -c .pre-commit-config.yaml`.
 
 Please see pre-commit documentation for further explanation: [Pre-commit](https://pre-commit.com/)
 
