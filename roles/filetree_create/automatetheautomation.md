@@ -21,7 +21,7 @@ Utilizing the Automation Webhook capabilities in Ansible Tower / Controller, you
 
 ## Automation Controller Workflow CasC
 
-![Automation Controller Workflow CasC](https://github.com/redhat-cop/controller_configuration/blob/devel/.github/tests/automatetheautomation/pictures/AAP_CasC_Worflow.png)
+![Automation Controller Workflow CasC](https://github.com/redhat-cop/controller_configuration/blob/devel/tests/automatetheautomation/pictures/AAP_CasC_Worflow.png)
 *Automation Controller Workflow CasC*
 
 The workflow will have the following steps:
