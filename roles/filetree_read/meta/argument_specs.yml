@@ -5,12 +5,10 @@ argument_specs:
     options:
       orgs:
         type: str
-        default: Acme
         required: true
         description: This variable sets the organization where should be applied the configuration.
       dir_orgs_vars:
         type: str
-        default: orgs_vars
         required: true
         description: This variable sets the directory path where the variables will be store.
       env:
