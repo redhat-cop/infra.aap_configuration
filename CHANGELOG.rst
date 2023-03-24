@@ -8,6 +8,15 @@ infra.controller_configuration Release Notes
 v2.3.1
 ======
 
+Bugfixes
+--------
+
+- Ensures vars get loaded properly by dispatch role
+- Fixed issue in filetree_read where arg spec incorrect and caused failure (#550)
+
+v2.3.0
+======
+
 Minor Changes
 -------------
 
@@ -29,8 +38,6 @@ Bugfixes
 --------
 
 - Added argument_spec for all roles
-- Ensures vars get loaded properly by dispatch role
-- Fixed issue in filetree_read where arg spec incorrect and caused failure (#550)
 - Fixed name of task for inventory source update
 - Fixed variable definitions in readmes
 - Removed master_role_example as no longer required (this wasn't a functional role)
