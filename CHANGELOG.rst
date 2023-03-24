@@ -1,9 +1,46 @@
-=================================================
+============================================
 infra.controller_configuration Release Notes
-=================================================
+============================================
 
 .. contents:: Topics
 
+
+v2.3.1
+======
+
+Bugfixes
+--------
+
+- Ensures vars get loaded properly by dispatch role
+- Fixed issue in filetree_read where arg spec incorrect and caused failure (#550)
+
+v2.3.0
+======
+
+Minor Changes
+-------------
+
+- Adapt filetree_read role tests playbook config-controller-filetree.yml.
+- Add new type of objects for object_diff role:  applications, execution environments, instance groups, notifications and schedules
+- Add no_log to all tasks that populates data to avoid exposing encrypted data
+- Add task to add Galaxy credentials and Execution Environments to Organization.
+- Set the variables to assign_galaxy_credentials_to_org and assign_default_ee_to_org to false in the task to run all roles at dispatch role.
+- avoid to create orgs during drop_diff
+- fixed an extra blank line in schedules readme that was breaking the table
+- removed references to redhat_cop as a collection namespace in the readme files.
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- updated object_diff role to use the infra namespace, that means to use the role it requires the infra version of the collection. Previous version required the redhat_cop
+
+Bugfixes
+--------
+
+- Added argument_spec for all roles
+- Fixed name of task for inventory source update
+- Fixed variable definitions in readmes
+- Removed master_role_example as no longer required (this wasn't a functional role)
 
 v2.2.5
 ======
