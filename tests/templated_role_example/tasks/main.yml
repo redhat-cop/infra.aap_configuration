@@ -1,0 +1,43 @@
+---
+# Create Job Template
+- name: Add Controller ***********
+  controller_***********:
+    name:                           "{{ ***********_item.name }}"
+    new_name:                       "{{ ***********_item.new_name | default(omit, true) }}"
+    description:                    "{{ ***********_item.description | default('') }}"
+
+    # Role specific options
+    state:                          "{{ ***********_item.state | default(controller_state | default('present')) }}"
+    controller_username:                 "{{ controller_username | default(omit, true) }}"
+    controller_password:                 "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:               "{{ controller_oauthtoken | default(omit, true) }}"
+    controller_host:                     "{{ controller_hostname | default(omit, true) }}"
+    controller_config_file:              "{{ controller_config_file | default(omit, true) }}"
+    validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
+  loop: "{{ controller_************ }}"
+  loop_control:
+    loop_var: "__controller_***********_item"
+  no_log: "{{ controller_configuration_*******_secure_logging }}"
+  when: controller_************ is defined
+  async: 1000
+  poll: 0
+  register: __controller_***********_job_async
+  changed_when: not __controller_***********_job_async.changed
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
+
+- name: "Configure *********** | Wait for finish the *********** creation"
+  async_status:
+    jid: "{{ __controller_***********_job_async_results_item.ansible_job_id }}"
+  register: __controller_***********_job_async_result
+  until: __controller_***********_job_async_result.finished
+  retries: "{{ controller_configuration_***********_async_retries }}"
+  delay: "{{ controller_configuration_***********_async_delay }}"
+  loop: "{{ __controller_***********_job_async.results }}"
+  loop_control:
+    loop_var: __controller_***********_job_async_results_item
+  when: __controller_***********_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ controller_configuration_*******_secure_logging }}"
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
+...

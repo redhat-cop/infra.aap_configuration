@@ -101,6 +101,15 @@
       ansible.builtin.include_tasks: "./tasks/ad_hoc_cancel.yml"
       when: controller_ad_hoc_commands is defined
 
+    - name: Launch Controller Bulk Hosts
+      ansible.builtin.include_role:
+        name: bulk_host_create
+      vars:
+        controller_bulk_hosts: "{{ temp_controller_bulk_hosts }}"
+      when:
+        - controller_bulk_launch_jobs is defined
+        - awx_version == "21.14.0" or awx_version == "devel"
+
     - name: Launch Controller Jobs
       ansible.builtin.include_role:
         name: job_launch
@@ -122,6 +131,26 @@
       vars:
         controller_cancel_jobs: "{{ tmp_jobs.results | map(attribute='ansible_facts.tmp_job') | list }}"
       when: launched_controller_jobs is defined
+
+    - name: Find Job ID's
+      ansible.builtin.debug:
+        var: __job_templates_job_async_result
+
+    - name: Launch Controller Bulk Jobs
+      ansible.builtin.include_role:
+        name: bulk_job_launch
+      vars:
+        controller_bulk_hosts: "{{ temp_controller_bulk_hosts }}"
+        controller_bulk_launch_jobs:
+          - name: My Bulk Job Launch
+            jobs:
+              - unified_job_template: "{{ __job_templates_job_async_result.results[0].id }}"
+              - unified_job_template: "{{ __job_templates_job_async_result.results[1].id }}"
+            organization: Default
+            wait: false
+      when:
+        - controller_bulk_launch_jobs is defined
+        - awx_version == "21.14.0" or awx_version == "devel"
 
     - name: Launch Controller workflows
       ansible.builtin.include_role:

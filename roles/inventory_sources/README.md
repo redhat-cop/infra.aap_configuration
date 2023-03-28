@@ -98,7 +98,8 @@ The role will strip the double space between the curly bracket in order to provi
 |`verbosity`|""|no|The verbosity level to run this inventory source under.|
 |`update_on_launch`|""|no|Refresh inventory data from its source each time a job is run.|
 |`update_cache_timeout`|""|no|Time in seconds to consider an inventory sync to be current.|
-|`source_project`|""|no|Project to use as source with scm option|
+|`source_project`|""|no|Project to use as source with scm option.|
+|`scm_branch`|""|no|Project scm branch to use as source with scm option. Project must have branch override enabled.|
 |`state`|`present`|no|Desired state of the resource.|
 |`notification_templates_started`|""|no|The notifications on started to use for this inventory source in a list.|
 |`notification_templates_success`|""|no|The notifications on success to use for this inventory source in a list.|

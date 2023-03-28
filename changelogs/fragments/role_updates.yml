@@ -1,0 +1,7 @@
+---
+minor_changes:
+  - Added new_name option to the roles applications, credential_types, execution_environments, inventories, projects, users.
+  - Added scm_branch option to inventory_sources role.
+  - Corrected various readmes.
+  - Added Roles bulk_host_create, bulk_job_launch.
+...

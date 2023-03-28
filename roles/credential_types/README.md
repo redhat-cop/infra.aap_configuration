@@ -59,6 +59,7 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`name`|""|yes|Name of Credential Type|
+|`new_name`|""|no|Setting this option will change the existing name (looked up via the name field).|
 |`description`|`False`|no|The description of the credential type to give more detail about it.|
 |`injectors`|""|no|Enter injectors using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax. See below on proper formatting.|
 |`inputs`|""|no|Enter inputs using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax.|
