@@ -1,6 +1,0 @@
----
-bugfixes:
-  - Removed master_role_example as no longer required (this wasn't a functional role)
-  - Added argument_spec for all roles
-  - Fixed variable definitions in readmes
-...

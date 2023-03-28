@@ -20,6 +20,7 @@ skip_list:
   - fqcn[keyword]
   - meta-runtime  # This collection with the appropriate awx.awx or ansible.controller still works with older ansible.
   - role-name[path]
+  - sanity[cannot-ignore]  # We're only ignoring sanity rules when we have to
 kinds:
   - playbooks: "**/examples/templates/*.{yml,yaml}"
   - playbooks: "**/examples/*.{yml,yaml}"

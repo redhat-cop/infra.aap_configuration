@@ -44,7 +44,7 @@
         extensions: ["yml"]
 
     - name: Wait for the controller to be up
-      uri:
+      ansible.builtin.uri:
         url: "https://{{ controller_hostname }}/api/v2/mesh_visualizer/"
         user: "{{ controller_username }}"
         password: "{{ controller_password }}"
@@ -57,7 +57,6 @@
       until: mesh_data.json is defined
       retries: 120
       delay: 5
-
 
 
   roles:
