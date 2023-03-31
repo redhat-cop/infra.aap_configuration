@@ -82,7 +82,7 @@ The role will strip the double space between the curly bracket in order to provi
 |`new_name`|""|yes|str|To use when changing a hosts's name.|
 |`description`|""|no|str|The description of the host.|
 |`inventory`|""|yes|str|The inventory the host applies against.|
-|`enabled`|`True`|no|bool|If the host should be enabled.|
+|`enabled`||no|bool|If the host should be enabled.|
 |`variables`|{}|no|str|The variables applicable to the host.|
 |`state`|`present`|no|str|Desired state of the resource.|
 
