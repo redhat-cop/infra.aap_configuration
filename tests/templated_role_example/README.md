@@ -1,8 +1,8 @@
-# controller_configuration.license
+# controller_configuration.***********
 
 ## Description
 
-An Ansible Role to deploy a license on Ansible Controller.
+An Ansible Role to create******* on Ansible Controller.
 
 ## Requirements
 
@@ -24,38 +24,45 @@ Currently:
 |`controller_username`|""|no|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
 |`controller_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.|||
-|`controller_license`|`see below`|yes|Data structure describing your license for controller, described below.||
+|`controller_************`|`see below`|yes|Data structure describing your organization or organizations Described below.||
 
 ### Secure Logging Variables
 
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
-The role defaults to False as normally the add license task does not include sensitive information.
-controller_configuration_license_secure_logging defaults to the value of controller_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
+The role defaults to False as normally the add ******* task does not include sensitive information.
+controller_configuration_*******_secure_logging defaults to the value of controller_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`controller_configuration_license_secure_logging`|`False`|no|Whether or not to include the sensitive license role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`controller_configuration_*******_secure_logging`|`False`|no|Whether or not to include the sensitive ******* role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
+
+### Asynchronous Retry Variables
+
+The following Variables set asynchronous retries for the role.
+If neither of the retries or delay or retries are set, they will default to their respective defaults.
+This allows for all items to be created, then checked that the task finishes successfully.
+This also speeds up the overall role.
+
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|
+|`controller_configuration_async_retries`|30|no|This variable sets the number of retries to attempt for the role globally.|
+|`controller_configuration_*******_async_retries`|`{{ controller_configuration_async_retries }}`|no|This variable sets the number of retries to attempt for the role.|
+|`controller_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
+|`controller_configuration_*******_async_delay`|`controller_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ## Data Structure
 
-### License Variables
+### ************ Variables
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`manifest_file`|""|no|obj|File path to a Red Hat subscription manifest (a .zip file)|
-|`manifest_url`|""|no|obj|URL containing a Red Hat subscription manifest (a .zip file)|
-|`manifest_content`|""|no|obj|Base64 encoded content of Red Hat subscription manifest|
-|`manifest`|""|no|obj|DEPRECATED - changed to `manifest_file` (still works as an alias)|
-|`manifest_username`|""|no|obj|Optional username for access to `manifest_url`|
-|`manifest_password`|""|no|obj|Optional password for access to `manifest_url`|
-|`pool_id`|""|no|str|Red Hat or Red Hat Satellite pool_id to attach to|
-|`eula_accepted`|""|yes|bool|DEPRECATED since Tower 3.8 - Whether to accept the End User License Agreement for Ansible controller|
-|`force`|`False`|no|bool|By default, the license manifest will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.|
-|`state`|`present`|no|str|Desired state of the resource.|
+|`name`|""|yes|str|Name of Job Template|
+|`new_name`|""|str|no|Setting this option will change the existing name (looked up via the name field).|
+|`description`|`False`|no|str|Description to use for the job template.|
 
-For further details on fields see <https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html>
+|`state`|`present`|no|str|Desired state of the resource.|
 
 ### Standard Project Data Structure
 
@@ -63,22 +70,15 @@ For further details on fields see <https://docs.ansible.com/automation-controlle
 
 ```json
 {
-    "controller_license": {
-        "manifest_file": "/tmp/my_controller.license",
-        "force": true
-      }
 }
+
 ```
 
 #### Yaml Example
 
 ```yaml
 ---
-controller_license:
-  manifest_url: "https://fileserver.internal/controller_license.zip"
-  manifest_username: admin
-  manifest_password: password
-  force: false
+
 ```
 
 ## Playbook Examples
@@ -96,12 +96,12 @@ controller_license:
   # controller_password: changeme
   pre_tasks:
     - name: Include vars from controller_configs directory
-      ansible.builtin.include_vars:
+      include_vars:
         dir: ./yaml
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: infra.controller_configuration.license, when: controller_license is defined}
+    - {role: redhat_cop.controller_configuration.license, when: controller_license is defined}
 ```
 
 ## License
@@ -109,5 +109,3 @@ controller_license:
 [MIT](https://github.com/redhat-cop/controller_configuration#licensing)
 
 ## Author
-
-[Tom Page](https://github.com/Tompage1994)

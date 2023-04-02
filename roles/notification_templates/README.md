@@ -59,7 +59,7 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|The name of the notification.|
-|`new_name`|""|yes|str|Setting this option will change the existing name (looked up via the name field.|
+|`new_name`|""|yes|str|Setting this option will change the existing name (looked up via the name field).|
 |`copy_from`|""|no|str|Name or id to copy the Notification template from. This will copy an existing notification and change any parameters supplied.|
 |`description`|""|no|str|The description of the notification.|
 |`organization`|""|no|str|The organization applicable to the notification.|

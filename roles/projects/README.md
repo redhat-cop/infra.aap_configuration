@@ -59,6 +59,7 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of Project|
+|`new_name`|""|no|Setting this option will change the existing name (looked up via the name field).|
 |`copy_from`|""|no|str|Name or id to copy the project from. This will copy an existing project and change any parameters supplied.|
 |`description`|`False`|no|str|Description of the Project.|
 |`organization`|`False`|yes|str|Name of organization for project.|

@@ -83,8 +83,8 @@ This also speeds up the overall role.
 |`notification_templates_success`|""|no|list|The notifications on success to use for this organization in a list.|
 |`scm_branch`|""|no|str|SCM branch applied as a prompt, assuming job template prompts for SCM branch|
 |`state`|`present`|no|str|Desired state of the resource.|
-|`schema`|""|no|dict|A json list of nodes and their corresponding options. The sub-options are in the module doc.|
-|`destroy_current_schema`|""|no|dict|Set in order to destroy current schema on the workflow, used in cases where drastic changes to schema are happening.|
+|`workflow_nodes`|""|no|dict|A json list of nodes and their corresponding options. The sub-options are in the module doc.|
+|`destroy_current_nodes`|""|no|dict|Set in order to destroy current schema on the workflow, used in cases where drastic changes to schema are happening.|
 |`survey_enabled`|""|no|bool|Enable a survey on the job template.|
 |`survey_spec`|""|no|dict|JSON/YAML dict formatted survey definition.|
 |`survey`|""|no|dict|JSON/YAML dict formatted survey definition. Alias of survey_spec|

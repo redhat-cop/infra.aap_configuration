@@ -59,7 +59,7 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`name`|""|yes|Name of Credential|
-|`new_name`|""|no|Setting this option will change the existing name (looked up via the name field.|
+|`new_name`|""|no|Setting this option will change the existing name (looked up via the name field).|
 |`copy_from`|""|no|Name or id to copy the credential from. This will copy an existing credential and change any parameters supplied.|
 |`description`|`False`|no|Description of  of Credential.|
 |`organization`|""|no|Organization this Credential belongs to. If provided on creation, do not give either user or team.|

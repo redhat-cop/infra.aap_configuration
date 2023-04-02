@@ -22,6 +22,7 @@
     update_on_launch:                     "{{ __controller_source_item.update_on_launch | default(omit) }}"
     update_cache_timeout:                 "{{ __controller_source_item.update_cache_timeout | default(omit, true) }}"
     source_project:                       "{{ __controller_source_item.source_project.name | default(__controller_source_item.source_project | default(omit, true)) }}"
+    scm_branch:                           "{{ __controller_source_item.scm_branch | default(omit) }}"
     state:                                "{{ __controller_source_item.state | default(controller_state | default('present')) }}"
     notification_templates_started:       "{{ __controller_source_item.notification_templates_started | default(__controller_source_item.related.notification_templates_started | default([]) | map(attribute='name') | list) | default(omit, true) }}"
     notification_templates_success:       "{{ __controller_source_item.notification_templates_success | default(__controller_source_item.related.notification_templates_success | default([]) | map(attribute='name') | list) | default(omit, true) }}"
