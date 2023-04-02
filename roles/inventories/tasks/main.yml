@@ -2,6 +2,7 @@
 - name: Create inventory
   inventory:
     name:                               "{{ __controller_inventory_item.name | mandatory }}"
+    new_name:                           "{{ __controller_inventory_item.new_name | default(omit, true) }}"
     copy_from:                          "{{ __controller_inventory_item.copy_from | default(omit, true) }}"
     description:                        "{{ __controller_inventory_item.description | default(omit, true) }}"
     organization:                       "{{ __controller_inventory_item.organization.name | default(__controller_inventory_item.organization) | mandatory }}"

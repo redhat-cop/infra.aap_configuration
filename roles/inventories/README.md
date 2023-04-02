@@ -79,6 +79,7 @@ The role will strip the double space between the curly bracket in order to provi
 |Variable Name|Default Value|Required|type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of this inventory.|
+|`new_name`|""|no|Setting this option will change the existing name (looked up via the name field).|
 |`copy_from`|""|no|str|Name or id to copy the inventory from. This will copy an existing inventory and change any parameters supplied.|
 |`description`|""|no|str|Description of this inventory.|
 |`organization`|""|yes|str|Organization this inventory belongs to.|

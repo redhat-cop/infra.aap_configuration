@@ -2,6 +2,7 @@
 - name: Add Credential Types
   credential_type:
     name:                           "{{ __controller_credential_type_item.name | mandatory }}"
+    new_name:                       "{{ __controller_credential_type_item.new_name | default(omit, true) }}"
     description:                    "{{ __controller_credential_type_item.description | default(omit, true) }}"
     injectors:                      "{{ __controller_credential_type_item.injectors | default(omit, true) | regex_replace('[ ]{2,}', '') }}"
     inputs:                         "{{ __controller_credential_type_item.inputs | default(omit, true) }}"

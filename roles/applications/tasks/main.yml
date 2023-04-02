@@ -3,6 +3,7 @@
 - name: Add Controller Applications
   application:
     name:                           "{{ __application_item.name | mandatory }}"
+    new_name:                       "{{ __application_item.new_name | default(omit, true) }}"
     organization:                   "{{ __application_item.organization | mandatory }}"
     description:                    "{{ __application_item.description | default(omit, true) }}"
     authorization_grant_type:       "{{ __application_item.authorization_grant_type | default('password') }}"

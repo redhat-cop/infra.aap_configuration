@@ -4,6 +4,7 @@
 - name: Add controller user  # noqa fqcn[action-core]
   user:
     username:                 "{{ __controller_user_accounts_item.user | default(__controller_user_accounts_item.username) | mandatory }}"
+    new_username:             "{{ __controller_user_accounts_item.new_username | default(omit, true) }}"
     # the 'true' in the second default leads to no password being set if the default password is empty
     password:                 "{{ __controller_user_accounts_item.password | default(controller_user_default_password | default(omit, true)) }}"
     email:                    "{{ __controller_user_accounts_item.email | default(omit, true) }}"
