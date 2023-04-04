@@ -228,37 +228,57 @@ class LookupModule(LookupBase):
                 target_teams_expanded = False
                 job_templates_expanded = False
                 workflows_expanded = False
+                dupitems = [
+                    "target_team",
+                    "target_teams",
+                    "job_template",
+                    "job_templates",
+                    "workflow",
+                    "workflows"
+                ]
+                if "target_team" in item:
+                    new_item = copy.deepcopy(item)
+                    new_item.update({"team": item["target_team"]})
+                    for dupitem in dupitems:
+                        new_item.pop(dupitem)
+                    list_to_extend.append(new_item)
+                    target_teams_expanded = True
                 if "target_teams" in item:
                     for team in item["target_teams"]:
                         new_item = copy.deepcopy(item)
                         new_item.update({"team": team})
-                        new_item.pop("target_teams")
-                        if "job_templates" in new_item:
-                            new_item.pop("job_templates")
-                        if "workflows" in new_item:
-                            new_item.pop("workflows")
+                        for dupitem in dupitems:
+                            new_item.pop(dupitem)
                         list_to_extend.append(new_item)
                     target_teams_expanded = True
+                if "job_template" in item:
+                    new_item = copy.deepcopy(item)
+                    new_item.update({"job_template": item["job_template"]})
+                    for dupitem in dupitems:
+                        new_item.pop(dupitem)
+                    list_to_extend.append(new_item)
+                    job_templates_expanded = True
                 if "job_templates" in item:
                     for job_template in item["job_templates"]:
                         new_item = copy.deepcopy(item)
                         new_item.update({"job_template": job_template})
-                        new_item.pop("job_templates")
-                        if "target_teams" in new_item:
-                            new_item.pop("target_teams")
-                        if "workflows" in new_item:
-                            new_item.pop("workflows")
+                        for dupitem in dupitems:
+                            new_item.pop(dupitem)
                         list_to_extend.append(new_item)
                     job_templates_expanded = True
+                if "workflow" in item:
+                    new_item = copy.deepcopy(item)
+                    new_item.update({"workflow_job_template": item["workflow"]})
+                    for dupitem in dupitems:
+                        new_item.pop(dupitem)
+                    list_to_extend.append(new_item)
+                    workflows_expanded = True
                 if "workflows" in item:
                     for workflow in item["workflows"]:
                         new_item = copy.deepcopy(item)
                         new_item.update({"workflow_job_template": workflow})
-                        new_item.pop("workflows")
-                        if "target_teams" in new_item:
-                            new_item.pop("target_teams")
-                        if "job_templates" in new_item:
-                            new_item.pop("job_templates")
+                        for dupitem in dupitems:
+                            new_item.pop(dupitem)
                         list_to_extend.append(new_item)
                     workflows_expanded = True
                 if target_teams_expanded or job_templates_expanded or workflows_expanded:
