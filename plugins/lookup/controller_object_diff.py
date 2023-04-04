@@ -246,7 +246,7 @@ class LookupModule(LookupBase):
                     "project",
                     "projects",
                     "credential",
-                    "credentials"
+                    "credentials",
                 ]
                 if "target_team" in item:
                     list_to_extend.append(self.map_item(item, "team", item["target_team"], dupitems))
