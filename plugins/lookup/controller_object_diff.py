@@ -115,9 +115,9 @@ class LookupModule(LookupBase):
 
         return compare_list
 
-    def map_item(self, item, new_attribute_name, attribute_name, dupitems):
+    def map_item(self, item, new_attribute_name, attribute_value, dupitems):
         new_item = copy.deepcopy(item)
-        new_item.update({new_attribute_name: item[attribute_name]})
+        new_item.update({new_attribute_name: attribute_value})
         for dupitem in [dupitem for dupitem in dupitems if dupitem in new_item]:
             new_item.pop(dupitem)
         return new_item
