@@ -5,11 +5,11 @@
     name:                           "{{ __application_item.name | mandatory }}"
     new_name:                       "{{ __application_item.new_name | default(omit, true) }}"
     organization:                   "{{ __application_item.organization | mandatory }}"
-    description:                    "{{ __application_item.description | default(omit, true) }}"
+    description:                    "{{ __application_item.description | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_applications_enforce_defaults , default_value='', omit_value=omit), true) }}"
     authorization_grant_type:       "{{ __application_item.authorization_grant_type | default('password') }}"
     client_type:                    "{{ __application_item.client_type | default('public') }}"
     redirect_uris:                  "{{ __application_item.redirect_uris | default([]) }}"
-    skip_authorization:             "{{ __application_item.skip_authorization | default(omit) }}"
+    skip_authorization:             "{{ __application_item.skip_authorization | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_applications_enforce_defaults , default_value=false, omit_value=omit), true) }}"
     state:                          "{{ __application_item.state | default(controller_state | default('present')) }}"
 
     # Role specific options
