@@ -1,5 +1,7 @@
 ---
 controller_organizations:
-  - name: Satellite
   - name: Default
+    default_environment:
+      name: Custom EE
+      type: execution_environment
 ...

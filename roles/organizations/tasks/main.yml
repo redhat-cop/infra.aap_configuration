@@ -6,6 +6,7 @@
     custom_virtualenv:                  "{{ __controller_organizations_item.custom_virtualenv | default(omit, true) }}"
     max_hosts:                          "{{ __controller_organizations_item.max_hosts | default(omit, true) }}"
     instance_groups:                    "{{ __controller_organizations_item.instance_groups | default(omit, true) }}"
+    default_environment:                "{{ (__controller_organizations_item.default_environment.name | default(__controller_organizations_item.execution_environment | default(omit, true))) if (assign_default_ee_to_org is defined and assign_default_ee_to_org) else omit }}"
     default_environment:                "{{ (__controller_organizations_item.default_environment | default(omit)) if (assign_default_ee_to_org is defined and assign_default_ee_to_org) else omit }}"
     galaxy_credentials:                 "{{ (__controller_organizations_item.galaxy_credentials | default(omit)) if (assign_galaxy_credentials_to_org is defined and assign_galaxy_credentials_to_org) else omit }}"
     notification_templates_approvals:   "{{ __controller_organizations_item.notification_templates_approvals | default(__controller_organizations_item.related.notification_templates_approvals | default([]) | map(attribute='name') | list) | default(omit, true) }}"
