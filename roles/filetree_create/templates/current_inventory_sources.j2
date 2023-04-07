@@ -3,7 +3,9 @@ controller_inventory_sources:
 {% for inventory_source in current_inventory_sources_asset_value %}
   - name: "{{ inventory_source.name }}"
     description: "{{ inventory_source.description }}"
+{% if inventory_source.summary_fields.organization %}
     organization: "{{ inventory_source.summary_fields.organization.name }}"
+{% endif %}
     source: "{{ inventory_source.source | default('ToDo: The source of the inventory_source was originally missing and must be specified',true) }}"
 {% if inventory_source.source_project %}
     source_project: "{{ inventory_source.summary_fields.source_project.name }}"
