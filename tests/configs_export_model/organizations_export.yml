@@ -13,6 +13,9 @@ controller_organizations:
   - name: Default
     description: Default
     max_hosts: 0
+    default_environment:
+      name: My EE
+      type: execution_environment
     custom_virtualenv: null
     related:
       notification_templates_started: []
