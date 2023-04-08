@@ -19,11 +19,11 @@ jobs:
       matrix:
         awx_version:
           - devel
+          - 22.0.0
+          - 21.14.0
           - 21.13.0
           - 21.12.0
           - 21.11.0
-          # - 20.1.0 Diabled until working
-          # - 19.5.1 Diabled until working
     uses: "./.github/workflows/ci_standalone_versioned.yml"
     with:
       awx_version: ${{ matrix.awx_version }}
