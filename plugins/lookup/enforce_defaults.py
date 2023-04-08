@@ -7,7 +7,7 @@ __metaclass__ = type
 DOCUMENTATION = """
 name: enforce_defaults
 author: "Sean Sullivan (@sean-m-sullivan)"
-version_added: "2.3.2"
+version_added: "2.4.0"
 short_description: Return difference for objects from Controller API
 requirements:
   - None
