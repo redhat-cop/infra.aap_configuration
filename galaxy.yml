@@ -1,0 +1,32 @@
+---
+namespace: redhat_cop
+name: controller_configuration
+version: 2.3.2
+description: A collection of roles to manage Ansible Controller
+readme: README.md
+authors:
+    - Andrew Huffman
+    - Adebisi Oyawale @aoyawale
+    - Kedar Kulkarni @kedark3
+    - Tom Page @Tompage1994
+    - Sean Sullivan @sean-m-sullivan
+    - David Danielsson @djdanielsson
+repository: https://github.com/redhat-cop/controller_configuration
+issues: https://github.com/redhat-cop/controller_configuration/issues
+homepage: https://galaxy.ansible.com/infra/controller_configuration
+build_ignore:
+    - galaxy.yml.j2
+    - release.yml
+    - .github
+    - .ansiblelint.yml
+    - .yamllint.yml
+    - '*.tar.gz'
+license:
+    - GPL-3.0-or-later
+tags:
+    - controller
+    - collection
+    - controller_configuration
+    - automation_platform
+    - infrastructure
+...

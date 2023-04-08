@@ -31,4 +31,8 @@
   no_log: "{{ controller_configuration_ad_hoc_command_secure_logging }}"
   register: controller_ad_hoc_commands_output
   when: controller_ad_hoc_commands is defined
+
+- name: Warn about namespace change
+  ansible.builtin.debug:
+    msg: WARNING!!! You are using a version of redhat_cop.controller_configuration that is no longer maintained please change to infra.controller_configuration.
 ...

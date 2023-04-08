@@ -1,6 +1,5 @@
 collections/*
 !collections/requirements.yml
-galaxy.yml
 *.tar.gz
 *.pyc
 id_rsa*

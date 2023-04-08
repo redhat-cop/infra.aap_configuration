@@ -19,4 +19,8 @@
     apply:
       tags:
         - organizations
+
+- name: Warn about namespace change
+  ansible.builtin.debug:
+    msg: WARNING!!! You are using a version of redhat_cop.controller_configuration that is no longer maintained please change to infra.controller_configuration.
 ...

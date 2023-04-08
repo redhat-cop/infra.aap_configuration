@@ -76,4 +76,8 @@
   when:
     - __workflow_loop_item.simplified_workflow_nodes is defined
     - (__workflow_loop_item.state | default('present')) ==  "present"
+
+- name: Warn about namespace change
+  ansible.builtin.debug:
+    msg: WARNING!!! You are using a version of redhat_cop.controller_configuration that is no longer maintained please change to infra.controller_configuration.
 ...

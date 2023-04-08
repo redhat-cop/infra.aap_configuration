@@ -54,4 +54,8 @@
     validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
   no_log: "{{ controller_configuration_license_secure_logging }}"
   when: controller_license is defined
+
+- name: Warn about namespace change
+  ansible.builtin.debug:
+    msg: WARNING!!! You are using a version of redhat_cop.controller_configuration that is no longer maintained please change to infra.controller_configuration.
 ...

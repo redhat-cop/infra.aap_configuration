@@ -7,6 +7,10 @@
 
 This Ansible collection allows for easy interaction with an AWX or Ansible Controller server via Ansible roles using the AWX/Controller collection modules.
 
+## WARNING!!! You are using a version of redhat_cop.controller_configuration that is no longer maintained please change to infra.controller_configuration.
+
+Please either install from the validated content collections, or from infra.controller_configuration on Galaxy.
+
 ## Requirements
 
 The awx.awx or ansible.controller collections MUST be installed in order for this collection to work. It is recommended they be invoked in the playbook in the following way.
