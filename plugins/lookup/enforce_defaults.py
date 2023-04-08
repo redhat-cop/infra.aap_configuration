@@ -46,6 +46,7 @@ _raw:
 """
 
 from ansible.plugins.lookup import LookupBase
+from ansible.errors import AnsibleError
 from ansible.module_utils._text import to_native
 from ansible.utils.display import Display
 
