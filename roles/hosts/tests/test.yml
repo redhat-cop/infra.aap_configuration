@@ -19,5 +19,5 @@
         extensions: ["yml"]
 
   roles:
-    - {role: ../.., when: controller_host is defined}
+    - {role: ../.., when: controller_hosts is defined}
 ...

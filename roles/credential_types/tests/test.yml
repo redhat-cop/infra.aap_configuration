@@ -5,9 +5,10 @@
   gather_facts: false
   vars:
     controller_validate_certs: false
-    controller_hostname: controller.example.com
+    controller_hostname: controller.nas
     controller_username: admin
-    controller_password: changeme
+    controller_password: secret123
+    controller_configuration_enforce_defaults: false
 
   collections:
     - awx.awx

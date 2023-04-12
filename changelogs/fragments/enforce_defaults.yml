@@ -1,4 +1,5 @@
 ---
 minor_changes:
-  - added option to multiple roles to enforce defaults. This is described in each of the roles readmes and will slowly be rolled out to all applicable roles. This option enforces module/api defaults in order to prevent config drift. This makes it so if an option is NOT specified in a configuration it enforces the default value. It is not enabled by default.
+  - Added option to multiple roles to enforce defaults. This is described in each of the roles readmes and will slowly be rolled out to all applicable roles. This option enforces module/api defaults in order to prevent config drift. This makes it so if an option is NOT specified in a configuration it enforces the default value. It is not enabled by default.
+  - Credentials role credential type set to mandatory. This would fail in the past if it was not set, this just codifies it.
 ...

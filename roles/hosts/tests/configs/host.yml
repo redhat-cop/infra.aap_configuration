@@ -1,7 +1,7 @@
 ---
-controller_host:
+controller_hosts:
   - name: localhost
-    inventory: My Inv
+    inventory: localhost
     variables:
       my_var: true
 ...
