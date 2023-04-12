@@ -4,11 +4,11 @@
   execution_environment:
     name:                           "{{ __execution_environments_item.name | mandatory }}"
     new_name:                       "{{ __execution_environments_item.new_name | default(omit, true) }}"
-    description:                    "{{ __execution_environments_item.description | default(omit, true) }}"
+    description:                    "{{ __execution_environments_item.description | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_execution_environments_enforce_defaults , default_value='', omit_value=omit), true) }}"
     image:                          "{{ __execution_environments_item.image | mandatory }}"
-    organization:                   "{{ __execution_environments_item.organization.name | default(__execution_environments_item.organization | default(omit, true)) }}"
-    credential:                     "{{ __execution_environments_item.credential | default(omit, true) }}"
-    pull:                           "{{ __execution_environments_item.pull | default(omit, true) }}"
+    organization:                   "{{ __execution_environments_item.organization.name | default(__execution_environments_item.organization | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_execution_environments_enforce_defaults , default_value='', omit_value=omit), true)) }}"
+    credential:                     "{{ __execution_environments_item.credential | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_execution_environments_enforce_defaults , default_value='', omit_value=omit), true) }}"
+    pull:                           "{{ __execution_environments_item.pull | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_execution_environments_enforce_defaults , default_value='missing', omit_value=omit), true) }}"
     state:                          "{{ __execution_environments_item.state | default(controller_state | default('present')) }}"
 
     # Role specific options
