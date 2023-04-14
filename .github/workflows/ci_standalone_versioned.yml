@@ -59,6 +59,14 @@ jobs:
       - name: Display Versions
         run: which python && pip --version && ansible --version
 
+      - name: Build and install the collection
+        uses: redhat-cop/ansible_collections_tooling/actions/build_ansible_collection@main
+        with:
+          collection_namespace: infra
+          collection_name: controller_configuration
+          collection_version: 2.0.0
+          collection_repo: https://github.com/redhat-cop/controller_configuration/
+
       - name: "Install Galaxy dependencies"
         run: ansible-galaxy collection install -r .github/collections/requirements.yml
 
