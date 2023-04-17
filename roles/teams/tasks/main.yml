@@ -3,7 +3,7 @@
   team:
     name:                     "{{ __controller_team_item.name | mandatory }}"
     new_name:                 "{{ __controller_team_item.new_name | default(omit, true) }}"
-    description:              "{{ __controller_team_item.description | default(omit, true) }}"
+    description:              "{{ __controller_team_item.description | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_teams_enforce_defaults , default_value='', omit_value=omit), true) }}"
     organization:             "{{ __controller_team_item.organization.name | default(__controller_team_item.organization) | mandatory }}"
     state:                    "{{ __controller_team_item.state | default(controller_state | default('present')) }}"
 
