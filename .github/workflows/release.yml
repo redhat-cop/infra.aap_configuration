@@ -19,7 +19,7 @@ jobs:
       quay_username: redhat_cop
       collection_dependencies: awx.awx
     secrets:
-      infra_api_key: ${{ secrets.GALAXY_INFRA_KEY }}
+      galaxy_api_key: ${{ secrets.ANSIBLE_GALAXY_APIKEY }}
       token: ${{ secrets.GITHUB_TOKEN }}
       quay_token: ${{ secrets.quay_token }}
 ...
