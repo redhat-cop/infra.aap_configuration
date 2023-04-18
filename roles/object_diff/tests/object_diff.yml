@@ -32,8 +32,8 @@
             controller_oauthtoken: "{{ authtoken_res.json.token }}"
             controller_oauthtoken_url: "{{ authtoken_res.json.url }}"
   roles:
-    - sean_m_sullivan.controller_configuration.filetree_read
-    - sean_m_sullivan.controller_configuration.object_diff
+    - infra.controller_configuration.filetree_read
+    - infra.controller_configuration.object_diff
 
   post_tasks:
     - name: "Delete the Authentication Token used"
