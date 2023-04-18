@@ -6,7 +6,7 @@ METHOD:PUBLISH
 PRODID:-//Apple Inc.//macOS 13.2.1//EN
 BEGIN:VEVENT
 TRANSP:OPAQUE
-DTEND:20230510T140000Z
+DTEND:20230511T140000Z
 ORGANIZER;CN="ssulliva@redhat.com";EMAIL="ssulliva@redhat.com":mailto:ss
  ulliva@redhat.com
 UID:2k8fmfg2msr8lfi6k6g5upqt9a@google.com
@@ -25,7 +25,7 @@ DESCRIPTION:<a href="https://github.com/redhat-cop/controller_configurat
 STATUS:CONFIRMED
 SEQUENCE:2
 SUMMARY:AAP config as code Public meeting
-DTSTART:20230510T130000Z
+DTSTART:20230511T130000Z
 LAST-MODIFIED:20230416T100000Z
 CREATED:20230123T211213Z
 BEGIN:VALARM
