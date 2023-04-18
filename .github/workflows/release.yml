@@ -12,7 +12,7 @@ jobs:
   release:
     uses: "sean-m-sullivan/ansible_collections_tooling/.github/workflows/release_pipeline_single.yml@main"
     with:
-      collection_namespace: sean-m-sullivan
+      collection_namespace: sean_m_sullivan
       collection_name: controller_configuration
       collection_version: ${{ github.ref_name }}
       collection_repo: https://github.com/redhat-cop/controller_configuration/
