@@ -1,7 +1,7 @@
 ---
 controller_configuration_projects_async_retries: 60
 controller_configuration_projects_async_delay: 2
-controller_projects:
+projects:
   - name: Tower Config Testing
     description: ''
     local_path: _48__controller_config_testing
