@@ -1,16 +1,15 @@
 BEGIN:VCALENDAR
-CALSCALE:GREGORIAN
 VERSION:2.0
-X-WR-CALNAME:AAP config as code Public meeting
-METHOD:PUBLISH
-PRODID:-//Apple Inc.//macOS 13.2.1//EN
+PRODID:-//ical.marudot.com//iCal Event Maker
+CALSCALE:GREGORIAN
 BEGIN:VEVENT
-TRANSP:OPAQUE
-DTEND:20230412T160000Z
-ORGANIZER;CN="ssulliva@redhat.com";EMAIL="ssulliva@redhat.com":mailto:ss
- ulliva@redhat.com
-UID:2k8fmfg2msr8lfi6k6g5upqt9a@google.com
-DTSTAMP:20230316T155301Z
+DTSTAMP:20230418T084131Z
+UID:1681807271999-95396@ical.marudot.com
+DTSTART:20230511T130000Z
+RRULE:FREQ=WEEKLY;INTERVAL=4;BYDAY=TH
+DTEND:20230511T140000Z
+SUMMARY:AAP config as code Public meeting
+URL:https://meet.google.com/npj-fyzv-oyo
 X-GOOGLE-CONFERENCE:https://meet.google.com/npj-fyzv-oyo
 DESCRIPTION:<a href="https://github.com/redhat-cop/controller_configurat
  ion/issues/475">https://github.com/redhat-cop/controller_configuration/i
@@ -22,18 +21,5 @@ DESCRIPTION:<a href="https://github.com/redhat-cop/controller_configurat
  \nLearn more about Meet at: https://support.google.com/a/users/answer/92
  82720\n\nPlease do not edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~
  :~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-
-STATUS:CONFIRMED
-SEQUENCE:2
-SUMMARY:AAP config as code Public meeting
-DTSTART:20230412T150000Z
-LAST-MODIFIED:20230316T155150Z
-CREATED:20230123T211213Z
-BEGIN:VALARM
-UID:4555EBDE-771F-420A-9ED8-CB6C7540E67D
-X-WR-ALARMUID:4555EBDE-771F-420A-9ED8-CB6C7540E67D
-TRIGGER:-PT10M
-DESCRIPTION:This is an event reminder
-ACTION:DISPLAY
-END:VALARM
 END:VEVENT
 END:VCALENDAR
