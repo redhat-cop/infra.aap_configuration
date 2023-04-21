@@ -7,8 +7,6 @@ argument_specs:
         description: Data structure describing your notification_templates
         type: list
         elements: dict
-        aliases:
-          - notification_templates
         # options:
         #   name:
         #     required: true

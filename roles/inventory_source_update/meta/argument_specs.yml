@@ -7,8 +7,6 @@ argument_specs:
         description: Data structure describing your inventory_sources to update
         type: list
         elements: dict
-        aliases:
-          - inventory_sources
         # options:
         #   name:
         #     required: true

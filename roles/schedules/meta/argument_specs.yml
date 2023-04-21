@@ -7,8 +7,6 @@ argument_specs:
         description: Data structure describing your schedules
         type: list
         elements: dict
-        aliases:
-          - schedules
         # options:
         #   name:
         #     required: true

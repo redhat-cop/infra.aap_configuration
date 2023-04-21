@@ -18,7 +18,7 @@
     controller_oauthtoken:          "{{ controller_oauthtoken | default(omit, true) }}"
     controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
     validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
-  loop: "{{ controller_notifications | default( notification_templates ) }}"
+  loop: "{{ notification_templates if notification_templates is defined else controller_notifications }}"
   loop_control:
     loop_var: __controller_notification_item
   no_log: "{{ controller_configuration_notifications_secure_logging }}"

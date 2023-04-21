@@ -1,5 +1,5 @@
 ---
-controller_workflows:
+workflow_job_templates:
   - name: Complicated workflow schema
     description: a complicated workflow
     extra_vars: {}
