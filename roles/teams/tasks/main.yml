@@ -3,7 +3,7 @@
   team:
     name:                     "{{ __controller_team_item.name | mandatory }}"
     new_name:                 "{{ __controller_team_item.new_name | default(omit, true) }}"
-    description:              "{{ __controller_team_item.description | default(omit, true) }}"
+    description:              "{{ __controller_team_item.description | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_teams_enforce_defaults , default_value='', omit_value=omit), true) }}"
     organization:             "{{ __controller_team_item.organization.name | default(__controller_team_item.organization) | mandatory }}"
     state:                    "{{ __controller_team_item.state | default(controller_state | default('present')) }}"
 
@@ -14,7 +14,7 @@
     controller_username:      "{{ controller_username | default(omit, true) }}"
     controller_oauthtoken:    "{{ controller_oauthtoken | default(omit, true) }}"
     validate_certs:           "{{ controller_validate_certs | default(omit) }}"
-  loop: "{{ controller_teams }}"
+  loop: "{{ controller_teams | default( teams ) }}"
   loop_control:
     loop_var: __controller_team_item
   no_log: "{{ controller_configuration_teams_secure_logging }}"

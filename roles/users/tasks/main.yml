@@ -10,9 +10,9 @@
     email:                    "{{ __controller_user_accounts_item.email | default(omit, true) }}"
     first_name:               "{{ __controller_user_accounts_item.firstname | default(__controller_user_accounts_item.first_name | default(omit, true)) }}"
     last_name:                "{{ __controller_user_accounts_item.lastname | default(__controller_user_accounts_item.last_name | default(omit, true)) }}"
-    is_superuser:             "{{ __controller_user_accounts_item.is_superuser | default(__controller_user_accounts_item.superuser | default(omit)) }}"
-    is_system_auditor:        "{{ __controller_user_accounts_item.is_auditor | default(__controller_user_accounts_item.is_system_auditor | default(omit)) }}"
-    update_secrets:           "{{ __controller_user_accounts_item.update_secrets | default(omit) }}"
+    is_superuser:             "{{ __controller_user_accounts_item.is_superuser | default(__controller_user_accounts_item.superuser | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_users_enforce_defaults , default_value=false, omit_value=omit))) }}"
+    is_system_auditor:        "{{ __controller_user_accounts_item.is_auditor | default(__controller_user_accounts_item.is_system_auditor | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_users_enforce_defaults , default_value=false, omit_value=omit))) }}"
+    update_secrets:           "{{ __controller_user_accounts_item.update_secrets | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_users_enforce_defaults , default_value=false, omit_value=omit)) }}"
     organization:             "{{ __controller_user_accounts_item.organization | default(omit) }}"
     state:                    "{{ __controller_user_accounts_item.state | default(controller_state | default(omit, true)) }}"
 
@@ -23,7 +23,7 @@
     controller_oauthtoken:    "{{ controller_oauthtoken | default(omit, true) }}"
     validate_certs:           "{{ controller_validate_certs | default(omit) }}"
     controller_config_file:   "{{ controller_config_file | default(omit, true) }}"
-  loop: "{{ controller_user_accounts }}"
+  loop: "{{ controller_user_accounts | default( users ) }}"
   loop_control:
     loop_var: __controller_user_accounts_item
   no_log: "{{ controller_configuration_users_secure_logging }}"

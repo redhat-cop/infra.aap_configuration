@@ -7,6 +7,8 @@ argument_specs:
         description: Data structure describing your inventories
         type: list
         elements: dict
+        aliases:
+          - inventory
         # options:
         #   name:
         #     required: true

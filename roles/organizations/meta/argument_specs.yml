@@ -7,6 +7,8 @@ argument_specs:
         description: Data structure describing your organizations
         type: list
         elements: dict
+        aliases:
+          - organizations
         # options:
         #   name:
         #     required: true

@@ -7,6 +7,8 @@ argument_specs:
         description: Data structure describing your credential_types
         type: list
         elements: dict
+        aliases:
+          - credential_types
         # options:
         #   name:
         #     type: str

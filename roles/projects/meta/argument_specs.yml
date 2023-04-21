@@ -7,6 +7,8 @@ argument_specs:
         description: Data structure describing your projects
         type: list
         elements: dict
+        aliases:
+          - projects
         # options:
         #   name:
         #     required: true
