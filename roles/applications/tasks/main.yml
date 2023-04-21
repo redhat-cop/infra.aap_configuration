@@ -19,7 +19,7 @@
     controller_host:                "{{ controller_hostname | default(omit, true) }}"
     controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
     validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
-  loop: "{{ controller_applications | default( applications ) }}"
+  loop: "{{ applications if applications is defined else controller_applications }}"
   loop_control:
     loop_var: "__application_item"
   no_log: "{{ controller_configuration_applications_secure_logging }}"

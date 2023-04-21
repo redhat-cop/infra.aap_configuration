@@ -1,5 +1,5 @@
 ---
-controller_user_accounts:
+users:
   - username: AWX-Collection-tests-controller_role-user
     first_name: Joe
     last_name: User

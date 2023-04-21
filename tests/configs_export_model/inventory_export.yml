@@ -1,5 +1,5 @@
 ---
-controller_inventories:
+inventory:
   - name: 2nd Testing Inventory
     description: ''
     kind: ''

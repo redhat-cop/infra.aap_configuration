@@ -1,5 +1,5 @@
 ---
-organizations:
+controller_organizations:
   - name: Satellite
   - name: Default
 ...

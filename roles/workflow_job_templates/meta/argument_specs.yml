@@ -7,8 +7,6 @@ argument_specs:
         description: Data structure describing your workflow_job_templates
         type: list
         elements: dict
-        aliases:
-          - workflow_job_templates
         # options:
         #   name:
         #     required: true

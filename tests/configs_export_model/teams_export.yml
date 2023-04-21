@@ -1,5 +1,5 @@
 ---
-controller_teams:
+teams:
   - name: team1
     description: ''
     organization:

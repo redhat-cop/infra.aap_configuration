@@ -7,8 +7,6 @@ argument_specs:
         description: Data structure describing your project_updates
         type: list
         elements: dict
-        aliases:
-          - projects
         # options:
         #   name:
         #     required: true

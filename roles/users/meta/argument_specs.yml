@@ -7,8 +7,6 @@ argument_specs:
         description: Data structure describing your users
         type: list
         elements: dict
-        aliases:
-          - users
         # options:
         #   username:
         #     required: true

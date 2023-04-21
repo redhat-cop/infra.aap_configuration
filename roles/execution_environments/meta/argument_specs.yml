@@ -7,8 +7,6 @@ argument_specs:
         description: Data structure describing your execution_environments
         type: list
         elements: dict
-        aliases:
-          - execution_environments
         # options:
         #   name:
         #     required: true

@@ -7,8 +7,6 @@ argument_specs:
         description: Data structure describing your teams
         type: list
         elements: dict
-        aliases:
-          - teams
         # options:
         #   name:
         #     required: true
