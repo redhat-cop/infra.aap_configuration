@@ -15,7 +15,7 @@
     controller_host:          "{{ controller_hostname | default(omit, true) }}"
     controller_config_file:   "{{ controller_config_file | default(omit, true) }}"
     validate_certs:           "{{ controller_validate_certs | default(omit) }}"
-  loop: "{{ controller_projects }}"
+  loop: "{{ projects if projects is defined else controller_projects }}"
   loop_control:
     loop_var: "__project_update_update_item"
   no_log: "{{ controller_configuration_project_update_secure_logging }}"

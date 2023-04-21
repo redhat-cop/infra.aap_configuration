@@ -1,5 +1,5 @@
 ---
-controller_notifications:
+notification_templates:
   - name: Email notification
     description: Send out emails for tower jobs
     notification_type: email

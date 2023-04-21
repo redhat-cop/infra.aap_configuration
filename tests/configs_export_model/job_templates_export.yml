@@ -1,5 +1,5 @@
 ---
-controller_templates:
+job_templates:
   - name: No Survey Template no vars
     description: ''
     job_type: run
