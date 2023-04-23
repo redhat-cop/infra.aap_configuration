@@ -1,5 +1,5 @@
 ---
-controller_teams:
+teams:
   - name: team1
     description: ''
     organization:
@@ -107,4 +107,10 @@ controller_teams:
         type: organization
       name: team1
       type: team
+  - name: satellite-qe
+    organization:
+      name: Satellite
+  - name: satlab-admin
+    organization:
+      name: Satellite
 ...

@@ -21,7 +21,7 @@
     controller_password:        "{{ controller_password | default(omit, true) }}"
     controller_oauthtoken:      "{{ controller_oauthtoken | default(omit, true) }}"
     validate_certs:             "{{ controller_validate_certs | default(omit) }}"
-  loop: "{{ controller_inventories }}"
+  loop: "{{ inventory if inventory is defined else controller_inventories }}"
   loop_control:
     loop_var: __controller_inventory_item
   no_log: "{{ controller_configuration_inventories_secure_logging }}"

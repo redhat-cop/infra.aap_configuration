@@ -23,7 +23,7 @@
     controller_oauthtoken:    "{{ controller_oauthtoken | default(omit, true) }}"
     validate_certs:           "{{ controller_validate_certs | default(omit) }}"
     controller_config_file:   "{{ controller_config_file | default(omit, true) }}"
-  loop: "{{ controller_user_accounts }}"
+  loop: "{{ users if users is defined else controller_user_accounts }}"
   loop_control:
     loop_var: __controller_user_accounts_item
   no_log: "{{ controller_configuration_users_secure_logging }}"

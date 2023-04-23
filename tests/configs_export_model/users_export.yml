@@ -1,5 +1,5 @@
 ---
-controller_user_accounts:
+users:
   - username: AWX-Collection-tests-controller_role-user
     first_name: Joe
     last_name: User
@@ -32,4 +32,6 @@ controller_user_accounts:
     natural_key:
       username: AWX-Collection-tests-controller_role-user-ClPzjxrRTIwcOCvO
       type: user
+  - username: controller_user
+    is_superuser: true
 ...

@@ -14,7 +14,7 @@
     controller_username:      "{{ controller_username | default(omit, true) }}"
     controller_oauthtoken:    "{{ controller_oauthtoken | default(omit, true) }}"
     validate_certs:           "{{ controller_validate_certs | default(omit) }}"
-  loop: "{{ controller_teams }}"
+  loop: "{{ teams if teams is defined else controller_teams }}"
   loop_control:
     loop_var: __controller_team_item
   no_log: "{{ controller_configuration_teams_secure_logging }}"

@@ -1,5 +1,5 @@
 ---
-controller_inventory_sources:
+inventory_sources:
   - name: test
     description: ''
     source: scm
