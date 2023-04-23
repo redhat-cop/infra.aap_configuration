@@ -16,7 +16,7 @@
     controller_host:                "{{ controller_hostname | default(omit, true) }}"
     controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
     validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
-  loop: "{{ controller_credential_types }}"
+  loop: "{{ credential_types if credential_types is defined else controller_credential_types }}"
   loop_control:
     loop_var: __controller_credential_type_item
   no_log: "{{ controller_configuration_credential_types_secure_logging }}"

@@ -41,7 +41,7 @@
     controller_host:                    "{{ controller_hostname | default(omit, true) }}"
     controller_config_file:             "{{ controller_config_file | default(omit, true) }}"
     validate_certs:                     "{{ controller_validate_certs | default(omit) }}"
-  loop: "{{ controller_workflows }}"
+  loop: "{{ workflow_job_templates if workflow_job_templates is defined else controller_workflows }}"
   loop_control:
     loop_var: __workflow_loop_item
   no_log: "{{ workflow_job_templates_secure_logging }}"
@@ -70,7 +70,7 @@
 # Create links between workflow node
 - name: Loop over nodes in schema to add to workflow templates
   ansible.builtin.include_tasks: "add_workflows_schema.yml"
-  loop: "{{ controller_workflows }}"
+  loop: "{{ controller_workflows | default( workflow_job_templates ) }}"
   loop_control:
     loop_var: __workflow_loop_item
   when:
