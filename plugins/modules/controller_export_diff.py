@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # coding: utf-8 -*-
-
 # (c) 2017, John Westcott IV <john.westcott.iv@redhat.com>
+# based on the work of John Westcott
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -15,11 +15,10 @@ ANSIBLE_METADATA = {'metadata_version': '1.1', 'status': ['preview'], 'supported
 DOCUMENTATION = '''
 ---
 module: export
-author: "John Westcott IV (@john-westcott-iv)"
-version_added: "3.7.0"
-short_description: export resources from Automation Platform Controller.
+author: "Sean Sullivan (@sean-m-sullivan)"
+short_description: Compare controller configuration resources with those defined in code.
 description:
-    - Export assets from Automation Platform Controller.
+    - Compare controller configuration resources with those defined in code.
 options:
     all:
       description:
@@ -96,11 +95,27 @@ options:
         - schedule names to export
       type: list
       elements: str
+    compare_items:
+      description:
+        - The list of objects to compare the api_list to.
+      type: dict
+      elements: dict
+      required: True
+    set_absent:
+      description:
+        - Set state of items not in the compare list to 'absent'
+      type: boolean
+      default: True
+    with_present:
+      description:
+        - Include items in the original compare list in the output, and set state to 'present'
+      type: boolean
+      default: True
 requirements:
   - "awxkit >= 9.3.0"
 notes:
   - Specifying a name of "all" for any asset type will export all items of that asset type.
-extends_documentation_fragment: awx.awx.auth
+extends_documentation_fragment: ansible_collections.awx.awx.auth
 '''
 
 EXAMPLES = '''
@@ -124,7 +139,16 @@ EXAMPLES = '''
 
 import logging
 from ansible.module_utils.six.moves import StringIO
-from ..module_utils.awxkit import ControllerAWXKitModule
+
+try:
+    from ansible_collections.awx.awx.plugins.module_utils.awxkit import ControllerAWXKitModule
+except ImportError as imp_exc:
+    AWX_IMPORT_ERROR = imp_exc
+
+try:
+    from ansible_collections.ansible.controller.plugins.module_utils.awxkit import ControllerAWXKitModule
+except ImportError as imp_exc:
+    AAP_IMPORT_ERROR = imp_exc
 
 try:
     from awxkit.api.pages.api import EXPORTABLE_RESOURCES
@@ -137,6 +161,9 @@ except ImportError:
 def main():
     argument_spec = dict(
         all=dict(type='bool', default=False),
+        compare_items=dict(type='dict', required=True),
+        set_absent=dict(type='bool', default=True),
+        with_present=dict(type='bool', default=True),
     )
 
     # We are not going to raise an error here because the __init__ method of ControllerAWXKitModule will do that for us
@@ -149,6 +176,9 @@ def main():
     if not HAS_EXPORTABLE_RESOURCES:
         module.fail_json(msg="Your version of awxkit does not have import/export")
 
+    compare_items = module.params.get("compare_items")
+    set_absent = module.params.get('set_absent')
+    with_present = module.params.get('with_present')
     # The export process will never change the AWX system
     module.json_output['changed'] = False
 
@@ -181,8 +211,7 @@ def main():
 
     # Run the export process
     try:
-        module.json_output['assets'] = module.get_api_v2_object().export_assets(**export_args)
-        module.exit_json(**module.json_output)
+        module.json_output['controller_objects'] = module.get_api_v2_object().export_assets(**export_args)
     except Exception as e:
         module.fail_json(msg="Failed to export assets {0}".format(e))
     finally:
@@ -192,6 +221,10 @@ def main():
         if log_contents != '':
             module.fail_json(msg=log_contents)
 
+    #testing remove this
+    # module.fail_json(msg='Field: {0}'.format(export_args))
+
+    module.exit_json(**module.json_output)
 
 if __name__ == '__main__':
     main()
