@@ -4,7 +4,7 @@
     name:                           "{{ __controller_schedule_item.name | mandatory }}"
     new_name:                       "{{ __controller_schedule_item.new_name | default(omit, true) }}"
     description:                    "{{ __controller_schedule_item.description | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_schedules_enforce_defaults , default_value='', omit_value=omit), true) }}"
-    rrule:                          "{{ __controller_schedule_item.rrule | mandatory }}"
+    rrule:                          "{{ __controller_schedule_item.rrule | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_schedules_enforce_defaults , default_value='', omit_value=omit), true) }}"
     extra_data:                     "{{ __controller_schedule_item.extra_data | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_schedules_enforce_defaults , default_value={}, omit_value=omit), true) }}"
     inventory:                      "{{ __controller_schedule_item.inventory | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_schedules_enforce_defaults , default_value='', omit_value=omit), true) }}"
     credentials:                    "{{ __controller_schedule_item.credentials | default(omit, true) }}"
