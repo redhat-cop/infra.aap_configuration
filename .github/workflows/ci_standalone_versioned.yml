@@ -74,5 +74,5 @@ jobs:
         run: ansible-playbook tests/configure_controller.yml -e controller_hostname=localhost:8043 -v -e awx_version=${{ inputs.awx_version }}
 
       - name: "Perform export model playbook tests"
-        run: ansible-playbook tests/configure_controller_export_model.yml -e controller_hostname=localhost:8043 -v
+        run: ansible-playbook tests/configure_controller_export_model.yml -e controller_hostname=localhost:8043 -v -e awx_version=${{ inputs.awx_version }}
 ...
