@@ -4,8 +4,8 @@
     target_credential:              "{{ __cred_input_src_item.target_credential | mandatory }}"
     input_field_name:               "{{ __cred_input_src_item.input_field_name | mandatory }}"
     source_credential:              "{{ __cred_input_src_item.source_credential | default(omit, true) }}"
-    description:                    "{{ __cred_input_src_item.description | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_credential_input_sources_enforce_defaults , default_value='', omit_value=omit), true) }}"
-    metadata:                       "{{ __cred_input_src_item.metadata | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_credential_input_sources_enforce_defaults , default_value={}, omit_value=omit), true) }}"
+    description:                    "{{ __cred_input_src_item.description | default(( '' if controller_configuration_credential_input_sources_enforce_defaults else omit), true) }}"
+    metadata:                       "{{ __cred_input_src_item.metadata | default(( {} if controller_configuration_credential_input_sources_enforce_defaults else omit), true) }}"
     state:                          "{{ __cred_input_src_item.state | default(controller_state | default('present')) }}"
 
     # Role specific options
