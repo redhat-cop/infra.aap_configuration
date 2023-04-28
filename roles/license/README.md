@@ -53,6 +53,7 @@ controller_configuration_license_secure_logging defaults to the value of control
 |`pool_id`|""|no|str|Red Hat or Red Hat Satellite pool_id to attach to|
 |`eula_accepted`|""|yes|bool|DEPRECATED since Tower 3.8 - Whether to accept the End User License Agreement for Ansible controller|
 |`force`|`False`|no|bool|By default, the license manifest will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.|
+|`state`|`present`|no|str|Desired state of the resource.|
 
 For further details on fields see <https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html>
 
@@ -100,7 +101,7 @@ controller_license:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.license, when: controller_license is defined}
+    - {role: infra.controller_configuration.license, when: controller_license is defined}
 ```
 
 ## License

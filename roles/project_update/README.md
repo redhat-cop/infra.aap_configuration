@@ -24,7 +24,7 @@ Currently:
 |`controller_username`|""|no|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
 |`controller_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.|||
-|`controller_projects`|`see below`|yes|Data structure describing the project to update Described below.||
+|`controller_projects`|`see below`|yes|Data structure describing the project to update Described below. Alias: projects ||
 
 ### Secure Logging Variables
 
@@ -63,7 +63,7 @@ This also speeds up the overall role.
 |`wait`|""|no|str|Wait for the project to complete.|
 |`interval`|`controller_configuration_project_update_async_delay`|no|str|The interval to request an update from controller.|
 |`timeout`|""|no|str|If waiting for the job to complete this will abort after this amount of seconds.|
-|`update_project`|false|no|bool|If defined and true, the project update will be executed, otherwise it won't.|
+|`update_project`|`False`|no|bool|If defined and true, the project update will be executed, otherwise it won't.|
 
 ### Standard Project Data Structure
 
@@ -115,7 +115,7 @@ controller_projects:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.project_update, when: controller_projects is defined}
+    - {role: infra.controller_configuration.project_update, when: controller_projects is defined}
 
 ```
 

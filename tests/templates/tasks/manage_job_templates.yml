@@ -1,0 +1,13 @@
+---
+- name: Include job templates vars
+  ansible.builtin.include_vars: ../vars/controller_job_templates.yml
+  tags:
+    - jobtemplates
+    - alltags
+
+- import_role:
+    name: infra.controller_configuration.job_templates
+  tags:
+    - jobtemplates
+    - alltags
+...

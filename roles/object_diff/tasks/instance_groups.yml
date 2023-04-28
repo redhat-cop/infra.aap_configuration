@@ -19,7 +19,7 @@
 
     - name: "Find the difference of Instance Groups between what is on the Controller versus CasC on SCM"
       ansible.builtin.set_fact:
-        __instance_groups_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
+        __instance_groups_difference: "{{ lookup(controller_role_plugin,
                                         api_list=__controller_api_instance_groups,
                                         compare_list=controller_instance_groups,
                                         with_present=false,

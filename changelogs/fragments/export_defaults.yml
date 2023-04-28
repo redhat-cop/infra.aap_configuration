@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - added alias's for applicable roles to use the variables set by the awx cli export.
+...

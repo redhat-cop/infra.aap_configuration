@@ -26,6 +26,22 @@ Currently:
 |`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_credential_input_sources`|`see below`|yes|Data structure describing your credential input sources Described below.||
 
+### Enforcing defaults
+
+The following Variables compliment each other.
+If Both variables are not set, enforcing default values is not done.
+Enabling these variables enforce default values on options that are optional in the controller API.
+This should be enabled to enforce configuration and prevent configuration drift. It is recomended to be enabled, however it is not enforced by default.
+
+Enabling this will enforce configurtion without specifying every option in the configuration files.
+
+'controller_configuration_credential_input_sources_enforce_defaults' defaults to the value of 'controller_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
+
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|
+|`controller_configuration_credential_input_sources_enforce_defaults`|`False`|no|Whether or not to enforce default option values on only the applications role|
+|`controller_configuration_enforce_defaults`|`False`|no|This variable enables enforced default values as well, but is shared across multiple roles, see above.|
+
 ### Secure Logging Variables
 
 The following Variables compliment each other.
@@ -60,9 +76,9 @@ This also speeds up the overall role.
 |:---:|:---:|:---:|:---:|:---:|
 |`target_credential`|""|yes|str|Name of credential to have the input source applied|
 |`input_field_name`|""|yes|str|Name of field which will be written by the input source|
-|`source_credential`|""|str|no|Name of the source credential which points to a credential source|
-|`metadata`|""|str|no|The metadata applied to the source.|
-|`description`|`False`|no|str|Description to use for the credential input source.|
+|`source_credential`|""|no|str|Name of the source credential which points to a credential source|
+|`metadata`|""|no|dict|The metadata applied to the source.|
+|`description`|""|no|str|Description to use for the credential input source.|
 |`state`|`present`|no|str|Desired state of the resource.|
 
 For further details on fields see <https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html>
@@ -122,7 +138,7 @@ controller_credential_input_sources:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.credential_input_sources, when: controller_credential_input_sources is defined}
+    - {role: infra.controller_configuration.credential_input_sources, when: controller_credential_input_sources is defined}
 ```
 
 ## License

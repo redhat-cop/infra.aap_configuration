@@ -24,7 +24,23 @@ Currently:
 |`controller_username`|""|no|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
 |`controller_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.|||
-|`controller_inventories`|`see below`|yes|Data structure describing your inventories described below.||
+|`controller_inventories`|`see below`|yes|Data structure describing your inventories described below. Alias: inventory ||
+
+### Enforcing defaults
+
+The following Variables compliment each other.
+If Both variables are not set, enforcing default values is not done.
+Enabling these variables enforce default values on options that are optional in the controller API.
+This should be enabled to enforce configuration and prevent configuration drift. It is recomended to be enabled, however it is not enforced by default.
+
+Enabling this will enforce configurtion without specifying every option in the configuration files.
+
+'controller_configuration_inventories_enforce_defaults' defaults to the value of 'controller_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
+
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|
+|`controller_configuration_inventories_enforce_defaults`|`False`|no|Whether or not to enforce default option values on only the applications role|
+|`controller_configuration_enforce_defaults`|`False`|no|This variable enables enforced default values as well, but is shared across multiple roles, see above.|
 
 ### Secure Logging Variables
 
@@ -76,18 +92,20 @@ The role will strip the double space between the curly bracket in order to provi
 
 ### Inventory Variables
 
-|Variable Name|Default Value|Required|Description|
-|:---:|:---:|:---:|:---:|
-|`name`|""|yes|Name of this inventory.|
-|`copy_from`|""|no|Name or id to copy the inventory from. This will copy an existing inventory and change any parameters supplied.|
-|`description`|""|no|Description of this inventory.|
-|`organization`|`False`|no|Organization this inventory belongs to.|
-|`instance_groups`|""|no|list of Instance Groups for this Inventory to run on.|
-|`variables`|`False`|no|Variables for the inventory.|
-|`kind`|`False`|no|The kind of inventory. Currently choices are '' and 'smart'|
-|`host_filter`|`False`|no|The host filter field, useful only when 'kind=smart'|
-|`prevent_instance_group_fallback`|`False`|no|Prevent falling back to instance groups set on the organization|
-|`state`|`present`|no|Desired state of the resource.|
+|Variable Name|Default Value|Required|type|Description|
+|:---:|:---:|:---:|:---:|:---:|
+|`name`|""|yes|str|Name of this inventory.|
+|`new_name`|""|no|Setting this option will change the existing name (looked up via the name field).|
+|`copy_from`|""|no|str|Name or id to copy the inventory from. This will copy an existing inventory and change any parameters supplied.|
+|`description`|""|no|str|Description of this inventory.|
+|`organization`|""|yes|str|Organization this inventory belongs to.|
+|`instance_groups`|""|no|list|List of Instance Groups for this Inventory to run on.|
+|`input_inventories`|""|no|list|List of Inventories to use as input for Constructed Inventory.|
+|`variables`|`{}`|no|dict|Variables for the inventory.|
+|`kind`|""|no|str|The kind of inventory. Currently choices are '' and 'smart'|
+|`host_filter`|""|no|str|The host filter field, useful only when 'kind=smart'|
+|`prevent_instance_group_fallback`|`False`|no|bool|Prevent falling back to instance groups set on the organization|
+|`state`|`present`|no|str|Desired state of the resource.|
 
 ### Standard Inventory Data Structure
 
@@ -149,7 +167,7 @@ controller_inventories:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.inventories, when: controller_inventories is defined}
+    - {role: infra.controller_configuration.inventories, when: controller_inventories is defined}
 ```
 
 ## License

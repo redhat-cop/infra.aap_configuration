@@ -1,0 +1,13 @@
+---
+- name: Include workflows vars
+  ansible.builtin.include_vars: ../vars/controller_workflows.yml
+  tags:
+    - workflows
+    - alltags
+
+- import_role:
+    name: infra.controller_configuration.workflow_job_templates
+  tags:
+    - workflows
+    - alltags
+...

@@ -1,0 +1,13 @@
+---
+- name: Include projects vars
+  ansible.builtin.include_vars: ../vars/controller_projects.yml
+  tags:
+    - projects
+    - alltags
+
+- import_role:
+    name: infra.controller_configuration.projects
+  tags:
+    - projects
+    - alltags
+...

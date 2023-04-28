@@ -24,7 +24,23 @@ Currently:
 |`controller_username`|""|no|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
 |`controller_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.|||
-|`workflow_job_templates`|`see below`|yes|Data structure describing your workflow job templates described below.||
+|`controller_workflows`|`see below`|yes|Data structure describing your workflow job templates described below. Alias: workflow_job_templates ||
+
+### Enforcing defaults
+
+The following Variables compliment each other.
+If Both variables are not set, enforcing default values is not done.
+Enabling these variables enforce default values on options that are optional in the controller API.
+This should be enabled to enforce configuration and prevent configuration drift. It is recomended to be enabled, however it is not enforced by default.
+
+Enabling this will enforce configurtion without specifying every option in the configuration files.
+
+'controller_configuration_workflows_enforce_defaults' defaults to the value of 'controller_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
+
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|
+|`controller_configuration_workflows_enforce_defaults`|`False`|no|Whether or not to enforce default option values on only the applications role|
+|`controller_configuration_enforce_defaults`|`False`|no|This variable enables enforced default values as well, but is shared across multiple roles, see above.|
 
 ### Secure Logging Variables
 
@@ -83,8 +99,8 @@ This also speeds up the overall role.
 |`notification_templates_success`|""|no|list|The notifications on success to use for this organization in a list.|
 |`scm_branch`|""|no|str|SCM branch applied as a prompt, assuming job template prompts for SCM branch|
 |`state`|`present`|no|str|Desired state of the resource.|
-|`schema`|""|no|dict|A json list of nodes and their corresponding options. The sub-options are in the module doc.|
-|`destroy_current_schema`|""|no|dict|Set in order to destroy current schema on the workflow, used in cases where drastic changes to schema are happening.|
+|`workflow_nodes`|""|no|dict|A json list of nodes and their corresponding options. The sub-options are in the module doc.|
+|`destroy_current_nodes`|""|no|dict|Set in order to destroy current schema on the workflow, used in cases where drastic changes to schema are happening.|
 |`survey_enabled`|""|no|bool|Enable a survey on the job template.|
 |`survey_spec`|""|no|dict|JSON/YAML dict formatted survey definition.|
 |`survey`|""|no|dict|JSON/YAML dict formatted survey definition. Alias of survey_spec|
@@ -402,7 +418,7 @@ controller_workflows:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.workflow_job_templates, when: controller_workflows is defined}
+    - {role: infra.controller_configuration.workflow_job_templates, when: controller_workflows is defined}
 
 ```
 

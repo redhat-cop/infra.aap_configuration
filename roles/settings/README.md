@@ -140,7 +140,7 @@ controller_settings:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.settings, when: controller_settings is defined}
+    - {role: infra.controller_configuration.settings, when: controller_settings is defined}
 ```
 
 ## License

@@ -26,6 +26,22 @@ Currently:
 |`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.|||
 |`controller_groups`|`see below`|yes|Data structure describing your group or groups Described below.||
 
+### Enforcing defaults
+
+The following Variables compliment each other.
+If Both variables are not set, enforcing default values is not done.
+Enabling these variables enforce default values on options that are optional in the controller API.
+This should be enabled to enforce configuration and prevent configuration drift. It is recomended to be enabled, however it is not enforced by default.
+
+Enabling this will enforce configurtion without specifying every option in the configuration files.
+
+'controller_configuration_groups_enforce_defaults' defaults to the value of 'controller_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
+
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|
+|`controller_configuration_groups_enforce_defaults`|`False`|no|Whether or not to enforce default option values on only the applications role|
+|`controller_configuration_enforce_defaults`|`False`|no|This variable enables enforced default values as well, but is shared across multiple roles, see above.|
+
 ### Secure Logging Variables
 
 The following Variables compliment each other.
@@ -76,16 +92,18 @@ The role will strip the double space between the curly bracket in order to provi
 
 ### Group Variables
 
-|Variable Name|Default Value|Required|Description|
-|:---:|:---:|:---:|:---:|
-|`name`|""|yes|Name of Group|
-|`new_name`|""|yes|Name of Group, used in updating a Group.|
-|`description`|`False`|no|Description of  of Group.|
-|`inventory`|""|yes| Name of inventory|
-|`variables`|{}|no| variables applicable to group.|
-|`hosts`|""|no | hosts (list) in group|
-|`children`|""|no|  List of groups that should be nested inside in this group|
-|`state`|`present`|no|Desired state of the resource.|
+|Variable Name|Default Value|Required|Type|Description|
+|:---:|:---:|:---:|:---:|:---:|
+|`name`|""|yes|str|Name of Group|
+|`new_name`|""|yes|str|Name of Group, used in updating a Group.|
+|`description`|`False`|no|str|Description of the Group.|
+|`inventory`|""|yes|str|Name of inventory the group should be made a member of.|
+|`variables`|{}|no|dict|variables applicable to group.|
+|`hosts`|""|no|list|hosts (list) in group|
+|`children`|""|no|list|List of groups that should be nested inside in this group|
+|`preserve_existing_hosts`|`False`|no|bool|Whether to preserve existing hosts in an existing group|
+|`preserve_existing_children`|`False`|no|bool|Whether to preserve existing children in an existing group|
+|`state`|`present`|no|str|Desired state of the resource.|
 
 ### Standard Organization Data Structure
 
@@ -146,7 +164,7 @@ controller_groups:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.groups, when: controller_groups is defined}
+    - {role: infra.controller_configuration.groups, when: controller_groups is defined}
 ```
 
 ## License

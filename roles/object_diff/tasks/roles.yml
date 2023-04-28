@@ -53,7 +53,7 @@
 
     - name: "Find the difference of Roles between what is on the Controller versus CasC on SCM"
       ansible.builtin.set_fact:
-        __roles_difference: "{{ lookup('redhat_cop.controller_configuration.controller_object_diff',
+        __roles_difference: "{{ lookup(controller_role_plugin,
                                         api_list=__full_controller_api_roles, compare_list=controller_roles,
                                         with_present=false, set_absent=true)
                              }}"

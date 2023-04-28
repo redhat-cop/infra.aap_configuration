@@ -3,11 +3,12 @@
 - name: Add Controller Execution Environments
   execution_environment:
     name:                           "{{ __execution_environments_item.name | mandatory }}"
-    description:                    "{{ __execution_environments_item.description | default(omit, true) }}"
+    new_name:                       "{{ __execution_environments_item.new_name | default(omit, true) }}"
+    description:                    "{{ __execution_environments_item.description | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_execution_environments_enforce_defaults , default_value='', omit_value=omit), true) }}"
     image:                          "{{ __execution_environments_item.image | mandatory }}"
-    organization:                   "{{ __execution_environments_item.organization.name | default(__execution_environments_item.organization | default(omit, true)) }}"
-    credential:                     "{{ __execution_environments_item.credential | default(omit, true) }}"
-    pull:                           "{{ __execution_environments_item.pull | default(omit, true) }}"
+    organization:                   "{{ __execution_environments_item.organization.name | default(__execution_environments_item.organization | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_execution_environments_enforce_defaults , default_value='', omit_value=omit), true)) }}"
+    credential:                     "{{ __execution_environments_item.credential | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_execution_environments_enforce_defaults , default_value='', omit_value=omit), true) }}"
+    pull:                           "{{ __execution_environments_item.pull | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_execution_environments_enforce_defaults , default_value='missing', omit_value=omit), true) }}"
     state:                          "{{ __execution_environments_item.state | default(controller_state | default('present')) }}"
 
     # Role specific options
@@ -17,7 +18,7 @@
     controller_host:                "{{ controller_hostname | default(omit, true) }}"
     controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
     validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
-  loop: "{{ controller_execution_environments }}"
+  loop: "{{ execution_environments if execution_environments is defined else controller_execution_environments }}"
   loop_control:
     loop_var: "__execution_environments_item"
   no_log: "{{ controller_configuration_execution_environments_secure_logging }}"

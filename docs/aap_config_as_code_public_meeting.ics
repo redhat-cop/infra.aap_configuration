@@ -1,0 +1,25 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ical.marudot.com//iCal Event Maker
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+DTSTAMP:20230418T084131Z
+UID:1681807271999-95396@ical.marudot.com
+DTSTART:20230511T130000Z
+RRULE:FREQ=WEEKLY;INTERVAL=4;BYDAY=TH
+DTEND:20230511T140000Z
+SUMMARY:AAP config as code Public meeting
+URL:https://meet.google.com/npj-fyzv-oyo
+X-GOOGLE-CONFERENCE:https://meet.google.com/npj-fyzv-oyo
+DESCRIPTION:<a href="https://github.com/redhat-cop/controller_configurat
+ ion/issues/475">https://github.com/redhat-cop/controller_configuration/i
+ ssues/475</a>\n\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~
+ :~:~:~:~:~:~:~:~:~:~:~:~::~:~::-\nJoin with Google Meet: https://meet.go
+ ogle.com/npj-fyzv-oyo\nOr dial: (US) +1 470-722-0265 PIN: 621302239#\n\n
+ Join using SIP\n1189446461569@gmeet.redhat.com (ID: 1189446461569)\nMore
+  joining options: https://tel.meet/npj-fyzv-oyo?pin=1189446461569&hs=7\n
+ \nLearn more about Meet at: https://support.google.com/a/users/answer/92
+ 82720\n\nPlease do not edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~
+ :~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-
+END:VEVENT
+END:VCALENDAR

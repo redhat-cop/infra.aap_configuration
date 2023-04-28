@@ -1,0 +1,13 @@
+---
+- name: Include schedules vars
+  ansible.builtin.include_vars: ../vars/controller_schedules.yml
+  tags:
+    - schedules
+    - alltags
+
+- import_role:
+    name: infra.controller_configuration.schedules
+  tags:
+    - schedules
+    - alltags
+...

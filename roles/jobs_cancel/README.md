@@ -45,7 +45,7 @@ controller_configuration_jobs_cancel_secure_logging defaults to the value of con
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`id`|""|yes|int|ID of the job to cancel.|
-|`fail_if_not_running`|""|no|bool|Fail loudly if the job can not be canceled.|
+|`fail_if_not_running`|`False`|no|bool|Fail loudly if the job can not be canceled.|
 
 ### Standard Project Data Structure
 
@@ -78,7 +78,7 @@ controller_cancel_jobs:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.jobs_cancel, when: controller_cancel_jobs is defined}
+    - {role: infra.controller_configuration.jobs_cancel, when: controller_cancel_jobs is defined}
 ```
 
 ## License

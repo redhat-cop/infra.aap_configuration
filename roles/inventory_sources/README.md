@@ -24,7 +24,23 @@ Currently:
 |`controller_username`|""|no|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
 |`controller_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.|||
-|`controller_inventory_sources`|`see below`|yes|Data structure describing your inventory sources Described below.||
+|`controller_inventory_sources`|`see below`|yes|Data structure describing your inventory sources Described below. Alias: inventory_sources ||
+
+### Enforcing defaults
+
+The following Variables compliment each other.
+If Both variables are not set, enforcing default values is not done.
+Enabling these variables enforce default values on options that are optional in the controller API.
+This should be enabled to enforce configuration and prevent configuration drift. It is recomended to be enabled, however it is not enforced by default.
+
+Enabling this will enforce configurtion without specifying every option in the configuration files.
+
+'controller_configuration_inventory_sources_enforce_defaults' defaults to the value of 'controller_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
+
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|
+|`controller_configuration_inventory_sources_enforce_defaults`|`False`|no|Whether or not to enforce default option values on only the applications role|
+|`controller_configuration_enforce_defaults`|`False`|no|This variable enables enforced default values as well, but is shared across multiple roles, see above.|
 
 ### Secure Logging Variables
 
@@ -89,6 +105,7 @@ The role will strip the double space between the curly bracket in order to provi
 |`enabled_var`|""|no|The variable to use to determine enabled state e.g., "status.power_state".|
 |`enabled_value`|""|no|Value when the host is considered enabled, e.g., "powered_on".|
 |`host_filter`|""|no|If specified, controller will only import hosts that match this regular expression.|
+|`limit`|""|no|Enter host, group or pattern match.|
 |`credential`|""|no|Credential to use for the source.|
 |`execution_environment`|""|no|Execution Environment to use for the source.|
 |`overwrite`|""|no|Delete child groups and hosts not found in source.|
@@ -98,7 +115,8 @@ The role will strip the double space between the curly bracket in order to provi
 |`verbosity`|""|no|The verbosity level to run this inventory source under.|
 |`update_on_launch`|""|no|Refresh inventory data from its source each time a job is run.|
 |`update_cache_timeout`|""|no|Time in seconds to consider an inventory sync to be current.|
-|`source_project`|""|no|Project to use as source with scm option|
+|`source_project`|""|no|Project to use as source with scm option.|
+|`scm_branch`|""|no|Project scm branch to use as source with scm option. Project must have branch override enabled.|
 |`state`|`present`|no|Desired state of the resource.|
 |`notification_templates_started`|""|no|The notifications on started to use for this inventory source in a list.|
 |`notification_templates_success`|""|no|The notifications on success to use for this inventory source in a list.|
@@ -162,7 +180,7 @@ controller_inventory_sources:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.inventory_sources, when: controller_inventory_sources is defined}
+    - {role: infra.controller_configuration.inventory_sources, when: controller_inventory_sources is defined}
 ```
 
 ## License

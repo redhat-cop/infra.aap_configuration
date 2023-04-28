@@ -17,8 +17,8 @@ controller_configuration_dispatcher_roles:
   - {role: applications, var: controller_applications, tags: applications}
   - {role: instances, var: controller_instances, tags: instances}
   - {role: instance_groups, var: controller_instance_groups, tags: instance_groups}
-  - {role: project_update, var: controller_projects, tags: projects}
   - {role: hosts, var: controller_hosts, tags: hosts}
+  - {role: bulk_host_create, var: controller_bulk_hosts, tags: bulk_hosts}
   - {role: groups, var: controller_groups, tags: inventories}
   - {role: job_templates, var: controller_templates, tags: job_templates}
   - {role: workflow_job_templates, var: controller_workflows, tags: workflow_job_templates}

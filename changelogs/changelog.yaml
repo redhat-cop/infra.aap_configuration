@@ -381,3 +381,44 @@ releases:
     - typos.yml
     - workflow_job_template_state_and_nodes.yml
     release_date: '2023-01-26'
+  2.3.0:
+    changes:
+      breaking_changes:
+      - updated object_diff role to use the infra namespace, that means to use the
+        role it requires the infra version of the collection. Previous version required
+        the redhat_cop
+      bugfixes:
+      - Fixed name of task for inventory source update
+      - Fixed variable definitions in readmes
+      - Removed master_role_example as no longer required (this wasn't a functional
+        role)
+      minor_changes:
+      - Added argument_spec for all roles
+      - Adapt filetree_read role tests playbook config-controller-filetree.yml.
+      - 'Add new type of objects for object_diff role:  applications, execution environments,
+        instance groups, notifications and schedules'
+      - Add no_log to all tasks that populates data to avoid exposing encrypted data
+      - Add task to add Galaxy credentials and Execution Environments to Organization.
+      - Set the variables to assign_galaxy_credentials_to_org and assign_default_ee_to_org
+        to false in the task to run all roles at dispatch role.
+      - avoid to create orgs during drop_diff
+      - fixed an extra blank line in schedules readme that was breaking the table
+      - removed references to redhat_cop as a collection namespace in the readme files.
+    fragments:
+    - arg_spec.yml
+    - dispatch_creds_ee_orgs_creation.yml
+    - filetree_read.yml
+    - fixing_readme.yaml
+    - i_s_u_title.yml
+    - object_diff_role_and_plugin.yml
+    - redhat_to_infra_conversion.yml
+    release_date: '2023-03-16'
+  2.3.1:
+    changes:
+      bugfixes:
+      - Added argument_spec for all roles
+      - Ensures vars get loaded properly by dispatch role
+    fragments:
+    - arg_spec.yml
+    - dispatch_fix.yml
+    release_date: '2023-03-24'

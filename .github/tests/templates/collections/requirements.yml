@@ -1,7 +1,0 @@
----
-collections:
-  - name: awx.awx
-  - name: ansible.tower
-  - name: ansible.controller
-  - name: redhat_cop.controller_configuration
-...

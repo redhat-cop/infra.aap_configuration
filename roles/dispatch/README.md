@@ -1,4 +1,4 @@
-# controller_configuration.projects
+# controller_configuration.dispatch
 
 ## Description
 
@@ -45,7 +45,7 @@ controller_configuration_dispatcher_roles:
 
 Note that each item has three elements:
 
-- `role` which is the name of the role within redhat_cop.controller_configuration
+- `role` which is the name of the role within infra.controller_configuration
 - `var` which is the variable which is used in that role. We use this to prevent the role being called if the variable is not set
 - `tags` the tags which are applied to the role so it is possible to apply tags to a playbook using the dispatcher with these tags.
 
@@ -103,7 +103,7 @@ This also speeds up the overall role. Each individual role has its own variable 
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - redhat_cop.controller_configuration.dispatch
+    - infra.controller_configuration.dispatch
 ```
 
 ## License

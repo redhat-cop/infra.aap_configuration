@@ -1,0 +1,49 @@
+---
+- name: Get list of organizations from controller
+  uri:
+    force_basic_auth: true
+    method: GET
+    password: "{{ controller_password }}"
+    return_content: true
+    url: "https://{{ controller_hostname }}/api/v2/organizations/"
+    user: "{{ controller_username }}"
+    validate_certs: "{{ controller_validate_certs }}"
+  register: existing_organizations
+  tags:
+    - orgs
+    - alltags
+
+- name: Set fact when organization is present
+  set_fact:
+    org_exists: true
+  when: org_names.name == which_org
+  loop: "{{ existing_organizations.json.results }}"
+  loop_control:
+    loop_var: org_names
+  tags:
+    - orgs
+    - alltags
+
+- name: Include organizations vars
+  ansible.builtin.include_vars: ../vars/controller_organizations.yml
+  when:
+    - org_exists is not defined
+  tags:
+    - orgs
+    - alltags
+
+- name: Include organizations vars
+  ansible.builtin.include_vars: ../vars/controller_organizations_with_hub.yml
+  when:
+    - org_exists is defined
+    - org_exists
+  tags:
+    - orgs
+    - alltags
+
+- include_role:
+    name: infra.controller_configuration.organizations
+  tags:
+    - orgs
+    - alltags
+...

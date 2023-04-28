@@ -1,0 +1,7 @@
+---
+collections:
+  - name: awx.awx
+  - name: ansible.tower
+  - name: ansible.controller
+  - name: infra.controller_configuration
+...

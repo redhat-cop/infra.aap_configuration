@@ -1,0 +1,13 @@
+---
+- name: Include instance group vars
+  ansible.builtin.include_vars: ../vars/controller_instance_groups.yml
+  tags:
+    - instancegroups
+    - alltags
+
+- import_role:
+    name: infra.controller_configuration.instance_groups
+  tags:
+    - instancegroups
+    - alltags
+...

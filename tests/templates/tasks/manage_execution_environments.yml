@@ -1,0 +1,13 @@
+---
+- name: Include EE vars
+  ansible.builtin.include_vars: ../vars/controller_ees.yml
+  tags:
+    - ees
+    - alltags
+
+- import_role:
+    name: infra.controller_configuration.execution_environments
+  tags:
+    - ees
+    - alltags
+...

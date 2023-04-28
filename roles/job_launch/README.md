@@ -44,7 +44,7 @@ controller_configuration_job_launch_secure_logging defaults to the value of cont
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|The name or id of the project to update.|
+|`name`|""|yes|str|The name or id of the job to launch.|
 |`job_type`|""|no|str|Job_type to use for the job, only used if prompt for job_type is set. Run or Check are the options.|
 |`inventory`|""|no|str|Inventory to use for the job, only used if prompt for inventory is set.|
 |`organization`|""|no|str|Organization the inventory belongs to.|
@@ -98,7 +98,7 @@ controller_launch_jobs:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: redhat_cop.controller_configuration.job_launch, when: controller_launch_jobs is defined}
+    - {role: infra.controller_configuration.job_launch, when: controller_launch_jobs is defined}
 ```
 
 ## License

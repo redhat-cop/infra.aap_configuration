@@ -1,0 +1,13 @@
+---
+- name: Include hosts vars
+  ansible.builtin.include_vars: ../vars/controller_hosts.yml
+  tags:
+    - hosts
+    - alltags
+
+- import_role:
+    name: infra.controller_configuration.hosts
+  tags:
+    - hosts
+    - alltags
+...
