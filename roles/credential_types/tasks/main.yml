@@ -3,9 +3,9 @@
   credential_type:
     name:                           "{{ __controller_credential_type_item.name | mandatory }}"
     new_name:                       "{{ __controller_credential_type_item.new_name | default(omit, true) }}"
-    description:                    "{{ __controller_credential_type_item.description | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_credential_types_enforce_defaults , default_value='', omit_value=omit), true) }}"
-    injectors:                      "{{ __controller_credential_type_item.injectors | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_credential_types_enforce_defaults , default_value={}, omit_value=omit), true) | regex_replace('[ ]{2,}', '') }}"
-    inputs:                         "{{ __controller_credential_type_item.inputs | default(lookup('infra.controller_configuration.enforce_defaults', enforce_default=controller_configuration_credential_types_enforce_defaults , default_value={}, omit_value=omit), true) }}"
+    description:                    "{{ __controller_credential_type_item.description | default(( '' if controller_configuration_credential_types_enforce_defaults else omit), true) }}"
+    injectors:                      "{{ __controller_credential_type_item.injectors | default(( {} if controller_configuration_credential_types_enforce_defaults else omit), true) | regex_replace('[ ]{2,}', '') }}"
+    inputs:                         "{{ __controller_credential_type_item.inputs | default(( {} if controller_configuration_credential_types_enforce_defaults else omit), true) }}"
     kind:                           "{{ __controller_credential_type_item.kind | default('cloud') }}"
     state:                          "{{ __controller_credential_type_item.state | default(controller_state | default('present')) }}"
 

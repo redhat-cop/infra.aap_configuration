@@ -1,4 +1,4 @@
 ---
 controller_instance_groups:
-  - name: test_instance_group
+  - name: test1
 ...
