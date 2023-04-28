@@ -21,7 +21,6 @@ controller_workflows:
       schedules: []
       workflow_nodes:
         - extra_data: {}
-          inventory:
           scm_branch:
           job_type:
           job_tags:
@@ -77,7 +76,6 @@ controller_workflows:
             identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
             type: workflow_job_template_node
         - extra_data: {}
-          inventory:
           scm_branch:
           job_type:
           job_tags:
@@ -134,7 +132,6 @@ controller_workflows:
             option_true_false: 'yes'
             target_groups:
               - group1
-          inventory:
           scm_branch:
           job_type:
           job_tags:
@@ -171,7 +168,6 @@ controller_workflows:
             identifier: 28910097-e606-4252-8aa9-2c1a0b8b6c92
             type: workflow_job_template_node
         - extra_data: {}
-          inventory:
           scm_branch:
           job_type:
           job_tags:
@@ -208,7 +204,6 @@ controller_workflows:
             identifier: ca7ffc3b-8401-4153-83bf-bb3dd918ca87
             type: workflow_job_template_node
         - extra_data: {}
-          inventory:
           scm_branch:
           job_type:
           job_tags:
@@ -322,7 +317,6 @@ controller_workflows:
       schedules: []
       workflow_nodes:
         - extra_data: {}
-          inventory:
           scm_branch:
           job_type:
           job_tags:
@@ -370,7 +364,6 @@ controller_workflows:
             identifier: d9779889-cfdb-4a8c-8a11-1f54acf84aca
             type: workflow_job_template_node
         - extra_data: {}
-          inventory:
           scm_branch:
           job_type:
           job_tags:
