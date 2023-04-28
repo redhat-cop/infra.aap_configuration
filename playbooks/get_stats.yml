@@ -1,0 +1,113 @@
+---
+# This expects you to run this on Controller/Tower itself and use a system administrator account which you attach to the Job Template
+# You will also need to have localhost in your inventory for this to work without modification
+- name: Get stats
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  vars:
+    controller_hostname: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
+    controller_username: "{{ lookup('ansible.builtin.env', 'CONTROLLER_USERNAME') }}"
+    controller_password: "{{ lookup('ansible.builtin.env', 'CONTROLLER_PASSWORD') }}"
+    controller_validate_certs: "{{ lookup('ansible.builtin.env', 'CONTROLLER_VERIFY_SSL') | default(false) }}"
+
+  tasks:
+    - name: Get number of JT
+      ansible.builtin.uri:
+        url: "https://{{ controller_hostname }}/api/v2/metrics/?format=json"
+        method: GET
+        force_basic_auth: true
+        user: "{{ controller_username }}"
+        password: "{{ controller_password }}"
+        return_content: true
+        headers:
+          Content-Type: application/json
+        validate_certs: false
+      register: r_metrics
+
+    - name: Debug metrics
+      ansible.builtin.debug:
+        verbosity: 1
+        msg:
+          - "{{ r_metrics }}"
+          - "{{ r_metrics['json']['awx_system_info'] }}"
+          - "{{ r_metrics['json']['awx_job_templates_total'] }}"
+          - "{{ r_metrics['json']['awx_workflow_job_templates_total'] }}"
+          - "{{ r_metrics['json']['awx_license_instance_total'] }}"
+          - "{{ r_metrics['json']['awx_license_instance_free'] }}"
+
+    - name: Get users info
+      ansible.builtin.uri:
+        url: "https://{{ controller_hostname }}/api/v2/users/?format=json"
+        method: GET
+        force_basic_auth: true
+        user: "{{ controller_username }}"
+        password: "{{ controller_password }}"
+        return_content: true
+        headers:
+          Content-Type: application/json
+        validate_certs: false
+      register: r_users
+
+    - name: Debug users
+      ansible.builtin.debug:
+        verbosity: 1
+        msg:
+          - "{{ r_users['json']['results'] }}"
+          - "{{ ansible_facts['date_time']['date'] | to_datetime('%Y-%m-%d') }}"
+          - "{{ r_users['json']['results'][0]['last_login'] | regex_search('[0-9]{4}-[0-9]{2}-[0-9]{2}', '\\0') | first }}"
+          - "{{ (r_users['json']['results'][0]['last_login'] | regex_search('[0-9]{4}-[0-9]{2}-[0-9]{2}', '\\0') | first) | to_datetime('%Y-%m-%d') }}"
+          - "{{ (((r_users['json']['results'][0]['last_login'] | regex_search('[0-9]{4}-[0-9]{2}-[0-9]{2}', '\\0') | first) | to_datetime('%Y-%m-%d')) - (ansible_facts['date_time']['date'] | to_datetime('%Y-%m-%d'))).days }}"
+
+    - name: Remove users who have never logged in (null)
+      ansible.builtin.set_fact:
+        temp_user_list: "{{ (active_users | default([])) + [item['last_login']] }}"
+        active_users: []
+      when: item['last_login'] is regex('[0-9]{4}-[0-9]{2}-[0-9]{2}(.*)')
+      loop: "{{ r_users['json']['results'] }}"
+
+    - name: Debug removing users list
+      ansible.builtin.debug:
+        verbosity: 1
+        msg:
+          - "{{ temp_user_list }}"
+
+    - name: Find active users
+      ansible.builtin.set_fact:
+        active_users: "{{ active_users + [item] }}"
+      # when: (((item | regex_search('[0-9]{4}-[0-9]{2}-[0-9]{2}', '\\0') | first) | to_datetime('%Y-%m-%d')) - ('2023-03-30' | to_datetime('%Y-%m-%d'))).days <= 30
+      when: ((((item | regex_search('[0-9]{4}-[0-9]{2}-[0-9]{2}', '\\0') | first) | to_datetime('%Y-%m-%d')) - (ansible_facts['date_time']['date'] | to_datetime('%Y-%m-%d'))).days) <= 30
+      loop: "{{ temp_user_list }}"
+
+    - name: Get subscription info
+      ansible.builtin.uri:
+        url: "https://{{ controller_hostname }}/api/v2/settings/all/?format=json"
+        method: GET
+        force_basic_auth: true
+        user: "{{ controller_username }}"
+        password: "{{ controller_password }}"
+        return_content: true
+        headers:
+          Content-Type: application/json
+        validate_certs: false
+      register: r_subscription
+
+    - name: Output
+      ansible.builtin.debug:
+        msg:
+          - "Number of active users: {{ active_users | length }}"
+          - "Number of subs: {{ r_metrics['json']['awx_license_instance_total']['samples'][0]['value'] }}"
+          - "Number of avalible subs: {{ r_metrics['json']['awx_license_instance_free']['samples'][0]['value'] }}"
+          - "Number of orgs: {{ r_metrics['json']['awx_organizations_total']['samples'][0]['value'] }}"
+          - "Number of users: {{ r_metrics['json']['awx_users_total']['samples'][0]['value'] }}"
+          - "Number of teams: {{ r_metrics['json']['awx_teams_total']['samples'][0]['value'] }}"
+          - "Number of inv: {{ r_metrics['json']['awx_inventories_total']['samples'][0]['value'] }}"
+          - "Number of projects: {{ r_metrics['json']['awx_projects_total']['samples'][0]['value'] }}"
+          - "Number of JT: {{ r_metrics['json']['awx_job_templates_total']['samples'][0]['value'] }}"
+          - "Number of workflows: {{ r_metrics['json']['awx_workflow_job_templates_total']['samples'][0]['value'] }}"
+          - "Number of hosts: {{ r_metrics['json']['awx_hosts_total']['samples'] }}"
+          - "{{ r_metrics['json']['awx_status_total']['samples'] }}"
+          - "{{ r_metrics['json']['awx_system_info']['samples'][0]['labels'] }}"
+          - "{{ r_subscription['json']['LICENSE'] }}"
+
+...
