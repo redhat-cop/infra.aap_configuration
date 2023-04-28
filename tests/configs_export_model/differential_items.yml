@@ -430,6 +430,7 @@ differential_expected:
       natural_key:
         type: user
         username: admin
+      password: ''
       related:
         roles:
           - content_object:
