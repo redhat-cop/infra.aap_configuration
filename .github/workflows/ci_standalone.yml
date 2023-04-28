@@ -19,6 +19,7 @@ jobs:
       matrix:
         awx_version:
           - devel
+          - 22.1.0
           - 22.0.0
           - 21.14.0
           - 21.13.0
