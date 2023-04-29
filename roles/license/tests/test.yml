@@ -8,6 +8,8 @@
     controller_hostname: controller.example.com
     controller_username: admin
     controller_password: changeme
+    redhat_subscription_username: changeme
+    redhat_subscription_password: changeme
 
   collections:
     - awx.awx

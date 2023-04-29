@@ -40,7 +40,11 @@ controller_configuration_license_secure_logging defaults to the value of control
 
 ## Data Structure
 
-### License Variables
+### Manifest vs Subscription
+
+The module and this role can use either a manifest file, or lookup the subscription on your account. Only one method is needed, provide the appropriate variables to use the either method.
+
+### License Variables for using mainfest
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
@@ -53,6 +57,21 @@ controller_configuration_license_secure_logging defaults to the value of control
 |`pool_id`|""|no|str|Red Hat or Red Hat Satellite pool_id to attach to|
 |`eula_accepted`|""|yes|bool|DEPRECATED since Tower 3.8 - Whether to accept the End User License Agreement for Ansible controller|
 |`force`|`False`|no|bool|By default, the license manifest will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.|
+|`state`|`present`|no|str|Desired state of the resource.|
+
+For further details on fields see <https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html>
+
+### License Variables for using Red Hat Subscription
+
+|Variable Name|Default Value|Required|Type|Description|
+|:---:|:---:|:---:|:---:|:---:|
+|`redhat_subscription_username`|""|no|str|Red Hat or Red Hat Satellite username to get available subscriptions.|
+|`redhat_subscription_password`|""|no|str|Red Hat or Red Hat Satellite password to get available subscriptions.|
+|`filters`|"default values"|no|str|dict of filters to use to narrow the subscription. See example below for how to use this.|
+|`support_level`|"Self-Support"|no|str|DEPRECATED - changed to `manifest_file` (still works as an alias)|
+|`list_num`|0|no|int|List index of the subscription to use, if you want to overide the default, it is recomended to use the filters to limit the pools found.|
+|`pool_id`|""|no|str|Red Hat or Red Hat Satellite pool_id to attach to, setting this will skip the lookup.|
+|`force`|`False`|no|bool|By default, the license will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.|
 |`state`|`present`|no|str|Desired state of the resource.|
 
 For further details on fields see <https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html>
@@ -83,7 +102,7 @@ controller_license:
 
 ## Playbook Examples
 
-### Standard Role Usage
+### Standard Manifest Role Usage
 
 ```yaml
 ---
@@ -102,6 +121,25 @@ controller_license:
         extensions: ["yml"]
   roles:
     - {role: infra.controller_configuration.license, when: controller_license is defined}
+```
+
+### Standard Subscription lookup Role Usage
+
+```yaml
+---
+- name: Playbook to configure ansible controller post installation
+  hosts: localhost
+  connection: local
+  vars:
+    controller_validate_certs: false
+    controller_hostname: controller.example.com
+    controller_username: admin
+    controller_password: changeme
+    redhat_subscription_username: changeme
+    redhat_subscription_password: changeme
+
+  roles:
+    - {role: infra.controller_configuration.license}
 ```
 
 ## License
