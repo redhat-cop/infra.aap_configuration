@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - added options to license role to allow use of subcription lookup or pool_id.
+...
