@@ -430,7 +430,7 @@ differential_expected:
       natural_key:
         type: user
         username: admin
-      password: ''
+      password: "{{ '' if awx_version == 'devel' else omit }}"
       related:
         roles:
           - content_object:
