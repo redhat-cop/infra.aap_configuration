@@ -113,5 +113,5 @@
         that:
           - differential_expected ==  export_results.difference
       when:
-        - awx_version == "22.0.0" or awx_version == "22.1.0" or awx_version == "devel"  # It works on earlier versions, the issue is new fields fail in the differential.
+        - awx_version == "devel"  # It works on earlier versions, the issue is new fields fail in the differential.
 ...
