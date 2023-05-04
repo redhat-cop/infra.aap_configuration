@@ -202,7 +202,7 @@ class LookupModule(LookupBase):
             for item in api_list_reduced:
                 if item["resource_type"] == "organization":
                     item.update({"organizations": [item[item["resource_type"]]]})
-                item.update({"role": item["name"].lower()})
+                item.update({"role": item["name"].lower().replace(" ", "_")})
                 # Remove the extra fields
                 item.pop("users")
                 item.pop("teams")
