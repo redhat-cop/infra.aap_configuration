@@ -17,64 +17,64 @@
 
   tasks:
     - name: Include task to manage ansible_config
-      include_tasks: tasks/manage_ansible_config.yml
+      ansible.builtin.include_tasks: tasks/manage_ansible_config.yml
       tags:
         - ansible_config
 
     - name: Include task to manage private automation hub groups
-      include_tasks: tasks/manage_groups.yml
+      ansible.builtin.include_tasks: tasks/manage_groups.yml
       tags:
         - groups
 
     - name: Include task to manage private automation hub users
-      include_tasks: tasks/manage_users.yml
+      ansible.builtin.include_tasks: tasks/manage_users.yml
       tags:
         - users
 
     # All tasks below here may need to be re-ordered so they
     # execute in a particular order.
     - name: Include task for managing collection namespaces
-      include_tasks: tasks/manage_collection_namespaces.yml
+      ansible.builtin.include_tasks: tasks/manage_collection_namespaces.yml
       tags:
         - namespaces
 
     - name: Include task for collection publishing
-      include_tasks: tasks/manage_collection_publish.yml
+      ansible.builtin.include_tasks: tasks/manage_collection_publish.yml
       tags:
         - publish
 
     - name: Include task for execution environment images
-      include_tasks: tasks/manage_ee_images.yml
+      ansible.builtin.include_tasks: tasks/manage_ee_images.yml
       tags:
         - ee_images
 
     - name: Include task to manage execution enviornment namespaces
-      include_tasks: tasks/manage_ee_namespaces.yml
+      ansible.builtin.include_tasks: tasks/manage_ee_namespaces.yml
       tags:
         - ee_namespaces
 
     - name: Include task to manage execution environment registries
-      include_tasks: tasks/manage_ee_registries.yml
+      ansible.builtin.include_tasks: tasks/manage_ee_registries.yml
       tags:
         - registries
 
     - name: Include task to manage execution environment registry indices
-      include_tasks: tasks/manage_ee_registry_indices.yml
+      ansible.builtin.include_tasks: tasks/manage_ee_registry_indices.yml
       tags:
         - indices
 
     - name: Include task to manage execution environment registry sync
-      include_tasks: tasks/manage_ee_registry_sync.yml
+      ansible.builtin.include_tasks: tasks/manage_ee_registry_sync.yml
       tags:
         - regsync
 
     - name: Include task to manage execution environment repositories
-      include_tasks: tasks/manage_ee_repositories.yml
+      ansible.builtin.include_tasks: tasks/manage_ee_repositories.yml
       tags:
         - repos
 
     - name: Include task to manage execution environment repository sync
-      include_tasks: tasks/manage_ee_repository_sync.yml
+      ansible.builtin.include_tasks: tasks/manage_ee_repository_sync.yml
       tags:
         - reposync
 ...

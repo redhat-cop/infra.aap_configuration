@@ -31,13 +31,16 @@
           - name: managers
           - name: deleteme
 
-    - block:
+    - name: Run 'role' role for post 4.6
+      when: galaxy_ng_version == "stable-4.6" or galaxy_ng_version == "master"
+      block:
         - name: Test role creation
           ansible.builtin.include_role:
             name: role
-      when: galaxy_ng_version == "stable-4.6" or galaxy_ng_version == "master"
 
-    - block:
+    - name: Run group role for pre-4.6
+      when: galaxy_ng_version == "stable-4.4" or galaxy_ng_version == "stable-4.5"
+      block:
         # Testing Group creation and perms in 4.5
         - name: Test group creation
           ansible.builtin.include_role:
@@ -58,7 +61,6 @@
                   - view_collectionremote
               - name: deleteme
                 state: absent
-      when: galaxy_ng_version == "stable-4.4" or galaxy_ng_version == "stable-4.5"
 
     - name: Test User creation
       ansible.builtin.include_role:

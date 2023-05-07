@@ -21,11 +21,11 @@
 
   tasks:
 
-    - name: repository creation
+    - name: Repository creation
       ansible.builtin.include_role:
         name: repository
 
-    - name: repository creation with file
+    - name: Repository creation with file
       ansible.builtin.include_role:
         name: repository
       vars:
@@ -33,7 +33,7 @@
           url: https://galaxy.ansible.com/api/
           requirements_file: files/collection_requirement_file.yml
 
-    - name: repository sync
+    - name: Repository sync
       ansible.builtin.include_role:
         name: repository_sync
 ...

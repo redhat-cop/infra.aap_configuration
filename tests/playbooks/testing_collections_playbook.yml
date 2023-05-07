@@ -92,12 +92,12 @@
     - name: Download Tower tarball
       ansible.builtin.get_url:
         url: https://galaxy.ansible.com/download/redhat_cop-tower_configuration-1.5.2-3.8.2.tar.gz
-        dest: "{{playbook_dir}}/redhat_cop-tower_configuration-1.5.2-3.8.2.tar.gz"
+        dest: "{{ playbook_dir }}/redhat_cop-tower_configuration-1.5.2-3.8.2.tar.gz"
         mode: '0440'
 
     - name: Upload Tower collection to automation hub
       ah_collection_upload:
-        path: "{{playbook_dir}}/redhat_cop-tower_configuration-1.5.2-3.8.2.tar.gz"
+        path: "{{ playbook_dir }}/redhat_cop-tower_configuration-1.5.2-3.8.2.tar.gz"
         wait: true
         ah_host: "{{ ah_hostname }}"
         ah_token: "{{ ah_token }}"

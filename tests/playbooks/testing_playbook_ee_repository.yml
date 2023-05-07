@@ -79,10 +79,10 @@
       ansible.builtin.include_role:
         name: ee_registry_index
 
-# Disabled
-#    - name: Registery sync
-#      ansible.builtin.include_role:
-#        name: ee_registry_sync
+    # Disabled
+    #    - name: Registery sync
+    #      ansible.builtin.include_role:
+    #        name: ee_registry_sync
 
     - name: Tag image
       ansible.builtin.include_role:

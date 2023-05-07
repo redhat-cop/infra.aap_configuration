@@ -46,7 +46,9 @@
         ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
-    - block:
+    - name: Perform pre-4.6 tasks for group perms
+      when: galaxy_ng_version == "stable-4.4" or galaxy_ng_version == "stable-4.5"
+      block:
         - name: Ensure group operators has some perms
           ah_group_perm:
             name: operators
@@ -109,8 +111,6 @@
             ah_password: "{{ ah_password }}"
             ah_path_prefix: "{{ ah_path_prefix }}"
             validate_certs: "{{ ah_validate_certs }}"
-
-      when: galaxy_ng_version == "stable-4.4" or galaxy_ng_version == "stable-4.5"
 
     # Testing namespace renaming
     - name: Ensure namespace1 has a new name (namespace2)

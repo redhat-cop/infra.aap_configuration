@@ -104,17 +104,17 @@ jobs:
           collection_repo: https://github.com/redhat-cop/ah_configuration/
 
       - name: "Perform playbook collection tests"
-        run: ansible-playbook .github/tests/playbooks/testing_collections_playbook.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
+        run: ansible-playbook tests/playbooks/testing_collections_playbook.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
 
       - name: "Perform collection repository tests"
-        run: ansible-playbook .github/tests/playbooks/testing_collections_repos.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
+        run: ansible-playbook tests/playbooks/testing_collections_repos.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
 
       - name: "Perform playbook user and group management tests"
-        run: ansible-playbook .github/tests/playbooks/testing_playbook_user.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
+        run: ansible-playbook tests/playbooks/testing_playbook_user.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
 
       - name: "Perform playbook namespace tests"
-        run: ansible-playbook .github/tests/playbooks/testing_playbook_ee_namespace.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
+        run: ansible-playbook tests/playbooks/testing_playbook_ee_namespace.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
         if: ${{ inputs.galaxy_ng_version == 'stable-4.4' || inputs.galaxy_ng_version == 'stable-4.5'  }}  # ee_namespace APIs were removed in 4.6 (see #183)
 
       - name: "Perform playbook repository tests"
-        run: ansible-playbook .github/tests/playbooks/testing_playbook_ee_repository.yml -vv -e galaxy_ng_version=${{ inputs.galaxy_ng_version }} -e redhat_catalog_username=${{ secrets.redhat_catalog_username }} -e redhat_catalog_password=${{ secrets.redhat_catalog_password }}
+        run: ansible-playbook tests/playbooks/testing_playbook_ee_repository.yml -vv -e galaxy_ng_version=${{ inputs.galaxy_ng_version }} -e redhat_catalog_username=${{ secrets.redhat_catalog_username }} -e redhat_catalog_password=${{ secrets.redhat_catalog_password }}

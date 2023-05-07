@@ -9,7 +9,7 @@ ansible_config_list:
 
 automation_hub_list:
   - name: automation_hub
-    url: "{{ah_host}}"
+    url: "{{ ah_host }}"
     auth_url: https://auth.com
     token: changeme
 
