@@ -26,7 +26,7 @@ jobs:
   release:
     needs:
       - ci_standalone
-    uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline.yml@main"
+    uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline_single.yml@main"
     with:
       collection_namespace: infra
       collection_name: controller_configuration
