@@ -61,7 +61,7 @@ This also speeds up the overall role.
 ---
 ah_ee_registries:
   - name: myreg
-    url: url: https://quay.io/my/registry
+    url: https://quay.io/my/registry
     interval: 10
     wait: true
     timeout: 300

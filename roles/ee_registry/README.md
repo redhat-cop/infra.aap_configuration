@@ -68,7 +68,7 @@ This also speeds up the overall role.
 ---
 ah_ee_registries:
   - name: myreg
-    url: url: https://quay.io/my/registry
+    url: https://quay.io/my/registry
 ```
 
 ## Playbook Examples
