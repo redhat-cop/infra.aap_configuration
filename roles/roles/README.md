@@ -75,7 +75,9 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`user`|""|no|str|The user for which the role applies|
+|`users`|""|no|list|The users for which the role applies|
 |`team`|""|no|str|The team for which the role applies|
+|`teams`|""|no|list|The teams for which the role applies|
 |`role`|""|no|str (see note below)|The role which is applied to one of {`target_team`, `inventory`, `job_template`, `target_team`, `inventory`, `job_template`} for either `user` or `team` |
 |`target_team`|""|no|str|The team the role applies against|
 |`target_teams`|""|no|list|The teams the role applies against|
@@ -140,6 +142,9 @@ This also speeds up the overall role.
 ---
 controller_roles:
 - user: jdoe
+  users:
+    - thing1
+    - thing2
   target_team: "My Team"
   role: member
 - team: "My Team"
