@@ -4,5 +4,4 @@ minor_changes:
   - Credentials role credential type set to mandatory. This would fail in the past if it was not set, this just codifies it.
   - Instances role - changed default of node_type and node_state to omit, as generally these cannot be changed on existing instances unless deploying new instances.
   - Inventory role - added input_inventories option for constructed inventories.
-  - Schedule role - rrule set to mandatory. This would fail in the past if it was not set, this just codifies it.
 ...
