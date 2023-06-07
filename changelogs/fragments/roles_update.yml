@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - added option to roles role to support upcoming change to allow lists of teams and users to be used in the module.
+...
