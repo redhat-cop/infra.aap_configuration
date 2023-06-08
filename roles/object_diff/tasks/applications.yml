@@ -18,7 +18,7 @@
   ansible.builtin.set_fact:
     __applications_difference: "{{ lookup(controller_role_plugin,
                                       api_list=__controller_api_applications, compare_list=controller_applications,
-                                      with_present=false, set_absent=true)
+                                      with_present=include_present_state, set_absent=true)
                             }}"
 
 - name: "Set application's list to be configured"

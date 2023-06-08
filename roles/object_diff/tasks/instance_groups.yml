@@ -22,7 +22,7 @@
         __instance_groups_difference: "{{ lookup(controller_role_plugin,
                                         api_list=__controller_api_instance_groups,
                                         compare_list=controller_instance_groups,
-                                        with_present=false,
+                                        with_present=include_present_state,
                                         set_absent=true)
                              }}"
 
