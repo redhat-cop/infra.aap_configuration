@@ -20,7 +20,7 @@
   ansible.builtin.set_fact:
     __inventories_difference: "{{ lookup(controller_role_plugin,
                                          api_list=__controller_api_inventories, compare_list=controller_inventories,
-                                         with_present=false, set_absent=true)
+                                         with_present=include_present_state, set_absent=true)
                                }}"
 
 - name: "Set inventores' list to be configured"

@@ -21,7 +21,7 @@
     __inventory_sources_difference: "{{ lookup(controller_role_plugin,
                                                 api_list=__controller_api_inventory_sources,
                                                 compare_list=controller_inventory_sources,
-                                                with_present=false, set_absent=true)
+                                                with_present=include_present_state, set_absent=true)
                                      }}"
 
 - name: "Set inventory_sources' list to be configured"

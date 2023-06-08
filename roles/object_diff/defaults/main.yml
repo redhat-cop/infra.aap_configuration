@@ -53,4 +53,5 @@ controller_configuration_object_diff_secure_logging: "{{ controller_configuratio
 
 controller_api_version: "v2"
 
+include_present_state: false
 ...
