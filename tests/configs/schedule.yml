@@ -10,6 +10,7 @@ controller_schedules:
     rrule: "DTSTART:20200101T000000Z RRULE:FREQ=HOURLY;INTERVAL=3"
     execution_environment: My EE
     forks: 2
+    limit: all
     instance_groups:
       - test_instance_group
     labels:
