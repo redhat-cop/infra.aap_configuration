@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Fixed filetree read to error when organization not defined.
-...

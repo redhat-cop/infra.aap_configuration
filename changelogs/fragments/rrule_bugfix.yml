@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Fixed rrule in schedules to not be mandatory.
-...
