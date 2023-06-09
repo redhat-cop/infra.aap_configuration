@@ -105,6 +105,14 @@ class LookupModule(LookupBase):
     def warn_callback(self, warning):
         self.display.warning(warning)
 
+    def create_present_list(self, compare_list):
+        if not compare_list:
+            return [compare_list]
+
+        for item in compare_list:
+            item.update({"state": "present"})
+        return compare_list
+
     def run(self, terms, variables=None, **kwargs):
         self.set_options(direct=kwargs)
 
@@ -114,10 +122,11 @@ class LookupModule(LookupBase):
         warn_on_empty_api = self.get_option("warn_on_empty_api")
         if not api_list:
             if warn_on_empty_api:
-                self._display.warning("Skipping, did not find items in api_list")
+                if not compare_list:
+                    self._display.warning("Skipping, did not find items in neither api_list nor compare_list")
             else:
                 raise AnsibleLookupError("Unable to find items in api_list")
-            return [api_list]
+            return self.create_present_list(compare_list)
 
         # Set Keys to keep for each list. Depending on type
         if api_list[0]["type"] == "organization" or api_list[0]["type"] == "credential_type" or api_list[0]["type"] == "instance_group":
@@ -285,8 +294,7 @@ class LookupModule(LookupBase):
                 item.update({"state": "absent"})
         # Combine Lists
         if self.get_option("with_present"):
-            for item in compare_list_reduced:
-                item.update({"state": "present"})
+            self.create_present_list(compare_list_reduced)
             compare_list.extend(difference)
             # Return Compare list with difference attached
             difference = compare_list
