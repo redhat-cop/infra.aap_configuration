@@ -111,7 +111,7 @@ differential_expected:
       ask_job_slice_count_on_launch: true
       ask_job_type_on_launch: false
       ask_labels_on_launch: true
-      ask_limit_on_launch: false
+      ask_limit_on_launch: true
       ask_scm_branch_on_launch: false
       ask_skip_tags_on_launch: false
       ask_tags_on_launch: false
@@ -184,7 +184,7 @@ differential_expected:
             job_slice_count: 1
             job_tags: ""
             job_type:
-            limit: ""
+            limit: all
             name: Demo Schedule 2
             natural_key:
               name: Demo Schedule 2

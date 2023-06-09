@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Fixed defaults for values that are lists.
+...

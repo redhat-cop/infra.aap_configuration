@@ -40,6 +40,7 @@ controller_templates:
     ask_job_slice_count_on_launch: true
     ask_labels_on_launch: true
     ask_timeout_on_launch: true
+    ask_limit_on_launch: true
     prevent_instance_group_fallback: true
     survey_spec:
       name: ''
