@@ -1,4 +1,0 @@
----
-minor_changes:
-  - added get_stats.yml playbook in the playbook folder to get some basic info on a Tower/Controller instance
-...

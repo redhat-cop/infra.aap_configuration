@@ -5,14 +5,46 @@ infra.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v2.4.0
+======
+
+Minor Changes
+-------------
+
+- Added Roles bulk_host_create, bulk_job_launch.
+- Added new_name option to the roles applications, credential_types, execution_environments, inventories, projects, users.
+- Added new_username option to user role.
+- Added option to multiple roles to enforce defaults. This is described in each of the roles readmes and will slowly be rolled out to all applicable roles. This option enforces module/api defaults in order to prevent config drift. This makes it so if an option is NOT specified in a configuration it enforces the default value. It is not enabled by default.
+- Added scm_branch option to inventory_sources role.
+- Corrected various readmes.
+- Credentials role credential type set to mandatory. This would fail in the past if it was not set, this just codifies it.
+- If someone wants to have the old behavior, or only update projects with dispatch, the dispatch variable controller_configuration_dispatcher_roles can be overwritten and customized.
+- Instances role - changed default of node_type and node_state to omit, as generally these cannot be changed on existing instances unless deploying new instances.
+- Inventory role - added input_inventories option for constructed inventories.
+- Removed project_update from dispatch. This is because with bringing update_project option in line with the module options, it was running twice both in project and project update. Since both roles use the same variable controller_projects.
+- Set the default behavior of project_update to run the update as true, unless the user explicitly sets the variable update_project to overide the default behavior. This is because if the user is specifically calling project_update it should by default update the project.
+- Updated workflow job template options to use non depreciated names for options. This should not affect any operations.
+- added alias's for applicable roles to use the variables set by the awx cli export.
+- added get_stats.yml playbook in the playbook folder to get some basic info on a Tower/Controller instance
+- added option for using the export form of default execution environment.
+- added option to roles role to support upcoming change to allow lists of teams and users to be used in the module.
+- added options to license role to allow use of subcription lookup or pool_id.
+
+Bugfixes
+--------
+
+- Fixed defaults for values that are lists.
+- Fixed filetree read to error when organization not defined.
+- Fixed rrule in schedules to not be mandatory.
+
 v2.3.1
 ======
 
 Bugfixes
 --------
 
+- Added argument_spec for all roles
 - Ensures vars get loaded properly by dispatch role
-- Fixed issue in filetree_read where arg spec incorrect and caused failure (#550)
 
 v2.3.0
 ======
@@ -24,6 +56,7 @@ Minor Changes
 - Add new type of objects for object_diff role:  applications, execution environments, instance groups, notifications and schedules
 - Add no_log to all tasks that populates data to avoid exposing encrypted data
 - Add task to add Galaxy credentials and Execution Environments to Organization.
+- Added argument_spec for all roles
 - Set the variables to assign_galaxy_credentials_to_org and assign_default_ee_to_org to false in the task to run all roles at dispatch role.
 - avoid to create orgs during drop_diff
 - fixed an extra blank line in schedules readme that was breaking the table
@@ -37,7 +70,6 @@ Breaking Changes / Porting Guide
 Bugfixes
 --------
 
-- Added argument_spec for all roles
 - Fixed name of task for inventory source update
 - Fixed variable definitions in readmes
 - Removed master_role_example as no longer required (this wasn't a functional role)

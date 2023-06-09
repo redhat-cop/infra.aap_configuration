@@ -1,7 +1,0 @@
----
-minor_changes:
-  - Added option to multiple roles to enforce defaults. This is described in each of the roles readmes and will slowly be rolled out to all applicable roles. This option enforces module/api defaults in order to prevent config drift. This makes it so if an option is NOT specified in a configuration it enforces the default value. It is not enabled by default.
-  - Credentials role credential type set to mandatory. This would fail in the past if it was not set, this just codifies it.
-  - Instances role - changed default of node_type and node_state to omit, as generally these cannot be changed on existing instances unless deploying new instances.
-  - Inventory role - added input_inventories option for constructed inventories.
-...

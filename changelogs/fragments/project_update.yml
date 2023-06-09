@@ -1,6 +1,0 @@
----
-minor_changes:
-  - Removed project_update from dispatch. This is because with bringing update_project option in line with the module options, it was running twice both in project and project update. Since both roles use the same variable controller_projects.
-  - If someone wants to have the old behavior, or only update projects with dispatch, the dispatch variable controller_configuration_dispatcher_roles can be overwritten and customized.
-  - Set the default behavior of project_update to run the update as true, unless the user explicitly sets the variable update_project to overide the default behavior. This is because if the user is specifically calling project_update it should by default update the project.
-...
