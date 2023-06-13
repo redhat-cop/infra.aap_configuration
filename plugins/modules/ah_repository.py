@@ -130,14 +130,14 @@ extends_documentation_fragment: infra.ah_configuration.auth
 
 EXAMPLES = """
 - name: Configure rh-certified repo
-  ah_repository:
+  infra.ah_configuration.ah_repository:
     name: rh-certified
     url: https://cloud.redhat.com/api/automation-hub/
     token: aabbcc
     auth_url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
 
 - name: Configure community repo
-  ah_repository:
+  infra.ah_configuration.ah_repository:
     name: community
     url: https://galaxy.ansible.com/api/
     requirements:
@@ -145,7 +145,7 @@ EXAMPLES = """
       - infra.controller_configuration
 
 - name: Configure community repo from a file
-  ah_repository:
+  infra.ah_configuration.ah_repository:
     name: community
     url: https://galaxy.ansible.com/api/
     requirements_file: "/tmp/requirements.yml"

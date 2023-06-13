@@ -53,12 +53,12 @@ extends_documentation_fragment: infra.ah_configuration.auth_ui
 
 EXAMPLES = """
 - name: Sync my_registry without waiting
-  ah_ee_registry_sync:
+  infra.ah_configuration.ah_ee_registry_sync:
     name: my_registry
     wait: false
 
 - name: Sync registry.redhat.io registry and wait up to 300 seconds
-  ah_ee_registry_sync:
+  infra.ah_configuration.ah_ee_registry_sync:
     name: registry_redhat_io
     wait: true
     timeout: 300

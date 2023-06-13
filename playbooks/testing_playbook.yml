@@ -21,7 +21,7 @@
 
   tasks:
     - name: Authenticate and get an API token
-      ah_token:
+      infra.ah_configuration.ah_token:
         ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
@@ -43,7 +43,7 @@
     #      ah_auto_approve: true
 
     - name: Remove collection
-      ah_collection:
+      infra.ah_configuration.ah_collection:
         namespace: community_test
         name: test
         version: 1.0.1
@@ -54,7 +54,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Configure community repo
-      ah_repository:
+      infra.ah_configuration.ah_repository:
         name: community
         url: https://galaxy.ansible.com/api/
         requirements:
@@ -66,7 +66,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Configure community repo from file
-      ah_repository:
+      infra.ah_configuration.ah_repository:
         name: community
         url: https://galaxy.ansible.com/api/
         requirements_file: files/collection_requirement_file.yml
@@ -76,7 +76,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Sync community repo
-      ah_repository_sync:
+      infra.ah_configuration.ah_repository_sync:
         name: community
         wait: true
         ah_host: "{{ ah_hostname }}"
@@ -85,7 +85,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Configure rh-certified repo
-      ah_repository:
+      infra.ah_configuration.ah_repository:
         name: rh-certified
         url: https://cloud.redhat.com/api/automation-hub/
         auth_url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
@@ -96,7 +96,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Add EE Registry
-      ah_ee_registry:
+      infra.ah_configuration.ah_ee_registry:
         name: myreg
         url: https://registry.redhat.io
         ah_host: "{{ ah_hostname }}"
@@ -106,7 +106,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Deauthenticate
-      ah_token:
+      infra.ah_configuration.ah_token:
         ah_host: "{{ ah_hostname }}"
         ah_token: "{{ ah_token }}"
         ah_path_prefix: "{{ ah_path_prefix }}"

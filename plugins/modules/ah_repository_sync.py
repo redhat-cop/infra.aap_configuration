@@ -53,12 +53,12 @@ extends_documentation_fragment: infra.ah_configuration.auth
 
 EXAMPLES = """
 - name: Sync rh-certified repo without waiting
-  ah_repository_sync:
+  infra.ah_configuration.ah_repository_sync:
     name: rh-certified
     wait: false
 
 - name: Sync community repo and wait up to 60 seconds
-  ah_repository_sync:
+  infra.ah_configuration.ah_repository_sync:
     name: community
     wait: true
     timeout: 60

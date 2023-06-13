@@ -8,13 +8,13 @@ This Ansible collection allows for easy interaction with an Ansible Automation H
 
 ## Redhat Communities of Practice Configuration Collections Suite
 
-|Collection Name|Purpose|
-|:---:|:---:|
-|[Controller Configuration](https://galaxy.ansible.com/redhat_cop/controller_configuration)|Automation controller configuration|
-|[Hub Configuration](https://galaxy.ansible.com/redhat_cop/ah_configuration)|Automation hub configuration|
-|[EE Utilities](https://galaxy.ansible.com/redhat_cop/ee_utilities)|Execution Environment creation utilities|
-|[AAP installation Utilities](https://galaxy.ansible.com/redhat_cop/aap_utilities)|Ansible Automation Platform Utilities|
-|[AAP Configuration Template](https://github.com/redhat-cop/aap_configuration_template)|Configuration Template for this suite|
+|                                      Collection Name                                       |                 Purpose                  |
+|:------------------------------------------------------------------------------------------:|:----------------------------------------:|
+| [Controller Configuration](https://galaxy.ansible.com/redhat_cop/controller_configuration) |   Automation controller configuration    |
+|        [Hub Configuration](https://galaxy.ansible.com/redhat_cop/ah_configuration)         |       Automation hub configuration       |
+|             [EE Utilities](https://galaxy.ansible.com/redhat_cop/ee_utilities)             | Execution Environment creation utilities |
+|     [AAP installation Utilities](https://galaxy.ansible.com/redhat_cop/aap_utilities)      |  Ansible Automation Platform Utilities   |
+|   [AAP Configuration Template](https://github.com/redhat-cop/aap_configuration_template)   |  Configuration Template for this suite   |
 
 ## Included content
 
@@ -47,7 +47,7 @@ You can also specify authentication by setting the following variables:
 
 - `galaxy_server`, `galaxy_oauthtoken`, `ah_token`
 
-The OAuth2 token is the only method. You can obtain the token through through the web interface. If you only pass a username and password to galaxy API roles/modules a new OAUTH2 token will be generated, invalidating the previous user token. To ensure this doesn't occur always set the ah_token variable to the users OAUTH2 token before executing automation. This does not affect pulp API calls.
+The OAuth2 token is the only method. You can obtain the token through the web interface. If you only pass a username and password to galaxy API roles/modules a new OAUTH2 token will be generated, invalidating the previous user token. To ensure this doesn't occur always set the ah_token variable to the users OAUTH2 token before executing automation. This does not affect pulp API calls.
 
 Galaxy API calls
 

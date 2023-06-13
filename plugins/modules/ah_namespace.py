@@ -89,7 +89,7 @@ extends_documentation_fragment: infra.ah_configuration.auth
 
 EXAMPLES = """
 - name: Create Tower Ping job template
-  ah_namespace:
+  infra.ah_configuration.ah_namespace:
     name: Redhat
     company: Redhat
     email: user@example.com
@@ -97,7 +97,7 @@ EXAMPLES = """
     description: This is the Redhat Namespace
     links:
       - name: "homepage"
-        url: "http://www.redhat.com"
+        url: "https://www.redhat.com"
     groups:
       - system:partner-engineers
       - admins

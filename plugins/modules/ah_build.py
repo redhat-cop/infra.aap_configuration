@@ -51,7 +51,7 @@ options:
 
 EXAMPLES = """
 - name: Build infra.ah_configuration:v1.0.0
-  ah_build:
+  infra.ah_configuration.ah_build:
     path: /home/ansible/ah_configuration
     force: true
     output_path: /var/tmp
