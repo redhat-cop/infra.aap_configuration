@@ -94,6 +94,7 @@ This also speeds up the overall role.
 |`lookup_organization`|""|no|str|Organization the inventories, job templates, projects, or workflows the items exists in. Used to help lookup the object, for organization roles see organization. If not provided, will lookup by name only, which does not work with duplicates.|
 |`project`|""|no|str|The project the role applies against|
 |`projects`|""|no|list|The project the role applies against|
+|`instance_groups`|""|no|list|The instance groups the role applies against|
 |`state`|`present`|no|str|Desired state of the resource.|
 
 #### Role
