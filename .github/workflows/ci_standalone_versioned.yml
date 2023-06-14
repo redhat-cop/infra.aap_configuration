@@ -44,6 +44,10 @@ jobs:
       - name: set the awx password in the inventory
         run: echo "admin_password='password'" >> awx/tools/docker-compose/inventory
 
+      - name: Find and replace dependency
+        run: sed -i 's,rsyslog-8.2102.0-106.el9 ,https://download.copr.fedorainfracloud.org/results/ansible/Rsyslog/epel-9-x86_64/06076718-rsyslog/rsyslog-8.2102.0-106.el9.x86_64.rpm ,' tools/ansible/roles/dockerfile/templates/Dockerfile.j2
+        working-directory: awx
+
       - name: build images
         working-directory: awx
         run: make docker-compose-build
