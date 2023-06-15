@@ -10,23 +10,19 @@ controller_schedules:
 {% if current_schedules_asset_value.summary_fields.inventory is defined %}
     inventory: "{{ current_schedules_asset_value.summary_fields.inventory.name }}"
 {% endif %}
-{#
 {% if query_instance_groups | length > 0 %}
     instance_groups:
 {% for instance_group in query_instance_groups %}
       - "{{ instance_group.name }}"
 {% endfor %}
 {% endif %}
-#}
     dtstart: "{{ current_schedules_asset_value.dtstart }}"
     dtend: "{{ current_schedules_asset_value.dtend }}"
     timezone: "{{ current_schedules_asset_value.timezone }}"
     rrule: "{{ current_schedules_asset_value.rrule }}"
-{#
 {% if current_schedules_asset_value.summary_fields.execution_environment is defined %}
     execution_environment: "{{ current_schedules_asset_value.summary_fields.execution_environment.name }}"
 {% endif %}
-#}
 {% if current_schedules_asset_value.extra_data is defined %}
     extra_data:
       {{ current_schedules_asset_value.extra_data | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") }}
