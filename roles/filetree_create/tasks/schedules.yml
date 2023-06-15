@@ -13,7 +13,7 @@
     state: directory
     mode: '0755'
 
-- name: "Add current schedules to the schedules output file in {{ output_path }}/schedules"
+- name: "Add current schedules to the schedules output file in {{ output_path }}"
   ansible.builtin.template:
     src: "templates/current_schedules.j2"
     dest: "{{ __dest }}"
