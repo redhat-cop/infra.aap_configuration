@@ -21,4 +21,5 @@ valid_tags:
   - instance_groups
   - applications
   - labels
+  - schedules
 ...
