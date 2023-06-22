@@ -6,3 +6,4 @@ galaxy.yml
 id_rsa*
 test
 tests/output
+.vscode
