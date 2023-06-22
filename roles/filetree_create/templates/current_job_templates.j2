@@ -48,7 +48,7 @@ controller_templates:
     start_at_task: "{{ current_job_templates_asset_value.start_at_task }}"
     timeout: {{ current_job_templates_asset_value.timeout | int }}
 {% if is_aap and current_job_templates_asset_value.summary_fields.execution_environment is defined %}
-    execution_environment: "{{ current_job_templates_asset_value.summary_fields.execution_environment.name | default(omit) }}"
+    execution_environment: "{{ current_job_templates_asset_value.summary_fields.execution_environment.name }}"
 {% endif %}
 {% if not is_aap %}
     custom_virtualenv: "{{ current_job_templates_asset_value.custom_virtualenv | default(omit) }}"
