@@ -1,2 +1,0 @@
-minor_changes:
-  - remove depencency of CONTROLER_USERNAME variable for object_diff role by calling the API with api/me instead of calling the api/users and filtering by username
