@@ -1,4 +1,4 @@
 ---
 bugfixes:
-  - Changes default value for *_enforce_defaults to false instead of the truthy value (due to the quotes), 'false'.
+  - Changes default value for `*_enforce_defaults` to false instead of the truthy value (due to the quotes), 'false'.
 ...
