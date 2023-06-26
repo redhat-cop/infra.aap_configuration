@@ -18,6 +18,7 @@ skip_list:
   - meta-runtime  # This collection with the appropriate awx.awx or ansible.controller still works with older ansible.
   - fqcn[keyword]
   - role-name[path]
+  - var-naming[no-role-prefix]
 warn_list:
   - jinja[invalid]  # Temporarily adding this due to https://github.com/ansible/ansible-lint/issues/3048
 kinds:
