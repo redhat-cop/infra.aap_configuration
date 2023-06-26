@@ -1,10 +1,10 @@
-# Red Hat Communities of Practice Services Catalog Configuration Collection
+# Red Hat Communities of Practice Event Driven Ansible Configuration Collection
 
-This Ansible collection allows for easy interaction with an Ansible Services Catalog or Pinakes server via Ansible playbooks.
+This Ansible collection allows for easy interaction with an Event Driven Ansible server via Ansible playbooks.
 
 ## Work In Progress
 
-At present this collection is a work in progress and modules and roles will be added when available. At the moment there are major issues preventing the start of this collection due to an inability to authenticate to the Services Catalog API. See [this issue](https://github.com/redhat-cop/services_catalog_configuration/issues/1) which will track this work.
+At present this collection is a work in progress and modules and roles will be added when available.
 
 The work which will be done will be tracked in the issues. Feel free to add questions or feature requests there which can be answered or resolved once we begin work on this collection.
 
