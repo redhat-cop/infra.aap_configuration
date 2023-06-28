@@ -296,18 +296,21 @@ def main():
             if resource in compare_items:
                 for resource_object in compare_items[resource]:
                     if with_present:
-                        resource_object.update({"state": "present"})
-                    for idx, dict_ in enumerate(awxkit_list[resource]):
-                        if resource == "users":
-                            if resource_object["username"] == dict_["username"]:
-                                awxkit_list[resource].pop(idx)
-                        elif "organization" not in resource_object or resource_object["organization"] is None:
-                            if resource_object["name"] == dict_["name"]:
-                                awxkit_list[resource].pop(idx)
-                        else:
-                            for idx, dict_ in enumerate(awxkit_list[resource]):
-                                if resource_object["name"] == dict_["name"] and resource_object["organization"]["name"] == dict_["organization"]["name"]:
-                                    awxkit_list[resource].pop(idx)
+                        resource_object.update({"state": "present"})        
+                        for idx, dict_ in enumerate(awxkit_list[resource]):
+                            try:
+                                if resource == "users":
+                                    if resource_object["username"] == dict_["username"]:
+                                        awxkit_list[resource].pop(idx)
+                                elif "organization" not in resource_object or resource_object["organization"] is None:
+                                    if resource_object["name"] == dict_["name"]:
+                                        awxkit_list[resource].pop(idx)
+                                else:
+                                    for idx, dict_ in enumerate(awxkit_list[resource]):
+                                        if resource_object["name"] == dict_["name"] and resource_object["organization"]["name"] == dict_["organization"]["name"]:
+                                            awxkit_list[resource].pop(idx)
+                            except Exception as e:
+                                module.fail_json(msg="Failed to export assets {0} with resource {1} and dict {2}".format(e, resource_object, dict_))
                 # After looping through every item in the compare_items the remaining are set to absent.
                 if set_absent:
                     if awxkit_list[resource]:
