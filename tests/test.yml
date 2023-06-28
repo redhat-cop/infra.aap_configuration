@@ -1,0 +1,28 @@
+---
+- name: Playbook to configure ansible controller post installation
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    workflow_job_templates_secure_logging: false
+    controller_validate_certs: false
+    controller_configuration_secure_logging: false
+  collections:
+    - awx.awx
+    - infra.controller_configuration
+  # Define following vars here, or in configs/controller_auth.yml
+  # controller_hostname: controller.example.com
+  # controller_username: admin
+  # controller_password: changeme
+  pre_tasks:
+
+    - name: Include vars from controller_configs directory
+      ansible.builtin.include_vars:
+        dir: ./configs_export_model
+        ignore_files: [README.md]
+        extensions: ["yml"]
+
+  roles:
+
+    - {role: credentials, when: credentials is defined, tags: credentials}
+...

@@ -261,9 +261,7 @@ def main():
             export_args[resource] = ""
         else:
             # Otherwise we take either the string or None (if the parameter was not passed) to get one or no items
-            resource_param = module.params.get(resource)
-            if resource_param is not None:
-                export_args[resource] = module.params.get(resource)
+            export_args[resource] = module.params.get(resource)
 
     # Currently the export process does not return anything on error
     # It simply just logs to Python's logger
