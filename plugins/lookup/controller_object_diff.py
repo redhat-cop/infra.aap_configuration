@@ -136,7 +136,11 @@ class LookupModule(LookupBase):
             keys_to_keep = ["username"]
             api_keys_to_keep = ["username"]
         elif api_list[0]["type"] == "workflow_job_template_node":
-            keys_to_keep = ["workflow_job_template", "unified_job_template", "identifier"]
+            keys_to_keep = [
+                "workflow_job_template",
+                "unified_job_template",
+                "identifier",
+            ]
             api_keys_to_keep = ["identifier", "summary_fields"]
         elif api_list[0]["type"] == "group" or api_list[0]["type"] == "host":
             keys_to_keep = ["name", "inventory"]

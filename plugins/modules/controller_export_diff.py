@@ -9,7 +9,11 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-ANSIBLE_METADATA = {"metadata_version": "1.1", "status": ["preview"], "supported_by": "community"}
+ANSIBLE_METADATA = {
+    "metadata_version": "1.1",
+    "status": ["preview"],
+    "supported_by": "community",
+}
 
 
 DOCUMENTATION = """
@@ -201,10 +205,14 @@ from ansible.module_utils.six.moves import StringIO
 from copy import deepcopy
 
 try:
-    from ansible_collections.awx.awx.plugins.module_utils.awxkit import ControllerAWXKitModule
+    from ansible_collections.awx.awx.plugins.module_utils.awxkit import (
+        ControllerAWXKitModule,
+    )
 except ImportError:
     try:
-        from ansible_collections.ansible.controller.plugins.module_utils.awxkit import ControllerAWXKitModule
+        from ansible_collections.ansible.controller.plugins.module_utils.awxkit import (
+            ControllerAWXKitModule,
+        )
     except ImportError:
         AAP_IMPORT_ERROR = True
 
@@ -261,9 +269,7 @@ def main():
             export_args[resource] = ""
         else:
             # Otherwise we take either the string or None (if the parameter was not passed) to get one or no items
-            resource_param = module.params.get(resource)
-            if resource_param is not None:
-                export_args[resource] = module.params.get(resource)
+            export_args[resource] = module.params.get(resource)
 
     # Currently the export process does not return anything on error
     # It simply just logs to Python's logger
@@ -300,16 +306,18 @@ def main():
                     if with_present:
                         resource_object.update({"state": "present"})
                     for idx, dict_ in enumerate(awxkit_list[resource]):
-                        if resource == "users":
-                            if resource_object["username"] == dict_["username"]:
-                                awxkit_list[resource].pop(idx)
-                        elif "organization" not in resource_object or resource_object["organization"] is None:
-                            if resource_object["name"] == dict_["name"]:
-                                awxkit_list[resource].pop(idx)
-                        else:
-                            for idx, dict_ in enumerate(awxkit_list[resource]):
+                        try:
+                            if resource == "users":
+                                if resource_object["username"] == dict_["username"]:
+                                    awxkit_list[resource].pop(idx)
+                            elif "organization" not in resource_object or resource_object["organization"] is None:
+                                if resource_object["name"] == dict_["name"]:
+                                    awxkit_list[resource].pop(idx)
+                            else:
                                 if resource_object["name"] == dict_["name"] and resource_object["organization"]["name"] == dict_["organization"]["name"]:
                                     awxkit_list[resource].pop(idx)
+                        except Exception as e:
+                            module.fail_json(msg="Failed to compare assets {0} with resource {1} and exported {2}".format(e, resource_object, awxkit_list[resource]))
                 # After looping through every item in the compare_items the remaining are set to absent.
                 if set_absent:
                     if awxkit_list[resource]:
