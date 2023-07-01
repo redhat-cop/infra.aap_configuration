@@ -18,16 +18,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: "Checkout galaxy_ng"
+      - name: Checkout AWX
         uses: actions/checkout@v2
         with:
           repository: ansible/awx
           path: awx
           ref: ${{ inputs.awx_version }}
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
+          python-version: "3.11"
 
       - name: Update apt
         run: sudo apt -y update
