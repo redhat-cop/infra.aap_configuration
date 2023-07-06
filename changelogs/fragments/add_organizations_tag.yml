@@ -1,3 +1,2 @@
 minor_changes:
   - add organizations tag in a dispatch task which is in charge of applying galaxy credencitals in the organization.
-
