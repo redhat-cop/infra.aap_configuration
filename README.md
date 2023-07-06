@@ -13,13 +13,13 @@ This Ansible collection allows for easy interaction with an Ansible Automation H
 | [awx.awx/Ansible.controller repo](https://github.com/ansible/awx/tree/devel/awx_collection) |   Automation controller modules          |
 |        [Ansible Hub Configuration](https://github.com/ansible/automation_hub_collection)     |       Automation hub configuration       |
 
-## Links to other Validated Configuration Collections
+## Links to other Validated Configuration Collections for Ansible Automation Platform
 
 |                                      Collection Name                                       |                 Purpose                  |
 |:------------------------------------------------------------------------------------------:|:----------------------------------------:|
-| [Controller Configuration](https://galaxy.ansible.com/redhat_cop/controller_configuration) |   Automation controller configuration    |
-|             [EE Utilities](https://galaxy.ansible.com/redhat_cop/ee_utilities)             | Execution Environment creation utilities |
-|     [AAP installation Utilities](https://galaxy.ansible.com/redhat_cop/aap_utilities)      |  Ansible Automation Platform Utilities   |
+| [Controller Configuration](https://github.com/redhat-cop/controller_configuration) |   Automation controller configuration    |
+|             [EE Utilities](https://github.com/redhat-cop/ee_utilities)             | Execution Environment creation utilities |
+|     [AAP installation Utilities](https://github.com/redhat-cop/aap_utilities)      |  Ansible Automation Platform Utilities   |
 |   [AAP Configuration Template](https://github.com/redhat-cop/aap_configuration_template)   |  Configuration Template for this suite   |
 
 ## Included content
