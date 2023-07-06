@@ -19,4 +19,5 @@
     apply:
       tags:
         - organizations
+  tags: organizations
 ...
