@@ -1,17 +1,17 @@
 ---
 ah_collections:
-  - namespace: redhat_cop
-    name: ah_configuration
-    path: /home/runner/work/ah_configuration/ah_configuration/redhat_cop-ah_configuration-1.0.0.tar.gz
+  - namespace: ansible
+    name: automation_hub
+    path: /home/runner/work/automation_hub_collection/automation_hub_collection/ansible-automation_hub-1.0.0.tar.gz
     wait: true
     interaval: 5
     auto_approve: true
     timeout: 180
 
 ah_collections_overwrite:
-  - namespace: redhat_cop
-    name: ah_configuration
-    path: /home/runner/work/ah_configuration/ah_configuration/redhat_cop-ah_configuration-1.0.0.tar.gz
+  - namespace: ansible
+    name: automation_hub
+    path: /home/runner/work/automation_hub_collection/automation_hub_collection/ansible-automation_hub-1.0.0.tar.gz
     wait: true
     interaval: 5
     auto_approve: true

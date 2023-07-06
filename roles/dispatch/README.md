@@ -1,4 +1,4 @@
-# ah_configuration.projects
+# ansible.automation_hub.dispatch
 
 ## Description
 
@@ -8,7 +8,7 @@ An Ansible Role to run all roles for which variables are found on Ansible Automa
 
 This collection is most useful for experienced AAP2 users who want to quickly configure a Automation Hub instance.
 
-If you are new to AAP2 and/or to the infra.ah_configuration collection, it is highly recommended that you ensure that you're familiar with both AAP2 and the collection, before using this role.
+If you are new to AAP2 and/or to the ansible.automation_hub collection, it is highly recommended that you ensure that you're familiar with both AAP2 and the collection, before using this role.
 
 ## Variables
 
@@ -34,7 +34,7 @@ ah_configuration_dispatcher_roles:
 
 Each item within the variable has three elements:
 
-- `role` which is the name of the role within infra.ah_configuration
+- `role` which is the name of the role within ansible.automation_hub
 - `var` which is the variable or variables in that role. We use this to prevent the role being called if the variable is not set.
 - `tags` the tags which are applied to the role so it is possible to apply tags to a playbook using the dispatcher with these tags.
 
@@ -54,7 +54,7 @@ If the functionality of Automation Hub is extended in the future, and more varia
 ### Secure Logging Variables
 
 The role defaults to False as normally most projects task does not include sensitive information.
-Each role the dispatch role calls has a separate variable which can be turned on to enforce secure logging for that role but defaults to the value of ah_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it. If neither value is set then each role has a default value of true or false depending on the Red Hat COP suggestions.
+Each role the dispatch role calls has a separate variable which can be turned on to enforce secure logging for that role but defaults to the value of ah_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it. If neither value is set then each role has a default value of true or false as determined by best practices for each role.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
@@ -93,7 +93,7 @@ This also speeds up the overall role. Each individual role has its own variable 
         ignore_files: [ah_config.yml.template]
         extensions: ["yml"]
   roles:
-    - infra.ah_configuration.dispatch
+    - ansible.automation_hub.dispatch
 ```
 
 ## License

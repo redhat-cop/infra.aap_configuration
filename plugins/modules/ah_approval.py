@@ -41,15 +41,15 @@ options:
       required: True
       type: str
 
-extends_documentation_fragment: infra.ah_configuration.auth
+extends_documentation_fragment: ansible.automation_hub.auth
 """
 
 
 EXAMPLES = """
-- name: Approve infra.ah_configuration:v1.0.0
-  infra.ah_configuration.ah_approval:
-    namespace: infra
-    name: ah_configuration
+- name: Approve namespace.collection_name:v1.0.0
+  ansible.automation_hub.ah_approval:
+    namespace: namespace
+    name: collection_name
     version: v1.0.0
 
 """

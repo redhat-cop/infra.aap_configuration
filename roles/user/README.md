@@ -1,4 +1,4 @@
-# infra.ah_configuration.user
+# ansible.automation_hub.user
 
 ## Description
 

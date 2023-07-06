@@ -61,12 +61,12 @@ notes:
   - When the module creates a namespace, the private automation hub web UI does not display that new namespace.
     You must first create a repository in the namespace, with C(podman push) for example, for the web UI to show the namespace.
   - When the module grants access to a group, the permissions associated to that group apply.
-extends_documentation_fragment: infra.ah_configuration.auth_ui
+extends_documentation_fragment: ansible.automation_hub.auth_ui
 """
 
 EXAMPLES = r"""
 - name: Ensure the namespace exists
-  infra.ah_configuration.ah_ee_namespace:
+  ansible.automation_hub.ah_ee_namespace:
     name: ansible-automation-platform-20-early-access
     state: present
     ah_host: hub.example.com
@@ -74,7 +74,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the namespace has a new name
-  infra.ah_configuration.ah_ee_namespace:
+  ansible.automation_hub.ah_ee_namespace:
     name: ansible-automation-platform-20-early-access
     new_name: custom-ee-01
     state: present
@@ -83,7 +83,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the namespace is removed
-  infra.ah_configuration.ah_ee_namespace:
+  ansible.automation_hub.ah_ee_namespace:
     name: custom-ee-01
     state: absent
     ah_host: hub.example.com
@@ -91,7 +91,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure only the operators group can manage the namespace
-  infra.ah_configuration.ah_ee_namespace:
+  ansible.automation_hub.ah_ee_namespace:
     name: ansible-automation-platform-20-early-access
     state: present
     groups:
@@ -102,7 +102,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the managers group can also manage the namespace
-  infra.ah_configuration.ah_ee_namespace:
+  ansible.automation_hub.ah_ee_namespace:
     name: ansible-automation-platform-20-early-access
     state: present
     groups:

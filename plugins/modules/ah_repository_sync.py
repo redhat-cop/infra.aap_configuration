@@ -47,18 +47,18 @@ options:
         - If waiting for the project to update this will abort after this
           amount of seconds
       type: int
-extends_documentation_fragment: infra.ah_configuration.auth
+extends_documentation_fragment: ansible.automation_hub.auth
 """
 
 
 EXAMPLES = """
 - name: Sync rh-certified repo without waiting
-  infra.ah_configuration.ah_repository_sync:
+  ansible.automation_hub.ah_repository_sync:
     name: rh-certified
     wait: false
 
 - name: Sync community repo and wait up to 60 seconds
-  infra.ah_configuration.ah_repository_sync:
+  ansible.automation_hub.ah_repository_sync:
     name: community
     wait: true
     timeout: 60

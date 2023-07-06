@@ -36,16 +36,16 @@ options:
     default: present
     choices: [absent, present]
 seealso:
-  - module: infra.ah_configuration.ah_group_perm
-  - module: infra.ah_configuration.ah_user
+  - module: ansible.automation_hub.ah_group_perm
+  - module: ansible.automation_hub.ah_user
 notes:
   - Supports C(check_mode).
-extends_documentation_fragment: infra.ah_configuration.auth_ui
+extends_documentation_fragment: ansible.automation_hub.auth_ui
 """
 
 EXAMPLES = r"""
 - name: Ensure the group exists
-  infra.ah_configuration.ah_group:
+  ansible.automation_hub.ah_group:
     name: administrators
     state: present
     ah_host: hub.example.com
@@ -53,7 +53,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the group is removed
-  infra.ah_configuration.ah_group:
+  ansible.automation_hub.ah_group:
     name: operators
     state: absent
     ah_host: hub.example.com

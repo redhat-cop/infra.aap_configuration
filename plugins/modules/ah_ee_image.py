@@ -51,12 +51,12 @@ options:
 notes:
   - Supports C(check_mode).
   - Only works with private automation hub v4.3.2 or later.
-extends_documentation_fragment: infra.ah_configuration.auth_ui
+extends_documentation_fragment: ansible.automation_hub.auth_ui
 """
 
 EXAMPLES = r"""
 - name: Ensure the image has the additional tags
-  infra.ah_configuration.ah_ee_image:
+  ansible.automation_hub.ah_ee_image:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8:2.0.0-15
     state: present
     tags:
@@ -68,7 +68,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Replace all the image tags
-  infra.ah_configuration.ah_ee_image:
+  ansible.automation_hub.ah_ee_image:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8:2.0.0-15
     state: present
     append: false
@@ -80,7 +80,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the image does not exist
-  infra.ah_configuration.ah_ee_image:
+  ansible.automation_hub.ah_ee_image:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8:2.0
     state: absent
     ah_host: hub.example.com

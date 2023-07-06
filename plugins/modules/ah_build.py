@@ -50,8 +50,8 @@ options:
 
 
 EXAMPLES = """
-- name: Build infra.ah_configuration:v1.0.0
-  infra.ah_configuration.ah_build:
+- name: Build ansible.automation_hub:v1.0.0
+  ansible.automation_hub.ah_build:
     path: /home/ansible/ah_configuration
     force: true
     output_path: /var/tmp

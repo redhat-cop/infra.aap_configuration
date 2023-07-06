@@ -28,7 +28,7 @@ sections:
   - Bugfixes
 - - known_issues
   - Known Issues
-title: infra.ah_configuration
+title: ansible.automation_hub
 trivial_section_name: trivial
 use_fqcn: true
 ...

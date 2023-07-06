@@ -84,20 +84,20 @@ options:
       default: "present"
       type: str
 
-extends_documentation_fragment: infra.ah_configuration.auth
+extends_documentation_fragment: ansible.automation_hub.auth
 """
 
 
 EXAMPLES = """
 - name: Upload collection to automation hub
-  infra.ah_configuration.ah_collection:
+  ansible.automation_hub.ah_collection:
     namespace: awx
     name: awx
     path: /var/tmp/collections/awx-awx-15.0.0.tar.gz
 
 
 - name: Remove collection
-  infra.ah_configuration.ah_collection:
+  ansible.automation_hub.ah_collection:
     namespace: test_collection
     name: test
     version: 4.1.2

@@ -1,4 +1,4 @@
-# infra.ah_configuration.group
+# ansible.automation_hub.group
 
 ## Description
 

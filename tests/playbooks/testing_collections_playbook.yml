@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
   collections:
-    - infra.ah_configuration
+    - ansible.automation_hub
   pre_tasks:
     - name: Include vars from ah_configs directory
       ansible.builtin.include_vars:
@@ -70,8 +70,8 @@
 
     - name: Remove collection
       ah_collection:
-        namespace: infra
-        name: ah_configuration
+        namespace: ansible
+        name: automation_hub
         version: 0.9.2
         state: absent
         ah_host: "{{ ah_hostname }}"
@@ -91,13 +91,13 @@
 
     - name: Download Tower tarball
       ansible.builtin.get_url:
-        url: https://galaxy.ansible.com/download/redhat_cop-tower_configuration-1.5.2-3.8.2.tar.gz
-        dest: "{{ playbook_dir }}/redhat_cop-tower_configuration-1.5.2-3.8.2.tar.gz"
+        url: https://galaxy.ansible.com/download/infra-controller_configuration-2.4.0.tar.gz
+        dest: "{{ playbook_dir }}/infra-controller_configuration-2.4.0.tar.gz"
         mode: '0440'
 
     - name: Upload Tower collection to automation hub
       ah_collection_upload:
-        path: "{{ playbook_dir }}/redhat_cop-tower_configuration-1.5.2-3.8.2.tar.gz"
+        path: "{{ playbook_dir }}/infra-controller_configuration-2.4.0.tar.gz"
         wait: true
         ah_host: "{{ ah_hostname }}"
         ah_token: "{{ ah_token }}"

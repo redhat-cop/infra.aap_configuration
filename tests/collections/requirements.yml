@@ -1,4 +1,4 @@
 ---
 collections:
-  - name: infra.ah_configuration
+  - name: ansible.automation_hub
 ...

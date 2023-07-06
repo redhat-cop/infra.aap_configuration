@@ -1,4 +1,4 @@
-# infra.ah_configuration.repository
+# ansible.automation_hub.repository
 
 ## Description
 
@@ -59,7 +59,7 @@ ah_repository_certified:
 ah_repository_community:
   url: https://galaxy.ansible.com/api/
   requirements:
-    - infra.ah_configuration
+    - ansible.automation_hub
     - infra.controller_configuration
     - infra.aap_utilities
     - infra.ee_utilities

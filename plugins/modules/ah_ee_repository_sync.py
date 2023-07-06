@@ -47,18 +47,18 @@ options:
         - If waiting for the repository to update this will abort after this
           amount of seconds
       type: int
-extends_documentation_fragment: infra.ah_configuration.auth_ui
+extends_documentation_fragment: ansible.automation_hub.auth_ui
 """
 
 
 EXAMPLES = """
 - name: Sync my_repository without waiting
-  infra.ah_configuration.ah_ee_repository_sync:
+  ansible.automation_hub.ah_ee_repository_sync:
     name: my_repository
     wait: false
 
 - name: Sync ee-supported-rhel8 repository and wait up to 300 seconds
-  infra.ah_configuration.ah_ee_repository_sync:
+  ansible.automation_hub.ah_ee_repository_sync:
     name: ansible-automation-platform-21/ee-supported-rhel8
     wait: true
     timeout: 300

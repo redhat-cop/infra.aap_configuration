@@ -11,6 +11,7 @@ ah_namespaces:
         url: "https://github.com/ansible/awx"
     groups:
       - system:partner-engineers
-  - name: redhat_cop
+  - name: infra
   - name: test_namespace
+  - name: ansible
 ...

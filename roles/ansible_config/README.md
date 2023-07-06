@@ -1,4 +1,4 @@
-# ah_configuration_ah_namespace
+# ansible.automation_hub.ansible_config
 
 ## Description
 

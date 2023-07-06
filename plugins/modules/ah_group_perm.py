@@ -55,8 +55,8 @@ options:
     default: present
     choices: [absent, present]
 seealso:
-  - module: infra.ah_configuration.ah_group
-  - module: infra.ah_configuration.ah_user
+  - module: ansible.automation_hub.ah_group
+  - module: ansible.automation_hub.ah_user
 notes:
   - Supports C(check_mode).
   - This module only works up to Automation Hub version 4.5 (AAP 2.2)
@@ -64,13 +64,13 @@ notes:
     C(change_container), C(change_image_tag), C(create_container), and
     C(push_container)) are only available with private automation hub v4.3.2 or
     later.
-extends_documentation_fragment: infra.ah_configuration.auth_ui
+extends_documentation_fragment: ansible.automation_hub.auth_ui
 """
 
 
 EXAMPLES = r"""
 - name: Ensure the operators have the correct permissions to manage users
-  infra.ah_configuration.ah_group_perm:
+  ansible.automation_hub.ah_group_perm:
     name: operators
     perms:
       - add_user
@@ -83,7 +83,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the administrators have all the permissions
-  infra.ah_configuration.ah_group_perm:
+  ansible.automation_hub.ah_group_perm:
     name: administrators
     perms: "*"
     state: present
@@ -92,7 +92,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the developers cannot manage groups nor users
-  infra.ah_configuration.ah_group_perm:
+  ansible.automation_hub.ah_group_perm:
     name: developers
     perms:
       - add_user

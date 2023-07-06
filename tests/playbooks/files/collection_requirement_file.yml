@@ -1,6 +1,6 @@
 ---
 collections:
-  - name: infra.ah_configuration
-  - name: redhat_cop.ee_utilities
+  - name: infra.ee_utilities
+  - name: infra.controller_configuration
   - name: ansible.windows
 ...

@@ -58,18 +58,18 @@ options:
     default: present
     choices: [absent, present]
 seealso:
-  - module: infra.ah_configuration.ah_group
-  - module: infra.ah_configuration.ah_user
+  - module: ansible.automation_hub.ah_group
+  - module: ansible.automation_hub.ah_user
 notes:
   - Supports C(check_mode).
   - This module only works up to Automation Hub version 4.6 (AAP 2.3)
-extends_documentation_fragment: infra.ah_configuration.auth_ui
+extends_documentation_fragment: ansible.automation_hub.auth_ui
 """
 
 
 EXAMPLES = r"""
 - name: Ensure the operators have the correct permissions to manage users
-  infra.ah_configuration.ah_role:
+  ansible.automation_hub.ah_role:
     name: galaxy.operators
     perms:
       - add_user
@@ -82,7 +82,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the administrators have all the permissions
-  infra.ah_configuration.ah_role:
+  ansible.automation_hub.ah_role:
     name: galaxy.administrators
     perms: "*"
     state: present
@@ -91,7 +91,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the developers cannot manage groups nor users
-  infra.ah_configuration.ah_role:
+  ansible.automation_hub.ah_role:
     name: galaxy.developers
     perms:
       - add_user

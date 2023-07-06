@@ -37,17 +37,17 @@ options:
       default: True
       type: bool
 
-extends_documentation_fragment: infra.ah_configuration.auth
+extends_documentation_fragment: ansible.automation_hub.auth
 """
 
 
 EXAMPLES = """
 - name: Upload collection to automation hub
-  infra.ah_configuration.ah_collection_upload:
+  ansible.automation_hub.ah_collection_upload:
     path: /var/tmp/collections/awx_awx-15.0.0.tar.gz
 
 - name: Upload collection to automation hub from galaxy
-  infra.ah_configuration.ah_collection_upload:
+  ansible.automation_hub.ah_collection_upload:
     path: https://galaxy.ansible.com/download/theforeman-foreman-3.2.0.tar.gz
 
 """

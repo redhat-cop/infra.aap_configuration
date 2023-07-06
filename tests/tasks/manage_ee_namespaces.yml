@@ -6,7 +6,7 @@
 
 - name: Import ah_configuration role
   ansible.builtin.import_role:
-    name: infra.ah_configuration.ee_namespace
+    name: ansible.automation_hub.ee_namespace
   tags:
     - ee_namespaces
 ...

@@ -1,4 +1,4 @@
-# infra.ah_configuration.ee_namespace
+# ansible.automation_hub.ee_namespace
 
 ## Description
 

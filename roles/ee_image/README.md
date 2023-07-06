@@ -1,4 +1,4 @@
-# infra.ah_configuration.ee_image
+# ansible.automation_hub.ee_image
 
 ## Description
 

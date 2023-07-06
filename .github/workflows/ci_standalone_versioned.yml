@@ -66,7 +66,7 @@ jobs:
         run: sed -i.bak 's/WITH_DEV_INSTALL=1/WITH_DEV_INSTALL=0/' galaxy_ng/.compose.env
 
       - name: set the hub ui path in .compose.env
-        run: echo "ANSIBLE_HUB_UI_PATH='/home/runner/work/ah_configuration/ah_configuration/ansible-hub-ui'" >> galaxy_ng/.compose.env
+        run: echo "ANSIBLE_HUB_UI_PATH='/home/runner/work/automation_hub_collection/automation_hub_collection/ansible-hub-ui'" >> galaxy_ng/.compose.env
 
       - name: cat
         run: cat galaxy_ng/.compose.env
@@ -98,10 +98,10 @@ jobs:
         id: build
         uses: redhat-cop/ansible_collections_tooling/actions/build_ansible_collection@main
         with:
-          collection_namespace: redhat_cop
-          collection_name: ah_configuration
+          collection_namespace: ansible
+          collection_name: automation_hub
           collection_version: 1.0.0
-          collection_repo: https://github.com/redhat-cop/ah_configuration/
+          collection_repo: https://github.com/ansible/automation_hub_collection
 
       - name: "Perform playbook collection tests"
         run: ansible-playbook tests/playbooks/testing_collections_playbook.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}

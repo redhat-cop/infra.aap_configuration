@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
   collections:
-    - infra.ah_configuration
+    - ansible.automation_hub
   pre_tasks:
     - name: Include vars from ah_configs directory
       ansible.builtin.include_vars:

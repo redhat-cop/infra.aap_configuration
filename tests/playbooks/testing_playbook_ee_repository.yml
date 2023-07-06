@@ -5,7 +5,7 @@
   become: false
   gather_facts: false
   collections:
-    - infra.ah_configuration
+    - ansible.automation_hub
   vars:
     hub_host: localhost:5001
     ah_hostname: http://localhost:8002/
