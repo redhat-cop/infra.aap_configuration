@@ -1,4 +1,4 @@
-# infra.ah_configuration.ee_registry
+# ansible.automation_hub.ee_registry
 
 ## Description
 

@@ -1,4 +1,4 @@
-# infra.ah_configuration.collection
+# ansible.automation_hub.collection
 
 ## Description
 

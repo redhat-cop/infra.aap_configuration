@@ -1,17 +1,23 @@
-# Redhat Communties of Practice Automation Hub Configuration Collection
+# Red Hat Ansible Automation Hub Configuration Collection
 
-[![pre-commit tests](https://github.com/redhat-cop/ah_configuration/actions/workflows/pre-commit.yml/badge.svg?branch=devel)](https://github.com/redhat-cop/ah_configuration/actions/workflows/pre-commit.yml)
+[![pre-commit tests](https://github.com/ansible/automation_hub_collection/actions/workflows/pre-commit.yml/badge.svg?branch=devel)](https://github.com/ansible/automation_hub_collection/actions/workflows/pre-commit.yml)
 ![Code style: flake8](https://img.shields.io/badge/Code%20style-flake8-orange)
 <!-- Further CI badges go here as above -->
 
 This Ansible collection allows for easy interaction with an Ansible Automation Hub or Galaxy NG server via Ansible playbooks.
 
-## Redhat Communities of Practice Configuration Collections Suite
+## Links to Ansible Automation Platform Collections
+
+|                                      Collection Name                                         |                 Purpose                  |
+|:--------------------------------------------------------------------------------------------:|:----------------------------------------:|
+| [awx.awx/Ansible.controller repo](https://github.com/ansible/awx/tree/devel/awx_collection) |   Automation controller modules          |
+|        [Ansible Hub Configuration](https://github.com/ansible/automation_hub_collection)     |       Automation hub configuration       |
+
+## Links to other Validated Configuration Collections
 
 |                                      Collection Name                                       |                 Purpose                  |
 |:------------------------------------------------------------------------------------------:|:----------------------------------------:|
 | [Controller Configuration](https://galaxy.ansible.com/redhat_cop/controller_configuration) |   Automation controller configuration    |
-|        [Hub Configuration](https://galaxy.ansible.com/redhat_cop/ah_configuration)         |       Automation hub configuration       |
 |             [EE Utilities](https://galaxy.ansible.com/redhat_cop/ee_utilities)             | Execution Environment creation utilities |
 |     [AAP installation Utilities](https://galaxy.ansible.com/redhat_cop/aap_utilities)      |  Ansible Automation Platform Utilities   |
 |   [AAP Configuration Template](https://github.com/redhat-cop/aap_configuration_template)   |  Configuration Template for this suite   |
@@ -22,10 +28,10 @@ Click the `Content` button to see the list of content included in this collectio
 
 ## Installing this collection
 
-You can install the infra ah_configuration collection with the Ansible Galaxy CLI:
+You can install the ansible automation_hub collection with the Ansible Galaxy CLI:
 
 ```bash
-ansible-galaxy collection install infra.ah_configuration
+ansible-galaxy collection install ansible.automation_hub
 ```
 
 You can also include it in a `requirements.yml` file and install it with `ansible-galaxy collection install -r requirements.yml`, using the format:
@@ -33,7 +39,7 @@ You can also include it in a `requirements.yml` file and install it with `ansibl
 ```yaml
 ---
 collections:
-  - name: infra.ah_configuration
+  - name: ansible.automation_hub
     # If you need a specific version of the collection, you can specify like this:
     # version: ...
 ```
@@ -76,8 +82,8 @@ Add more roles and modules for endpoints on the Automation Hub.
 
 ## Contributing to this collection
 
-We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [Automation Hub Configuration collection repository](https://github.com/redhat-cop/ah_configuration).
-More information about contributing can be found in our [Contribution Guidelines.](https://github.com/redhat-cop/ah_configuration/blob/devel/.github/CONTRIBUTING.md)
+We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [Automation Hub Configuration collection repository](https://github.com/ansible/automation_hub_collection).
+More information about contributing can be found in our [Contribution Guidelines.](https://github.com/ansible/automation_hub_collection/blob/devel/.github/CONTRIBUTING.md)
 
 ## Licensing
 

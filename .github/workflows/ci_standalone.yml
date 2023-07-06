@@ -11,6 +11,7 @@ jobs:
           - stable-4.4
           - stable-4.5
           - stable-4.6
+          - stable-4.7
           - master
     uses: "./.github/workflows/ci_standalone_versioned.yml"
     with:

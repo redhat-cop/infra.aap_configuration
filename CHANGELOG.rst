@@ -1,5 +1,5 @@
 ====================================
-infra.ah_configuration Release Notes
+ansible.automation_hub Release Notes
 ====================================
 
 .. contents:: Topics
@@ -50,7 +50,7 @@ Breaking Changes / Porting Guide
 New Modules
 -----------
 
-- infra.ah_configuration.ah_role - Manage a role of group permissions
+- ansible.automation_hub.ah_role - Manage a role of group permissions
 
 v1.0.1
 ======
@@ -199,7 +199,7 @@ Breaking Changes / Porting Guide
 New Modules
 -----------
 
-- infra.ah_configuration.ah_ee_registry - Manage private automation hub execution environment remote registries.
+- ansible.automation_hub.ah_ee_registry - Manage private automation hub execution environment remote registries.
 
 v0.6.1
 ======
@@ -209,7 +209,7 @@ Minor Changes
 
 - added namespace state absent module parameter
 - added new permision options to the ah_group_perm module and group role.
-- ah_ee_namespace and ah_ee_repository - adding the ``new_name`` parameter so that users can rename namespaces and repositories (https://github.com/redhat-cop/ah_configuration/issues/44)
+- ah_ee_namespace and ah_ee_repository - adding the ``new_name`` parameter so that users can rename namespaces and repositories (https://github.com/ansible/automation_hub_collection/issues/44)
 - removed dependency for ansible.galaxy module which wasn't accessible in 2.12 Ansible
 
 v0.5.5

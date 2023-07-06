@@ -1,4 +1,4 @@
-# infra.ah_configuration.publish
+# ansible.automation_hub.publish
 
 ## Description
 
@@ -92,7 +92,7 @@ ah_auto_approve: true
       tags:
         - always
   roles:
-    - infra.ah_configuration.publish
+    - ansible.automation_hub.publish
 ```
 
 ## License

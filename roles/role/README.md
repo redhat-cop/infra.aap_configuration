@@ -1,4 +1,4 @@
-# infra.ah_configuration.role
+# ansible.automation_hub.role
 
 ## Description
 
