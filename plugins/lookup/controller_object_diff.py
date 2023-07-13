@@ -295,7 +295,7 @@ class LookupModule(LookupBase):
                 item.update({"state": "absent"})
         # Combine Lists
         if self.get_option("with_present"):
-            self.create_present_list(compare_list_reduced)
+            compare_list = self.create_present_list(compare_list)
             compare_list.extend(difference)
             # Return Compare list with difference attached
             difference = compare_list
