@@ -16,7 +16,7 @@
 
 - name: "Find the difference of Execution Environment between what is on the Controller versus CasC on SCM"
   ansible.builtin.set_fact:
-    __execution_environments_difference: "{{ lookup(controller_role_plugin,
+    __execution_environments_difference: "{{ query(controller_role_plugin,
                                       api_list=__controller_api_execution_environments, compare_list=controller_execution_environments,
                                       with_present=include_present_state, set_absent=true)
                             }}"
