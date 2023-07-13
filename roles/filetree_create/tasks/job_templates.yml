@@ -15,6 +15,7 @@
     mode: '0755'
   vars:
     __path: "{{ output_path }}/{{ needed_path | regex_replace('/', '_') }}/job_templates"
+  when: organization_filter is not defined or (needed_path is match(organization_filter))
   loop: "{{ (job_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
             + (['ORGANIZATIONLESS'] if ((job_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
          }}"
@@ -44,6 +45,7 @@
     query_notification_success: "{{ query(controller_api_plugin, current_job_templates_asset_value.related.notification_templates_success,
                      host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                      return_all=true, max_objects=query_controller_api_max_objects) }}"
+  when: organization_filter is not defined or (job_template_organization is match(organization_filter))
   loop: "{{ job_templates_lookvar }}"
   loop_control:
     loop_var: current_job_templates_asset_value

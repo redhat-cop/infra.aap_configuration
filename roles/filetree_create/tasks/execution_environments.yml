@@ -20,4 +20,12 @@
     mode: '0644'
   vars:
     current_execution_environments_asset_value: "{{ execution_environments_lookvar }}"
+  when: organization_filter is not defined or organization_filter in (
+          current_execution_environments_asset_value |
+          map(attribute='summary_fields') |
+          selectattr('organization', 'defined') |
+          map(attribute='organization') |
+          map(attribute='name') |
+          unique
+        )
 ...

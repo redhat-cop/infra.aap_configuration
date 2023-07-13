@@ -14,6 +14,7 @@
     mode: '0755'
   vars:
     __path: "{{ output_path }}/{{ needed_path | regex_replace('/', '_') }}/notification_templates"
+  when: organization_filter is not defined or (needed_path is match(organization_filter))
   loop: "{{ (notification_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
             + (['ORGANIZATIONLESS'] if ((notification_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
          }}"
@@ -28,6 +29,7 @@
     mode: '0644'
   vars:
     __dest: "{{ output_path }}/{{ (current_notification_templates_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true)) | regex_replace('/', '_') }}/notification_templates/{{ current_notification_templates_asset_value.name | regex_replace('/', '_') }}.yaml"
+  when: organization_filter is not defined or (current_notification_templates_asset_value.summary_fields.organization.name is match(organization_filter))
   loop: "{{ notification_templates_lookvar }}"
   loop_control:
     loop_var: current_notification_templates_asset_value

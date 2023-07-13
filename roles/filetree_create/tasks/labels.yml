@@ -15,6 +15,7 @@
     mode: '0755'
   vars:
     __path: "{{ output_path }}/{{ needed_path | regex_replace('/', '_') }}/labels"
+  when: organization_filter is not defined or (needed_path is match(organization_filter))
   loop: "{{ (labels_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
             + (['ORGANIZATIONLESS'] if ((labels_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
          }}"
@@ -32,6 +33,7 @@
     label_id: "{{ current_labels_asset_value.id }}"
     label_name: "{{ current_labels_asset_value.name | regex_replace('/', '_') }}"
     __dest: "{{ output_path }}/{{ label_organization | regex_replace('/', '_') }}/labels/{{ label_id }}_{{ label_name | regex_replace('/', '_') }}.yaml"
+  when: organization_filter is not defined or (label_organization is match(organization_filter))
   loop: "{{ labels_lookvar }}"
   loop_control:
     loop_var: current_labels_asset_value
