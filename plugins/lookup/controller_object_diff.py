@@ -106,11 +106,12 @@ class LookupModule(LookupBase):
         self.display.warning(warning)
 
     def create_present_list(self, compare_list):
-        if not compare_list:
+        if not compare_list and not isinstance(compare_list, list):
             return [compare_list]
 
         for item in compare_list:
             item.update({"state": "present"})
+
         return compare_list
 
     def run(self, terms, variables=None, **kwargs):
@@ -307,4 +308,4 @@ class LookupModule(LookupBase):
             for item in difference_to_remove:
                 difference.remove(item)
 
-        return [difference]
+        return difference
