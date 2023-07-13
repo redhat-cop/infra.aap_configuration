@@ -21,6 +21,7 @@ jobs:
           - devel
           - 22.4.0
           - 22.3.0
+          - 21.13.0
           - 21.11.0
     uses: "./.github/workflows/ci_standalone_versioned.yml"
     with:
