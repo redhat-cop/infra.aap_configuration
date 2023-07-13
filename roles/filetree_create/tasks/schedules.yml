@@ -24,13 +24,13 @@
     __dest: "{{ output_path }}/schedules/{{ label_id }}_{{ label_name | regex_replace('/', '_') }}.yaml"
     query_credentials: "{{ query(controller_api_plugin, current_schedules_asset_value.related.credentials,
                  host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
-                 return_all=true, max_objects=query_controller_api_max_objects) }}"
+                 return_all=true, max_objects=query_controller_api_max_objects) if current_schedules_asset_value.related.credentials is defined else [] }}"
     query_instance_groups: "{{ query(controller_api_plugin, current_schedules_asset_value.related.instance_groups,
                  host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
-                 return_all=true, max_objects=query_controller_api_max_objects) }}"
+                 return_all=true, max_objects=query_controller_api_max_objects) if current_schedules_asset_value.related.instance_groups is defined else [] }}"
     query_labels: "{{ query(controller_api_plugin, current_schedules_asset_value.related.labels,
                  host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
-                 return_all=true, max_objects=query_controller_api_max_objects) }}"
+                 return_all=true, max_objects=query_controller_api_max_objects) if current_schedules_asset_value.related.labels is defined else [] }}"
   loop: "{{ schedules_lookvar }}"
   loop_control:
     loop_var: current_schedules_asset_value

@@ -16,10 +16,18 @@ controller_schedules:
       - "{{ instance_group.name }}"
 {% endfor %}
 {% endif %}
+{% if current_schedules_asset_value.dtstart is defined %}
     dtstart: "{{ current_schedules_asset_value.dtstart }}"
+{% endif %}
+{% if current_schedules_asset_value.dtend is defined %}
     dtend: "{{ current_schedules_asset_value.dtend }}"
+{% endif %}
+{% if current_schedules_asset_value.timezone is defined %}
     timezone: "{{ current_schedules_asset_value.timezone }}"
+{% endif %}
+{% if current_schedules_asset_value.rrule is defined %}
     rrule: "{{ current_schedules_asset_value.rrule }}"
+{% endif %}
 {% if current_schedules_asset_value.summary_fields.execution_environment is defined %}
     execution_environment: "{{ current_schedules_asset_value.summary_fields.execution_environment.name }}"
 {% endif %}
