@@ -18,7 +18,7 @@
 
 - name: "Find the difference of Inventories between what is on the Controller versus CasC on SCM"
   ansible.builtin.set_fact:
-    __inventories_difference: "{{ lookup(controller_role_plugin,
+    __inventories_difference: "{{ query(controller_role_plugin,
                                          api_list=__controller_api_inventories, compare_list=controller_inventories,
                                          with_present=include_present_state, set_absent=true)
                                }}"

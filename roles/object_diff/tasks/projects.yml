@@ -18,7 +18,7 @@
 
 - name: "Find the difference of Project between what is on the Controller versus CasC on SCM"
   ansible.builtin.set_fact:
-    __projects_difference: "{{ lookup(controller_role_plugin,
+    __projects_difference: "{{ query(controller_role_plugin,
                                       api_list=__controller_api_projects, compare_list=controller_projects,
                                       with_present=include_present_state, set_absent=true)
                             }}"
