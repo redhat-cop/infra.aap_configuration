@@ -32,12 +32,24 @@ controller_templates:
     ask_inventory_on_launch: {{ current_job_templates_asset_value.ask_inventory_on_launch | bool }}
     ask_limit_on_launch: {{ current_job_templates_asset_value.ask_limit_on_launch | bool }}
     ask_credential_on_launch: {{ current_job_templates_asset_value.ask_credential_on_launch | bool }}
+{% if current_job_templates_asset_value.ask_execution_environment_on_launch is defined %}
     ask_execution_environment_on_launch: {{ current_job_templates_asset_value.ask_execution_environment_on_launch | bool }}
+{% endif %}
+{% if current_job_templates_asset_value.ask_labels_on_launch is defined %}
     ask_labels_on_launc: {{ current_job_templates_asset_value.ask_labels_on_launch | bool }}
+{% endif %}
+{% if current_job_templates_asset_value.ask_forks_on_launch is defined %}
     ask_forks_on_launch: {{ current_job_templates_asset_value.ask_forks_on_launch | bool }}
+{% endif %}
+{% if current_job_templates_asset_value.ask_job_slice_count_on_launch is defined %}
     ask_job_slice_count_on_launch: {{ current_job_templates_asset_value.ask_job_slice_count_on_launch | bool }}
+{% endif %}
+{% if current_job_templates_asset_value.ask_timeout_on_launch is defined %}
     ask_timeout_on_launch: {{ current_job_templates_asset_value.ask_timeout_on_launch | bool }}
+{% endif %}
+{% if current_job_templates_asset_value.ask_instance_groups_on_launch is defined %}
     ask_instance_groups_on_launch: {{ current_job_templates_asset_value.ask_instance_groups_on_launch | bool }}
+{% endif %}
 {% if current_job_templates_asset_value.extra_vars and current_job_templates_asset_value.extra_vars != '---' and current_job_templates_asset_value.extra_vars != '' %}
     extra_vars:
       {{ current_job_templates_asset_value.extra_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") }}
@@ -86,5 +98,7 @@ controller_templates:
 {% if current_job_templates_asset_value.webhook_credential %}
     webhook_credential: "{{ current_job_templates_asset_value.webhook_credential }}"
 {% endif %}
+{% if current_job_templates_asset_value.prevent_instance_group_fallback is defined %}
     prevent_instance_group_fallback: {{ current_job_templates_asset_value.prevent_instance_group_fallback | bool }}
+{% endif %}
 ...
