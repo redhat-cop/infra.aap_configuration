@@ -1,7 +1,7 @@
 ---
 argument_specs:
   main:
-    short_description: An Ansible Role to create users in Automation Hub.
+    short_description: An Ansible Role to publish collections in Automation Hub.
     options:
       ah_configuration_working_dir:
         default: /var/tmp
