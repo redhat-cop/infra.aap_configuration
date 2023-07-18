@@ -9,7 +9,7 @@
     username: "{{ __repository_item['username'] | default(omit) }}"
     password: "{{ __repository_item['password'] | default(omit) }}"
     requirements: "{{ __repository_item['requirements'] | default(omit) }}"
-    requirements_file: "{{ __repository_item['requirements_file'] | default(omit }}"
+    requirements_file: "{{ __repository_item['requirements_file'] | default(omit) }}"
     download_concurrency: "{{ __repository_item['download_concurrency'] | default(10) }}"
     rate_limit: "{{ __repository_item['rate_limit'] | default(8) }}"
     signed_only: "{{ __repository_item['signed_only'] | default(omit) }}"

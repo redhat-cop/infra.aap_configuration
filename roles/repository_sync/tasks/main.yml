@@ -27,8 +27,8 @@
     jid: "{{ __repositories_syncs_job_async_result_item.ansible_job_id }}"
   register: __repositories_syncs_job_async_result
   until: __repositories_syncs_job_async_result.finished
-  retries: "{{ ah_configuration_repository_syncs_async_retries }}"
-  delay: "{{ ah_configuration_repository_syncs_async_delay }}"
+  retries: "{{ ah_configuration_repository_sync_async_retries }}"
+  delay: "{{ ah_configuration_repository_sync_async_delay }}"
   loop: "{{ __repositories_syncs_job_async.results }}"
   loop_control:
     loop_var: __repositories_syncs_job_async_result_item

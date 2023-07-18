@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Update collection repository roles to use allow for lists as this has been expanded in the newer version of the product.
+...
