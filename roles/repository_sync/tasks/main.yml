@@ -1,31 +1,39 @@
 ---
-- name: Sync Automation Hub certified repository
+- name: Sync Automation Hub repository
   ah_repository_sync:
-    name:           "rh-certified"
-    wait:           "{{ ah_repository_certified.wait | default(false) }}"
-    interval:       "{{ ah_repository_certified.interval | default(1) }}"
-    timeout:        "{{ ah_repository_certified.timeout | default(omit) }}"
-    ah_host:        "{{ ah_host | default(ah_hostname) }}"
-    ah_username:    "{{ ah_username | default(omit) }}"
-    ah_password:    "{{ ah_password | default(omit) }}"
-    ah_token:       "{{ ah_token | default(omit) }}"
+    name: "{{ __repository_item.name }}"
+    wait: "{{ __repository_item.wait | default(omit) }}"
+    interval: "{{ __repository_item.interval | default(1) }}"
+    timeout: "{{ __repository_item.timeout | default(omit) }}"
+    ah_host: "{{ ah_host | default(ah_hostname) }}"
+    ah_username: "{{ ah_username | default(omit) }}"
+    ah_password: "{{ ah_password | default(omit) }}"
+    ah_token: "{{ ah_token | default(omit) }}"
     ah_path_prefix: "{{ ah_path_prefix | default(omit) }}"
-    ah_verify_ssl:  "{{ ah_validate_certs | default(omit) }}"
-  when: ah_repository_certified is defined
+    ah_verify_ssl: "{{ ah_validate_certs | default(omit) }}"
+  loop: "{{ ah_repositories }}"
+  loop_control:
+    loop_var: "__repository_item"
   no_log: "{{ ah_configuration_repository_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __repositories_syncs_job_async
+  changed_when: not __repositories_syncs_job_async.changed
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
 
-- name: Sync Automation Hub community repository
-  ah_repository_sync:
-    name:           "community"
-    wait:           "{{ ah_repository_community.wait | default(false) }}"
-    interval:       "{{ ah_repository_community.interval | default(1) }}"
-    timeout:        "{{ ah_repository_community.timeout | default(omit) }}"
-    ah_host:        "{{ ah_host | default(ah_hostname) }}"
-    ah_username:    "{{ ah_username | default(omit) }}"
-    ah_password:    "{{ ah_password | default(omit) }}"
-    ah_token:       "{{ ah_token | default(omit) }}"
-    ah_path_prefix: "{{ ah_path_prefix | default(omit) }}"
-    ah_verify_ssl:  "{{ ah_validate_certs | default(omit) }}"
-  when: ah_repository_community is defined
+- name: "Repository Sync | Wait for finish the repository_sync to finish"
+  ansible.builtin.async_status:
+    jid: "{{ __repositories_syncs_job_async_result_item.ansible_job_id }}"
+  register: __repositories_syncs_job_async_result
+  until: __repositories_syncs_job_async_result.finished
+  retries: "{{ ah_configuration_repository_syncs_async_retries }}"
+  delay: "{{ ah_configuration_repository_syncs_async_delay }}"
+  loop: "{{ __repositories_syncs_job_async.results }}"
+  loop_control:
+    loop_var: __repositories_syncs_job_async_result_item
+  when: __repositories_syncs_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_repository_secure_logging }}"
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
 ...

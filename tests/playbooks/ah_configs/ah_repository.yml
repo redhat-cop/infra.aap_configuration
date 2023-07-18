@@ -1,10 +1,11 @@
 ---
-ah_repository_community:
-  url: https://galaxy.ansible.com/api/
-  requirements:
-    - name: infra.ee_utilities
-    - name: infra.controller_configuration
-  wait: true
-  interval: 25
-  timeout: 1000000
+ah_repositories:
+  - name: community
+    url: https://galaxy.ansible.com/api/
+    requirements:
+      - name: infra.ee_utilities
+      - name: infra.controller_configuration
+    wait: true
+    interval: 25
+    timeout: 1000000
 ...

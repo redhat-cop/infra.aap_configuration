@@ -6,9 +6,9 @@ An Ansible Role to sync Repositories in Automation Hub.
 
 ## Variables
 
-These are the sub options for the vars `ah_repository_certified` and `ah_repository_community` which are dictionaries with the options you want. See examples for details.
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
+|`name`|""|yes| Repository name. Probably one of community, validated, or rh-certified.||
 |`wait`|"false"|no|Wait for the repository to finish syncing before returning.||
 |`interval`|"1"|no|The interval to request an update from Automation Hub.||
 |`timeout`|""|no|If waiting for the project to update this will abort after this amount of seconds.||
