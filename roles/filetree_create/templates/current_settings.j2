@@ -2,12 +2,11 @@
 controller_settings:
   - settings:
 {% for key,value in changed_settings[0].items() %}
-{% if   key == "AUTH_LDAP_GROUP_TYPE_PARAMS" %}
-{{ key | indent(width=6, first=True) }}: {'name_attr': 'cn', 'member_attr': 'member'}
-{% elif key == "AUTOMATION_ANALYTICS_LAST_ENTRIES" %}
-{{ key | indent(width=6, first=True) }}: {{ value | to_json }}
-{% else %}
-{{ key | indent(width=6, first=True) }}: {{ value | replace('True', 'true') | replace('False', 'false') | replace('None', 'null') }}
+{% if value is mapping or value | type_debug == "list" %}
+{{ key | indent(width=6, first=True) }}:
+{{ value | to_nice_yaml(indent=2) | indent(width=8, first=True) }}
+{%- else %}
+{{ key | indent(width=6, first=True) }}: "{{ value | replace('True', 'true') | replace('False', 'false') | replace('None', 'null') }}"
 {% endif %}
 {% endfor %}
 ...
