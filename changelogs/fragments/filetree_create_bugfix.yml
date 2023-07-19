@@ -1,3 +1,4 @@
 bugfixes:
   - When exporting job templates it was failing when missing some input information.
   - When importing the exported settings, fields like `AUTOMATION_ANALYTICS_LAST_GATHER: 2023-07-17T13:22:06.445818Z` caused problems with the multiple `:`.
+  - When importing the exported notification templates, the types of some values are not as expected.
