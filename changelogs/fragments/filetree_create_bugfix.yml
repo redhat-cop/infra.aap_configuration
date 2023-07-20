@@ -3,3 +3,4 @@ bugfixes:
   - "When importing the exported settings, fields like `AUTOMATION_ANALYTICS_LAST_GATHER: 2023-07-17T13:22:06.445818Z` caused problems with the multiple `:`."
   - When importing the exported notification templates, the types of some values are not as expected.
   - When exporting schedules, the diff_mode was not treated correctly
+  - Temporarily fixed an error when installing docker-compose using pip (see https://stackoverflow.com/questions/76708329/docker-compose-no-longer-building-image-attributeerror-cython-sources for more information)
