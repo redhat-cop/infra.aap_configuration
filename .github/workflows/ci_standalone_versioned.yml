@@ -36,7 +36,7 @@ jobs:
         run: sudo apt-get install -y libsasl2-dev python3-dev libldap2-dev libssl-dev build-essential
 
       - name: Install docker-compose
-        run: pip3 install --upgrade docker-compose
+        run: pip3 install --upgrade docker-compose pyyaml==5.3.1
 
       - name: collect system info
         run: whoami; id; pwd; ls -al; uname -a ; df -h .; mount ; cat /etc/issue; docker --version ; ps aux | fgrep -i docker; ls -al /var/run/containerd/containerd.sock
