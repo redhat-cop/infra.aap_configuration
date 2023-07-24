@@ -38,7 +38,7 @@
   register: __repositories_job_async
   changed_when: not __repositories_job_async.changed
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
 
 - name: "Create Repository | Wait for finish the repository creation"
   ansible.builtin.async_status:
@@ -53,6 +53,6 @@
   when: __repositories_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_repository_secure_logging }}"
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
 
 ...

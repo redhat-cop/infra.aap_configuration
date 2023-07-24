@@ -26,7 +26,7 @@
   register: __ee_repositories_job_async
   changed_when: not __ee_repositories_job_async.changed
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
 
 - name: "Create EE Repository | Wait for finish the ee_repository creation"
   ansible.builtin.async_status:
@@ -41,5 +41,5 @@
   when: __ee_repositories_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_ee_repository_secure_logging }}"
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
 ...

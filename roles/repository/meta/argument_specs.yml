@@ -24,6 +24,12 @@ argument_specs:
         type: str
         description: Information regarding the proxy that AH will use to communicate to the Red Hat repositories. Can be left empty if no proxy used.
 
+      # Async variables
+      ah_configuration_async_dir:
+        default: /tmp/.ansible_async
+        required: false
+        description: Sets the directory to write the results file for async tasks. Set to `null` to use Ansible's default value.
+
       # No_log variables
       ah_configuration_repository_secure_logging:
         default: "{{ ah_configuration_secure_logging | default(false) }}"
