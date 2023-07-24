@@ -71,7 +71,7 @@ controller_schedules:
 {% if current_schedules_asset_value.limit is defined %}
     limit: "{{ current_schedules_asset_value.limit }}"
 {% endif %}
-{% if current_schedules_asset_value.diff_mode is defined %}
+{% if current_schedules_asset_value.diff_mode is defined and current_schedules_asset_value.diff_mode | type_debug != "NoneType" %}
     diff_mode: {{ current_schedules_asset_value.diff_mode | bool }}
 {% endif %}
 {% if current_schedules_asset_value.verbosity is defined %}
