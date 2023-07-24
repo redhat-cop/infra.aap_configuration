@@ -27,7 +27,7 @@
   register: __collections_job_async
   changed_when: not __collections_job_async.changed
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
 
 - name: Sleep for 10 seconds and continue with play
   ansible.builtin.wait_for:
@@ -46,5 +46,5 @@
   when: __collections_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_collection_secure_logging }}"
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
 ...

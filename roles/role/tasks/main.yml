@@ -21,7 +21,7 @@
   register: __roles_job_async
   changed_when: not __roles_job_async.changed
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
 
 - name: "Create Role | Wait for finish the role creation"
   ansible.builtin.async_status:
@@ -36,5 +36,5 @@
   when: __roles_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_role_secure_logging }}"
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
 ...

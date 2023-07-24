@@ -40,6 +40,10 @@ Each item within the variable has three elements:
 
 If the functionality of Automation Hub is extended in the future, and more variables are able to trigger a role, the new variable should be added into the `var` list for the role above.
 
+The `ah_configuration_async_dir` variable sets the directory to write the results file for async tasks.
+The default value is `/tmp/.ansible_async`.
+Set to `null` to use Ansible's default value.
+
 ### Authentication
 
 |Variable Name|Default Value|Required|Description|Example|

@@ -14,6 +14,7 @@ An Ansible Role to index EE Registries in Automation Hub.
 |`ah_validate_certs`|`False`|no|Whether or not to validate the Ansible Automation Hub Server's SSL certificate.||
 |`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 |`ah_ee_registries`|`see below`|yes|Data structure describing your ee_registries, described below. (Note this is the same as for the `ee_registries` role and the variable can be combined). Note that this role will only do anything if the `index` suboption of this variable is set to true.||
+|`ah_configuration_async_dir`|`/tmp/.ansible_async`|no|Sets the directory to write the results file for async tasks. Set to `null` to use Ansible's default value.||
 
 ### Secure Logging Variables
 

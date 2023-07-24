@@ -27,6 +27,10 @@ argument_specs:
         default: 1
         required: false
         description: This variable sets delay between retries across all roles as a default.
+      ah_configuration_async_dir:
+        default: /tmp/.ansible_async
+        required: false
+        description: Sets the directory to write the results file for async tasks. Set to `null` to use Ansible's default value.
 
       # No_log variables
       ah_configuration_group_secure_logging:

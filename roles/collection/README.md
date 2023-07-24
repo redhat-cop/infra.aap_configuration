@@ -20,6 +20,10 @@ These are the sub options for the vars `ah_collections` which are dictionaries w
 |`overwrite_existing`|"false"|no|Overwrites an existing collection and requires version to be set.||
 |`state`|"present"|no|Desired state of the resource||
 
+The `ah_configuration_async_dir` variable sets the directory to write the results file for async tasks.
+The default value is `/tmp/.ansible_async`.
+Set to `null` to use Ansible's default value.
+
 ### Secure Logging Variables
 
 The following Variables compliment each other.
