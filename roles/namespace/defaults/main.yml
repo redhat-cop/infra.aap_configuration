@@ -28,5 +28,5 @@ ah_namespaces: []
 ah_configuration_namespace_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
 ah_configuration_namespace_async_retries: "{{ ah_configuration_async_retries | default(50) }}"
 ah_configuration_namespace_async_delay: "{{ ah_configuration_async_delay | default(1) }}"
-ah_configuration_async_dir: /tmp/.ansible_async
+ah_configuration_async_dir: null
 ...
