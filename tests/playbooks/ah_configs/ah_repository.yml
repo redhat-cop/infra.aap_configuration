@@ -1,7 +1,9 @@
 ---
+ah_configuration_repository_sync_async_delay: 5
+ah_configuration_repository_sync_async_retries: 150
 ah_repositories:
   - name: community
-    url: https://galaxy.ansible.com/api/
+    url: https://beta-galaxy.ansible.com/
     requirements:
       - name: infra.ee_utilities
       - name: infra.controller_configuration

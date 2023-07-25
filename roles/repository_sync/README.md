@@ -14,8 +14,7 @@ An Ansible Role to sync Repositories in Automation Hub.
 |`timeout`|""|no|If waiting for the project to update this will abort after this amount of seconds.||
 
 The `ah_configuration_async_dir` variable sets the directory to write the results file for async tasks.
-The default value is `/tmp/.ansible_async`.
-Set to `null` to use Ansible's default value.
+The default value is set to  `null` which uses the Ansible Default of `/root/.ansible_async/`.
 
 ### Secure Logging Variables
 

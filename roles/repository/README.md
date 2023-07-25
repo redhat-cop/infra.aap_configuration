@@ -33,8 +33,7 @@ An Ansible Role to create Repositories in Automation Hub.
 |`ca_cert_path`|""|no|Path to a PEM encoded CA certificate used for authentication||
 
 The `ah_configuration_async_dir` variable sets the directory to write the results file for async tasks.
-The default value is `/tmp/.ansible_async`.
-Set to `null` to use Ansible's default value.
+The default value is set to  `null` which uses the Ansible Default of `/root/.ansible_async/`.
 
 ### Secure Logging Variables
 

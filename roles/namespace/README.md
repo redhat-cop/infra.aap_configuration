@@ -15,7 +15,7 @@ An Ansible Role to create Namespaces in Automation Hub.
 |`ah_validate_certs`|`False`|no|Whether or not to validate the Ansible Automation Hub Server's SSL certificate.||
 |`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 |`ah_namespaces`|`see below`|yes|Data structure describing your namespaces, described below.||
-|`ah_configuration_async_dir`|`/tmp/.ansible_async`|no|Sets the directory to write the results file for async tasks. Set to `null` to use Ansible's default value.||
+|`ah_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
 
 ### Secure Logging Variables
 

@@ -17,7 +17,7 @@ An Ansible Role to create EE Registries in Automation Hub.
 |`proxy_username`|""|no|str|The username for the proxy authentication|
 |`proxy_password`|""|no|str|The password for the proxy authentication|
 |`ah_ee_registries`|`see below`|yes|Data structure describing your ee_registries, described below.||
-|`ah_configuration_async_dir`|`/tmp/.ansible_async`|no|Sets the directory to write the results file for async tasks. Set to `null` to use Ansible's default value.||
+|`ah_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
 
 ### Secure Logging Variables
 
