@@ -30,7 +30,7 @@
   register: __inventories_job_async
   changed_when: not __inventories_job_async.changed
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
 - name: "Create Controller inventories | Wait for finish the inventories creation"
   ansible.builtin.async_status:
@@ -45,5 +45,5 @@
   when: __inventories_job_async_result_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_inventories_secure_logging }}"
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 ...
