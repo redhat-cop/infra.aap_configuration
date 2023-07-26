@@ -18,7 +18,7 @@ The following variables are required for that role to work properly:
 | `organization_filter` | N/A | no | str | Exports only the objects belonging to the specified organization (applies to all the objects that can be assigned to an organization). |
 | `organization_id` | N/A | no | int | Alternative to `organization_filter`, but specifiying the current organization's ID to filter by. Exports only the objects belonging to the specified organization (applies to all the objects that can be assigned to an organization). |
 | `output_path` | `/tmp/filetree_output` | yes | str | The path to the output directory where all the generated `yaml` files with the corresponding Objects as code will be written to. |
-| `input_tag` | `['all']` | no | bool | The tags which are applied to the 'sub-roles'. If 'all' is in the list (the default value) then all roles will be called. |
+| `input_tag` | `['all']` | no | List of Strings | The tags which are applied to the 'sub-roles'. If 'all' is in the list (the default value) then all roles will be called. |
 
 ## Dependencies
 
