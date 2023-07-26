@@ -15,11 +15,9 @@ jobs:
       matrix:
         awx_version:
           - devel
+          - 22.4.0
           - 22.3.0
-          - 22.2.0
-          - 22.1.0
-          - 22.0.0
-          - 21.14.0
+          - 21.13.0
           - 21.11.0
     uses: "./.github/workflows/ci_standalone_versioned.yml"
     with:
@@ -27,16 +25,29 @@ jobs:
   release:
     needs:
       - ci_standalone
-    uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline_single.yml@main"
+    uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline_dual.yml@main"
     with:
-      collection_namespace: infra
-      collection_name: controller_configuration
+      # Galaxy Publish
+      collection_namespace_1: infra
+      collection_name_1: controller_configuration
+      publish_url_collection_1: https://galaxy.ansible.com
+      galaxy_publish_1: true
+      ah_publish_1: false
+      # CRC Publish
+      collection_namespace_2: infra
+      collection_name_2: controller_configuration
+      publish_url_collection_2: https://cloud.redhat.com/api/automation-hub/
+      galaxy_publish_2: false
+      ah_publish_2: true
       collection_version: ${{ github.ref_name }}
       collection_repo: https://github.com/redhat-cop/controller_configuration/
       quay_username: redhat_cop
       collection_dependencies: awx.awx
+      matrix_message: This Ansible collection allows for easy interaction with an AWX or Ansible Controller server via Ansible roles using the AWX/Controller collection modules.
     secrets:
-      galaxy_api_key: ${{ secrets.GALAXY_INFRA_KEY }}
-      token: ${{ secrets.GITHUB_TOKEN }}
+      collection_api_key_1: ${{ secrets.GALAXY_INFRA_KEY }}
+      collection_api_key_2: ${{ secrets.CRC_PUBLISH_KEY }}
+      git_token: ${{ secrets.GITHUB_TOKEN }}
       quay_token: ${{ secrets.quay_token }}
+      matrix_token: ${{ secrets.matrix_token }}
 ...
