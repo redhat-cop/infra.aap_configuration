@@ -29,6 +29,7 @@
     mode: '0755'
   vars:
     __path: "{{ output_path }}/{{ current_user_dir | regex_replace('/', '_') }}/users"
+  when: organization_filter is not defined or (current_user_dir is match(organization_filter))
   loop: "{{ current_users | selectattr('organizations', 'defined') | map(attribute='organizations') | flatten | unique }}"
   loop_control:
     loop_var: current_user_dir
@@ -42,6 +43,7 @@
   vars:
     current_users_asset_value: "{{ current_user_dir.0 }}"
     __dest: "{{ output_path }}/{{ current_user_dir.1 | regex_replace('/', '_') }}/users/{{ current_user_dir.0.username | regex_replace('/', '_') }}.yaml"
+  when: organization_filter is not defined or (current_user_dir.1 is match(organization_filter))
   loop: "{{ current_users | subelements('organizations') }}"
   loop_control:
     loop_var: current_user_dir
@@ -50,7 +52,11 @@
 - name: "Set the user's roles"
   ansible.builtin.include_tasks: "user_roles.yml"
   vars:
-    username: "{{ item.username }}"
-  loop: "{{ users_lookvar }}"
-  when: not item.is_superuser
+    username: "{{ current_user.0.username }}"
+  when:
+    - not current_user.0.is_superuser
+    - organization_filter is not defined or (current_user.1 is match(organization_filter))
+  loop: "{{ current_users | subelements('organizations') }}"
+  loop_control:
+    loop_var: current_user
 ...

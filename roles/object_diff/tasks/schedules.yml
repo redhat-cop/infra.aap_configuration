@@ -37,7 +37,7 @@
 
 - name: "Find the difference of Schedule between what is on the Controller versus CasC on SCM"
   ansible.builtin.set_fact:
-    __schedules_difference: "{{ lookup(controller_role_plugin,
+    __schedules_difference: "{{ query(controller_role_plugin,
                                       api_list=__controller_api_schedules, compare_list=controller_schedules,
                                       with_present=include_present_state, set_absent=true)
                             }}"

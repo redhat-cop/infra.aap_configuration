@@ -1,0 +1,2 @@
+minor_changes:
+  - filetree_create now allows to export objects for the specified organization

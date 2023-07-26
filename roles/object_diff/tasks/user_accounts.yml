@@ -35,7 +35,7 @@
   block:
     - name: "Find the difference of User Accounts between what is on the Controller versus CasC on SCM"
       ansible.builtin.set_fact:
-        __user_accounts_difference: "{{ lookup(controller_role_plugin,
+        __user_accounts_difference: "{{ query(controller_role_plugin,
                                                 api_list=__controller_api_user_accounts, compare_list=controller_user_accounts,
                                                 with_present=include_present_state, set_absent=true)
                                      }}"

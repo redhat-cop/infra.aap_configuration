@@ -28,7 +28,7 @@
   register: __execution_environments_job_async
   changed_when: not __execution_environments_job_async.changed
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
 - name: "Create Controller Execution Environments | Wait for finish the Controller Execution Environments creation"
   ansible.builtin.async_status:
@@ -43,5 +43,5 @@
   when: __execution_environments_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_execution_environments_secure_logging }}"
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 ...

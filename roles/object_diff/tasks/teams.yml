@@ -29,7 +29,7 @@
 
     - name: "Find the difference of Teams between what is on the Controller versus CasC on SCM"
       ansible.builtin.set_fact:
-        __teams_difference: "{{ lookup(controller_role_plugin,
+        __teams_difference: "{{ query(controller_role_plugin,
                                         api_list=__controller_api_teams,
                                         compare_list=controller_teams,
                                         with_present=include_present_state,

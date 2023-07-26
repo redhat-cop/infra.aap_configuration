@@ -50,7 +50,7 @@
   register: __workflows_job_async
   changed_when: not __workflows_job_async.changed
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
 - name: "Manage Workflows | Wait for finish the workflow creation"
   ansible.builtin.async_status:
@@ -65,7 +65,7 @@
   when: __workflows_job_async_results_item.ansible_job_id is defined
   no_log: "{{ workflow_job_templates_secure_logging }}"
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
 # Create links between workflow node
 - name: Loop over nodes in schema to add to workflow templates

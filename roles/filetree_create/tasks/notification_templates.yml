@@ -2,9 +2,13 @@
 - name: "Get current Notification Templates from the API"
   ansible.builtin.set_fact:
     notification_templates_lookvar: "{{ query(controller_api_plugin, 'api/v2/notification_templates/',
+                                              query_params=(query_params | combine({'organization': organization_id})) if organization_id is defined else query_params,
                                               host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                               return_all=true, max_objects=query_controller_api_max_objects)
                                      }}"
+  vars:
+    query_params:
+      order_by: 'organization,id'
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
 - name: "Create the <ORGANIZATION_NAME>/notification_templates output directory for notification templates in {{ output_path }}"
