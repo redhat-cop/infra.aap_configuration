@@ -964,6 +964,14 @@ class AHUIEERemote(AHUIObject):
         self.name_field = "pulp_id"
         self.id_field = "pulp_id"
 
+    @property
+    def id_endpoint(self):
+        """Return the object's endpoint."""
+        name = self.name
+        if name is None:
+            return self.endpoint
+        return "{endpoint}/{name}".format(endpoint=self.endpoint, name=name)
+
 
 class AHUIEERepository(AHUIObject):
     """Manage the README file of execution environment repositories.
