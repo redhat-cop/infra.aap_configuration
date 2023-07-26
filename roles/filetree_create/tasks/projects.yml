@@ -2,10 +2,13 @@
 - name: "Get current Projects from the API"
   ansible.builtin.set_fact:
     projects_lookvar: "{{ query(controller_api_plugin, 'api/v2/projects/',
-                                query_params={'order_by': 'organization,id'},
+                                query_params=(query_params | combine({'organization': organization_id})) if organization_id is defined else query_params,
                                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                 return_all=true, max_objects=query_controller_api_max_objects)
                        }}"
+  vars:
+    query_params:
+      order_by: 'organization,id'
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
 - name: "Create the <ORGANIZATION_NAME>/projects output directory for projects in {{ output_path }}"
@@ -15,7 +18,6 @@
     mode: '0755'
   vars:
     __path: "{{ output_path }}/{{ needed_path | regex_replace('/', '_') }}/projects"
-  when: organization_filter is not defined or (needed_path is match(organization_filter))
   loop: "{{ (projects_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
             + (['ORGANIZATIONLESS'] if ((projects_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
          }}"
@@ -42,7 +44,6 @@
     query_notification_success: "{{ query(controller_api_plugin, current_projects_asset_value.related.notification_templates_success,
                      host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                      return_all=true, max_objects=query_controller_api_max_objects) }}"
-  when: organization_filter is not defined or (project_organization is match(organization_filter))
   loop: "{{ projects_lookvar }}"
   loop_control:
     loop_var: current_projects_asset_value

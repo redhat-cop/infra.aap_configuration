@@ -2,10 +2,14 @@
 - name: "Get the inventories from the API"
   ansible.builtin.set_fact:
     inventory_lookvar: "{{ query(controller_api_plugin, 'api/v2/inventories/',
-                                 query_params={'not__kind': 'smart', 'order_by': 'organization,id'},
+                                 query_params=(query_params | combine({'organization': organization_id})) if organization_id is defined else query_params,
                                  host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                  return_all=true, max_objects=query_controller_api_max_objects)
                         }}"
+  vars:
+    query_params:
+      not__kind: 'smart'
+      order_by: 'organization,id'
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
 - name: "Create the <ORGANIZATION_NAME>/inventories output directory for inventories in {{ output_path }}"
@@ -17,7 +21,6 @@
     inventory_organization: "{{ needed_path.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
     inventory_name: "{{ needed_path.name | regex_replace('/', '_') }}"
     __path: "{{ output_path }}/{{ inventory_organization | regex_replace('/', '_') }}/inventories/{{ inventory_name | regex_replace('/', '_') }}"
-  when: organization_filter is not defined or (inventory_organization is match(organization_filter))
   loop: "{{ inventory_lookvar }}"
   loop_control:
     loop_var: needed_path
@@ -32,7 +35,6 @@
     inventory_organization: "{{ current_inventories_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
     inventory_name: "{{ current_inventories_asset_value.name | regex_replace('/', '_') }}"
     __dest: "{{ output_path }}/{{ inventory_organization | regex_replace('/', '_') }}/inventories/{{ inventory_name | regex_replace('/', '_') }}/{{ current_inventories_asset_value.id }}_{{ inventory_name | regex_replace('/', '_') }}.yaml"
-  when: organization_filter is not defined or (current_inventories_asset_value.summary_fields.organization.name is match(organization_filter))
   loop: "{{ inventory_lookvar }}"
   loop_control:
     loop_var: current_inventories_asset_value
@@ -49,7 +51,6 @@
                                                           return_all=true, max_objects=query_controller_api_max_objects)
                                                     if current_inventory_sources.has_inventory_sources else []
                                             }}"
-  when: organization_filter is not defined or (inventory_organization is match(organization_filter))
   loop: "{{ inventory_lookvar }}"
   loop_control:
     loop_var: current_inventory_sources
@@ -67,7 +68,6 @@
                                               return_all=true, max_objects=query_controller_api_max_objects)
                                         if not current_inventory_hosts.has_inventory_sources else []
                                 }}"
-  when: organization_filter is not defined or (inventory_organization is match(organization_filter))
   loop: "{{ inventory_lookvar }}"
   loop_control:
     loop_var: current_inventory_hosts
@@ -85,7 +85,6 @@
                                                return_all=true, max_objects=query_controller_api_max_objects)
                                          if not current_inventory_groups.has_inventory_sources else []
                                  }}"
-  when: organization_filter is not defined or (inventory_organization is match(organization_filter))
   loop: "{{ inventory_lookvar }}"
   loop_control:
     loop_var: current_inventory_groups

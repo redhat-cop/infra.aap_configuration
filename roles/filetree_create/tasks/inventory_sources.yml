@@ -12,5 +12,4 @@
     mode: '0644'
   when:
     - current_inventory_sources_asset_value | length > 0
-    - organization_filter is not defined or (inventory_organization is match(organization_filter))
 ...

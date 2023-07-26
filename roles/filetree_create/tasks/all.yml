@@ -6,6 +6,24 @@
                        verify_ssl=controller_validate_certs).version is version('4.0.0', '>=') }}"
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
+- name: "Block to get the organization_filter ID to filter all the queries"
+  when:
+    - organization_filter is defined
+    - organization_filter | length > 0
+  block:
+    - name: "Get the organization_filter ID to restrict the API queries"
+      ansible.builtin.set_fact:
+        organization_id: "{{ lookup(controller_api_plugin, 'organizations',
+                                    query_params={'name': organization_filter},
+                                    host=controller_hostname, oauth_token=controller_oauthtoken,
+                                    verify_ssl=controller_validate_certs).id
+                          }}"
+      no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
+
+    - name: "Show the organization_filter ID"
+      ansible.builtin.debug:
+        msg: "The organization {{ organization_filter }} has the ID {{ organization_id }}"
+
 - name: Include tasks (block)
   when: "['all', 'labels', 'applications', 'instance_groups', 'settings', 'inventory', 'credentials', 'credential_types', 'notification_templates', 'users', 'teams', 'organizations', 'projects', 'execution_environments', 'job_templates', 'workflow_job_templates', 'workflow_job_template_nodes', 'schedules'] | intersect(input_tag) | length > 0"
   block:

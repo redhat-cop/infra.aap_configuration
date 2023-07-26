@@ -1,11 +1,14 @@
 ---
 - name: "Get current Applications from the API"
   ansible.builtin.set_fact:
-    applications_lookvar: "{{ query(controller_api_plugin, 'api/v2/applications/',
-                                query_params={'order_by': 'organization,id'},
+    applications_lookvar: "{{ query(controller_api_plugin, 'applications/',
+                                query_params=(query_params | combine({'organization': organization_id})) if organization_id is defined else query_params,
                                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                 return_all=true, max_objects=query_controller_api_max_objects)
                            }}"
+  vars:
+    query_params:
+      order_by: 'organization,id'
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
 - name: "Create the <ORGANIZATION_NAME>/applications output directory for applications in {{ output_path }}"
@@ -15,7 +18,6 @@
     mode: '0755'
   vars:
     __path: "{{ output_path }}/{{ needed_path | regex_replace('/', '_') }}/applications"
-  when: organization_filter is not defined or (needed_path is match(organization_filter))
   loop: "{{ (applications_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
             + (['ORGANIZATIONLESS'] if ((applications_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
          }}"
@@ -33,7 +35,6 @@
     application_id: "{{ current_applications_asset_value.id }}"
     application_name: "{{ current_applications_asset_value.name | regex_replace('/', '_') }}"
     __dest: "{{ output_path }}/{{ application_organization | regex_replace('/', '_') }}/applications/{{ application_id }}_{{ application_name | regex_replace('/', '_') }}.yaml"
-  when: organization_filter is not defined or (current_applications_asset_value.summary_fields.organization.name is match(organization_filter))
   loop: "{{ applications_lookvar }}"
   loop_control:
     loop_var: current_applications_asset_value

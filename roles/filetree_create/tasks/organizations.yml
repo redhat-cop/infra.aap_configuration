@@ -2,10 +2,13 @@
 - name: "Get current Organizations from the API"
   ansible.builtin.set_fact:
     orgs_lookvar: "{{ query(controller_api_plugin, 'api/v2/organizations/',
-                            query_params={'order_by': 'id'},
+                            query_params=(query_params | combine({'id': organization_id})) if organization_id is defined else query_params,
                             host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                             return_all=true, max_objects=query_controller_api_max_objects)
                    }}"
+  vars:
+    query_params:
+      order_by: 'id'
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
 - name: "Create the output directory for organizations: {{ output_path + '/' + current_organization_dir.name }}"
@@ -15,7 +18,6 @@
     mode: '0755'
   vars:
     __path: "{{ output_path }}/{{ current_organization_dir.name | regex_replace('/', '_') }}"
-  when: organization_filter is not defined or (current_organization_dir.name is match(organization_filter))
   loop: "{{ orgs_lookvar }}"
   loop_control:
     loop_var: current_organization_dir
@@ -40,7 +42,6 @@
     query_notification_approvals: "{{ query(controller_api_plugin, current_organization.related.notification_templates_approvals,
                      host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                      return_all=true, max_objects=query_controller_api_max_objects) }}"
-  when: organization_filter is not defined or (current_organization.name is match(organization_filter))
   loop: "{{ orgs_lookvar }}"
   loop_control:
     loop_var: current_organization
