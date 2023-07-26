@@ -51,6 +51,7 @@ This also speeds up the overall role.
 |`controller_configuration_project_update_async_retries`|60|no|This variable sets the number of retries to attempt for the role.|
 |`controller_configuration_async_delay`|10|no|This sets the delay between retries for the role globally.|
 |`controller_configuration_project_update_async_delay`|10|no|This sets the delay between retries for the role.|
+|`controller_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
 ## Data Structure
 

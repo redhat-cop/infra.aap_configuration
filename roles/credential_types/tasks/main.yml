@@ -25,7 +25,7 @@
   register: __credentialtypes_job_async
   changed_when: not __credentialtypes_job_async.changed
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
 - name: "Configure Controller Credential Types | Wait for finish the credential types creation"
   ansible.builtin.async_status:
@@ -40,5 +40,5 @@
   when: __credentialtypes_job_async_result_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_credential_types_secure_logging }}"
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 ...

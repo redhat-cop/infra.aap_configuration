@@ -74,7 +74,7 @@
   register: __job_templates_job_async
   changed_when: not __job_templates_job_async.changed
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
 - name: "Configure Controller Job Templates | Wait for finish the job templates creation"
   ansible.builtin.async_status:
@@ -89,5 +89,5 @@
   when: __job_templates_job_async_result_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_job_templates_secure_logging }}"
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 ...
