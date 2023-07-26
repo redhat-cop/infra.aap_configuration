@@ -10,5 +10,6 @@
     src: "templates/current_inventory_sources.j2"
     dest: "{{ inventory_sources_output_path }}/current_inventory_sources.yaml"
     mode: '0644'
-  when: current_inventory_sources_asset_value | length > 0
+  when:
+    - current_inventory_sources_asset_value | length > 0
 ...
