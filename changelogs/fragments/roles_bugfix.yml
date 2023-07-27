@@ -1,4 +1,0 @@
-bugfixes:
-  - fixed an the users and teams field on the roles role to be correct and not singular.
-minor_changes:
-  - added the instance_groups filed to the roles role.

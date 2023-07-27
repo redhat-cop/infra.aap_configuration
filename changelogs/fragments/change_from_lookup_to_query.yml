@@ -1,5 +1,0 @@
----
-bugfixes:
-  - 'Fix addition of `state: present` when `with_present: true`'
-minor_changes:
-  - Change from lookup to query in the object_diff task files

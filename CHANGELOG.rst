@@ -5,6 +5,33 @@ infra.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v2.4.1
+======
+
+Minor Changes
+-------------
+
+- Add option to change async directory, and set the default to null. /tmp/.ansible_async was a workaround while the default was broken previously.
+- Change from lookup to query in the object_diff task files
+- add organizations tag in a dispatch task which is in charge of applying galaxy credencitals in the organization.
+- added the instance_groups filed to the roles role.
+- added the possibility to export schedules through the filetree_create role
+- filetree_create now allows to export objects for the specified organization
+- remove depencency of CONTROLER_USERNAME variable for object_diff role by calling the API with api/me instead of calling the api/users and filtering by username
+
+Bugfixes
+--------
+
+- Changes default value for `*_enforce_defaults` to false instead of the truthy value (due to the quotes), 'false'.
+- Fix addition of `state: present` when `with_present: true`
+- Temporarily fixed an error when installing docker-compose using pip (see https://stackoverflow.com/questions/76708329/docker-compose-no-longer-building-image-attributeerror-cython-sources for more information)
+- When exporting job templates it was failing when missing some input information.
+- When exporting schedules, the diff_mode was not treated correctly
+- When importing the exported notification templates, the types of some values are not as expected.
+- When importing the exported settings, fields like `AUTOMATION_ANALYTICS_LAST_GATHER: 2023-07-17T13:22:06.445818Z` caused problems with the multiple `:`.
+- fix 'credentials' role ignoring 'update_secrets false' and forcing to default 'true'
+- fixed an the users and teams field on the roles role to be correct and not singular.
+
 v2.4.0
 ======
 

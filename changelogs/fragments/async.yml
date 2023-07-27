@@ -1,4 +1,0 @@
----
-minor_changes:
-  - Add option to change async directory, and set the default to null. /tmp/.ansible_async was a workaround while the default was broken previously.
-...
