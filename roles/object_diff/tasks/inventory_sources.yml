@@ -19,9 +19,9 @@
 - name: "Find the difference of Inventory Sources between what is on the Controller versus CasC on SCM"
   ansible.builtin.set_fact:
     __inventory_sources_difference: "{{ query(controller_role_plugin,
-                                                api_list=__controller_api_inventory_sources,
-                                                compare_list=controller_inventory_sources,
-                                                with_present=include_present_state, set_absent=true)
+                                              api_list=__controller_api_inventory_sources,
+                                              compare_list=controller_inventory_sources,
+                                              with_present=include_present_state, set_absent=true) | flatten
                                      }}"
 
 - name: "Set inventory_sources' list to be configured"

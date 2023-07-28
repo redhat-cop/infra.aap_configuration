@@ -64,7 +64,8 @@
   args:
     apply:
       tags: "{{ __task_diff.tags }}"
-  tags: always
+  tags:
+    - always
   loop: "{{ controller_configuration_object_diff_tasks }}"
   loop_control:
     loop_var: __task_diff
