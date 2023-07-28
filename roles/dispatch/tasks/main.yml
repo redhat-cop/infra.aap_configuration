@@ -1,10 +1,4 @@
 ---
-- name: "DEBUG"
-  debug:
-    var: controller_workflows
-  tags:
-    - always
-
 - name: "Run infra.controller_configuration.{{ __role.role }}"
   ansible.builtin.include_role:
     name: "{{ __role.role }}"

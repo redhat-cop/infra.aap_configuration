@@ -1,10 +1,5 @@
 ---
 # tasks file for filetree_read
-- debug:
-    var: controller_roles
-  when:
-    controller_roles is defined
-
 - name: "Init controller variables"
   ansible.builtin.set_fact:
     controller_settings: []
