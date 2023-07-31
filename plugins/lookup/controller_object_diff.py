@@ -186,7 +186,12 @@ class LookupModule(LookupBase):
             api_list_reduced = copy.deepcopy(api_list)
         elif api_list[0]["type"] == "instance_group":
             compare_list_reduced = [{key: item[key] for key in keys_to_keep} for item in compare_list]
-            api_list_reduced = [{key: item[key] for key in api_keys_to_keep} for item in api_list if (item["summary_fields"] and item["summary_fields"]["user_capabilities"]["delete"])]
+            api_list_reduced = [
+                {key: item[key] for key in api_keys_to_keep}
+                for item in api_list
+                if (item["summary_fields"] and item["summary_fields"]["user_capabilities"]["delete"])
+            ]
+
         else:
             compare_list_reduced = [{key: item[key] for key in keys_to_keep} for item in compare_list]
             api_list_reduced = [{key: item[key] for key in api_keys_to_keep} for item in api_list]
@@ -203,7 +208,7 @@ class LookupModule(LookupBase):
                 item.pop("summary_fields")
         elif api_list[0]["type"] == "credential":
             for item in api_list_reduced:
-                item.update({"organization": item["summary_fields"]["organization"]["name"] if item["summary_fields"]["organization"] else ''})
+                item.update({"organization": item["summary_fields"]["organization"]["name"] if item["summary_fields"]["organization"] else ""})
                 item.update({"credential_type": item["summary_fields"]["credential_type"]["name"]})
                 item.pop("summary_fields")
         elif api_list[0]["type"] == "workflow_job_template_node":
