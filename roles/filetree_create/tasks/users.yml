@@ -22,10 +22,6 @@
     label: "User {{ user_lookvar_item.username }}"
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
-- name: "DEBUG DEBUG DEBUG"
-  debug:
-    var: current_users
-
 - name: "Create the <ORGANIZATION_NAME> output directory for users in {{ output_path }}"
   ansible.builtin.file:
     path: "{{ __path }}"
