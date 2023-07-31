@@ -45,20 +45,20 @@ differential_items:
         organization: Default
         scm_type: git
         scm_url: https://github.com/ansible/tower-example.git
-        state: present
+        # state: present
       - description: ansible-examples
         name: Test Inventory source project
         organization: Default
         scm_type: git
         scm_url: https://github.com/ansible/ansible-examples.git
-        state: present
+        # state: present
       - credential: gitlab-personal-access-token for satqe_auto_droid
         description: ansible-examples
         name: Test Inventory source project with credential
         organization: Default
         scm_type: git
         scm_url: https://github.com/ansible/ansible-examples.git
-        state: present
+        # state: present
         wait: false
       - description: Test Project 1
         name: Test Project
@@ -67,7 +67,7 @@ differential_items:
         scm_clean: true
         scm_type: git
         scm_url: https://github.com/ansible/tower-example.git
-        state: present
+        # state: present
       - name: Demo Project
         organization: Default
         state: absent
@@ -77,6 +77,9 @@ differential_items:
       - name: "cyberark"
         credential_type: CyberArk Central Credential Provider Lookup
         organization: Default
+      - name: Demo Credential
+        organization: Default
+        credential_type: "Machine"
     expected_test_result:
       - name: gitlab
         organization: Default
