@@ -79,6 +79,7 @@ This also speeds up the overall role.
 |`users`|""|no|list|The users for which the role applies|
 |`team`|""|no|str|The team for which the role applies|
 |`teams`|""|no|list|The teams for which the role applies|
+|`roles`|""|no|str (see note below)|The roles which are applied to one of {`target_team`, `inventory`, `job_template`, `target_team`, `inventory`, `job_template`} for either `user` or `team` |
 |`role`|""|no|str (see note below)|The role which is applied to one of {`target_team`, `inventory`, `job_template`, `target_team`, `inventory`, `job_template`} for either `user` or `team` |
 |`target_team`|""|no|str|The team the role applies against|
 |`target_teams`|""|no|list|The teams the role applies against|
@@ -100,7 +101,7 @@ This also speeds up the overall role.
 
 #### Role
 
-`role` must be one of the following:
+`role` must be one of the following (or roles must contain a list made up from the following):
 
 - `admin`
 - `read`
@@ -117,6 +118,8 @@ This also speeds up the overall role.
 - `notification_admin`
 - `job_template_admin`
 
+Note that the `roles` option takes precedence over the `role` option and simply allows to specify multiple roles for a user or team (or set of users or teams).
+
 ### Standard RBAC Data Structure
 
 #### Json Example
@@ -132,13 +135,16 @@ This also speeds up the overall role.
     {
       "team": "My Team",
       "organization": "Default",
-      "role": "execute"
+      "role": [
+        "execute",
+        "read"
+      ]
     }
   ]
 }
 ```
 
-#### Yaml Example
+git check
 
 ```yaml
 ---
@@ -151,7 +157,9 @@ controller_roles:
   role: member
 - team: "My Team"
   organization: "Default"
-  role: execute
+  roles:
+    - execute
+    - read
 ```
 
 ## Playbook Examples
