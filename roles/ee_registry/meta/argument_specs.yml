@@ -9,6 +9,18 @@ argument_specs:
         description: Data structure describing your ee registries to manage.
         type: list
         elements: dict
+      proxy_url:
+        required: false
+        type: str
+        description: Information regarding the proxy that AH will use to communicate to the Red Hat repositories. Can be left empty if no proxy used.
+      proxy_username:
+        required: false
+        type: str
+        description: Information regarding the proxy that AH will use to communicate to the Red Hat repositories. Can be left empty if no proxy used.
+      proxy_password:
+        required: false
+        type: str
+        description: Information regarding the proxy that AH will use to communicate to the Red Hat repositories. Can be left empty if no proxy used.
 
       # Async variables
       ah_configuration_ee_registry_async_retries:
