@@ -17,9 +17,9 @@ An Ansible Role to create Repositories in Automation Hub.
 |`password`|""|no|Password to authenticate to the remote repository.||
 |`requirements`|""|no|(`ah_repository_community`)Requirements to download from remote.||
 |`requirements_file`|""|no|(`ah_repository_community`)A yaml requirements file to download from remote.||
-|`proxy_url`|""|no|Proxy URL to use for the connection.||
-|`proxy_username`|""|no|Proxy URL to use for the connection.||
-|`proxy_password`|""|no|Proxy URL to use for the connection.||
+|`proxy_url`|""|no|The URL for the proxy. Defaults to global `proxy_url` variable.||
+|`proxy_username`|""|no|The username for the proxy authentication. Defaults to global `proxy_username` variable.||
+|`proxy_password`|""|no|The password for the proxy authentication. Defaults to global `proxy_password` variable.||
 |`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 |`download_concurrency`|"10"|no| Number of concurrent collections to download.||
 |`rate_limit`|"8"|no|Limits total download rate in requests per second||

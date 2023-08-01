@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Add role option for proxy information rather than being forced to use global
+...
