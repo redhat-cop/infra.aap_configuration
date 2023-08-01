@@ -8,7 +8,9 @@ controller_roles:
     role: use
   - inventory:  RHVM-02
     team: satlab-admin
-    role: admin
+    roles:
+      - admin
+      - use
   # - workflow:  Test workflow 1
   #   team: satellite-qe
   #   role: execute
