@@ -1,4 +1,47 @@
 ---
+- name: Create Roles Based Access Entry on Controller
+  role:
+    user:                           "{{ __controller_role_item.0.user | default(omit, true) }}"
+    users:                          "{{ __controller_role_item.0.users | default(( [] if controller_configuration_role_enforce_defaults else omit), true) }}"
+    team:                           "{{ __controller_role_item.0.team | default(omit, true) }}"
+    teams:                          "{{ __controller_role_item.0.teams | default(( [] if controller_configuration_role_enforce_defaults else omit), true) }}"
+    role:                           "{{ __controller_role_item.1 | mandatory }}"
+    target_team:                    "{{ __controller_role_item.0.target_team | default(omit, true) }}"
+    target_teams:                   "{{ __controller_role_item.0.target_teams | default(( [] if controller_configuration_role_enforce_defaults else omit), true) }}"
+    inventory:                      "{{ __controller_role_item.0.inventory | default(omit, true) }}"
+    inventories:                    "{{ __controller_role_item.0.inventories | default(( [] if controller_configuration_role_enforce_defaults else omit), true) }}"
+    job_template:                   "{{ __controller_role_item.0.job_template | default(omit, true) }}"
+    job_templates:                  "{{ __controller_role_item.0.job_templates | default(( [] if controller_configuration_role_enforce_defaults else omit), true) }}"
+    workflow:                       "{{ __controller_role_item.0.workflow | default(omit, true) }}"
+    workflows:                      "{{ __controller_role_item.0.workflows | default(( [] if controller_configuration_role_enforce_defaults else omit), true) }}"
+    credential:                     "{{ __controller_role_item.0.credential | default(omit, true) }}"
+    credentials:                    "{{ __controller_role_item.0.credentials | default(( [] if controller_configuration_role_enforce_defaults else omit), true) }}"
+    organization:                   "{{ __controller_role_item.0.organization | default(omit, true) }}"
+    organizations:                  "{{ __controller_role_item.0.organizations | default(( [] if controller_configuration_role_enforce_defaults else omit), true) }}"
+    lookup_organization:            "{{ __controller_role_item.0.lookup_organization | default(omit, true) }}"
+    project:                        "{{ __controller_role_item.0.project | default(omit, true) }}"
+    projects:                       "{{ __controller_role_item.0.projects | default(( [] if controller_configuration_role_enforce_defaults else omit), true) }}"
+    instance_groups:                "{{ __controller_role_item.0.instance_groups | default(( [] if controller_configuration_role_enforce_defaults else omit), true) }}"
+    state:                          "{{ __controller_role_item.0.state | default(controller_state | default('present')) }}"
+
+    # Role Standard Options
+    controller_username:            "{{ controller_username | default(omit, true) }}"
+    controller_password:            "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:          "{{ controller_oauthtoken | default(omit, true) }}"
+    controller_host:                "{{ controller_hostname | default(omit, true) }}"
+    controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
+    validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
+  loop: "{{ controller_roles | subelements('roles', skip_missing=true) }}"
+  loop_control:
+    loop_var: __controller_role_item
+  no_log: "{{ controller_configuration_role_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __controller_role_job_async
+  changed_when: not __controller_role_job_async.changed
+  vars:
+    ansible_async_dir: '/tmp/.ansible_async'
+
 - name: Create Role Based Access Entry on Controller
   role:
     user:                           "{{ __controller_role_item.user | default(omit, true) }}"
@@ -32,6 +75,7 @@
     controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
     validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
   loop: "{{ controller_roles }}"
+  when: not __controller_role_item.roles is defined
   loop_control:
     loop_var: __controller_role_item
   no_log: "{{ controller_configuration_role_secure_logging }}"

@@ -2,7 +2,9 @@
 controller_roles:
   - user: admin
     job_template: Demo Job Template
-    role: read
+    roles:
+      - read
+      - execute
   - inventory: Demo Inventory
     user: admin
     role: read
