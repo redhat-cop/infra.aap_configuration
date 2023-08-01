@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Fixed a flake8 failure with comparison of types.
+...

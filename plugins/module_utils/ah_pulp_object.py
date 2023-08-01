@@ -267,7 +267,7 @@ class AHPulpObject(object):
                 return True
             new_item = new[k]
             old_item = old[k]
-            if type(new_item) != type(old_item) or new_item != old_item:
+            if type(new_item) is not type(old_item) or new_item != old_item:
                 return True
         return False
 
