@@ -32,7 +32,7 @@ jobs:
       collection_namespace: infra
       collection_name: ah_configuration
       collection_version: ${{ github.ref_name }}
-      collection_repo: https://github.com/redhat-cop/ah_configuration/
+      collection_repo: https://github.com/ansible/automation_hub_collection.git
       quay_username: redhat_cop
     secrets:
       galaxy_api_key: ${{ secrets.GALAXY_INFRA_KEY }}
