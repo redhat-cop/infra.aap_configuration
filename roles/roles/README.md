@@ -135,7 +135,7 @@ Note that the `roles` option takes precedence over the `role` option and simply 
     {
       "team": "My Team",
       "organization": "Default",
-      "role": [
+      "roles": [
         "execute",
         "read"
       ]
