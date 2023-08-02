@@ -94,6 +94,9 @@ jobs:
       - name: give stack some time to spin up
         run: sleep 240
 
+      - name: Move ansible.cfg to root
+        run: mv .github/files/ansible.cfg .
+
       - name: Build and install the collection
         id: build
         uses: redhat-cop/ansible_collections_tooling/actions/build_ansible_collection@main
