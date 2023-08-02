@@ -60,6 +60,9 @@ jobs:
       - name: give some time to spin up
         run: sleep 30
 
+      - name: Move ansible.cfg to root
+        run: mv .github/files/ansible.cfg .
+
       - name: Display Versions
         run: which python && pip --version && ansible --version
 
