@@ -1,5 +1,5 @@
 ---
-- name: Create Roles Based Access Entry on Controller
+- name: Create Role Based Access Entry on Controller
   role:
     user:                           "{{ __controller_role_item.0.user | default(__controller_role_item.user) | default(omit, true) }}"
     users:                          "{{ __controller_role_item.0.users | default(__controller_role_item.users) | default(( [] if controller_configuration_role_enforce_defaults else omit), true) }}"
@@ -40,7 +40,7 @@
   register: __controller_role_job_async
   changed_when: not __controller_role_job_async.changed
   vars:
-    ansible_async_dir: '/tmp/.ansible_async'
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
 - name: "Configure Roles | Wait for finish the Roles creation"
   ansible.builtin.async_status:
