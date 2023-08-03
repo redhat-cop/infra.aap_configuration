@@ -87,7 +87,7 @@ automation_hub_list:
 
 ```yaml
 ---
-- name: Add namespace to Automation Hub
+- name: Set up Ansible Configuration for usage with PAH
   hosts: localhost
   connection: local
   gather_facts: false
