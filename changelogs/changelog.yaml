@@ -519,3 +519,18 @@ releases:
     - remove_username_dependency_objectdiff.yml
     - roles_bugfix.yml
     release_date: '2023-07-26'
+  2.5.0:
+    changes:
+      bugfixes:
+      - Added more attributes to be expanded and used by the comparison
+      - Fixed lintering issues
+      minor_changes:
+      - Added roles option to roles role to allow setting multiple roles in one item
+        rather than repeating entire sections of code
+      - ansible.cfg removed from root and galaxy.yml added to enable install from
+        source
+    fragments:
+    - object_diff.yml
+    - roles.yml
+    - source_build.yml
+    release_date: '2023-08-03'
