@@ -1,4 +1,0 @@
----
-minor_changes:
-  - ansible.cfg removed from root and galaxy.yml added to enable install from source
-...
