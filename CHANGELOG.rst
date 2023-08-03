@@ -5,6 +5,21 @@ infra.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v2.5.0
+======
+
+Minor Changes
+-------------
+
+- Added roles option to roles role to allow setting multiple roles in one item rather than repeating entire sections of code
+- ansible.cfg removed from root and galaxy.yml added to enable install from source
+
+Bugfixes
+--------
+
+- Added more attributes to be expanded and used by the comparison
+- Fixed lintering issues
+
 v2.4.1
 ======
 
