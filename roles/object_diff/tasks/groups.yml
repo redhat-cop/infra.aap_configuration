@@ -39,7 +39,7 @@
         __groups_difference: "{{ query(controller_role_plugin,
                                         query_params={'summary_fields.inventory.organization_id': controller_organization_id.id},
                                         api_list=__controller_api_groups, compare_list=controller_groups,
-                                        with_present=include_present_state, set_absent=true)
+                                        with_present=include_present_state, set_absent=true) | flatten
                               }}"
 
     - name: "Set the inventory key at the correct place"

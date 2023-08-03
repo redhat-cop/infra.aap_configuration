@@ -89,11 +89,11 @@ _raw:
   returned: on successful differential
 """
 
-from ansible.plugins.lookup import LookupBase
+import copy
 from ansible.errors import AnsibleError, AnsibleLookupError
 from ansible.module_utils._text import to_native
+from ansible.plugins.lookup import LookupBase
 from ansible.utils.display import Display
-import copy
 
 
 class LookupModule(LookupBase):
@@ -113,6 +113,13 @@ class LookupModule(LookupBase):
             item.update({"state": "present"})
 
         return compare_list
+
+    def map_item(self, item, new_attribute_name, attribute_value, dupitems):
+        new_item = copy.deepcopy(item)
+        new_item.update({new_attribute_name: attribute_value})
+        for dupitem in [dupitem for dupitem in dupitems if dupitem in new_item]:
+            new_item.pop(dupitem)
+        return new_item
 
     def run(self, terms, variables=None, **kwargs):
         self.set_options(direct=kwargs)
@@ -179,7 +186,12 @@ class LookupModule(LookupBase):
             api_list_reduced = copy.deepcopy(api_list)
         elif api_list[0]["type"] == "instance_group":
             compare_list_reduced = [{key: item[key] for key in keys_to_keep} for item in compare_list]
-            api_list_reduced = [{key: item[key] for key in api_keys_to_keep} for item in api_list if item["summary_fields"]["user_capabilities"]["delete"]]
+            api_list_reduced = [
+                {key: item[key] for key in api_keys_to_keep}
+                for item in api_list
+                if (item["summary_fields"] and item["summary_fields"]["user_capabilities"]["delete"])
+            ]
+
         else:
             compare_list_reduced = [{key: item[key] for key in keys_to_keep} for item in compare_list]
             api_list_reduced = [{key: item[key] for key in api_keys_to_keep} for item in api_list]
@@ -196,7 +208,7 @@ class LookupModule(LookupBase):
                 item.pop("summary_fields")
         elif api_list[0]["type"] == "credential":
             for item in api_list_reduced:
-                item.update({"organization": item["summary_fields"]["organization"]["name"]})
+                item.update({"organization": item["summary_fields"]["organization"]["name"] if item["summary_fields"]["organization"] else ""})
                 item.update({"credential_type": item["summary_fields"]["credential_type"]["name"]})
                 item.pop("summary_fields")
         elif api_list[0]["type"] == "workflow_job_template_node":
@@ -225,43 +237,57 @@ class LookupModule(LookupBase):
             list_to_extend = []
             list_to_remove = []
             for item in compare_list_reduced:
-                target_teams_expanded = False
-                job_templates_expanded = False
-                workflows_expanded = False
+                expanded = False
+                dupitems = [
+                    "target_team",
+                    "target_teams",
+                    "job_template",
+                    "job_templates",
+                    "workflow",
+                    "workflows",
+                    "inventory",
+                    "inventories",
+                    "project",
+                    "projects",
+                    "credential",
+                    "credentials",
+                ]
+                if "target_team" in item:
+                    list_to_extend.append(self.map_item(item, "team", item["target_team"], dupitems))
+                    expanded = True
                 if "target_teams" in item:
                     for team in item["target_teams"]:
-                        new_item = copy.deepcopy(item)
-                        new_item.update({"team": team})
-                        new_item.pop("target_teams")
-                        if "job_templates" in new_item:
-                            new_item.pop("job_templates")
-                        if "workflows" in new_item:
-                            new_item.pop("workflows")
-                        list_to_extend.append(new_item)
-                    target_teams_expanded = True
+                        list_to_extend.append(self.map_item(item, "team", team, dupitems))
+                    expanded = True
+                if "job_template" in item:
+                    list_to_extend.append(self.map_item(item, "job_template", item["job_template"], dupitems))
+                    expanded = True
                 if "job_templates" in item:
                     for job_template in item["job_templates"]:
-                        new_item = copy.deepcopy(item)
-                        new_item.update({"job_template": job_template})
-                        new_item.pop("job_templates")
-                        if "target_teams" in new_item:
-                            new_item.pop("target_teams")
-                        if "workflows" in new_item:
-                            new_item.pop("workflows")
-                        list_to_extend.append(new_item)
-                    job_templates_expanded = True
+                        list_to_extend.append(self.map_item(item, "job_template", job_template, dupitems))
+                    expanded = True
+                if "workflow" in item:
+                    list_to_extend.append(self.map_item(item, "workflow_job_template", item["workflow"], dupitems))
+                    expanded = True
                 if "workflows" in item:
                     for workflow in item["workflows"]:
-                        new_item = copy.deepcopy(item)
-                        new_item.update({"workflow_job_template": workflow})
-                        new_item.pop("workflows")
-                        if "target_teams" in new_item:
-                            new_item.pop("target_teams")
-                        if "job_templates" in new_item:
-                            new_item.pop("job_templates")
-                        list_to_extend.append(new_item)
-                    workflows_expanded = True
-                if target_teams_expanded or job_templates_expanded or workflows_expanded:
+                        list_to_extend.append(self.map_item(item, "workflow_job_template", workflow, dupitems))
+                    expanded = True
+                if "inventory" in item:
+                    list_to_extend.append(self.map_item(item, "inventory", item["inventory"], dupitems))
+                    expanded = True
+                if "inventories" in item:
+                    for inventory in item["inventories"]:
+                        list_to_extend.append(self.map_item(item, "inventory", inventory, dupitems))
+                    expanded = True
+                if "project" in item:
+                    list_to_extend.append(self.map_item(item, "project", item["project"], dupitems))
+                    expanded = True
+                if "projects" in item:
+                    for project in item["projects"]:
+                        list_to_extend.append(self.map_item(item, "project", project, dupitems))
+                    expanded = True
+                if expanded:
                     list_to_remove.append(item)
             for item in list_to_remove:
                 compare_list_reduced.remove(item)
@@ -295,7 +321,8 @@ class LookupModule(LookupBase):
                 item.update({"state": "absent"})
         # Combine Lists
         if self.get_option("with_present"):
-            compare_list = self.create_present_list(compare_list)
+            for item in compare_list_reduced:
+                item.update({"state": "present"})
             compare_list.extend(difference)
             # Return Compare list with difference attached
             difference = compare_list
@@ -308,4 +335,4 @@ class LookupModule(LookupBase):
             for item in difference_to_remove:
                 difference.remove(item)
 
-        return difference
+        return [difference]
