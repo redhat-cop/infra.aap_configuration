@@ -63,12 +63,18 @@ class AHAPIModule(AnsibleModule):
             required=False,
             fallback=(env_fallback, ["AH_VERIFY_SSL"]),
         ),
+        request_timeout=dict(
+            type="float",
+            required=False,
+            fallback=(env_fallback, ["AH_REQUEST_TIMEOUT"])
+        ),
     )
     short_params = {
         "host": "ah_host",
         "username": "ah_username",
         "password": "ah_password",
         "verify_ssl": "validate_certs",
+        "request_timeout": "request_timeout",
         "path_prefix": "ah_path_prefix",
     }
 
@@ -76,6 +82,7 @@ class AHAPIModule(AnsibleModule):
     username = None
     password = None
     verify_ssl = True
+    request_timeout = 10
     path_prefix = "galaxy"
     authenticated = False
 
@@ -117,7 +124,7 @@ class AHAPIModule(AnsibleModule):
             "Content-Type": "application/json",
             "Accept": "application/json",
         }
-        self.session = Request(validate_certs=self.verify_ssl, headers=self.headers, follow_redirects=True)
+        self.session = Request(validate_certs=self.verify_ssl, headers=self.headers, follow_redirects=True, timeout=self.request_timeout)
 
         # Define the API paths
         self.galaxy_path_prefix = "/api/{prefix}".format(prefix=self.path_prefix.strip("/"))
@@ -215,7 +222,7 @@ class AHAPIModule(AnsibleModule):
         response = {}
 
         try:
-            response = self.session.open(method, url.geturl(), headers=headers, data=data)
+            response = self.session.open(method, url.geturl(), headers=headers, data=data, timeout=self.request_timeout)
         except SSLValidationError as ssl_err:
             raise AHAPIModuleError("Could not establish a secure connection to {host}: {error}.".format(host=url.netloc, error=ssl_err))
         except ConnectionError as con_err:
@@ -460,7 +467,7 @@ class AHAPIModule(AnsibleModule):
             "Content-Type": "application/json",
             "Accept": "application/json",
         }
-        self.session = Request(validate_certs=self.verify_ssl, headers=self.headers)
+        self.session = Request(validate_certs=self.verify_ssl, headers=self.headers, timeout=self.request_timeout)
         self.authenticated = False
 
     def fail_json(self, **kwargs):

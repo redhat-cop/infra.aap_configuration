@@ -13,9 +13,10 @@ An Ansible Role to create Namespaces in Automation Hub.
 |`ah_password`|""|yes|Automation Hub Admin User's password on the Automation Hub Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 |`ah_validate_certs`|`False`|no|Whether or not to validate the Ansible Automation Hub Server's SSL certificate.||
+|`ah_request_timeout`|`10`|no|Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.||
 |`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
-|`ah_namespaces`|`see below`|yes|Data structure describing your namespaces, described below.||
 |`ah_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
+|`ah_namespaces`|`see below`|yes|Data structure describing your namespaces, described below.||
 
 ### Secure Logging Variables
 

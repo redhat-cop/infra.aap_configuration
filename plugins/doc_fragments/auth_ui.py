@@ -38,6 +38,11 @@ options:
     - If value not set, will try environment variable C(AH_VERIFY_SSL)
     type: bool
     aliases: [ ah_verify_ssl ]
+  request_timeout:
+    description:
+    - Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.
+    - Defaults to 10s, but this is handled by the shared module_utils code
+    type: float
   ah_path_prefix:
     description:
     - API path used to access the api.

@@ -30,6 +30,13 @@ options:
     - API path used to access the api.
     - For galaxy_ng this is either 'automation-hub' or the custom prefix used on install with GALAXY_API_PATH_PREFIX
     - For Automation Hub this is 'galaxy'
+  request_timeout:
+    description:
+    - Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.
+    - Defaults to 10 seconds
+    type: float
+    env:
+    - name: AH_REQUEST_TIMEOUT
   verify_ssl:
     description:
     - Specify whether Ansible should verify the SSL certificate of the AH host.

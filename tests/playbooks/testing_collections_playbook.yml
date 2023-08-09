@@ -104,6 +104,19 @@
         ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
+    - name: Verify setting request_timeout to very low will fail
+      ah_namespace:
+        name: to_not_work
+        request_timeout: 0.001
+      register: request_timout_test
+      ignore_errors: true
+
+    - name: Assert previous failed
+      ansible.builtin.assert:
+        that:
+          - request_timout_test is failed
+          - "'timed out' in request_timout_test.msg"
+
     - name: Deauthenticate
       ah_token:
         ah_host: "{{ ah_hostname }}"

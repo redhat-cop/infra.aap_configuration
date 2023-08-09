@@ -8,29 +8,15 @@ An Ansible Role to create Repositories in Automation Hub.
 
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes| Repository name. Probably one of community, validated, or rh-certified||
-|`url`|`https://cloud.redhat.com/api/automation-hub/`|no|(`ah_repository_certified`)Remote URL for the repository.|`https://console.redhat.com/api/automation-hub/content/`|
-|`url`|`https://galaxy.ansible.com/api/`|no|(`ah_repository_community`)Remote URL for the repository.||
-|`auth_url`|`https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token`|no|(`ah_repository_certified`)Remote URL for the repository authentication if separate.||
-|`token`|""|no|Token to authenticate to the remote repository.||
-|`username`|""|no|Username to authenticate to the remote repository.||
-|`password`|""|no|Password to authenticate to the remote repository.||
-|`requirements`|""|no|(`ah_repository_community`)Requirements to download from remote.||
-|`requirements_file`|""|no|(`ah_repository_community`)A yaml requirements file to download from remote.||
-|`proxy_url`|""|no|The URL for the proxy. Defaults to global `proxy_url` variable.||
-|`proxy_username`|""|no|The username for the proxy authentication. Defaults to global `proxy_username` variable.||
-|`proxy_password`|""|no|The password for the proxy authentication. Defaults to global `proxy_password` variable.||
+|`ah_host`|""|yes|URL to the Automation Hub or Galaxy Server. (alias: `ah_hostname`)|127.0.0.1|
+|`ah_username`|""|yes|Admin User on the Automation Hub or Galaxy Server.||
+|`ah_password`|""|yes|Automation Hub Admin User's password on the Automation Hub Server.  This should be stored in an Ansible Vault at vars/tower-secrets.yml or elsewhere and called from a parent playbook.||
 |`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
-|`download_concurrency`|"10"|no| Number of concurrent collections to download.||
-|`rate_limit`|"8"|no|Limits total download rate in requests per second||
-|`signed_only`|"False"|no|Only download signed collections|True|
-|`tls_validation`|"True"|no|Whether to use TLS validation against the remote repository|False|
-|`client_key`|""|no|A PEM encoded private key file used for authentication||
-|`client_cert`|""|no|A PEM encoded client certificate used for authentication||
-|`ca_cert`|""|no|A PEM encoded CA certificate used for authentication||
-|`client_key_path`|""|no|Path to a PEM encoded private key file used for authentication||
-|`client_cert_path`|""|no|Path to a PEM encoded client certificate used for authentication||
-|`ca_cert_path`|""|no|Path to a PEM encoded CA certificate used for authentication||
+|`ah_validate_certs`|`False`|no|Whether or not to validate the Ansible Automation Hub Server's SSL certificate.||
+|`ah_request_timeout`|`10`|no|Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.||
+|`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
+|`ah_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
+|`ah_repositories`|`see below`|yes|Data structure describing your namespaces, described below.||
 
 The `ah_configuration_async_dir` variable sets the directory to write the results file for async tasks.
 The default value is set to  `null` which uses the Ansible Default of `/root/.ansible_async/`.
@@ -62,6 +48,34 @@ This also speeds up the overall role.
 |`ah_configuration_repository_async_delay`|`ah_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ## Data Structure
+
+### Repository Variables
+
+|Variable Name|Default Value|Required|Description|Example|
+|:---:|:---:|:---:|:---:|:---:|
+|`name`|""|yes| Repository name. Probably one of community, validated, or rh-certified||
+|`url`|`https://cloud.redhat.com/api/automation-hub/`|no|(`ah_repository_certified`)Remote URL for the repository.|`https://console.redhat.com/api/automation-hub/content/`|
+|`url`|`https://galaxy.ansible.com/api/`|no|(`ah_repository_community`)Remote URL for the repository.||
+|`auth_url`|`https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token`|no|(`ah_repository_certified`)Remote URL for the repository authentication if separate.||
+|`token`|""|no|Token to authenticate to the remote repository.||
+|`username`|""|no|Username to authenticate to the remote repository.||
+|`password`|""|no|Password to authenticate to the remote repository.||
+|`requirements`|""|no|(`ah_repository_community`)Requirements to download from remote.||
+|`requirements_file`|""|no|(`ah_repository_community`)A yaml requirements file to download from remote.||
+|`proxy_url`|""|no|The URL for the proxy. Defaults to global `proxy_url` variable.||
+|`proxy_username`|""|no|The username for the proxy authentication. Defaults to global `proxy_username` variable.||
+|`proxy_password`|""|no|The password for the proxy authentication. Defaults to global `proxy_password` variable.||
+|`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`download_concurrency`|"10"|no| Number of concurrent collections to download.||
+|`rate_limit`|"8"|no|Limits total download rate in requests per second||
+|`signed_only`|"False"|no|Only download signed collections|True|
+|`tls_validation`|"True"|no|Whether to use TLS validation against the remote repository|False|
+|`client_key`|""|no|A PEM encoded private key file used for authentication||
+|`client_cert`|""|no|A PEM encoded client certificate used for authentication||
+|`ca_cert`|""|no|A PEM encoded CA certificate used for authentication||
+|`client_key_path`|""|no|Path to a PEM encoded private key file used for authentication||
+|`client_cert_path`|""|no|Path to a PEM encoded client certificate used for authentication||
+|`ca_cert_path`|""|no|Path to a PEM encoded CA certificate used for authentication||
 
 ### Standard Project Data Structure
 

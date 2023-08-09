@@ -55,6 +55,11 @@ argument_specs:
         required: false
         description: Whether or not to validate the Automation Hub Server's SSL certificate.
         type: str
+      ah_request_timeout:
+        default: 10
+        required: false
+        description: Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.
+        type: float
       ah_username:
         required: false
         description: User for authentication on Automation Hub

@@ -58,6 +58,11 @@ class AHModule(AnsibleModule):
             required=False,
             fallback=(env_fallback, ["AH_API_TOKEN"]),
         ),
+        request_timeout=dict(
+            type="float",
+            required=False,
+            fallback=(env_fallback, ["AH_REQUEST_TIMEOUT"])
+        ),
     )
     ENCRYPTED_STRING = "$encrypted$"
     short_params = {
@@ -66,6 +71,7 @@ class AHModule(AnsibleModule):
         "password": "ah_password",
         "verify_ssl": "validate_certs",
         "path_prefix": "ah_path_prefix",
+        "request_timeout": "request_timeout",
         "oauth_token": "ah_token",
     }
     IDENTITY_FIELDS = {}
@@ -75,6 +81,7 @@ class AHModule(AnsibleModule):
     username = None
     password = None
     verify_ssl = True
+    request_timeout = 10
     oauth_token = None
     basic_auth = False
     authenticated = False
@@ -97,7 +104,7 @@ class AHModule(AnsibleModule):
             self.params = direct_params
         #        else:
         super(AHModule, self).__init__(argument_spec=full_argspec, **kwargs)
-        self.session = Request(cookies=CookieJar(), validate_certs=self.verify_ssl)
+        self.session = Request(cookies=CookieJar(), validate_certs=self.verify_ssl, timeout=self.request_timeout)
 
         # Parameters specified on command line will override settings in any config
         for short_param, long_param in self.short_params.items():
@@ -219,6 +226,7 @@ class AHModule(AnsibleModule):
                 url.geturl(),
                 headers=headers,
                 validate_certs=self.verify_ssl,
+                timeout=self.request_timeout,
                 follow_redirects=True,
                 data=data,
             )
@@ -373,6 +381,7 @@ class AHModule(AnsibleModule):
                         "POST",
                         api_token_url,
                         validate_certs=self.verify_ssl,
+                        timeout=self.request_timeout,
                         follow_redirects=True,
                         force_basic_auth=True,
                         url_username=self.username,
@@ -387,6 +396,7 @@ class AHModule(AnsibleModule):
                         "GET",
                         test_url,
                         validate_certs=self.verify_ssl,
+                        timeout=self.request_timeout,
                         headers={
                             "Content-Type": "application/json",
                             "Authorization": "Basic {0}".format(basic_str.decode("ascii")),
