@@ -8,6 +8,11 @@ on:
         description: The version to pull of galaxy_ng
         required: true
         type: string
+      gh_ref:
+        description: The ref in the repository to pull
+        required: false
+        default: devel
+        type: string
     secrets:
       redhat_catalog_username:
         description: Username for Red Hat Catalog
