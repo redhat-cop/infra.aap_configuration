@@ -22,6 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ inputs.gh_ref }}
 
       - name: "Checkout galaxy_ng"
         uses: actions/checkout@v2
