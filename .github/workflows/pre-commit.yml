@@ -17,5 +17,5 @@ jobs:
       collection_namespace: ansible
       collection_name: automation_hub
       collection_version: 2.0.0
-      collection_repo: https://github.com/ansible/automation_hub_collection
+      collection_repo: https://github.com/ansible/galaxy_collection
 ...

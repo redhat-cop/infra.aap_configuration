@@ -209,7 +209,7 @@ Minor Changes
 
 - added namespace state absent module parameter
 - added new permision options to the ah_group_perm module and group role.
-- ah_ee_namespace and ah_ee_repository - adding the ``new_name`` parameter so that users can rename namespaces and repositories (https://github.com/ansible/automation_hub_collection/issues/44)
+- ah_ee_namespace and ah_ee_repository - adding the ``new_name`` parameter so that users can rename namespaces and repositories (https://github.com/ansible/galaxy_collection/issues/44)
 - removed dependency for ansible.galaxy module which wasn't accessible in 2.12 Ansible
 
 v0.5.5

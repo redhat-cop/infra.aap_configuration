@@ -5,15 +5,15 @@ authors:
   - David Danielsson @djdanielsson
 dependencies: {}
 description: Ansible content that interacts with the Ansible Automation Hub or Galaxy NG API.
-documentation: https://github.com/ansible/automation_hub_collection/blob/devel/README.md
+documentation: https://github.com/ansible/galaxy_collection/blob/devel/README.md
 license:
   - GPL-3.0-only
 namespace: infra
 name: ah_configuration
 version: 1.1.1-devel
 readme: README.md
-repository: https://github.com/ansible/automation_hub_collection
-issues: https://github.com/ansible/automation_hub_collection/issues
+repository: https://github.com/ansible/galaxy_collection
+issues: https://github.com/ansible/galaxy_collection/issues
 tags:
   - cloud
   - infrastructure

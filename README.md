@@ -1,6 +1,6 @@
 # Red Hat Ansible Automation Hub Configuration Collection
 
-[![pre-commit tests](https://github.com/ansible/automation_hub_collection/actions/workflows/pre-commit.yml/badge.svg?branch=devel)](https://github.com/ansible/automation_hub_collection/actions/workflows/pre-commit.yml)
+[![pre-commit tests](https://github.com/ansible/galaxy_collection/actions/workflows/pre-commit.yml/badge.svg?branch=devel)](https://github.com/ansible/galaxy_collection/actions/workflows/pre-commit.yml)
 ![Code style: flake8](https://img.shields.io/badge/Code%20style-flake8-orange)
 <!-- Further CI badges go here as above -->
 
@@ -11,7 +11,7 @@ This Ansible collection allows for easy interaction with an Ansible Automation H
 |                                      Collection Name                                         |                 Purpose                  |
 |:--------------------------------------------------------------------------------------------:|:----------------------------------------:|
 | [awx.awx/Ansible.controller repo](https://github.com/ansible/awx/tree/devel/awx_collection) |   Automation controller modules          |
-|        [Ansible Hub Configuration](https://github.com/ansible/automation_hub_collection)     |       Automation hub configuration       |
+|        [Ansible Hub Configuration](https://github.com/ansible/galaxy_collection)     |       Automation hub configuration       |
 
 ## Links to other Validated Configuration Collections for Ansible Automation Platform
 
@@ -82,8 +82,8 @@ Add more roles and modules for endpoints on the Automation Hub.
 
 ## Contributing to this collection
 
-We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [Automation Hub Configuration collection repository](https://github.com/ansible/automation_hub_collection).
-More information about contributing can be found in our [Contribution Guidelines.](https://github.com/ansible/automation_hub_collection/blob/devel/.github/CONTRIBUTING.md)
+We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [Automation Hub Configuration collection repository](https://github.com/ansible/galaxy_collection).
+More information about contributing can be found in our [Contribution Guidelines.](https://github.com/ansible/galaxy_collection/blob/devel/.github/CONTRIBUTING.md)
 
 ## Licensing
 
