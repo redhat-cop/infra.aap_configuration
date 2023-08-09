@@ -18,6 +18,7 @@
     ah_token:              "{{ ah_token | default(omit) }}"
     ah_path_prefix:        "{{ ah_path_prefix | default(omit) }}"
     validate_certs:        "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:       "{{ ah_request_timeout | default(omit) }}"
   loop: "{{ ah_collections }}"
   loop_control:
     loop_var: "__collection"

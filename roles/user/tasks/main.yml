@@ -18,6 +18,7 @@
     ah_password:      "{{ ah_password | default(omit) }}"
     ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
     validate_certs:   "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:  "{{ ah_request_timeout | default(omit) }}"
   loop: "{{ ah_users }}"
   loop_control:
     loop_var: "__user"
