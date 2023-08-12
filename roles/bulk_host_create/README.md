@@ -14,8 +14,6 @@ Currently:
 
 ## Variables
 
-### Authentication
-
 |Variable Name|Default Value|Required|Description|Example|
 |:---|:---:|:---:|:---|:---|
 |`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
