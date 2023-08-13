@@ -108,11 +108,19 @@
       ah_namespace:
         name: to_not_work
         request_timeout: 100
+        ah_host: "{{ ah_hostname }}"
+        ah_token: "{{ ah_token }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
 
     - name: Verify setting request_timeout to very low will fail
       ah_namespace:
         name: to_not_work
         request_timeout: 0.01
+        ah_host: "{{ ah_hostname }}"
+        ah_token: "{{ ah_token }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
       register: request_timout_test
       ignore_errors: true
 

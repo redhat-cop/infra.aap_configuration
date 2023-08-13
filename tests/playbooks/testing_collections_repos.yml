@@ -20,20 +20,37 @@
         mode: '0755'
 
   tasks:
+    - name: Perform pre-4.7 tasks for collection repositories
+      when: galaxy_ng_version == "stable-4.4" or galaxy_ng_version == "stable-4.5" or galaxy_ng_version == "stable-4.6"
+      block:
+        - name: Repository creation
+          ansible.builtin.include_role:
+            name: repository
 
-    - name: Repository creation
-      ansible.builtin.include_role:
-        name: repository
+        - name: Repository creation with file
+          ansible.builtin.include_role:
+            name: repository
+          vars:
+            ah_repository_community:
+              url: https://galaxy.ansible.com/api/
+              requirements_file: files/collection_requirement_file.yml
 
-    - name: Repository creation with file
-      ansible.builtin.include_role:
-        name: repository
-      vars:
-        ah_repository_community:
-          url: https://galaxy.ansible.com/api/
-          requirements_file: files/collection_requirement_file.yml
+        - name: Repository sync
+          ansible.builtin.include_role:
+            name: repository_sync
 
-    - name: Repository sync
-      ansible.builtin.include_role:
-        name: repository_sync
+    - name: Perform tasks for collection repositories
+      when: galaxy_ng_version == "stable-4.7" or galaxy_ng_version == "stable-4.8" or galaxy_ng_version == "master"
+      block:
+        - name: Collection Remote creation
+          ansible.builtin.include_role:
+            name: collection_remote
+
+        - name: Collection Remote creation with file
+          ansible.builtin.include_role:
+            name: collection_remote
+          vars:
+            ah_repository_community:
+              url: https://galaxy.ansible.com/api/
+              requirements_file: files/collection_requirement_file.yml
 ...

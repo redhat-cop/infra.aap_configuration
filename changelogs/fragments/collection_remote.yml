@@ -1,0 +1,6 @@
+---
+major_changes:
+  - Added collection_remote role and module to manage collection remotes. This will only work in Galaxy 4.7 or AAP 2.4.
+deprecated_features:
+  - ah_repository, ah_repository_sync modules and repository, repository_sync roles are being depreciated, they will be removed when support for AAP 2.3 ends in May of 2024.
+...

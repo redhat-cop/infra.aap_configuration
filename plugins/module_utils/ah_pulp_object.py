@@ -350,6 +350,25 @@ class AHPulpObject(object):
             )
         )
 
+    def create_or_update(self, new_item, auto_exit=True):
+        """Create or update the current object in private automation hub.
+
+        :param new_item: The data to pass to the API call. This provides the
+                         object details ({"username": "jdoe", ...} for example)
+        :type new_item: dict
+        :param auto_exit: Exit the module when the API call is done.
+        :type auto_exit: bool
+
+        :return: Do not return if ``auto_exit`` is ``True``. Otherwise, return
+                 ``True`` if object has been updated (change state) or ``False``
+                 if the object do not need updating.
+        :rtype: bool
+        """
+        if self.exists:
+            return self.update(new_item, auto_exit)
+        else:
+            return self.create(new_item, auto_exit)
+
 
 class AHPulpRolePerm(AHPulpObject):
     """Manage the roles that contain permisions with the Pulp API.
@@ -948,3 +967,39 @@ class AHPulpTask(AHPulpObject):
             if timeout and elapsed > timeout:
                 self.api.fail_json(msg="Timed out awaiting task completion. tasks: {children}".format(children=children))
         return task_status
+
+
+class AHPulpCollectionRemote(AHPulpObject):
+    """Manage the collection remote with the Pulp API.
+
+    The :py:class:``AHPulpCollectionRemote`` creates and deletes collection remotes.
+
+    Getting the details of a collection remote:
+        ``GET /pulp/api/v3/remotes/ansible/collection/?name=<name>`` ::
+
+            {
+              "count": 1,
+              "next": null,
+              "previous": null,
+              "results": [
+                {
+                    "pulp_href": "/api/automation-hub/pulp/api/v3/remotes/ansible/collection/0189f01a-873f-7ce5-ac11-43dd498680f5/",
+                    "pulp_created": "2023-08-13T18:13:37.727598Z",
+                    "name": "galax",
+                }
+              ]
+            }
+
+    Create a collection remote:
+        ``POST /pulp/api/v3/remotes/ansible/collection/``
+
+    Delete a collection remote:
+        ``DELETE pulp/api/v3/remotes/ansible/collection/0189f01a-873f-7ce5-ac11-43dd498680f5/``
+    """
+
+    def __init__(self, API_object, data=None):
+        """Initialize the object."""
+        super(AHPulpCollectionRemote, self).__init__(API_object, data)
+        self.endpoint = "remotes/ansible/collection"
+        self.object_type = "collection remote"
+        self.name_field = "name"
