@@ -1,0 +1,73 @@
+---
+argument_specs:
+  main:
+    short_description: An Ansible Role to create collection remotes in Automation Hub.
+    options:
+      ah_collection_remotes:
+        default: []
+        required: false
+        description: Data structure describing the certified collection remotes to manage.
+        type: list
+        elements: dict
+      proxy_url:
+        required: false
+        type: str
+        description: Information regarding the proxy that AH will use to communicate to the Red Hat repositories. Can be left empty if no proxy used.
+      proxy_username:
+        required: false
+        type: str
+        description: Information regarding the proxy that AH will use to communicate to the Red Hat repositories. Can be left empty if no proxy used.
+      proxy_password:
+        required: false
+        type: str
+        description: Information regarding the proxy that AH will use to communicate to the Red Hat repositories. Can be left empty if no proxy used.
+
+      # Async variables
+      ah_configuration_async_dir:
+        default: null
+        required: false
+        description: Sets the directory to write the results file for async tasks. The default value is set to  `null` which uses the Ansible Default of `/root/.ansible_async/`.
+
+      # No_log variables
+      ah_configuration_collection_remote_secure_logging:
+        default: "{{ ah_configuration_secure_logging | default(false) }}"
+        required: false
+        type: bool
+        description: Whether or not to include the sensitive role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
+      ah_configuration_secure_logging:
+        default: false
+        required: false
+        type: bool
+        description: This variable enables secure logging across all roles as a default.
+
+      # Generic across all roles
+      ah_host:
+        required: false
+        description: URL to the Automation Hub Server.
+        type: str
+      ah_path_prefix:
+        required: false
+        description: The path for the Automation Hub API. Usually galaxy or automation-hub unless custom set in AH settings.
+      ah_validate_certs:
+        default: true
+        required: false
+        description: Whether or not to validate the Automation Hub Server's SSL certificate.
+        type: str
+      ah_request_timeout:
+        default: 10
+        required: false
+        description: Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.
+        type: float
+      ah_username:
+        required: false
+        description: User for authentication on Automation Hub
+        type: str
+      ah_password:
+        required: false
+        description: User's password For Automation Hub
+        type: str
+      ah_token:
+        required: false
+        description: Automation Hub token for authentication.
+        type: str
+...
