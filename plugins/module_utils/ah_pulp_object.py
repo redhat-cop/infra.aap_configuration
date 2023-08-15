@@ -233,7 +233,7 @@ class AHPulpObject(object):
         except AHAPIModuleError as e:
             self.api.fail_json(msg="Create error: {error}, url: {url}".format(error=e, url=url.geturl()))
 
-        if response["status_code"] in [200, 201]:
+        if response["status_code"] in [200, 201, 202]:
             self.exists = True
             self.data = response["json"]
             # Make sure the object name is available in the response
@@ -969,10 +969,10 @@ class AHPulpTask(AHPulpObject):
         return task_status
 
 
-class AHPulpCollectionRemote(AHPulpObject):
+class AHPulpAnsibleRemote(AHPulpObject):
     """Manage the collection remote with the Pulp API.
 
-    The :py:class:``AHPulpCollectionRemote`` creates and deletes collection remotes.
+    The :py:class:``AHPulpAnsibleRemote`` creates and deletes collection remotes.
 
     Getting the details of a collection remote:
         ``GET /pulp/api/v3/remotes/ansible/collection/?name=<name>`` ::
@@ -999,7 +999,153 @@ class AHPulpCollectionRemote(AHPulpObject):
 
     def __init__(self, API_object, data=None):
         """Initialize the object."""
-        super(AHPulpCollectionRemote, self).__init__(API_object, data)
+        super(AHPulpAnsibleRemote, self).__init__(API_object, data)
         self.endpoint = "remotes/ansible/collection"
         self.object_type = "collection remote"
+        self.name_field = "name"
+
+
+class AHPulpAnsibleRepository(AHPulpObject):
+    """Manage the ansible repository with the Pulp API.
+
+    TODO: add description
+
+    Getting the details of a repository:
+        ``GET /pulp/api/v3/repositories/ansible/ansible/?name=<name>`` ::
+
+        {
+            "count": 1,
+            "next": null,
+            "previous": null,
+            "results": [
+                {
+                    "pulp_href": "/api/automation-hub/pulp/api/v3/repositories/ansible/ansible/018983f5-c249-7bd1-9e68-47a07b03d11b/",
+                    "pulp_created": "2023-07-23T18:14:28.682316Z",
+                    "versions_href": "/api/automation-hub/pulp/api/v3/repositories/ansible/ansible/018983f5-c249-7bd1-9e68-47a07b03d11b/versions/",
+                    "pulp_labels": {},
+                    "latest_version_href": "/api/automation-hub/pulp/api/v3/repositories/ansible/ansible/018983f5-c249-7bd1-9e68-47a07b03d11b/versions/0/",
+                    "name": "alpine",
+                    "description": null,
+                    "retain_repo_versions": 1,
+                    "remote": null,
+                    "last_synced_metadata_time": null,
+                    "gpgkey": null,
+                    "last_sync_task": null,
+                    "private": false
+                }
+            ]
+        }
+    """
+
+    def __init__(self, API_object, data=None):
+        """Initialize the object."""
+        super(AHPulpAnsibleRepository, self).__init__(API_object, data)
+        self.endpoint = "repositories/ansible/ansible"
+        self.object_type = "collection repository"
+        self.name_field = "name"
+
+    def sync(self, wait, interval, timeout):
+        """Perform an POST API call to sync an object.
+
+        :param wait: Whether to wait for the object to finish syncing
+        :type wait: bool
+        :param interval: How often to poll for a change in the sync status
+        :type interval: integer
+        :param timeout: How long to wait for the sync to complete in seconds
+        :type timeout: integer
+        :param auto_exit: Exit the module when the API call is done.
+        :type auto_exit: bool
+
+        :return: Do not return if ``auto_exit`` is ``True``. Otherwise, return
+                 ``True``.
+        :rtype: bool
+        """
+
+        url = self.api.host_url._replace(path="{endpoint}sync/".format(endpoint=self.href))
+        # self.api.fail_json(msg="url: {error}".format(error=url))
+        try:
+            response = self.api.make_request("POST", url, wait_for_task=False)
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Start Sync error: {error}".format(error=e))
+
+        if response["status_code"] == 202:
+            sync_status = "Started"
+            if wait:
+                start = time.time()
+                task_href = response["json"]["task"]
+                taskPulp = AHPulpTask(self.api)
+                elapsed = 0
+                while sync_status not in ["Complete", "Failed"]:
+                    taskPulp.get_object(task_href)
+                    if taskPulp.data["error"]:
+                        sync_status = "Complete"
+                        error_output = taskPulp.data["error"]["description"].split(",")
+                        self.api.fail_json(
+                            status=error_output[0],
+                            msg=error_output[1],
+                            url=error_output[2],
+                            traceback=taskPulp.data["error"]["traceback"],
+                        )
+                    if taskPulp.data["state"] == "completed":
+                        sync_status = "Complete"
+                        break
+                    time.sleep(interval)
+                    elapsed = time.time() - start
+                    if timeout and elapsed > timeout:
+                        self.api.fail_json(msg="Timed out awaiting sync")
+
+            json_output = {
+                "name": self.name,
+                "changed": True,
+                "sync_status": sync_status,
+                "task": response["json"]["task"],
+            }
+            self.api.exit_json(**json_output)
+            return True
+
+        error_msg = self.api.extract_error_msg(response)
+        if error_msg:
+            self.api.fail_json(msg="Unable to create {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg))
+        self.api.fail_json(
+            msg="Unable to create {object_type} {name}: {code}".format(
+                object_type=self.object_type,
+                name=self.name,
+                code=response["status_code"],
+            )
+        )
+
+
+class AHPulpAnsibleDistribution(AHPulpObject):
+    """Manage the ansible distribution with the Pulp API.
+
+    TODO: add description
+
+    Getting the details of a repository:
+        ``GET /pulp/api/v3/distributions/ansible/ansible/?name=<name>`` ::
+
+        {
+            "count": 1,
+            "next": null,
+            "previous": null,
+            "results": [
+                {
+                    "pulp_href": "/api/automation-hub/pulp/api/v3/distributions/ansible/ansible/018983f5-5afb-7272-9ce3-a825f11c1f7d/",
+                    "pulp_created": "2023-07-23T18:14:02.236595Z",
+                    "base_path": "alpine",
+                    "content_guard": "/api/automation-hub/pulp/api/v3/contentguards/core/content_redirect/01898355-81e9-7ed6-9a49-2fcc84754196/",
+                    "name": "alpine",
+                    "repository": "/api/automation-hub/pulp/api/v3/repositories/ansible/ansible/018983f5-5986-7da9-b42c-a0534d7a9524/",
+                    "repository_version": null,
+                    "client_url": "http://localhost:5001/pulp_ansible/galaxy/alpine/",
+                    "pulp_labels": {}
+                }
+            ]
+        }
+    """
+
+    def __init__(self, API_object, data=None):
+        """Initialize the object."""
+        super(AHPulpAnsibleDistribution, self).__init__(API_object, data)
+        self.endpoint = "distributions/ansible/ansible"
+        self.object_type = "collection distribution"
         self.name_field = "name"

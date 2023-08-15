@@ -166,7 +166,7 @@ EXAMPLES = """
 """
 
 from ..module_utils.ah_api_module import AHAPIModule
-from ..module_utils.ah_pulp_object import AHPulpCollectionRemote
+from ..module_utils.ah_pulp_object import AHPulpAnsibleRemote
 
 
 def main():
@@ -258,7 +258,7 @@ def main():
             field_val = module.getFileContent(path_val)
             new_fields[field_name] = field_val
 
-    remote = AHPulpCollectionRemote(module)
+    remote = AHPulpAnsibleRemote(module)
     # Removing the registry
     if state == "absent":
         remote.get_object(name)

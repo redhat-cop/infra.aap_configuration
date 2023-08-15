@@ -53,4 +53,12 @@
             ah_repository_community:
               url: https://galaxy.ansible.com/api/
               requirements_file: files/collection_requirement_file.yml
+
+        - name: Collection Repository creation
+          ansible.builtin.include_role:
+            name: collection_repository
+
+        - name: Collection Repository sync
+          ansible.builtin.include_role:
+            name: collection_repository_sync
 ...
