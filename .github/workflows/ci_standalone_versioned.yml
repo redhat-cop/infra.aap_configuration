@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: ${{ gh_ref }}
+          ref: ${{ inputs.gh_ref }}
 
       - name: Checkout AWX
         uses: actions/checkout@v2
