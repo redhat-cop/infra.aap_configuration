@@ -12,8 +12,6 @@ Currently:
 
 ## Variables
 
-### Authentication
-
 |Variable Name|Default Value|Required|Description|Example|
 |:---|:---:|:---:|:---|:---|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|

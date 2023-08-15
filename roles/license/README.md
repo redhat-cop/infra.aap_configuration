@@ -4,6 +4,8 @@
 
 An Ansible Role to deploy a license on Ansible Controller.
 
+This will either accept a manifest file, or use redhat subscription account credentials to lookup available subscriptions and use them.
+
 ## Requirements
 
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
@@ -14,8 +16,6 @@ Currently:
 
 ## Variables
 
-### Authentication
-
 |Variable Name|Default Value|Required|Description|Example|
 |:---|:---:|:---:|:---|:---|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
@@ -25,6 +25,8 @@ Currently:
 |`controller_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.|||
 |`controller_license`|`see below`|yes|Data structure describing your license for controller, described below.||
+|`redhat_subscription_username`|""|no|Red Hat or Red Hat Satellite username to get available subscriptions. Used only for Subscription lookup implementation.|
+|`redhat_subscription_password`|""|no|Red Hat or Red Hat Satellite password to get available subscriptions. Used only for Subscription lookup implementation.|
 
 ### Secure Logging Variables
 
@@ -59,22 +61,17 @@ The module and this role can use either a manifest file, or lookup the subscript
 |`force`|`False`|no|bool|By default, the license manifest will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.|
 |`state`|`present`|no|str|Desired state of the resource.|
 
-For further details on fields see <https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html>
-
 ### License Variables for using Red Hat Subscription
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`redhat_subscription_username`|""|no|str|Red Hat or Red Hat Satellite username to get available subscriptions.|
-|`redhat_subscription_password`|""|no|str|Red Hat or Red Hat Satellite password to get available subscriptions.|
 |`filters`|"default values"|no|str|dict of filters to use to narrow the subscription. See example below for how to use this.|
 |`support_level`|"Self-Support"|no|str|DEPRECATED - changed to `manifest_file` (still works as an alias)|
 |`list_num`|0|no|int|List index of the subscription to use, if you want to overide the default, it is recomended to use the filters to limit the pools found.|
-|`pool_id`|""|no|str|Red Hat or Red Hat Satellite pool_id to attach to, setting this will skip the lookup.|
+|`pool_id`|""|no|str|Red Hat or Red Hat Satellite pool_id to attach to.|
 |`force`|`False`|no|bool|By default, the license will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.|
+|`use_lookup`|`False`|no|bool|Whether or not to lookup subscriptions.|
 |`state`|`present`|no|str|Desired state of the resource.|
-
-For further details on fields see <https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html>
 
 ### Standard Project Data Structure
 
@@ -137,7 +134,10 @@ controller_license:
     controller_password: changeme
     redhat_subscription_username: changeme
     redhat_subscription_password: changeme
-
+    controller_license:
+      filters:
+        product_name: "Red Hat Ansible Automation Platform"
+        support_level: "Self-Support"
   roles:
     - {role: infra.controller_configuration.license}
 ```
