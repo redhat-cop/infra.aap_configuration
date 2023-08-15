@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: "collection_remote"
+  role_name: "collection_repository"
   author: "Sean Sullivan"
-  description: "An Ansible Role to create collection remotes in Automation Hub."
+  description: "An Ansible Role to create collection remote in Automation Hub."
   company: "Red Hat"
 
   # If the issue tracker for your role is not on github, uncomment the
@@ -33,7 +33,7 @@ galaxy_info:
     - "automationhub"
     - "galaxy"
     - "configuration"
-    - "remote"
+    - "repository"
 
 dependencies: []
 # List your role dependencies here, one per line. Be sure to remove the '[]' above,

@@ -1,0 +1,11 @@
+---
+ah_collection_repositories:
+  - name: "foobar"
+    description: "description of foobar repository"
+    pulp_labels:
+      pipeline: "approved"
+    distribution:
+      name: "foobar"
+      state: present
+    remote: community
+...
