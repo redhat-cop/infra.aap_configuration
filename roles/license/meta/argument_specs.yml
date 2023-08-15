@@ -4,10 +4,9 @@ argument_specs:
     short_description: An Ansible Role to deploy a license on Ansible Controller.
 
     options:
-      controller_labels:
+      controller_license:
         description: Data structure describing your license for Controller
-        type: list
-        elements: dict
+        type: dict
         # options:
         #   manifest_file:
         #     required: false
@@ -46,6 +45,23 @@ argument_specs:
         #     required: false
         #     type: bool
         #     description: By default, the license manifest will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.
+        #   use_lookup:
+        #     default: false
+        #     required: false
+        #     type: bool
+        #     description: Whether or not to lookup subscriptions.
+
+      # Variables used for Liscense lookup
+      redhat_subscription_username:
+        default: None
+        required: false
+        type: str
+        description: Red Hat or Red Hat Satellite username to get available subscriptions.
+      redhat_subscription_password:
+        default: None
+        required: false
+        type: str
+        description: Red Hat or Red Hat Satellite password to get available subscriptions.
 
       # No_log variables
       controller_configuration_labels_secure_logging:

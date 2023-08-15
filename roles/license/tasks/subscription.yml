@@ -14,7 +14,9 @@
     controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
     validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
   register: subscription
-  when: controller_license.pool_id is not defined
+  when:
+    - "'use_lookup' in controller_license"
+    - controller_license.use_lookup
 
 - name: Install the Controller license
   license:
