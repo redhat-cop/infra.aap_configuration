@@ -138,7 +138,6 @@ options:
       - A dictionary structure as returned by the token module.
       - If value not set, will try environment variable C(CONTROLLER_OAUTH_TOKEN) and then config files
       type: raw
-      version_added: "3.7.0"
       aliases: [ tower_oauthtoken ]
     validate_certs:
       description:
@@ -148,6 +147,12 @@ options:
       - If value not set, will try environment variable C(CONTROLLER_VERIFY_SSL) and then config files
       type: bool
       aliases: [ tower_verify_ssl ]
+    request_timeout:
+      description:
+      - Specify the timeout Ansible should use in requests to the controller host.
+      - Defaults to 10s, but this is handled by the shared module_utils code
+      type: float
+      version_added: "2.6.0"
     controller_config_file:
       description:
       - Path to the controller config file.
