@@ -1,0 +1,29 @@
+---
+# The exclude_paths does not appear to be working in pre-commit
+# this issue describes similar behavior but suggested fix doesn't work
+# https://github.com/ansible/ansible-lint/issues/371
+# exclude_paths:
+#  - roles/master_role_example/
+exclude_paths:
+  - '.github/'
+  - 'roles/master_role_example/'
+  - 'changelogs/'
+parseable: true
+use_default_rules: true
+# https://github.com/ansible/ansible-lint/issues/808
+# with verbosity set to 1, its dumping 'unknown file type messages'
+# verbosity: 1
+skip_list:
+  - meta-unsupported-ansible
+  - meta-runtime  # This collection with the appropriate awx.awx or ansible.controller still works with older ansible.
+  - fqcn[keyword]
+  - role-name[path]
+  - var-naming[no-role-prefix]
+  - galaxy[version-incorrect]  # Added because it doesn't like pre-v1.0.0 versions
+warn_list:
+  - jinja[invalid]  # Temporarily adding this due to https://github.com/ansible/ansible-lint/issues/3048
+kinds:
+  - playbooks: "**/examples/*.{yml,yaml}"
+  - tasks: "**/examples/tasks/*.yml"
+  - vars: "**/examples/vars/*.yml"
+...

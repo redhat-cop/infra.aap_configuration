@@ -1,0 +1,33 @@
+---
+authors:
+  - Chris Renwick @crenwick93
+  - Tom Page @Tompage1994
+  - Sean Sullivan @sean-m-sullivan
+  - David Danielsson @djdanielsson
+dependencies: {}
+description: Ansible content that interacts with the Ansible EDA Controller.
+documentation: https://github.com/redhat-cop/eda_configuration/blob/devel/README.md
+license:
+  - GPL-3.0-only
+namespace: infra
+name: eda_configuration
+version: 0.1.0-devel
+readme: README.md
+repository: https://github.com/redhat-cop/eda_configuration
+issues: https://github.com/redhat-cop/eda_configuration/issues
+tags:
+  - cloud
+  - infrastructure
+  - ansible
+  - event
+  - driven
+  - controller
+  - eda
+  - automation
+build_ignore:
+  - tools
+  - setup.cfg
+  - galaxy.yml.j2
+  - template_galaxy.yml
+  - '*.tar.gz'
+...

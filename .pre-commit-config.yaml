@@ -1,0 +1,32 @@
+---
+repos:
+  - repo: 'https://github.com/pre-commit/pre-commit-hooks'
+    rev: v4.4.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: 'https://github.com/ansible-community/ansible-lint.git'
+    rev: v6.17.2
+    hooks:
+      # see discussions here about what arguments are used, and behavior
+      # https://github.com/ansible/ansible-lint/issues/649
+      # Roles will trigger an "unknown file type"
+      # https://github.com/ansible/ansible-lint/issues/808
+      - id: ansible-lint
+        pass_filenames: false
+        always_run: true
+        entry: "ansible-lint"
+        args:
+          - "--profile=production"
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.8.1
+    hooks:
+      - id: markdownlint-cli2
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.1.0
+    hooks:
+      - id: flake8
+        name: flake8
+        entry: flake8
+        types: [python]
+...
