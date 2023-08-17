@@ -8,8 +8,8 @@ description: Ansible content that interacts with the Ansible Automation Hub or G
 documentation: https://github.com/ansible/galaxy_collection/blob/devel/README.md
 license:
   - GPL-3.0-only
-namespace: infra
-name: ah_configuration
+namespace: galaxy
+name: galaxy
 version: 1.1.1-devel
 readme: README.md
 repository: https://github.com/ansible/galaxy_collection

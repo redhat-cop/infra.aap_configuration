@@ -108,8 +108,8 @@ jobs:
         id: build
         uses: redhat-cop/ansible_collections_tooling/actions/build_ansible_collection@main
         with:
-          collection_namespace: ansible
-          collection_name: automation_hub
+          collection_namespace: galaxy
+          collection_name: galaxy
           collection_version: 1.0.0
           collection_repo: https://github.com/ansible/galaxy_collection
 
@@ -118,7 +118,9 @@ jobs:
         if: |
           inputs.galaxy_ng_version == 'stable-4.4' ||
           inputs.galaxy_ng_version == 'stable-4.5' ||
-          inputs.galaxy_ng_version == 'stable-4.6'
+          inputs.galaxy_ng_version == 'stable-4.6' ||
+          inputs.galaxy_ng_version == 'stable-4.7'
+
 
       - name: "Perform collection repository tests"
         run: ansible-playbook tests/playbooks/testing_collections_repos.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
