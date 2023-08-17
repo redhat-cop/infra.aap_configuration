@@ -106,8 +106,28 @@ options:
   download_concurrency:
     description:
       - Number of concurrent collections to download.
-    type: str
-    default: "10"
+    type: int
+    default: 10
+  max_retries:
+    description:
+      - Retries to use when running sync. Default is 0 which does not limit.
+    type: int
+    default: 0
+  rate_limit:
+    description:
+      - Limits total download rate in requests per second.
+    type: int
+    default: 8
+  signed_only:
+    description:
+      - Whether to only download signed collections
+    type: bool
+    default: False
+  sync_dependencies:
+    description:
+      - Whether to download depenencies when syncing collections.
+    type: bool
+    default: False
   proxy_url:
     description:
       - Proxy URL to use for the connection
@@ -120,16 +140,6 @@ options:
     description:
       - Proxy URL to use for the connection
     type: str
-  rate_limit:
-    description:
-      - Limits total download rate in requests per second.
-    type: str
-    default: "8"
-  signed_only:
-    description:
-      - Whether to only download signed collections
-    type: bool
-    default: False
   state:
     description:
       - If C(absent), then the module deletes the remote repository.
@@ -188,12 +198,14 @@ def main():
         client_key_path=dict(no_log=False),
         client_cert_path=dict(),
         ca_cert_path=dict(),
-        download_concurrency=dict(default="10"),
+        download_concurrency=dict(type='int', default=10),
+        max_retries=dict(type='int', default=0),
+        rate_limit=dict(type='int', default=8),
+        signed_only=dict(type="bool", default=False),
+        sync_dependencies=dict(type="bool", default=False),
         proxy_url=dict(),
         proxy_username=dict(),
         proxy_password=dict(no_log=True),
-        rate_limit=dict(default="8"),
-        signed_only=dict(type="bool", default=False),
         state=dict(choices=['present', 'absent'], default='present'),
     )
 
@@ -241,12 +253,17 @@ def main():
         "proxy_username",
         "proxy_password",
         "download_concurrency",
+        "max_retries",
         "rate_limit",
         "signed_only",
+        "sync_dependencies",
     ):
         field_val = module.params.get(field_name)
         if field_val is not None:
             new_fields[field_name] = field_val
+
+    if new_fields["max_retries"] == 0:
+        new_fields["max_retries"] = None
 
     for field_name in (
         "client_key",

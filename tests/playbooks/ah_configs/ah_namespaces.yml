@@ -13,5 +13,5 @@ ah_namespaces:
       - system:partner-engineers
   - name: infra
   - name: test_namespace
-  - name: ansible
+  - name: galaxy
 ...
