@@ -1,3 +1,21 @@
 ---
 requires_ansible: '>=2.9.10'
+plugin_routing:
+  modules:
+    ah_ee_namespace:
+      deprecation:
+        removal_version: 3.0.0
+        warning_text: The endpoint has been removed and is not supported in AAP 2.3 onwards
+    ah_group_perm:
+      deprecation:
+        removal_version: 3.0.0
+        warning_text: The endpoint has been removed and is not supported in AAP 2.3 onwards
+    ah_repository:
+      deprecation:
+        removal_version: 3.0.0
+        warning_text: The endpoint has been removed and is not supported in AAP 2.4 onwards
+    ah_repository_sync:
+      deprecation:
+        removal_version: 3.0.0
+        warning_text: The endpoint has been removed and is not supported in AAP 2.4 onwards
 ...

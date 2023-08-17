@@ -13,6 +13,11 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
+ANSIBLE_METADATA = {'metadata_version': '1.1',
+                    'status': ['deprecated'],
+                    'supported_by': 'community'}
+
+
 DOCUMENTATION = r"""
 ---
 module: ah_ee_namespace
@@ -24,6 +29,11 @@ description:
   - Please use the ee_repository to achieve the same functionality.
 version_added: '0.4.3'
 author: Herve Quatremain (@herve4m)
+deprecated:
+  why: The endpoint has been removed and is not supported in AAP 2.3 onwards
+  alternative: None
+  removed_in: 3.0.0
+  removed_from_collection: ansible.automation_hub
 options:
   name:
     description:
@@ -208,6 +218,9 @@ def main():
 
     # Create a module for ourselves
     module = AHAPIModule(argument_spec=argument_spec, supports_check_mode=True)
+    module.warn("This role 'ee_namespace' and module 'ah_ee_namespace' will be removed when support for AAP 2.2 ends in November of 2023. "
+                "The endpoint was removed in 2.3 with no replacement."
+                )
 
     # Extract our parameters
     name = module.params.get("name")

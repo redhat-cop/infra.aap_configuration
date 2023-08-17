@@ -1,0 +1,7 @@
+---
+deprecated_features:
+  - Added warnings to ah_ee_namespace module to depreciate it and the ee_namespace role that they will be removed when support for AAP 2.2 ends in November of 2023.
+  - Added warnings to ah_group_perm module to depreciate it and the group role that uses it they will be removed when support for AAP 2.2 ends in November of 2023.
+  - Added warnings to ah_repository module to depreciate it and the repository role that they will be removed when support for AAP 2.3 ends in May of 2024.
+  - Added warnings to ah_repository_sync module to depreciate it and the repository_sync role that they will be removed when support for AAP 2.3 ends in May of 2024.
+...

@@ -11,7 +11,7 @@ __metaclass__ = type
 
 ANSIBLE_METADATA = {
     "metadata_version": "1.1",
-    "status": ["preview"],
+    "status": ["deprecated"],
     "supported_by": "community",
 }
 
@@ -24,6 +24,11 @@ short_description: Configure a repository.
 description:
     - Configure an Automation Hub remote Repository. See
       U(https://www.ansible.com/) for an overview.
+deprecated:
+  why: The endpoint has been removed and is not supported in AAP 2.4 onwards. It's functionality has been replaced by collection_remote_sync.
+  alternative: collection_remote_sync
+  removed_in: 3.0.0
+  removed_from_collection: ansible.automation_hub
 options:
     name:
       description:
@@ -79,6 +84,9 @@ def main():
 
     # Create a module for ourselves
     module = AHModule(argument_spec=argument_spec)
+    module.warn("This role 'repository_sync' and module 'ah_repository_sync' will be removed when support for AAP 2.3 ends in May of 2024. "
+                "The module and role collection_repository_sync replaced it."
+                )
 
     # Extract our parameters
     name = module.params.get("name")

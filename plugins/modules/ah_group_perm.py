@@ -13,6 +13,11 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
+ANSIBLE_METADATA = {'metadata_version': '1.1',
+                    'status': ['deprecated'],
+                    'supported_by': 'community'}
+
+
 DOCUMENTATION = r"""
 ---
 module: ah_group_perm
@@ -21,6 +26,11 @@ description:
   - Add and remove permissions for a group.
 version_added: '0.4.3'
 author: Herve Quatremain (@herve4m)
+deprecated:
+  why: The endpoint has been removed and is not supported in AAP 2.3 onwards. It is replaaced by role permisions.
+  alternative: None
+  removed_in: 3.0.0
+  removed_from_collection: ansible.automation_hub
 options:
   name:
     description:
@@ -165,6 +175,9 @@ def main():
 
     # Create a module for ourselves
     module = AHAPIModule(argument_spec=argument_spec, supports_check_mode=True)
+    module.warn("This module 'ah_group_perm' and the group permision part of the role 'group' will be removed when support for AAP 2.2 "
+                "ends in November of 2023. It was replaced with role permissions in 2.3."
+                )
 
     # Extract our parameters
     name = module.params.get("name")
