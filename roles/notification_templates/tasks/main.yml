@@ -16,6 +16,7 @@
     controller_username:            "{{ controller_username | default(omit, true) }}"
     controller_password:            "{{ controller_password | default(omit, true) }}"
     controller_oauthtoken:          "{{ controller_oauthtoken | default(omit, true) }}"
+    request_timeout:                "{{ controller_request_timeout | default(omit, true) }}"
     controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
     validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
   loop: "{{ notification_templates if notification_templates is defined else controller_notifications }}"
