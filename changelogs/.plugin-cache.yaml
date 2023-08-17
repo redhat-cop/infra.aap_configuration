@@ -1,0 +1,19 @@
+objects:
+  role: {}
+plugins:
+  become: {}
+  cache: {}
+  callback: {}
+  cliconf: {}
+  connection: {}
+  filter: {}
+  httpapi: {}
+  inventory: {}
+  lookup: {}
+  module: {}
+  netconf: {}
+  shell: {}
+  strategy: {}
+  test: {}
+  vars: {}
+version: 0.1.0-devel

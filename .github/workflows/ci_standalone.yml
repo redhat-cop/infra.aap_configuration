@@ -1,0 +1,15 @@
+---
+name: Test roles and modules
+on: [push, pull_request_target]
+
+jobs:
+  ci_standalone:
+    strategy:
+      fail-fast: false
+      matrix:
+        eda_server_version:
+          - main
+    uses: "./.github/workflows/ci_standalone_versioned.yml"
+    with:
+      eda_server_version: ${{ matrix.eda_server_version }}
+      gh_ref: ${{ github.ref }}

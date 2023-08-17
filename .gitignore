@@ -1,0 +1,9 @@
+collections/*
+!collections/requirements.yml
+/*.tar.gz
+temp_test_module.yml
+test_playbook.yml
+test/
+tests/output
+.vscode
+__pycache__

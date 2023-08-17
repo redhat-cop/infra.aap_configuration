@@ -1,0 +1,71 @@
+---
+name: Test roles and modules with galaxy_ng
+
+on:
+  workflow_call:
+    inputs:
+      eda_server_version:
+        description: The version to pull of galaxy_ng
+        required: true
+        type: string
+      gh_ref:
+        description: The ref in the repository to pull
+        required: false
+        default: devel
+        type: string
+
+jobs:
+
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ inputs.gh_ref }}
+
+      - name: "Checkout galaxy_ng"
+        uses: actions/checkout@v2
+        with:
+          repository: ansible/eda-server
+          path: eda-server
+          ref: ${{ inputs.eda_server_version }}
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Update apt
+        run: sudo apt -y update
+
+      - name: Install docker-compose
+        run: curl -SL https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose && sudo chmod +x /usr/local/bin/docker-compose
+
+      - name: collect system info
+        run: whoami; id; pwd; ls -al; uname -a ; df -h .; mount ; cat /etc/issue; docker --version ; ps aux | fgrep -i docker; ls -al /var/run/containerd/containerd.sock
+
+      # We might also want to spin up an AWX later here and set EDA_CONTROLLER_URL and EDA_CONTROLLER_SSL_VERIFY for integration testing but for now we can skip.
+
+      # We should also consider setting EDA_IMAGE_URL and EDA_UI_IMAGE_URL from the eda_server_version once images are properly tagged. We may not need to pull a different version of the repo but instead just point at a different image.
+
+      - name: Pull Images
+        working-directory: eda-server/tools/docker
+        run: docker compose -p eda -f docker-compose-stage.yaml pull
+
+      - name: Start stack
+        working-directory: eda-server/tools/docker
+        run: docker compose -p eda -f docker-compose-stage.yaml up -d --wait
+
+      - name: Move ansible.cfg to root
+        run: mv .github/files/ansible.cfg .
+
+      - name: Build and install the collection
+        id: build
+        uses: redhat-cop/ansible_collections_tooling/actions/build_ansible_collection@main
+        with:
+          collection_namespace: infra
+          collection_name: automation_hub
+          collection_version: 0.0.1
+          collection_repo: https://github.com/redhat-cop/eda_configuration
+
+      - name: "Perform playbook collection tests"
+        run: ansible-playbook tests/playbooks/testing_collections_playbook.yml -v -e eda_server_version=${{ inputs.eda_server_version }} -e git_repo_name=${{ github.event.repository.name }}

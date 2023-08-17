@@ -1,0 +1,26 @@
+---
+- name: Testing EDA Server
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  collections:
+    - infra.eda_configuration
+  pre_tasks:
+    - name: Include vars from ah_configs directory
+      ansible.builtin.include_vars:
+        dir: ./eda_configs
+        extensions: ["yml"]
+      tags:
+        - always
+
+  tasks:
+    - name: Verify EDA Controller is up
+      ansible.builtin.uri:
+        validate_certs: false
+        url: "{{ eda_hostname }}/eda"
+        url_username: "{{ eda_username }}"
+        url_password: "{{ eda_password }}"
+        status_code:
+          - 200
+        force_basic_auth: true
+...
