@@ -151,6 +151,7 @@ options:
       description:
       - Specify the timeout Ansible should use in requests to the controller host.
       - Defaults to 10s, but this is handled by the shared module_utils code
+      - This option requires awx.awx>=22.7.0 or equivalent ansible.controller collection
       type: float
       version_added: "2.6.0"
     controller_config_file:
