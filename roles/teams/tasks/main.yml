@@ -13,6 +13,7 @@
     controller_password:      "{{ controller_password | default(omit, true) }}"
     controller_username:      "{{ controller_username | default(omit, true) }}"
     controller_oauthtoken:    "{{ controller_oauthtoken | default(omit, true) }}"
+    request_timeout:          "{{ controller_request_timeout | default(omit, true) }}"
     validate_certs:           "{{ controller_validate_certs | default(omit) }}"
   loop: "{{ teams if teams is defined else controller_teams }}"
   loop_control:
