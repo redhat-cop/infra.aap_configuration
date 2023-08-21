@@ -53,6 +53,6 @@
   tags: "{{ valid_tags }}"
 
 - name: "Remind to check all the 'ToDo:' entries in the output files"
-  debug:
+  ansible.builtin.debug:
     msg: "Please, check the existance of 'ToDo: ' entries in the files generated at '{{ output_path }}' with the following command: grep -R 'ToDo: ' '{{ output_path }}'"
 ...
