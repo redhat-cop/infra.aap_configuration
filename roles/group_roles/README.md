@@ -1,8 +1,8 @@
-# ansible.automation_hub.role
+# group_roles
 
 ## Description
 
-An Ansible Role to create role permisions in Automation Hub.
+An Ansible Role to add roles to groups in Automation Hub.
 
 ## Variables
 
@@ -15,7 +15,7 @@ An Ansible Role to create role permisions in Automation Hub.
 |`ah_request_timeout`|`10`|no|Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.||
 |`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 |`ah_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
-|`ah_roles`|`see below`|yes|Data structure describing your role permissions, described below.||
+|`ah_groups`|`see below`|yes|Data structure describing your groups, described below.||
 
 ### Secure Logging Variables
 
@@ -26,7 +26,7 @@ ah_configuration_group_secure_logging defaults to the value of ah_configuration_
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`ah_configuration_role_secure_logging`|`False`|no|Whether or not to include the sensitive Namespace role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`ah_configuration_group_secure_logging`|`False`|no|Whether or not to include the sensitive Namespace role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`ah_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
@@ -39,56 +39,84 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`ah_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
-|`ah_configuration_role_async_retries`|`ah_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
+|`ah_configuration_group_async_retries`|`ah_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
 |`ah_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
-|`ah_configuration_role_async_delay`|`ah_configuration_async_delay`|no|This sets the delay between retries for the role.|
+|`ah_configuration_group_async_delay`|`ah_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ## Data Structure
 
-### Role Variables
+### Group Variables
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|Group Name. Must be lower case containing only alphanumeric characters and underscores. Must start with 'galaxy.'.|
-|`description`|""|yes|str|The description of the permision role.|
-|`perms`|""|yes|str|The list of permissions for the given role. See below for options.|
-|`state`|`present`|no|str|Desired state of the group.|
-<!-- |`new_name`|""|yes|str|Setting this option will change the existing name (looked up via the name field.| -->
-#### perms
+|`groups`|""|yes|str| List of Group Names to apply the roles to. If the group does not exist, it will be created. Must be lower case containing only alphanumeric characters and underscores.|
+|`role_list`|""|yes|str|The list of roles to add to or remove from the given group. See below for options.|
+|`state`|`present`|no|str|Desired state of the group. Can be `present`, `enforced`, or `absent`. If absent, then the module deletes the given combination of roles for given groups. If present, then the module creates the group roles if it does not already exist. If enforced, then the module will remove any group role combinations not provided.|
 
-The module accepts the following roles:
+#### role_list
 
-- For user management, `add_user`, `change_user`, `delete_user`, and `view_user`.
-- For group management, `add_group`, `change_group`, `delete_group`, and `view_group`.
-- For collection namespace management, `add_namespace`, `change_namespace`, `upload_to_namespace`, and `delete_namespace`.
-- For collection content management, `modify_ansible_repo_content`, `delete_collection`, and `sign_ansiblerepository`.
-- For remote repository configuration, `change_collectionremote`, `view_collectionremote`,
-  `add_collectionremote`, `delete_collectionremote`, and `manage_roles_collectionremote`.
-- For Ansible Repository management, only with private automation hub v4.7.0
-  `add_ansiblerepository`, `change_ansiblerepository`, `delete_ansiblerepository`, `manage_roles_ansiblerepository`,
-  `repair_ansiblerepository`, `view_ansiblerepository`,
-- For container image management, only with private automation hub v4.3.2 or later,
-  `change_containernamespace_perms`, `change_container`, `change_image_tag`, `create_container`,
-  Push existing container `push_container`, `namespace_add_containerdistribution`, `manage_roles_containernamespace`,
-  and `delete_containerrepository`.
-- For remote registry management, `add_containerregistryremote`, `change_containerregistryremote`, and`delete_containerregistryremote`.
-- For task management, `change_task`, `view_task`, and `delete_task`.
-- You can also grant or revoke all permissions with `*` or `all`.
+The `role_list` variable is a combination of roles and targets that are applied to the groups listed in `groups`.
+The structure look slike
 
-### Standard Project Data Structure
+```yaml
+- roles:
+    - container.containerdistribution_owner
+  targets:
+    execution_environments:
+      - ee-minimal-rhel8
+```
+
+Roles can be those that were created using the `role` role, the `ah_role`, or the built in roles.
+
+If no targets are listed, the roles are applied globally to the groups.
+Targets consist of the following.
+
+|Target|Description|
+|:---:|:---:|
+|`collection_namespaces`|List of collection namespaces to apply the roles to.|
+|`collection_remotes`|List of collection remotes to apply the roles to.|
+|`collection_repositories`|List of collection repositories to apply the roles to.|
+|`execution_environments`|List of execution environments to apply the roles to.|
+|`container_registery_remotes`|List of container registery remotes to apply the roles to.|
 
 #### Yaml Example
 
 ```yaml
 ---
-ah_roles:
-  - name: galaxy.stuff.mcstuffins
-    description: test
-    perms:
-      - add_user
-      - change_user
-      - delete_user
-      - view_user
+ah_group_roles:
+  - state: present
+    groups:
+      - santa
+      - group1
+    role_list:
+      - roles:
+          - container.containerdistribution_owner
+        targets:
+          execution_environments:
+            - redhat_cop/config_as_code_ee
+      - roles:
+          - galaxy.container_remote
+        targets:
+          container_registery_remotes:
+            - quay
+      - roles:
+          - galaxy.user_admin
+          - galaxy.group_admin
+      - roles:
+          - galaxy.ansible_repository_owner
+        targets:
+          collection_repositories:
+            - validated
+      - roles:
+          - galaxy.collection_remote_owner
+        targets:
+          collection_remotes:
+            - community
+      - roles:
+          - galaxy.collection_namespace_owner
+        targets:
+          collection_namespaces:
+            - autohubtest2
 ```
 
 ## Playbook Examples
@@ -97,7 +125,7 @@ ah_roles:
 
 ```yaml
 ---
-- name: Add roles to Automation Hub
+- name: Add group roles to Automation Hub
   hosts: localhost
   connection: local
   gather_facts: false
@@ -114,7 +142,7 @@ ah_roles:
       tags:
         - always
   roles:
-    - ../../role
+    - ../../group_roles
 ```
 
 ## License
