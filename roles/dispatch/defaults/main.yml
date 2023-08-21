@@ -10,4 +10,8 @@ ah_configuration_dispatcher_roles:
   - {role: ee_registry, var: ah_ee_registries, tags: registries}
   - {role: ee_registry_index, var: ah_ee_registries, tags: indices}
   - {role: ee_registry_sync, var: ah_ee_registries, tags: regsync}
+  - {role: collection_remote, var: ah_collection_remotes, tags: collectionremote}
+  - {role: collection_repository, var: ah_collection_repositories, tags: collectionsrep}
+  - {role: collection_repository_sync, var: ah_collection_repositories, tags: collectionsrepsync}
+  - {role: group_roles, var: ah_group_roles, tags: group_roles}
 ...

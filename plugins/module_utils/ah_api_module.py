@@ -97,6 +97,8 @@ class AHAPIModule(AnsibleModule):
         else:
             super(AHAPIModule, self).__init__(argument_spec=full_argspec, **kwargs)
 
+        self.json_output = {'changed': False}
+
         # Update the current object with the provided parameters
         for short_param, long_param in self.short_params.items():
             direct_value = self.params.get(long_param)
@@ -291,7 +293,9 @@ class AHAPIModule(AnsibleModule):
         try:
             response_body = response.read()
         except Exception as e:
-            if response["json"]["errors"]:
+            if response["json"]["non_field_errors"]:
+                raise AHAPIModuleError("Errors occurred with request (HTTP 400). Errors: {errors}".format(errors=response["json"]["non_field_errors"]))
+            elif response["json"]["errors"]:
                 raise AHAPIModuleError("Errors occurred with request (HTTP 400). Errors: {errors}".format(errors=response["json"]["errors"]))
             elif response["text"]:
                 raise AHAPIModuleError("Errors occurred with request (HTTP 400). Errors: {errors}".format(errors=response["text"]))
@@ -497,4 +501,4 @@ class AHAPIModule(AnsibleModule):
             else:
                 fail_msg = "Unable to get server version: {code}".format(code=response["status_code"])
             self.fail_json(msg=fail_msg)
-        return response["json"]["server_version"] if "server_version" in response["json"] else ""
+        return response["json"]["server_version"].replace('dev', '') if "server_version" in response["json"] else ""

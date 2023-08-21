@@ -176,14 +176,15 @@ class AHPulpObject(object):
                 raise
 
         if response["status_code"] in [202, 204]:
+
+            self.api.json_output = {
+                "name": self.name,
+                "href": self.href,
+                "type": self.object_type,
+                "changed": True,
+            }
             if auto_exit:
-                json_output = {
-                    "name": self.name,
-                    "href": self.href,
-                    "type": self.object_type,
-                    "changed": True,
-                }
-                self.api.exit_json(**json_output)
+                self.api.exit_json(**self.api.json_output)
             self.exists = False
             self.data = {}
             return True
@@ -217,14 +218,14 @@ class AHPulpObject(object):
         """
         if self.api.check_mode:
             self.data.update(new_item)
+            self.api.json_output = {
+                "name": self.name,
+                "type": self.object_type,
+                "changed": True,
+            }
+            self.api.json_output.update(self.data)
             if auto_exit:
-                json_output = {
-                    "name": self.name,
-                    "type": self.object_type,
-                    "changed": True,
-                }
-                json_output.update(self.data)
-                self.api.exit_json(**json_output)
+                self.api.exit_json(**self.api.json_output)
             return True
 
         url = self.api.build_pulp_url(self.endpoint)
@@ -239,15 +240,15 @@ class AHPulpObject(object):
             # Make sure the object name is available in the response
             if self.name_field not in self.data:
                 self.data[self.name_field] = new_item[self.name_field]
+            self.api.json_output = {
+                "name": self.name,
+                "href": self.href,
+                "type": self.object_type,
+                "changed": True,
+            }
+            self.api.json_output.update(self.data)
             if auto_exit:
-                json_output = {
-                    "name": self.name,
-                    "href": self.href,
-                    "type": self.object_type,
-                    "changed": True,
-                }
-                json_output.update(self.data)
-                self.api.exit_json(**json_output)
+                self.api.exit_json(**self.api.json_output)
             return True
 
         error_msg = self.api.extract_error_msg(response)
@@ -295,28 +296,28 @@ class AHPulpObject(object):
         needs_patch = self.object_are_different(self.data, new_item)
 
         if not needs_patch:
+            self.api.json_output = {
+                "name": self.name,
+                "href": self.href,
+                "type": self.object_type,
+                "changed": False,
+            }
+            self.api.json_output.update(self.data)
             if auto_exit:
-                json_output = {
-                    "name": self.name,
-                    "href": self.href,
-                    "type": self.object_type,
-                    "changed": False,
-                }
-                json_output.update(self.data)
-                self.api.exit_json(**json_output)
+                self.api.exit_json(**self.api.json_output)
             return False
 
         if self.api.check_mode:
             self.data.update(new_item)
+            self.api.json_output = {
+                "name": self.name,
+                "href": self.href,
+                "type": self.object_type,
+                "changed": True,
+            }
+            self.api.json_output.update(self.data)
             if auto_exit:
-                json_output = {
-                    "name": self.name,
-                    "href": self.href,
-                    "type": self.object_type,
-                    "changed": True,
-                }
-                json_output.update(self.data)
-                self.api.exit_json(**json_output)
+                self.api.exit_json(**self.api.json_output)
             return True
 
         url = self.api.host_url._replace(path=self.href)
@@ -328,15 +329,15 @@ class AHPulpObject(object):
         if response["status_code"] in [200, 202, 204]:
             self.exists = True
             self.data.update(new_item)
+            self.api.json_output = {
+                "name": self.name,
+                "href": self.href,
+                "type": self.object_type,
+                "changed": True,
+            }
+            self.api.json_output.update(self.data)
             if auto_exit:
-                json_output = {
-                    "name": self.name,
-                    "href": self.href,
-                    "type": self.object_type,
-                    "changed": True,
-                }
-                json_output.update(self.data)
-                self.api.exit_json(**json_output)
+                self.api.exit_json(**self.api.json_output)
             return True
 
         error_msg = self.api.extract_error_msg(response)
@@ -371,7 +372,7 @@ class AHPulpObject(object):
 
 
 class AHPulpRolePerm(AHPulpObject):
-    """Manage the roles that contain permisions with the Pulp API.
+    """Manage the roles that contain permissions with the Pulp API.
 
     The :py:class:``AHPulpRolePerm`` creates and deletes namespaces.
 
@@ -618,19 +619,19 @@ class AHPulpEERepository(AHPulpObject):
         """
         if not self.exists:
             if auto_exit:
-                json_output = {"digest": digest, "type": "image", "changed": False}
+                self.api.json_output = {"digest": digest, "type": "image", "changed": False}
                 self.api.exit_json(changed=False)
             return
 
         if self.api.check_mode:
+            self.api.json_output = {
+                "name": self.name,
+                "digest": digest,
+                "type": "image",
+                "changed": True,
+            }
             if auto_exit:
-                json_output = {
-                    "name": self.name,
-                    "digest": digest,
-                    "type": "image",
-                    "changed": True,
-                }
-                self.api.exit_json(**json_output)
+                self.api.exit_json(**self.api.json_output)
             return
 
         url = self.api.host_url._replace(path="{endpoint}remove_image/".format(endpoint=self.repository_endpoint))
@@ -640,14 +641,15 @@ class AHPulpEERepository(AHPulpObject):
             self.api.fail_json(msg="Delete error: {error}".format(error=e))
 
         if response["status_code"] in [202, 204]:
+
+            self.api.json_output = {
+                "name": self.name,
+                "digest": digest,
+                "type": "image",
+                "changed": True,
+            }
             if auto_exit:
-                json_output = {
-                    "name": self.name,
-                    "digest": digest,
-                    "type": "image",
-                    "changed": True,
-                }
-                self.api.exit_json(**json_output)
+                self.api.exit_json(**self.api.json_output)
             return
 
         error_msg = self.api.extract_error_msg(response)
@@ -684,26 +686,27 @@ class AHPulpEERepository(AHPulpObject):
                  if the object do not need updating.
         """
         if not self.exists:
+            self.api.json_output = {
+                "digest": digest,
+                "tag": tag,
+                "type": "image",
+                "changed": False,
+            }
             if auto_exit:
-                json_output = {
-                    "digest": digest,
-                    "tag": tag,
-                    "type": "image",
-                    "changed": False,
-                }
-                self.api.exit_json(**json_output)
+                self.api.exit_json(**self.api.json_output)
             return False
 
         if self.api.check_mode:
+
+            self.api.json_output = {
+                "name": self.name,
+                "digest": digest,
+                "tag": tag,
+                "type": "image",
+                "changed": True,
+            }
             if auto_exit:
-                json_output = {
-                    "name": self.name,
-                    "digest": digest,
-                    "tag": tag,
-                    "type": "image",
-                    "changed": True,
-                }
-                self.api.exit_json(**json_output)
+                self.api.exit_json(**self.api.json_output)
             return True
 
         url = self.api.host_url._replace(path="{endpoint}untag/".format(endpoint=self.repository_endpoint))
@@ -713,27 +716,27 @@ class AHPulpEERepository(AHPulpObject):
             self.api.fail_json(msg="Untag error: {error}".format(error=e))
 
         if response["status_code"] in [202, 204]:
+            self.api.json_output = {
+                "name": self.name,
+                "digest": digest,
+                "tag": tag,
+                "type": "image",
+                "changed": True,
+            }
             if auto_exit:
-                json_output = {
-                    "name": self.name,
-                    "digest": digest,
-                    "tag": tag,
-                    "type": "image",
-                    "changed": True,
-                }
-                self.api.exit_json(**json_output)
+                self.api.exit_json(**self.api.json_output)
             return True
 
         if response["status_code"] >= 400:
+            self.api.json_output = {
+                "name": self.name,
+                "digest": digest,
+                "tag": tag,
+                "type": "image",
+                "changed": False,
+            }
             if auto_exit:
-                json_output = {
-                    "name": self.name,
-                    "digest": digest,
-                    "tag": tag,
-                    "type": "image",
-                    "changed": False,
-                }
-                self.api.exit_json(**json_output)
+                self.api.exit_json(**self.api.json_output)
             return False
 
         error_msg = self.api.extract_error_msg(response)
@@ -772,26 +775,26 @@ class AHPulpEERepository(AHPulpObject):
                  if the object do not need updating.
         """
         if not self.exists:
+            self.api.json_output = {
+                "digest": digest,
+                "tag": tag,
+                "type": "image",
+                "changed": False,
+            }
             if auto_exit:
-                json_output = {
-                    "digest": digest,
-                    "tag": tag,
-                    "type": "image",
-                    "changed": False,
-                }
-                self.api.exit_json(**json_output)
+                self.api.exit_json(**self.api.json_output)
             return False
 
         if self.api.check_mode:
+            self.api.json_output = {
+                "name": self.name,
+                "digest": digest,
+                "tag": tag,
+                "type": "image",
+                "changed": True,
+            }
             if auto_exit:
-                json_output = {
-                    "name": self.name,
-                    "digest": digest,
-                    "tag": tag,
-                    "type": "image",
-                    "changed": True,
-                }
-                self.api.exit_json(**json_output)
+                self.api.exit_json(**self.api.json_output)
             return True
 
         url = self.api.host_url._replace(path="{endpoint}tag/".format(endpoint=self.repository_endpoint))
@@ -801,15 +804,15 @@ class AHPulpEERepository(AHPulpObject):
             self.api.fail_json(msg="Tag error: {error}".format(error=e))
 
         if response["status_code"] in [202, 204]:
+            self.api.json_output = {
+                "name": self.name,
+                "digest": digest,
+                "tag": tag,
+                "type": "image",
+                "changed": True,
+            }
             if auto_exit:
-                json_output = {
-                    "name": self.name,
-                    "digest": digest,
-                    "tag": tag,
-                    "type": "image",
-                    "changed": True,
-                }
-                self.api.exit_json(**json_output)
+                self.api.exit_json(**self.api.json_output)
             return True
 
         error_msg = self.api.extract_error_msg(response)
@@ -969,6 +972,161 @@ class AHPulpTask(AHPulpObject):
         return task_status
 
 
+class AHPulpGroups(AHPulpObject):
+    """Manage Groups with the Pulp API.
+
+    The :py:class:``AHPulpGroups`` creates, deletes, and add permissions to groups.
+
+    Getting the details of a group:
+        ``GET /pulp/api/v3/groups/?name=<name>`` ::
+
+            {
+                "count": 1,
+                "next": null,
+                "previous": null,
+                "results": [
+                    {
+                        "name": "santa",
+                        "pulp_href": "/api/galaxy/pulp/api/v3/groups/3/",
+                        "id": 3
+                    }
+                ]
+            }
+
+    Create a collection remote:
+        ``POST /pulp/api/v3/groups/``
+
+    Delete a collection remote:
+        ``DELETE pulp/api/v3/groups/3/``
+    """
+
+    def __init__(self, API_object, data=None):
+        """Initialize the object."""
+        super(AHPulpGroups, self).__init__(API_object, data)
+        self.endpoint = "groups"
+        self.object_type = "group"
+        self.name_field = "name"
+        self.roles = []
+        self.api.json_output = {
+            "changed": False,
+        }
+
+    def get_perms(self, group):
+        """Return the permissions associated with the group.
+
+        :return: The list of permission names.
+        :rtype: list
+        """
+
+        url = self.api.host_url._replace(path="{endpoint}roles/".format(endpoint=group['pulp_href']))
+        # self.api.fail_json(msg="url: {error}".format(error=url))
+        try:
+            response = self.api.make_request("GET", url, wait_for_task=False)
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Error Retrieving Permisions: {error}".format(error=e))
+
+        return response["json"]["results"]
+
+    def associate_permissions(self, group_data=None, new_perms=None, state='present'):
+        """Find the associations of the permissions.
+
+        :return: The list of actions taken
+        :rtype: list
+        """
+        # Find if the permission has been created, set definition
+        response = {}
+        response['removed'] = []
+        response['added'] = []
+        response['existing'] = []
+        for new_permission in new_perms:
+            search_data = self.find_permissions(group_data=group_data, new_perm=new_permission)
+            if search_data['found']:
+                response['existing'].append(
+                    {
+                        "group": group_data['name'],
+                        "group_href": group_data['pulp_href'],
+                        "perms": new_permission
+                    }
+                )
+                group_data = search_data['group_data']
+            if search_data['found'] and state == 'absent':
+                self.remove_permission(search_data['pulp_href'])
+                response['removed'].append(
+                    {
+                        "group": group_data['name'],
+                        "perms": new_permission
+                    }
+                )
+            if not search_data['found'] and (state == 'present' or state == 'enforced'):
+                response['added'].append(self.add_permission(group=group_data, permission=new_permission))
+        if state == 'enforced':
+            for enforced_perm in group_data['before_perms']:
+                if "found" not in enforced_perm:
+                    self.remove_permission(enforced_perm['pulp_href'])
+                    response['removed'].append(
+                        {
+                            "group": group_data['name'],
+                            "perms": enforced_perm
+                        }
+                    )
+        return response
+
+    def find_permissions(self, group_data=None, new_perm=None):
+        """Check if the permission is associated with the group.
+
+        :return: True/False if Found.
+        :rtype: list
+        """
+        response = {'found': False}
+
+        # Find if the permission has been created, set definition
+        for index, current_permission in enumerate(group_data['before_perms']):
+            if new_perm['role'] == current_permission['role'] and new_perm['content_object'] == current_permission['content_object']:
+                response['found'] = True
+                response['pulp_href'] = current_permission['pulp_href']
+                group_data['before_perms'][index]['found'] = True
+                response['group_data'] = group_data
+        return response
+
+    def add_permission(self, group=None, permission=None):
+        """Add listed permissions.
+        "group_perm_list": [
+            {
+            "group": "santa",
+            "group_href": "/api/automation-hub/pulp/api/v3/groups/6/",
+            "perms": {
+                "content_object": "/api/automation-hub/pulp/api/v3/pulp_ansible/namespaces/1/",
+                "role": "galaxy.collection_namespace_owner"
+            }
+            }
+        :return: The list of permission sets.
+        :rtype: list
+        """
+        url = self.api.host_url._replace(path="{endpoint}roles/".format(endpoint=group['pulp_href']))
+        try:
+            response = self.api.make_request("POST", url, data=permission)
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Start Sync error: {error}".format(error=e))
+        self.api.json_output['changed'] = True
+        return response['json']
+
+    def remove_permission(self, permission_path):
+        """Remove listed permissions.
+        'removal_list': [
+            '/api/automation-hub/pulp/api/v3/groups/6/roles/018a099e-f8f8-7868-bfcd-68ed880e9296/'
+        ]
+        :return: The list of permission hrefs removed.
+        :rtype: list
+        """
+        url = self.api.host_url._replace(path=permission_path)
+        try:
+            response = self.api.make_request("DELETE", url)
+        except AHAPIModuleError as e:
+            self.api.fail_json(msg="Start Sync error: {error}".format(error=e))
+        self.api.json_output['changed'] = True
+        return response
+
+
 class AHPulpAnsibleRemote(AHPulpObject):
     """Manage the collection remote with the Pulp API.
 
@@ -1094,13 +1252,13 @@ class AHPulpAnsibleRepository(AHPulpObject):
                     if timeout and elapsed > timeout:
                         self.api.fail_json(msg="Timed out awaiting sync")
 
-            json_output = {
+            self.api.json_output = {
                 "name": self.name,
                 "changed": True,
                 "sync_status": sync_status,
                 "task": response["json"]["task"],
             }
-            self.api.exit_json(**json_output)
+            self.api.exit_json(**self.api.json_output)
             return True
 
         error_msg = self.api.extract_error_msg(response)
@@ -1148,4 +1306,40 @@ class AHPulpAnsibleDistribution(AHPulpObject):
         super(AHPulpAnsibleDistribution, self).__init__(API_object, data)
         self.endpoint = "distributions/ansible/ansible"
         self.object_type = "collection distribution"
+        self.name_field = "name"
+
+
+class AHPulpAnsibleNamesace(AHPulpObject):
+    """Manage the ansible Namesace with the Pulp API.
+
+    TODO: add description
+    Currently the below Get does not work.
+    Getting the details of a repository:
+        ``GET /pulp/api/v3/pulp_ansible/namespaces/?name=<name>`` ::
+
+        {
+            "count": 1,
+            "next": null,
+            "previous": null,
+            "results": [
+                {
+                    "pulp_href": "/api/automation-hub/pulp/api/v3/distributions/ansible/ansible/018983f5-5afb-7272-9ce3-a825f11c1f7d/",
+                    "pulp_created": "2023-07-23T18:14:02.236595Z",
+                    "base_path": "alpine",
+                    "content_guard": "/api/automation-hub/pulp/api/v3/contentguards/core/content_redirect/01898355-81e9-7ed6-9a49-2fcc84754196/",
+                    "name": "alpine",
+                    "repository": "/api/automation-hub/pulp/api/v3/repositories/ansible/ansible/018983f5-5986-7da9-b42c-a0534d7a9524/",
+                    "repository_version": null,
+                    "client_url": "http://localhost:5001/pulp_ansible/galaxy/alpine/",
+                    "pulp_labels": {}
+                }
+            ]
+        }
+    """
+
+    def __init__(self, API_object, data=None):
+        """Initialize the object."""
+        super(AHPulpAnsibleNamesace, self).__init__(API_object, data)
+        self.endpoint = "pulp_ansible/namespaces"
+        self.object_type = "collection namespace"
         self.name_field = "name"

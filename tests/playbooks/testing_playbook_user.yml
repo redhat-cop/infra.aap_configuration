@@ -62,6 +62,106 @@
               - name: deleteme
                 state: absent
 
+    - name: Run group role for 4.6
+      when: galaxy_ng_version == "stable-4.6"
+      block:
+        - name: Test group creation
+          ansible.builtin.include_role:
+            name: group
+          vars:
+            ah_groups:
+              - name: operators
+              - name: administrators
+              - name: managers
+              - name: deleteme
+                state: absent
+
+        - name: Test group role creation
+          ansible.builtin.include_role:
+            name: group_roles
+          vars:
+            ah_group_roles:
+              - groups:
+                  - administrators
+                  - managers
+                role_list:
+                  - roles:
+                      - galaxy.user_admin
+                      - galaxy.group_admin
+              - groups:
+                  - administrators
+                  - managers
+                state: absent
+                role_list:
+                  - roles:
+                      - galaxy.user_admin
+                      - galaxy.group_admin
+
+    - name: Run group role for post-4.7
+      when: galaxy_ng_version == "stable-4.7" or galaxy_ng_version == "master"
+      block:
+        # Testing Group creation and perms in 4.5
+        - name: Test group creation
+          ansible.builtin.include_role:
+            name: group
+          vars:
+            ah_groups:
+              - name: operators
+              - name: administrators
+              - name: managers
+              - name: deleteme
+                state: absent
+
+        - name: Test group role creation
+          ansible.builtin.include_role:
+            name: group_roles
+          vars:
+            ah_group_roles:
+              - groups:
+                  - administrators
+                  - managers
+                role_list:
+                  - roles:
+                      - galaxy.user_admin
+                      - galaxy.group_admin
+              - groups:
+                  - operators
+                  - managers
+                role_list:
+                  - roles:
+                      - galaxy.ansible_repository_owner
+                    targets:
+                      collection_repositories:
+                        - community-infra-repo
+                  - roles:
+                      - galaxy.collection_remote_owner
+                    targets:
+                      collection_remotes:
+                        - community-infra
+              - groups:
+                  - administrators
+                  - managers
+                state: absent
+                role_list:
+                  - roles:
+                      - galaxy.user_admin
+                      - galaxy.group_admin
+              - groups:
+                  - operators
+                  - managers
+                state: absent
+                role_list:
+                  - roles:
+                      - galaxy.ansible_repository_owner
+                    targets:
+                      collection_repositories:
+                        - community-infra-repo
+                  - roles:
+                      - galaxy.collection_remote_owner
+                    targets:
+                      collection_remotes:
+                        - community-infra
+
     - name: Test User creation
       ansible.builtin.include_role:
         name: user

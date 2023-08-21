@@ -77,8 +77,6 @@ This also speeds up the overall role.
 |`client_cert_path`|""|no|Path to a PEM encoded client certificate used for authentication||
 |`ca_cert_path`|""|no|Path to a PEM encoded CA certificate used for authentication||
 
-### Standard Project Data Structure
-
 #### Yaml Example
 
 ```yaml
