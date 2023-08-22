@@ -23,7 +23,7 @@ jobs:
         with:
           ref: ${{ inputs.gh_ref }}
 
-      - name: "Checkout galaxy_ng"
+      - name: "Checkout eda-server"
         uses: actions/checkout@v2
         with:
           repository: ansible/eda-server

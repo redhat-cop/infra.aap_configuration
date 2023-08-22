@@ -6,7 +6,7 @@
   collections:
     - infra.eda_configuration
   pre_tasks:
-    - name: Include vars from ah_configs directory
+    - name: Include vars from eda_configs directory
       ansible.builtin.include_vars:
         dir: ./eda_configs
         extensions: ["yml"]
@@ -23,4 +23,8 @@
         status_code:
           - 200
         force_basic_auth: true
+
+    - name: Create project
+      ansible.builtin.include_role:
+        name: project
 ...
