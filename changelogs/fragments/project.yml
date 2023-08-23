@@ -1,0 +1,7 @@
+---
+minor_changes:
+  - Added project module
+  - Added project role
+  - Added project_sync module
+  - Added project_sync role
+...

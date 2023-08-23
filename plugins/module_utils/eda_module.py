@@ -18,6 +18,7 @@ import re
 from json import loads, dumps
 import base64
 import os
+import time
 
 
 class ItemNotDefined(Exception):
@@ -720,6 +721,30 @@ class EDAModule(AnsibleModule):
                     self._encrypted_changed_warning(field, old, warning=warning)
                     return True
         return False
+
+    def sync_project(self, id, wait=True, interval=1, timeout=None):
+        self.json_output["id"] = id
+
+        # If the state was present and we can let the module build or update the existing item, this will return on its own
+        response = self.post_endpoint('projects/{id}/sync'.format(id=id))
+        task_id = response["json"]["import_task_id"]
+        self.json_output["task"] = task_id
+
+        if wait:
+            status = None
+            start = time.time()
+            elapsed = 0
+            while status != "finished" and status != "failed":
+                status = self.get_endpoint("tasks/{id}".format(id=task_id))["json"]["status"]
+                time.sleep(interval)
+                elapsed = time.time() - start
+                if timeout and elapsed > timeout:
+                    self.fail_json(msg="Timed out awaiting task completion.", task=task_id)
+            if status == "failed":
+                self.fail_json(msg="The project sync failed", task=task_id)
+
+        self.json_output["changed"] = True
+        self.exit_json(**self.json_output)
 
     @staticmethod
     def _resolve_path(path):

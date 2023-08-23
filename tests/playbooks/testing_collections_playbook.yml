@@ -27,4 +27,8 @@
     - name: Create project
       ansible.builtin.include_role:
         name: project
+
+    - name: Sync project
+      ansible.builtin.include_role:
+        name: project_sync
 ...

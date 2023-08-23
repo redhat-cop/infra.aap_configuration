@@ -1,0 +1,70 @@
+---
+argument_specs:
+  main:
+    short_description: An Ansible Role to sync projects in EDA controller.
+    options:
+      eda_projects:
+        default: []
+        required: false
+        description: Data structure describing your projects to manage. If the sync option is set then the project will be synced
+        type: list
+        elements: dict
+
+      # Async variables
+      eda_configuration_project_sync_async_retries:
+        default: "{{ eda_configuration_async_retries | default(50) }}"
+        required: false
+        description: This variable sets the number of retries to attempt for the role.
+      eda_configuration_async_retries:
+        default: 50
+        required: false
+        description: This variable sets number of retries across all roles as a default.
+      eda_configuration_project_sync_async_delay:
+        default: "{{ eda_configuration_async_delay | default(1) }}"
+        required: false
+        description: This variable sets delay between retries for the role.
+      eda_configuration_async_delay:
+        default: 1
+        required: false
+        description: This variable sets delay between retries across all roles as a default.
+      eda_configuration_async_dir:
+        default: null
+        required: false
+        description: Sets the directory to write the results file for async tasks. The default value is set to  `null` which uses the Ansible Default of `/root/.ansible_async/`.
+
+      # No_log variables
+      eda_configuration_project_secure_logging:
+        default: "{{ eda_configuration_secure_logging | default(false) }}"
+        required: false
+        type: bool
+        description: Whether or not to include the sensitive role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
+      eda_configuration_secure_logging:
+        default: false
+        required: false
+        type: bool
+        description: This variable enables secure logging across all roles as a default.
+
+      # Generic across all roles
+      eda_host:
+        required: false
+        description: URL to the EDA Controller Server.
+        type: str
+      eda_validate_certs:
+        default: true
+        required: false
+        description: Whether or not to validate the EDA Controller Server's SSL certificate.
+        type: str
+      eda_request_timeout:
+        default: 10
+        required: false
+        description: Specify the timeout Ansible should use in requests to the EDA Controller host.
+        type: float
+      eda_username:
+        required: false
+        description: User for authentication on EDA Controller
+        type: str
+      eda_password:
+        required: false
+        description: User's password For EDA Controller
+        type: str
+...
