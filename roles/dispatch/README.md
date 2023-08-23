@@ -41,6 +41,8 @@ controller_configuration_dispatcher_roles:
   - {role: workflow_job_templates, var: controller_workflows, tags: workflow_job_templates}
   - {role: schedules, var: controller_schedules, tags: schedules}
   - {role: roles, var: controller_roles, tags: roles}
+  - {role: job_launch, var: controller_launch_jobs, tags: job_launch}
+  - {role: workflow_launch, var: controller_workflow_launch_jobs, tags: workflow_launch}
 ```
 
 Note that each item has three elements:
@@ -61,6 +63,7 @@ It is possible to redefine this variable with a subset of roles or with differen
 |`controller_username`|""|no|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
 |`controller_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
+|`controller_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
 
 ### Secure Logging Variables
 

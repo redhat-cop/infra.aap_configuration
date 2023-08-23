@@ -35,6 +35,7 @@
     controller_username:                  "{{ controller_username | default(omit, true) }}"
     controller_password:                  "{{ controller_password | default(omit, true) }}"
     controller_oauthtoken:                "{{ controller_oauthtoken | default(omit, true) }}"
+    request_timeout:                      "{{ controller_request_timeout | default(omit, true) }}"
     validate_certs:                       "{{ controller_validate_certs | default(omit) }}"
   loop: "{{ inventory_sources if inventory_sources is defined else controller_inventory_sources }}"
   loop_control:
