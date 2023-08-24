@@ -1,4 +1,4 @@
-# ansible.automation_hub.ee_registry
+# galaxy.galaxy.ee_registry
 
 ## Description
 

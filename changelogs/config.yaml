@@ -28,7 +28,7 @@ sections:
   - Bugfixes
 - - known_issues
   - Known Issues
-title: ansible.automation_hub
+title: galaxy.galaxy
 trivial_section_name: trivial
 use_fqcn: true
 ...

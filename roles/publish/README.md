@@ -1,4 +1,4 @@
-# ansible.automation_hub.publish
+# galaxy.galaxy.publish
 
 ## Description
 
@@ -97,7 +97,7 @@ ah_auto_approve: true
       tags:
         - always
   roles:
-    - ansible.automation_hub.publish
+    - galaxy.galaxy.publish
 ```
 
 ## License

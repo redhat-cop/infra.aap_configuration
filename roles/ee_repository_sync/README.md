@@ -1,4 +1,4 @@
-# ansible.automation_hub.ee_repository_sync
+# galaxy.galaxy.ee_repository_sync
 
 ## Description
 

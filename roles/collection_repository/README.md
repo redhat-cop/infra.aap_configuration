@@ -60,7 +60,7 @@ This also speeds up the overall role.
 |`distribution`|""|no|dict|Distribution options for the collection repository. See additional options below for details. Most users will leave this blank|
 |`private`|""|no|boolean|Make the Collection repository private.|
 |`remote`|""|no|str|Remote repository name. This is used if the collections use a remote source.|
-|`update`|`false`|no|bool|Wait for the Collection repository to finish syncing before returning.||
+|`update_repo`|`false`|no|bool|Wait for the Collection repository to finish syncing before returning.||
 |`wait`|`true`|no|bool|Wait for the Collection repository to finish syncing before returning.||
 |`interval`|1.0|no|float|The interval to request an update from Automation Hub.||
 |`timeout`|""|no|int|If waiting for the project to update this will abort after this amount of seconds.||

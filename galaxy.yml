@@ -27,4 +27,5 @@ build_ignore:
   - galaxy.yml.j2
   - template_galaxy.yml
   - '*.tar.gz'
+  - test
 ...

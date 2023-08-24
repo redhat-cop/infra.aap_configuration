@@ -1,4 +1,4 @@
-# ansible.automation_hub.group
+# galaxy.galaxy.group
 
 ## Description
 
