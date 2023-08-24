@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
   collections:
-    - ansible.automation_hub
+    - galaxy.galaxy
   pre_tasks:
     - name: Include vars from ah_configs directory
       ansible.builtin.include_vars:
@@ -21,7 +21,7 @@
 
   tasks:
     - name: Authenticate and get an API token
-      ansible.automation_hub.ah_token:
+      galaxy.galaxy.ah_token:
         ah_host: "{{ ah_hostname }}"
         ah_username: "{{ ah_username }}"
         ah_password: "{{ ah_password }}"
@@ -43,7 +43,7 @@
     #      ah_auto_approve: true
 
     - name: Remove collection
-      ansible.automation_hub.ah_collection:
+      galaxy.galaxy.ah_collection:
         namespace: community_test
         name: test
         version: 1.0.1
@@ -54,11 +54,11 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Configure community repo
-      ansible.automation_hub.ah_repository:
+      galaxy.galaxy.ah_repository:
         name: community
         url: https://galaxy.ansible.com/api/
         requirements:
-          - name: ansible.automation_hub
+          - name: galaxy.galaxy
           - name: infra.controller_configuration
         ah_host: "{{ ah_hostname }}"
         ah_token: "{{ ah_token }}"
@@ -66,7 +66,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Configure community repo from file
-      ansible.automation_hub.ah_repository:
+      galaxy.galaxy.ah_repository:
         name: community
         url: https://galaxy.ansible.com/api/
         requirements_file: files/collection_requirement_file.yml
@@ -76,7 +76,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Sync community repo
-      ansible.automation_hub.ah_repository_sync:
+      galaxy.galaxy.ah_repository_sync:
         name: community
         wait: true
         ah_host: "{{ ah_hostname }}"
@@ -85,7 +85,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Configure rh-certified repo
-      ansible.automation_hub.ah_repository:
+      galaxy.galaxy.ah_repository:
         name: rh-certified
         url: https://cloud.redhat.com/api/automation-hub/
         auth_url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
@@ -96,7 +96,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Add EE Registry
-      ansible.automation_hub.ah_ee_registry:
+      galaxy.galaxy.ah_ee_registry:
         name: myreg
         url: https://registry.redhat.io
         ah_host: "{{ ah_hostname }}"
@@ -106,7 +106,7 @@
         validate_certs: "{{ ah_validate_certs }}"
 
     - name: Deauthenticate
-      ansible.automation_hub.ah_token:
+      galaxy.galaxy.ah_token:
         ah_host: "{{ ah_hostname }}"
         ah_token: "{{ ah_token }}"
         ah_path_prefix: "{{ ah_path_prefix }}"

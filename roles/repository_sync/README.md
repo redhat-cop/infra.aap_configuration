@@ -1,4 +1,4 @@
-# ansible.automation_hub.repository_sync
+# galaxy.galaxy.repository_sync
 
 ## Description
 
@@ -71,7 +71,7 @@ ah_repository_certified:
 ah_repository_community:
   url: https://galaxy.ansible.com/api/
   requirements:
-    - ansible.automation_hub
+    - galaxy.galaxy
     - infra.controller_configuration
     - infra.aap_utilities
     - infra.ee_utilities

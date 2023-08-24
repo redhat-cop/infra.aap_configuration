@@ -28,10 +28,10 @@ Click the `Content` button to see the list of content included in this collectio
 
 ## Installing this collection
 
-You can install the ansible automation_hub collection with the Ansible Galaxy CLI:
+You can install the galaxy galaxy collection with the Ansible Galaxy CLI:
 
 ```bash
-ansible-galaxy collection install ansible.automation_hub
+ansible-galaxy collection install galaxy.galaxy
 ```
 
 You can also include it in a `requirements.yml` file and install it with `ansible-galaxy collection install -r requirements.yml`, using the format:
@@ -39,7 +39,7 @@ You can also include it in a `requirements.yml` file and install it with `ansibl
 ```yaml
 ---
 collections:
-  - name: ansible.automation_hub
+  - name: galaxy.galaxy
     # If you need a specific version of the collection, you can specify like this:
     # version: ...
 ```

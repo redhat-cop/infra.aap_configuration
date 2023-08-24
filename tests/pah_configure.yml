@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
   collections:
-    - ansible.automation_hub
+    - galaxy.galaxy
 
   vars:
     target_state: "present"

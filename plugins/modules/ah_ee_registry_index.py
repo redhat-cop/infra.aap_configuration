@@ -49,18 +49,18 @@ options:
       type: int
 notes:
   - Only works when registry URL is registry.redhat.io
-extends_documentation_fragment: ansible.automation_hub.auth_ui
+extends_documentation_fragment: galaxy.galaxy.auth_ui
 """
 
 
 EXAMPLES = """
 - name: Index redhat registry without waiting
-  ansible.automation_hub.ah_ee_registry_index:
+  galaxy.galaxy.ah_ee_registry_index:
     name: redhat
     wait: false
 
 - name: Index registry.redhat.io registry and wait up to 300 seconds
-  ansible.automation_hub.ah_ee_registry_index:
+  galaxy.galaxy.ah_ee_registry_index:
     name: registry_redhat_io
     wait: true
     timeout: 300

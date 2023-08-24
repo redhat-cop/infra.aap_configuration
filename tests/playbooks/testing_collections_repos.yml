@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
   collections:
-    - ansible.automation_hub
+    - galaxy.galaxy
   pre_tasks:
     - name: Include vars from ah_configs directory
       ansible.builtin.include_vars:
@@ -61,4 +61,7 @@
         - name: Collection Repository sync
           ansible.builtin.include_role:
             name: collection_repository_sync
+          vars:
+            ah_collection_repositories:
+              - name: community-infra-repo
 ...

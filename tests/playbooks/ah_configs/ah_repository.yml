@@ -31,4 +31,17 @@ ah_collection_repositories:
     distribution:
       state: present
     remote: community-infra
+  - name: community-infra-repo-nodistro
+    description: "description of community-infra repository"
+    pulp_labels:
+      pipeline: "approved"
+    remote: community-infra
+  - name: community-infra-repo-noremote
+    description: "description of community-infra repository"
+    pulp_labels:
+      pipeline: "approved"
+    distribution:
+      state: present
+  - name: community-infra-repo-nothing
+    description: "description of community-infra repository"
 ...

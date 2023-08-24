@@ -75,12 +75,12 @@ notes:
   - Only works with private automation hub v4.3.2 or later for local repositories and v4.4.0 for remote repositories.
   - The module cannot be use to create repositories.
     Use C(podman push) for example to create repositories.
-extends_documentation_fragment: ansible.automation_hub.auth_ui
+extends_documentation_fragment: galaxy.galaxy.auth_ui
 """
 
 EXAMPLES = r"""
 - name: Ensure the repository description and README are set
-  ansible.automation_hub.ah_ee_repository:
+  galaxy.galaxy.ah_ee_repository:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8
     state: present
     description: Supported execution environment
@@ -94,7 +94,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the repository README is set
-  ansible.automation_hub.ah_ee_repository:
+  galaxy.galaxy.ah_ee_repository:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8
     state: present
     readme_file: README.md
@@ -103,7 +103,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the repository is removed
-  ansible.automation_hub.ah_ee_repository:
+  galaxy.galaxy.ah_ee_repository:
     name: ansible-automation-platform-20-early-access/ee-supported-rhel8
     state: absent
     ah_host: hub.example.com
@@ -111,7 +111,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Add a remote repository from quayio registry
-  ansible.automation_hub.ah_ee_repository:
+  galaxy.galaxy.ah_ee_repository:
     name: myrepo
     upstream_name: repo
     registry: quayio

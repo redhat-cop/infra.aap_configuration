@@ -1,4 +1,4 @@
-# ansible.automation_hub.collection
+# galaxy.galaxy.collection
 
 ## Description
 

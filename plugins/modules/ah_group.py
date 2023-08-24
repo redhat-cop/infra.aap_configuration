@@ -36,16 +36,16 @@ options:
     default: present
     choices: [absent, present]
 seealso:
-  - module: ansible.automation_hub.ah_group_perm
-  - module: ansible.automation_hub.ah_user
+  - module: galaxy.galaxy.ah_group_perm
+  - module: galaxy.galaxy.ah_user
 notes:
   - Supports C(check_mode).
-extends_documentation_fragment: ansible.automation_hub.auth_ui
+extends_documentation_fragment: galaxy.galaxy.auth_ui
 """
 
 EXAMPLES = r"""
 - name: Ensure the group exists
-  ansible.automation_hub.ah_group:
+  galaxy.galaxy.ah_group:
     name: administrators
     state: present
     ah_host: hub.example.com
@@ -53,7 +53,7 @@ EXAMPLES = r"""
     ah_password: Sup3r53cr3t
 
 - name: Ensure the group is removed
-  ansible.automation_hub.ah_group:
+  galaxy.galaxy.ah_group:
     name: operators
     state: absent
     ah_host: hub.example.com

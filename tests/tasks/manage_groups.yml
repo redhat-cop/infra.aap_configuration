@@ -6,7 +6,7 @@
 
 - name: Import ah_configuration role
   ansible.builtin.import_role:
-    name: ansible.automation_hub.group
+    name: galaxy.galaxy.group
   tags:
     - groups
 ...

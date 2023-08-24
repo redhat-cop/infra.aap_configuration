@@ -1,4 +1,4 @@
-# ansible.automation_hub.dispatch
+# galaxy.galaxy.dispatch
 
 ## Description
 
@@ -8,7 +8,7 @@ An Ansible Role to run all roles for which variables are found on Ansible Automa
 
 This collection is most useful for experienced AAP2 users who want to quickly configure a Automation Hub instance.
 
-If you are new to AAP2 and/or to the ansible.automation_hub collection, it is highly recommended that you ensure that you're familiar with both AAP2 and the collection, before using this role.
+If you are new to AAP2 and/or to the galaxy.galaxy collection, it is highly recommended that you ensure that you're familiar with both AAP2 and the collection, before using this role.
 
 ## Variables
 
@@ -34,7 +34,7 @@ ah_configuration_dispatcher_roles:
 
 Each item within the variable has three elements:
 
-- `role` which is the name of the role within ansible.automation_hub
+- `role` which is the name of the role within galaxy.galaxy
 - `var` which is the variable or variables in that role. We use this to prevent the role being called if the variable is not set.
 - `tags` the tags which are applied to the role so it is possible to apply tags to a playbook using the dispatcher with these tags.
 
@@ -96,7 +96,7 @@ This also speeds up the overall role. Each individual role has its own variable 
         ignore_files: [ah_config.yml.template]
         extensions: ["yml"]
   roles:
-    - ansible.automation_hub.dispatch
+    - galaxy.galaxy.dispatch
 ```
 
 ## License

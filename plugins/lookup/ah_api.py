@@ -71,7 +71,7 @@ options:
       - If a list view returns more an max_objects an exception will be raised
     type: integer
     default: 1000
-extends_documentation_fragment: ansible.automation_hub.auth_plugin
+extends_documentation_fragment: galaxy.galaxy.auth_plugin
 notes:
   - If the query is not filtered properly this can cause a performance impact.
   - Two options take multiple terms. 'ee_images' and 'collection'. See the _terms choices above or the examples below for more details.
@@ -80,20 +80,20 @@ notes:
 EXAMPLES = """
 - name: Report the usernames of all users
   debug:
-    msg: "Users: {{ query('ansible.automation_hub.ah_api', 'users', return_all=true) | map(attribute='username') | list }}"
+    msg: "Users: {{ query('galaxy.galaxy.ah_api', 'users', return_all=true) | map(attribute='username') | list }}"
 
 - name: List all collection namespaces by the devops team
   debug:
-    msg: "{{ lookup('ansible.automation_hub.ah_api', 'namespaces', host='https://ah.example.com', username='ansible',
+    msg: "{{ lookup('galaxy.galaxy.ah_api', 'namespaces', host='https://ah.example.com', username='ansible',
               password='Passw0rd123', verify_ssl=false, query_params={'company': 'Devops'}) }}"
 
 - name: Get the list of tags for my_ee
   set_fact:
-    my_ee_tags: "{{ lookup('ansible.automation_hub.ah_api', 'ee_images', 'my_ee') | map(attribute='tags') | list | flatten }}"
+    my_ee_tags: "{{ lookup('galaxy.galaxy.ah_api', 'ee_images', 'my_ee') | map(attribute='tags') | list | flatten }}"
 
 - name: Get the list of versions for a collection in the published repo
   set_fact:
-    collection_versions: "{{ lookup('ansible.automation_hub.ah_api', 'collection', 'published', 'fake_namespace',
+    collection_versions: "{{ lookup('galaxy.galaxy.ah_api', 'collection', 'published', 'fake_namespace',
                             'collection_name').all_versions | map(attribute='version') | list }}"
 """
 

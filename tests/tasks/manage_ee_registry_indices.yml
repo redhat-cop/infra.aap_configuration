@@ -6,7 +6,7 @@
 
 - name: Import ah_configuration role
   ansible.builtin.import_role:
-    name: ansible.automation_hub.ee_registry_index
+    name: galaxy.galaxy.ee_registry_index
   tags:
     - indices
 ...

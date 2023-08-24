@@ -1,4 +1,4 @@
-# ansible.automation_hub.role
+# galaxy.galaxy.role
 
 ## Description
 

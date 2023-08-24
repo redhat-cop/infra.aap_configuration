@@ -1,4 +1,4 @@
-# ansible.automation_hub.ee_namespace
+# galaxy.galaxy.ee_namespace
 
 ## Description
 

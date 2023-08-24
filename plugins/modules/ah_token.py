@@ -40,21 +40,21 @@ options:
       choices: ["present", "absent"]
       default: "present"
       type: str
-extends_documentation_fragment: ansible.automation_hub.auth
+extends_documentation_fragment: galaxy.galaxy.auth
 """
 
 EXAMPLES = """
 - name: Create a new token using an existing token
-  ansible.automation_hub.ah_token:
+  galaxy.galaxy.ah_token:
     ah_token: "{{ my_existing_token }}"
 
 - name: Delete this token
-  ansible.automation_hub.ah_token:
+  galaxy.galaxy.ah_token:
     ah_token: "{{ ah_token }}"
     state: absent
 
 - name: Create a new token using username/password
-  ansible.automation_hub.ah_token:
+  galaxy.galaxy.ah_token:
     state: present
     ah_username: "{{ my_username }}"
     ah_password: "{{ my_password }}"

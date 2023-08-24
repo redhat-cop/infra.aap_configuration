@@ -98,12 +98,12 @@ options:
     type: str
     default: present
     choices: [present, enforced, absent]
-extends_documentation_fragment: ansible.automation_hub.auth_ui
+extends_documentation_fragment: galaxy.galaxy.auth_ui
 """
 
 EXAMPLES = """
 - name: Ensure the group exists
-  ansible.automation_hub.group_roles:
+  galaxy.galaxy.group_roles:
     groups:
       - santa
       - group1

@@ -1,4 +1,4 @@
-# ansible.automation_hub.ee_image
+# galaxy.galaxy.ee_image
 
 ## Description
 

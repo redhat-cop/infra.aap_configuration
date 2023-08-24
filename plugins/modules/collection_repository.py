@@ -76,7 +76,7 @@ options:
       description:
         - Existing remote name.
       type: str
-    update:
+    update_repo:
       description:
         - Whether to update the collection repository before exiting the module.
       required: false
@@ -106,7 +106,7 @@ options:
       type: str
       choices: ["present", "absent"]
       default: present
-extends_documentation_fragment: ansible.automation_hub.auth_ui
+extends_documentation_fragment: galaxy.galaxy.auth_ui
 """
 
 
@@ -155,7 +155,7 @@ def main():
         pulp_labels=dict(type="dict"),
         private=dict(type="bool", default=False),
         remote=dict(),
-        update=dict(default=False, type="bool"),
+        update_repo=dict(type="bool", default=False),
         wait=dict(default=True, type="bool"),
         interval=dict(default=1.0, type="float"),
         timeout=dict(default=None, type="int"),
@@ -167,7 +167,7 @@ def main():
     # Extract our parameters
     name = module.params.get("name")
     module.fail_on_missing_params(["name"])
-    update = module.params.get("wait")
+    update_repo = module.params.get("update_repo")
     wait = module.params.get("wait")
     interval = module.params.get("interval")
     timeout = module.params.get("timeout")
@@ -196,7 +196,8 @@ def main():
     ansible_repository = AHPulpAnsibleRepository(module)
     ansible_repository.get_object(name=name)
 
-    if distro := new_fields.get("distribution"):
+    distro = new_fields.get("distribution")
+    if distro:
         # if "distribution" is set, but "state" is missing, set "present"
         distro_state = distro.get("state", None)
 
@@ -224,7 +225,8 @@ def main():
 
         ansible_repository.delete(auto_exit=True)
 
-    if remote := new_fields.get("remote"):
+    remote = new_fields.get("remote")
+    if remote:
         ansible_remote = AHPulpAnsibleRemote(module)
         ansible_remote.get_object(name=remote)
 
@@ -262,7 +264,7 @@ def main():
                     auto_exit=False,
                 )
 
-    if update:
+    if update_repo:
         ansible_repository.sync(wait, interval, timeout)
 
     module.exit_json(**module.json_output)

@@ -1,4 +1,4 @@
-# ansible.automation_hub.user
+# galaxy.galaxy.user
 
 ## Description
 

@@ -46,7 +46,7 @@ options:
         - If waiting for the repository to update this will abort after this
           amount of seconds
       type: int
-extends_documentation_fragment: ansible.automation_hub.auth_ui
+extends_documentation_fragment: galaxy.galaxy.auth_ui
 """
 
 

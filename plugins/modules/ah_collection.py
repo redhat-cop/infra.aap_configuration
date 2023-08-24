@@ -84,20 +84,20 @@ options:
       default: "present"
       type: str
 
-extends_documentation_fragment: ansible.automation_hub.auth
+extends_documentation_fragment: galaxy.galaxy.auth
 """
 
 
 EXAMPLES = """
 - name: Upload collection to automation hub
-  ansible.automation_hub.ah_collection:
+  galaxy.galaxy.ah_collection:
     namespace: awx
     name: awx
     path: /var/tmp/collections/awx-awx-15.0.0.tar.gz
 
 
 - name: Remove collection
-  ansible.automation_hub.ah_collection:
+  galaxy.galaxy.ah_collection:
     namespace: test_collection
     name: test
     version: 4.1.2

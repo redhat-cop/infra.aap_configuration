@@ -1,4 +1,4 @@
 ---
 collections:
-  - name: ansible.automation_hub
+  - name: galaxy.galaxy
 ...

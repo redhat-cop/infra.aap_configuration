@@ -148,7 +148,7 @@ options:
     type: str
     default: present
     choices: [present, absent]
-extends_documentation_fragment: ansible.automation_hub.auth_ui
+extends_documentation_fragment: galaxy.galaxy.auth_ui
 """
 
 
@@ -165,7 +165,7 @@ EXAMPLES = """
     name: community
     url: https://galaxy.ansible.com/api/
     requirements:
-      - ansible.automation_hub
+      - galaxy.galaxy
       - infra.controller_configuration
 
 - name: Configure community collection_remote from a file

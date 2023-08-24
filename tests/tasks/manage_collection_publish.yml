@@ -6,7 +6,7 @@
 
 - name: Import ah_configuration role
   ansible.builtin.import_role:
-    name: ansible.automation_hub.publish
+    name: galaxy.galaxy.publish
   tags:
     - publish
 ...

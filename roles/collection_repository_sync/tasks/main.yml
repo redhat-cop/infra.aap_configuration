@@ -3,9 +3,9 @@
 - name: Sync Automation Hub Collection Remote repository
   collection_repository_sync:
     name:                     "{{ __collection_repository_sync_item.name }}"
-    wait:                     "{{ __repository_item.wait | default(omit) }}"
-    interval:                 "{{ __repository_item.interval | default(1) }}"
-    timeout:                  "{{ __repository_item.timeout | default(omit) }}"
+    wait:                     "{{ __collection_repository_sync_item.wait | default(omit) }}"
+    interval:                 "{{ __collection_repository_sync_item.interval | default(1) }}"
+    timeout:                  "{{ __collection_repository_sync_item.timeout | default(omit) }}"
     ah_host:                  "{{ ah_host | default(ah_hostname) }}"
     ah_username:              "{{ ah_username | default(omit) }}"
     ah_password:              "{{ ah_password | default(omit) }}"

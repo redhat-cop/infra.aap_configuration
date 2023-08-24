@@ -1,5 +1,5 @@
 ====================================
-ansible.automation_hub Release Notes
+galaxy.galaxy Release Notes
 ====================================
 
 .. contents:: Topics
@@ -50,7 +50,7 @@ Breaking Changes / Porting Guide
 New Modules
 -----------
 
-- ansible.automation_hub.ah_role - Manage a role of group permissions
+- galaxy.galaxy.ah_role - Manage a role of group permissions
 
 v1.0.1
 ======
@@ -199,7 +199,7 @@ Breaking Changes / Porting Guide
 New Modules
 -----------
 
-- ansible.automation_hub.ah_ee_registry - Manage private automation hub execution environment remote registries.
+- galaxy.galaxy.ah_ee_registry - Manage private automation hub execution environment remote registries.
 
 v0.6.1
 ======

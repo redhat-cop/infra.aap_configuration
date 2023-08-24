@@ -47,18 +47,18 @@ options:
         - If waiting for the registry to update this will abort after this
           amount of seconds
       type: int
-extends_documentation_fragment: ansible.automation_hub.auth_ui
+extends_documentation_fragment: galaxy.galaxy.auth_ui
 """
 
 
 EXAMPLES = """
 - name: Sync my_registry without waiting
-  ansible.automation_hub.ah_ee_registry_sync:
+  galaxy.galaxy.ah_ee_registry_sync:
     name: my_registry
     wait: false
 
 - name: Sync registry.redhat.io registry and wait up to 300 seconds
-  ansible.automation_hub.ah_ee_registry_sync:
+  galaxy.galaxy.ah_ee_registry_sync:
     name: registry_redhat_io
     wait: true
     timeout: 300

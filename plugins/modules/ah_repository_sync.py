@@ -28,7 +28,7 @@ deprecated:
   why: The endpoint has been removed and is not supported in AAP 2.4 onwards. It's functionality has been replaced by collection_remote_sync.
   alternative: collection_remote_sync
   removed_in: 3.0.0
-  removed_from_collection: ansible.automation_hub
+  removed_from_collection: galaxy.galaxy
 options:
     name:
       description:
@@ -52,18 +52,18 @@ options:
         - If waiting for the project to update this will abort after this
           amount of seconds
       type: int
-extends_documentation_fragment: ansible.automation_hub.auth
+extends_documentation_fragment: galaxy.galaxy.auth
 """
 
 
 EXAMPLES = """
 - name: Sync rh-certified repo without waiting
-  ansible.automation_hub.ah_repository_sync:
+  galaxy.galaxy.ah_repository_sync:
     name: rh-certified
     wait: false
 
 - name: Sync community repo and wait up to 60 seconds
-  ansible.automation_hub.ah_repository_sync:
+  galaxy.galaxy.ah_repository_sync:
     name: community
     wait: true
     timeout: 60

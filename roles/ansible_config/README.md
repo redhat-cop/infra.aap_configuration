@@ -1,4 +1,4 @@
-# ansible.automation_hub.ansible_config
+# galaxy.galaxy.ansible_config
 
 ## Description
 

@@ -5,7 +5,7 @@
   become: false
   gather_facts: false
   collections:
-    - ansible.automation_hub
+    - galaxy.galaxy
   vars:
     ah_hostname: http://localhost:8002/
     ah_username: admin
