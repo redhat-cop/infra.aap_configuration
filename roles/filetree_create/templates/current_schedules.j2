@@ -4,7 +4,6 @@ controller_schedules:
 {% if current_schedules_asset_value.description is defined %}
     description: "{{ current_schedules_asset_value.description }}"
 {% endif %}
-    organization: "ToDo: The schedule '{{ current_schedules_asset_value.name }}' must have an organization"
     enabled: {{ current_schedules_asset_value.enabled }}
     unified_job_template: "{{ current_schedules_asset_value.summary_fields.unified_job_template.name }}"
 {% if current_schedules_asset_value.summary_fields.inventory is defined %}
