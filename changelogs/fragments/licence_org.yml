@@ -1,7 +1,0 @@
----
-bugfixes:
-  - Fixed issue with organization role not acceppting default environments option correctly.
-  - Fixed issue with licence role not operating properly, when a controller never had credentials provided for subscription lookup. See Role Readme for proper usuage.
-minor_changes:
-  - licence role now uses a boolean of controller_license.use_looup to determine whether to lookup subscriptions. A lookup is only needed to refresh the available pools, or if it has never been done. See Role Readme for details.
-...

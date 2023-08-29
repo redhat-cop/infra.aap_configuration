@@ -1,4 +1,0 @@
----
-minor_changes:
-  - Adds request_timeout to controller_export_diff module, and roles
-...
