@@ -5,6 +5,21 @@ infra.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v2.5.1
+======
+
+Minor Changes
+-------------
+
+- Adds request_timeout to controller_export_diff module, and roles
+- licence role now uses a boolean of controller_license.use_looup to determine whether to lookup subscriptions. A lookup is only needed to refresh the available pools, or if it has never been done. See Role Readme for details.
+
+Bugfixes
+--------
+
+- Fixed issue with licence role not operating properly, when a controller never had credentials provided for subscription lookup. See Role Readme for proper usuage.
+- Fixed issue with organization role not acceppting default environments option correctly.
+
 v2.5.0
 ======
 
