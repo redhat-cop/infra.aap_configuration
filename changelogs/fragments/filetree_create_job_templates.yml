@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - filetree_create - Fixed the misspelled variable name that caused exported job_templates yaml files containing incorrect name.
+...
