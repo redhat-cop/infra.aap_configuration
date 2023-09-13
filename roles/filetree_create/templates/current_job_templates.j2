@@ -36,7 +36,7 @@ controller_templates:
     ask_execution_environment_on_launch: {{ current_job_templates_asset_value.ask_execution_environment_on_launch | bool }}
 {% endif %}
 {% if current_job_templates_asset_value.ask_labels_on_launch is defined %}
-    ask_labels_on_launc: {{ current_job_templates_asset_value.ask_labels_on_launch | bool }}
+    ask_labels_on_launch: {{ current_job_templates_asset_value.ask_labels_on_launch | bool }}
 {% endif %}
 {% if current_job_templates_asset_value.ask_forks_on_launch is defined %}
     ask_forks_on_launch: {{ current_job_templates_asset_value.ask_forks_on_launch | bool }}
