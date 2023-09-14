@@ -13,6 +13,7 @@
   loop_control:
     loop_var: __read_applications_definitions_item
   register: __contents_filetree_controller_applications
+  failed_when: "'VARIABLE IS NOT DEFINED' in __contents_filetree_controller_applications"
 
 - name: "Populate Applications list"
   ansible.builtin.set_fact:

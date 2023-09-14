@@ -13,6 +13,7 @@
   loop_control:
     loop_var: __read_roles_definitions_item
   register: __contents_filetree_controller_roles
+  failed_when: "'VARIABLE IS NOT DEFINED' in __contents_filetree_controller_roles"
 
 - name: "Populate Roles list"
   ansible.builtin.set_fact:

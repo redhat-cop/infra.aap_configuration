@@ -13,6 +13,7 @@
   loop_control:
     loop_var: __read_settings_definitions_item
   register: __contents_filetree_controller_settings
+  failed_when: "'VARIABLE IS NOT DEFINED' in __contents_filetree_controller_settings"
 
 - name: "Populate Settings list"
   ansible.builtin.set_fact:
