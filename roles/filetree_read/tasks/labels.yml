@@ -13,6 +13,7 @@
   loop_control:
     loop_var: __read_labels_definitions_item
   register: __contents_filetree_controller_labels
+  failed_when: "'VARIABLE IS NOT DEFINED' in __contents_filetree_controller_labels"
 
 - name: "Populate Labels list"
   ansible.builtin.set_fact:

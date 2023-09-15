@@ -13,6 +13,7 @@
   loop_control:
     loop_var: __read_execution_environments_definitions_item
   register: __contents_filetree_controller_execution_environments
+  failed_when: "'VARIABLE IS NOT DEFINED' in __contents_filetree_controller_execution_environments"
 
 - name: "Populate Execution Environments list"
   ansible.builtin.set_fact:

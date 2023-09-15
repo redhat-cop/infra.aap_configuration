@@ -13,6 +13,7 @@
   loop_control:
     loop_var: __read_notifications_definitions_item
   register: __contents_filetree_controller_notifications
+  failed_when: "'VARIABLE IS NOT DEFINED' in __contents_filetree_controller_notifications"
 
 - name: "Populate Notifications list"
   ansible.builtin.set_fact:

@@ -13,6 +13,7 @@
   loop_control:
     loop_var: __read_inventories_definitions_item
   register: __contents_filetree_controller_inventories
+  failed_when: "'VARIABLE IS NOT DEFINED' in __contents_filetree_controller_inventories"
 
 - name: "Populate Inventories list"
   ansible.builtin.set_fact:

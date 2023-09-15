@@ -13,6 +13,7 @@
   loop_control:
     loop_var: __read_schedules_definitions_item
   register: __contents_filetree_controller_schedules
+  failed_when: "'VARIABLE IS NOT DEFINED' in __contents_filetree_controller_schedules"
 
 - name: "Populate Schedules list"
   ansible.builtin.set_fact:

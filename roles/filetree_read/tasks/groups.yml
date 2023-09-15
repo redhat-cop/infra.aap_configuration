@@ -13,6 +13,7 @@
   loop_control:
     loop_var: __read_groups_definitions_item
   register: __contents_filetree_controller_groups
+  failed_when: "'VARIABLE IS NOT DEFINED' in __contents_filetree_controller_groups"
 
 - name: "Populate Groups list"
   ansible.builtin.set_fact:
