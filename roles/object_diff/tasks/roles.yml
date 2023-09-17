@@ -47,12 +47,12 @@
     - name: "Explode the roles for users"
       ansible.builtin.set_fact:
         __full_controller_api_roles: "{{ (__full_controller_api_roles | default([])) + [item.0 | combine({'user': item.1})] }}"
-      loop: "{{ (__controller_api_roles | subelements('users')) }}"
+      loop: "{{ (__controller_api_roles | default([]) | subelements('users', skip_missing=true)) }}"
 
     - name: "Explode the roles for teams"
       ansible.builtin.set_fact:
         __full_controller_api_roles: "{{ (__full_controller_api_roles | default([])) + [item.0 | combine({'team': item.1})] }}"
-      loop: "{{ (__controller_api_roles | subelements('teams')) }}"
+      loop: "{{ (__controller_api_roles | default([]) | subelements('teams', skip_missing=true)) }}"
 
     - name: "Find the difference of Roles between what is on the Controller versus CasC on SCM"
       ansible.builtin.set_fact:
