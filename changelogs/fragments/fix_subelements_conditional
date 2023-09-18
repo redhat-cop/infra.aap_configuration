@@ -2,4 +2,3 @@
 bugfixes:
   -  filetree_create and object_diff- Subelement filter is executed before when and it was causing a failure when the list was not defined.
 ...
-
