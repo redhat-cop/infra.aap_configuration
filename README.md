@@ -7,6 +7,11 @@
 
 This Ansible collection allows for easy interaction with an AWX or Ansible Controller server via Ansible roles using the AWX/Controller collection modules.
 
+## Getting Help
+We are on the Ansible Forums, if you want to discuss sossssmething, ask for help, or participate in the community, please use the #infra-config-as-code tag on the fourm.
+[Ansible Forums](https://forum.ansible.com/tag/infra-config-as-code)
+
+
 ## Requirements
 
 The awx.awx or ansible.controller collections MUST be installed in order for this collection to work. It is recommended they be invoked in the playbook in the following way.
