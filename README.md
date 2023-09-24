@@ -11,7 +11,8 @@ This Ansible collection allows for easy interaction with an AWX or Ansible Contr
 We are on the Ansible Forums and Matrix, if you want to discuss sossssmething, ask for help, or participate in the community, please use the #infra-config-as-code tag on the fourm, or post to the chat in Matrix.
 
 [Ansible Forums](https://forum.ansible.com/tag/infra-config-as-code)
-[Matrix Chat Rooms](https://matrix.to/#/#aap_config_as_code:ansible.com)
+
+[Matrix Chat Room](https://matrix.to/#/#aap_config_as_code:ansible.com)
 
 ## Requirements
 
