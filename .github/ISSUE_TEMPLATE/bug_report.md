@@ -8,6 +8,7 @@ labels: bug, new
 ---
 
 <!--- Verify first that your issue is not already reported on GitHub -->
+<!--- If this is a request for help, please use the forum https://forum.ansible.com/tag/infra-config-as-code -->
 <!--- Also test if the latest release are affected -->
 
 # Summary

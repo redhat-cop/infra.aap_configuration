@@ -2,6 +2,9 @@
 # Ref: https://help.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository#configuring-the-template-chooser
 blank_issues_enabled: false # default is true
 contact_links:
+  - name: Help and Support
+    url: https://forum.ansible.com/tag/infra-config-as-code
+    about: We use the ansible forums for Annoucements, Getting Help, and more!
   - name: Feature requests
     url: https://github.com/redhat-cop/controller_configuration/discussions/categories/ideas
     about: Suggest an idea for this project
