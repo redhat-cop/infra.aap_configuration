@@ -150,6 +150,7 @@ The input data can be organized in a very flexible way, letting the user use any
 ### Controller Export
 
 The awx command line can export json that is compatible with this collection.
+In addition there is an awx.awx/ansible.controller export module that use the awx command line to export.
 More details can be found [here](EXPORT_README.md)
 
 ### Template Example
