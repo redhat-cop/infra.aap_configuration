@@ -26,7 +26,7 @@ ah_configuration_dispatcher_roles:
   - {role: ee_registry_sync, var: [ah_ee_registries], tags: regsync}
   - {role: ee_repository, var: [ah_ee_repositories], tags: repos}
   - {role: ee_repository_sync, var: [ah_ee_repository_sync], tags: reposync}
-  - {role: namespace, var: [ah_ee_namespaces], tags: namespaces}
+  - {role: namespace, var: [ah_namespaces], tags: namespaces}
   - {role: group, var: [ah_groups], tags: groups}
   - {role: publish, var: [ah_collections], tags: publish}
   - {role: user, var: [ah_users], tags: users}
