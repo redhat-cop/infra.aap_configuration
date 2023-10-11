@@ -26,7 +26,7 @@ description:
       U(https://www.ansible.com/) for an overview.
 deprecated:
   why: The endpoint has been removed and is not supported in AAP 2.4 onwards. It's functionality has been replaced by collection_remote_sync.
-  alternative: collection_remote_sync
+  alternative: collection_repository_sync
   removed_in: 3.0.0
   removed_from_collection: galaxy.galaxy
 options:
