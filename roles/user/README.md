@@ -93,7 +93,6 @@ ah_users:
     ah_validate_certs: false
   # Define following vars here, or in ah_configs/ah_auth.yml
   # ah_host: ansible-ah-web-svc-test-project.example.com
-  # ah_token: changeme
   pre_tasks:
     - name: Include vars from ah_configs directory
       ansible.builtin.include_vars:
