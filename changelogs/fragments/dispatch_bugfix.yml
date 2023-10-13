@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - dispatch - Fixed the order and behavior to run as a single task with options for organization behavior.
+...
