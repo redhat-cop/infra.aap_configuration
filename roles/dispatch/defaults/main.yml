@@ -16,6 +16,7 @@ controller_configuration_dispatcher_roles:
   - {role: inventory_sources, var: controller_inventory_sources, tags: inventory_sources}
   - {role: inventory_source_update, var: controller_inventory_sources, tags: inventory_sources}
   - {role: execution_environments, var: controller_execution_environments, tags: execution_environments}
+  - {role: organizations, var: controller_organizations, tags: organizations, assign_galaxy_credentials_to_org: true, assign_default_ee_to_org: true}
   - {role: applications, var: controller_applications, tags: applications}
   - {role: hosts, var: controller_hosts, tags: hosts}
   - {role: bulk_host_create, var: controller_bulk_hosts, tags: bulk_hosts}
