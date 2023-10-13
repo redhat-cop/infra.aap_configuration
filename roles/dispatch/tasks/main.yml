@@ -10,14 +10,6 @@
   loop_control:
     loop_var: __role
   vars:
-    assign_galaxy_credentials_to_org: false
-    assign_default_ee_to_org: false
-
-- name: Include Tasks to add Galaxy credentials and Execution Environments to Organizations
-  ansible.builtin.include_role:
-    name: organizations
-    apply:
-      tags:
-        - organizations
-  tags: organizations
+    assign_galaxy_credentials_to_org: "{{ __role.assign_galaxy_credentials_to_org | default(false) }}"
+    assign_default_ee_to_org: "{{ __role.assign_default_ee_to_org | default(false) }}"
 ...
