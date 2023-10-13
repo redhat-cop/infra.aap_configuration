@@ -59,7 +59,7 @@
   tags:
     - always
 
-- name: "Include Tasks to get OBJECT DIFF {{ __task_diff.name }}"
+- name: "Include Tasks to get OBJECT DIFF"
   ansible.builtin.include_tasks: "{{ __task_diff.name }}.yml"
   args:
     apply:
