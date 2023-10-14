@@ -551,3 +551,20 @@ releases:
     - add_request_timeout.yml
     - licence_org.yml
     release_date: '2023-08-29'
+  2.5.2:
+    changes:
+      bugfixes:
+      - Fixed issue with organization creation with instance group. Execute instance
+        and instance_group before organizations.
+      - dispatch - Fixed the order and behavior to run as a single task with options
+        for organization behavior.
+      - filetree_create - Fixed the misspelled variable name that caused exported
+        job_templates yaml files containing incorrect name.
+      - filetree_create and object_diff- Subelement filter is executed before when
+        and it was causing a failure when the list was not defined.
+    fragments:
+    - dispatch_bugfix.yml
+    - filetree_create_job_templates.yml
+    - fix_subelements_conditional.yml
+    - instancegroups_org.yml
+    release_date: '2023-10-14'

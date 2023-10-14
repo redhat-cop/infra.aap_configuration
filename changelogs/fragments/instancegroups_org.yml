@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Fixed issue with organization creation with instance group. Execute instance and instance_group before organizations.
-...
