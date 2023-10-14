@@ -30,7 +30,7 @@ jobs:
       # Galaxy Publish
       collection_namespace_1: infra
       collection_name_1: controller_configuration
-      publish_url_collection_1: https://galaxy.ansible.com
+      publish_url_collection_1: https://galaxy.ansible.com/api/
       galaxy_publish_1: true
       ah_publish_1: false
       # CRC Publish
