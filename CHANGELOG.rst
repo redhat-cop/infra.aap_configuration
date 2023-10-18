@@ -5,6 +5,17 @@ infra.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v2.5.2
+======
+
+Bugfixes
+--------
+
+- Fixed issue with organization creation with instance group. Execute instance and instance_group before organizations.
+- dispatch - Fixed the order and behavior to run as a single task with options for organization behavior.
+- filetree_create - Fixed the misspelled variable name that caused exported job_templates yaml files containing incorrect name.
+- filetree_create and object_diff- Subelement filter is executed before when and it was causing a failure when the list was not defined.
+
 v2.5.1
 ======
 
