@@ -46,13 +46,18 @@
     loop_var: __workflow_loop_item
     label: "{{ __operation.verb }} Workflow {{ __workflow_loop_item.name }}"
   no_log: "{{ workflow_job_templates_secure_logging }}"
-  async: 1000
+  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
   register: __workflows_job_async
   changed_when: not __workflows_job_async.changed
   vars:
     __operation: "{{ operation_translate[__workflow_loop_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
+
+- name: "Flag for errors (check mode only)"
+  ansible.builtin.set_fact:
+    error_flag: true
+  when: ansible_check_mode and __workflows_job_async.failed is defined and __workflows_job_async.failed
 
 - name: "Managing Workflows | Wait for finish the workflow management"
   ansible.builtin.async_status:
@@ -65,7 +70,7 @@
   loop_control:
     loop_var: __workflows_job_async_results_item
     label: "{{ __operation.verb }} Workflow {{ __workflows_job_async_results_item.__workflow_loop_item.name }} | Wait for finish the workflow {{ __operation.action }}"
-  when: __workflows_job_async_results_item.ansible_job_id is defined
+  when: not ansible_check_mode and __workflows_job_async_results_item.ansible_job_id is defined
   no_log: "{{ workflow_job_templates_secure_logging }}"
   vars:
     __operation: "{{ operation_translate[__workflows_job_async_results_item.__workflow_loop_item.state | default(controller_state) | default('present')] }}"

@@ -19,17 +19,23 @@
   loop: "{{ projects if projects is defined else controller_projects }}"
   loop_control:
     loop_var: "__project_update_update_item"
+    label: "{{ (__project_update_update_item.organization | default('<no_org>')) }}/{{ __project_update_update_item.name }}"
   no_log: "{{ controller_configuration_project_update_secure_logging }}"
   when:
     - controller_projects is defined
     - __project_update_update_item.update_project | default(true)
     - __project_update_update_item.state | default('present') != "absent"
-  async: 1000
+  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
   register: __project_update_job_async
   changed_when: not __project_update_job_async.changed
   vars:
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
+
+- name: "Flag for errors (check mode only)"
+  ansible.builtin.set_fact:
+    error_flag: true
+  when: ansible_check_mode and __project_update_job_async.failed is defined and __project_update_job_async.failed
 
 - name: "Configure Controller Projects | Wait for finish the projects creation"
   ansible.builtin.async_status:
@@ -41,7 +47,7 @@
   loop: "{{ __project_update_job_async.results }}"
   loop_control:
     loop_var: __project_update_job_async_results_item
-  when: __project_update_job_async_results_item.ansible_job_id is defined
+  when: not ansible_check_mode and __project_update_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_project_update_secure_logging }}"
   vars:
     ansible_async_dir: '{{ controller_configuration_async_dir }}'

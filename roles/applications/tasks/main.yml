@@ -25,13 +25,18 @@
     loop_var: "__application_item"
     label: "{{ __operation.verb }} Controller Application {{ __application_item.name }}"
   no_log: "{{ controller_configuration_applications_secure_logging }}"
-  async: 1000
+  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
   register: __applications_job_async
   changed_when: not __applications_job_async.changed
   vars:
     __operation: "{{ operation_translate[__application_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
+
+- name: "Flag for errors (check mode only)"
+  ansible.builtin.set_fact:
+    error_flag: true
+  when: ansible_check_mode and __applications_job_async.failed is defined and __applications_job_async.failed
 
 - name: "Managing Controller Applications | Wait for finish the Application management"
   ansible.builtin.async_status:
@@ -44,7 +49,7 @@
   loop_control:
     loop_var: __applications_job_async_results_item
     label: "{{ __operation.verb }} Controller Application {{ __applications_job_async_results_item.__application_item.name }} | Wait for finish the Application {{ __operation.action }}"
-  when: __applications_job_async_results_item.ansible_job_id is defined
+  when: not ansible_check_mode and __applications_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_applications_secure_logging }}"
   vars:
     __operation: "{{ operation_translate[__applications_job_async_results_item.__application_item.state | default(controller_state) | default('present')] }}"
