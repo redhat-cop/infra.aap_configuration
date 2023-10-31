@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create credential input sources on Ansible Controller, the below example is for CyberArk as an input source, change accordingly to match your input source type.
+An Ansible Role to create/update/remove credential input sources on Ansible Controller, the below example is for CyberArk as an input source, change accordingly to match your input source type.
 
 ## Requirements
 

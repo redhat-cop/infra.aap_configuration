@@ -5,14 +5,10 @@
                                                              host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)
                                                    }}"
   no_log: "{{ controller_configuration_object_diff_secure_logging }}"
-  tags:
-    - always
 
 - name: "Role differences (block)"
   when:
     - __controller_api_current_user_check_is_admin.is_superuser
-  tags:
-    - always
   block:
 
     - name: "Get the API list of all roles"  # noqa jinja[spacing]

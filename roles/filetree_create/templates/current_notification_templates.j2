@@ -12,7 +12,7 @@ controller_notifications:
 {% elif (value | lower) is match('true') or (value | lower) is match('false') %}
       {{ key }}: {{ value | bool }}
 {% else %}
-      {{ key }}: {{ '!unsafe ' if ( value | regex_search('{{')) }}"{{ value | replace('\n','\\n') | replace('"', '\\"') }}"
+      {{ key }}: {{ '!unsafe ' if (value | regex_search('{{')) }}"{{ value | replace('\n','\\n') | replace('"', '\\"') }}"
 {% endif %}
 {% endfor %}
 {% if current_notification_templates_asset_value.messages is defined and current_notification_templates_asset_value.messages %}

@@ -1,14 +1,14 @@
 ---
-- name: Add Controller notifications
+- name: "Managing Controller Notifications"
   notification_template:
     name:                           "{{ __controller_notification_item.name | mandatory }}"
     new_name:                       "{{ __controller_notification_item.new_name | default(omit, true) }}"
     copy_from:                      "{{ __controller_notification_item.copy_from | default(omit, true) }}"
-    description:                    "{{ __controller_notification_item.description | default(( '' if controller_configuration_notifications_enforce_defaults else omit), true) }}"
+    description:                    "{{ __controller_notification_item.description | default(('' if controller_configuration_notifications_enforce_defaults else omit), true) }}"
     organization:                   "{{ __controller_notification_item.organization.name | default(__controller_notification_item.organization) | mandatory }}"
-    notification_type:              "{{ __controller_notification_item.notification_type | default(omit, true) | mandatory}}"
-    notification_configuration:     "{{ __controller_notification_item.notification_configuration | default(( {} if controller_configuration_notifications_enforce_defaults else omit), true) }}"
-    messages:                       "{{ __controller_notification_item.messages | default(( {} if controller_configuration_notifications_enforce_defaults else omit), true) | regex_replace('[ ]{2,}', '') }}"
+    notification_type:              "{{ __controller_notification_item.notification_type | default(omit, true) | mandatory }}"
+    notification_configuration:     "{{ __controller_notification_item.notification_configuration | default(({} if controller_configuration_notifications_enforce_defaults else omit), true) }}"
+    messages:                       "{{ __controller_notification_item.messages | default(({} if controller_configuration_notifications_enforce_defaults else omit), true) | regex_replace('[ ]{2,}', '') }}"
     state:                          "{{ __controller_notification_item.state | default(controller_state | default('present')) }}"
 
     # Role Standard Options
@@ -22,15 +22,17 @@
   loop: "{{ notification_templates if notification_templates is defined else controller_notifications }}"
   loop_control:
     loop_var: __controller_notification_item
+    label: "{{ __operation.verb }} Controller notification {{ __controller_notification_item.name }}"
   no_log: "{{ controller_configuration_notifications_secure_logging }}"
   async: 1000
   poll: 0
   register: __controller_notification_job_async
   changed_when: not __controller_notification_job_async.changed
   vars:
+    __operation: "{{ operation_translate[__controller_notification_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
-- name: "Configure notifications | Wait for finish the notifications creation"
+- name: "Managing Notifications | Wait for finish the Notifications management"
   ansible.builtin.async_status:
     jid: "{{ __controller_notification_job_async_results_item.ansible_job_id }}"
   register: __controller_notification_job_async_result
@@ -40,8 +42,10 @@
   loop: "{{ __controller_notification_job_async.results }}"
   loop_control:
     loop_var: __controller_notification_job_async_results_item
+    label: "{{ __operation.verb }} notification {{ __controller_notification_job_async_results_item.__controller_notification_item.name }} | Wait for finish the notifications {{ __operation.action }}"
   when: __controller_notification_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_notifications_secure_logging }}"
   vars:
+    __operation: "{{ operation_translate[__controller_notification_job_async_results_item.__controller_notification_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 ...

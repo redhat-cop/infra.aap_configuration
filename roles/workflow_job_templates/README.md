@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create Workflow Job Templates on Ansible Controller.
+An Ansible Role to create/update/remove Workflow Job Templates on Ansible Controller.
 
 ## Requirements
 

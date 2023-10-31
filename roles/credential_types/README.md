@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create Credential Types on Ansible Controller.
+An Ansible Role to create/update/remove Credential Types on Ansible Controller.
 
 ## Requirements
 
