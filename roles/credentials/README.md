@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create Credentials on Ansible Controller.
+An Ansible Role to create/update/remove Credentials on Ansible Controller.
 
 ## Requirements
 

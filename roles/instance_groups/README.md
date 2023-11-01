@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create instance groups on Ansible Controller.
+An Ansible Role to create/update/remove instance groups on Ansible Controller.
 
 ## Requirements
 

@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create Projects on Ansible Controller.
+An Ansible Role to create/update/remove Projects on Ansible Controller.
 
 ## Requirements
 

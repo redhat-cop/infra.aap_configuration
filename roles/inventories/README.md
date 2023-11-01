@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create inventories on Ansible Controller.
+An Ansible Role to create/update/remove inventories on Ansible Controller.
 
 ## Requirements
 
