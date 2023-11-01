@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create execution_environments on Ansible Controller.
+An Ansible Role to create/update/remove execution_environments on Ansible Controller.
 
 ## Requirements
 

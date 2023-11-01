@@ -1,13 +1,13 @@
 ---
-- name: Add Controller host
+- name: "Managing Controller Hosts"
   host:
     name:                   "{{ __controller_host_item.name | mandatory }}"
     new_name:               "{{ __controller_host_item.new_name | default(omit, true) }}"
-    description:            "{{ __controller_host_item.description | default(( '' if controller_configuration_host_enforce_defaults else omit), true) }}"
+    description:            "{{ __controller_host_item.description | default(('' if controller_configuration_host_enforce_defaults else omit), true) }}"
     inventory:              "{{ __controller_host_item.inventory | mandatory }}"
-    enabled:                "{{ __controller_host_item.enabled | default(( false if controller_configuration_host_enforce_defaults else omit), true) }}"
+    enabled:                "{{ __controller_host_item.enabled | default((false if controller_configuration_host_enforce_defaults else omit), true) }}"
     state:                  "{{ __controller_host_item.state | default(controller_state | default('present')) }}"
-    variables:              "{{ __controller_host_item.variables | default(( {} if controller_configuration_host_enforce_defaults else omit), true) | regex_replace('[ ]{2,}', '') }}"
+    variables:              "{{ __controller_host_item.variables | default(({} if controller_configuration_host_enforce_defaults else omit), true) | regex_replace('[ ]{2,}', '') }}"
 
     # Role Standard Options
     controller_host:        "{{ controller_hostname | default(omit, true) }}"
@@ -20,15 +20,17 @@
   loop: "{{ controller_hosts }}"
   loop_control:
     loop_var: __controller_host_item
+    label: "{{ __operation.verb }} Controller host {{ __controller_host_item.name }}"
   no_log: "{{ controller_configuration_hosts_secure_logging }}"
   async: 1000
   poll: 0
   register: __host_job_async
   changed_when: not __host_job_async.changed
   vars:
+    __operation: "{{ operation_translate[__controller_host_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
-- name: "Configure Controller Hosts | Wait for finish the Hosts creation"
+- name: "Managing Controller Hosts | Wait for finish the Hosts management"
   ansible.builtin.async_status:
     jid: "{{ __host_job_async_results_item.ansible_job_id }}"
   register: __host_job_async_result
@@ -38,8 +40,10 @@
   loop: "{{ __host_job_async.results }}"
   loop_control:
     loop_var: __host_job_async_results_item
+    label: "{{ __operation.verb }} Controller Host {{ __host_job_async_results_item.__controller_host_item.name }} | Wait for finish the Hosts {{ __operation.action }}"
   when: __host_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_hosts_secure_logging }}"
   vars:
+    __operation: "{{ operation_translate[__host_job_async_results_item.__controller_host_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 ...

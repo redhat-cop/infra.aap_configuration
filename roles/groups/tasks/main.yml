@@ -1,18 +1,18 @@
 ---
 # The group module is also an ansible.builtin module, but due to supporting both the awx.awx and automation.controller collections
 # the FQCN cannot be used here.
-- name: Add controller group  # noqa fqcn[action-core]
+- name: "Managing Controller Groups"  # noqa fqcn[action-core]
   group:
-    name:                           "{{ controller_groups_item.name | mandatory }}"
-    new_name:                       "{{ controller_groups_item.new_name | default(omit, true) }}"
-    description:                    "{{ controller_groups_item.description | default(( '' if controller_configuration_groups_enforce_defaults else omit), true) }}"
-    inventory:                      "{{ controller_groups_item.inventory | mandatory }}"
-    variables:                      "{{ controller_groups_item.variables | default(( {} if controller_configuration_groups_enforce_defaults else omit), true) | regex_replace('[ ]{2,}', '') }}"
-    hosts:                          "{{ controller_groups_item.hosts | default(( [] if controller_configuration_groups_enforce_defaults else omit), true) }}"
-    children:                       "{{ controller_groups_item.children | default(( [] if controller_configuration_groups_enforce_defaults else omit), true) }}"
-    preserve_existing_hosts:        "{{ controller_groups_item.preserve_existing_hosts | default(( false if controller_configuration_groups_enforce_defaults else omit)) }}"
-    preserve_existing_children:     "{{ controller_groups_item.preserve_existing_children | default(( false if controller_configuration_groups_enforce_defaults else omit)) }}"
-    state:                          "{{ controller_groups_item.state | default(controller_state | default('present')) }}"
+    name:                           "{{ __controller_groups_item.name | mandatory }}"
+    new_name:                       "{{ __controller_groups_item.new_name | default(omit, true) }}"
+    description:                    "{{ __controller_groups_item.description | default(('' if controller_configuration_groups_enforce_defaults else omit), true) }}"
+    inventory:                      "{{ __controller_groups_item.inventory | mandatory }}"
+    variables:                      "{{ __controller_groups_item.variables | default(({} if controller_configuration_groups_enforce_defaults else omit), true) | regex_replace('[ ]{2,}', '') }}"
+    hosts:                          "{{ __controller_groups_item.hosts | default(([] if controller_configuration_groups_enforce_defaults else omit), true) }}"
+    children:                       "{{ __controller_groups_item.children | default(([] if controller_configuration_groups_enforce_defaults else omit), true) }}"
+    preserve_existing_hosts:        "{{ __controller_groups_item.preserve_existing_hosts | default((false if controller_configuration_groups_enforce_defaults else omit)) }}"
+    preserve_existing_children:     "{{ __controller_groups_item.preserve_existing_children | default((false if controller_configuration_groups_enforce_defaults else omit)) }}"
+    state:                          "{{ __controller_groups_item.state | default(controller_state | default('present')) }}"
 
     # Role Standard Options
     controller_username:            "{{ controller_username | default(omit, true) }}"
@@ -24,16 +24,18 @@
     validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
   loop: "{{ controller_groups }}"
   loop_control:
-    loop_var: controller_groups_item
+    loop_var: __controller_groups_item
+    label: "{{ __operation.verb }} Controller Group {{ __controller_groups_item.name }}"
   no_log: "{{ controller_configuration_group_secure_logging }}"
   async: 1000
   poll: 0
   register: __group_job_async
   changed_when: not __group_job_async.changed
   vars:
+    __operation: "{{ operation_translate[__controller_groups_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
-- name: "Create Controller Group | Wait for finish the Controller Group creation"
+- name: "Managing Controller Groups | Wait for finish the Controller Groups management"
   ansible.builtin.async_status:
     jid: "{{ __group_job_async_results_item.ansible_job_id }}"
   register: __group_job_async_result
@@ -43,8 +45,10 @@
   loop: "{{ __group_job_async.results }}"
   loop_control:
     loop_var: __group_job_async_results_item
+    label: "{{ __operation.verb }} Controller Group {{ __group_job_async_results_item.__controller_groups_item.name }} | Wait for finish the Controller Group {{ __operation.action }}"
   when: __group_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_group_secure_logging }}"
   vars:
+    __operation: "{{ operation_translate[__group_job_async_results_item.__controller_groups_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 ...

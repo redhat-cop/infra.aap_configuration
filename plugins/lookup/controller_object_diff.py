@@ -69,14 +69,13 @@ EXAMPLES = """
   set_fact:
     project_difference: "{{ query('infra.controller_configuration.controller_object_diff',
       api_list=controller_api_results, compare_list=differential_item.differential_test_items,
-      with_present=true, set_absent=true ) }}"
+      with_present=true, set_absent=true) }}"
 
 - name: Add Projects
   include_role:
     name: infra.controller_configuration.projects
   vars:
     controller_projects: "{{ project_difference }}"
-
 """
 
 RETURN = """

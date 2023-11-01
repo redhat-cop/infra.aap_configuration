@@ -1,6 +1,6 @@
 ---
 # Creating Workflow Node
-- name: Create the Workflow Node
+- name: Create the Workflow Nodes
   workflow_job_template_node:
     identifier:                     "{{ __workflow_loop_node_item.identifier | mandatory }}"   # internal identification ID
     extra_data:                     "{{ __workflow_loop_node_item.extra_data | default(omit, true) }}"
@@ -47,7 +47,7 @@
   vars:
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
-- name: "Manage Workflows | Wait for finish the workflow creation"
+- name: "Create the Workflow Nodes | Wait for finish the Workflow Nodes creation"
   ansible.builtin.async_status:
     jid: "{{ __workflows_node_async_results_item.ansible_job_id }}"
   register: __workflows_node_async_result

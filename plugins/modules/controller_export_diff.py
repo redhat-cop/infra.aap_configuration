@@ -192,7 +192,7 @@ EXAMPLES = """
           scm_url: https://github.com/ansible/ansible-examples.git
           description: ansible-examples
           organization:
-              name: Satellite
+            name: Satellite
           credential: gitlab-personal-access-token for satqe_auto_droid
           wait: false
     controller_host: https://controller
