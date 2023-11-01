@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to add hosts on Ansible Controller.
+An Ansible Role to add/update/remove hosts on Ansible Controller.
 
 ## Requirements
 

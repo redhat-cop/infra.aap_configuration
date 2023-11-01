@@ -1,14 +1,14 @@
 ---
 # Create Controller Execution Environments
-- name: Add Controller Execution Environments
+- name: "Managing Controller Execution Environments"
   execution_environment:
     name:                           "{{ __execution_environments_item.name | mandatory }}"
     new_name:                       "{{ __execution_environments_item.new_name | default(omit, true) }}"
-    description:                    "{{ __execution_environments_item.description | default(( '' if controller_configuration_execution_environments_enforce_defaults else omit), true) }}"
+    description:                    "{{ __execution_environments_item.description | default(('' if controller_configuration_execution_environments_enforce_defaults else omit), true) }}"
     image:                          "{{ __execution_environments_item.image | mandatory }}"
-    organization:                   "{{ __execution_environments_item.organization.name | default(__execution_environments_item.organization | default(( '' if controller_configuration_execution_environments_enforce_defaults else omit), true)) }}"
-    credential:                     "{{ __execution_environments_item.credential | default(( '' if controller_configuration_execution_environments_enforce_defaults else omit), true) }}"
-    pull:                           "{{ __execution_environments_item.pull | default(( 'missing' if controller_configuration_execution_environments_enforce_defaults else omit), true) }}"
+    organization:                   "{{ __execution_environments_item.organization.name | default(__execution_environments_item.organization | default(('' if controller_configuration_execution_environments_enforce_defaults else omit), true)) }}"
+    credential:                     "{{ __execution_environments_item.credential | default(('' if controller_configuration_execution_environments_enforce_defaults else omit), true) }}"
+    pull:                           "{{ __execution_environments_item.pull | default(('missing' if controller_configuration_execution_environments_enforce_defaults else omit), true) }}"
     state:                          "{{ __execution_environments_item.state | default(controller_state | default('present')) }}"
 
     # Role specific options
@@ -22,6 +22,7 @@
   loop: "{{ execution_environments if execution_environments is defined else controller_execution_environments }}"
   loop_control:
     loop_var: "__execution_environments_item"
+    label: "{{ __operation.verb }} Controller Execution Environment {{ __execution_environments_item }}"
   no_log: "{{ controller_configuration_execution_environments_secure_logging }}"
   when: controller_execution_environments is defined
   async: 1000
@@ -29,9 +30,10 @@
   register: __execution_environments_job_async
   changed_when: not __execution_environments_job_async.changed
   vars:
+    __operation: "{{ operation_translate[__execution_environments_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
-- name: "Create Controller Execution Environments | Wait for finish the Controller Execution Environments creation"
+- name: "Managing Controller Execution Environments | Wait for finish the Controller Execution Environments management"
   ansible.builtin.async_status:
     jid: "{{ __execution_environments_job_async_results_item.ansible_job_id }}"
   register: __execution_environments_job_async_result
@@ -41,8 +43,10 @@
   loop: "{{ __execution_environments_job_async.results }}"
   loop_control:
     loop_var: __execution_environments_job_async_results_item
+    label: "{{ __operation.verb }} Controller Execution Environment {{ __execution_environments_job_async_results_item.__execution_environments_item.name }} | Wait for finish the Controller Execution Environment {{ __operation.action }}"
   when: __execution_environments_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_execution_environments_secure_logging }}"
   vars:
+    __operation: "{{ operation_translate[__execution_environments_job_async_results_item.__execution_environments_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 ...

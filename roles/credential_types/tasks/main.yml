@@ -1,5 +1,5 @@
 ---
-- name: Add Credential Types
+- name: "Managing Credential Types"
   credential_type:
     name:                           "{{ __controller_credential_type_item.name | mandatory }}"
     new_name:                       "{{ __controller_credential_type_item.new_name | default(omit, true) }}"
@@ -20,15 +20,17 @@
   loop: "{{ credential_types if credential_types is defined else controller_credential_types }}"
   loop_control:
     loop_var: __controller_credential_type_item
+    label: "{{ __operation.verb }} Credential Type {{ __controller_credential_type_item.name }}"
   no_log: "{{ controller_configuration_credential_types_secure_logging }}"
   async: 1000
   poll: 0
   register: __credentialtypes_job_async
   changed_when: not __credentialtypes_job_async.changed
   vars:
+    __operation: "{{ operation_translate[__controller_credential_type_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
-- name: "Configure Controller Credential Types | Wait for finish the credential types creation"
+- name: "Managing Controller Credential Types | Wait for finish the credential types management"
   ansible.builtin.async_status:
     jid: "{{ __credentialtypes_job_async_result_item.ansible_job_id }}"
   register: __credentialtypes_job_async_result
@@ -38,8 +40,10 @@
   loop: "{{ __credentialtypes_job_async.results }}"
   loop_control:
     loop_var: __credentialtypes_job_async_result_item
+    label: "{{ __operation.verb }} Controller Credential Type {{ __credentialtypes_job_async_result_item }} | Wait for finish the credential type {{ __operation.action }}"
   when: __credentialtypes_job_async_result_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_credential_types_secure_logging }}"
   vars:
+    __operation: "{{ operation_translate[__credentialtypes_job_async_result_item.__controller_credential_type_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 ...

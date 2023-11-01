@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create Teams on Ansible Controller.
+An Ansible Role to create/update/remove Teams on Ansible Controller.
 
 ## Requirements
 

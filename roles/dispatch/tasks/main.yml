@@ -1,5 +1,5 @@
 ---
-- name: "Run infra.controller_configuration.{{ __role.role }}"
+- name: "Run the following infra.controller_configuration roles: {{ controller_configuration_dispatcher_roles | map(attribute='role') | join(', ') }}"
   ansible.builtin.include_role:
     name: "{{ __role.role }}"
     apply:

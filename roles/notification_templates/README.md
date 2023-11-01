@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to add notification templates on Ansible Controller.
+An Ansible Role to add/update/remove notification templates on Ansible Controller.
 
 ## Requirements
 
