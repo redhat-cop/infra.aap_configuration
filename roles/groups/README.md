@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create Groups on Ansible Controller.
+An Ansible Role to create/update/remove Groups on Ansible Controller.
 
 ## Requirements
 

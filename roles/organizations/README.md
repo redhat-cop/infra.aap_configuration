@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create Organizations on Ansible Controller.
+An Ansible Role to create/update/remove Organizations on Ansible Controller.
 
 ## Requirements
 

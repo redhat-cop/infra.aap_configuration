@@ -1,5 +1,5 @@
 ---
-- name: Add Controller Credential Input Sources
+- name: "Managing Controller Credential Input Sources"
   credential_input_source:
     target_credential:              "{{ __cred_input_src_item.target_credential | mandatory }}"
     input_field_name:               "{{ __cred_input_src_item.input_field_name | mandatory }}"
@@ -19,15 +19,17 @@
   loop: "{{ controller_credential_input_sources }}"
   loop_control:
     loop_var: "__cred_input_src_item"
+    label: "{{ __operation.verb }} Controller Credential Input Source for Credential {{ __cred_input_src_item.target_credential }}"
   no_log: "{{ controller_configuration_credential_input_sources_secure_logging }}"
   async: 1000
   poll: 0
   register: __credential_input_sources_job_async
   changed_when: not __credential_input_sources_job_async.changed
   vars:
+    __operation: "{{ operation_translate[__cred_input_src_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
-- name: "Create Controller Credential Input Sources | Wait for finish the Controller Credential Input Sources creation"
+- name: "Managing Controller Credential Input Sources | Wait for finish the Controller Credential Input Sources management"
   ansible.builtin.async_status:
     jid: "{{ __credential_input_sources_job_async_results_item.ansible_job_id }}"
   register: __credential_input_sources_job_async_result
@@ -37,8 +39,10 @@
   loop: "{{ __credential_input_sources_job_async.results }}"
   loop_control:
     loop_var: __credential_input_sources_job_async_results_item
+    label: "{{ __operation.verb }} Controller Credential Input Source for Credential {{ __credential_input_sources_job_async_results_item.__cred_input_src_item.target_credential }}"
   when: __credential_input_sources_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_credential_input_sources_secure_logging }}"
   vars:
+    __operation: "{{ operation_translate[__credential_input_sources_job_async_results_item.__cred_input_src_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 ...

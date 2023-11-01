@@ -50,7 +50,7 @@ awx export --conf.host https://localhost --conf.username admin --conf.password *
 
     - name: Export projects to file
       ansible.builtin.copy:
-        content: "{{ export_results | to_nice_yaml( width=50, explicit_start=True, explicit_end=True) }}"
+        content: "{{ export_results | to_nice_yaml(width=50, explicit_start=True, explicit_end=True) }}"
         dest: projects.yaml
 ...
 ```

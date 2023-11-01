@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create Job Templates on Ansible Controller.
+An Ansible Role to create/update/remove Job Templates on Ansible Controller.
 
 ## Requirements
 

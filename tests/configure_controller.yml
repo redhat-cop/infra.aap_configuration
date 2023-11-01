@@ -170,7 +170,7 @@
         controller_password:     "{{ controller_password }}"
         controller_host:         "{{ controller_hostname }}"
         validate_certs:          "{{ controller_validate_certs }}"
-      ignore_errors: true  ## noqa ignore-errors
+      ignore_errors: true  # noqa ignore-errors
 
     - name: Get the organization ID
       ansible.builtin.set_fact:
