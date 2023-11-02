@@ -42,13 +42,18 @@
     loop_var: __controller_source_item
     label: "{{ __operation.verb }} an Inventory Source {{ __controller_source_item.name }}"
   no_log: "{{ controller_configuration_inventory_sources_secure_logging }}"
-  async: 1000
+  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
   register: __inventory_source_job_async
   changed_when: not __inventory_source_job_async.changed
   vars:
     __operation: "{{ operation_translate[__controller_source_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
+
+- name: "Flag for errors (check mode only)"
+  ansible.builtin.set_fact:
+    error_flag: true
+  when: ansible_check_mode and __inventory_source_job_async.failed is defined and __inventory_source_job_async.failed
 
 - name: "Managing Inventory Sources | Wait for finish the Inventory Sources management"
   ansible.builtin.async_status:
@@ -61,7 +66,7 @@
   loop_control:
     loop_var: __inventory_source_job_async_results_item
     label: "{{ __operation.verb }} Inventory Source {{ __inventory_source_job_async_results_item }} | Wait for finish the Inventory Source {{ __operation.action }}"
-  when: __inventory_source_job_async_results_item.ansible_job_id is defined
+  when: not ansible_check_mode and __inventory_source_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_inventory_sources_secure_logging }}"
   vars:
     __operation: "{{ operation_translate[__inventory_source_job_async_results_item.__controller_source_item.state | default(controller_state) | default('present')] }}"

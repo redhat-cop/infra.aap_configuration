@@ -28,13 +28,18 @@
     label: "{{ __operation.verb }} Controller Instance Group {{ __controller_instance_group_item.name }}"
   no_log: "{{ controller_configuration_instance_groups_secure_logging }}"
   when: controller_instance_groups is defined
-  async: 1000
+  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
   register: __instance_groups_job_async
   changed_when: not __instance_groups_job_async.changed
   vars:
     __operation: "{{ operation_translate[__controller_instance_group_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
+
+- name: "Flag for errors (check mode only)"
+  ansible.builtin.set_fact:
+    error_flag: true
+  when: ansible_check_mode and __instance_groups_job_async.failed is defined and __instance_groups_job_async.failed
 
 - name: "Managing Controller instance groups | Wait for finish the instance groups management"
   ansible.builtin.async_status:
@@ -47,7 +52,7 @@
   loop_control:
     loop_var: __instance_groups_job_async_results_item
     label: "{{ __operation.verb }} Controller instance group {{ __instance_groups_job_async_results_item.__controller_instance_group_item.name }} | Wait for finish the instance groups {{ __operation.action }}"
-  when: __instance_groups_job_async_results_item.ansible_job_id is defined
+  when: not ansible_check_mode and __instance_groups_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_instance_groups_secure_logging }}"
   vars:
     __operation: "{{ operation_translate[__instance_groups_job_async_results_item.__controller_instance_group_item.state | default(controller_state) | default('present')] }}"

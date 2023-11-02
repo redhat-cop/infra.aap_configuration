@@ -43,13 +43,18 @@
     loop_var: __controller_project_item
     label: "{{ __operation.verb }} Project {{ __controller_project_item.name }}"
   no_log: "{{ controller_configuration_projects_secure_logging }}"
-  async: 1000
+  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
   register: __projects_job_async
   changed_when: not __projects_job_async.changed
   vars:
     __operation: "{{ operation_translate[__controller_project_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
+
+- name: "Flag for errors (check mode only)"
+  ansible.builtin.set_fact:
+    error_flag: true
+  when: ansible_check_mode and __projects_job_async.failed is defined and __projects_job_async.failed
 
 - name: "Managing Projects | Wait for finish the projects management"
   ansible.builtin.async_status:
@@ -62,7 +67,7 @@
   loop_control:
     loop_var: __projects_job_async_results_item
     label: "{{ __operation.verb }} Project {{ __projects_job_async_results_item.__controller_project_item.name }} | Wait for finish the project {{ __operation.action }}"
-  when: __projects_job_async_results_item.ansible_job_id is defined
+  when: not ansible_check_mode and __projects_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_projects_secure_logging }}"
   vars:
     __operation: "{{ operation_translate[__projects_job_async_results_item.__controller_project_item.state | default(controller_state) | default('present')] }}"

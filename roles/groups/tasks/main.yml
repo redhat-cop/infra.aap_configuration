@@ -27,13 +27,18 @@
     loop_var: __controller_groups_item
     label: "{{ __operation.verb }} Controller Group {{ __controller_groups_item.name }}"
   no_log: "{{ controller_configuration_group_secure_logging }}"
-  async: 1000
+  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
   register: __group_job_async
   changed_when: not __group_job_async.changed
   vars:
     __operation: "{{ operation_translate[__controller_groups_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
+
+- name: "Flag for errors (check mode only)"
+  ansible.builtin.set_fact:
+    error_flag: true
+  when: ansible_check_mode and __group_job_async.failed is defined and __group_job_async.failed
 
 - name: "Managing Controller Groups | Wait for finish the Controller Groups management"
   ansible.builtin.async_status:
@@ -46,7 +51,7 @@
   loop_control:
     loop_var: __group_job_async_results_item
     label: "{{ __operation.verb }} Controller Group {{ __group_job_async_results_item.__controller_groups_item.name }} | Wait for finish the Controller Group {{ __operation.action }}"
-  when: __group_job_async_results_item.ansible_job_id is defined
+  when: not ansible_check_mode and __group_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_group_secure_logging }}"
   vars:
     __operation: "{{ operation_translate[__group_job_async_results_item.__controller_groups_item.state | default(controller_state) | default('present')] }}"

@@ -2,8 +2,8 @@
 # Update Inventory sources
 - name: Run Controller inventory source update
   inventory_source_update:
-    name:                     "{{ __inventory_source_update_item.name }}"
-    inventory:                "{{ __inventory_source_update_item.inventory }}"
+    name:                     "{{ __inventory_source_update_item.name | mandatory }}"
+    inventory:                "{{ __inventory_source_update_item.inventory | mandatory }}"
     organization:             "{{ __inventory_source_update_item.organization | default(omit, true) }}"
     wait:                     "{{ __inventory_source_update_item.wait | default(omit) }}"
     interval:                 "{{ __inventory_source_update_item.interval | default(controller_configuration_inventory_source_update_async_delay) }}"
@@ -20,16 +20,22 @@
   loop: "{{ inventory_sources if inventory_sources is defined else controller_inventory_sources }}"
   loop_control:
     loop_var: "__inventory_source_update_item"
+    label: "{{ (__inventory_source_update_item.organization | default('<no_org>')) }}/{{ __inventory_source_update_item.inventory }}/{{ __inventory_source_update_item.name }}"
   no_log: "{{ controller_configuration_inventory_source_update_secure_logging }}"
   when:
     - controller_inventory_sources is defined
     - __inventory_source_update_item.state | default('present') != "absent"
-  async: 1000
+  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
   register: __inventory_source_update_async
   changed_when: not __inventory_source_update_async.changed
   vars:
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
+
+- name: "Flag for errors (check mode only)"
+  ansible.builtin.set_fact:
+    error_flag: true
+  when: ansible_check_mode and __inventory_source_update_async.failed is defined and __inventory_source_update_async.failed
 
 - name: "Controller inventory source update | Wait for finish of the inventory source update"
   ansible.builtin.async_status:
@@ -41,7 +47,7 @@
   loop: "{{ __inventory_source_update_async.results }}"
   loop_control:
     loop_var: __inventory_source_update_async_results_item
-  when: __inventory_source_update_async_results_item.ansible_job_id is defined
+  when: not ansible_check_mode and __inventory_source_update_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_inventory_source_update_secure_logging }}"
   vars:
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
