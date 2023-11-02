@@ -19,10 +19,10 @@ jobs:
       matrix:
         awx_version:
           - devel
-          - 22.6.0
-          - 22.5.0
-          - 21.13.0
-          - 21.11.0
+          - 23.3.1
+          - 23.3.0
+          - 23.0.0
+          - 22.7.0
     uses: "./.github/workflows/ci_standalone_versioned.yml"
     with:
       awx_version: ${{ matrix.awx_version }}

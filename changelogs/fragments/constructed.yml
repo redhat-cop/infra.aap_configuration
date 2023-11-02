@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - The role 'inventory_sources' will now skip when the source parameter is `constructed`. These sources are auto created and not meant to be edited. However they can still be synced with the inventory_source_update.
+...

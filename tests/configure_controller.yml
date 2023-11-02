@@ -108,7 +108,6 @@
         controller_bulk_hosts: "{{ temp_controller_bulk_hosts }}"
       when:
         - controller_bulk_launch_jobs is defined
-        - awx_version == "21.14.0" or awx_version == "devel"
 
     - name: Launch Controller Jobs
       ansible.builtin.include_role:
@@ -150,7 +149,6 @@
             wait: false
       when:
         - controller_bulk_launch_jobs is defined
-        - awx_version == "21.14.0" or awx_version == "22.0.0" or awx_version == "22.1.0" or awx_version == "devel"
 
     - name: Launch Controller workflows
       ansible.builtin.include_role:
