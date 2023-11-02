@@ -54,5 +54,4 @@
   vars:
     __operation: "{{ operation_translate[__applications_job_async_results_item.__application_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
-# trigger
 ...
