@@ -45,7 +45,7 @@
   loop: "{{ __inventories_job_async.results }}"
   loop_control:
     loop_var: __inventories_job_async_result_item
-    label: "{{ __operation.verb }} Controller inventorie {{ __inventories_job_async_result_item.__controller_inventory_item.name }} | Wait for finish the inventories {{ __operation.action }}"
+    label: "{{ __operation.verb }} Controller inventory {{ __inventories_job_async_result_item.__controller_inventory_item.name }} | Wait for finish the inventories {{ __operation.action }}"
   when: __inventories_job_async_result_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_inventories_secure_logging }}"
   vars:
