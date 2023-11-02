@@ -18,13 +18,19 @@
   loop: "{{ controller_settings is mapping | ternary([controller_settings], controller_settings) }}"
   loop_control:
     loop_var: __controller_setting_item
+    label: "{{ __controller_setting_item.name | default(__controller_setting_item.settings) }}"
   no_log: "{{ controller_configuration_settings_secure_logging }}"
-  async: 1000
+  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
   register: __controller_setting_job_async
   changed_when: not __controller_setting_job_async.changed
   vars:
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
+
+- name: "Flag for errors (check mode only)"
+  ansible.builtin.set_fact:
+    error_flag: true
+  when: ansible_check_mode and __controller_setting_job_async.failed is defined and __controller_setting_job_async.failed
 
 - name: "Configure Settings | Wait for finish the Settings creation"
   ansible.builtin.async_status:
@@ -36,7 +42,7 @@
   loop: "{{ __controller_setting_job_async.results }}"
   loop_control:
     loop_var: __controller_setting_job_async_results_item
-  when: __controller_setting_job_async_results_item.ansible_job_id is defined
+  when: not ansible_check_mode and __controller_setting_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_settings_secure_logging }}"
   vars:
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
