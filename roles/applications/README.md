@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create Applications on Ansible Controller.
+An Ansible Role to create/update/remove Applications on Ansible Controller.
 
 ## Requirements
 

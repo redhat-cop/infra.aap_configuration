@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create Schedules on Ansible Controller.
+An Ansible Role to create/update/remove Schedules on Ansible Controller.
 
 ## Requirements
 

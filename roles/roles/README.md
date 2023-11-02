@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create RBAC Entries on Ansible Controller.
+An Ansible Role to create/update/remove RBAC Entries on Ansible Controller.
 
 ## Requirements
 
