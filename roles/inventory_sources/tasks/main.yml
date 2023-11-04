@@ -46,6 +46,7 @@
   poll: 0
   register: __inventory_source_job_async
   changed_when: not __inventory_source_job_async.changed
+  when: __controller_source_item.source != "constructed"
   vars:
     __operation: "{{ operation_translate[__controller_source_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'

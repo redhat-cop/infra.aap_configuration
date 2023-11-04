@@ -40,5 +40,7 @@ controller_inventory_sources:
     organization: Satellite
     source: scm
     state: absent
-    # more options can be provided but for scm source we are using, we need only this much.
+  - name: "Auto-created source for: test_constructed"
+    inventory: test_constructed
+    source: constructed
 ...

@@ -99,7 +99,7 @@ The role will strip the double space between the curly bracket in order to provi
 |`description`|`False`|no|The description to use for the inventory source.|
 |`inventory`|""|yes|Inventory the group should be made a member of.|
 |`organization`|""|no|Organization the inventory belongs to.|
-|`source`|""|no|The source to use for this group.|
+|`source`|""|no|The source to use for this group. If set to `constructed` this role will be skipped as they are not meant to be edited.|
 |`source_path`|""|no|For an SCM based inventory source, the source path points to the file within the repo to use as an inventory.|
 |`source_vars`|""|no|The variables or environment fields to apply to this source type.|
 |`enabled_var`|""|no|The variable to use to determine enabled state e.g., "status.power_state".|

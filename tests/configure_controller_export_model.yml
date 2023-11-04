@@ -113,6 +113,4 @@
       ansible.builtin.assert:
         that:
           - differential_expected ==  export_results.difference
-      when:
-        - awx_version == "devel"  # It works on earlier versions, the issue is new fields fail in the differential.
 ...

@@ -337,7 +337,7 @@ differential_expected:
       credential:
       default_environment:
       description: ansible-examples
-      local_path: _19__test_inventory_source_project
+      local_path: _20__test_inventory_source_project
       name: Test Inventory source project
       natural_key:
         name: Test Inventory source project
@@ -377,7 +377,7 @@ differential_expected:
         type: credential
       default_environment:
       description: ansible-examples
-      local_path: _20__test_inventory_source_project_with_credential
+      local_path: _21__test_inventory_source_project_with_credential
       name: Test Inventory source project with credential
       natural_key:
         name: Test Inventory source project with credential
