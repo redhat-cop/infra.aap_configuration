@@ -106,6 +106,9 @@ differential_items:
       - name: satlab-admin-inventory
         organization: Default
         state: absent
+      - name: test_constructed
+        organization: Default
+        state: absent
       - name: Test Inventory - Smart
         organization: Default
         state: absent

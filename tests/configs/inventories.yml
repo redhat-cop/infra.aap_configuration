@@ -22,4 +22,9 @@ controller_inventories:
     description: created by Ansible Playbook
     kind: smart
     host_filter:  "name__icontains=localhost"
+  - name: test_constructed
+    organization: Default
+    kind: constructed
+    input_inventories:
+      - localhost
 ...
