@@ -25,13 +25,18 @@
     label: "{{ __operation.verb }} Controller Execution Environment {{ __execution_environments_item }}"
   no_log: "{{ controller_configuration_execution_environments_secure_logging }}"
   when: controller_execution_environments is defined
-  async: 1000
+  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
   register: __execution_environments_job_async
   changed_when: not __execution_environments_job_async.changed
   vars:
     __operation: "{{ operation_translate[__execution_environments_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
+
+- name: "Flag for errors (check mode only)"
+  ansible.builtin.set_fact:
+    error_flag: true
+  when: ansible_check_mode and __execution_environments_job_async.failed is defined and __execution_environments_job_async.failed
 
 - name: "Managing Controller Execution Environments | Wait for finish the Controller Execution Environments management"
   ansible.builtin.async_status:
@@ -44,7 +49,7 @@
   loop_control:
     loop_var: __execution_environments_job_async_results_item
     label: "{{ __operation.verb }} Controller Execution Environment {{ __execution_environments_job_async_results_item.__execution_environments_item.name }} | Wait for finish the Controller Execution Environment {{ __operation.action }}"
-  when: __execution_environments_job_async_results_item.ansible_job_id is defined
+  when: not ansible_check_mode and __execution_environments_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_execution_environments_secure_logging }}"
   vars:
     __operation: "{{ operation_translate[__execution_environments_job_async_results_item.__execution_environments_item.state | default(controller_state) | default('present')] }}"

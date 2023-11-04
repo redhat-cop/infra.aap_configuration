@@ -8,7 +8,7 @@
                         }}"
   vars:
     query_params:
-      not__kind: 'smart'
+      not__kind: 'constructed'
       order_by: 'organization,id'
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
@@ -76,14 +76,15 @@
 
 - name: "Set the inventory's groups"
   ansible.builtin.include_tasks: "groups.yml"
+  when: current_inventory_groups.total_groups > 0
   vars:
     inventory_organization: "{{ current_inventory_groups.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
     inventory_name: "{{ current_inventory_groups.name | regex_replace('/', '_') }}"
     groups_output_path: "{{ output_path }}/{{ inventory_organization | regex_replace('/', '_') }}/inventories/{{ inventory_name | regex_replace('/', '_') }}"
     current_groups_asset_value: "{{ query(controller_api_plugin, current_inventory_groups.related.groups,
-                                               host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
-                                               return_all=true, max_objects=query_controller_api_max_objects)
-                                         if not current_inventory_groups.has_inventory_sources else []
+                                          host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                                          return_all=true, max_objects=query_controller_api_max_objects)
+                                    if (not current_inventory_groups.has_inventory_sources or current_inventory_groups.kind is match('smart')) else []
                                  }}"
   loop: "{{ inventory_lookvar }}"
   loop_control:

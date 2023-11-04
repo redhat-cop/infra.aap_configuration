@@ -39,15 +39,21 @@
   loop: "{{ __workflow_loop_item.simplified_workflow_nodes }}"
   loop_control:
     loop_var: __workflow_loop_node_item
+    label: "{{ __workflow_loop_item.name }}/{{ __workflow_loop_node_item.identifier }}"
   no_log: "{{ workflow_job_templates_secure_logging }}"
-  async: 1000
+  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
   register: __workflows_node_async
   changed_when: not __workflows_node_async.changed
   vars:
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
-- name: "Create the Workflow Nodes | Wait for finish the Workflow Nodes creation"
+- name: "Flag for errors (check mode only)"
+  ansible.builtin.set_fact:
+    error_flag: true
+  when: ansible_check_mode and __workflows_node_async.failed is defined and __workflows_node_async.failed
+
+- name: "Manage Workflows | Wait for finish the workflow creation"
   ansible.builtin.async_status:
     jid: "{{ __workflows_node_async_results_item.ansible_job_id }}"
   register: __workflows_node_async_result
@@ -56,7 +62,7 @@
   loop: "{{ __workflows_node_async.results }}"
   loop_control:
     loop_var: __workflows_node_async_results_item
-  when: __workflows_node_async_results_item.ansible_job_id is defined
+  when: not ansible_check_mode and __workflows_node_async_results_item.ansible_job_id is defined
   no_log: "{{ workflow_job_templates_secure_logging }}"
   vars:
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
@@ -81,16 +87,22 @@
   loop: "{{ __workflow_loop_item.simplified_workflow_nodes }}"
   loop_control:
     loop_var: __workflow_loop_node_item
+    label: "{{ __workflow_loop_node_item.identifier }}"
   no_log: "{{ workflow_job_templates_secure_logging }}"
   # Execute only the nodes that define links to the following
   when: ((__workflow_loop_node_item.always_nodes is defined and __workflow_loop_node_item.always_nodes | length > 0) or
         (__workflow_loop_node_item.success_nodes is defined and __workflow_loop_node_item.success_nodes | length > 0) or
         (__workflow_loop_node_item.failure_nodes is defined and __workflow_loop_node_item.failure_nodes | length > 0))
-  async: 1000
+  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
   register: __workflows_link_async
   vars:
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
+
+- name: "Flag for errors (check mode only)"
+  ansible.builtin.set_fact:
+    error_flag: true
+  when: ansible_check_mode and __workflows_link_async.failed is defined and __workflows_link_async.failed
 
 - name: "Manage Workflows | Wait for finish the workflow creation"
   ansible.builtin.async_status:
@@ -102,7 +114,7 @@
   loop: "{{ __workflows_link_async.results }}"
   loop_control:
     loop_var: __workflows_link_async_results_item
-  when: __workflows_link_async_results_item.ansible_job_id is defined
+  when: not ansible_check_mode and __workflows_link_async_results_item.ansible_job_id is defined
   no_log: "{{ workflow_job_templates_secure_logging }}"
   vars:
     ansible_async_dir: '{{ controller_configuration_async_dir }}'

@@ -1,0 +1,41 @@
+---
+- name: "Get the inventories from the API"
+  ansible.builtin.set_fact:
+    constructed_inventory_lookvar: "{{ query(controller_api_plugin, 'api/v2/constructed_inventories/',
+                                             query_params=(query_params | combine({'organization': organization_id})) if organization_id is defined else query_params,
+                                             host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                                             return_all=true, max_objects=query_controller_api_max_objects)
+                                    }}"
+  vars:
+    query_params:
+      order_by: 'organization,id'
+  no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
+
+- name: "Create the <ORGANIZATION_NAME>/inventories output directory for inventories in {{ output_path }}"
+  ansible.builtin.file:
+    path: "{{ __path }}"
+    state: directory
+    mode: '0755'
+  vars:
+    inventory_organization: "{{ needed_path.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+    inventory_name: "{{ needed_path.name | regex_replace('/', '_') }}"
+    __path: "{{ output_path }}/{{ inventory_organization | regex_replace('/', '_') }}/inventories/{{ inventory_name | regex_replace('/', '_') }}"
+  loop: "{{ constructed_inventory_lookvar }}"
+  loop_control:
+    loop_var: needed_path
+    label: "{{ __path }}"
+
+- name: "Add current constructed_inventories to the <ORGANIZATION_NAME>/inventories output yaml file in {{ output_path }}"
+  ansible.builtin.template:
+    src: "templates/current_inventories.j2"
+    dest: "{{ __dest }}"
+    mode: '0644'
+  vars:
+    inventory_organization: "{{ current_inventories_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+    inventory_name: "{{ current_inventories_asset_value.name | regex_replace('/', '_') }}"
+    __dest: "{{ output_path }}/{{ inventory_organization | regex_replace('/', '_') }}/inventories/{{ inventory_name | regex_replace('/', '_') }}/{{ current_inventories_asset_value.id }}_{{ inventory_name | regex_replace('/', '_') }}.yaml"
+  loop: "{{ constructed_inventory_lookvar }}"
+  loop_control:
+    loop_var: current_inventories_asset_value
+    label: "{{ __dest }}"
+...
