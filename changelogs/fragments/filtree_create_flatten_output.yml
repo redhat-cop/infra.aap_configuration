@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - The role 'filetree_create' will now allow to export all the objects of one kind into a single file, so it can be loaded by both ansible `group_vars` syntax and `filetree_read` tool.
+...

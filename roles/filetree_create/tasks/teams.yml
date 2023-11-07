@@ -15,9 +15,11 @@
   when:
     - flatten_output is defined
     - flatten_output | bool
+  vars:
+    __dest: "{{ output_path }}/teams.yaml"
   block:
     - name: "Add current teams to the teams flat file"
-      blockinfile:
+      ansible.builtin.blockinfile:
         create: true
         insertafter: EOF
         path: "{{ __dest }}"
@@ -27,13 +29,18 @@
         team_organization: "{{ (current_teams_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true)) | regex_replace('/', '_') }}"
         team_id: "{{ current_teams_asset_value.id }}"
         team_name: "{{ current_teams_asset_value.name | regex_replace('/', '_') }}"
-        __dest: "{{ output_path }}/teams.yaml"
         last_team: "{{ current_team_index == ((teams_lookvar | length) - 1) }}"
       loop: "{{ teams_lookvar }}"
       loop_control:
         index_var: current_team_index
         loop_var: current_teams_asset_value
         label: "{{ __dest }}"
+
+    - name: "Remove all the blank lines introduced by the last task"
+      ansible.builtin.lineinfile:
+        path: "{{ __dest }}"
+        line: ''
+        state: absent
 
 - name: "Block for to generate the filetre_create normal output"
   when: flatten_output is not defined or (flatten_output | bool) == false

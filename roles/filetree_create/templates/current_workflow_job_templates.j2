@@ -1,5 +1,7 @@
+{% if (current_workflow_job_template_index | default(0)) == 0 %}
 ---
 controller_workflows:
+{% endif %}
   - name: "{{ current_workflow_job_templates_asset_value.name }}"
     description: "{{ current_workflow_job_templates_asset_value.description }}"
     organization: "{{ current_workflow_job_templates_asset_value.summary_fields.organization.name | default('ToDo: The WF \'' + current_workflow_job_templates_asset_value.name + '\' must belong to an organization') }}"
@@ -36,12 +38,11 @@ controller_workflows:
 {% endfor %}
 {% endif %}
 {% endfor %}
-    survey_enabled: "{{ current_workflow_job_templates_asset_value.survey_enabled }}"
     ask_variables_on_launch: "{{ current_workflow_job_templates_asset_value.ask_variables_on_launch }}"
     allow_simultaneous: "{{ current_workflow_job_templates_asset_value.allow_simultaneous }}"
     scm_branch: "{{ current_workflow_job_templates_asset_value.scm_branch }}"
     webhook_service: "{{ current_workflow_job_templates_asset_value.webhook_service }}"
-{% if current_workflow_job_templates_asset_value.extra_vars and current_workflow_job_templates_asset_value.extra_vars != '---' and current_workflow_job_templates_asset_value.extra_vars != '' %}
+{% if current_workflow_job_templates_asset_value.extra_vars and current_workflow_job_templates_asset_value.extra_vars | length > 3 %}
     extra_vars:
       {{ current_workflow_job_templates_asset_value.extra_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") }}
 {%- endif %}
@@ -76,5 +77,14 @@ controller_workflows:
 {% endfor %}
 {% endif %}
     survey_enabled: {{ current_workflow_job_templates_asset_value.survey_enabled }}
-    survey_spec: {{ query(controller_api_plugin, current_workflow_job_templates_asset_value.related.survey_spec, host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)[0] }}
+{% set survey_spec_contents = query(controller_api_plugin, current_workflow_job_templates_asset_value.related.survey_spec,
+                                    host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)[0] |
+                                    from_yaml | to_nice_yaml(indent=2,width=500) | regex_replace("\n\n[ ]*", "\\\\n") | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") | replace("^$", "")
+-%}
+{% if current_workflow_job_templates_asset_value.related.survey_spec is defined and survey_spec_contents | length > 3 %}
+    survey_spec:
+      {{ survey_spec_contents }}
+{% endif %}
+{% if last_workflow_job_template | default(true) | bool %}
 ...
+{% endif %}

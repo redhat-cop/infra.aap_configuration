@@ -11,14 +11,16 @@
   when:
     - flatten_output is defined
     - flatten_output | bool
+  vars:
+    __dest: "{{ output_path }}/team_roles.yaml"
   block:
     - name: "Stat if the output file exists"
       ansible.builtin.stat:
-        path: "{{ output_path }}/team_roles.yaml"
+        path: "{{ __dest }}"
       register: team_roles_file
 
     - name: "Add current team roles to the team roles flat file"
-      blockinfile:
+      ansible.builtin.blockinfile:
         create: true
         insertafter: EOF
         path: "{{ __dest }}"
@@ -26,9 +28,14 @@
         block: "{{ lookup('template', 'templates/current_team_roles.j2') }}"
       vars:
         current_team_roles_asset_value: "{{ team_roles_lookvar }}"
-        __dest: "{{ output_path }}/team_roles.yaml"
         first_team_role: "{{ not team_roles_file.stat.exists }}"
       when: team_roles_lookvar | length > 0
+
+    - name: "Remove all the blank lines introduced by the last task"
+      ansible.builtin.lineinfile:
+        path: "{{ __dest }}"
+        line: ''
+        state: absent
 
 - name: "Block for to generate the filetre_create normal output"
   when: flatten_output is not defined or (flatten_output | bool) == false

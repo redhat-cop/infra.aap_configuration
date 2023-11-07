@@ -1,5 +1,7 @@
+{% if (current_user_index | default(0)) == 0 %}
 ---
 controller_user_accounts:
+{% endif %}
 - username: "{{ current_users_asset_value.username }}"
   password: "INITIAL"
   email: "{{ current_users_asset_value.email }}"
@@ -8,4 +10,6 @@ controller_user_accounts:
   auditor: "{{ current_users_asset_value.is_system_auditor }}"
   superuser: "{{ current_users_asset_value.is_superuser }}"
   update_secrets: false
+{% if last_user | default(true) | bool %}
 ...
+{% endif %}

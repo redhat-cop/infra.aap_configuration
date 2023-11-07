@@ -15,9 +15,11 @@
   when:
     - flatten_output is defined
     - flatten_output | bool
+  vars:
+    __dest: "{{ output_path }}/job_templates.yaml"
   block:
     - name: "Add current job_templates to the job_templates flat file"
-      blockinfile:
+      ansible.builtin.blockinfile:
         create: true
         insertafter: EOF
         path: "{{ __dest }}"
@@ -27,7 +29,6 @@
         job_template_organization: "{{ current_job_templates_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
         job_template_id: "{{ current_job_templates_asset_value.id }}"
         job_template_name: "{{ current_job_templates_asset_value.name | regex_replace('/', '_') }}"
-        __dest: "{{ output_path }}/job_templates.yaml"
         query_labels: "{{ query(controller_api_plugin, current_job_templates_asset_value.related.labels,
                          host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                          return_all=true, max_objects=query_controller_api_max_objects) }}"
@@ -47,6 +48,12 @@
         loop_var: current_job_templates_asset_value
         label: "{{ __dest }}"
       no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
+
+    - name: "Remove all the blank lines introduced by the last task"
+      ansible.builtin.lineinfile:
+        path: "{{ __dest }}"
+        line: ''
+        state: absent
 
 - name: "Block for to generate the filetre_create normal output"
   when: flatten_output is not defined or (flatten_output | bool) == false

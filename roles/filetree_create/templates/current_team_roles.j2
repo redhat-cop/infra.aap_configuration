@@ -1,4 +1,4 @@
-{% if first_team_role | bool %}
+{% if first_team_role | default(true) | bool %}
 ---
 controller_roles:
 {% endif %}
@@ -25,6 +25,6 @@ controller_roles:
     role: "{{ role.name | lower }}"
 {% endif %}
 {% endfor %}
-{% if last_team_role | bool %}
+{% if last_team_role | default(true) | bool %}
 ...
-{%- endif -%}
+{% endif %}
