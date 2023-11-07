@@ -21,6 +21,7 @@
     - name: "Add current notification_templates to the notification_templates flat file"
       ansible.builtin.blockinfile:
         create: true
+        mode: "0644"
         insertafter: EOF
         path: "{{ __dest }}"
         marker: ""
@@ -40,7 +41,7 @@
         state: absent
 
 - name: "Block for to generate the filetre_create normal output"
-  when: flatten_output is not defined or (flatten_output | bool) == false
+  when: flatten_output is not defined or not (flatten_output | bool)
   block:
     - name: "Create the <ORGANIZATION_NAME>/notification_templates output directory for notification templates in {{ output_path }}"
       ansible.builtin.file:

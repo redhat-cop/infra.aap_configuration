@@ -1,3 +1,4 @@
+---
 - name: "Flatten the filetree_create output into unique files per each object type"
   hosts: localhost
   connection: local
@@ -31,10 +32,12 @@
       ansible.builtin.file:
         path: "{{ filetree_create_output_dir }}_flatten"
         state: directory
+        mode: "0755"
 
     - name: "Write all the objects to the corresponding file"
       ansible.builtin.copy:
         dest: "{{ filetree_create_output_dir }}_flatten/{{ item.name }}.yaml"
+        mode: "0644"
         content: |
           ---
           {{ item.value | to_nice_yaml(indent=2) }}

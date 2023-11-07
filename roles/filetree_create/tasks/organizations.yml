@@ -21,6 +21,7 @@
     - name: "Add current organizations to the organizations flat file"
       ansible.builtin.blockinfile:
         create: true
+        mode: "0644"
         insertafter: EOF
         path: "{{ __dest }}"
         marker: ""
@@ -53,7 +54,7 @@
         state: absent
 
 - name: "Block for to generate the filetre_create normal output"
-  when: flatten_output is not defined or (flatten_output | bool) == false
+  when: flatten_output is not defined or not (flatten_output | bool)
   block:
     - name: "Create the output directory for organizations: {{ output_path + '/' + current_organization_dir.name }}"
       ansible.builtin.file:
