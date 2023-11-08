@@ -36,12 +36,14 @@
 
     - name: "Write all the objects to the corresponding file"
       ansible.builtin.copy:
-        dest: "{{ filetree_create_output_dir }}_flatten/{{ item.name }}.yaml"
+        dest: "{{ filetree_create_output_dir }}_flatten/{{ object_type.name }}.yaml"
         mode: "0644"
         content: |
           ---
-          {{ item.value | to_nice_yaml(indent=2) }}
+          {{ object_type.value | to_nice_yaml(indent=2) }}
           ...
+      loop_control:
+        loop_var: object_type
       loop:
         - name: controller_settings
           value: "{{ controller_settings }}"
@@ -86,3 +88,7 @@
         - name: controller_roles
           value: "{{ controller_roles }}"
 ...
+# Sample usage:
+#
+# ansible-playbook infra.controller_configuration.flatten_filetree_create_output.yaml -e '{filetree_create_output_dir: /tmp/filetree_output}'
+#
