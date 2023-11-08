@@ -47,3 +47,4 @@
         status_code: 204
       when: controller_oauthtoken_url is defined
 ...
+# ansible-playbook -i localhost, filetree_create.yml -e '{controller_configuration_inventories_enforce_defaults: false, controller_configuration_inventory_sources_enforce_defaults: false, controller_validate_certs: false, controller_hostname: localhost:8443, controller_username: <user_name>, controller_password: <password>, flatten_output: true}'
