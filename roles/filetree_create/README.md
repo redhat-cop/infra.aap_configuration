@@ -155,13 +155,13 @@ This role can generate output files in two different ways:
 - **Flatten files**:
 
   The output files are all located in the same directory. Each file contains a YAML list with all the objects belonging to the same object type. This output format allows to load all the objects both from the standard Ansible `group_vars` and from the `infra.controller_configuration.filetree_read` role.
-  
+
   The expotation can be triggered with the following command:
 
   ```console
   ansible-playbook -i localhost, filetree_create.yml -e '{controller_validate_certs: false, controller_hostname: localhost:8443, controller_username: admin, controller_password: password, flatten_output: true}'
   ```
-  
+
   One example of this approach follows:
 
   ```console
