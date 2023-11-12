@@ -115,7 +115,7 @@ class AHModule(AnsibleModule):
         # Perform magic depending on whether ah_token is a string or a dict
         if self.params.get("ah_token"):
             token_param = self.params.get("ah_token")
-            if type(token_param) is dict:
+            if isinstance(token_param, dict):
                 if "token" in token_param:
                     self.oauth_token = self.params.get("ah_token")["token"]
                 else:
