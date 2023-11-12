@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create execution environment images in Automation Hub.
+An Ansible Role to create users in Automation Hub.
 
 ## Variables
 
