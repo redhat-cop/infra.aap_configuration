@@ -330,6 +330,10 @@ class LookupModule(LookupBase):
         if self.get_option("set_absent"):
             for item in difference:
                 item.update({"state": "absent"})
+                if "team" in item and item["role"] == "member":
+                    item.update({"target_team": item["team"]})
+                    item.pop("team")
+
         # Combine Lists
         if self.get_option("with_present"):
             for item in compare_list_reduced:
