@@ -120,6 +120,11 @@ class LookupModule(LookupBase):
         new_item.update({new_attribute_name: attribute_value})
         return new_item
 
+    def equal_dicts(self, d1, d2, ignore_keys):
+        d1_filtered = {k: v for k, v in d1.items() if k not in ignore_keys}
+        d2_filtered = {k: v for k, v in d2.items() if k not in ignore_keys}
+        return d1_filtered == d2_filtered
+
     def run(self, terms, variables=None, **kwargs):
         self.set_options(direct=kwargs)
 
@@ -315,7 +320,10 @@ class LookupModule(LookupBase):
         else:
             difference = []
             for item in api_list_reduced:
-                if item not in compare_list_reduced:
+                for compare_item in compare_list_reduced:
+                    if self.equal_dicts(compare_item, item, "state"):
+                        break
+                else:
                     difference.append(item)
 
         # Set

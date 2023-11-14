@@ -1,4 +1,5 @@
 ---
 bugfixes:
   - Fixed an issue where the usage access to instance_groups were removed
+  - Fixed an issue where the diff doesn't work correctly when explicitly setting state present
 ...
