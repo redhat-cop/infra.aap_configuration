@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Fixed an issue where the usage access to instance_groups were removed
+...

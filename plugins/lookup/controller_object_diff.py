@@ -223,6 +223,8 @@ class LookupModule(LookupBase):
             for item in api_list_reduced:
                 if item["resource_type"] == "organization":
                     item.update({"organizations": [item[item["resource_type"]]]})
+                if item["resource_type"] == "instance_group":
+                    item.update({"instance_groups": [item[item["resource_type"]]]})
                 item.update({"role": item["name"].lower().replace(" ", "_")})
                 # Remove the extra fields
                 item.pop("users")
@@ -231,6 +233,8 @@ class LookupModule(LookupBase):
                 item.pop("resource_type")
                 if "organization" in item:
                     item.pop("organization")
+                if "instance_group" in item:
+                    item.pop("instance_group")
                 if "type" in item:
                     item.pop("type")
             list_to_extend = []
