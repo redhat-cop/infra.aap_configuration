@@ -336,7 +336,7 @@ class LookupModule(LookupBase):
 
         # Combine Lists
         if self.get_option("with_present"):
-            for item in compare_list_reduced:
+            for item in compare_list:
                 item.update({"state": "present"})
             compare_list.extend(difference)
             # Return Compare list with difference attached
