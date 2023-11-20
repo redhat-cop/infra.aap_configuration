@@ -1,5 +1,7 @@
+{% if (first_inventory | default(true) | bool) and (current_inventory_index | default(0) == 0) %}
 ---
 controller_inventories:
+{% endif %}
   - name: "{{ current_inventories_asset_value.name }}"
     description: "{{ current_inventories_asset_value.description }}"
     organization: "{{ inventory_organization }}"
@@ -29,4 +31,6 @@ controller_inventories:
     variables:
       {{ current_inventories_asset_value.variables | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") }}
 {%- endif %}
+{% if last_inventory | default(true) | bool %}
 ...
+{% endif %}

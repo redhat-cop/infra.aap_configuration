@@ -1,0 +1,94 @@
+---
+- name: "Flatten the filetree_create output into unique files per each object type"
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    filetree_controller_settings: &filetree_create_output_dir "{{ filetree_create_output_dir }}"
+    filetree_controller_organizations: *filetree_create_output_dir
+    filetree_controller_labels: *filetree_create_output_dir
+    filetree_controller_user_accounts: *filetree_create_output_dir
+    filetree_controller_teams: *filetree_create_output_dir
+    filetree_controller_credential_types: *filetree_create_output_dir
+    filetree_controller_credentials: *filetree_create_output_dir
+    filetree_controller_credential_input_sources: *filetree_create_output_dir
+    filetree_controller_notifications: *filetree_create_output_dir
+    filetree_controller_projects: *filetree_create_output_dir
+    filetree_controller_execution_environments: *filetree_create_output_dir
+    filetree_controller_applications: *filetree_create_output_dir
+    filetree_controller_inventories: *filetree_create_output_dir
+    filetree_controller_inventory_sources: *filetree_create_output_dir
+    filetree_controller_instance_groups: *filetree_create_output_dir
+    filetree_controller_hosts: *filetree_create_output_dir
+    filetree_controller_groups: *filetree_create_output_dir
+    filetree_controller_templates: *filetree_create_output_dir
+    filetree_controller_workflow_job_templates: *filetree_create_output_dir
+    filetree_controller_schedules: *filetree_create_output_dir
+    filetree_controller_roles: *filetree_create_output_dir
+  roles:
+    - infra.controller_configuration.filetree_read
+  post_tasks:
+    - name: "Create the output flatten dir"
+      ansible.builtin.file:
+        path: "{{ filetree_create_output_dir }}_flatten"
+        state: directory
+        mode: "0755"
+
+    - name: "Write all the objects to the corresponding file"
+      ansible.builtin.copy:
+        dest: "{{ filetree_create_output_dir }}_flatten/{{ object_type.name }}.yaml"
+        mode: "0644"
+        content: |
+          ---
+          {{ object_type.value | to_nice_yaml(indent=2) }}
+          ...
+      loop_control:
+        loop_var: object_type
+      loop:
+        - name: controller_settings
+          value: "{{ controller_settings }}"
+        - name: controller_organizations
+          value: "{{ controller_organizations }}"
+        - name: controller_labels
+          value: "{{ controller_labels }}"
+        - name: controller_user_accounts
+          value: "{{ controller_user_accounts }}"
+        - name: controller_teams
+          value: "{{ controller_teams }}"
+        - name: controller_credential_types
+          value: "{{ controller_credential_types }}"
+        - name: controller_credentials
+          value: "{{ controller_credentials }}"
+        - name: controller_credential_input_sources
+          value: "{{ controller_credential_input_sources }}"
+        - name: controller_notifications
+          value: "{{ controller_notifications }}"
+        - name: controller_projects
+          value: "{{ controller_projects }}"
+        - name: controller_execution_environments
+          value: "{{ controller_execution_environments }}"
+        - name: controller_applications
+          value: "{{ controller_applications }}"
+        - name: controller_inventories
+          value: "{{ controller_inventories }}"
+        - name: controller_inventory_sources
+          value: "{{ controller_inventory_sources }}"
+        - name: controller_instance_groups
+          value: "{{ controller_instance_groups }}"
+        - name: controller_hosts
+          value: "{{ controller_hosts }}"
+        - name: controller_groups
+          value: "{{ controller_groups }}"
+        - name: controller_templates
+          value: "{{ controller_templates }}"
+        - name: controller_workflow_job_templates
+          value: "{{ controller_workflow_job_templates | default([]) }}"
+        - name: controller_schedules
+          value: "{{ controller_schedules }}"
+        - name: controller_roles
+          value: "{{ controller_roles }}"
+...
+# Sample usage:
+#
+# ansible-playbook infra.controller_configuration.flatten_filetree_create_output.yaml -e '{filetree_create_output_dir: /tmp/filetree_output}'
+#

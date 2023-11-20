@@ -1,5 +1,7 @@
+{% if (current_inventory_index | default(0)) == 0 %}
 ---
 controller_inventory_sources:
+{% endif %}
 {% for inventory_source in current_inventory_sources_asset_value %}
   - name: "{{ inventory_source.name }}"
     description: "{{ inventory_source.description }}"
@@ -51,4 +53,6 @@ controller_inventory_sources:
 {% endfor %}
 {% endif %}
 {% endfor %}
+{% if last_inventory | default(true) | bool %}
 ...
+{% endif %}
