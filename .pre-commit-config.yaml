@@ -14,7 +14,7 @@ repos:
   #       types:
   #         - yaml
   - repo: 'https://github.com/ansible-community/ansible-lint.git'
-    rev: v6.21.1
+    rev: v6.22.0
     hooks:
       # see discussions here about what arguments are used, and behavior
       # https://github.com/ansible/ansible-lint/issues/649
@@ -34,7 +34,7 @@ repos:
     hooks:
       - id: markdownlint-cli2
   - repo: https://github.com/ambv/black
-    rev: 23.10.1
+    rev: 23.11.0
     hooks:
       - id: black
         name: black
