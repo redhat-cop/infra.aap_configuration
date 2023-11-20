@@ -1,5 +1,7 @@
+{% if (current_application_index | default(0)) == 0 %}
 ---
 controller_applications:
+{% endif %}
   - name: "{{ current_applications_asset_value.name }}"
     description: "{{ current_applications_asset_value.description }}"
     organization: "{{ current_applications_asset_value.summary_fields.organization.name | default('ToDo: The application \'' + current_applications_asset_value.name + '\' must have an organization') }}"
@@ -8,4 +10,6 @@ controller_applications:
     skip_authorization: "{{ current_applications_asset_value.skip_authorization }}"
     client_id: "{{ current_applications_asset_value.client_id }}"
     client_type: "{{ current_applications_asset_value.client_type }}"
+{% if last_application | default(true) | bool %}
 ...
+{% endif %}

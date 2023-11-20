@@ -11,29 +11,61 @@
       order_by: 'organization,id'
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
-- name: "Create the <ORGANIZATION_NAME>/notification_templates output directory for notification templates in {{ output_path }}"
-  ansible.builtin.file:
-    path: "{{ __path }}"
-    state: directory
-    mode: '0755'
+- name: "Block for to generate flatten output"
+  when:
+    - flatten_output is defined
+    - flatten_output | bool
   vars:
-    __path: "{{ output_path }}/{{ needed_path | regex_replace('/', '_') }}/notification_templates"
-  loop: "{{ (notification_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
-            + (['ORGANIZATIONLESS'] if ((notification_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
-         }}"
-  loop_control:
-    loop_var: needed_path
-    label: "{{ __path }}"
+    __dest: "{{ output_path }}/notification_templates.yaml"
+  block:
+    - name: "Add current notification_templates to the notification_templates flat file"
+      ansible.builtin.blockinfile:
+        create: true
+        mode: "0644"
+        insertafter: EOF
+        path: "{{ __dest }}"
+        marker: ""
+        block: "{{ lookup('template', 'templates/current_notification_templates.j2') }}"
+      vars:
+        last_notification_template: "{{ current_notification_template_index == ((notification_templates_lookvar | length) - 1) }}"
+      loop: "{{ notification_templates_lookvar }}"
+      loop_control:
+        index_var: current_notification_template_index
+        loop_var: current_notification_templates_asset_value
+        label: "{{ __dest }}"
 
-- name: "Add current notification templates to the <ORGANIZATION_NAME>/current_notification_templates.yaml output file in {{ output_path }}"
-  ansible.builtin.template:
-    src: "templates/current_notification_templates.j2"
-    dest: "{{ __dest }}"
-    mode: '0644'
-  vars:
-    __dest: "{{ output_path }}/{{ (current_notification_templates_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true)) | regex_replace('/', '_') }}/notification_templates/{{ current_notification_templates_asset_value.name | regex_replace('/', '_') }}.yaml"
-  loop: "{{ notification_templates_lookvar }}"
-  loop_control:
-    loop_var: current_notification_templates_asset_value
-    label: "{{ __dest }}"
+    - name: "Remove all the blank lines introduced by the last task"
+      ansible.builtin.lineinfile:
+        path: "{{ __dest }}"
+        line: ''
+        state: absent
+
+- name: "Block for to generate the filetre_create normal output"
+  when: flatten_output is not defined or not (flatten_output | bool)
+  block:
+    - name: "Create the <ORGANIZATION_NAME>/notification_templates output directory for notification templates in {{ output_path }}"
+      ansible.builtin.file:
+        path: "{{ __path }}"
+        state: directory
+        mode: '0755'
+      vars:
+        __path: "{{ output_path }}/{{ needed_path | regex_replace('/', '_') }}/notification_templates"
+      loop: "{{ (notification_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
+                + (['ORGANIZATIONLESS'] if ((notification_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
+             }}"
+      loop_control:
+        loop_var: needed_path
+        label: "{{ __path }}"
+
+    - name: "Add current notification templates to the <ORGANIZATION_NAME>/current_notification_templates.yaml output file in {{ output_path }}"
+      ansible.builtin.template:
+        src: "templates/current_notification_templates.j2"
+        dest: "{{ __dest }}"
+        mode: '0644'
+      vars:
+        __dest: "{{ output_path }}/{{ (current_notification_templates_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true)) | regex_replace('/', '_') }}/notification_templates/{{ current_notification_templates_asset_value.name | regex_replace('/', '_') }}.yaml"
+      loop: "{{ notification_templates_lookvar }}"
+      loop_control:
+        loop_var: current_notification_templates_asset_value
+        label: "{{ __dest }}"
 ...

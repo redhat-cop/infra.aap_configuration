@@ -13,6 +13,7 @@
 
     - name: "Get the API list of all roles"
       ansible.builtin.set_fact:
+        # noqa jinja[spacing]
         __controller_api_roles: "{{ (__controller_api_roles | default([])) + [{
                                       'users': current_users,
                                       'teams': current_teams,

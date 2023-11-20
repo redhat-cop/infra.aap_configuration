@@ -1,5 +1,7 @@
+{% if (current_schedule_index | default(0)) == 0 %}
 ---
 controller_schedules:
+{% endif %}
   - name: "{{ current_schedules_asset_value.name }}"
 {% if current_schedules_asset_value.description is defined %}
     description: "{{ current_schedules_asset_value.description }}"
@@ -76,4 +78,6 @@ controller_schedules:
 {% if current_schedules_asset_value.verbosity is defined %}
     verbosity: {{ current_schedules_asset_value.verbosity | int }}
 {% endif %}
+{% if last_schedule | default(true) | bool %}
 ...
+{% endif %}

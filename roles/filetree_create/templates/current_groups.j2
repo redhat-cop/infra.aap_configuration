@@ -1,5 +1,7 @@
+{% if ((first_inventory | default(true) | bool) and ((current_inventory_index | default(0)) == 0)) %}
 ---
 controller_groups:
+{% endif %}
 {% for group in current_groups_asset_value %}
   - name: "{{ group.name }}"
     description: "{{ group.description }}"
@@ -15,4 +17,6 @@ controller_groups:
    ) | selectattr("name", "defined") | map(attribute="name") | to_nice_yaml(indent=2) | indent(width=6, first=True)
 }}
 {%- endfor -%}
+{% if last_inventory | default(true) | bool %}
 ...
+{% endif %}

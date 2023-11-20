@@ -1,5 +1,7 @@
+{% if first_team_role | default(true) | bool %}
 ---
 controller_roles:
+{% endif %}
 {% for role in team_roles_lookvar %}
 {% if role.summary_fields.resource_type is defined %}
   - team: "{{ teamname }}"
@@ -23,4 +25,6 @@ controller_roles:
     role: "{{ role.name | lower }}"
 {% endif %}
 {% endfor %}
+{% if last_team_role | default(true) | bool %}
 ...
+{% endif %}

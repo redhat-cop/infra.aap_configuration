@@ -1,5 +1,7 @@
+{% if (current_job_template_index | default(0)) == 0 %}
 ---
 controller_templates:
+{% endif %}
   - name: "{{ current_job_templates_asset_value.name }}"
     description: "{{ current_job_templates_asset_value.description }}"
     organization: "{{ current_job_templates_asset_value.summary_fields.organization.name | default('ToDo: The job template \'' + current_job_templates_asset_value.name + '\' must belong to an organization') }}"
@@ -50,7 +52,7 @@ controller_templates:
 {% if current_job_templates_asset_value.ask_instance_groups_on_launch is defined %}
     ask_instance_groups_on_launch: {{ current_job_templates_asset_value.ask_instance_groups_on_launch | bool }}
 {% endif %}
-{% if current_job_templates_asset_value.extra_vars and current_job_templates_asset_value.extra_vars != '---' and current_job_templates_asset_value.extra_vars != '' %}
+{% if current_job_templates_asset_value.extra_vars and current_job_templates_asset_value.extra_vars | length > 3 %}
     extra_vars:
       {{ current_job_templates_asset_value.extra_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") }}
 {%- endif %}
@@ -91,7 +93,14 @@ controller_templates:
 {% endfor %}
 {% endif %}
     survey_enabled: {{ current_job_templates_asset_value.survey_enabled | bool }}
-    survey_spec: {{ query(controller_api_plugin, current_job_templates_asset_value.related.survey_spec, host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)[0] }}
+{% set survey_spec_contents = query(controller_api_plugin, current_job_templates_asset_value.related.survey_spec,
+                                    host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)[0] |
+                                    from_yaml | to_nice_yaml(indent=2,width=500) | regex_replace("\n\n[ ]*", "\\\\n") | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") | replace("^$", "")
+-%}
+{% if current_job_templates_asset_value.related.survey_spec is defined and survey_spec_contents | length > 3 %}
+    survey_spec:
+      {{ survey_spec_contents }}
+{% endif %}
     become_enabled: {{ current_job_templates_asset_value.become_enabled | bool }}
     diff_mode: {{ current_job_templates_asset_value.diff_mode | bool }}
     webhook_service: "{{ current_job_templates_asset_value.webhook_service }}"
@@ -101,4 +110,6 @@ controller_templates:
 {% if current_job_templates_asset_value.prevent_instance_group_fallback is defined %}
     prevent_instance_group_fallback: {{ current_job_templates_asset_value.prevent_instance_group_fallback | bool }}
 {% endif %}
+{% if last_job_template | default(true) | bool %}
 ...
+{% endif %}

@@ -1,5 +1,7 @@
+{% if (current_organization_index | default(0)) == 0 %}
 ---
 controller_organizations:
+{% endif %}
   - name: "{{ current_organization.name }}"
     description: "{{ current_organization.description }}"
 {% if query_notification_error | length > 0 %}
@@ -26,4 +28,6 @@ controller_organizations:
       - "{{ notification_approval.name }}"
 {% endfor %}
 {% endif %}
+{% if last_organization | default(true) | bool %}
 ...
+{% endif %}

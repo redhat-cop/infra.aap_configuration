@@ -1,5 +1,7 @@
+{% if (current_project_index | default(0)) == 0 %}
 ---
 controller_projects:
+{% endif %}
   - name: "{{ current_projects_asset_value.name }}"
     description: "{{ current_projects_asset_value.description }}"
     organization: "{{ current_projects_asset_value.summary_fields.organization.name | default('ToDo: The project \'' + current_projects_asset_value.name + '\' must have an organization') }}"
@@ -35,4 +37,6 @@ controller_projects:
       - "{{ notification_success.name }}"
 {% endfor %}
 {% endif %}
+{% if last_project | default(true) | bool %}
 ...
+{% endif %}

@@ -19,6 +19,7 @@ The following variables are required for that role to work properly:
 | `organization_id` | N/A | no | int | Alternative to `organization_filter`, but specifiying the current organization's ID to filter by. Exports only the objects belonging to the specified organization (applies to all the objects that can be assigned to an organization). |
 | `output_path` | `/tmp/filetree_output` | yes | str | The path to the output directory where all the generated `yaml` files with the corresponding Objects as code will be written to. |
 | `input_tag` | `['all']` | no | List of Strings | The tags which are applied to the 'sub-roles'. If 'all' is in the list (the default value) then all roles will be called. |
+| `flatten_output` | N/A | no | bool | Whether to flatten the output in single files per each object type instead of the normal exportation structure |
 
 ## Dependencies
 
@@ -76,6 +77,122 @@ A list of other roles hosted on Galaxy should go here, plus any details in regar
         status_code: 204
       when: controller_oauthtoken_url is defined
 ...
+```
+
+This role can generate output files in two different ways:
+
+- **Structured output**:
+
+  The output files are distributed in separate directories, by organization first, and then by object type. Into each of these directories, one file per object is generated. This way allows to organize the files using different criteria, for example, by funcionalities or applications.
+
+  The expotation can be triggered with the following command:
+
+  ```console
+  ansible-playbook -i localhost, filetree_create.yml -e '{controller_validate_certs: false, controller_hostname: localhost:8443, controller_username: admin, controller_password: password}'
+  ```
+
+  One example of this approach follows:
+
+  ```console
+  /tmp/filetree_output_distributted
+  ├── current_credential_types.yaml
+  ├── current_execution_environments.yaml
+  ├── current_instance_groups.yaml
+  ├── current_settings.yaml
+  ├── Default
+  │   ├── applications
+  │   │   ├── 23_controller_application-app2.yaml
+  │   │   └── 24_controller_application-app3.yaml
+  │   ├── credentials
+  │   │   ├── 82_Demo Credential.yaml
+  │   │   └── 84_Demo Custom Credential.yaml
+  │   ├── current_organization.yaml
+  │   ├── inventories
+  │   │   ├── Demo Inventory
+  │   │   │   └── 81_Demo Inventory.yaml
+  │   │   └── Test Inventory - Smart
+  │   │       ├── 78_Test Inventory - Smart.yaml
+  │   │       └── current_hosts.yaml
+  │   ├── job_templates
+  │   │   ├── 177_test-template-1.yaml
+  │   │   └── 190_Demo Job Template.yaml
+  │   ├── labels
+  │   │   ├── 52_Prod.yaml
+  │   │   ├── 53_differential.yaml
+  │   ├── notification_templates
+  │   │   ├── Email notification differential.yaml
+  │   │   └── Email notification.yaml
+  │   ├── projects
+  │   │   ├── 169_Test Project.yaml
+  │   │   ├── 170_Demo Project.yaml
+  │   ├── teams
+  │   │   ├── 28_satellite-qe.yaml
+  │   │   └── 29_tower-team.yaml
+  │   └── workflow_job_templates
+  │       ├── 191_Simple workflow schema.yaml
+  │       └── 200_Complicated workflow schema.yaml
+  ├── ORGANIZATIONLESS
+  │   ├── credentials
+  │   │   ├── 2_Ansible Galaxy.yaml
+  │   │   └── 3_Default Execution Environment Registry Credential.yaml
+  │   └── users
+  │       ├── admin.yaml
+  │       ├── controller_user.yaml
+  ├── schedules
+  │   ├── 1_Cleanup Job Schedule.yaml
+  │   ├── 2_Cleanup Activity Schedule.yaml
+  │   ├── 4_Cleanup Expired Sessions.yaml
+  │   ├── 52_Demo Schedule.yaml
+  │   ├── 53_Demo Schedule 2.yaml
+  │   └── 5_Cleanup Expired OAuth 2 Tokens.yaml
+  ├── team_roles
+  │   ├── current_roles_satellite-qe.yaml
+  │   └── current_roles_tower-team.yaml
+  └── user_roles
+      └── current_roles_controller_user.yaml
+  ```
+
+- **Flatten files**:
+
+  The output files are all located in the same directory. Each file contains a YAML list with all the objects belonging to the same object type. This output format allows to load all the objects both from the standard Ansible `group_vars` and from the `infra.controller_configuration.filetree_read` role.
+
+  The expotation can be triggered with the following command:
+
+  ```console
+  ansible-playbook -i localhost, filetree_create.yml -e '{controller_validate_certs: false, controller_hostname: localhost:8443, controller_username: admin, controller_password: password, flatten_output: true}'
+  ```
+
+  One example of this approach follows:
+
+  ```console
+  /tmp/filetree_output_flatten
+  ├── applications.yaml
+  ├── credentials.yaml
+  ├── current_credential_types.yaml
+  ├── current_execution_environments.yaml
+  ├── current_instance_groups.yaml
+  ├── current_settings.yaml
+  ├── groups.yaml
+  ├── hosts.yaml
+  ├── inventories.yaml
+  ├── inventory_sources.yaml
+  ├── job_templates.yaml
+  ├── labels.yaml
+  ├── notification_templates.yaml
+  ├── organizations.yaml
+  ├── projects.yaml
+  ├── schedules.yaml
+  ├── team_roles.yaml
+  ├── teams.yaml
+  ├── user_roles.yaml
+  ├── users.yaml
+  └── workflow_job_templates.yaml
+  ```
+
+A playbook to convert from the structured output to the flattened one is provided, and can be executed with the following command:
+
+```console
+ansible-playbook infra.controller_configuration.flatten_filetree_create_output.yaml -e '{filetree_create_output_dir: /tmp/filetree_output}'
 ```
 
 ## License
