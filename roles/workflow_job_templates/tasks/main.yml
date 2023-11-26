@@ -10,7 +10,7 @@
     organization:                       "{{ __workflow_loop_item.organization.name | default(__workflow_loop_item.organization | default(('' if controller_configuration_workflows_enforce_defaults else omit), true)) }}"
     ask_variables_on_launch:            "{{ __workflow_loop_item.ask_variables_on_launch | default((false if controller_configuration_workflows_enforce_defaults else omit)) }}"
     inventory:                          "{{ __workflow_loop_item.inventory.name | default(__workflow_loop_item.inventory | default(('' if controller_configuration_workflows_enforce_defaults else omit), true)) }}"
-    limit:                              "{{ __workflow_loop_item.limit | default((0 if controller_configuration_workflows_enforce_defaults else omit), true) }}"
+    limit:                              "{{ __workflow_loop_item.limit | default(('' if controller_configuration_workflows_enforce_defaults else omit), true) }}"
     labels:                             "{{ (__workflow_loop_item.related.labels | map(attribute='name') | list if __workflow_loop_item.related.labels is defined) | default(__workflow_loop_item.labels) | default(([] if controller_configuration_workflows_enforce_defaults else omit), true) }}"
     scm_branch:                         "{{ __workflow_loop_item.scm_branch | default(('' if controller_configuration_workflows_enforce_defaults else omit), true) }}"
     ask_inventory_on_launch:            "{{ __workflow_loop_item.ask_inventory_on_launch | default((false if controller_configuration_workflows_enforce_defaults else omit)) }}"
