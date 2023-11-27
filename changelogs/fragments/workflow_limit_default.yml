@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - The role 'workflow_job_templates' Default enforced value set for workflow templates limit was 0, was corrected to be an empty string.
+...
