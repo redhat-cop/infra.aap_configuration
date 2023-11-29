@@ -3,6 +3,7 @@
 ## Description
 
 An Ansible Role to create Repositories in Automation Hub.
+This role has been depreciated and is not supported in AAP 2.4 onwards. It is replaced by collection_remote.
 
 ## Variables
 
@@ -81,17 +82,15 @@ This also speeds up the overall role.
 
 ```yaml
 ---
-ah_repository_certified:
-  url: 'https://cloud.redhat.com/api/automation-hub/<custom_sync_url_from_cloud>'
-  token: 'secretToken'
-
-ah_repository_community:
-  url: https://galaxy.ansible.com/api/
-  requirements:
-    - galaxy.galaxy
-    - infra.controller_configuration
-    - infra.aap_utilities
-    - infra.ee_utilities
+ah_repositories:
+  - name: community
+    url: https://beta-galaxy.ansible.com/
+    requirements:
+      - name: infra.ee_utilities
+      - name: infra.controller_configuration
+    wait: true
+    interval: 25
+    timeout: 1000000
 ```
 
 ## Playbook Examples

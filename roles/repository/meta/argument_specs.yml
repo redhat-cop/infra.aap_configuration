@@ -3,26 +3,12 @@ argument_specs:
   main:
     short_description: An Ansible Role to create repositories in Automation Hub.
     options:
-      ah_repository_certified:
+      ah_repositories:
+        default: []
         required: false
-        description: Data structure describing the certified repository to manage.
-        type: dict
-      ah_repository_community:
-        required: false
-        description: Data structure describing the community repository to manage.
-        type: dict
-      proxy_url:
-        required: false
-        type: str
-        description: Information regarding the proxy that AH will use to communicate to the Red Hat repositories. Can be left empty if no proxy used.
-      proxy_username:
-        required: false
-        type: str
-        description: Information regarding the proxy that AH will use to communicate to the Red Hat repositories. Can be left empty if no proxy used.
-      proxy_password:
-        required: false
-        type: str
-        description: Information regarding the proxy that AH will use to communicate to the Red Hat repositories. Can be left empty if no proxy used.
+        description: Data structure describing the collection repositories to sync.
+        type: list
+        elements: dict
 
       # Async variables
       ah_configuration_async_dir:

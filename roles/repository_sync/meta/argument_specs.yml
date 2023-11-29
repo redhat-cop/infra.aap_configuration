@@ -3,14 +3,12 @@ argument_specs:
   main:
     short_description: An Ansible Role to sync repositories in Automation Hub.
     options:
-      ah_repository_certified:
+      ah_repositories:
+        default: []
         required: false
-        description: Data structure describing the certified repository to manage.
-        type: dict
-      ah_repository_community:
-        required: false
-        description: Data structure describing the community repository to manage.
-        type: dict
+        description: Data structure describing the collection repositories to sync.
+        type: list
+        elements: dict
 
       # Async variables
       ah_configuration_async_dir:
