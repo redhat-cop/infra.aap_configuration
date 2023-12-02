@@ -3,6 +3,49 @@ differential_expected:
   credential_types: []
   credentials:
     - credential_type:
+        kind: scm
+        name: Source Control
+        type: credential_type
+      description: ''
+      inputs:
+        username: username
+      name: gitlab-team
+      natural_key:
+        credential_type:
+          kind: scm
+          name: Source Control
+          type: credential_type
+        name: gitlab-team
+        organization:
+        type: credential
+      organization:
+      state: absent
+      user:
+        type: user
+        username: controller_user
+    - credential_type:
+        kind: scm
+        name: Source Control
+        type: credential_type
+      description: ''
+      inputs:
+        username: username
+      name: gitlab-user
+      natural_key:
+        credential_type:
+          kind: scm
+          name: Source Control
+          type: credential_type
+        name: gitlab-user
+        organization:
+          name: Satellite
+          type: organization
+        type: credential
+      organization:
+        name: Satellite
+        type: organization
+      state: absent
+    - credential_type:
         kind: vault
         name: Vault
         type: credential_type
@@ -262,37 +305,6 @@ differential_expected:
       state: absent
   organizations: []
   projects:
-    - allow_override: false
-      credential:
-      default_environment:
-      description: ansible-examples
-      local_path: _10__test_inventory_source_project
-      name: Test Inventory source project
-      natural_key:
-        name: Test Inventory source project
-        organization:
-          name: Satellite
-          type: organization
-        type: project
-      organization:
-        name: Satellite
-        type: organization
-      related:
-        notification_templates_error: []
-        notification_templates_started: []
-        notification_templates_success: []
-      scm_branch: ""
-      scm_clean: false
-      scm_delete_on_update: false
-      scm_refspec: ""
-      scm_track_submodules: false
-      scm_type: git
-      scm_update_cache_timeout: 0
-      scm_update_on_launch: false
-      scm_url: https://github.com/ansible/ansible-examples.git
-      signature_validation_credential:
-      state: absent
-      timeout: 0
     - allow_override: false
       credential:
         credential_type:
