@@ -14,7 +14,7 @@ repos:
   #       types:
   #         - yaml
   - repo: 'https://github.com/ansible-community/ansible-lint.git'
-    rev: v6.22.0
+    rev: v6.22.1
     hooks:
       # see discussions here about what arguments are used, and behavior
       # https://github.com/ansible/ansible-lint/issues/649
