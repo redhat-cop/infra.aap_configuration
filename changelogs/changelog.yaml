@@ -568,3 +568,37 @@ releases:
     - fix_subelements_conditional.yml
     - instancegroups_org.yml
     release_date: '2023-10-14'
+  2.6.0:
+    changes:
+      bugfixes:
+      - Fixed an issue where the diff doesn't work correctly when explicitly setting
+        state present
+      - Fixed an issue where the usage access to instance_groups were removed
+      - Fixed member removal of teams
+      - The role 'credentials' have had the enforced defaults removed from team, user,
+        and organization options. This was causing an error with these parameters
+        were mutally exclusive.
+      - The role 'inventory_sources' will now skip when the source parameter is `constructed`.
+        These sources are auto created and not meant to be edited. However they can
+        still be synced with the inventory_source_update.
+      - The role 'workflow_job_templates' Default enforced value set for workflow
+        templates limit was 0, was corrected to be an empty string.
+      minor_changes:
+      - The role 'filetree_create' will now allow to export all the objects of one
+        kind into a single file, so it can be loaded by both ansible `group_vars`
+        syntax and `filetree_read` tool.
+      - added improvements to checkmod where it will run faster with the async tasks.
+        In addition added an additional fail check at end of dispatch that will likely
+        fail if dependencies are missing, as expected.
+      - added mandatory check to workflow launch name option
+      - filetree_create - Add the constructed inventory exportation fields from the
+        API endpoint `api/v2/constructed_inventories`
+    fragments:
+    - checkmode.yml
+    - constructed.yml
+    - credential_owner.yml
+    - diff_plugin.yml
+    - filetree_create_export_constructed_inventories.yml
+    - filtree_create_flatten_output.yml
+    - workflow_limit_default.yml
+    release_date: '2023-12-02'
