@@ -93,4 +93,11 @@ projects:
     description: Test Project 2
     organization:
       name: Default
+  - name: Test Inventory source project
+    description: ansible-examples
+    organization:
+      name: Satellite
+      type: organization
+    scm_type: git
+    scm_url: https://github.com/ansible/ansible-examples.git
 ...
