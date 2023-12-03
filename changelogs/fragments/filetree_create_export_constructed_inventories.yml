@@ -1,2 +1,0 @@
-minor_changes:
-  - filetree_create - Add the constructed inventory exportation fields from the API endpoint `api/v2/constructed_inventories`
