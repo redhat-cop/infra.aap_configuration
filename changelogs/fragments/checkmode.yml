@@ -1,5 +1,0 @@
----
-minor_changes:
-    - added mandatory check to workflow launch name option
-    - added improvements to checkmod where it will run faster with the async tasks. In addition added an additional fail check at end of dispatch that will likely fail if dependencies are missing, as expected.
-...
