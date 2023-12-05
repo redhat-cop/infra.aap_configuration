@@ -6,7 +6,7 @@
     description:                          "{{ __controller_source_item.description | default(('' if controller_configuration_inventory_sources_enforce_defaults else omit), true) }}"
     inventory:                            "{{ __controller_source_item.inventory.name | default(__controller_source_item.inventory) | mandatory }}"
     organization:                         "{{ __controller_source_item.inventory.organization.name | default(__controller_source_item.organization | default(('' if controller_configuration_inventory_sources_enforce_defaults else omit), true)) }}"
-    source:                               "{{ __controller_source_item.source | default(('scm' if controller_configuration_inventory_sources_enforce_defaults else omit), true) }}"
+    source:                               "{{ omit if __controller_source_item.source is defined and __controller_source_item.source == 'constructed' else __controller_source_item.source | default(('scm' if controller_configuration_inventory_sources_enforce_defaults else omit), true) }}"
     source_path:                          "{{ __controller_source_item.source_path | default(('' if controller_configuration_inventory_sources_enforce_defaults else omit), true) }}"
     source_vars:                          "{{ __controller_source_item.source_vars | default(({} if controller_configuration_inventory_sources_enforce_defaults else omit), true) | regex_replace('[ ]{2,}', '') }}"
     enabled_var:                          "{{ __controller_source_item.enabled_var | default(('' if controller_configuration_inventory_sources_enforce_defaults else omit), true) }}"
@@ -46,7 +46,6 @@
   poll: 0
   register: __inventory_source_job_async
   changed_when: not __inventory_source_job_async.changed
-  when: __controller_source_item.source != "constructed"
   vars:
     __operation: "{{ operation_translate[__controller_source_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'

@@ -43,4 +43,11 @@ controller_inventory_sources:
   - name: "Auto-created source for: test_constructed"
     inventory: test_constructed
     source: constructed
+    limit: localhost
+    source_vars:
+      plugin: constructed
+      use_vars_plugins: true  # https://github.com/ansible/ansible/issues/75365
+      keyed_groups:
+        - key: some_var
+          separator: ""
 ...
