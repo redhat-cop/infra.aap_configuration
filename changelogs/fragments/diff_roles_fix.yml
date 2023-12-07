@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - Fixed roles diff when the roles are provided as a list, in a single entry
