@@ -305,10 +305,7 @@ class LookupModule(LookupBase):
             list_to_remove.clear()
             for item in compare_list_reduced:
                 expanded = False
-                dupitems = [
-                    "roles",
-                    "role"
-                ]
+                dupitems = ["roles", "role"]
                 if "roles" in item:
                     for role in item["roles"]:
                         list_to_extend.append(self.map_item(item, "role", role, dupitems))
