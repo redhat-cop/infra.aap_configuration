@@ -300,6 +300,21 @@ class LookupModule(LookupBase):
             for item in list_to_remove:
                 compare_list_reduced.remove(item)
             compare_list_reduced.extend(list_to_extend)
+            # Expand all compare list elements when roles is provided as list
+            list_to_extend.clear()
+            list_to_remove.clear()
+            for item in compare_list_reduced:
+                expanded = False
+                dupitems = ["roles", "role"]
+                if "roles" in item:
+                    for role in item["roles"]:
+                        list_to_extend.append(self.map_item(item, "role", role, dupitems))
+                    expanded = True
+                if expanded:
+                    list_to_remove.append(item)
+            for item in list_to_remove:
+                compare_list_reduced.remove(item)
+            compare_list_reduced.extend(list_to_extend)
         elif (
             api_list[0]["type"] != "organization"
             and api_list[0]["type"] != "user"
