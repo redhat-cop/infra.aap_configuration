@@ -301,8 +301,8 @@ class LookupModule(LookupBase):
                 compare_list_reduced.remove(item)
             compare_list_reduced.extend(list_to_extend)
             # Expand all compare list elements when roles is provided as list
-            list_to_extend = []
-            list_to_remove = []
+            list_to_extend.clear()
+            list_to_remove.clear()
             for item in compare_list_reduced:
                 expanded = False
                 dupitems = [
