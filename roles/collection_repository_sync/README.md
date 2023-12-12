@@ -78,7 +78,7 @@ ah_collection_repositories:
 
 ```yaml
 ---
-- name: Add repository to Automation Hub
+- name: Sync repository to Automation Hub
   hosts: localhost
   connection: local
   gather_facts: false

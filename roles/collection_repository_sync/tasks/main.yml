@@ -1,5 +1,5 @@
 ---
-# Create AH repository
+# Sync AH repository
 - name: Sync Automation Hub Collection Remote repository
   collection_repository_sync:
     name:                     "{{ __collection_repository_sync_item.name }}"
