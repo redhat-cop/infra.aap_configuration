@@ -1,7 +1,7 @@
 # Red Hat Communities of Practice Controller Configuration Collection
 
 ![pre-commit tests](https://github.com/redhat-cop/controller_configuration/actions/workflows/pre-commit.yml/badge.svg)
-![Galaxy Release](https://github.com/redhat-cop/controller_configuration/workflows/galaxy-release/badge.svg)
+![Release](https://github.com/redhat-cop/controller_configuration/actions/workflows/release.yml/badge.svg)
 <!-- markdownlint-disable-line MD033 MD034 --><a href="https://raw.githubusercontent.com/redhat-cop/controller_configuration/devel/docs/aap_config_as_code_public_meeting.ics"><img border="0" alt="Google Calendar invite" src="https://www.google.com/calendar/images/ext/gc_button1_en-GB.gif"></a>
 <!-- Further CI badges go here as above -->
 
