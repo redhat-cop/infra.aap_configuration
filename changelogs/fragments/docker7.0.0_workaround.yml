@@ -1,3 +1,0 @@
----
-bugfixes:
-  - Fixed bug with docker version 7.0.0, which includes the command `docker compose` as a replace of `docker-compose`. See https://github.com/docker/docker-py/issues/3194#issuecomment-1857356075
