@@ -6,3 +6,4 @@ id_rsa*
 test
 tests/output
 .vscode
+ansible.cfg
