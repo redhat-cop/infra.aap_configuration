@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - Fixed roles diff when the role is set at the organization level for an user/team
