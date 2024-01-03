@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - Avoid the hosts populated by a constructed inventory to be removed

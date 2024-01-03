@@ -112,6 +112,27 @@ differential_items:
       - name: Test Inventory - Smart
         organization: Default
         state: absent
+  - name: hosts
+    with_present: false
+    differential_test_items:
+      - name: localhost
+        inventory: Demo Inventory
+    expected_test_result:
+      - name: "dummy"
+        inventory: "Inventory_Dummy_1"
+        state: absent
+      - name: "dummy"
+        inventory: "Inventory_Dummy_2"
+        state: absent
+      - name: "dummy"
+        inventory: "Inventory_Dummy_3"
+        state: absent
+      - name: "localhost"
+        inventory: "RHVM-01"
+        state: absent
+      - name: "localhost"
+        inventory: "localhost"
+        state: absent
   - name: teams
     with_present: false
     differential_test_items:
