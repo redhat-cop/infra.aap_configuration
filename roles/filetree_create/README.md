@@ -4,9 +4,7 @@ The role `filetree_create` is intended to be used as the first step to begin usi
 
 ## Requirements
 
-That role requires the following:
-
-- [awx.awx](https://docs.ansible.com/ansible/latest/collections/awx/awx/index.html) or [ansible.controller]ansible collection.
+This role requires the [awx.awx](https://docs.ansible.com/ansible/latest/collections/awx/awx/index.html) or [ansible.controller](https://console.redhat.com/ansible/automation-hub/repo/published/ansible/controller) ansible collection.
 
 ## Role Variables
 
@@ -85,7 +83,7 @@ This role can generate output files in two different ways:
 
   The output files are distributed in separate directories, by organization first, and then by object type. Into each of these directories, one file per object is generated. This way allows to organize the files using different criteria, for example, by funcionalities or applications.
 
-  The expotation can be triggered with the following command:
+  The export can be triggered with the following command:
 
   ```console
   ansible-playbook -i localhost, filetree_create.yml -e '{controller_validate_certs: false, controller_hostname: localhost:8443, controller_username: admin, controller_password: password}'

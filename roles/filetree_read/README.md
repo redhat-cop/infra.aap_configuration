@@ -4,7 +4,7 @@ An ansible role which reads variables from a hierarchical and scalable directory
 
 ## Requirements
 
-ansible-galaxy collection install -r tests/collections/requirements.yml to be installed Currently: awx.awx or ansible.controller and infra.controller_configuration.
+This role requires the [awx.awx](https://docs.ansible.com/ansible/latest/collections/awx/awx/index.html) or [ansible.controller](https://console.redhat.com/ansible/automation-hub/repo/published/ansible/controller) Ansible collection.
 
 ## Role Variables
 
