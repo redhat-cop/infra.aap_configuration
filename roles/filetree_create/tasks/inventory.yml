@@ -89,6 +89,7 @@
 
 - name: "Set the inventory's inventory sources"
   ansible.builtin.include_tasks: "inventory_sources.yml"
+  when: current_inventory_sources.total_inventory_sources > 0
   vars:
     inventory_organization: "{{ current_inventory_sources.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
     inventory_name: "{{ current_inventory_sources.name | regex_replace('/', '_') }}"
@@ -97,9 +98,9 @@
                                        else
                                          output_path + '/inventory_sources.yaml' }}"
     current_inventory_sources_asset_value: "{{ query(controller_api_plugin, current_inventory_sources.related.inventory_sources,
-                                                          host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
-                                                          return_all=true, max_objects=query_controller_api_max_objects)
-                                                    if current_inventory_sources.has_inventory_sources else []
+                                                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                                                     return_all=true, max_objects=query_controller_api_max_objects)
+                                               if current_inventory_sources.has_inventory_sources else []
                                             }}"
     last_inventory: "{{ current_inventory_index == ((inventory_lookvar | length) - 1) }}"
   loop: "{{ inventory_lookvar }}"
@@ -119,12 +120,11 @@
                            else
                              output_path + '/hosts.yaml' }}"
     current_hosts_asset_value: "{{ query(controller_api_plugin, current_inventory_hosts.related.hosts,
+                                         query_params={'not__description': 'imported'},
                                          host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                          return_all=true, max_objects=query_controller_api_max_objects)
                                    if not current_inventory_hosts.has_inventory_sources else []
                                 }}"
-    first_inventory: "{{ not (__inventories_file.stat.exists | bool) }}"
-    last_inventory: "{{ current_inventory_index == ((inventory_lookvar | length) - 1) }}"
   loop: "{{ inventory_lookvar }}"
   loop_control:
     index_var: current_inventory_index
@@ -143,12 +143,11 @@
                            else
                              output_path + '/groups.yaml' }}"
     current_groups_asset_value: "{{ query(controller_api_plugin, current_inventory_groups.related.groups,
+                                          query_params={'not__description': 'imported'},
                                           host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                           return_all=true, max_objects=query_controller_api_max_objects)
                                     if (not current_inventory_groups.has_inventory_sources or current_inventory_groups.kind is match('smart')) else []
                                  }}"
-    first_inventory: "{{ not (__inventories_file.stat.exists | bool) }}"
-    last_inventory: "{{ current_inventory_index == ((inventory_lookvar | length) - 1) }}"
   loop: "{{ inventory_lookvar }}"
   loop_control:
     index_var: current_inventory_index

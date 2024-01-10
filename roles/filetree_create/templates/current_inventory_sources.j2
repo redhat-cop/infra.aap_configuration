@@ -1,4 +1,4 @@
-{% if (current_inventory_index | default(0)) == 0 %}
+{% if first_inventory_source | default(true) | bool %}
 ---
 controller_inventory_sources:
 {% endif %}
@@ -53,6 +53,6 @@ controller_inventory_sources:
 {% endfor %}
 {% endif %}
 {% endfor %}
-{% if last_inventory | default(true) | bool %}
+{% if (last_inventory | default(true) | bool) and (last_inventory_source | default(true) | bool) %}
 ...
 {% endif %}
