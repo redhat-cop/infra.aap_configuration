@@ -77,7 +77,7 @@ This also speeds up the overall role.
 |`proxy_url`|``|no|The URL for the proxy. Defaults to global `proxy_url` variable.||
 |`proxy_username`|``|no|The username for the proxy authentication. Defaults to global `proxy_username` variable.||
 |`proxy_password`|``|no|The password for the proxy authentication. Defaults to global `proxy_password` variable.||
-|`state`|`present`|no|Desired state of the collection_remote. Either `present` or `absent`.|
+|`state`|`present`|no|Desired state of the collection_remote. Either `present` or `absent`.||
 
 ### Standard Project Data Structure
 

@@ -15,7 +15,7 @@ An Ansible Role to update, or destroy Automation Hub Collections.
 |`ah_request_timeout`|`10`|no|Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.||
 |`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 |`ah_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
-|`ah_collections`|`null`|`no`|`see below`|yes|Data structure describing your collections, described below.||
+|`ah_collections`|`see below`|yes|Data structure describing your collections, described below.||
 
 These are the sub options for the vars `ah_collections` which are dictionaries with the options you want. See examples for details.
 |Variable Name|Default Value|Required|Description|Example|
