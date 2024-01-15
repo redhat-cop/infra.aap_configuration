@@ -19,7 +19,7 @@ Currently:
 |`ansible_config_group`|""|no|str|The group the resulting ansible config file or directory should have.|
 |`ah_configuration_working_dir`|"/var/tmp"|no|path|Location to render the ansible config file to.|
 |`automation_hub_list`|`[]`|no|list|A list of Automation hubs and galaxies to put in the ansible config, see below for details.|
-|`ansible_config_list`|`[{"header":"galaxy","keypairs":[{"key":"ignore_certs","value":"{{ not (ah_validate_certs | bool) }}"}]}]`|no|list|A set of ansible config settings, a default is set, but can be overridden, see below for details.|
+|`ansible_config_list`|`[{"header":"galaxy","keypairs":[{"key":"ignore_certs","value":"{{ not (ah_validate_certs \| bool) }}"}]}]`|no|list|A set of ansible config settings, a default is set, but can be overridden, see below for details.|
 |`ah_token`|""|no|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 |`ah_path_prefix`|`galaxy`|no|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 

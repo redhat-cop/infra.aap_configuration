@@ -61,7 +61,7 @@ Each role the dispatch role calls has a separate variable which can be turned on
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-ah_configuration_ee_registry_secure_logging|`False`|no|Whether or not to include the sensitive Registry role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`ah_configuration_ee_registry_secure_logging`|`False`|no|Whether or not to include the sensitive Registry role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`ah_configuration_secure_logging`|""|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
