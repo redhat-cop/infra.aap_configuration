@@ -75,7 +75,7 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of execution environment|
-|`new_name`|""|no|Setting this option will change the existing name (looked up via the name field).|
+|`new_name`|""|no|str|Setting this option will change the existing name (looked up via the name field).|
 |`description`|""|no|str|Description to use for the execution environment.|
 |`image`|""|yes|str|Container image to use for the execution environment|
 |`organization`|""|no|str|The organization the execution environment belongs to.|

@@ -21,7 +21,7 @@ Currently:
 |`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
 |`controller_username`|""|no|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
 |`controller_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
-|`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.|||
+|`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
 |`controller_inventories`|`see below`|yes|Data structure describing your inventories described below. Alias: inventory ||
 
@@ -95,7 +95,7 @@ The role will strip the double space between the curly bracket in order to provi
 |Variable Name|Default Value|Required|type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of this inventory.|
-|`new_name`|""|no|Setting this option will change the existing name (looked up via the name field).|
+|`new_name`|""|no|str|Setting this option will change the existing name (looked up via the name field).|
 |`copy_from`|""|no|str|Name or id to copy the inventory from. This will copy an existing inventory and change any parameters supplied.|
 |`description`|""|no|str|Description of this inventory.|
 |`organization`|""|yes|str|Organization this inventory belongs to.|
