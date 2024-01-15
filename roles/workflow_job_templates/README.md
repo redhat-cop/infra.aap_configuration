@@ -21,7 +21,7 @@ Currently:
 |`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
 |`controller_username`|""|no|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
 |`controller_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
-|`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.|||
+|`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
 |`controller_workflows`|`see below`|yes|Data structure describing your workflow job templates described below. Alias: workflow_job_templates ||
 
@@ -78,7 +78,7 @@ This also speeds up the overall role.
 |`new_name`|""|str|no|Setting this option will change the existing name (looked up via the name field).|
 |`copy_from`|""|no|str|Name or id to copy the Workflow template from. This will copy an existing workflow and change any parameters supplied.|
 |`description`|""|no|str|Description to use for the job template.|
-|`organization`|""|""|no|list|Organization the workflow job template exists in. Used to lookup the object, cannot be changed with this module|
+|`organization`|""|no|list|Organization the workflow job template exists in. Used to lookup the object, cannot be changed with this module|
 |`ask_inventory_on_launch`|""|no|bool|Prompt user for inventory on launch.|
 |`ask_limit_on_launch`|""|no|bool|Prompt user for a limit on launch.|
 |`ask_scm_branch_on_launch`|""|no|bool|Prompt user for scm branch on launch.|
