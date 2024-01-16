@@ -9,7 +9,7 @@ controller_inventory_sources:
     organization: "{{ inventory_source.summary_fields.organization.name }}"
 {% endif %}
     source: "{{ inventory_source.source | default('ToDo: The source of the inventory_source was originally missing and must be specified',true) }}"
-{% if inventory_source.source_project is defined %}
+{% if inventory_source.source_project is defined and inventory_source.source_project != None %}
     source_project: "{{ inventory_source.summary_fields.source_project.name }}"
 {% endif %}
 {% if inventory_source.source_path is defined %}
