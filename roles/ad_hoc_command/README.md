@@ -59,7 +59,7 @@ controller_configuration_ad_hoc_command_secure_logging defaults to the value of 
 |`interval`|2|no|int|The interval to request an update from controller.|
 |`timeout`|""|no|int|If waiting for the command to complete this will abort after this amount of seconds.|
 
-### Standard Project Data Structure
+### Standard Ad Hoc Command Data Structure
 
 #### Yaml Example
 

@@ -54,7 +54,7 @@ This also speeds up the overall role.
 
 ## Data Structure
 
-### Inventory Source Variables
+### Inventory Source Update Variables
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
@@ -65,7 +65,7 @@ This also speeds up the overall role.
 |`interval`|`controller_configuration_inventory_source_update_async_delay`|no|int|The interval to request an update from controller.|
 |`timeout`|""|no|int|If waiting for the job to complete this will abort after this amount of seconds.|
 
-### Standard Project Data Structure
+### Standard Inventory Source Update Data Structure
 
 #### Yaml Example
 

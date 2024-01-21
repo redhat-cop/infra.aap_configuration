@@ -46,7 +46,7 @@ controller_configuration_jobs_cancel_secure_logging defaults to the value of con
 |`id`|""|yes|int|ID of the job to cancel.|
 |`fail_if_not_running`|`False`|no|bool|Fail loudly if the job can not be canceled.|
 
-### Standard Project Data Structure
+### Standard Cancel Jobs Data Structure
 
 #### Yaml Example
 
