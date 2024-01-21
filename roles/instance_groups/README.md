@@ -87,7 +87,7 @@ This also speeds up the overall role.
 |`instances`|""|no|list|The instances associated with this instance_group.|
 |`state`|`present`|no|str|Desired state of the resource.|
 
-### Standard Project Data Structure
+### Standard Instance Group Data Structure
 
 #### Yaml Example
 
@@ -117,7 +117,7 @@ controller_instance_groups:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: infra.controller_configuration.groups, when: controller_groups is defined}
+    - {role: infra.controller_configuration.instance_groups, when: controller_instance_groups is defined}
 ```
 
 ## License
