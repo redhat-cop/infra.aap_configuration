@@ -70,7 +70,7 @@ This also speeds up the overall role.
 |`variables`|""|no|dict|Variables to use for the host.|
 |`instance`|""|no|list|instance to use for the host.|
 
-### Standard Project Data Structure
+### Standard Bulk Host Data Structure
 
 #### Json Example
 

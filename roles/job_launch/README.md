@@ -66,7 +66,7 @@ controller_configuration_job_launch_secure_logging defaults to the value of cont
 |`interval`|2|no|float|The interval to request an update from controller.|
 |`timeout`|""|no|int|If waiting for the job to complete this will abort after this amount of seconds.|
 
-### Standard Project Data Structure
+### Standard Job Launch Data Structure
 
 #### Yaml Example
 

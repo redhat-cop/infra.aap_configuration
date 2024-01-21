@@ -83,7 +83,7 @@ This also speeds up the overall role.
 
 For further details on fields see <https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html>
 
-### Standard Project Data Structure
+### Standard Credential Input Source Data Structure
 
 #### Json Example
 
