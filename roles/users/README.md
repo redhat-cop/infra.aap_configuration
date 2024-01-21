@@ -87,7 +87,7 @@ This also speeds up the overall role.
 |`state`|`present`|no|str|Desired state of the resource.|
 |`update_secrets`|true|no|bool| True will always change password if user specifies password, even if API gives $encrypted$ for password. False will only set the password if other values change too.|
 
-### Standard user Data Structure
+### Standard User Data Structure
 
 #### Json Example
 

@@ -92,7 +92,7 @@ This also speeds up the overall role.
 |`identifier`|""|yes|str|An identifier for the resulting workflow node that represents this job that is unique within its workflow. It is copied to workflow job nodes corresponding to this node. This functions the same as the name field for other resources, however if it is not set, it will be set to a random UUID4 value.|
 |`timeout`|""|no|int|If waiting for the job to complete this will abort after this amount of seconds.|
 
-### Standard Project Data Structure
+### Standard Bulk Job Launch Data Structure
 
 #### Json Example
 

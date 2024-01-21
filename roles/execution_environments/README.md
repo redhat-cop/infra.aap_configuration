@@ -83,7 +83,7 @@ This also speeds up the overall role.
 |`pull`|"missing"|no|choice("always", "missing", "never")|Determine image pull behavior|
 |`state`|`present`|no|str|Desired state of the resource.|
 
-### Standard Project Data Structure
+### Standard Execution Environment Data Structure
 
 #### Json Example
 

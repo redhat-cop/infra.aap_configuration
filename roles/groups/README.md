@@ -105,7 +105,7 @@ The role will strip the double space between the curly bracket in order to provi
 |`preserve_existing_children`|`False`|no|bool|Whether to preserve existing children in an existing group|
 |`state`|`present`|no|str|Desired state of the resource.|
 
-### Standard Organization Data Structure
+### Standard Group Data Structure
 
 #### Json Example
 

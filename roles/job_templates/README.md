@@ -151,7 +151,7 @@ Refer to the [controller Api Guide](https://docs.ansible.com/ansible-tower/lates
 |`choices`|List of choices for a "multi" type|
 |`new_question`|Boolean|
 
-### Standard Project Data Structure
+### Standard Job Template Data Structure
 
 #### Json Example
 

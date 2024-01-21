@@ -102,7 +102,7 @@ The role will strip the double space between the curly bracket in order to provi
 |`variables`|{}|no|str|The variables applicable to the host.|
 |`state`|`present`|no|str|Desired state of the resource.|
 
-### Standard host Data Structure
+### Standard Host Data Structure
 
 #### Json Example
 

@@ -65,7 +65,7 @@ This also speeds up the overall role.
 |`timeout`|""|no|str|If waiting for the job to complete this will abort after this amount of seconds.|
 |`update_project`|`False`|no|bool|If defined and true, the project update will be executed, otherwise it won't.|
 
-### Standard Project Data Structure
+### Standard Project Update Data Structure
 
 #### Yaml Example
 

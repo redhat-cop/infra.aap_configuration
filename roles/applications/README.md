@@ -84,7 +84,7 @@ This also speeds up the overall role.
 |`skip_authorization`|"false"|yes|bool|Set True to skip authorization step for completely trusted applications.|
 |`state`|`present`|no|str|Desired state of the application.|
 
-### Standard Project Data Structure
+### Standard Application Data Structure
 
 #### Json Example
 

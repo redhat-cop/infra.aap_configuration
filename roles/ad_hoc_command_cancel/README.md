@@ -48,7 +48,7 @@ controller_configuration_ad_hoc_command_secure_logging defaults to the value of 
 |`interval`|1|no|int|The interval in seconds, to request an update from.|
 |`timeout`|0|no|int|Maximum time in seconds to wait for a job to finish, 0 means wait until it is finished regardless.|
 
-### Standard Project Data Structure
+### Standard Ad Hoc Command Cancel Data Structure
 
 #### Yaml Example
 
