@@ -70,7 +70,7 @@ This also speeds up the overall role.
 
 ## Data Structure
 
-### Instance Group Variables
+### Instance Variables
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
@@ -82,7 +82,7 @@ This also speeds up the overall role.
 |`node_state`|""|no|str|Indicates the current life cycle stage of this instance. Current options are 'installed' and 'deprovisioning'.|
 |`listener_port`|""|no|int|Port that Receptor will listen for incoming connections on.|
 
-### Standard Project Data Structure
+### Standard Instance Data Structure
 
 #### Yaml Example
 

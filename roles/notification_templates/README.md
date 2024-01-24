@@ -84,7 +84,7 @@ This also speeds up the overall role.
 |`messages`|""|no|list|Optional custom messages for notification template. Assumes any instance of two space __ are used for adding variables and removes them. Does not effect single space.|
 |`state`|`present`|no|str|Desired state of the resource.|
 
-### Standard notification Data Structure
+### Standard Notification Data Structure
 
 #### Json Example
 

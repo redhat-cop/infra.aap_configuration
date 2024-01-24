@@ -74,7 +74,7 @@ The module and this role can use either a manifest file, or lookup the subscript
 |`use_lookup`|`False`|no|bool|Whether or not to lookup subscriptions.|
 |`state`|`present`|no|str|Desired state of the resource.|
 
-### Standard Project Data Structure
+### Standard License Data Structure
 
 #### Json Example
 

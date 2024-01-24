@@ -108,12 +108,12 @@ This also speeds up the overall role.
 |Vault|
 |VMware vCenter|
 
-### Standard Organization Data Structure
+### Standard Credential Data Structure
 
 #### Json Example
 
 ```json
----
+
 {
     "controller_credentials": [
       {
