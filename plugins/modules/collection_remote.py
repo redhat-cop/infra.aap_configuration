@@ -127,7 +127,7 @@ options:
     description:
       - Whether to download depenencies when syncing collections.
     type: bool
-    default: False
+    default: True
   proxy_url:
     description:
       - Proxy URL to use for the connection
@@ -202,7 +202,7 @@ def main():
         max_retries=dict(type='int', default=0),
         rate_limit=dict(type='int', default=8),
         signed_only=dict(type="bool", default=False),
-        sync_dependencies=dict(type="bool", default=False),
+        sync_dependencies=dict(type="bool", default=True),
         proxy_url=dict(),
         proxy_username=dict(),
         proxy_password=dict(no_log=True),
