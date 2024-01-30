@@ -73,7 +73,7 @@ This also speeds up the overall role.
 |`max_retries`|`0`|no|Retries to use when running sync. Default is 0 which does not limit.||
 |`rate_limit`|`8`|no|Limits total download rate in requests per second.||
 |`signed_only`|`False`|no|Only download signed collections|False|
-|`sync_dependencies`|`False`|no|Whether to download depenencies when syncing collections.|False|
+|`sync_dependencies`|`True`|no|Whether to download depenencies when syncing collections.|False|
 |`proxy_url`|``|no|The URL for the proxy. Defaults to global `proxy_url` variable.||
 |`proxy_username`|``|no|The username for the proxy authentication. Defaults to global `proxy_username` variable.||
 |`proxy_password`|``|no|The password for the proxy authentication. Defaults to global `proxy_password` variable.||
