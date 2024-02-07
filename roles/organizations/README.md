@@ -24,6 +24,8 @@ Currently:
 |`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
 |`controller_organizations`|`see below`|yes|Data structure describing your organization or organizations Described below. Alias: organizations ||
+|`assign_galaxy_credentials_to_org`|`True`|no|Boolean to indicate whether credentials should be assigned or not. It should be noted that credentials must exist before adding it. This is automatically set to `False` if this role is used via the dispatcher role. |
+|`assign_default_ee_to_org`|`True`|no|Boolean to indicate whether default execution environment should be assigned or not. It should be noted that execution environment must exist before adding it. This is automatically set to `False` if this role is used via the dispatcher role. |
 
 ### Enforcing defaults
 
@@ -88,8 +90,6 @@ This role accepts two data models. A simple straightforward easy to maintain mod
 |`notification_templates_error`|""|no|list|The notifications on error to use for this organization in a list.|
 |`notification_templates_approvals`|""|no|list|The notifications for approval to use for this organization in a list.|
 |`state`|`present`|no|str|Desired state of the resource.|
-|`assign_galaxy_credentials_to_org`|`True`|no|bool|Boolean to indicate whether credentials should be assigned or not. It should be noted that credentials must exist before adding it. |
-|`assign_default_ee_to_org`|`True`|no|bool|Boolean to indicate whether default execution environment should be assigned or not. It should be noted that execution environment must exist before adding it. |
 
 ### Standard Organization Data Structure model
 
