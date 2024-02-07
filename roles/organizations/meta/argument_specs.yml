@@ -58,21 +58,22 @@ argument_specs:
         #     type: list
         #     elements: str
         #     description: The notifications for approval to use for this organization in a list.
-        #   assign_galaxy_credentials_to_org:
-        #     default: true
-        #     required: false
-        #     type: bool
-        #     description: Boolean to indicate whether credentials should be assigned or not. It should be noted that credentials must exist before adding it.
-        #   assign_default_ee_to_org:
-        #     default: true
-        #     required: false
-        #     type: bool
-        #     description: Boolean to indicate whether default execution environment should be assigned or not. It should be noted that execution environment must exist before adding it.
         #   state:
         #     default: "{{ controller_state | default('present') }}"
         #     required: false
         #     type: str
         #     description: Desired state of the resource.
+
+      assign_galaxy_credentials_to_org:
+        default: true
+        required: false
+        type: bool
+        description: Boolean to indicate whether credentials should be assigned to the organization or not. It should be noted that credentials must exist before adding it.
+      assign_default_ee_to_org:
+        default: true
+        required: false
+        type: bool
+        description: Boolean to indicate whether default execution environment should be assigned to the organization or not. It should be noted that execution environment must exist before adding it.
 
       # Async variables
       controller_configuration_organizations_async_retries:
