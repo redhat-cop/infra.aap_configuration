@@ -3,21 +3,36 @@
   when:
     - flatten_output is defined
     - flatten_output | bool
+  vars:
+    __dest: "{{ inventory_sources_output_path }}"
   block:
+    - name: "Stat if the output file exists"
+      ansible.builtin.stat:
+        path: "{{ __dest }}"
+      register: __inventory_sources_file
+
+    - name: "Remove the yaml finalizer if it's already present"
+      ansible.builtin.lineinfile:
+        path: "{{ __dest }}"
+        line: "..."
+        state: absent
+      when: __inventory_sources_file.stat.exists | bool
+
     - name: "Add current inventory source to the inventory sources flat file"
       ansible.builtin.blockinfile:
         create: true
         mode: "0644"
         insertafter: EOF
-        path: "{{ inventory_sources_output_path }}"
+        path: "{{ __dest }}"
         marker: ""
         block: "{{ lookup('template', 'templates/current_inventory_sources.j2') }}"
       vars:
-        last_inventory: "{{ current_inventory_for_sources_index == ((inventory_lookvar | length) - 1) }}"
+        first_inventory_source: "{{ not (__inventory_sources_file.stat.exists | bool) }}"
+        last_inventory_source: "{{ current_inventory_for_sources_index == ((inventory_lookvar | length) - 1) }}"
 
     - name: "Remove all the blank lines introduced by the last task"
       ansible.builtin.lineinfile:
-        path: "{{ inventory_sources_output_path }}"
+        path: "{{ __dest }}"
         line: ''
         state: absent
 

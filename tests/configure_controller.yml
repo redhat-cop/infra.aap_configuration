@@ -170,7 +170,7 @@
         validate_certs:          "{{ controller_validate_certs }}"
       ignore_errors: true  # noqa ignore-errors
 
-    - name: Get the organization ID
+    - name: "Get the organization ID"
       ansible.builtin.set_fact:
         controller_organization_id: "{{ lookup(controller_api_plugin, 'organizations', query_params={'name': 'Default'}, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
 

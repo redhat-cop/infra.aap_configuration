@@ -75,7 +75,7 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of application|
-|`new_name`|""|no|Setting this option will change the existing name (looked up via the name field).|
+|`new_name`|""|no|str|Setting this option will change the existing name (looked up via the name field).|
 |`organization`|""|yes|str|Name of the organization for the application|
 |`description`|""|no|str|Description to use for the application.|
 |`authorization_grant_type`|"password"|yes|str|Grant type for tokens in this application, "password" or "authorization-code"|
@@ -84,7 +84,7 @@ This also speeds up the overall role.
 |`skip_authorization`|"false"|yes|bool|Set True to skip authorization step for completely trusted applications.|
 |`state`|`present`|no|str|Desired state of the application.|
 
-### Standard Project Data Structure
+### Standard Application Data Structure
 
 #### Json Example
 

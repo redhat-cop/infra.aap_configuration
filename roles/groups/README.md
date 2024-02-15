@@ -21,7 +21,7 @@ Currently:
 |`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
 |`controller_username`|""|no|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
 |`controller_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
-|`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.|||
+|`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
 |`controller_groups`|`see below`|yes|Data structure describing your group or groups Described below.||
 
@@ -105,7 +105,7 @@ The role will strip the double space between the curly bracket in order to provi
 |`preserve_existing_children`|`False`|no|bool|Whether to preserve existing children in an existing group|
 |`state`|`present`|no|str|Desired state of the resource.|
 
-### Standard Organization Data Structure
+### Standard Group Data Structure
 
 #### Json Example
 

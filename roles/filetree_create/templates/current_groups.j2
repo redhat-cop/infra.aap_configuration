@@ -1,4 +1,4 @@
-{% if ((first_inventory | default(true) | bool) and ((current_inventory_index | default(0)) == 0)) %}
+{% if first_group | default(true) | bool %}
 ---
 controller_groups:
 {% endif %}
@@ -17,6 +17,4 @@ controller_groups:
    ) | selectattr("name", "defined") | map(attribute="name") | to_nice_yaml(indent=2) | indent(width=6, first=True)
 }}
 {%- endfor -%}
-{% if last_inventory | default(true) | bool %}
 ...
-{% endif %}

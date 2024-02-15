@@ -144,7 +144,7 @@ required:
 }
 ```
 
-### Standard Organization Data Structure
+### Standard Credential Type Data Structure
 
 #### Json Example
 

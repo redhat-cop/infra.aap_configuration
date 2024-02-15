@@ -84,7 +84,7 @@ This also speeds up the overall role.
 |`user`|""|no|User that should own this credential. If provided, do not give either team or organization. |
 |`team`|""|no|Team that should own this credential. If provided, do not give either user or organization. |
 |`state`|`present`|no|Desired state of the resource.|
-|`update_secrets`|true|no|bool| True will always change password if user specifies password, even if API gives $encrypted$ for password. False will only set the password if other values change too.|
+|`update_secrets`|true|no| True will always change password if user specifies password, even if API gives $encrypted$ for password. False will only set the password if other values change too.|
 
 ### Credential types
 
@@ -108,12 +108,12 @@ This also speeds up the overall role.
 |Vault|
 |VMware vCenter|
 
-### Standard Organization Data Structure
+### Standard Credential Data Structure
 
 #### Json Example
 
 ```json
----
+
 {
     "controller_credentials": [
       {

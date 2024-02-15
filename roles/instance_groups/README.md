@@ -21,7 +21,7 @@ Currently:
 |`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
 |`controller_username`|""|no|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
 |`controller_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
-|`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.|||
+|`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
 |`controller_instance_groups`|`see below`|yes|Data structure describing your instance groups Described below.||
 
@@ -76,7 +76,7 @@ This also speeds up the overall role.
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of this instance group.|
 |`new_name`|""|str|no|Setting this option will change the existing name (looked up via the name field).|
-|`credential`|""|no|str|Credential to authenticate with Kubernetes or OpenShift. Must be of type "Kubernetes/OpenShift API Bearer Token". Will make instance part of a Container Group. |.
+|`credential`|""|no|str|Credential to authenticate with Kubernetes or OpenShift. Must be of type "Kubernetes/OpenShift API Bearer Token". Will make instance part of a Container Group.|
 |`is_container_group`|False|no|bool|Signifies that this InstanceGroup should act as a ContainerGroup. If no credential is specified, the underlying Pod's ServiceAccount will be used.|
 |`policy_instance_percentage`|""|no|int|Minimum percentage of all instances that will be automatically assigned to this group when new instances come online.|
 |`policy_instance_minimum`|""|no|int|Static minimum number of Instances that will be automatically assign to this group when new instances come online.|
@@ -87,7 +87,7 @@ This also speeds up the overall role.
 |`instances`|""|no|list|The instances associated with this instance_group.|
 |`state`|`present`|no|str|Desired state of the resource.|
 
-### Standard Project Data Structure
+### Standard Instance Group Data Structure
 
 #### Yaml Example
 
@@ -117,7 +117,7 @@ controller_instance_groups:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: infra.controller_configuration.groups, when: controller_groups is defined}
+    - {role: infra.controller_configuration.instance_groups, when: controller_instance_groups is defined}
 ```
 
 ## License

@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Organization not defined when exporting some inventory sources from Tower 3.7.2
+  - Constructed inventories can only be exported when AAP version is >= 4.5.0
