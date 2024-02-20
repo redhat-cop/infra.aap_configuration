@@ -6,7 +6,7 @@
     name:             "{{ __group.name | default(omit) }}"
     # new_name:         "{{ __group.new_name | default(omit) }}"  <-- Needs adding once new_name option added to module
     state:            "{{ __group.state | default(ah_state | default('present')) }}"
-    ah_host:          "{{ ah_host | default(ah_hostname) }}"
+    ah_host:          "{{ ah_host | default(ah_hostname) | default(omit) }}"
     ah_username:      "{{ ah_username | default(omit) }}"
     ah_password:      "{{ ah_password | default(omit) }}"
     ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
@@ -43,7 +43,7 @@
     name:             "{{ __group.new_name | default(__group.name | default(omit)) }}"
     perms:            "{{ __group.perms }}"
     state:            "{{ __group.state | default(ah_state | default('present')) }}"
-    ah_host:          "{{ ah_host | default(ah_hostname) }}"
+    ah_host:          "{{ ah_host | default(ah_hostname) | default(omit) }}"
     ah_username:      "{{ ah_username | default(omit) }}"
     ah_password:      "{{ ah_password | default(omit) }}"
     ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"

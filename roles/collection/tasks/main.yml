@@ -12,7 +12,7 @@
     interval:              "{{ __collection.interval | default(omit) }}"
     overwrite_existing:    "{{ __collection.overwrite_existing | default(omit) }}"
     state:                 "{{ __collection.state | default('present') }}"
-    ah_host:               "{{ ah_host | default(ah_hostname) }}"
+    ah_host:               "{{ ah_host | default(ah_hostname) | default(omit) }}"
     ah_username:           "{{ ah_username | default(omit) }}"
     ah_password:           "{{ ah_password | default(omit) }}"
     ah_token:              "{{ ah_token | default(omit) }}"

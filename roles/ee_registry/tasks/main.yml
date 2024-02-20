@@ -11,7 +11,7 @@
     download_concurrency:   "{{ __ee_registry_item.download_concurrency | default(omit) }}"
     rate_limit:             "{{ __ee_registry_item.rate_limit | default(omit) }}"
     state:                  "{{ __ee_registry_item.state | default(ah_state | default('present')) }}"
-    ah_host:                "{{ ah_host | default(ah_hostname) }}"
+    ah_host:                "{{ ah_host | default(ah_hostname) | default(omit) }}"
     ah_username:            "{{ ah_username | default(omit) }}"
     ah_password:            "{{ ah_password | default(omit) }}"
     ah_path_prefix:         "{{ ah_path_prefix | default(omit) }}"

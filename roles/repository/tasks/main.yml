@@ -23,7 +23,7 @@
     proxy_url:                "{{ __repository_item.proxy_url | default(proxy_url | default(omit)) }}"
     proxy_username:           "{{ __repository_item.proxy_username | default(proxy_username | default(omit)) }}"
     proxy_password:           "{{ __repository_item.proxy_password | default(proxy_password | default(omit)) }}"
-    ah_host:                  "{{ ah_host | default(ah_hostname) }}"
+    ah_host:                  "{{ ah_host | default(ah_hostname) | default(omit) }}"
     ah_username:              "{{ ah_username | default(omit) }}"
     ah_password:              "{{ ah_password | default(omit) }}"
     ah_token:                 "{{ ah_token | default(omit) }}"
