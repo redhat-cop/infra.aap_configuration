@@ -65,7 +65,6 @@ argument_specs:
         required: false
         description: The path for the Automation Hub API. Usually galaxy or automation-hub unless custom set in AH settings.
       ah_validate_certs:
-        default: true
         required: false
         description: Whether or not to validate the Automation Hub Server's SSL certificate.
         type: str
