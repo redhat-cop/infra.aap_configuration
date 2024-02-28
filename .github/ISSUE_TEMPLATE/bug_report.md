@@ -74,4 +74,4 @@ Include a [minimum complete verifiable example] with:
 
 <!--- HINT: You can paste gist.github.com links for larger files -->
 
-[minimum complete verifiable example]: http://stackoverflow.com/help/mcve
+<!-- [minimum complete verifiable example]: http://stackoverflow.com/help/mcve -->

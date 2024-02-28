@@ -31,4 +31,8 @@
     - name: Sync project
       ansible.builtin.include_role:
         name: project_sync
+
+    - name: Create credential
+      ansible.builtin.include_role:
+        name: credential
 ...
