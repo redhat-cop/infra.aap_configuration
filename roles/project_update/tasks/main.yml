@@ -37,7 +37,7 @@
     error_flag: true
   when: ansible_check_mode and __project_update_job_async.failed is defined and __project_update_job_async.failed
 
-- name: "Configure Controller Projects | Wait for finish the projects creation"
+- name: "Configure Controller Projects | Wait for finish the projects update"
   ansible.builtin.async_status:
     jid: "{{ __project_update_job_async_results_item.ansible_job_id }}"
   register: __project_update_job_async_result
