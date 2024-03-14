@@ -81,6 +81,10 @@ differential_items:
         organization: Default
         credential_type: "Machine"
     expected_test_result:
+      - name: galaxy-server
+        credential_type: Ansible Galaxy/Automation Hub API Token
+        organization: Default
+        state: absent
       - name: gitlab
         organization: Default
         credential_type: "Source Control"

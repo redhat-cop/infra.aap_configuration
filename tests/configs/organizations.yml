@@ -2,4 +2,9 @@
 controller_organizations:
   - name: Satellite
   - name: Default
+  - name: Test-dispatch-dependencies
+    galaxy_credentials:
+      - galaxy-server
+    notification_templates_approvals:
+      - Email notification
 ...
