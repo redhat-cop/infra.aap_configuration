@@ -1,0 +1,5 @@
+---
+minor_changes:
+  - Add `assign_notification_templates_to_org` option to organization role to allow conditional assigning of notification templates
+  - Updated dispatch role with `assign_notification_templates_to_org` option assigned to organization as False on first run and True on second run by default.
+...

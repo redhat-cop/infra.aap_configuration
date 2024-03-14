@@ -14,6 +14,7 @@ controller_configuration_dispatcher_roles:
     tags: organizations
     assign_galaxy_credentials_to_org: false
     assign_default_ee_to_org: false
+    assign_notification_templates_to_org: false
   - role: labels
     var: controller_labels
     tags: labels
@@ -35,14 +36,15 @@ controller_configuration_dispatcher_roles:
   - role: execution_environments
     var: controller_execution_environments
     tags: execution_environments
+  - role: notification_templates
+    var: controller_notifications
+    tags: notification_templates
   - role: organizations
     var: controller_organizations
     tags: organizations
     assign_galaxy_credentials_to_org: true
     assign_default_ee_to_org: true
-  - role: notification_templates
-    var: controller_notifications
-    tags: notification_templates
+    assign_notification_templates_to_org: true
   - role: projects
     var: controller_projects
     tags: projects

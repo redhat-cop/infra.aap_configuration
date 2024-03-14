@@ -22,4 +22,19 @@ organizations:
       notification_templates_success: []
       notification_templates_error: []
       notification_templates_approvals: []
+  - name: Test-dispatch-dependencies
+    max_hosts: 0
+    natural_key:
+      name: Test-dispatch-dependencies
+      type: organization
+    related:
+      notification_templates_approvals:
+        - name: Email notification
+          organization:
+            name: Default
+            type: organization
+          type: notification_template
+      notification_templates_error: []
+      notification_templates_started: []
+      notification_templates_success: []
 ...

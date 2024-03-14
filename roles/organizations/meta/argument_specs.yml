@@ -74,6 +74,11 @@ argument_specs:
         required: false
         type: bool
         description: Boolean to indicate whether default execution environment should be assigned to the organization or not. It should be noted that execution environment must exist before adding it.
+      assign_notification_templates_to_org:
+        default: true
+        required: false
+        type: bool
+        description: Boolean to indicate whether notification templates should be assigned to the organization or not. It should be noted that notification templates must exist before adding them.
 
       # Async variables
       controller_configuration_organizations_async_retries:

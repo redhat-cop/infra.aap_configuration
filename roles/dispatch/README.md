@@ -26,9 +26,10 @@ controller_configuration_dispatcher_roles:
   - {role: credential_types, var: controller_credential_types, tags: credential_types}
   - {role: credentials, var: controller_credentials, tags: credentials}
   - {role: credential_input_sources, var: controller_credential_input_sources, tags: credential_input_sources}
-  - {role: notification_templates, var: controller_notifications, tags: notification_templates}
-  - {role: projects, var: controller_projects, tags: projects}
   - {role: execution_environments, var: controller_execution_environments, tags: execution_environments}
+  - {role: notification_templates, var: controller_notifications, tags: notification_templates}
+  - {role: organizations, var: controller_organizations, tags: organizations}  # Rerunning with additional dependant values set to be added to the org
+  - {role: projects, var: controller_projects, tags: projects}
   - {role: applications, var: controller_applications, tags: applications}
   - {role: inventories, var: controller_inventories, tags: inventories}
   - {role: instance_groups, var: controller_instance_groups, tags: instance_groups}
