@@ -75,12 +75,14 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`hostname`|""|yes|str|Hostname of this instance.|
-|`capacity_adjustment`|""|float|no|Capacity adjustment between 0 and 1. |
+|`capacity_adjustment`|""|float|no|Capacity adjustment between 0 and 1.|
 |`enabled`|False|no|bool|If true, the instance will be enabled and used.|
 |`managed_by_policy`|False|no|bool|If true, will be managed by instance group policy.|
 |`node_type`|""|no|str|Role that this node plays in the mesh. Most likely Execution. Current options are 'execution'.|
 |`node_state`|""|no|str|Indicates the current life cycle stage of this instance. Current options are 'installed' and 'deprovisioning'.|
 |`listener_port`|""|no|int|Port that Receptor will listen for incoming connections on.|
+|`peers`|[]|no|list|List of peers to connect outbound to. Only configurable for hop and execution nodes.|
+|`peers_from_control_nodes`|False|no|bool|If enabled, control plane nodes will automatically peer to this node.|
 
 ### Standard Instance Data Structure
 
