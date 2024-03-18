@@ -19,5 +19,6 @@
       loop: "{{ __list_files.files }}"
       loop_control:
         loop_var: __file
-...
+
 # ansible-playbook set_organization.yaml -e '{path: /home/ivan/tmp, new_organization: "Linux_Squad[ORG]"}'
+...
