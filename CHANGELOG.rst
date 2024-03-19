@@ -1,9 +1,26 @@
-============================================
-infra.controller_configuration Release Notes
-============================================
+=============================================
+infra.controller\_configuration Release Notes
+=============================================
 
 .. contents:: Topics
 
+v2.7.1
+======
+
+Minor Changes
+-------------
+
+- Add `assign_notification_templates_to_org` option to organization role to allow conditional assigning of notification templates
+- Updated dispatch role with `assign_notification_templates_to_org` option assigned to organization as False on first run and True on second run by default.
+- instance role - add missing arguments introduced in ansible.controller 4.5.0 or awx.awx 23.0.0
+
+Bugfixes
+--------
+
+- Constructed inventories can only be exported when AAP version is >= 4.5.0
+- Fixed roles diff when the role is set at the organization level for an user/team
+- Fixed roles diff when the roles are provided as a list, in a single entry
+- Organization not defined when exporting some inventory sources from Tower 3.7.2
 
 v2.6.0
 ======
