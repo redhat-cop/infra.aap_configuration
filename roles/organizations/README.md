@@ -80,6 +80,7 @@ This role accepts two data models. A simple straightforward easy to maintain mod
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of Organization|
+|`new_name`|""|no|str|New name of Organization|
 |`description`|`False`|no|str|Description of  of Organization.|
 |`custom_virtualenv`|""|no|str|Local absolute file path containing a custom Python virtualenv to use.|
 |`max_hosts`|""|no|int|The max hosts allowed in this organization.|
@@ -185,7 +186,7 @@ controller_organizations:
 
 ## License
 
-[MIT](https://github.com/redhat-cop/controller_configuration#licensing)
+[GPL-3.0](https://github.com/redhat-cop/controller_configuration#licensing)
 
 ## Author
 

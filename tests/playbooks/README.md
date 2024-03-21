@@ -132,7 +132,7 @@ You have make the following configurations in order to configure CD integration:
 
 ## License
 
-[MIT](https://github.com/redhat-cop/controller_configuration#licensing)
+[GPL-3.0](https://github.com/redhat-cop/controller_configuration#licensing)
 
 ## Author
 
