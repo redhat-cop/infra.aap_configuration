@@ -3,17 +3,11 @@
 blank_issues_enabled: false # default is true
 contact_links:
   - name: Help and Support
-    url: https://forum.ansible.com/tag/infra-config-as-code
-    about: We use the ansible forums for Annoucements, Getting Help, and more!
-  - name: Feature requests
-    url: https://github.com/redhat-cop/controller_configuration/discussions/categories/ideas
-    about: Suggest an idea for this project
-  - name: Discussions
-    url: https://github.com/redhat-cop/controller_configuration/discussions
-    about: Any kind of questions should go on the forum.
-  - name: Matrix room
     url: https://matrix.to/#/#aap_config_as_code:ansible.com
-    about: Matrix room for questions and discussion.
+    about: Matrix room for questions. (or go to the forums)
+  - name: Feature requests
+    url: https://forum.ansible.com/tag/infra-config-as-code
+    about: Any kind of questions or ideas should go on the forum.
   - name: Ansible Code of Conduct
     url: https://docs.ansible.com/ansible/latest/community/code_of_conduct.html
     about: Be nice to other members of the community. Behave.

@@ -1,3 +1,0 @@
----
-minor_changes:
-  - instance role - add missing arguments introduced in ansible.controller 4.5.0 or awx.awx 23.0.0
