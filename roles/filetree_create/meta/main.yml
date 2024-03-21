@@ -15,9 +15,9 @@ galaxy_info:
   # - GPL-3.0-only
   # - Apache-2.0
   # - CC-BY-4.0
-  license: GPL3+
+  license: GPL-3.0-or-later
 
-  min_ansible_version: "2.10"
+  min_ansible_version: 2.14.0
 
   # If this a Container Enabled role, provide the minimum Ansible Container version.
   # min_ansible_container_version:
