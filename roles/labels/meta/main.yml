@@ -5,9 +5,9 @@ galaxy_info:
   description: "An Ansible role to create labels in Ansible Controller.."
   company: "Red Hat"
 
-  license: "MIT"
+  license: GPL-3.0-or-later
 
-  min_ansible_version: "2.4"
+  min_ansible_version: 2.14.0
 
   platforms:
     - name: "EL"
