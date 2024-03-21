@@ -195,4 +195,6 @@ Please read and familiarize yourself with this document.
 
 ## Licensing
 
-MIT See [LICENSE](LICENSE) to see the full text.
+GNU General Public License v3.0 or later.
+
+See [LICENSE](LICENSE) to see the full text.
