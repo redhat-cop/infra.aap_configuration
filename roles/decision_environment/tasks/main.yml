@@ -1,0 +1,42 @@
+---
+
+# Create EDA Controller Decision Environment
+- name: Add EDA Controller decision environment
+  decision_environment:
+    name:             "{{ __de_item.name }}"
+    new_name:         "{{ __de_item.new_name | default(omit) }}"
+    description:      "{{ __de_item.description | default(omit) }}"
+    image_url:        "{{ __de_item.image_url | default(omit) }}"
+    credential:       "{{ __de_item.credential | default(omit) }}"
+    state:            "{{ __de_item.state | default(eda_state | default('present')) }}"
+    eda_host:         "{{ eda_host | default(eda_hostname) }}"
+    eda_username:     "{{ eda_username | default(omit) }}"
+    eda_password:     "{{ eda_password | default(omit) }}"
+    validate_certs:   "{{ eda_validate_certs | default(omit) }}"
+    request_timeout:  "{{ eda_request_timeout | default(omit) }}"
+  loop: "{{ eda_decision_environments }}"
+  loop_control:
+    loop_var: "__de_item"
+  no_log: "{{ eda_configuration_decision_environment_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __decision_environments_job_async
+  changed_when: not __decision_environments_job_async.changed
+  vars:
+    ansible_async_dir: '{{ eda_configuration_async_dir }}'
+
+- name: "Create decision_environment | Wait for finish the decision_environment creation"
+  ansible.builtin.async_status:
+    jid: "{{ __decision_environments_job_async_result_item.ansible_job_id }}"
+  register: __decision_environments_job_async_result
+  until: __decision_environments_job_async_result.finished
+  retries: "{{ eda_configuration_decision_environment_async_retries }}"
+  delay: "{{ eda_configuration_decision_environment_async_delay }}"
+  loop: "{{ __decision_environments_job_async.results }}"
+  loop_control:
+    loop_var: __decision_environments_job_async_result_item
+  when: __decision_environments_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ eda_configuration_decision_environment_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ eda_configuration_async_dir }}'
+...
