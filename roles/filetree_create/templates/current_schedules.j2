@@ -73,7 +73,7 @@ controller_schedules:
     limit: "{{ current_schedules_asset_value.limit }}"
 {% endif %}
 {% if current_schedules_asset_value.diff_mode is defined and current_schedules_asset_value.diff_mode | type_debug != "NoneType" %}
-    diff_mode: {{ current_schedules_asset_value.diff_mode | bool }}
+    diff_mode: {{ current_schedules_asset_value.diff_mode | bool | lower }}
 {% endif %}
 {% if current_schedules_asset_value.verbosity is defined %}
     verbosity: {{ current_schedules_asset_value.verbosity | int }}
