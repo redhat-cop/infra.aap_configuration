@@ -1,0 +1,26 @@
+---
+- name: "Play to rename an object to every other object that is using it"
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: "Get all the files using this object from the specified path"
+      ansible.builtin.find:
+        paths: "{{ path }}"
+        file_type: file
+        recurse: true
+        read_whole_file: true
+        contains: "{{ current_name | regex_escape() }}"
+      register: __list_files
+
+    - name: "Update the name into the found files"
+      ansible.builtin.replace:
+        path: "{{ __file.path }}"
+        regexp: '^(.*){{ current_name | regex_escape() }}(.*)$'
+        replace: '\1{{ new_name }}\2'
+      loop: "{{ __list_files.files }}"
+      loop_control:
+        loop_var: __file
+
+# ansible-playbook rename_objects.yaml -e '{path: /home/ivan/tmp, current_name: "Current Name", new_name: "New Name"}'
+...
