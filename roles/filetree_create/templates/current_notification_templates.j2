@@ -12,7 +12,7 @@ controller_notifications:
 {% elif (value | type_debug == 'int') %}
       {{ key }}: {{ value | int }}
 {% elif (value | lower) is match('true') or (value | lower) is match('false') %}
-      {{ key }}: {{ value | bool }}
+      {{ key }}: {{ value | bool | lower }}
 {% else %}
       {{ key }}: {{ '!unsafe ' if (value | regex_search('{{')) }}"{{ value | replace('\n','\\n') | replace('"', '\\"') }}"
 {% endif %}

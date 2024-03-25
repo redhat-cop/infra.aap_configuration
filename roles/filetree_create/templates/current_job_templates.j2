@@ -16,48 +16,48 @@ controller_templates:
     verbosity: {{ current_job_templates_asset_value.verbosity }}
     job_type: "{{ current_job_templates_asset_value.job_type }}"
     job_slice_count: {{ current_job_templates_asset_value.job_slice_count }}
-    use_fact_cache: {{ current_job_templates_asset_value.use_fact_cache | bool }}
+    use_fact_cache: {{ current_job_templates_asset_value.use_fact_cache | bool | lower }}
 {% if current_job_templates_asset_value.summary_fields.credentials %}
     credentials:
 {% for credential in current_job_templates_asset_value.summary_fields.credentials %}
       - "{{ credential.name }}"
 {% endfor %}
 {% endif %}
-    allow_simultaneous: {{ current_job_templates_asset_value.allow_simultaneous | bool }}
-    ask_scm_branch_on_launch: {{ current_job_templates_asset_value.ask_scm_branch_on_launch | bool }}
-    ask_diff_mode_on_launch: {{ current_job_templates_asset_value.ask_diff_mode_on_launch | bool }}
-    ask_tags_on_launch: {{ current_job_templates_asset_value.ask_tags_on_launch | bool }}
-    ask_skip_tags_on_launch: {{ current_job_templates_asset_value.ask_skip_tags_on_launch | bool }}
-    ask_job_type_on_launch: {{ current_job_templates_asset_value.ask_job_type_on_launch | bool }}
-    ask_verbosity_on_launch: {{ current_job_templates_asset_value.ask_verbosity_on_launch | bool }}
-    ask_variables_on_launch: {{ current_job_templates_asset_value.ask_variables_on_launch | bool }}
-    ask_inventory_on_launch: {{ current_job_templates_asset_value.ask_inventory_on_launch | bool }}
-    ask_limit_on_launch: {{ current_job_templates_asset_value.ask_limit_on_launch | bool }}
-    ask_credential_on_launch: {{ current_job_templates_asset_value.ask_credential_on_launch | bool }}
+    allow_simultaneous: {{ current_job_templates_asset_value.allow_simultaneous | bool | lower }}
+    ask_scm_branch_on_launch: {{ current_job_templates_asset_value.ask_scm_branch_on_launch | bool | lower }}
+    ask_diff_mode_on_launch: {{ current_job_templates_asset_value.ask_diff_mode_on_launch | bool | lower }}
+    ask_tags_on_launch: {{ current_job_templates_asset_value.ask_tags_on_launch | bool | lower }}
+    ask_skip_tags_on_launch: {{ current_job_templates_asset_value.ask_skip_tags_on_launch | bool | lower }}
+    ask_job_type_on_launch: {{ current_job_templates_asset_value.ask_job_type_on_launch | bool | lower }}
+    ask_verbosity_on_launch: {{ current_job_templates_asset_value.ask_verbosity_on_launch | bool | lower }}
+    ask_variables_on_launch: {{ current_job_templates_asset_value.ask_variables_on_launch | bool | lower }}
+    ask_inventory_on_launch: {{ current_job_templates_asset_value.ask_inventory_on_launch | bool | lower }}
+    ask_limit_on_launch: {{ current_job_templates_asset_value.ask_limit_on_launch | bool | lower }}
+    ask_credential_on_launch: {{ current_job_templates_asset_value.ask_credential_on_launch | bool | lower }}
 {% if current_job_templates_asset_value.ask_execution_environment_on_launch is defined %}
-    ask_execution_environment_on_launch: {{ current_job_templates_asset_value.ask_execution_environment_on_launch | bool }}
+    ask_execution_environment_on_launch: {{ current_job_templates_asset_value.ask_execution_environment_on_launch | bool | lower }}
 {% endif %}
 {% if current_job_templates_asset_value.ask_labels_on_launch is defined %}
-    ask_labels_on_launch: {{ current_job_templates_asset_value.ask_labels_on_launch | bool }}
+    ask_labels_on_launch: {{ current_job_templates_asset_value.ask_labels_on_launch | bool | lower }}
 {% endif %}
 {% if current_job_templates_asset_value.ask_forks_on_launch is defined %}
-    ask_forks_on_launch: {{ current_job_templates_asset_value.ask_forks_on_launch | bool }}
+    ask_forks_on_launch: {{ current_job_templates_asset_value.ask_forks_on_launch | bool | lower }}
 {% endif %}
 {% if current_job_templates_asset_value.ask_job_slice_count_on_launch is defined %}
-    ask_job_slice_count_on_launch: {{ current_job_templates_asset_value.ask_job_slice_count_on_launch | bool }}
+    ask_job_slice_count_on_launch: {{ current_job_templates_asset_value.ask_job_slice_count_on_launch | bool | lower }}
 {% endif %}
 {% if current_job_templates_asset_value.ask_timeout_on_launch is defined %}
-    ask_timeout_on_launch: {{ current_job_templates_asset_value.ask_timeout_on_launch | bool }}
+    ask_timeout_on_launch: {{ current_job_templates_asset_value.ask_timeout_on_launch | bool | lower }}
 {% endif %}
 {% if current_job_templates_asset_value.ask_instance_groups_on_launch is defined %}
-    ask_instance_groups_on_launch: {{ current_job_templates_asset_value.ask_instance_groups_on_launch | bool }}
+    ask_instance_groups_on_launch: {{ current_job_templates_asset_value.ask_instance_groups_on_launch | bool | lower }}
 {% endif %}
 {% if current_job_templates_asset_value.extra_vars and current_job_templates_asset_value.extra_vars | length > 3 %}
     extra_vars:
       {{ current_job_templates_asset_value.extra_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") }}
 {%- endif %}
     job_tags: "{{ current_job_templates_asset_value.job_tags }}"
-    force_handlers: {{ current_job_templates_asset_value.force_handlers | bool }}
+    force_handlers: {{ current_job_templates_asset_value.force_handlers | bool | lower }}
     skip_tags: "{{ current_job_templates_asset_value.skip_tags }}"
     start_at_task: "{{ current_job_templates_asset_value.start_at_task }}"
     timeout: {{ current_job_templates_asset_value.timeout | int }}
@@ -92,7 +92,7 @@ controller_templates:
       - "{{ notification_success.name }}"
 {% endfor %}
 {% endif %}
-    survey_enabled: {{ current_job_templates_asset_value.survey_enabled | bool }}
+    survey_enabled: {{ current_job_templates_asset_value.survey_enabled | bool | lower }}
 {% set survey_spec_contents = query(controller_api_plugin, current_job_templates_asset_value.related.survey_spec,
                                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)[0] |
                                     from_yaml | to_nice_yaml(indent=2,width=500) | regex_replace("\n\n[ ]*", "\\\\n") | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") | replace("^$", "")
@@ -101,15 +101,15 @@ controller_templates:
     survey_spec:
       {{ survey_spec_contents }}
 {% endif %}
-    become_enabled: {{ current_job_templates_asset_value.become_enabled | bool }}
-    diff_mode: {{ current_job_templates_asset_value.diff_mode | bool }}
+    become_enabled: {{ current_job_templates_asset_value.become_enabled | bool | lower }}
+    diff_mode: {{ current_job_templates_asset_value.diff_mode | bool | lower }}
     webhook_service: "{{ current_job_templates_asset_value.webhook_service }}"
 {% if current_job_templates_asset_value.webhook_credential %}
     webhook_credential: "{{ current_job_templates_asset_value.webhook_credential }}"
 {% endif %}
 {% if current_job_templates_asset_value.prevent_instance_group_fallback is defined %}
-    prevent_instance_group_fallback: {{ current_job_templates_asset_value.prevent_instance_group_fallback | bool }}
+    prevent_instance_group_fallback: {{ current_job_templates_asset_value.prevent_instance_group_fallback | bool | lower }}
 {% endif %}
-{% if last_job_template | default(true) | bool %}
+{% if last_job_template | default(true) | bool | lower %}
 ...
 {% endif %}
