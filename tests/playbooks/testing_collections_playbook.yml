@@ -35,4 +35,8 @@
     - name: Create credential
       ansible.builtin.include_role:
         name: credential
+
+    - name: Create decision environment
+      ansible.builtin.include_role:
+        name: decision_environment
 ...

@@ -1,0 +1,5 @@
+---
+minor_changes:
+  - Added decision environment module
+  - Added decision environment role
+...
