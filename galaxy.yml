@@ -28,4 +28,5 @@ build_ignore:
   - template_galaxy.yml
   - '*.tar.gz'
   - test
+  - galaxy_ng
 ...
