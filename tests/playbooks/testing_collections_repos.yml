@@ -20,27 +20,26 @@
         mode: '0755'
 
   tasks:
-    - name: Perform pre-4.7 tasks for collection repositories
-      when: galaxy_ng_version == "stable-4.4" or galaxy_ng_version == "stable-4.5" or galaxy_ng_version == "stable-4.6"
-      block:
-        - name: Repository creation
-          ansible.builtin.include_role:
-            name: repository
+    # - name: Perform pre-4.7 tasks for collection repositories
+    #   when: galaxy_ng_version == "stable-4.4" or galaxy_ng_version == "stable-4.5" or galaxy_ng_version == "stable-4.6"
+    #   block:
+    #     - name: Repository creation
+    #       ansible.builtin.include_role:
+    #         name: repository
 
-        - name: Repository creation with file
-          ansible.builtin.include_role:
-            name: repository
-          vars:
-            ah_repository_community:
-              url: https://galaxy.ansible.com/api/
-              requirements_file: files/collection_requirement_file.yml
+    #     - name: Repository creation with file
+    #       ansible.builtin.include_role:
+    #         name: repository
+    #       vars:
+    #         ah_repository_community:
+    #           url: https://galaxy.ansible.com/api/
+    #           requirements_file: files/collection_requirement_file.yml
 
-        - name: Repository sync
-          ansible.builtin.include_role:
-            name: repository_sync
+    #     - name: Repository sync
+    #       ansible.builtin.include_role:
+    #         name: repository_sync
 
     - name: Perform tasks for collection repositories
-      when: galaxy_ng_version == "stable-4.7" or galaxy_ng_version == "stable-4.8" or galaxy_ng_version == "master"
       block:
         - name: Collection Remote creation
           ansible.builtin.include_role:
@@ -64,4 +63,54 @@
           vars:
             ah_collection_repositories:
               - name: community-infra-repo
+
+        - name: Test group role creation
+          ansible.builtin.include_role:
+            name: group_roles
+          vars:
+            ah_group_roles:
+              - groups:
+                  - administrators
+                  - managers
+                role_list:
+                  - roles:
+                      - galaxy.user_admin
+                      - galaxy.group_admin
+              - groups:
+                  - operators
+                  - managers
+                role_list:
+                  - roles:
+                      - galaxy.ansible_repository_owner
+                    targets:
+                      collection_repositories:
+                        - community-infra-repo
+                  - roles:
+                      - galaxy.collection_remote_owner
+                    targets:
+                      collection_remotes:
+                        - community-infra
+              - groups:
+                  - administrators
+                  - managers
+                state: absent
+                role_list:
+                  - roles:
+                      - galaxy.user_admin
+                      - galaxy.group_admin
+              - groups:
+                  - operators
+                  - managers
+                state: absent
+                role_list:
+                  - roles:
+                      - galaxy.ansible_repository_owner
+                    targets:
+                      collection_repositories:
+                        - community-infra-repo
+                  - roles:
+                      - galaxy.collection_remote_owner
+                    targets:
+                      collection_remotes:
+                        - community-infra
 ...

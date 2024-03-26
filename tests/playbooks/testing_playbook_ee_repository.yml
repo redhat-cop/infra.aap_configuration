@@ -7,11 +7,11 @@
   collections:
     - galaxy.galaxy
   vars:
-    hub_host: localhost:5001
-    ah_hostname: http://localhost:8002/
+    hub_host: localhost:55001
+    ah_hostname: http://localhost:55001/
     ah_username: admin
     ah_password: admin
-    ah_path_prefix: 'automation-hub'
+    ah_path_prefix: 'galaxy'
     ah_validate_certs: false
     repository: test-namespace/ee-minimal-rhel8
     tag: latest
@@ -24,30 +24,6 @@
       tags:
         - always
   tasks:
-    # Preparing an image:
-    # - Pulling a small image from Quay (does not matter what image it is)
-    # - Tagging it so that it can be pushed to private automation hub
-    # - Pushing the image
-    # - Deleting the images from the local system
-    # The tasks do not use the podman collection because it may not be
-    # available on the testing system.
-    - name: Ensure a small container image is available
-      ansible.builtin.command:
-        cmd: "podman pull {{ fake_image }}"
-      changed_when: true
-
-    - name: Ensure the image has the correct tag
-      ansible.builtin.command:
-        cmd: "podman tag {{ fake_image }} {{ hub_host }}/{{ repository }}:{{ tag }}"
-      changed_when: true
-
-    - name: Ensure the image is pushed in private automation hub
-      ansible.builtin.command:
-        cmd: "podman push --tls-verify=false --remove-signatures
-              --creds={{ ah_username }}:{{ ah_password }}
-              {{ hub_host }}/{{ repository }}:{{ tag }}"
-      changed_when: true
-
     # Preparing a README file
     - name: Ensure a temporary file exists
       ansible.builtin.tempfile:
@@ -63,7 +39,7 @@
           * bullet 1
           * bullet 2
 
-    - name: Registery creation
+    - name: Registry creation
       ansible.builtin.include_role:
         name: ee_registry
 

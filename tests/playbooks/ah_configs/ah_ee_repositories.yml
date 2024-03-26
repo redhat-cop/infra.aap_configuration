@@ -35,6 +35,8 @@ ah_ee_repositories:
   # Adding a description and a README file to the repository
   - name: test-namespace/ee-minimal-rhel8
     # Testing with UTF-8 characters
+    registry: quay
+    upstream_name: "{{ fake_image }}"
     description: To jest jakiś opis
     readme: |
       # Min avrättningsmiljö

@@ -7,10 +7,10 @@
   collections:
     - galaxy.galaxy
   vars:
-    ah_hostname: http://localhost:8002/
+    ah_hostname: http://localhost:55001/
     ah_username: admin
     ah_password: admin
-    ah_path_prefix: 'automation-hub'
+    ah_path_prefix: 'galaxy'
     ah_validate_certs: false
 
   tasks:

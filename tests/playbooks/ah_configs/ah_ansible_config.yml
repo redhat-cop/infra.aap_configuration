@@ -2,7 +2,7 @@
 automation_hub_list:
   - name: automation_hub
     url: "{{ ah_hostname }}"
-    auth_url: "{{ ah_hostname }}api/automation-hub/"  # {{ah_hostname}}api/galaxy/ for AH {{ah_hostname}}api/automation-hub/ for Galaxy
+    auth_url: "{{ ah_hostname }}api/galaxy/"  # {{ah_hostname}}api/galaxy/ for AH {{ah_hostname}}api/automation-hub/ for Galaxy
 
 ansible_config_list:
   - header: galaxy

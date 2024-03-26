@@ -30,80 +30,6 @@ jobs:
         with:
           ref: ${{ inputs.gh_ref }}
 
-      - name: "Checkout galaxy_ng"
-        uses: actions/checkout@v2
-        with:
-          repository: ansible/galaxy_ng
-          path: galaxy_ng
-          ref: ${{ inputs.galaxy_ng_version }}
-
-      - name: "Checkout ansible-hub-ui"
-        uses: actions/checkout@v2
-        with:
-          repository: ansible/ansible-hub-ui
-          path: ansible-hub-ui
-          ref: ${{ inputs.galaxy_ng_version }}
-
-      - uses: actions/setup-python@v2
-        with:
-          python-version: "3.8"
-
-      - name: Update apt
-        run: sudo apt -y update
-
-      - name: Install LDAP requirements
-        run: sudo apt-get install -y libsasl2-dev python3-dev libldap2-dev libssl-dev build-essential
-
-      - name: Install docker-compose
-        run: pip3 install --upgrade docker-compose
-
-      - name: Downgrade docker
-        run: pip3 install docker==6.1.3
-
-      - name: collect system info
-        run: whoami; id; pwd; ls -al; uname -a ; df -h .; mount ; cat /etc/issue; docker --version ; ps aux | fgrep -i docker; ls -al /var/run/containerd/containerd.sock
-
-      - name: create the .compose.env file
-        run: rm -f galaxy_ng/.compose.env; cp galaxy_ng/.compose.env.example galaxy_ng/.compose.env
-
-      - name: workaround github worker permissions issues
-        run: sed -i.bak 's/PIP_EDITABLE_INSTALL=1/PIP_EDITABLE_INSTALL=0/' galaxy_ng/.compose.env
-
-      - name: workaround to enable collection approval for 4.4/4.5
-        run: sed -i.bak 's/PULP_GALAXY_REQUIRE_CONTENT_APPROVAL=false/PULP_GALAXY_REQUIRE_CONTENT_APPROVAL=true/' galaxy_ng/dev/standalone/galaxy_ng.env
-
-      - name: workaround github worker permissions issues
-        run: sed -i.bak 's/WITH_DEV_INSTALL=1/WITH_DEV_INSTALL=0/' galaxy_ng/.compose.env
-
-      - name: set the hub ui path in .compose.env
-        run: echo "ANSIBLE_HUB_UI_PATH='/home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/ansible-hub-ui'" >> galaxy_ng/.compose.env
-
-      - name: cat
-        run: cat galaxy_ng/.compose.env
-
-      - name: build stack
-        working-directory: galaxy_ng
-        run: make docker/build
-
-      - name: run migrations
-        working-directory: galaxy_ng
-        run: make docker/migrate
-
-      - name: load translations
-        working-directory: galaxy_ng
-        run: make docker/translations
-
-      - name: load loaddata
-        working-directory: galaxy_ng
-        run: make docker/loaddata
-
-      - name: start the compose stack
-        working-directory: galaxy_ng
-        run: ./compose up -d
-
-      - name: give stack some time to spin up
-        run: sleep 240
-
       - name: Move ansible.cfg to root
         run: mv .github/files/ansible.cfg .
 
@@ -116,24 +42,51 @@ jobs:
           collection_version: 1.0.0
           collection_repo: https://github.com/ansible/galaxy_collection
 
+      - name: "Checkout galaxy_ng"
+        uses: actions/checkout@v2
+        with:
+          repository: ansible/galaxy_ng
+          path: galaxy_ng
+          ref: ${{ inputs.galaxy_ng_version }}
+
+      # Note: COMPOSE_INTERACTIVE_NO_CLI=1 is required for oci-env to work correctly when there's no interactive terminal
+      - name: Set environment variables
+        working-directory: galaxy_ng
+        run: |
+          echo "OCI_ENV_PATH=${HOME}/work/ah_configuration/ah_configuration/oci_env" >> $GITHUB_ENV
+          echo "COMPOSE_INTERACTIVE_NO_CLI=1" >> $GITHUB_ENV
+          echo "OCI_VERBOSE=1" >> $GITHUB_ENV
+          echo "GH_DUMP_LOGS=1" >> $GITHUB_ENV
+          echo "GH_TEARDOWN=0" >> $GITHUB_ENV
+
+      - name: Update apt
+        run: sudo apt -y update
+
+      - name: Install LDAP requirements
+        run: sudo apt-get install -y libsasl2-dev python3 libldap2-dev libssl-dev build-essential
+
+      - name: setup oci-env
+        working-directory: galaxy_ng
+        run: |
+          git clone https://github.com/pulp/oci_env.git $OCI_ENV_PATH
+          pip install -e $OCI_ENV_PATH/client/
+          mkdir $OCI_ENV_PATH/db_backup/
+
+      - name: Move ci cfg to oci
+        run: mv .github/files/ci.py ./galaxy_ng/dev/oci_env_integration/actions/ci.py
+
+      - name: Stand up galaxy_ng
+        working-directory: galaxy_ng
+        run: python3 dev/oci_env_integration/actions/ci.py
+
+      - name: "Perform playbook user and group management tests"
+        run: ansible-playbook tests/playbooks/testing_playbook_user.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
+
       - name: "Perform playbook collection tests"
         run: ansible-playbook tests/playbooks/testing_collections_playbook.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }} -e git_repo_name=${{ github.event.repository.name }}
-        if: |
-          inputs.galaxy_ng_version == 'stable-4.4' ||
-          inputs.galaxy_ng_version == 'stable-4.5' ||
-          inputs.galaxy_ng_version == 'stable-4.6' ||
-          inputs.galaxy_ng_version == 'stable-4.7'
-
 
       - name: "Perform collection repository tests"
         run: ansible-playbook tests/playbooks/testing_collections_repos.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
 
-      - name: "Perform playbook namespace tests"
-        run: ansible-playbook tests/playbooks/testing_playbook_ee_namespace.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
-        if: ${{ inputs.galaxy_ng_version == 'stable-4.4' || inputs.galaxy_ng_version == 'stable-4.5'  }}  # ee_namespace APIs were removed in 4.6 (see #183)
-
       - name: "Perform playbook repository tests"
         run: ansible-playbook tests/playbooks/testing_playbook_ee_repository.yml -vv -e galaxy_ng_version=${{ inputs.galaxy_ng_version }} -e redhat_catalog_username=${{ secrets.redhat_catalog_username }} -e redhat_catalog_password=${{ secrets.redhat_catalog_password }}
-
-      - name: "Perform playbook user and group management tests"
-        run: ansible-playbook tests/playbooks/testing_playbook_user.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
