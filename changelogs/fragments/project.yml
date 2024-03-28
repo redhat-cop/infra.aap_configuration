@@ -1,5 +1,5 @@
 ---
-minor_changes:
+major_changes:
   - Added project module
   - Added project role
   - Added project_sync module

@@ -1,0 +1,45 @@
+---
+
+# Create EDA Controller Rulebook Activation
+- name: Add EDA Controller rulebook activation
+  rulebook_activation:
+    name:                 "{{ __ra_item.name }}"
+    description:          "{{ __ra_item.description | default(omit) }}"
+    project:              "{{ __ra_item.project | default(omit) }}"
+    rulebook:             "{{ __ra_item.rulebook | default(omit) }}"
+    decision_environment: "{{ __ra_item.decision_environment | default(omit) }}"
+    restart_policy:       "{{ __ra_item.restart_policy | default(omit) }}"
+    extra_vars:           "{{ __ra_item.extra_vars | default(omit) }}"
+    enabled:              "{{ __ra_item.enabled | default(omit) }}"
+    state:                "{{ __ra_item.state | default(eda_state | default('present')) }}"
+    eda_host:             "{{ eda_host | default(eda_hostname) }}"
+    eda_username:         "{{ eda_username | default(omit) }}"
+    eda_password:         "{{ eda_password | default(omit) }}"
+    validate_certs:       "{{ eda_validate_certs | default(omit) }}"
+    request_timeout:      "{{ eda_request_timeout | default(omit) }}"
+  loop: "{{ eda_rulebook_activations }}"
+  loop_control:
+    loop_var: "__ra_item"
+  no_log: "{{ eda_configuration_rulebook_activation_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __rulebook_activations_job_async
+  changed_when: not __rulebook_activations_job_async.changed
+  vars:
+    ansible_async_dir: '{{ eda_configuration_async_dir }}'
+
+- name: "Create rulebook_activation | Wait for finish the rulebook_activation creation"
+  ansible.builtin.async_status:
+    jid: "{{ __rulebook_activations_job_async_result_item.ansible_job_id }}"
+  register: __rulebook_activations_job_async_result
+  until: __rulebook_activations_job_async_result.finished
+  retries: "{{ eda_configuration_rulebook_activation_async_retries }}"
+  delay: "{{ eda_configuration_rulebook_activation_async_delay }}"
+  loop: "{{ __rulebook_activations_job_async.results }}"
+  loop_control:
+    loop_var: __rulebook_activations_job_async_result_item
+  when: __rulebook_activations_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ eda_configuration_rulebook_activation_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ eda_configuration_async_dir }}'
+...

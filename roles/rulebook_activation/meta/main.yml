@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: "credential"
-  author: "Derek Waters"
-  description: "An Ansible Role to create a credential in EDA Controller."
+  role_name: "rulebook_activation"
+  author: "Tom Page"
+  description: "An Ansible Role to create a rulebook activation in EDA Controller."
   company: "Red Hat"
 
   # If the issue tracker for your role is not on github, uncomment the
@@ -33,8 +33,10 @@ galaxy_info:
     - "edacontroller"
     - "eda"
     - "configuration"
-    - "credential"
-    - "credentials"
+    - "rulebookactivation"
+    - "rulebookactivations"
+    - "activation"
+    - "activations"
 
 dependencies: []
 # List your role dependencies here, one per line. Be sure to remove the '[]' above,

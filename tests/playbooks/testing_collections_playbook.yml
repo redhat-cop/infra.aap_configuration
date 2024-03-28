@@ -39,4 +39,8 @@
     - name: Create decision environment
       ansible.builtin.include_role:
         name: decision_environment
+
+    - name: Create rulebook activations
+      ansible.builtin.include_role:
+        name: decision_environment
 ...

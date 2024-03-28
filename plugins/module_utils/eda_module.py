@@ -313,6 +313,18 @@ class EDAModule(AnsibleModule):
 
         return self.existing_item_add_url(response["json"]["results"][0], endpoint, key=key)
 
+    def get_by_id(self, endpoint, id, **kwargs):
+        new_kwargs = kwargs.copy()
+
+        response = self.get_endpoint("{endpoint}/{id}".format(endpoint=endpoint, id=id), **new_kwargs)
+        if response["status_code"] != 200:
+            fail_msg = "Got a {0} response when trying to get id:{1} from {2}".format(response["status_code"], id, endpoint)
+            if "detail" in response.get("json", {}):
+                fail_msg += ", detail: {0}".format(response["json"]["detail"])
+            self.fail_json(msg=fail_msg)
+
+        return response["json"]
+
     def get_only(self, endpoint, name_or_id=None, allow_none=True, key="url", **kwargs):
         new_kwargs = kwargs.copy()
         if name_or_id:
@@ -537,6 +549,50 @@ class EDAModule(AnsibleModule):
             last_data = response["json"]
             return last_data
 
+    def create_no_name(
+        self,
+        new_item,
+        endpoint,
+        on_create=None,
+        auto_exit=False,
+        item_type="unknown",
+    ):
+
+        # This will exit from the module on its own
+        # If the method successfully creates an item and on_create param is defined,
+        #    the on_create parameter will be called as a method pasing in this object and the json from the response
+        # This will return one of two things:
+        #    1. None if the existing_item is already defined (so no create needs to happen)
+        #    2. The response from EDA Controller from calling the patch on the endpont. It's up to you to process the response and exit from the module
+        # Note: common error codes from the EDA Controller API can cause the module to fail
+
+        if not endpoint:
+            self.fail_json(msg="Unable to create new {0} due to missing endpoint".format(item_type))
+
+        # We have to rely on item_type being passed in since we don't have an existing item that declares its type
+        # We will pull the item_name out from the new_item, if it exists
+
+        response = self.post_endpoint(endpoint, **{"data": new_item})
+
+        if response["status_code"] in [200, 201]:
+            self.json_output["changed"] = True
+        else:
+            if "json" in response and "__all__" in response["json"]:
+                self.fail_json(msg="Unable to create {0}: {1}".format(item_type, response["json"]["__all__"][0]))
+            elif "json" in response:
+                self.fail_json(msg="Unable to create {0}: {1}".format(item_type, response["json"]))
+            else:
+                self.fail_json(msg="Unable to create {0}: {1}".format(item_type, response["status_code"]))
+
+        # If we have an on_create method and we actually changed something we can call on_create
+        if on_create is not None and self.json_output["changed"]:
+            on_create(self, response["json"])
+        elif auto_exit:
+            self.exit_json(**self.json_output)
+        else:
+            last_data = response["json"]
+            return last_data
+
     def update_if_needed(
         self,
         existing_item,
@@ -703,8 +759,8 @@ class EDAModule(AnsibleModule):
     def get_exactly_one(self, endpoint, name_or_id=None, **kwargs):
         return self.get_one(endpoint, name_or_id=name_or_id, allow_none=False, **kwargs)
 
-    def resolve_name_to_id(self, endpoint, name_or_id):
-        return self.get_exactly_one(endpoint, name_or_id)["id"]
+    def resolve_name_to_id(self, endpoint, name_or_id, data):
+        return self.get_exactly_one(endpoint, name_or_id, **{"data": data})["id"]
 
     def objects_could_be_different(self, old, new, field_set=None, warning=False):
         if field_set is None:
@@ -745,6 +801,34 @@ class EDAModule(AnsibleModule):
 
         self.json_output["changed"] = True
         self.exit_json(**self.json_output)
+
+    def trigger_post_action(
+        self,
+        endpoint,
+        auto_exit=False,
+        data=None,
+    ):
+
+        if not endpoint:
+            self.fail_json(msg="Unable to trigger action due to missing endpoint")
+
+        response = self.post_endpoint(endpoint, **{"data": data})
+
+        if response["status_code"] in [200, 201, 204]:
+            self.json_output["changed"] = True
+        else:
+            if "json" in response and "__all__" in response["json"]:
+                self.fail_json(msg="Unable to trigger {0}: {1}".format(endpoint, response["json"]["__all__"][0]))
+            elif "json" in response:
+                self.fail_json(msg="Unable to trigger {0}: {1}".format(endpoint, response["json"]))
+            else:
+                self.fail_json(msg="Unable to trigger {0}: {1}".format(endpoint, response["status_code"]))
+
+        if auto_exit:
+            self.exit_json(**self.json_output)
+        else:
+            last_data = response["json"]
+            return last_data
 
     @staticmethod
     def _resolve_path(path):
