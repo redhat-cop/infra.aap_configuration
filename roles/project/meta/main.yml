@@ -10,7 +10,7 @@ galaxy_info:
   # issue_tracker_url: http://example.com/issue/tracker
   license: "GPLv3+"
 
-  min_ansible_version: "2.9"
+  min_ansible_version: "2.14"
 
   # Optionally specify the branch Galaxy will use when accessing the GitHub
   # repo for this role. During role install, if no tags are available,
