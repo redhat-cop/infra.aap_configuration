@@ -50,11 +50,12 @@ This also speeds up the overall role.
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Rulebook activation name. Must be lower case containing only alphanumeric characters and underscores.|
 |`description`|""|no|str|Description to use for the Activation.|
-|`project`|""|no|str|project to use for the Activation.|
+|`project`|""|no|str|Project to use for the Activation.|
 |`rulebook`|""|yes|str|rulebook to use for the Activation.|
-|`decision_environment`|""|yes|str|decision_environment to use for the Activation.|
-|`restart_policy`|"always"|no|str|restart_policy to use for the Activation, choice of ["always", "never", "on_failure"]|
-|`extra_vars`|""|no|str|extra_vars to use for the Activation.|
+|`decision_environment`|""|yes|str|Decision_environment to use for the Activation.|
+|`restart_policy`|"always"|no|str|Restart_policy to use for the Activation, choice of ["always", "never", "on_failure"]|
+|`extra_vars`|""|no|str|Extra_vars to use for the Activation.|
+|`awx_token`|""|no|str|The token used to authenticate to controller.|
 |`enabled`|"true"|no|str|Whether the rulebook activation is automatically enabled to run.|
 |`state`|`present`|no|str|Desired state of the rulebook activation.|
 

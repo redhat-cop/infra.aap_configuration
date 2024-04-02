@@ -8,6 +8,7 @@
     project:              "{{ __ra_item.project | default(omit) }}"
     rulebook:             "{{ __ra_item.rulebook | default(omit) }}"
     decision_environment: "{{ __ra_item.decision_environment | default(omit) }}"
+    awx_token:            "{{ __ra_item.awx_token | default(omit) }}"
     restart_policy:       "{{ __ra_item.restart_policy | default(omit) }}"
     extra_vars:           "{{ __ra_item.extra_vars | default(omit) }}"
     enabled:              "{{ __ra_item.enabled | default(omit) }}"
