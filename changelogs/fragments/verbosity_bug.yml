@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - fixed a bug where when verbosity was set to 0 it was being dropped and value was not being pushed to controller
+...
