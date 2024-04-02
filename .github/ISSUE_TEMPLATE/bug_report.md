@@ -18,7 +18,7 @@ labels: bug, new
 
 - Bug Report
 
-# Ansible, Collection, Private Automation Hub details
+# Ansible, Collection, Event Driven Ansible Controller details
 
 <!--- Paste verbatim output between triple backticks -->
 
@@ -27,7 +27,7 @@ ansible --version
 
 ansible-galaxy collection list
 
-Private Automation Hub version
+Event Driven Ansible Controller version
 
 ```
 
