@@ -43,4 +43,8 @@
     - name: Create rulebook activations
       ansible.builtin.include_role:
         name: decision_environment
+
+    - name: Create user tokens
+      ansible.builtin.include_role:
+        name: user_token
 ...
