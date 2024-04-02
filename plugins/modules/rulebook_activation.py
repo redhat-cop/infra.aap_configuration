@@ -61,6 +61,11 @@ options:
         - Specify C(extra_vars) for the template.
       required: False
       type: dict
+    awx_token:
+      description:
+        - The token used to authenticate to controller.
+      required: False
+      type: str
     enabled:
       description:
         - Whether the rulebook activation is automatically enabled to run.
@@ -89,6 +94,7 @@ EXAMPLES = """
       provider: github
       repo_url: https://github.com/ansible/ansible-rulebook.git
     enabled: true
+    awx_token: my_token
     state: present
 
 - name: Restart eda rulebook activation
@@ -118,6 +124,7 @@ def main():
         extra_vars=dict(type="dict"),
         enabled=dict(type="bool", default="true"),
         state=dict(choices=["present", "absent", "restarted"], default="present"),
+        awx_token=dict(no_log=True),
     )
 
     # Create a module for ourselves
@@ -172,6 +179,9 @@ def main():
     if module.params.get("decision_environment") is not None:
         new_fields["decision_environment_id"] = module.resolve_name_to_id("decision-environments", module.params.get("decision_environment"))
 
+    if module.params.get("awx_token") is not None:
+        new_fields["awx_token_id"] = module.resolve_name_to_id("users/me/awx-tokens", module.params.get("awx_token"))
+
     # Create the extra_vars
     if module.params.get("extra_vars") is not None:
         if existing_item is not None:
@@ -199,6 +209,7 @@ def main():
                 or "project_id" in new_fields and existing_item["project_id"] != new_fields["project_id"]
                 or "rulebook_id" in new_fields and existing_item["rulebook_id"] != new_fields["rulebook_id"]
                 or "decision_environment_id" in new_fields and existing_item["decision_environment_id"] != new_fields["decision_environment_id"]
+                or "awx_token_id" in new_fields and existing_item["awx_token_id"] != new_fields["awx_token_id"]
                 or "extra_var_id" in new_fields and existing_item["extra_var_id"] != new_fields["extra_var_id"]):
             module.fail_json(msg="Once an activation has been created it can only be enabled, disabled or deleted. Other changes cannot be made.")
 
