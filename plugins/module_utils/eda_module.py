@@ -759,7 +759,7 @@ class EDAModule(AnsibleModule):
     def get_exactly_one(self, endpoint, name_or_id=None, **kwargs):
         return self.get_one(endpoint, name_or_id=name_or_id, allow_none=False, **kwargs)
 
-    def resolve_name_to_id(self, endpoint, name_or_id, data):
+    def resolve_name_to_id(self, endpoint, name_or_id, data=None):
         return self.get_exactly_one(endpoint, name_or_id, **{"data": data})["id"]
 
     def objects_could_be_different(self, old, new, field_set=None, warning=False):
