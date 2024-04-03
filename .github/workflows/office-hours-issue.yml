@@ -1,6 +1,6 @@
 ---
 # https://github.com/marketplace/actions/issues-helper
-name: Check inactive
+name: Close and create new office hours issue
 
 on: push
 # schedule:
@@ -16,6 +16,7 @@ jobs:
           actions: 'close-issues'
           token: ${{ secrets.GITHUB_TOKEN }}
           labels: 'office_hours'
+          close-reason: "completed"
 
   create-issue:
     runs-on: ubuntu-latest
