@@ -2,9 +2,9 @@
 # https://github.com/marketplace/actions/issues-helper
 name: Close and create new office hours issue
 
-on: push
-# schedule:
-#     - cron: "0 00 12 ? * 6L"  
+on:
+  schedule:
+    - cron: "1 0 8 * *"
 
 jobs:
   check-need-info:
