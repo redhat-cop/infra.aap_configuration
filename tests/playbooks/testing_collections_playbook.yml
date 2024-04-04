@@ -27,24 +27,57 @@
     - name: Create project
       ansible.builtin.include_role:
         name: project
+        apply:
+          tags:
+            - project
+      tags:
+        - project
 
     - name: Sync project
       ansible.builtin.include_role:
         name: project_sync
+        apply:
+          tags:
+            - project
+            - project_sync
+      tags:
+        - project
+        - project_sync
 
     - name: Create credential
       ansible.builtin.include_role:
         name: credential
+        apply:
+          tags:
+            - credential
+      tags:
+        - credential
 
     - name: Create decision environment
       ansible.builtin.include_role:
         name: decision_environment
-
-    - name: Create rulebook activations
-      ansible.builtin.include_role:
-        name: decision_environment
+        apply:
+          tags:
+            - decision_environment
+      tags:
+        - decision_environment
 
     - name: Create user tokens
       ansible.builtin.include_role:
         name: user_token
+        apply:
+          tags:
+            - user_token
+      tags:
+        - user_token
+
+    - name: Create rulebook activations
+      ansible.builtin.include_role:
+        name: rulebook_activation
+        apply:
+          tags:
+            - rulebook_activation
+      tags:
+        - rulebook_activation
+
 ...

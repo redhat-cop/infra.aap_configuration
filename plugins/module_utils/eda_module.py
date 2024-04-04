@@ -302,14 +302,23 @@ class EDAModule(AnsibleModule):
                 self.fail_wanted_one(response, endpoint, new_kwargs.get("data"))
         elif response["json"]["count"] > 1:
             if name_or_id:
-                # Since we did a name or ID search and got > 1 return something if the id matches
+                # Since we did a name or ID search and got > 1 return something if the id matches or the name matches exactly
+                exact_matches = []
                 for asset in response["json"]["results"]:
                     if str(asset["id"]) == name_or_id:
                         return self.existing_item_add_url(asset, endpoint, key=key)
+                    if str(asset[name_field]) == name_or_id:
+                        exact_matches.append(self.existing_item_add_url(asset, endpoint, key=key))
+                # If there is one exact name match then return that
+                if len(exact_matches) == 1:
+                    return exact_matches[0]
 
-            # We got > 1 and either didn't find something by ID (which means multiple names)
+            # We got > 1 and either didn't find something by ID or exact name (which means multiple names)
             # Or we weren't running with a or search and just got back too many to begin with.
-            self.fail_wanted_one(response, endpoint, new_kwargs.get("data"))
+            if allow_none:
+                return None
+            else:
+                self.fail_wanted_one(response, endpoint, new_kwargs.get("data"))
 
         return self.existing_item_add_url(response["json"]["results"][0], endpoint, key=key)
 
@@ -763,7 +772,7 @@ class EDAModule(AnsibleModule):
         return self.get_one(endpoint, name_or_id=name_or_id, allow_none=False, **kwargs)
 
     def resolve_name_to_id(self, endpoint, name_or_id, data=None):
-        return self.get_exactly_one(endpoint, name_or_id, **{"data": data})["id"]
+        return self.get_exactly_one(endpoint, name_or_id, **{"data": data if data else {}})["id"]
 
     def objects_could_be_different(self, old, new, field_set=None, warning=False):
         if field_set is None:

@@ -1,4 +1,5 @@
 ---
 bugfixes:
   - fixed a bug where resolve_name_to_id data was not defined
+  - fixed a bug with the API returning multiple items because it only matches the name starting with the value
 ...

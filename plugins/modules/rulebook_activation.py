@@ -124,7 +124,7 @@ def main():
         extra_vars=dict(type="dict"),
         enabled=dict(type="bool", default="true"),
         state=dict(choices=["present", "absent", "restarted"], default="present"),
-        awx_token=dict(no_log=True),
+        awx_token=dict(no_log=False),
     )
 
     # Create a module for ourselves

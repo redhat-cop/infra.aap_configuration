@@ -24,7 +24,7 @@
   vars:
     ansible_async_dir: '{{ eda_configuration_async_dir }}'
 
-- name: "Create project | Wait for finish the project creation"
+- name: "Sync project | Wait for finish syncing the project creation"
   ansible.builtin.async_status:
     jid: "{{ __projects_sync_job_async_result_item.ansible_job_id }}"
   register: __projects_sync_job_async_result

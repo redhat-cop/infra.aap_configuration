@@ -4,20 +4,11 @@ eda_rulebook_activations:
     description: Hook to listen for changes in GitHub
     project: EDA_example
     rulebook: git-hook-deploy-rules.yml
+    awx_token: my_user_token
     decision_environment: Automation Hub Default Decision Environment
     extra_vars:
       provider: github-local
       repo_url: https://github.com/ansible/ansible-rulebook.git
-    enabled: false
+    enabled: true
     state: present
-  - name: Github Hook
-    description: Hook to listen for changes in GitHub
-    project: EDA_example
-    rulebook: git-hook-deploy-rules.yml
-    decision_environment: Automation Hub Default Decision Environment
-    extra_vars:
-      provider: github-local
-      repo_url: https://github.com/ansible/ansible-rulebook.git
-    enabled: false
-    state: restarted
 ...
