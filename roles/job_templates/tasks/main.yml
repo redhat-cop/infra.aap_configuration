@@ -15,7 +15,7 @@
     credentials:                          "{{ __controller_template_item.credentials | default(__controller_template_item.related.credentials | default([]) | map(attribute='name') | list) | default(omit, true) }}"
     forks:                                "{{ __controller_template_item.forks | default((0 if controller_configuration_job_templates_enforce_defaults else omit), true) }}"
     limit:                                "{{ __controller_template_item.limit | default(('' if controller_configuration_job_templates_enforce_defaults else omit), true) }}"
-    verbosity:                            "{{ (__controller_template_item.verbosity | string) | default((0 if controller_configuration_job_templates_enforce_defaults else omit), true) }}"
+    verbosity:                            "{{ __controller_template_item.verbosity | default(0, true) if __controller_template_item.verbosity is defined or controller_configuration_job_templates_enforce_defaults else omit }}"
     extra_vars:                           "{{ __controller_template_item.extra_vars | default(({} if controller_configuration_job_templates_enforce_defaults else omit), true) }}"
     job_tags:                             "{{ __controller_template_item.job_tags | default(('' if controller_configuration_job_templates_enforce_defaults else omit), true) }}"
     force_handlers:                       "{{ __controller_template_item.force_handlers | default((false if controller_configuration_job_templates_enforce_defaults else omit)) }}"
