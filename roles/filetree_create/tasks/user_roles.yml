@@ -1,10 +1,14 @@
 ---
 - name: "Get current Users from the API"
   ansible.builtin.set_fact:
-    user_roles_lookvar: "{{ query(controller_api_plugin, 'api/v2/users/' + (username | urlencode()) + '/roles/',
+    user_roles_lookvar: "{{ query(controller_api_plugin, 'api/v2/users/' + __user_id + '/roles/',
                                   host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                   return_all=true, max_objects=query_controller_api_max_objects)
                          }}"
+  vars:
+    __user_id: "{{ lookup(controller_api_plugin, 'users', query_params={'username': username}, expect_one=true,
+                              host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)['id']
+                }}"
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
 - name: "Block for to generate flatten output"
