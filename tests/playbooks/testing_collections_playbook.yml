@@ -17,7 +17,7 @@
     - name: Verify EDA Controller is up
       ansible.builtin.uri:
         validate_certs: false
-        url: "{{ eda_hostname }}/eda"
+        url: "{{ eda_hostname }}/api/eda/v1/users/me/"
         url_username: "{{ eda_username }}"
         url_password: "{{ eda_password }}"
         status_code:

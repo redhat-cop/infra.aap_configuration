@@ -38,7 +38,7 @@ jobs:
         run: sudo apt -y update
 
       - name: Install docker-compose
-        run: curl -SL https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose && sudo chmod +x /usr/local/bin/docker-compose
+        run: sudo curl -SL https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose && sudo chmod +x /usr/local/bin/docker-compose
 
       - name: collect system info
         run: whoami; id; pwd; ls -al; uname -a ; df -h .; mount ; cat /etc/issue; docker --version ; ps aux | fgrep -i docker; ls -al /var/run/containerd/containerd.sock
@@ -53,7 +53,12 @@ jobs:
 
       - name: Start stack
         working-directory: eda-server/tools/docker
-        run: docker compose -p eda -f docker-compose-stage.yaml up -d --wait
+        run: |
+          docker-compose -p eda -f docker-compose-stage.yaml up -d
+          while ! curl -s http://localhost:8000/_healthz | grep -q "OK"; do
+            echo "Waiting for API to be ready..."
+            sleep 1
+          done
 
       - name: Move ansible.cfg to root
         run: mv .github/files/ansible.cfg .
