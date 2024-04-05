@@ -1,0 +1,12 @@
+---
+eda_users:
+  - username: jane_doe
+    first_name: Jane
+    last_name: Doe
+    email: jdoe@example.com
+    password: my_password1
+    update_secrets: false
+    roles:
+      - Auditor
+      - Contributor
+...

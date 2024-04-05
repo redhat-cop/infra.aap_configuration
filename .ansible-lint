@@ -18,6 +18,7 @@ skip_list:
   - meta-unsupported-ansible
   - meta-runtime  # This collection with the appropriate awx.awx or ansible.controller still works with older ansible.
   - fqcn[keyword]
+  - fqcn[action-core]
   - role-name[path]
   - var-naming[no-role-prefix]
   - galaxy[version-incorrect]  # Added because it doesn't like pre-v1.0.0 versions

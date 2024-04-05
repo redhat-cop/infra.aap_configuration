@@ -49,8 +49,8 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Decision Environment name. Must be lower case containing only alphanumeric characters and underscores.|
-|`new_name`|""|yes|str|Setting this option will change the existing name (looked up via the name field.)|
-|`description`|""|yes|str|Description to use for the Project.|
+|`new_name`|""|no|str|Setting this option will change the existing name (looked up via the name field.)|
+|`description`|""|no|str|Description to use for the Project.|
 |`image_url`|""|yes|str|A URL to a a container image to use for the decision environment.|
 |`credential`|""|no|str|The credential used to access the container registry holding the image.|
 |`state`|`present`|no|str|Desired state of the decision environment.|
