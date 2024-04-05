@@ -4,4 +4,7 @@ major_changes:
   - Added project role
   - Added project_sync module
   - Added project_sync role
+
+bugfixes:
+  - Fixed error message when project sync fails
 ...

@@ -1,9 +1,8 @@
-# infra.eda_configuration.user_token
+# infra.eda_configuration.user
 
 ## Description
 
-An Ansible Role to create User Tokens in EDA Controller. Note that tokens may only be applied to the user account accessing the API (ie. eda_username)
-Note that tokens cannot be updated, only created.
+An Ansible Role to create users in EDA Controller.
 
 ## Variables
 
@@ -15,18 +14,18 @@ Note that tokens cannot be updated, only created.
 |`eda_validate_certs`|`False`|no|Whether or not to validate the Ansible EDA Controller Server's SSL certificate.||
 |`eda_request_timeout`|`10`|no|Specify the timeout Ansible should use in requests to the EDA Controller host.||
 |`eda_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
-|`eda_user_tokens`|`see below`|yes|Data structure describing your user tokens, described below.||
+|`eda_users`|`see below`|yes|Data structure describing your users, described below.||
 
 ### Secure Logging Variables
 
-The following Variables complement each other.
+The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
-The role defaults to False as normally the add project task does not include sensitive information.
-eda_configuration_user_token_secure_logging defaults to the value of eda_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of EDA Controller configuration roles with a single variable, or for the user to selectively use it.
+The role defaults to False as normally the add user task does not include sensitive information.
+eda_configuration_user_secure_logging defaults to the value of eda_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of EDA Controller configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`eda_configuration_user_token_secure_logging`|`False`|no|Whether or not to include the sensitive Project role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`eda_configuration_user_secure_logging`|`False`|no|Whether or not to include the sensitive user role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`eda_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
@@ -39,31 +38,42 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`eda_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
-|`eda_configuration_user_token_async_retries`|`eda_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
+|`eda_configuration_user_async_retries`|`eda_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
 |`eda_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
-|`eda_configuration_user_token_async_delay`|`eda_configuration_async_delay`|no|This sets the delay between retries for the role.|
+|`eda_configuration_user_async_delay`|`eda_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ## Data Structure
 
-### User Token Variables
+### user Variables
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str|User Token name. Must be lower case containing only alphanumeric characters and underscores.|
-|`new_name`|""|no|str|Setting this option will change the existing name (looked up via the name field.)|
-|`description`|""|no|str|Description to use for the Project.|
-|`token`|""|yes|str|The value of the token to associate with the user.|
+|`username`|""|yes|str|Username. Must contain only letters, numbers, and `@.+-_` characters.|
+|`new_username`|""|no|str|Setting this option will change the existing username (looked up via the name field.)|
+|`first_name`|""|no|str|First ame of the user.|
+|`last_name`|""|no|str|Last name of the user.|
+|`email`|""|no|str|User's email address.|
+|`password`|""|yes|str|Password to use for the user.|
+|`update_secrets`|true|no|bool|Setting true will always change password if user specifies password. Password will only change if false if other fields change.|
+|`roles`|""|yes|list|Roles the user will have. Current acceptable values are: Viewer, Auditor, Editor, Contributor, Operator, Admin.|
+|`state`|`present`|no|str|Desired state of the user.|
 
-### Standard User Token Data Structure
+### Standard user Data Structure
 
 #### Yaml Example
 
 ```yaml
 ---
-eda_user_tokens:
-  - name: my_default_token
-    description: my default user token
-    token: TOKEN_VALUE
+eda_users:
+- username: jane_doe
+  first_name: Jane
+  last_name: Doe
+  email: jdoe@example.com
+  password: my_password1
+  update_secrets: false
+  roles:
+    - Auditor
+    - Contributor
 ```
 
 ## Playbook Examples
@@ -72,14 +82,14 @@ eda_user_tokens:
 
 ```yaml
 ---
-- name: Add user token to EDA Controller
+- name: Add user to EDA Controller
   hosts: localhost
   connection: local
   gather_facts: false
   vars:
     eda_validate_certs: false
   # Define following vars here, or in eda_configs/eda_auth.yml
-  # eda_host: ansible-eda-web-svc-test-project.example.com
+  # eda_host: ansible-eda-web-svc-test-user.example.com
   # eda_token: changeme
   pre_tasks:
     - name: Include vars from eda_configs directory
@@ -89,7 +99,7 @@ eda_user_tokens:
       tags:
         - always
   roles:
-    - ../../user_token
+    - ../../user
 ```
 
 ## License
@@ -98,4 +108,4 @@ eda_user_tokens:
 
 ## Author
 
-[Derek Waters](https://github.com/derekwaters/)
+[Tom Page](https://github.com/Tompage1994/)

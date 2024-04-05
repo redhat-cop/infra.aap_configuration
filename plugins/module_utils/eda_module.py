@@ -62,7 +62,7 @@ class EDAModule(AnsibleModule):
         "verify_ssl": "validate_certs",
         "request_timeout": "request_timeout",
     }
-    IDENTITY_FIELDS = {}
+    IDENTITY_FIELDS = {"users": "username"}
     ENCRYPTED_STRING = "$encrypted$"
     host = "127.0.0.1"
     username = None
@@ -533,7 +533,7 @@ class EDAModule(AnsibleModule):
                     self.json_output["id"] = response["json"]["id"]
                     item_url = "{0}{1}/".format(
                         self.build_url(endpoint).geturl()[len(self.host):],
-                        new_item["name"],
+                        response["json"]["id"],
                     )
                 self.json_output["changed"] = True
             elif response["status_code"] in [409] and treat_conflict_as_unchanged:
@@ -630,7 +630,8 @@ class EDAModule(AnsibleModule):
             try:
                 item_url = fixed_url or existing_item[key]
                 item_type = existing_item["type"]
-                item_name = existing_item["name"]
+                name_field = self.get_name_field_from_endpoint(endpoint)
+                item_name = existing_item[name_field]
                 item_id = require_id and existing_item["id"]
             except KeyError as ke:
                 self.fail_json(msg="Unable to process update of item due to missing data {0}".format(ke))
@@ -781,10 +782,10 @@ class EDAModule(AnsibleModule):
             new_field = new.get(field, None)
             old_field = old.get(field, None)
             if old_field != new_field:
-                if self.update_secrets or (not self.fields_could_be_same(old_field, new_field)):
+                if self.update_secrets:
                     return True  # Something doesn't match, or something might not match
             elif self.has_encrypted_values(new_field) or field not in new:
-                if self.update_secrets or (not self.fields_could_be_same(old_field, new_field)):
+                if self.update_secrets:
                     # case of 'field not in new' - user password write-only field that API will not display
                     self._encrypted_changed_warning(field, old, warning=warning)
                     return True
@@ -795,21 +796,36 @@ class EDAModule(AnsibleModule):
 
         # If the state was present and we can let the module build or update the existing item, this will return on its own
         response = self.post_endpoint('projects/{id}/sync'.format(id=id))
-        task_id = response["json"]["import_task_id"]
-        self.json_output["task"] = task_id
 
-        if wait:
-            status = None
-            start = time.time()
-            elapsed = 0
-            while status != "finished" and status != "failed":
-                status = self.get_endpoint("tasks/{id}".format(id=task_id))["json"]["status"]
-                time.sleep(interval)
-                elapsed = time.time() - start
-                if timeout and elapsed > timeout:
-                    self.fail_json(msg="Timed out awaiting task completion.", task=task_id)
-            if status == "failed":
-                self.fail_json(msg="The project sync failed", task=task_id)
+        if response["status_code"] == 202:
+            if not (response["json"] and response["json"]["import_task_id"]):
+                self.fail_json(msg="Unable to track sync task as import_task_id not returned from API. Got {0}".format(response["json"]))
+            task_id = response["json"]["import_task_id"]
+            self.json_output["task"] = task_id
+
+            if wait:
+                status = None
+                start = time.time()
+                elapsed = 0
+                while status != "finished" and status != "failed":
+                    status = self.get_endpoint("tasks/{id}".format(id=task_id))["json"]["status"]
+                    time.sleep(interval)
+                    elapsed = time.time() - start
+                    if timeout and elapsed > timeout:
+                        self.fail_json(msg="Timed out awaiting task completion.", task=task_id)
+                if status == "failed":
+                    self.fail_json(msg="The project sync failed", task=task_id)
+        else:
+            if "json" in response and "__all__" in response["json"]:
+                self.fail_json(msg="Unable to sync project: {0}".format(response["json"]["__all__"][0]))
+            elif "json" in response:
+                # This is from a project delete (if there is an active job against it)
+                if "error" in response["json"]:
+                    self.fail_json(msg="Unable to sync project: {0}".format(response["json"]["error"]))
+                else:
+                    self.fail_json(msg="Unable to sync project: {0}".format(response["json"]))
+            else:
+                self.fail_json(msg="Unable to sync project: {0}".format(response["status_code"]))
 
         self.json_output["changed"] = True
         self.exit_json(**self.json_output)
