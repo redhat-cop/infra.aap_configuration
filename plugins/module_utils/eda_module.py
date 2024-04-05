@@ -798,23 +798,20 @@ class EDAModule(AnsibleModule):
         response = self.post_endpoint('projects/{id}/sync'.format(id=id))
 
         if response["status_code"] == 202:
-            if not (response["json"] and response["json"]["import_task_id"]):
-                self.fail_json(msg="Unable to track sync task as import_task_id not returned from API. Got {0}".format(response["json"]))
-            task_id = response["json"]["import_task_id"]
-            self.json_output["task"] = task_id
-
             if wait:
                 status = None
                 start = time.time()
                 elapsed = 0
-                while status != "finished" and status != "failed":
-                    status = self.get_endpoint("tasks/{id}".format(id=task_id))["json"]["status"]
+                while status != "completed" and status != "failed":
+                    project = self.get_endpoint('projects/{id}'.format(id=id))["json"]
+                    self.json_output["project"] = project
+                    status = project["import_state"]
                     time.sleep(interval)
                     elapsed = time.time() - start
                     if timeout and elapsed > timeout:
-                        self.fail_json(msg="Timed out awaiting task completion.", task=task_id)
+                        self.fail_json(msg="Timed out awaiting task completion.", project=project)
                 if status == "failed":
-                    self.fail_json(msg="The project sync failed", task=task_id)
+                    self.fail_json(msg="The project sync failed", task=project["import_error"])
         else:
             if "json" in response and "__all__" in response["json"]:
                 self.fail_json(msg="Unable to sync project: {0}".format(response["json"]["__all__"][0]))

@@ -2,7 +2,8 @@
 eda_projects:
   - name: my_project
     description: my awesome project
-    url: https://github.com/ansible/ansible-rulebook.git
+    url: https://github.com/ansible/event-driven-ansible.git
     sync: true
     wait: true
+    timeout: 30
 ...
