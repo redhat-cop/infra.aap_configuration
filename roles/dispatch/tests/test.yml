@@ -1,0 +1,24 @@
+---
+- name: Run dispatch job to EDA
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    eda_validate_certs: false
+    eda_hostname: eda.example.com
+    eda_username: admin
+    eda_password: changeme
+
+  collections:
+    - awx.awx
+
+  pre_tasks:
+    - name: Include vars from eda_configs directory
+      ansible.builtin.include_vars:
+        dir: ./configs
+        extensions: ["yml"]
+      tags: always
+
+  roles:
+    - ../..
+...
