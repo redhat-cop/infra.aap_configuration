@@ -11,7 +11,7 @@ license:
   - GPL-3.0-only
 namespace: infra
 name: eda_configuration
-version: 0.1.0-devel
+version: 1.0.0-devel
 readme: README.md
 repository: https://github.com/redhat-cop/eda_configuration
 issues: https://github.com/redhat-cop/eda_configuration/issues
