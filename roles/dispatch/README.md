@@ -1,4 +1,4 @@
-# eda_configuration.dispatch
+# infra.eda_configuration.dispatch
 
 ## Description
 
