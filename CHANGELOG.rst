@@ -4,6 +4,20 @@ infra.eda\_configuration Release Notes
 
 .. contents:: Topics
 
+v1.1.0
+======
+
+Minor Changes
+-------------
+
+- Added eda_api lookup plugin
+
+Bugfixes
+--------
+
+- Fix issue where wrong not checking for full match of name when searching for existing objects
+- Fixes issue where project sync reports fail because it is already running
+
 v1.0.0
 ======
 
