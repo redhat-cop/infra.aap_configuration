@@ -68,7 +68,7 @@ jobs:
         uses: redhat-cop/ansible_collections_tooling/actions/build_ansible_collection@main
         with:
           collection_namespace: infra
-          collection_name: automation_hub
+          collection_name: eda_configuration
           collection_version: 0.0.1
           collection_repo: https://github.com/redhat-cop/eda_configuration
 
