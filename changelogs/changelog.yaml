@@ -35,3 +35,15 @@ releases:
     - user.yml
     - user_token.yml
     release_date: '2024-04-08'
+  1.1.0:
+    changes:
+      bugfixes:
+      - Fix issue where wrong not checking for full match of name when searching for
+        existing objects
+      - Fixes issue where project sync reports fail because it is already running
+      minor_changes:
+      - Added eda_api lookup plugin
+    fragments:
+    - api-lookup.yml
+    - proj_sync.yml
+    release_date: '2024-04-12'
