@@ -88,8 +88,9 @@ class EDAModule(AnsibleModule):
 
         if direct_params is not None:
             self.params = direct_params
-        #        else:
-        super(EDAModule, self).__init__(argument_spec=full_argspec, **kwargs)
+        else:
+            super(EDAModule, self).__init__(argument_spec=full_argspec, **kwargs)
+
         self.session = Request(cookies=CookieJar(), validate_certs=self.verify_ssl, timeout=self.request_timeout)
 
         # Parameters specified on command line will override settings in any config
@@ -319,8 +320,15 @@ class EDAModule(AnsibleModule):
                 return None
             else:
                 self.fail_wanted_one(response, endpoint, new_kwargs.get("data"))
-
-        return self.existing_item_add_url(response["json"]["results"][0], endpoint, key=key)
+        else:
+            # Check if name actually matches and isn't just that we match part of the name
+            asset = response["json"]["results"][0]
+            if (str(asset["id"]) == name_or_id) or (str(asset[name_field]) == name_or_id):
+                return self.existing_item_add_url(response["json"]["results"][0], endpoint, key=key)
+            elif allow_none:
+                return None
+            else:
+                self.fail_wanted_one(response, endpoint, new_kwargs.get("data"))
 
     def get_by_id(self, endpoint, id, **kwargs):
         new_kwargs = kwargs.copy()

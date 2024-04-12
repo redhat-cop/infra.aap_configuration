@@ -1,0 +1,7 @@
+---
+bugfixes:
+  - Fix issue where wrong not checking for full match of name when searching for existing objects
+
+minor_changes:
+  - Added eda_api lookup plugin
+...
