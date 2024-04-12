@@ -822,11 +822,21 @@ class EDAModule(AnsibleModule):
                     self.fail_json(msg="The project sync failed", task=project["import_error"])
         else:
             if "json" in response and "__all__" in response["json"]:
-                self.fail_json(msg="Unable to sync project: {0}".format(response["json"]["__all__"][0]))
+                if "detail" in response["json"]["__all__"][0] and response["json"]["__all__"][0]["detail"] == "Project import or sync is already running.":
+                    self.json_output["changed"] = False
+                    self.json_output["detail"] = response["json"]["__all__"][0]["detail"]
+                    self.exit_json(**self.json_output)
+                else:
+                    self.fail_json(msg="Unable to sync project: {0}".format(response["json"]["__all__"][0]))
             elif "json" in response:
                 # This is from a project delete (if there is an active job against it)
                 if "error" in response["json"]:
-                    self.fail_json(msg="Unable to sync project: {0}".format(response["json"]["error"]))
+                    if "detail" in response["json"]["error"] and response["json"]["error"]["detail"] == "Project import or sync is already running.":
+                        self.json_output["changed"] = False
+                        self.json_output["detail"] = response["json"]["error"]["detail"]
+                        self.exit_json(**self.json_output)
+                    else:
+                        self.fail_json(msg="Unable to sync project: {0}".format(response["json"]["error"]))
                 else:
                     self.fail_json(msg="Unable to sync project: {0}".format(response["json"]))
             else:

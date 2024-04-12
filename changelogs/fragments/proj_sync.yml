@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Fixes issue where project sync reports fail because it is already running
+...
