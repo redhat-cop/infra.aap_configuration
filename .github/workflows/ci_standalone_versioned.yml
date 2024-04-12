@@ -72,5 +72,11 @@ jobs:
           collection_version: 0.0.1
           collection_repo: https://github.com/redhat-cop/eda_configuration
 
+      - name: "Verify collection installed"
+        run: |
+          ansible-galaxy collection list infra.eda_configuration
+          ansible-doc --list infra.eda_configuration
+          ansible-doc --list infra.eda_configuration -t lookup
+
       - name: "Perform playbook collection tests"
         run: ansible-playbook tests/playbooks/testing_collections_playbook.yml -v -e eda_server_version=${{ inputs.eda_server_version }} -e git_repo_name=${{ github.event.repository.name }}
