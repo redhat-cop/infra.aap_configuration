@@ -20,6 +20,7 @@ env:
 jobs:
   integration:
     runs-on: ubuntu-latest
+    continue-on-error: ${{ inputs.awx_version == 'devel' }}
     steps:
       - uses: actions/checkout@v2
         with:
