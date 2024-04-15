@@ -24,7 +24,7 @@ jobs:
           - 23.0.0
           - 22.7.0
     uses: "./.github/workflows/ci_standalone_versioned.yml"
-    continue-on-error: ${{ matrix.awx_version == 'devel' }}
     with:
       awx_version: ${{ matrix.awx_version }}
       gh_ref: ${{ github.event.pull_request.head.sha || github.sha }}
+...
