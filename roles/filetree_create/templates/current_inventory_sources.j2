@@ -22,7 +22,7 @@ controller_inventory_sources:
     inventory: "{{ inventory_source.summary_fields.inventory.name }}"
     update_on_launch: "{{ inventory_source.update_on_launch }}"
     overwrite: "{{ inventory_source.overwrite }}"
-{% if inventory_source.credential is defined %}
+{% if inventory_source.summary_fields.credential is defined %}
     credential: "{{ inventory_source.summary_fields.credential.name }}"
 {% endif %}
 {% set query_notification_error = query(controller_api_plugin, inventory_source.related.notification_templates_error,
