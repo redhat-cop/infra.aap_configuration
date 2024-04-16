@@ -481,4 +481,448 @@ differential_expected:
             type: role
           - name: System Administrator
             type: role
+
+differential_expected_gte_awx25:
+  credential_types: []
+  credentials:
+    - credential_type:
+        kind: scm
+        name: Source Control
+        type: credential_type
+      description: ''
+      inputs:
+        username: username
+      name: gitlab-team
+      natural_key:
+        credential_type:
+          kind: scm
+          name: Source Control
+          type: credential_type
+        name: gitlab-team
+        organization:
+        type: credential
+      organization:
+      state: absent
+      user:
+        type: user
+        username: controller_user
+    - credential_type:
+        kind: scm
+        name: Source Control
+        type: credential_type
+      description: ''
+      inputs:
+        username: username
+      name: gitlab-user
+      natural_key:
+        credential_type:
+          kind: scm
+          name: Source Control
+          type: credential_type
+        name: gitlab-user
+        organization:
+          name: Satellite
+          type: organization
+        type: credential
+      organization:
+        name: Satellite
+        type: organization
+      state: absent
+    - credential_type:
+        kind: vault
+        name: Vault
+        type: credential_type
+      description: satlab-admin-vault ******** aka vault_secret
+      inputs:
+        vault_password: ""
+      name: satlab-admin-vault
+      natural_key:
+        credential_type:
+          kind: vault
+          name: Vault
+          type: credential_type
+        name: satlab-admin-vault
+        organization:
+          name: Satellite
+          type: organization
+        type: credential
+      organization:
+        name: Satellite
+        type: organization
+      state: absent
+  inventory:
+    - description: created by Ansible Playbook - for RHVM-02
+      host_filter:
+      kind: ""
+      name: RHVM-02
+      natural_key:
+        name: RHVM-02
+        organization:
+          name: Satellite
+          type: organization
+        type: inventory
+      organization:
+        name: Satellite
+        type: organization
+      prevent_instance_group_fallback: true
+      related:
+        groups: []
+        hosts: []
+        labels: []
+      state: absent
+      variables: "{}"
+  inventory_sources:
+    - credential:
+        credential_type:
+          kind: cloud
+          name: Red Hat Virtualization
+          type: credential_type
+        name: admin@internal-RHVM-01
+        organization:
+          name: Satellite
+          type: organization
+        type: credential
+      description: ""
+      enabled_value: ""
+      enabled_var: ""
+      execution_environment:
+      host_filter: ""
+      inventory:
+        name: RHVM-01
+        organization:
+          name: Satellite
+          type: organization
+        type: inventory
+      limit: ""
+      name: RHVM-01
+      natural_key:
+        inventory:
+          name: RHVM-01
+          organization:
+            name: Satellite
+            type: organization
+          type: inventory
+        name: RHVM-01
+        type: inventory_source
+      overwrite: true
+      overwrite_vars: false
+      related:
+        notification_templates_error: []
+        notification_templates_started: []
+        notification_templates_success: []
+        schedules: []
+      scm_branch: ""
+      source: scm
+      source_path: phillips_hue/hosts
+      source_project:
+        name: Test Inventory source project
+        organization:
+          name: Satellite
+          type: organization
+        type: project
+      source_vars: ""
+      state: absent
+      timeout: 0
+      update_cache_timeout: 0
+      update_on_launch: true
+      verbosity: 1
+  job_templates:
+    - allow_simultaneous: false
+      ask_credential_on_launch: false
+      ask_diff_mode_on_launch: false
+      ask_execution_environment_on_launch: true
+      ask_forks_on_launch: true
+      ask_instance_groups_on_launch: true
+      ask_inventory_on_launch: true
+      ask_job_slice_count_on_launch: true
+      ask_job_type_on_launch: false
+      ask_labels_on_launch: true
+      ask_limit_on_launch: true
+      ask_scm_branch_on_launch: false
+      ask_skip_tags_on_launch: false
+      ask_tags_on_launch: false
+      ask_timeout_on_launch: true
+      ask_variables_on_launch: false
+      ask_verbosity_on_launch: false
+      become_enabled: false
+      description: ""
+      diff_mode: false
+      execution_environment:
+        name: My EE
+        type: execution_environment
+      extra_vars: "{}"
+      force_handlers: false
+      forks: 0
+      host_config_key: ""
+      inventory:
+        name: localhost
+        organization:
+          name: Satellite
+          type: organization
+        type: inventory
+      job_slice_count: 1
+      job_tags: ""
+      job_type: run
+      limit: ""
+      name: Demo Job Template
+      natural_key:
+        name: Demo Job Template
+        organization:
+          name: Default
+          type: organization
+        type: job_template
+      playbook: helloworld.yml
+      prevent_instance_group_fallback: true
+      project:
+        name: Test Project
+        organization:
+          name: Default
+          type: organization
+        type: project
+      related:
+        credentials:
+          - credential_type:
+              kind: ssh
+              name: Machine
+              type: credential_type
+            name: Demo Credential
+            organization:
+            type: credential
+        labels: []
+        notification_templates_error: []
+        notification_templates_started: []
+        notification_templates_success: []
+        schedules:
+          - description: Another demonstration
+            diff_mode: false
+            enabled: true
+            execution_environment:
+              name: My EE
+              type: execution_environment
+            extra_data: {}
+            forks: 2
+            inventory:
+              name: localhost
+              organization:
+                name: Satellite
+                type: organization
+              type: inventory
+            job_slice_count: 1
+            job_tags: ""
+            job_type:
+            limit: all
+            name: Demo Schedule 2
+            natural_key:
+              name: Demo Schedule 2
+              type: schedule
+              unified_job_template:
+                name: Demo Job Template
+                organization:
+                  name: Default
+                  type: organization
+                type: job_template
+            related:
+              credentials: []
+            rrule: DTSTART:20200101T000000Z RRULE:FREQ=HOURLY;INTERVAL=3
+            scm_branch: ""
+            skip_tags: ""
+            timeout: 165
+            unified_job_template:
+              name: Demo Job Template
+              organization:
+                name: Default
+                type: organization
+              type: job_template
+            verbosity:
+        survey_spec:
+          description: ""
+          name: ""
+          spec:
+            - choices: ""
+              default: infra-ansible-tower-testing.infra.sat.rdu2.redhat.com
+              max: 1024
+              min: 0
+              new_question: true
+              question_description:
+                target host is required for playbook to work, this
+                host needs to exist in the inventory
+              question_name: Target Host
+              required: true
+              type: text
+              variable: target_hosts
+      scm_branch: ""
+      skip_tags: ""
+      start_at_task: ""
+      state: absent
+      survey_enabled: false
+      timeout: 0
+      use_fact_cache: false
+      verbosity: 0
+      webhook_credential:
+      webhook_service: ""
+  notification_templates:
+    - description: Send out emails for tower jobs
+      messages: {}
+      name: Email notification
+      natural_key:
+        name: Email notification
+        organization:
+          name: Default
+          type: organization
+        type: notification_template
+      notification_configuration:
+        host: smtp.example.com
+        password: ""
+        port: 25
+        recipients:
+          - admin@example.com
+        sender: tower0@example.com
+        timeout: 30
+        use_ssl: false
+        use_tls: false
+        username: ""
+      notification_type: email
+      organization:
+        name: Default
+        type: organization
+      state: absent
+  organizations: []
+  projects:
+    - allow_override: false
+      credential:
+        credential_type:
+          kind: scm
+          name: Source Control
+          type: credential_type
+        name: gitlab-personal-access-token for satqe_auto_droid
+        organization:
+          name: Satellite
+          type: organization
+        type: credential
+      default_environment:
+      description: ansible-examples
+      local_path: _11__test_inventory_source_project_with_credential
+      name: Test Inventory source project with credential
+      natural_key:
+        name: Test Inventory source project with credential
+        organization:
+          name: Satellite
+          type: organization
+        type: project
+      organization:
+        name: Satellite
+        type: organization
+      related:
+        notification_templates_error: []
+        notification_templates_started: []
+        notification_templates_success: []
+      scm_branch: ""
+      scm_clean: false
+      scm_delete_on_update: false
+      scm_refspec: ""
+      scm_track_submodules: false
+      scm_type: git
+      scm_update_cache_timeout: 0
+      scm_update_on_launch: false
+      scm_url: https://github.com/ansible/ansible-examples.git
+      signature_validation_credential:
+      state: absent
+      timeout: 0
+    - allow_override: false
+      credential:
+      default_environment:
+      description: ansible-examples
+      local_path: _20__test_inventory_source_project
+      name: Test Inventory source project
+      natural_key:
+        name: Test Inventory source project
+        organization:
+          name: Default
+          type: organization
+        type: project
+      organization:
+        name: Default
+        type: organization
+      related:
+        notification_templates_error: []
+        notification_templates_started: []
+        notification_templates_success: []
+      scm_branch: ""
+      scm_clean: false
+      scm_delete_on_update: false
+      scm_refspec: ""
+      scm_track_submodules: false
+      scm_type: git
+      scm_update_cache_timeout: 0
+      scm_update_on_launch: false
+      scm_url: https://github.com/ansible/ansible-examples.git
+      signature_validation_credential:
+      state: absent
+      timeout: 0
+    - allow_override: false
+      credential:
+        credential_type:
+          kind: scm
+          name: Source Control
+          type: credential_type
+        name: gitlab-personal-access-token for satqe_auto_droid
+        organization:
+          name: Satellite
+          type: organization
+        type: credential
+      default_environment:
+      description: ansible-examples
+      local_path: _21__test_inventory_source_project_with_credential
+      name: Test Inventory source project with credential
+      natural_key:
+        name: Test Inventory source project with credential
+        organization:
+          name: Default
+          type: organization
+        type: project
+      organization:
+        name: Default
+        type: organization
+      related:
+        notification_templates_error: []
+        notification_templates_started: []
+        notification_templates_success: []
+      scm_branch: ""
+      scm_clean: false
+      scm_delete_on_update: false
+      scm_refspec: ""
+      scm_track_submodules: false
+      scm_type: git
+      scm_update_cache_timeout: 0
+      scm_update_on_launch: false
+      scm_url: https://github.com/ansible/ansible-examples.git
+      signature_validation_credential:
+      state: absent
+      timeout: 0
+  teams:
+    - description: ""
+      name: differential-1
+      natural_key:
+        name: differential-1
+        organization:
+          name: Default
+          type: organization
+        type: team
+      organization:
+        name: Default
+        type: organization
+      state: absent
+  users:
+    - email: admin@localhost
+      state: absent
+      username: admin
+      first_name: ""
+      is_superuser: true
+      is_system_auditor: false
+      last_name: ""
+      natural_key:
+        type: user
+        username: admin
+      password: ''
+
 ...
