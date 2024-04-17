@@ -62,6 +62,12 @@
       vars:
         ah_collections: "{{ ah_collections_overwrite }}"
 
+    - name: Delete Collection
+      ansible.builtin.include_role:
+        name: collection
+      vars:
+        ah_collections: "{{ ah_collections_delete }}"
+
     - name: Publish Collections
       ansible.builtin.include_role:
         name: publish

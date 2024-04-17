@@ -18,6 +18,11 @@ ah_collections_overwrite:
     timeout: 180
     overwrite_existing: true
 
+ah_collections_delete:
+  - namespace: galaxy
+    name: galaxy
+    state: absent
+
 ah_git_collections:
   - collection_name: collection_test
     git_url: https://github.com/sean-m-sullivan/collection_test
