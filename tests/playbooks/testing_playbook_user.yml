@@ -53,6 +53,18 @@
       ansible.builtin.include_role:
         name: user
 
+    - name: Test User update
+      ansible.builtin.include_role:
+        name: user
+      vars:
+        ah_users: "{{ ah_users_update }}"
+
+    - name: Test User deletion
+      ansible.builtin.include_role:
+        name: user
+      vars:
+        ah_users: "{{ ah_users_delete }}"
+
     # Testing deletion
     - name: Ensure the administrators group is deleted
       ah_group:

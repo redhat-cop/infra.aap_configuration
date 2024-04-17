@@ -294,11 +294,14 @@ class AHAPIModule(AnsibleModule):
         try:
             response_body = response.read()
         except Exception as e:
-            if response["json"]["non_field_errors"]:
+            if "non_field_errors" in response["json"]:
                 raise AHAPIModuleError("Errors occurred with request (HTTP 400). Errors: {errors}".format(errors=response["json"]["non_field_errors"]))
-            elif response["json"]["errors"]:
-                raise AHAPIModuleError("Errors occurred with request (HTTP 400). Errors: {errors}".format(errors=response["json"]["errors"]))
-            elif response["text"]:
+            elif "errors" in response["json"]:
+                def get_details(err):
+                    return err["detail"]
+                raise AHAPIModuleError("Errors occurred with request (HTTP 400). Details: {errors}".format(
+                    errors=", ".join(map(get_details, response["json"]["errors"]))))
+            elif "text" in response:
                 raise AHAPIModuleError("Errors occurred with request (HTTP 400). Errors: {errors}".format(errors=response["text"]))
             raise AHAPIModuleError("Failed to read response body: {error}".format(error=e))
 

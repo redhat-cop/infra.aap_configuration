@@ -12,14 +12,16 @@ ah_users:
     groups:
       - operators
       - administrators
-  # Testing user update\
-  - username: admin1
-    first_name: Róża
-    is_superuser: true
   # Testing group membership
   - username: operator1
     groups: operators
     state: present
+
+ah_users_update:
+  # Testing user update
+  - username: admin1
+    first_name: Róża
+    is_superuser: true
   # Ensure operator1 is member of group operators and managers
   - username: operator1
     groups:
@@ -37,6 +39,8 @@ ah_users:
   # Testing password change
   - username: operator1
     password: test123456
+
+ah_users_delete:
   - username: operator1
     state: absent
 ...
