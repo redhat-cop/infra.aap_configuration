@@ -53,7 +53,7 @@ jobs:
       - name: Set environment variables
         working-directory: galaxy_ng
         run: |
-          echo "OCI_ENV_PATH=${HOME}/work/ah_configuration/ah_configuration/oci_env" >> $GITHUB_ENV
+          echo "OCI_ENV_PATH=${GITHUB_WORKSPACE}/oci_env" >> $GITHUB_ENV
           echo "COMPOSE_INTERACTIVE_NO_CLI=1" >> $GITHUB_ENV
           echo "OCI_VERBOSE=1" >> $GITHUB_ENV
           echo "GH_DUMP_LOGS=1" >> $GITHUB_ENV
