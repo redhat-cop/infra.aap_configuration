@@ -2,6 +2,7 @@
 
 [![pre-commit tests](https://github.com/ansible/galaxy_collection/actions/workflows/pre-commit.yml/badge.svg?branch=devel)](https://github.com/ansible/galaxy_collection/actions/workflows/pre-commit.yml)
 ![Code style: flake8](https://img.shields.io/badge/Code%20style-flake8-orange)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/8812/badge)](https://www.bestpractices.dev/projects/8812)
 <!-- Further CI badges go here as above -->
 
 This Ansible collection allows for easy interaction with an EDA Controller server via Ansible playbooks.
