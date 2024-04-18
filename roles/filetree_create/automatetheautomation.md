@@ -1,6 +1,6 @@
 # Automate the Automation
 
-One of the discussions we had when we were talking about the collection desing was if the configuration approach should be called Infrastructure or Configuration as Code, so We'd like to highlight the difference between Configuration as Code vs. Infrastructure as Code.
+One of the discussions we had when we were talking about the collection design was if the configuration approach should be called Infrastructure or Configuration as Code, so We'd like to highlight the difference between Configuration as Code vs. Infrastructure as Code.
 
 Configuration as code (referred to as CasC or CAC) and Infrastructure as Code (IaC) are often referred to as the same thing, but IaC is about managing your IT infrastructure. This includes servers, networking, load balancing, and security.
 

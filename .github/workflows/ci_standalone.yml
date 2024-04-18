@@ -3,13 +3,13 @@ name: Test collection with AWX matrix
 on:
   push:
     branches:
-    - '*_'
-    - devel
+      - '*_'
+      - devel
     tags:
-    - '*_'  # ending underscore for trying things
-    - 'v[0-9]+.[0-9]+.[0-9]+'  # final version
-    - 'v[0-9]+.[0-9]+.[0-9]+[abrc]+[0-9]+'  # alpha, beta, release candidate (rc)
-    - 'v[0-9]+.[0-9]+.[0-9]+.dev[0-9]+'  # development versions
+      - '*_'  # ending underscore for trying things
+      - 'v[0-9]+.[0-9]+.[0-9]+'  # final version
+      - 'v[0-9]+.[0-9]+.[0-9]+[abrc]+[0-9]+'  # alpha, beta, release candidate (rc)
+      - 'v[0-9]+.[0-9]+.[0-9]+.dev[0-9]+'  # development versions
   pull_request:
 
 jobs:

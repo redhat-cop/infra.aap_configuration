@@ -1,0 +1,61 @@
+---
+# https://github.com/marketplace/actions/issues-helper
+name: Close and create new office hours issue
+
+on:
+  schedule:
+    - cron: "1 0 8 * *"
+
+jobs:
+  check-need-info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: close-issues
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'close-issues'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          labels: 'office_hours'
+          close-reason: "completed"
+
+  create-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create issue
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'create-issue'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: 'AAP Config as Code Office Hours Agenda'
+          body: |
+            # AAP Config as Code Office Hours
+            ## What
+
+            After attending other Office Hours of various groups, we decided to host one of our own.
+            The goal is to host a regular time for the AAP Config as Code contributors to be available for your folks in the Community, so we are happy to announce a new regular video meeting.
+
+            ## Where & When
+
+            The meeting will be held on the first Thursday of the month at [1300 UTC](https://dateful.com/time-zone-converter?t=13:00&tz=UTC)
+
+            -   [Google Meet](https://meet.google.com/npj-fyzv-oyo)
+            -   Via Phone PIN: 621 302 239 [Guide](https://support.google.com/meet/answer/9518557)
+
+            This meeting is held the first Thursday of the month, at [1300 UTC](https://dateful.com/time-zone-converter?t=13:00&tz=UTC)
+
+            ## How
+
+            Add one topic per comment in this GitHub issue
+
+            If you don't have a GitHub account, jump on [#aap_config_as_code:ansible.com](https://matrix.to/#/#aap_config_as_code:ansible.com) on Matrix and we can add the topic for you
+
+            ## Talk with us
+
+            As well as the monthly video meeting you can join the Community (inc development team) on Matrix Chat.
+
+            - Matrix: [#aap_config_as_code:ansible.com](https://matrix.to/#/#aap_config_as_code:ansible.com) (recomended)
+
+            See you soon!
+          labels: 'office_hours,help wanted,question'
+
+...
