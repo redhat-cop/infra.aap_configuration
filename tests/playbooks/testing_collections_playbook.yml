@@ -20,14 +20,6 @@
         mode: '0755'
 
   tasks:
-    - name: Authenticate and get an API token
-      ah_token:
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
     - name: Create ansible config file
       ansible.builtin.include_role:
         name: ansible_config
@@ -51,6 +43,19 @@
         ah_namespaces:
           - name: test_namespace_renamed
             state: absent
+
+    - name: Gather a collection
+      ansible.builtin.git:
+        repo: https://github.com/redhat-cop/aap_utilities.git
+        version: 2.4.0
+        dest: /var/tmp/aap_utilities
+
+    - name: Build collection
+      ah_build:
+        path: /var/tmp/aap_utilities
+        output_path: /var/tmp/aap_utilities
+        force: true
+      register: ah_build_results
 
     - name: Upload Collection
       ansible.builtin.include_role:

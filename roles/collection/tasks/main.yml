@@ -1,5 +1,18 @@
 # Update or destroy Automation Hub Collection
 ---
+- name: Get token
+  ah_token:
+    ah_host:               "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:           "{{ ah_username | default(omit) }}"
+    ah_password:           "{{ ah_password | default(omit) }}"
+    ah_path_prefix:        "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:        "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:       "{{ ah_request_timeout | default(omit) }}"
+  when:
+    - ah_token is not defined
+    - lookup("ansible.builtin.env", "AH_API_TOKEN") == ""
+    - ah_collections | length > 1
+
 - name: Update or destroy Automation Hub Collection
   ah_collection:
     namespace:             "{{ __collection.namespace }}"

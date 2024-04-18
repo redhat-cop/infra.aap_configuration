@@ -7,6 +7,13 @@ ah_collections:
     interaval: 5
     auto_approve: true
     timeout: 180
+  - namespace: infra
+    name: aap_utilities
+    path: /var/tmp/aap_utilities/infra-aap_utilities-2.3.0-devel.tar.gz
+    wait: true
+    interaval: 5
+    auto_approve: true
+    timeout: 180
 
 ah_collections_overwrite:
   - namespace: galaxy

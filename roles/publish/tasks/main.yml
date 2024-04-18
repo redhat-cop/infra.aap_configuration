@@ -68,6 +68,19 @@
   no_log: "{{ ah_configuration_publish_secure_logging }}"
   when: ah_collection_list is not defined
 
+- name: Get token
+  ah_token:
+    ah_host:               "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:           "{{ ah_username | default(omit) }}"
+    ah_password:           "{{ ah_password | default(omit) }}"
+    ah_path_prefix:        "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:        "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:       "{{ ah_request_timeout | default(omit) }}"
+  when:
+    - ah_token is not defined
+    - lookup("ansible.builtin.env", "AH_API_TOKEN") == ""
+    - ah_collection_list | length > 1
+
 - name: Publish Collections
   ah_collection:
     namespace:          "{{ (__ah_collection_file | basename).split('-')[0] }}"
