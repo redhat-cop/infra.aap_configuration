@@ -101,6 +101,10 @@
         validate_certs: "{{ controller_validate_certs }}"
       register: export_results
 
+    - name: Determine if AWX>=25.0.0
+      ansible.builtin.set_fact:
+        __is_gte_awx25: "{{ awx_version == 'devel' or awx_version is version('25.0.0', '>=') }}"
+
     - name: Export output
       ansible.builtin.debug:
         var: export_results.difference
@@ -108,9 +112,20 @@
     - name: Differential_expected output
       ansible.builtin.debug:
         var: differential_expected
+      when: not __is_gte_awx25
+
+    - name: Differential_expected output
+      ansible.builtin.debug:
+        var: differential_expected_gte_awx25
+      when: __is_gte_awx25
 
     - name: "Assert that the expected results match for {{ differential_item.name }}"
       ansible.builtin.assert:
-        that:
-          - differential_expected ==  export_results.difference
+        that: export_results.difference == differential_expected
+      when: not __is_gte_awx25
+
+    - name: "Assert that the expected results match for {{ differential_item.name }}"
+      ansible.builtin.assert:
+        that: export_results.difference == differential_expected_gte_awx25
+      when: __is_gte_awx25
 ...
