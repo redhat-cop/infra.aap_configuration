@@ -49,7 +49,7 @@
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
   register: __workflows_job_async
-  changed_when: not __workflows_job_async.changed
+  changed_when: "(__workflows_job_async.changed if ansible_check_mode else false)"
   vars:
     __operation: "{{ operation_translate[__workflow_loop_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
