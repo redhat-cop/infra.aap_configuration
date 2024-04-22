@@ -6,6 +6,7 @@ eda_projects:
     sync: true
     wait: true
     timeout: 30
+    tls_validation: false
   - name: my_project_clone
     description: my awesome project clone
     url: https://github.com/ansible/event-driven-ansible.git

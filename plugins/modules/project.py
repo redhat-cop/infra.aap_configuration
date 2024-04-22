@@ -44,6 +44,11 @@ options:
       required: True
       type: str
       aliases: ['scm_url']
+    tls_validation:
+      description:
+        - Whether to use TLS validation against the url.
+      type: bool
+      default: True
     credential:
       description:
         - The token needed to utilize the SCM URL.
@@ -84,6 +89,7 @@ def main():
         new_name=dict(),
         description=dict(),
         url=dict(required=True, aliases=["scm_url"]),
+        tls_validation=dict(type="bool", default=True),
         credential=dict(),
         state=dict(choices=["present", "absent"], default="present"),
     )
@@ -112,6 +118,7 @@ def main():
     for field_name in (
         "description",
         "url",
+        "tls_validation",
     ):
         field_val = module.params.get(field_name)
         if field_val is not None:
