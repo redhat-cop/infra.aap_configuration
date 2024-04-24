@@ -25,7 +25,7 @@ The awx.awx or ansible.controller collections MUST be installed in order for thi
   hosts: localhost
   connection: local
   vars:
-    controller_validate_certs: false
+    controller_validate_certs: true
   collections:
     - awx.awx
 ```
@@ -89,7 +89,7 @@ Otherwise it will look for the modules only in your base installation. If there 
   hosts: localhost
   connection: local
   vars:
-    controller_validate_certs: false
+    controller_validate_certs: true
   collections:
     - awx.awx
 ```
