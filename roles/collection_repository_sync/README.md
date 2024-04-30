@@ -55,7 +55,7 @@ This also speeds up the overall role.
 |`name`|""|yes|str| Collection Repository name. Probably one of community, validated, rh-certified, or one you have created.|
 |`wait`|`true`|no|bool|Wait for the Collection repository to finish syncing before returning.|
 |`interval`|1.0|no|float|The interval to request an update from Automation Hub.|
-|`timeout`|""|no|int|If waiting for the project to update this will abort after this amount of seconds.|
+|`timeout`|""|no|int|If waiting for the repository to update this will abort after this amount of seconds.|
 |`state`|`present`|no|str|Desired state of the collection repository. Either `present` or `absent`.|
 
 ### Standard Project Data Structure
