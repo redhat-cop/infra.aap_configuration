@@ -53,7 +53,7 @@ This also speeds up the overall role.
 |`project`|""|no|str|Project to use for the Activation.|
 |`rulebook`|""|yes|str|rulebook to use for the Activation.|
 |`decision_environment`|""|yes|str|Decision_environment to use for the Activation.|
-|`restart_policy`|"always"|no|str|Restart_policy to use for the Activation, choice of ["always", "never", "on_failure"]|
+|`restart_policy`|"always"|no|str|Restart_policy to use for the Activation, choice of ["always", "never", "on-failure"]|
 |`extra_vars`|""|no|str|Extra_vars to use for the Activation.|
 |`awx_token`|""|no|str|The token used to authenticate to controller.|
 |`enabled`|"true"|no|str|Whether the rulebook activation is automatically enabled to run.|
