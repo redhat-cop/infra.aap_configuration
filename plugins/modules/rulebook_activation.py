@@ -53,7 +53,7 @@ options:
       description:
         - The policy used to determine whether to restart a rulebook.
       required: False
-      choices: ["always", "never", "on_failure"]
+      choices: ["always", "never", "on-failure"]
       default: "always"
       type: str
     extra_vars:
@@ -120,7 +120,7 @@ def main():
         project=dict(),
         rulebook=dict(required=True),
         decision_environment=dict(required=True),
-        restart_policy=dict(choices=["always", "never", "on_failure"], default="always"),
+        restart_policy=dict(choices=["always", "never", "on-failure"], default="always"),
         extra_vars=dict(type="dict"),
         enabled=dict(type="bool", default="true"),
         state=dict(choices=["present", "absent", "restarted"], default="present"),
