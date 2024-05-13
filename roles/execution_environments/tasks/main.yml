@@ -28,7 +28,7 @@
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
   register: __execution_environments_job_async
-  changed_when: not __execution_environments_job_async.changed
+  changed_when: "(__execution_environments_job_async.changed if ansible_check_mode else false)"
   vars:
     __operation: "{{ operation_translate[__execution_environments_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'

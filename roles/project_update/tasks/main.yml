@@ -28,7 +28,7 @@
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
   register: __project_update_job_async
-  changed_when: not __project_update_job_async.changed
+  changed_when: "(__project_update_job_async.changed if ansible_check_mode else false)"
   vars:
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
