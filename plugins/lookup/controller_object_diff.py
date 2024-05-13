@@ -230,7 +230,7 @@ class LookupModule(LookupBase):
                     item.update({"organizations": [item[item["resource_type"]]]})
                 if item["resource_type"] == "instance_group":
                     item.update({"instance_groups": [item[item["resource_type"]]]})
-                item.update({"role": item["name"].lower().replace(" ", "_")})
+                item.update({"role": item["name"].lower().replace(" ", "_").replace("ad_hoc", "adhoc")})
                 # Remove the extra fields
                 item.pop("users")
                 item.pop("teams")
