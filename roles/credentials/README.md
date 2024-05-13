@@ -88,25 +88,7 @@ This also speeds up the overall role.
 
 ### Credential types
 
-|Credential types|
-|:---:|
-|Amazon Web Services|
-|Controller|
-|GitHub Personal Access Token|
-|GitLab Personal Access Token|
-|Google Compute Engine|
-|Insights|
-|Machine|
-|Microsoft Azure Resource Manager|
-|Network|
-|OpenShift or Kubernetes API Bearer Token|
-|OpenStack|
-|Red Hat CloudForms|
-|Red Hat Satellite 6|
-|Red Hat Virtualization|
-|Source Control|
-|Vault|
-|VMware vCenter|
+To get a list of all the available builtin credential types, checkout the ansible doc's link [here](https://docs.ansible.com/automation-controller/latest/html/userguide/credentials.html#credential-types)
 
 ### Standard Credential Data Structure
 

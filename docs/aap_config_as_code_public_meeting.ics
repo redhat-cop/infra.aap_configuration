@@ -3,17 +3,19 @@ VERSION:2.0
 PRODID:-//ical.marudot.com//iCal Event Maker
 CALSCALE:GREGORIAN
 BEGIN:VEVENT
-DTSTAMP:20230418T084131Z
+DTSTAMP:20240502T083035Z
 UID:1681807271999-95396@ical.marudot.com
-DTSTART:20230511T130000Z
-RRULE:FREQ=WEEKLY;INTERVAL=4;BYDAY=TH
-DTEND:20230511T140000Z
+DTSTART:20240502T130000Z
+SEQUENCE:0
+RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=TH;BYSETPOS=1;WKST=SU
+DTEND:20240502T140000Z
 SUMMARY:AAP config as code Public meeting
 URL:https://meet.google.com/npj-fyzv-oyo
 X-GOOGLE-CONFERENCE:https://meet.google.com/npj-fyzv-oyo
-DESCRIPTION:<a href="https://github.com/redhat-cop/controller_configurat
- ion/issues/475">https://github.com/redhat-cop/controller_configuration/i
- ssues/475</a>\n\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~
+DESCRIPTION:
+ https://forum.ansible.com/t/aap-config-as-code-office-hours-first-thursday-of-every-month/398\n\n
+ https://github.com/redhat-cop/controller_configuration/issues?q=is%3Aissue+is%3Aopen+label%3Aoffice_hours\n\n
+ -::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~
  :~:~:~:~:~:~:~:~:~:~:~:~::~:~::-\nJoin with Google Meet: https://meet.go
  ogle.com/npj-fyzv-oyo\nOr dial: (US) +1 470-722-0265 PIN: 621302239#\n\n
  Join using SIP\n1189446461569@gmeet.redhat.com (ID: 1189446461569)\nMore
@@ -21,5 +23,10 @@ DESCRIPTION:<a href="https://github.com/redhat-cop/controller_configurat
  \nLearn more about Meet at: https://support.google.com/a/users/answer/92
  82720\n\nPlease do not edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~
  :~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:REMINDER
+TRIGGER;RELATED=START:-PT00H15M00S
+END:VALARM
 END:VEVENT
 END:VCALENDAR
