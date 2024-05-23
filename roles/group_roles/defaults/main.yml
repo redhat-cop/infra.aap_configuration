@@ -13,6 +13,7 @@ ah_group_roles: []
 #  - groups
 #  - role_list
 
+ah_configuration_group_roles_async_timeout: "{{ ah_configuration_async_timeout }}"
 ah_configuration_group_roles_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
 ah_configuration_group_roles_async_retries: "{{ ah_configuration_async_retries | default(50) }}"
 ah_configuration_group_roles_async_delay: "{{ ah_configuration_async_delay | default(1) }}"

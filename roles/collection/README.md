@@ -34,6 +34,22 @@ These are the sub options for the vars `ah_collections` which are dictionaries w
 The `ah_configuration_async_dir` variable sets the directory to write the results file for async tasks.
 The default value is set to  `null` which uses the Ansible Default of `/root/.ansible_async/`.
 
+### Asynchronous Retry Variables
+
+The following Variables set asynchronous retries for the role.
+If neither of the retries or delay or retries are set, they will default to their respective defaults.
+This allows for all items to be created, then checked that the task finishes successfully.
+This also speeds up the overall role.
+
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|
+|`ah_configuration_async_timeout`|1000|no|This variable sets the async timeout for the role globally.|
+|`ah_configuration_collection_async_timeout`|`ah_configuration_async_timeout`|no|This variable sets the async timeout for the role.|
+|`ah_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
+|`ah_configuration_collection_async_retries`|`ah_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
+|`ah_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
+|`ah_configuration_collection_async_delay`|`ah_configuration_async_delay`|no|This sets the delay between retries for the role.|
+
 ### Secure Logging Variables
 
 The following Variables compliment each other.

@@ -36,7 +36,7 @@
   loop_control:
     loop_var: "__namespace_item"
   no_log: "{{ ah_configuration_namespace_secure_logging }}"
-  async: 1000
+  async: "{{ ah_configuration_namespace_async_timeout }}"
   poll: 0
   register: __namespaces_job_async
   changed_when: not __namespaces_job_async.changed
