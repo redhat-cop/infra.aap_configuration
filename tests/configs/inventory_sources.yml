@@ -12,7 +12,7 @@ controller_inventory_sources:
     overwrite: true
     update_on_launch: true
     update_cache_timeout: 0
-    wait: true
+    wait: false
   - name: RHVM-02
     source: scm
     source_project: Test Project 2
@@ -23,7 +23,7 @@ controller_inventory_sources:
     overwrite: true
     update_on_launch: true
     update_cache_timeout: 0
-    wait: true
+    wait: false
   - name: RHVM-01-Default
     source: scm
     source_project: Test Project 2
@@ -34,7 +34,7 @@ controller_inventory_sources:
     overwrite: true
     update_on_launch: true
     update_cache_timeout: 0
-    wait: true
+    wait: false
   - name: RHVM-02
     inventory: RHVM-01
     organization: Satellite
