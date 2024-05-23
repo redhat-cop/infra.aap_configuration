@@ -16,7 +16,7 @@
   loop_control:
     loop_var: "__group"
   no_log: "{{ ah_configuration_group_secure_logging }}"
-  async: 1000
+  async: "{{ ah_configuration_group_async_timeout }}"
   poll: 0
   register: __groups_job_async
   changed_when: not __groups_job_async.changed
@@ -53,7 +53,7 @@
     loop_var: "__group"
   when: __group.perms is defined
   no_log: "{{ ah_configuration_group_secure_logging }}"
-  async: 1000
+  async: "{{ ah_configuration_group_async_timeout }}"
   poll: 0
   register: __group_perms_job_async
   changed_when: not __group_perms_job_async.changed

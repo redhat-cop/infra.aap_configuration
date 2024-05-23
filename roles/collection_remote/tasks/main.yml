@@ -37,7 +37,7 @@
   loop_control:
     loop_var: "__collection_remote_item"
   no_log: "{{ ah_configuration_collection_remote_secure_logging }}"
-  async: 1000
+  async: "{{ ah_configuration_collection_remote_async_timeout }}"
   poll: 0
   register: __collection_remote_job_async
   changed_when: not __collection_remote_job_async.changed

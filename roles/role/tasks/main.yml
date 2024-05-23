@@ -17,7 +17,7 @@
   loop_control:
     loop_var: "__role"
   no_log: "{{ ah_configuration_role_secure_logging }}"
-  async: 1000
+  async: "{{ ah_configuration_role_async_timeout }}"
   poll: 0
   register: __roles_job_async
   changed_when: not __roles_job_async.changed

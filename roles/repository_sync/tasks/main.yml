@@ -29,7 +29,7 @@
   loop_control:
     loop_var: "__repository_item"
   no_log: "{{ ah_configuration_repository_secure_logging }}"
-  async: 1000
+  async: "{{ ah_configuration_repository_sync_async_timeout }}"
   poll: 0
   register: __repositories_syncs_job_async
   changed_when: not __repositories_syncs_job_async.changed

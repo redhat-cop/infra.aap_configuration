@@ -23,7 +23,7 @@
   loop_control:
     loop_var: "__user"
   no_log: "{{ ah_configuration_user_secure_logging }}"
-  async: 1000
+  async: "{{ ah_configuration_user_async_timeout }}"
   poll: 0
   register: __users_job_async
   changed_when: not __users_job_async.changed

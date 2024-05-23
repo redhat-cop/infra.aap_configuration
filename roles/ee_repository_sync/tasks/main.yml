@@ -18,7 +18,7 @@
     loop_var: "__ee_repository_item"
   when: __ee_repository_item.sync | default(false)
   no_log: "{{ ah_configuration_ee_repository_secure_logging }}"
-  async: 1000
+  async: "{{ ah_configuration_ee_repository_sync_async_timeout }}"
   poll: 0
   register: __ee_repository_syncs_job_async
   changed_when: not __ee_repository_syncs_job_async.changed

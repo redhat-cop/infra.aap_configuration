@@ -24,7 +24,7 @@
   loop_control:
     loop_var: "__ee_registry_item"
   no_log: "{{ ah_configuration_ee_registry_secure_logging }}"
-  async: 1000
+  async: "{{ ah_configuration_ee_registry_async_timeout }}"
   poll: 0
   register: __ee_registries_job_async
   changed_when: not __ee_registries_job_async.changed

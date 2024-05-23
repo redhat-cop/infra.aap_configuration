@@ -16,7 +16,7 @@
   loop_control:
     loop_var: "__collection_repository_sync_item"
   no_log: "{{ ah_configuration_collection_repository_sync_secure_logging }}"
-  async: 1000
+  async: "{{ ah_configuration_collection_repository_sync_async_timeout }}"
   poll: 0
   register: __collection_repository_sync_job_async
   changed_when: not __collection_repository_sync_job_async.changed
