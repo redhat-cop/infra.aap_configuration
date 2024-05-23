@@ -9,7 +9,7 @@ controller_projects:
     scm_clean: true
     description: Test Project 1
     organization: Default
-    wait: true
+    wait: false
     update_project: false
   - name: Demo Project
     scm_type: git
@@ -18,19 +18,21 @@ controller_projects:
     scm_clean: true
     description: Test Project 1
     organization: Default
-    wait: true
+    wait: false
     update_project: false
   - name: Test Project 2
     scm_type: git
     scm_url: https://github.com/ansible/ansible-examples.git
     description: Test Project 2
     organization: Default
+    wait: false
     update_project: false
   - name: Test Inventory source project
     scm_type: git
     scm_url: https://github.com/ansible/ansible-examples.git
     description: ansible-examples
     organization: Satellite
+    wait: false
     update_project: false
   - name: Test Inventory source project with credential
     scm_type: git
