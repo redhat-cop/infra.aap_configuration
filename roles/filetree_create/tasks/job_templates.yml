@@ -1,8 +1,12 @@
 ---
 - name: "Get current Job Templates from the API"
   ansible.builtin.set_fact:
-    job_templates_lookvar: "{{ query(controller_api_plugin, 'api/v2/job_templates/',
-                                     query_params=(query_params | combine({'organization': organization_id})) if organization_id is defined else query_params,
+    job_templates_lookvar: "{{ query(controller_api_plugin, 'api/v2/job_templates/'        
+                                     query_params=(query_params | combine({'organization': organization_id})) if organization_id is defined and job_id is not defined
+                                     else
+                                     query_params=(query_params | combine({'organization': organization_id, 'id': job_id})) if organization_id is defined and job_id is defined
+                                     else 
+                                     query_params,                                  
                                      host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                      return_all=true, max_objects=query_controller_api_max_objects)
                             }}"
