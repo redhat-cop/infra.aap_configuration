@@ -7,7 +7,7 @@
                                 {'name': project_name} if project_name is defined else {})),
                                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                 return_all=true, max_objects=query_controller_api_max_objects)
-                      }}"
+                       }}"
   vars:
     query_params:
       order_by: 'organization,id'
