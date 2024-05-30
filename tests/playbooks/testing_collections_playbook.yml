@@ -115,6 +115,15 @@
         ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
+    - name: Upload Speicifc collection to automation hub from internet
+      ah_collection_upload:
+        path: "https://galaxy.ansible.com/download/infra-leapp-1.3.0.tar.gz"
+        wait: true
+        ah_host: "{{ ah_hostname }}"
+        ah_token: "{{ ah_token }}"
+        ah_path_prefix: "{{ ah_path_prefix }}"
+        validate_certs: "{{ ah_validate_certs }}"
+
     - name: Verify setting request_timeout to high will work
       ah_namespace:
         name: to_not_work

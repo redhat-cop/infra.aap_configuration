@@ -731,7 +731,7 @@ class AHModule(AnsibleModule):
     def upload(self, path, endpoint, wait=True, item_type="unknown"):
         if "://" in path:
             tmppath = fetch_file(self, path)
-            path = ".".join(tmppath.split(".")[:-2]) + ".tar.gz"
+            path = path.split("/")[-1]
             os.rename(tmppath, path)
             self.add_cleanup_file(path)
         ct, body = self.prepare_multipart(path)

@@ -47,6 +47,14 @@
       ansible.builtin.include_role:
         name: ee_repository
 
+    - name: Test updating the repository README file from a local file
+      ansible.builtin.include_role:
+        name: ee_repository
+      vars:
+        ah_ee_repositories:
+          - name: test-namespace/ee-minimal-rhel8
+            readme_file: "{{ tempfile['path'] }}"
+
     - name: Repository sync
       ansible.builtin.include_role:
         name: ee_repository_sync

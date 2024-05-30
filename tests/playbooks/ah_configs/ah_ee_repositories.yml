@@ -43,7 +43,4 @@ ah_ee_repositories:
 
       * bullet 1
       * bullet 2
-  # Testing updating the repository README file from a local file
-  - name: test-namespace/ee-minimal-rhel8
-    readme_file: "{{ tempfile['path'] }}"
 ...
