@@ -65,7 +65,7 @@ This also speeds up the overall role.
     - galaxy.galaxy.offline_sync
 ```
 
-### Playbook to upload to offline Automation Hub after using this role to download the collections.
+### Playbook to upload to offline Automation Hub after using this role to download the collections
 
 ```yaml
 ---
