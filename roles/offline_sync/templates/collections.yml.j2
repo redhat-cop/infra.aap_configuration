@@ -1,0 +1,6 @@
+---
+collections:
+{% for each in r_collections['json']['results'] %}
+  - name: {{ each.namespace }}.{{ each.name }}
+{% endfor %}
+...

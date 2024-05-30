@@ -1,0 +1,14 @@
+---
+ah_auto_approve: true
+ah_namespaces:
+{% for namespace in _namespaces %}
+  - name: {{ namespace }}
+{% endfor %}
+ah_collections:
+{% for each in _collections %}
+  - name: {{ (each | basename).split('-')[1] }}
+    namespace: {{ (each | basename).split('-')[0] }}
+    path: {{ each }}
+    state: present
+{% endfor %}
+...

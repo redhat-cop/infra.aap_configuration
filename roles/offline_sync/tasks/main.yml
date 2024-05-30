@@ -1,0 +1,80 @@
+---
+- name: Create directory to work in
+  ansible.builtin.file:
+    path: "{{ ah_configuration_working_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Check for ansible.cfg
+  ansible.builtin.stat:
+    path: "{{ ah_configuration_working_dir }}/ansible.cfg"
+  register: r_ansible_cfg
+
+- name: Figuring out AH token
+  when: (not r_ansible_cfg['stat']['exists']) and (ah_token is not defined or ah_token['token'] is defined)
+  block:
+    - name: Authenticate and get an API token from Automation Hub
+      ah_token:
+        ah_host: "{{ ah_host }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        ah_path_prefix: galaxy  # this is for private automation hub
+        validate_certs: false
+      register: r_ah_token
+
+    - name: Fixing format
+      ansible.builtin.set_fact:
+        ah_token: "{{ ah_token['token'] }}"
+      when: r_ah_token['changed']  # noqa: no-handler
+
+- name: Create ansible.cfg
+  ansible.builtin.template:
+    src: ansible.cfg.j2
+    dest: "{{ ah_configuration_working_dir }}/ansible.cfg"
+    mode: "0755"
+  when: not r_ansible_cfg['stat']['exists']
+
+- name: Get list of all collections
+  ansible.builtin.uri:
+    url: https://{{ ah_host }}/api/galaxy/pulp/api/v3/ansible/collections/?limit=1000
+    user: "{{ ah_username }}"
+    password: "{{ ah_password }}"
+    method: GET
+    force_basic_auth: true
+    validate_certs: "{{ ah_validate_certs }}"
+  register: r_collections
+
+- name: Create requirements.yml
+  ansible.builtin.template:
+    src: collections.yml.j2
+    dest: "{{ ah_configuration_working_dir }}/requirements.yml"
+    mode: "0755"
+
+- name: Create directory to put all collections
+  ansible.builtin.file:
+    path: "{{ ah_configuration_working_dir }}/collections"
+    state: directory
+    mode: "0755"
+
+- name: Download all collections
+  ansible.builtin.command: ansible-galaxy collection download {% if ah_configuration_no_deps %}--no-deps{% endif %} -r requirements.yml -p "{{ ah_configuration_working_dir }}/collections"
+  changed_when: true
+
+- name: Find all relevant built collection files
+  ansible.builtin.find:
+    paths: "{{ collection_dir }}"
+    patterns: "{{ (collection_dir) | ternary('*.tar.gz', (collection_dir | basename)) }}"
+  register: __ah_collections_find_results
+  vars:
+    collection_dir: "{{ ah_configuration_working_dir }}/collections/"
+
+- name: Create collections list
+  ansible.builtin.template:
+    src: collections_list.yml.j2
+    dest: "{{ ah_configuration_working_dir }}/collections.yml"
+    mode: "0755"
+  vars:
+    _namespaces: "{{ r_collections['json']['results'] | map(attribute='namespace') | flatten | sort | unique }}"
+    _collections: "{{ (__ah_collections_find_results['files'] | flatten) | map(attribute='path') | flatten | sort | unique }}"
+
+...
