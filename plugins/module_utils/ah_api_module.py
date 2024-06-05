@@ -130,7 +130,7 @@ class AHAPIModule(AnsibleModule):
         self.session = Request(validate_certs=self.verify_ssl, headers=self.headers, follow_redirects=True, timeout=self.request_timeout)
 
         # Define the API paths
-        self.galaxy_path_prefix = "/api/{prefix}".format(prefix=self.path_prefix.strip("/"))
+        self.galaxy_path_prefix = self.get_galaxy_path_prefix()
         self.ui_path_prefix = "{galaxy_prefix}/_ui/v1".format(galaxy_prefix=self.galaxy_path_prefix)
         self.plugin_path_prefix = "{galaxy_prefix}/v3/plugin".format(galaxy_prefix=self.galaxy_path_prefix)
         self.authenticate()
@@ -485,6 +485,35 @@ class AHAPIModule(AnsibleModule):
     def exit_json(self, **kwargs):
         self.logout()
         super(AHAPIModule, self).exit_json(**kwargs)
+
+    def get_galaxy_path_prefix(self):
+        """Return the automation hub/galaxy path prefix
+
+        :return: '/api/{prefix}' unless behind resource_server wherein the api path prefix may differ.
+                 resource_server expected response structure:
+                {
+                    "description": "",
+                    "apis": {
+                        "galaxy": "/api/galaxy/"
+                    }
+                }
+        :rtype: String
+        """
+
+        url = self._build_url(prefix="api", endpoint=None, query_params=None)
+
+        try:
+            response = self.make_request("GET", url)
+        except AHAPIModuleError as e:
+            self.fail_json(msg="Error while contacting server for Galaxy path prefix: {error} \nurl: {url}".format(error=e, url=url))
+        if response["status_code"] == 404:
+            return "/api/{prefix}".format(prefix=self.path_prefix.strip("/"))
+        else:
+            try:
+                rs_prefix = response["json"]["apis"]["galaxy"]
+            except KeyError as e:
+                self.fail_json(msg="Error while getting Galaxy api path prefix: {error}".format(error=e))
+            return rs_prefix.strip("/")
 
     def get_server_version(self):
         """Return the automation hub/galaxy server version.
