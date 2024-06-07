@@ -1,5 +1,5 @@
 ---
-name: Test roles and modules
+name: Test roles and modules - Standalone
 on: [push, pull_request_target]
 
 jobs:
