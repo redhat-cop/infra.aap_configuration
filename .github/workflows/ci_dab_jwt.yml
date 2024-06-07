@@ -1,17 +1,15 @@
 ---
-name: Test roles and modules - Standalone
+name: Test roles and modules - dab_jwt
 on: [push, pull_request_target]
 
 jobs:
-  ci_standalone:
+  ci_dab_jwt:
     strategy:
       fail-fast: false
       matrix:
         galaxy_ng_version:
-          - stable-4.8
-          - stable-4.9
           - master
-    uses: "./.github/workflows/ci_standalone_versioned.yml"
+    uses: "./.github/workflows/ci_dab_jwt_versioned.yml"
     with:
       galaxy_ng_version: ${{ matrix.galaxy_ng_version }}
       gh_ref: ${{ github.event.pull_request.head.sha || github.sha }}
