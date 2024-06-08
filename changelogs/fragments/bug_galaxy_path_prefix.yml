@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Fixed issue where collection exits when detecting Galaxy path prefix
+...

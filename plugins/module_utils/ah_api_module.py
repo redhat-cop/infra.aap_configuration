@@ -504,16 +504,15 @@ class AHAPIModule(AnsibleModule):
 
         try:
             response = self.make_request("GET", url)
-        except AHAPIModuleError as e:
-            self.fail_json(msg="Error while contacting server for Galaxy path prefix: {error} \nurl: {url}".format(error=e, url=url))
-        if response["status_code"] == 404:
-            return "/api/{prefix}".format(prefix=self.path_prefix.strip("/"))
-        else:
+            # No exception this is behind rescource_provider
             try:
                 rs_prefix = response["json"]["apis"]["galaxy"]
+                return rs_prefix.strip("/")
             except KeyError as e:
                 self.fail_json(msg="Error while getting Galaxy api path prefix: {error}".format(error=e))
-            return rs_prefix.strip("/")
+        except AHAPIModuleError:
+            # Indicates standalone galaxy
+            return "/api/{prefix}".format(prefix=self.path_prefix.strip("/"))
 
     def get_server_version(self):
         """Return the automation hub/galaxy server version.
