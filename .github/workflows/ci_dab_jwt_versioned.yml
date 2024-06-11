@@ -73,7 +73,7 @@ jobs:
           mkdir $OCI_ENV_PATH/db_backup/
 
       - name: Move ci cfg to oci
-        run: mv .github/files/ci_dab_jwt.py ./galaxy_ng/dev/oci_env_integration/actions/ci_dab_gwt.py
+        run: mv .github/files/ci_dab_jwt.py ./galaxy_ng/dev/oci_env_integration/actions/ci_dab_jwt.py
 
       - name: Stand up galaxy_ng
         working-directory: galaxy_ng
