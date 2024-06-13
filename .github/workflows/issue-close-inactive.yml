@@ -1,6 +1,6 @@
 ---
 # https://github.com/marketplace/actions/issues-helper
-name: Check inactive
+name: Check and close inactive
 
 on:
   schedule:
@@ -15,6 +15,6 @@ jobs:
         with:
           actions: 'close-issues'
           token: ${{ secrets.GITHUB_TOKEN }}
-          labels: 'need info, inactive'
+          labels: 'inactive'
           inactive-day: 7
 ...
