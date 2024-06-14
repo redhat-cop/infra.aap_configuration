@@ -27,6 +27,7 @@
   loop_control:
     loop_var: "__bulk_job_launch_item"
     label: "{{ (__bulk_job_launch_item.organization | default('<no_org>')) }}/{{ __bulk_job_launch_item.name }}"
+    pause: "{{ controller_configuration_bulk_job_launch_loop_delay }}"
   no_log: "{{ controller_configuration_bulk_job_launch_secure_logging }}"
   register: bulk_launched_controller_jobs
   when: controller_bulk_launch_jobs is defined

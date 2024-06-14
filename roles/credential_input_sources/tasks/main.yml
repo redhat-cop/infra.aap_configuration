@@ -20,6 +20,7 @@
   loop_control:
     loop_var: "__cred_input_src_item"
     label: "{{ __operation.verb }} Controller Credential Input Source for Credential {{ __cred_input_src_item.target_credential }}"
+    pause: "{{ controller_configuration_credential_input_sources_loop_delay }}"
   no_log: "{{ controller_configuration_credential_input_sources_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0

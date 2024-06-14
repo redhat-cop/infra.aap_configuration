@@ -23,6 +23,7 @@
   loop_control:
     loop_var: "__execution_environments_item"
     label: "{{ __operation.verb }} Controller Execution Environment {{ __execution_environments_item }}"
+    pause: "{{ controller_configuration_execution_environments_loop_delay }}"
   no_log: "{{ controller_configuration_execution_environments_secure_logging }}"
   when: controller_execution_environments is defined
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"

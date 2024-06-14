@@ -26,6 +26,7 @@
   loop_control:
     loop_var: __controller_inventory_item
     label: "{{ __operation.verb }} inventory {{ __controller_inventory_item.name }}"
+    pause: "{{ controller_configuration_inventories_loop_delay }}"
   no_log: "{{ controller_configuration_inventories_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0

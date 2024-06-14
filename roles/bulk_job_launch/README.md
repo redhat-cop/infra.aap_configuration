@@ -50,6 +50,8 @@ This also speeds up the overall role.
 |`controller_configuration_bulk_job_launch_async_retries`|`{{ controller_configuration_async_retries }}`|no|This variable sets the number of retries to attempt for the role.|
 |`controller_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
 |`controller_configuration_bulk_job_launch_async_delay`|`controller_configuration_async_delay`|no|This sets the delay between retries for the role.|
+|`controller_configuration_loop_delay`|0|no|This sets the pause between each item in the loop for the roles globally. To help when API is getting overloaded.|
+|`controller_configuration_bulk_job_launch_loop_delay`|`controller_configuration_loop_delay`|no|This sets the pause between each item in the loop for the role. To help when API is getting overloaded.|
 
 ## Data Structure
 

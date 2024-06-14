@@ -27,6 +27,7 @@
   loop_control:
     loop_var: __controller_organizations_item
     label: "{{ __operation.verb }} organization {{ __controller_organizations_item.name }}"
+    pause: "{{ controller_configuration_organizations_loop_delay }}"
   no_log: "{{ controller_configuration_organizations_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0

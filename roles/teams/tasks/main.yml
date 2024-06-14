@@ -19,6 +19,7 @@
   loop_control:
     loop_var: __controller_team_item
     label: "{{ __operation.verb }} Ansible Controller Team {{ __controller_team_item.name }}"
+    pause: "{{ controller_configuration_teams_loop_delay }}"
   no_log: "{{ controller_configuration_teams_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0

@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Added `controller_configuration_loop_delay` and role specific var to give users the option to add a pause during the async loop to slow it down a bit when they are seeing controller API overloaded.
+...

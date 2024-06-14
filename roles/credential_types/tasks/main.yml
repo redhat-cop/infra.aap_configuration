@@ -21,6 +21,7 @@
   loop_control:
     loop_var: __controller_credential_type_item
     label: "{{ __operation.verb }} Credential Type {{ __controller_credential_type_item.name }}"
+    pause: "{{ controller_configuration_credential_types_loop_delay }}"
   no_log: "{{ controller_configuration_credential_types_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0

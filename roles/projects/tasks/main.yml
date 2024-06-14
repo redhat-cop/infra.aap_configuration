@@ -42,6 +42,7 @@
   loop_control:
     loop_var: __controller_project_item
     label: "{{ __operation.verb }} Project {{ __controller_project_item.name }}"
+    pause: "{{ controller_configuration_projects_loop_delay }}"
   no_log: "{{ controller_configuration_projects_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
