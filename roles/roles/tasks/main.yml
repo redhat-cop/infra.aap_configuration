@@ -36,6 +36,7 @@
   loop_control:
     loop_var: __controller_role_item
     label: "{{ __operation.verb }} Role Based Access Entry on Controller {{ __controller_role_item.1 | default(__controller_role_item.role) }}"
+    pause: "{{ controller_configuration_role_loop_delay }}"
   no_log: "{{ controller_configuration_role_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0

@@ -18,6 +18,7 @@
   loop_control:
     loop_var: __controller_label_item
     label: "{{ __operation.verb }} the label {{ __controller_label_item.name }} to Controller"
+    pause: "{{ controller_configuration_labels_loop_delay }}"
   no_log: "{{ controller_configuration_labels_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0

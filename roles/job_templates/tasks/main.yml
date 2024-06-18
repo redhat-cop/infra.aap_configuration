@@ -69,6 +69,7 @@
   loop_control:
     loop_var: __controller_template_item
     label: "{{ __operation.verb }} Controller Job Template {{ __controller_template_item.name }}"
+    pause: "{{ controller_configuration_job_templates_loop_delay }}"
   no_log: "{{ controller_configuration_job_templates_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0

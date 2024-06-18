@@ -28,6 +28,7 @@
   loop_control:
     loop_var: __controller_user_accounts_item
     label: "{{ __operation.verb }} Controller User {{ __controller_user_accounts_item.user | default(__controller_user_accounts_item.username) }}"
+    pause: "{{ controller_configuration_users_loop_delay }}"
   no_log: "{{ controller_configuration_users_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0

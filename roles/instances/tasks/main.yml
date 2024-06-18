@@ -24,6 +24,7 @@
   loop_control:
     loop_var: __controller_instance_item
     label: "{{ __controller_instance_item.hostname }}"
+    pause: "{{ controller_configuration_instances_loop_delay }}"
   no_log: "{{ controller_configuration_instances_secure_logging }}"
   when: controller_instances is defined
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"

@@ -16,6 +16,7 @@
   loop: "{{ controller_bulk_hosts }}"
   loop_control:
     loop_var: __controller_bulk_hosts_item
+    pause: "{{ controller_configuration_bulk_hosts_loop_delay }}"
   no_log: "{{ controller_configuration_bulk_hosts_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0

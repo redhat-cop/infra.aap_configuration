@@ -24,6 +24,7 @@
   loop_control:
     loop_var: "__application_item"
     label: "{{ __operation.verb }} Controller Application {{ __application_item.name }}"
+    pause: "{{ controller_configuration_applications_loop_delay }}"
   no_log: "{{ controller_configuration_applications_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
