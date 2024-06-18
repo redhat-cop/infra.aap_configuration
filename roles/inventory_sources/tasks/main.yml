@@ -41,6 +41,7 @@
   loop_control:
     loop_var: __controller_source_item
     label: "{{ __operation.verb }} an Inventory Source {{ __controller_source_item.name }}"
+    pause: "{{ controller_configuration_inventory_loop_delay }}"
   no_log: "{{ controller_configuration_inventory_sources_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0

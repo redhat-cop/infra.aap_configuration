@@ -20,6 +20,7 @@
   loop_control:
     loop_var: "__project_update_update_item"
     label: "{{ (__project_update_update_item.organization | default('<no_org>')) }}/{{ __project_update_update_item.name }}"
+    pause: "{{ controller_configuration_project_update_loop_delay }}"
   no_log: "{{ controller_configuration_project_update_secure_logging }}"
   when:
     - controller_projects is defined
