@@ -34,7 +34,7 @@ repos:
         args: [--config=.black.cfg, --check, --diff]
         types: [python]
   - repo: https://github.com/pycqa/flake8
-    rev: 7.0.0
+    rev: 7.1.0
     hooks:
       - id: flake8
         name: flake8
