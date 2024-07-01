@@ -1,10 +1,11 @@
 ---
 name: Bug report
-about: >
-  Create a bug report. Please test against the latest release before
-  submitting it. For anything else, please use discussions
-  link below.
+about: Create a bug report. Please test against the latest release before submitting
+  it. For anything else, please use discussions link below.
+title: ''
 labels: bug, new
+assignees: ''
+
 ---
 
 <!--- Verify first that your issue is not already reported on GitHub -->
