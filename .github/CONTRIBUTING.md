@@ -40,8 +40,7 @@ See [Using Pull Requests](https://docs.github.com/en/pull-requests/collaborating
 
 For an in depth guide on how to contribute see [this article](https://opensource.com/article/19/7/create-pull-request-github)
 
-Use Github [discussions] forum or for a live chat experience try
-Matrix room [#aap_config_as_code:ansible.com](https://matrix.to/#/#aap_config_as_code:ansible.com).
+Try our Matrix room [#aap_config_as_code:ansible.com](https://matrix.to/#/#aap_config_as_code:ansible.com).
 
 For the full list of Ansible IRC and Mailing list, please see the
 [Ansible Communication] page.
