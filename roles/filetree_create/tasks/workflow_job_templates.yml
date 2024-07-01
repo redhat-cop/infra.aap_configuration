@@ -17,7 +17,7 @@
   block:
     - name: "Get current Job Templates related to workflow from the API"
       ansible.builtin.set_fact:
-        workflow_node_job_templates_lookvar: "{{ query(controller_api_plugin, {{ workflow_job_templates_lookvar[0]['related']['workflow_nodes'] }},
+        workflow_node_job_templates_lookvar: "{{ query(controller_api_plugin, workflow_job_templates_lookvar[0]['related']['workflow_nodes'],
                                                  host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                                  return_all=true, max_objects=query_controller_api_max_objects)
                                               }}"
