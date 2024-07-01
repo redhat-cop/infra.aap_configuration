@@ -39,8 +39,7 @@ For an in depth guide on how to contribute see [this article](https://opensource
 
 Note that we follow the [Automation Good Practices](https://redhat-cop.github.io/automation-good-practices) and so are you expected to do.
 
-Use Github [discussions] forum or for a live chat experience try
-Matrix room [#aap_config_as_code:ansible.com](https://matrix.to/#/#aap_config_as_code:ansible.com).
+Try our Matrix room [#aap_config_as_code:ansible.com](https://matrix.to/#/#aap_config_as_code:ansible.com).
 
 For the full list of Ansible IRC and Mailing list, please see the
 [Ansible Communication] page.
@@ -57,5 +56,4 @@ As with all Ansible projects, we have a [Code of Conduct].
 [ansible communication](https://docs.ansible.com/ansible/latest/community/communication.html)
 [code of conduct](https://docs.ansible.com/ansible/latest/community/code_of_conduct.html)
 [creating your fork on github](https://guides.github.com/activities/forking/)
-[discussions](https://github.com/redhat-cop/eda_configuration/discussions)
 [supported ansible versions](https://docs.ansible.com/ansible-core/devel/reference_appendices/release_and_maintenance.html#ansible-core-release-cycle)
