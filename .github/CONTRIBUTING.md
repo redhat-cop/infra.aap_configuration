@@ -58,5 +58,4 @@ As with all Ansible projects, we have a [Code of Conduct].
 [ansible communication](https://docs.ansible.com/ansible/latest/community/communication.html)
 [code of conduct](https://docs.ansible.com/ansible/latest/community/code_of_conduct.html)
 [creating your fork on github](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
-[discussions](https://github.com/redhat-cop/controller_configuration/discussions)
 [supported ansible versions](https://docs.ansible.com/ansible-core/devel/reference_appendices/release_and_maintenance.html#ansible-core-release-cycle)
