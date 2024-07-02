@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a bug report. Please test against the latest release before submitting
-  it. For anything else, please use discussions link below.
+  it. For anything else, please use the Forums link below.
 title: ''
 labels: bug, new
 assignees: ''
