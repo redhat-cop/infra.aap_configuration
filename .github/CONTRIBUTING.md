@@ -40,8 +40,7 @@ See [Using Pull Requests](https://docs.github.com/en/pull-requests/collaborating
 
 For an in depth guide on how to contribute see [this article](https://opensource.com/article/19/7/create-pull-request-github)
 
-Use Github [discussions] forum or for a live chat experience try
-Matrix room [#aap_config_as_code:ansible.com](https://matrix.to/#/#aap_config_as_code:ansible.com).
+Try our Matrix room [#aap_config_as_code:ansible.com](https://matrix.to/#/#aap_config_as_code:ansible.com).
 
 For the full list of Ansible IRC and Mailing list, please see the
 [Ansible Communication] page.
@@ -58,5 +57,4 @@ As with all Ansible projects, we have a [Code of Conduct].
 [ansible communication](https://docs.ansible.com/ansible/latest/community/communication.html)
 [code of conduct](https://docs.ansible.com/ansible/latest/community/code_of_conduct.html)
 [creating your fork on github](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
-[discussions](https://github.com/redhat-cop/controller_configuration/discussions)
 [supported ansible versions](https://docs.ansible.com/ansible-core/devel/reference_appendices/release_and_maintenance.html#ansible-core-release-cycle)
