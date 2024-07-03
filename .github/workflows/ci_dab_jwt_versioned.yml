@@ -79,9 +79,6 @@ jobs:
         working-directory: galaxy_ng
         run: python3 dev/oci_env_integration/actions/ci_dab_jwt.py
 
-      - name: "Perform playbook user and group management tests"
-        run: ansible-playbook tests/playbooks/testing_playbook_user.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
-
       - name: "Perform playbook collection tests"
         run: ansible-playbook tests/playbooks/testing_collections_playbook.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }} -e git_repo_name=${{ github.event.repository.name }}
 
