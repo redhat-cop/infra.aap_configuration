@@ -58,6 +58,11 @@ jobs:
           echo "OCI_VERBOSE=1" >> $GITHUB_ENV
           echo "GH_DUMP_LOGS=1" >> $GITHUB_ENV
           echo "GH_TEARDOWN=0" >> $GITHUB_ENV
+          echo "AH_HOST=http://localhost:8080/" >> $GITHUB_ENV
+          echo "AH_USERNAME=admin" >> $GITHUB_ENV
+          echo "AH_PASSWORD=admin" >> $GITHUB_ENV
+          echo "AH_LOGIN_PATH=/api/gateway/v1/login/" >> $GITHUB_ENV
+          echo "AH_LOGOUT_PATH=/api/gateway/v1/logout/" >> $GITHUB_ENV
 
       - name: Update apt
         run: sudo apt -y update
@@ -80,7 +85,7 @@ jobs:
         run: python3 dev/oci_env_integration/actions/ci_dab_jwt.py
 
       - name: "Perform playbook collection tests"
-        run: ansible-playbook tests/playbooks/testing_collections_playbook.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }} -e git_repo_name=${{ github.event.repository.name }}
+        run: ansible-playbook tests/playbooks/testing_collections_playbook.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }} -e git_repo_name=${{ github.event.repository.name }} -e ci_workflow=ci_dab_jwt
 
       - name: "Perform collection repository tests"
         run: ansible-playbook tests/playbooks/testing_collections_repos.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }}
