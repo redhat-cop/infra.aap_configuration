@@ -5,7 +5,7 @@
     new_name:                           "{{ __controller_organizations_item.new_name | default(omit) }}"
     description:                        "{{ __controller_organizations_item.description | default(('' if controller_configuration_organizations_enforce_defaults else omit), true) }}"
     custom_virtualenv:                  "{{ __controller_organizations_item.custom_virtualenv | default(omit, true) }}"
-    max_hosts:                          "{{ __controller_organizations_item.max_hosts | default(( 0 if controller_configuration_organizations_enforce_defaults else omit), true) }}"
+    max_hosts:                          "{{ __controller_organizations_item.max_hosts | default((0 if controller_configuration_organizations_enforce_defaults else omit), true) }}"
     instance_groups:                    "{{ (__controller_organizations_item.instance_groups | default(([] if controller_configuration_organizations_enforce_defaults else omit), true)) if (assign_instance_groups_to_org is defined and assign_instance_groups_to_org) else omit }}"
     default_environment:                "{{ (__controller_organizations_item.default_environment.name | default(__controller_organizations_item.default_environment | default(__controller_organizations_item.execution_environment | default(omit)))) if (assign_default_ee_to_org is defined and assign_default_ee_to_org) else omit }}"
     galaxy_credentials:                 "{{ (__controller_organizations_item.galaxy_credentials | default(([] if controller_configuration_organizations_enforce_defaults else omit), true)) if (assign_galaxy_credentials_to_org is defined and assign_galaxy_credentials_to_org) else omit }}"
