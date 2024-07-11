@@ -19,6 +19,8 @@ Each role has its own variables, for information on those please see each role w
 ```yaml
 controller_configuration_dispatcher_roles:
   - {role: settings, var: controller_settings, tags: settings}
+  - {role: instances, var: controller_instances, tags: instances}
+  - {role: instance_groups, var: controller_instance_groups, tags: instance_groups}
   - {role: organizations, var: controller_organizations, tags: organizations}
   - {role: labels, var: controller_labels, tags: labels}
   - {role: users, var: controller_user_accounts, tags: users}
@@ -28,15 +30,14 @@ controller_configuration_dispatcher_roles:
   - {role: credential_input_sources, var: controller_credential_input_sources, tags: credential_input_sources}
   - {role: execution_environments, var: controller_execution_environments, tags: execution_environments}
   - {role: notification_templates, var: controller_notifications, tags: notification_templates}
-  - {role: organizations, var: controller_organizations, tags: organizations}  # Rerunning with additional dependant values set to be added to the org
+  - {role: organizations, var: controller_organizations, tags: organizations} # Rerunning with additional dependant values set to be added to the org
   - {role: projects, var: controller_projects, tags: projects}
-  - {role: applications, var: controller_applications, tags: applications}
   - {role: inventories, var: controller_inventories, tags: inventories}
-  - {role: instance_groups, var: controller_instance_groups, tags: instance_groups}
-  - {role: project_update, var: controller_projects, tags: projects}
   - {role: inventory_sources, var: controller_inventory_sources, tags: inventory_sources}
   - {role: inventory_source_update, var: controller_inventory_sources, tags: inventory_sources}
+  - {role: applications, var: controller_applications, tags: applications}
   - {role: hosts, var: controller_hosts, tags: hosts}
+  - {role: bulk_host_create, var: controller_bulk_hosts, tags: bulk_hosts}
   - {role: groups, var: controller_groups, tags: inventories}
   - {role: job_templates, var: controller_templates, tags: job_templates}
   - {role: workflow_job_templates, var: controller_workflows, tags: workflow_job_templates}
