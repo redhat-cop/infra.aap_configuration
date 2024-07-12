@@ -97,8 +97,8 @@
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
 - name: Set templates error artifact
-  when: templates_error_list is defined
+  when: __templates_error_list is defined
   ansible.builtin.set_stats:
     data:
-      templates_errors: "{{ templates_error_list }}"
+      templates_errors: "{{ __templates_error_list }}"
 ...

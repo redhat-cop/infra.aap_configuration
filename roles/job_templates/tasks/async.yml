@@ -13,17 +13,17 @@
     - name: "Load error details"
       ansible.builtin.include_vars:
         file: "{{ __job_templates_job_async_result.results_file }}"
-        name: error_data
+        name: __error_data
 
     - name: "Building list of not processed templates"
       ansible.builtin.set_fact:
-        templates_error_list: "{{ templates_error_list | default([]) + [ {
-                                                                          'name': error_data['invocation']['module_args']['name'],
-                                                                          'project_name': error_data['invocation']['module_args']['project'],
-                                                                          'playbook': error_data['invocation']['module_args']['playbook'],
-                                                                          'inventory': error_data['invocation']['module_args']['inventory'],
-                                                                          'credentials': error_data['invocation']['module_args']['credentials'],
-                                                                          'error': error_data['msg']
+        __templates_error_list: "{{ __templates_error_list | default([]) + [ {
+                                                                          'name': __error_data['invocation']['module_args']['name'],
+                                                                          'project_name': __error_data['invocation']['module_args']['project'],
+                                                                          'playbook': __error_data['invocation']['module_args']['playbook'],
+                                                                          'inventory': __error_data['invocation']['module_args']['inventory'],
+                                                                          'credentials': __error_data['invocation']['module_args']['credentials'],
+                                                                          'error': __error_data['msg']
                                                                           }
                                                                         ]
                                }}"
