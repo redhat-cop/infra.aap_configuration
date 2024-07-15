@@ -15,18 +15,15 @@
   register: __contents_filetree_controller_roles
   failed_when: "'VARIABLE IS NOT DEFINED' in __contents_filetree_controller_roles"
 
-- name: "Populate Roles list"
-  ansible.builtin.set_fact:
-    __populate_controller_roles: "{{ (__populate_controller_roles | default([])) + __populate_roles_list_item.ansible_facts.controller_roles }}"
-  loop: "{{ __contents_filetree_controller_roles.results }}"
-  loop_control:
-    loop_var: __populate_roles_list_item
-  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
-  when: __contents_filetree_controller_roles.results is defined and __populate_roles_list_item.ansible_facts.controller_roles is defined
-
 - name: "Set Roles Data Structure"
   ansible.builtin.set_fact:
-    controller_roles: "{{ __populate_controller_roles }}"
+    controller_roles: >-
+      {{
+        __contents_filetree_controller_roles.results |
+        rejectattr('ansible_facts.controller_roles', 'undefined') |
+        map(attribute='ansible_facts.controller_roles') |
+        ansible.builtin.flatten
+      }}
   no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
-  when: __populate_controller_roles is defined
+  when: __contents_filetree_controller_roles.results
 ...

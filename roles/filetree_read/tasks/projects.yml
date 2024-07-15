@@ -15,18 +15,15 @@
   register: __contents_filetree_controller_projects
   failed_when: "'VARIABLE IS NOT DEFINED' in __contents_filetree_controller_projects"
 
-- name: "Populate Projects list"
-  ansible.builtin.set_fact:
-    __populate_controller_projects: "{{ (__populate_controller_projects | default([])) + __populate_projects_list_item.ansible_facts.controller_projects }}"
-  loop: "{{ __contents_filetree_controller_projects.results }}"
-  loop_control:
-    loop_var: __populate_projects_list_item
-  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
-  when: __contents_filetree_controller_projects.results is defined and __populate_projects_list_item.ansible_facts.controller_projects is defined
-
 - name: "Set Projects Data Structure"
   ansible.builtin.set_fact:
-    controller_projects: "{{ __populate_controller_projects }}"
+    controller_projects: >-
+      {{
+        __contents_filetree_controller_projects.results |
+        rejectattr('ansible_facts.controller_projects', 'undefined') |
+        map(attribute='ansible_facts.controller_projects') |
+        ansible.builtin.flatten
+      }}
   no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
-  when: __populate_controller_projects is defined
+  when: __contents_filetree_controller_projects.results
 ...
