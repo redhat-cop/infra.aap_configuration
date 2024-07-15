@@ -15,9 +15,38 @@
   pre_tasks:
     - name: Include vars from controller_configs directory
       ansible.builtin.include_vars:
-        dir: ./configs
-        extensions: ["yml"]
+        dir: ./configs/templates.yml
 
   roles:
     - {role: ../.., when: controller_templates is defined}
+
+- name: Add Invalid Job Templates to Controller
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    controller_validate_certs: false
+    controller_hostname: controller.example.com
+    controller_username: admin
+    controller_password: changeme
+
+  collections:
+    - awx.awx
+
+  pre_tasks:
+    - name: Include vars from controller_configs directory
+      ansible.builtin.include_vars:
+        dir: ./configs/invalid_templates.yml
+
+  roles:
+    - {role: ../.., when: controller_templates is defined}
+
+  post_tasks:
+    - name: Ensure the templates_errors is defined and has items
+      ansible.builtin.assert:
+        that:
+          - templates_errors is defined
+          - templates_errors | length > 0
+        fail_msg: "No errors found, validate test example"
+        success_msg: "Errors found, proceeding"
 ...
