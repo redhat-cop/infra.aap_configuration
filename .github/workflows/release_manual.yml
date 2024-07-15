@@ -1,0 +1,40 @@
+---
+# This workflow action will run pre-commit, which will execute ansible and yaml linting
+# See .pre-commit-config.yaml for what hooks are executed
+name: Release - Manual
+
+on:
+  workflow_dispatch:
+    inputs:
+      tagged_version:
+        description: "The tagged version to run the release of"
+        required: true
+
+jobs:
+  release:
+    uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline_dual.yml@main"
+    with:
+      # Galaxy Publish
+      collection_namespace_1: infra
+      collection_name_1: controller_configuration
+      publish_url_collection_1: https://galaxy.ansible.com/api/
+      galaxy_publish_1: true
+      ah_publish_1: false
+      # CRC Publish
+      collection_namespace_2: infra
+      collection_name_2: controller_configuration
+      publish_url_collection_2: https://cloud.redhat.com/api/automation-hub/
+      galaxy_publish_2: false
+      ah_publish_2: true
+      collection_version: ${{ vars.tagged_version }}
+      collection_repo: https://github.com/redhat-cop/controller_configuration/
+      quay_username: redhat_cop
+      collection_dependencies: awx.awx
+      matrix_message: This Ansible collection allows for easy interaction with an AWX or Ansible Controller server via Ansible roles using the AWX/Controller collection modules.
+    secrets:
+      collection_api_key_1: ${{ secrets.GALAXY_INFRA_KEY }}
+      collection_api_key_2: ${{ secrets.CRC_PUBLISH_KEY }}
+      git_token: ${{ secrets.GITHUB_TOKEN }}
+      quay_token: ${{ secrets.quay_token }}
+      matrix_token: ${{ secrets.matrix_token }}
+...
