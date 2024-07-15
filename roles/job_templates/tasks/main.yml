@@ -85,7 +85,7 @@
   when: ansible_check_mode and __job_templates_job_async.failed is defined and __job_templates_job_async.failed
 
 - name: "Managing Controller Job Templates | include async file"
-  ansible.builtin.include_tasks: "{{ role_path }}/tasks/async.yaml"
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/async.yml"
   loop: "{{ __job_templates_job_async.results }}"
   loop_control:
     loop_var: __job_templates_job_async_result_item
