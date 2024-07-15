@@ -96,9 +96,10 @@
     __operation: "{{ operation_translate[__job_templates_job_asycn_result_item.__controller_template_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
-- name: Set templates error artifact
+- name: Set Job Templates error artifact
   when: __templates_error_list is defined
   ansible.builtin.set_stats:
     data:
-      templates_errors: "{{ __templates_error_list }}"
+      job_templates_errors: "{{ __templates_error_list }}"
+  register: __job_templates_errors_set_stats
 ...
