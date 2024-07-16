@@ -1,4 +1,32 @@
 ---
+- name: Verify Job Templates
+  when: controller_templates is defined and (controller_state is defined and controller_state == 'exists')
+  block:
+    - name: 'Retrieve job templates from controller'
+      ansible.builtin.set_fact:
+        __t_controller_job_templates: >-
+          {{
+            query(
+              controller_api_plugin,
+              'api/v2/job_templates/',
+              host=controller_hostname,
+              oauth_token=controller_oauthtoken,
+              verify_ssl=controller_validate_certs,
+              return_all=true,
+              max_objects=query_controller_api_max_objects
+            ) |
+            map(attribute='name') |
+            ansible.builtin.flatten
+          }}
+
+    - name: 'Extract job templates which are not defined in controller'
+      ansible.builtin.set_fact:
+        job_templates: >-
+          {{
+            controller_templates |
+            rejectattr('name', 'in', __t_controller_job_templates)
+          }}
+
 - name: "Managing Controller Job Templates"
   job_template:
     name:                                 "{{ __controller_template_item.name | mandatory }}"
