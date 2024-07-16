@@ -15,18 +15,15 @@
   register: __contents_filetree_controller_inventories
   failed_when: "'VARIABLE IS NOT DEFINED' in __contents_filetree_controller_inventories"
 
-- name: "Populate Inventories list"
-  ansible.builtin.set_fact:
-    __populate_controller_inventories: "{{ (__populate_controller_inventories | default([])) + __populate_inventories_list_item.ansible_facts.controller_inventories }}"
-  loop: "{{ __contents_filetree_controller_inventories.results }}"
-  loop_control:
-    loop_var: __populate_inventories_list_item
-  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
-  when: __contents_filetree_controller_inventories.results is defined and __populate_inventories_list_item.ansible_facts.controller_inventories is defined
-
 - name: "Set Inventories Data Structure"
   ansible.builtin.set_fact:
-    controller_inventories: "{{ __populate_controller_inventories }}"
+    controller_inventories: >-
+      {{
+        __contents_filetree_controller_inventories.results |
+        rejectattr('ansible_facts.controller_inventories', 'undefined') |
+        map(attribute='ansible_facts.controller_inventories') |
+        ansible.builtin.flatten
+      }}
   no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
-  when: __populate_controller_inventories is defined
+  when: __contents_filetree_controller_inventories.results
 ...
