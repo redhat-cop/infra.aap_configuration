@@ -15,18 +15,15 @@
   register: __contents_filetree_controller_teams
   failed_when: "'VARIABLE IS NOT DEFINED' in __contents_filetree_controller_teams"
 
-- name: "Populate Teams list"
+- name: "Set Roles Data Structure"
   ansible.builtin.set_fact:
-    __populate_controller_teams: "{{ (__populate_controller_teams | default([])) + __populate_teams_list_item.ansible_facts.controller_teams }}"
-  loop: "{{ __contents_filetree_controller_teams.results }}"
-  loop_control:
-    loop_var: __populate_teams_list_item
+    controller_roles: >-
+      {{
+        __contents_filetree_controller_teams.results |
+        rejectattr('ansible_facts.controller_teams', 'undefined') |
+        map(attribute='ansible_facts.controller_teams') |
+        ansible.builtin.flatten
+      }}
   no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
-  when: __contents_filetree_controller_teams.results is defined and __populate_teams_list_item.ansible_facts.controller_teams is defined
-
-- name: "Set Teams Data Structure"
-  ansible.builtin.set_fact:
-    controller_teams: "{{ __populate_controller_teams }}"
-  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
-  when: __populate_controller_teams is defined
+  when: __contents_filetree_controller_teams.results
 ...
