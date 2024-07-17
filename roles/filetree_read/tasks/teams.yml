@@ -1,15 +1,26 @@
 ---
-- name: "Get list of files inside {{ filetree_controller_teams }}"
+- name: Determine if filetree_controller_teams is a string or list
+  ansible.builtin.set_fact:
+    __filetree_controller_teams: "{{ [filetree_controller_teams] if filetree_controller_teams is string else filetree_controller_teams }}"
+
+- name: "Get list of files"
   ansible.builtin.find:
-    paths: "{{ filetree_controller_teams }}"
+    paths: "{{ __filetree_controller_teams_item }}"
     file_type: file
     recurse: true
+  loop: "{{ __filetree_controller_teams }}"
+  loop_control:
+    loop_var: __filetree_controller_teams_item
   register: __list_files_controller_teams
+
+- name: Extract file paths using json_query
+  ansible.builtin.set_fact:
+    __list_files_controller_teams: "{{ __list_files_controller_teams | json_query('results[].files[].path') }}"
 
 - name: "Read Teams definitions"
   ansible.builtin.include_vars:
-    file: "{{ __read_teams_definitions_item.path }}"
-  loop: "{{ __list_files_controller_teams.files }}"
+    file: "{{ __read_teams_definitions_item }}"
+  loop: "{{ __list_files_controller_teams }}"
   loop_control:
     loop_var: __read_teams_definitions_item
   register: __contents_filetree_controller_teams

@@ -1,15 +1,26 @@
 ---
-- name: "Get list of files inside {{ filetree_controller_notifications }}"
+- name: Determine if filetree_controller_notifications is a string or list
+  ansible.builtin.set_fact:
+    __filetree_controller_notifications: "{{ [filetree_controller_notifications] if filetree_controller_notifications is string else filetree_controller_notifications }}"
+
+- name: "Get list of files"
   ansible.builtin.find:
-    paths: "{{ filetree_controller_notifications }}"
+    paths: "{{ __filetree_controller_notifications_item }}"
     file_type: file
     recurse: true
+  loop: "{{ __filetree_controller_notifications }}"
+  loop_control:
+    loop_var: __filetree_controller_notifications_item
   register: __list_files_controller_notifications
+
+- name: Extract file paths using json_query
+  ansible.builtin.set_fact:
+    __list_files_controller_notifications: "{{ __list_files_controller_notifications | json_query('results[].files[].path') }}"
 
 - name: "Read Notifications definitions"
   ansible.builtin.include_vars:
-    file: "{{ __read_notifications_definitions_item.path }}"
-  loop: "{{ __list_files_controller_notifications.files }}"
+    file: "{{ __read_notifications_definitions_item }}"
+  loop: "{{ __list_files_controller_notifications }}"
   loop_control:
     loop_var: __read_notifications_definitions_item
   register: __contents_filetree_controller_notifications

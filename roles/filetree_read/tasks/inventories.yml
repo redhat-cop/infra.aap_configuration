@@ -1,15 +1,26 @@
 ---
-- name: "Get list of files inside {{ filetree_controller_inventories }}"
+- name: Determine if filetree_controller_inventories is a string or list
+  ansible.builtin.set_fact:
+    __filetree_controller_inventories: "{{ [filetree_controller_inventories] if filetree_controller_inventories is string else filetree_controller_inventories }}"
+
+- name: "Get list of files"
   ansible.builtin.find:
-    paths: "{{ filetree_controller_inventories }}"
+    paths: "{{ __filetree_controller_inventories_item }}"
     file_type: file
     recurse: true
+  loop: "{{ __filetree_controller_inventories }}"
+  loop_control:
+    loop_var: __filetree_controller_inventories_item
   register: __list_files_controller_inventories
+
+- name: Extract file paths using json_query
+  ansible.builtin.set_fact:
+    __list_files_controller_inventories: "{{ __list_files_controller_inventories | json_query('results[].files[].path') }}"
 
 - name: "Read Inventories definitions"
   ansible.builtin.include_vars:
-    file: "{{ __read_inventories_definitions_item.path }}"
-  loop: "{{ __list_files_controller_inventories.files }}"
+    file: "{{ __read_inventories_definitions_item }}"
+  loop: "{{ __list_files_controller_inventories }}"
   loop_control:
     loop_var: __read_inventories_definitions_item
   register: __contents_filetree_controller_inventories

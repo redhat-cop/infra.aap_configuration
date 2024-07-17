@@ -1,15 +1,26 @@
 ---
-- name: "Get list of files inside {{ filetree_controller_instance_groups }}"
+- name: Determine if filetree_controller_instance_groups is a string or list
+  ansible.builtin.set_fact:
+    __filetree_controller_instance_groups: "{{ [filetree_controller_instance_groups] if filetree_controller_instance_groups is string else filetree_controller_instance_groups }}"
+
+- name: "Get list of files"
   ansible.builtin.find:
-    paths: "{{ filetree_controller_instance_groups }}"
+    paths: "{{ __filetree_controller_instance_groups_item }}"
     file_type: file
     recurse: true
+  loop: "{{ __filetree_controller_instance_groups }}"
+  loop_control:
+    loop_var: __filetree_controller_instance_groups_item
   register: __list_files_controller_instance_groups
+
+- name: Extract file paths using json_query
+  ansible.builtin.set_fact:
+    __list_files_controller_instance_groups: "{{ __list_files_controller_instance_groups | json_query('results[].files[].path') }}"
 
 - name: "Read Instance Groups definitions"
   ansible.builtin.include_vars:
-    file: "{{ __read_instance_groups_definitions_item.path }}"
-  loop: "{{ __list_files_controller_instance_groups.files }}"
+    file: "{{ __read_instance_groups_definitions_item }}"
+  loop: "{{ __list_files_controller_instance_groups }}"
   loop_control:
     loop_var: __read_instance_groups_definitions_item
   register: __contents_filetree_controller_instance_groups

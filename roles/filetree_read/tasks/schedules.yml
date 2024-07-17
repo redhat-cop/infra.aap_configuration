@@ -1,15 +1,26 @@
 ---
-- name: "Get list of files inside {{ filetree_controller_schedules }}"
+- name: Determine if filetree_controller_schedules is a string or list
+  ansible.builtin.set_fact:
+    __filetree_controller_schedules: "{{ [filetree_controller_schedules] if filetree_controller_schedules is string else filetree_controller_schedules }}"
+
+- name: "Get list of files"
   ansible.builtin.find:
-    paths: "{{ filetree_controller_schedules }}"
+    paths: "{{ __filetree_controller_schedules_item }}"
     file_type: file
     recurse: true
+  loop: "{{ __filetree_controller_schedules }}"
+  loop_control:
+    loop_var: __filetree_controller_schedules_item
   register: __list_files_controller_schedules
+
+- name: Extract file paths using json_query
+  ansible.builtin.set_fact:
+    __list_files_controller_schedules: "{{ __list_files_controller_schedules | json_query('results[].files[].path') }}"
 
 - name: "Read Schedules definitions"
   ansible.builtin.include_vars:
-    file: "{{ __read_schedules_definitions_item.path }}"
-  loop: "{{ __list_files_controller_schedules.files }}"
+    file: "{{ __read_schedules_definitions_item }}"
+  loop: "{{ __list_files_controller_schedules }}"
   loop_control:
     loop_var: __read_schedules_definitions_item
   register: __contents_filetree_controller_schedules

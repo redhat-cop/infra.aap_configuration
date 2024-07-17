@@ -1,0 +1,2 @@
+minor_changes:
+  - added the ability for filetree_read to support a string var for folders (for backward compatibility), or list (so user can provide multiple folder paths per task/tag if so desired)

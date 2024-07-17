@@ -1,15 +1,26 @@
 ---
-- name: "Get list of files inside {{ filetree_controller_projects }}"
+- name: Determine if filetree_controller_projects is a string or list
+  ansible.builtin.set_fact:
+    __filetree_controller_projects: "{{ [filetree_controller_projects] if filetree_controller_projects is string else filetree_controller_projects }}"
+
+- name: "Get list of files"
   ansible.builtin.find:
-    paths: "{{ filetree_controller_projects }}"
+    paths: "{{ __filetree_controller_projects_item }}"
     file_type: file
     recurse: true
+  loop: "{{ __filetree_controller_projects }}"
+  loop_control:
+    loop_var: __filetree_controller_projects_item
   register: __list_files_controller_projects
+
+- name: Extract file paths using json_query
+  ansible.builtin.set_fact:
+    __list_files_controller_projects: "{{ __list_files_controller_projects | json_query('results[].files[].path') }}"
 
 - name: "Read Projects definitions"
   ansible.builtin.include_vars:
-    file: "{{ __read_projects_definitions_item.path }}"
-  loop: "{{ __list_files_controller_projects.files }}"
+    file: "{{ __read_projects_definitions_item }}"
+  loop: "{{ __list_files_controller_projects }}"
   loop_control:
     loop_var: __read_projects_definitions_item
   register: __contents_filetree_controller_projects

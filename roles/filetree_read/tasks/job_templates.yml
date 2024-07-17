@@ -1,15 +1,26 @@
 ---
-- name: "Get list of files inside {{ filetree_controller_templates }}"
+- name: Determine if filetree_controller_templates is a string or list
+  ansible.builtin.set_fact:
+    __filetree_controller_templates: "{{ [filetree_controller_templates] if filetree_controller_templates is string else filetree_controller_templates }}"
+
+- name: "Get list of files"
   ansible.builtin.find:
-    paths: "{{ filetree_controller_templates }}"
+    paths: "{{ __filetree_controller_templates_item }}"
     file_type: file
     recurse: true
+  loop: "{{ __filetree_controller_templates }}"
+  loop_control:
+    loop_var: __filetree_controller_templates_item
   register: __list_files_controller_templates
+
+- name: Extract file paths using json_query
+  ansible.builtin.set_fact:
+    __list_files_controller_templates: "{{ __list_files_controller_templates | json_query('results[].files[].path') }}"
 
 - name: "Read Job Templates definitions"
   ansible.builtin.include_vars:
-    file: "{{ __read_job_templates_definitions_item.path }}"
-  loop: "{{ __list_files_controller_templates.files }}"
+    file: "{{ __read_job_templates_definitions_item }}"
+  loop: "{{ __list_files_controller_templates }}"
   loop_control:
     loop_var: __read_job_templates_definitions_item
   register: __contents_filetree_controller_templates

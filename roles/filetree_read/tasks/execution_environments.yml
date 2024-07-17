@@ -1,15 +1,26 @@
 ---
-- name: "Get list of files inside {{ filetree_controller_execution_environments }}"
+- name: Determine if filetree_controller_execution_environments is a string or list
+  ansible.builtin.set_fact:
+    __filetree_controller_execution_environments: "{{ [filetree_controller_execution_environments] if filetree_controller_execution_environments is string else filetree_controller_execution_environments }}"
+
+- name: "Get list of files"
   ansible.builtin.find:
-    paths: "{{ filetree_controller_execution_environments }}"
+    paths: "{{ __filetree_controller_execution_environments_item }}"
     file_type: file
     recurse: true
+  loop: "{{ __filetree_controller_execution_environments }}"
+  loop_control:
+    loop_var: __filetree_controller_execution_environments_item
   register: __list_files_controller_execution_environments
+
+- name: Extract file paths using json_query
+  ansible.builtin.set_fact:
+    __list_files_controller_execution_environments: "{{ __list_files_controller_execution_environments | json_query('results[].files[].path') }}"
 
 - name: "Read Execution Environments definitions"
   ansible.builtin.include_vars:
-    file: "{{ __read_execution_environments_definitions_item.path }}"
-  loop: "{{ __list_files_controller_execution_environments.files }}"
+    file: "{{ __read_execution_environments_definitions_item }}"
+  loop: "{{ __list_files_controller_execution_environments }}"
   loop_control:
     loop_var: __read_execution_environments_definitions_item
   register: __contents_filetree_controller_execution_environments

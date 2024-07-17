@@ -1,15 +1,26 @@
 ---
-- name: "Get list of files inside {{ filetree_controller_settings }}"
+- name: Determine if filetree_controller_settings is a string or list
+  ansible.builtin.set_fact:
+    __filetree_controller_settings: "{{ [filetree_controller_settings] if filetree_controller_settings is string else filetree_controller_settings }}"
+
+- name: "Get list of files"
   ansible.builtin.find:
-    paths: "{{ filetree_controller_settings }}"
+    paths: "{{ __filetree_controller_settings_item }}"
     file_type: file
     recurse: true
+  loop: "{{ __filetree_controller_settings }}"
+  loop_control:
+    loop_var: __filetree_controller_settings_item
   register: __list_files_controller_settings
+
+- name: Extract file paths using json_query
+  ansible.builtin.set_fact:
+    __list_files_controller_settings: "{{ __list_files_controller_settings | json_query('results[].files[].path') }}"
 
 - name: "Read Settings definitions"
   ansible.builtin.include_vars:
-    file: "{{ __read_settings_definitions_item.path }}"
-  loop: "{{ __list_files_controller_settings.files }}"
+    file: "{{ __read_settings_definitions_item }}"
+  loop: "{{ __list_files_controller_settings }}"
   loop_control:
     loop_var: __read_settings_definitions_item
   register: __contents_filetree_controller_settings
