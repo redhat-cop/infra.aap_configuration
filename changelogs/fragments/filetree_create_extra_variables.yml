@@ -1,4 +1,3 @@
 ---
 minor_changes:
-  - filetree_create able to provide variables with a dict (name:id) of job templates of the given workflow
-  - filetree_create able to provide variables with a dict (name:id) of projects of the given job template
+  - filetree_create able to export single worfklow with related job_templates and projects

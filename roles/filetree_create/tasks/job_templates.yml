@@ -13,11 +13,13 @@
       order_by: 'organization,id'
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
-- name: "Match project name with id"
+- name: "Export project related to job_template"
   when: job_template_id is defined and project_id is not defined
-  ansible.builtin.set_fact:
-    projects_dictvar: "{{ projects | default({}) | combine({ job_templates_lookvar[0]['summary_fields']['project']['name']: job_templates_lookvar[0]['summary_fields']['project']['id'] }) }}"
-
+  ansible.builtin.include_tasks: "projects.yml"
+  vars: 
+    project_id: "job_templates_lookvar[0]['summary_fields']['project']['id'] }}"
+  no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
+ 
 - name: "Block for to generate flatten output"
   when:
     - flatten_output is defined

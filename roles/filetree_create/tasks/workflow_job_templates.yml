@@ -23,9 +23,10 @@
                                               }}"
       no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
-    - name: "Match job name with id"
-      ansible.builtin.set_fact:
-        workflow_node_jobs_dictvar: "{{ workflow_node_jobs_dictvar | default({}) | combine({current_workflow_job_node_templates_asset_value['summary_fields']['unified_job_template']['name']: current_workflow_job_node_templates_asset_value['unified_job_template']}) }}"
+    - name: "Export job templates related to to workflow"
+      ansible.builtin.include_tasks: "job_templates.yml"
+      vars: 
+        job_template_id: "{{ current_workflow_job_node_templates_asset_value['unified_job_template'] }}"
       loop: "{{ workflow_node_job_templates_lookvar }}"
       loop_control:
         loop_var: current_workflow_job_node_templates_asset_value
