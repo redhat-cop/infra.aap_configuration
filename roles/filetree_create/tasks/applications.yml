@@ -69,7 +69,7 @@
         application_organization: "{{ current_applications_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}"
         application_id: "{{ current_applications_asset_value.id }}"
         application_name: "{{ current_applications_asset_value.name | regex_replace('/', '_') }}"
-        __dest: "{{ output_path }}/{{ application_organization | regex_replace('/', '_') }}/applications/{{ application_id }}_{{ application_name | regex_replace('/', '_') }}.yaml"
+        __dest: "{{ output_path }}/{{ application_organization | regex_replace('/', '_') }}/applications/{{ (application_id ~ '_') if omit_id is not defined else '' }}{{ application_name | regex_replace('/', '_') }}.yaml"
       loop: "{{ applications_lookvar }}"
       loop_control:
         loop_var: current_applications_asset_value
