@@ -13,7 +13,7 @@
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
 - name: "Block for matching job templates ids with names for given workflow"
-  when: workflow_job_template_id is defined
+  when: workflow_job_template_id is defined and (export_related_objects is defined and export_related_objects)
   block:
     - name: "Get current Job Templates related to workflow from the API"
       ansible.builtin.set_fact:
