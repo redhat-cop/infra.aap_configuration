@@ -22,7 +22,7 @@ controller_roles:
 {% elif role.summary_fields.resource_type is match('credential') %}
     credential: "{{ role.summary_fields.resource_name }}"
 {% endif %}
-    role: "{{ role.name | lower }}"
+    role: "{% if role.name | lower == 'approve' %}approval{% else %}{{ role.name | lower }}{% endif %}"
 {% endif %}
 {% endfor %}
 {% if last_team_role | default(true) | bool %}
