@@ -54,7 +54,7 @@ controller_templates:
 {% endif %}
 {% if current_job_templates_asset_value.extra_vars and current_job_templates_asset_value.extra_vars | length > 3 %}
     extra_vars:
-      {{ current_job_templates_asset_value.extra_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") }}
+      {{ current_job_templates_asset_value.extra_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | regex_replace('(^[^:]*): (.*){{', '\1: !unsafe \2{{', multiline=True)}}
 {%- endif %}
     job_tags: "{{ current_job_templates_asset_value.job_tags }}"
     force_handlers: {{ current_job_templates_asset_value.force_handlers | bool | lower }}

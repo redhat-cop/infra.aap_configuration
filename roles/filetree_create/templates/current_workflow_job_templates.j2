@@ -44,7 +44,7 @@ controller_workflows:
     webhook_service: "{{ current_workflow_job_templates_asset_value.webhook_service }}"
 {% if current_workflow_job_templates_asset_value.extra_vars and current_workflow_job_templates_asset_value.extra_vars | length > 3 %}
     extra_vars:
-      {{ current_workflow_job_templates_asset_value.extra_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") }}
+      {{ current_workflow_job_templates_asset_value.extra_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | regex_replace('(^[^:]*): (.*){{', '\1: !unsafe \2{{', multiline=True) }}
 {%- endif %}
 {% if query_labels | length > 0 %}
     labels:
