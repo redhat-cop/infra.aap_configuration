@@ -5,6 +5,11 @@
   gather_facts: false
   collections:
     - galaxy.galaxy
+  vars:
+    ah_path_prefix: 'galaxy'
+    ah_hostname: "{{ lookup('ansible.builtin.env', 'AH_HOST') }}"
+    ah_username: "{{ lookup('ansible.builtin.env', 'AH_USERNAME') }}"
+    ah_password: "{{ lookup('ansible.builtin.env', 'AH_PASSWORD') }}"
   pre_tasks:
     - name: Include vars from ah_configs directory
       ansible.builtin.include_vars:
@@ -24,9 +29,34 @@
       ansible.builtin.include_role:
         name: ansible_config
 
-    - name: Create namespace
-      ansible.builtin.include_role:
-        name: namespace
+    - name: Override namespaces vars standalone workflow
+      when: ci_workflow == "ci_standalone"
+      block:
+        - name: Create namespace
+          ansible.builtin.include_role:
+            name: namespace
+
+    - name: Override namespaces vars ci_dab_jwt workflow
+      when: ci_workflow == "ci_dab_jwt"
+      block:
+        - name: Create namespace
+          ansible.builtin.include_role:
+            name: namespace
+          vars:
+            ah_namespaces:
+              - name: community_test
+                company: Community Test
+                email: user@example.com
+                avatar_url: https://github.com/ansible/awx-logos/blob/master/awx/ui/client/assets/logo-header.svg
+                description: string
+                resources: "# Community\nA Namespace test with changes"
+                links:
+                  - name: "Nothing"
+                    url: "https://github.com/ansible/awx"
+              - name: infra
+              - name: test_namespace
+              - name: galaxy
+
 
     - name: Rename namespace
       ansible.builtin.include_role:
@@ -115,7 +145,7 @@
         ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 
-    - name: Upload Speicifc collection to automation hub from internet
+    - name: Upload Specific collection to automation hub from internet
       ah_collection_upload:
         path: "https://galaxy.ansible.com/download/infra-leapp-1.3.0.tar.gz"
         wait: true

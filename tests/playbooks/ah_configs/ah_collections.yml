@@ -35,6 +35,6 @@ ah_git_collections:
     git_url: https://github.com/sean-m-sullivan/collection_test
 
 ansible_config_path: "{{ ah_configuration_working_dir }}/ansible.cfg"
-ah_configuration_collection_async_retries: 50
-ah_configuration_collection_async_delay: 3
+ah_configuration_collection_async_retries: 100
+ah_configuration_collection_async_delay: 10
 ...

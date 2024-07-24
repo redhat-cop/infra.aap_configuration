@@ -1179,12 +1179,20 @@ class AHUIEERepository(AHUIObject):
                     if taskPulp.data["error"]:
                         sync_status = "Complete"
                         error_output = taskPulp.data["error"]["description"].split(",")
-                        self.api.fail_json(
-                            status=error_output[0],
-                            msg=error_output[1],
-                            url=error_output[2],
-                            traceback=taskPulp.data["error"]["traceback"],
-                        )
+                        if len(error_output) == 3:
+                            self.api.fail_json(
+                                status=error_output[0],
+                                msg=error_output[1],
+                                url=error_output[2],
+                                traceback=taskPulp.data["error"]["traceback"],
+                            )
+                        else:
+                            self.api.fail_json(
+                                status="",
+                                msg="",
+                                url="",
+                                traceback=taskPulp.data["error"]["traceback"],
+                            )
                     if taskPulp.data["state"] == "completed":
                         sync_status = "Complete"
                         break

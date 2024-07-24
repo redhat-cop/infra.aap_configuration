@@ -61,7 +61,6 @@ jobs:
           echo "AH_HOST=http://localhost:8080/" >> $GITHUB_ENV
           echo "AH_USERNAME=admin" >> $GITHUB_ENV
           echo "AH_PASSWORD=admin" >> $GITHUB_ENV
-          echo "AH_LOGIN_PATH=/api/gateway/v1/login/" >> $GITHUB_ENV
           echo "AH_LOGOUT_PATH=/api/gateway/v1/logout/" >> $GITHUB_ENV
 
       - name: Update apt

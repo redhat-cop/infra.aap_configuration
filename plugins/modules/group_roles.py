@@ -247,9 +247,12 @@ def main():
         # Perform associations
         associations = group.associate_permissions(group_data=group.data, new_perms=group_role_data['perm_list'], state=state)
         # Add data to output
-        group.api.json_output['removed'].extend(associations['removed'])
-        group.api.json_output['added'].extend(associations['added'])
-        group.api.json_output['existing'].extend(associations['existing'])
+        if 'removed' in group.api.json_output:
+            group.api.json_output['removed'].extend(associations['removed'])
+        if 'added' in group.api.json_output:
+            group.api.json_output['added'].extend(associations['added'])
+        if 'existing' in group.api.json_output:
+            group.api.json_output['existing'].extend(associations['existing'])
     # Add general Data to Output
     group.api.json_output.update(group_role_data)
     group.api.exit_json(**group.api.json_output)

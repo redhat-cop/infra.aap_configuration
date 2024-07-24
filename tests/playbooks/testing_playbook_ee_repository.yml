@@ -8,14 +8,14 @@
     - galaxy.galaxy
   vars:
     hub_host: localhost:55001
-    ah_hostname: http://localhost:55001/
-    ah_username: admin
-    ah_password: admin
+    ah_hostname: "{{ lookup('ansible.builtin.env', 'AH_HOST') }}"
+    ah_username: "{{ lookup('ansible.builtin.env', 'AH_USERNAME') }}"
+    ah_password: "{{ lookup('ansible.builtin.env', 'AH_PASSWORD') }}"
     ah_path_prefix: 'galaxy'
     ah_validate_certs: false
     repository: test-namespace/ee-minimal-rhel8
     tag: latest
-    fake_image: quay.io/ansible/http-test-container:2.0.0
+    fake_image: quay.io/v2/ansible/http-test-container:2.0.0
   pre_tasks:
     - name: Include vars from ah_configs directory
       ansible.builtin.include_vars:

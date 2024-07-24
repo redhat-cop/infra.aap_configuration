@@ -157,8 +157,10 @@ class AHModule(AnsibleModule):
         # Make sure we start with /api/vX
         if not endpoint.startswith("/"):
             endpoint = "/{0}".format(endpoint)
-        if not endpoint.startswith("/api/"):
+        if not endpoint.startswith("/api/") and not self.path_prefix.startswith("/api/"):
             endpoint = "api/{0}/v3{1}".format(self.path_prefix, endpoint)
+        if not endpoint.startswith("/api/") and self.path_prefix.startswith("/api/"):
+            endpoint = "{0}/v3{1}".format(self.path_prefix, endpoint)
         if not endpoint.endswith("/") and "?" not in endpoint:
             endpoint = "{0}/".format(endpoint)
 

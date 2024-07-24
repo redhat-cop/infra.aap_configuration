@@ -2,7 +2,7 @@
 ah_configuration_ee_registry_sync_async_delay: 20
 ah_ee_registries:
   - name: quay
-    url: https://quay.io/
+    url: https://quay.io/v2/
     rate_limit: 100
     download_concurrency: 25
     tls_validation: false

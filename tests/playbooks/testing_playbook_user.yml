@@ -7,9 +7,9 @@
   collections:
     - galaxy.galaxy
   vars:
-    ah_hostname: http://localhost:55001/
-    ah_username: admin
-    ah_password: admin
+    ah_hostname: "{{ lookup('ansible.builtin.env', 'AH_HOST') }}"
+    ah_username: "{{ lookup('ansible.builtin.env', 'AH_USERNAME') }}"
+    ah_password: "{{ lookup('ansible.builtin.env', 'AH_PASSWORD') }}"
     ah_path_prefix: 'galaxy'
     ah_validate_certs: false
   pre_tasks:

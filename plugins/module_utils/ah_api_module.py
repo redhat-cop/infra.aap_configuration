@@ -15,6 +15,7 @@ import re
 import socket
 import json
 import time
+import os
 
 from ansible.module_utils.basic import AnsibleModule, env_fallback
 from ansible.module_utils.compat.version import LooseVersion as Version
@@ -133,6 +134,7 @@ class AHAPIModule(AnsibleModule):
         self.galaxy_path_prefix = self.get_galaxy_path_prefix()
         self.ui_path_prefix = "{galaxy_prefix}/_ui/v1".format(galaxy_prefix=self.galaxy_path_prefix)
         self.plugin_path_prefix = "{galaxy_prefix}/v3/plugin".format(galaxy_prefix=self.galaxy_path_prefix)
+        self.ah_logout_path = os.getenv("AH_LOGOUT_PATH", None)
         self.authenticate()
         self.server_version = self.get_server_version()
         if self.server_version < "4.6":
@@ -384,71 +386,13 @@ class AHAPIModule(AnsibleModule):
 
     def authenticate(self):
         """Authenticate with the API."""
-        # curl -k -i  -X GET -H "Accept: application/json" -H "Content-Type: application/json" https://hub.lab.example.com/api/galaxy/_ui/v1/auth/login/
-
-        # HTTP/1.1 204 No Content
-        # Server: nginx/1.18.0
-        # Date: Tue, 10 Aug 2021 07:33:37 GMT
-        # Content-Length: 0
-        # Connection: keep-alive
-        # Vary: Accept, Cookie
-        # Allow: GET, POST, HEAD, OPTIONS
-        # X-Frame-Options: SAMEORIGIN
-        # Set-Cookie: csrftoken=jvdb...kKHo; expires=Tue, 09 Aug 2022 07:33:37 GMT; Max-Age=31449600; Path=/; SameSite=Lax
-        # Strict-Transport-Security: max-age=15768000
-
-        url = self.build_ui_url("auth/login")
+        # Use basic auth
+        test_url = self.build_ui_url("me")
+        basic_str = base64.b64encode("{0}:{1}".format(self.username, self.password).encode("ascii"))
+        header = {"Authorization": "Basic {0}".format(basic_str.decode("ascii"))}
         try:
-            response = self.make_request_raw_reponse("GET", url)
-        except AHAPIModuleError as e:
-            self.fail_json(msg="Authentication error: {error}".format(error=e))
-        # Set-Cookie: csrftoken=jvdb...kKHo; expires=Tue, 09 Aug 2022 07:33:37 GMT
-        for h in response.getheaders():
-            if h[0].lower() == "set-cookie":
-                k, v = h[1].split("=", 1)
-                if k.lower() == "csrftoken":
-                    header = {"X-CSRFToken": v.split(";", 1)[0]}
-                    break
-        else:
-            header = {}
-
-        # curl -k -i -X POST  -H 'referer: https://hub.lab.example.com' -H "Accept: application/json" -H "Content-Type: application/json"
-        #      -H 'X-CSRFToken: jvdb...kKHo' --cookie 'csrftoken=jvdb...kKHo' -d '{"username":"admin","password":"redhat"}'
-        #      https://hub.lab.example.com/api/galaxy/_ui/v1/auth/login/
-
-        # HTTP/1.1 204 No Content
-        # Server: nginx/1.18.0
-        # Date: Tue, 10 Aug 2021 07:35:33 GMT
-        # Content-Length: 0
-        # Connection: keep-alive
-        # Vary: Accept, Cookie
-        # Allow: GET, POST, HEAD, OPTIONS
-        # X-Frame-Options: SAMEORIGIN
-        # Set-Cookie: csrftoken=6DVP...at9a; expires=Tue, 09 Aug 2022 07:35:33 GMT; Max-Age=31449600; Path=/; SameSite=Lax
-        # Set-Cookie: sessionid=87b0iw12wyvy0353rk5fwci0loy5s615; expires=Tue, 24 Aug 2021 07:35:33 GMT; HttpOnly; Max-Age=1209600; Path=/; SameSite=Lax
-        # Strict-Transport-Security: max-age=15768000
-
-        try:
-            try:
-                response = self.make_request_raw_reponse(
-                    "POST",
-                    url,
-                    data={"username": self.username, "password": self.password},
-                    headers=header,
-                )
-                for h in response.getheaders():
-                    if h[0].lower() == "set-cookie":
-                        k, v = h[1].split("=", 1)
-                        if k.lower() == "csrftoken":
-                            header = {"X-CSRFToken": v.split(";", 1)[0]}
-                            self.headers.update(header)
-                            break
-            except AHAPIModuleError:
-                test_url = self.build_ui_url("me")
-                basic_str = base64.b64encode("{0}:{1}".format(self.username, self.password).encode("ascii"))
-                header = {"Authorization": "Basic {0}".format(basic_str.decode("ascii"))}
-                response = self.make_request_raw_reponse("GET", test_url, headers=header)
-                self.headers.update(header)
+            self.make_request_raw_reponse("GET", test_url, headers=header)
+            self.headers.update(header)
         except AHAPIModuleError as e:
             self.fail_json(msg="Authentication error: {error}".format(error=e))
         self.authenticated = True
@@ -465,7 +409,10 @@ class AHAPIModule(AnsibleModule):
         if not self.authenticated:
             return
 
-        url = self.build_ui_url("auth/logout")
+        if self.ah_logout_path:
+            url = self._build_url("/api", self.ah_logout_path.split("/api/")[1])
+        else:
+            url = self.build_ui_url("auth/logout")
         try:
             self.make_request_raw_reponse("POST", url)
         except AHAPIModuleError:
