@@ -64,6 +64,9 @@
             ah_collection_repositories:
               - name: community-infra-repo
 
+    - name: Override namespaces vars ci_dab_jwt workflow
+      when: ci_workflow != "ci_dab_jwt"
+      block:
         - name: Test group role creation
           ansible.builtin.include_role:
             name: group_roles
