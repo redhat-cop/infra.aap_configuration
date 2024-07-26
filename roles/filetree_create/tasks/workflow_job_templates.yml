@@ -86,7 +86,7 @@
         workflow_job_template_organization: "{{ current_workflow_job_templates_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
         workflow_job_template_id: "{{ current_workflow_job_templates_asset_value.id }}"
         workflow_job_template_name: "{{ current_workflow_job_templates_asset_value.name | regex_replace('/', '_') }}"
-        __dest: "{{ output_path }}/{{ workflow_job_template_organization | regex_replace('/', '_') }}/workflow_job_templates/{{ workflow_job_template_id }}_{{ workflow_job_template_name | regex_replace('/', '_') }}.yaml"
+        __dest: "{{ output_path }}/{{ workflow_job_template_organization | regex_replace('/', '_') }}/workflow_job_templates/{{ (workflow_job_template_id ~ '_') if omit_id is not defined else '' }}{{ workflow_job_template_name | regex_replace('/', '_') }}.yaml"
         query_labels: "{{ query(controller_api_plugin, current_workflow_job_templates_asset_value.related.labels,
                          host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                          return_all=true, max_objects=query_controller_api_max_objects) }}"
