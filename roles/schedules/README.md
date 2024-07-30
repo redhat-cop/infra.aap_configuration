@@ -126,10 +126,15 @@ This also speeds up the overall role.
 ```yaml
 ---
 controller_schedules:
-  - name: Demo Schedule
+  - name: Simple Example Schedule
+    description: A demonstration without any additional options
+    unified_job_template: Demo Job Template
+    rrule: "DTSTART:20191219T130551Z RRULE:FREQ=DAILY;INTERVAL=1;COUNT=1"
+  - name: Demo Schedule with extra options
     description: A demonstration
     unified_job_template: Demo Job Template
     rrule: "DTSTART:20191219T130551Z RRULE:FREQ=DAILY;INTERVAL=1;COUNT=1"
+    # Note that this example requires the relevant ask_*_on_launch to be true
     extra_data:
       scheduled: true
     verbosity: 1
