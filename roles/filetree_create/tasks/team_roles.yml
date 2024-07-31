@@ -55,7 +55,7 @@
         block: "{{ lookup('template', 'templates/current_team_roles.j2') }}"
       vars:
         first_team_role: "{{ not team_roles_file.stat.exists }}"
-      when: objects_role | length > 0
+      when: object_roles | length > 0
 
     - name: "Remove all the blank lines introduced by the last task"
       ansible.builtin.lineinfile:
