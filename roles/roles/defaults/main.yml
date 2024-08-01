@@ -1,5 +1,31 @@
 ---
 # list of dict describing a Controller access control rule
+sync_roles: false
+valid_roles: ["admin", "read", "member", "execute", "adhoc", "update", "use", "approval", "auditor", "project_admin", "inventory_admin",
+              "credential_admin", "workflow_admin", "notification_admin", "job_template_admin", "execution_environment_admin"]
+object_types:
+    - credentials
+    - credential_types
+    - execution_environments
+    - groups
+    - hosts
+    - inventory
+    - inventories
+    - job_template
+    - job_templates
+    - notification_templates
+    - organizations
+    - project
+    - projects
+    - teams
+    - target_team
+    - target_teams
+    - user
+    - users
+    - workflow
+    - workflows
+    - instance_groups
+
 controller_roles: []
 controller_configuration_role_secure_logging: "{{ controller_configuration_secure_logging | default('false') }}"
 controller_configuration_role_async_retries: "{{ controller_configuration_async_retries | default(30) }}"

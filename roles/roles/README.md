@@ -24,6 +24,7 @@ Currently:
 |`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
 |`controller_roles`|`see below`|yes|Data structure describing your RBAC entries described below.||
+|`sync_roles`|`false`|yes|Specify whether roles should be synchronized (add roles from SCM and remove those that do not exist in SCM).||
 
 ### Enforcing defaults
 

@@ -1,0 +1,11 @@
+---
+- name: "Get roles for {{ object_type }}"
+  ansible.builtin.include_tasks: __match_roles.yaml
+  loop: "{{ controller_roles | selectattr(__member_type, 'defined') | selectattr(__member_type, 'equalto', __member) | selectattr(__object_type, 'defined') | map(attribute=__object_type) }}"
+  loop_control:
+    loop_var: __object
+
+- name: "Remove duplicate entries"
+  ansible.builtin.set_fact:
+    object_role_list: "{{ object_role_list | unique }}"
+...
