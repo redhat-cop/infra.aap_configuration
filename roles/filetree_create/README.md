@@ -23,7 +23,7 @@ The following variables are required for that role to work properly:
 | `flatten_output` | N/A | no | bool | Whether to flatten the output in single files per each object type instead of the normal exportation structure |
 | `show_encrypted` | N/A | no | bool | Whether to remove the string '\$encrypted\$' in credentials output (not the actual credential value) |
 | `omit_id` | N/A | no | bool | Whether to create output files without objects id.|
-
+| `export_related_objects` | False | no | bool | Whether to export releated objects to workflows and job templates. |
 ## Dependencies
 
 A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
