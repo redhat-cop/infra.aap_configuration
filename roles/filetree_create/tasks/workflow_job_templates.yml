@@ -28,7 +28,7 @@
         marker: ""
         block: "{{ lookup('template', 'templates/current_workflow_job_templates.j2') }}"
       vars:
-        workflow_job_template_organization: "{{ current_workflow_job_templates_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+        workflow_job_template_organization: "{{ current_workflow_job_templates_asset_value.summary_fields.organization.name | organization | default('ORGANIZATIONLESS') }}"
         workflow_job_template_id: "{{ current_workflow_job_templates_asset_value.id }}"
         workflow_job_template_name: "{{ current_workflow_job_templates_asset_value.name | regex_replace('/', '_') }}"
         query_labels: "{{ query(controller_api_plugin, current_workflow_job_templates_asset_value.related.labels,
@@ -83,7 +83,7 @@
         dest: "{{ __dest }}"
         mode: '0644'
       vars:
-        workflow_job_template_organization: "{{ current_workflow_job_templates_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+        workflow_job_template_organization: "{{ current_workflow_job_templates_asset_value.summary_fields.organization.name | organization | default('ORGANIZATIONLESS') }}"
         workflow_job_template_id: "{{ current_workflow_job_templates_asset_value.id }}"
         workflow_job_template_name: "{{ current_workflow_job_templates_asset_value.name | regex_replace('/', '_') }}"
         __dest: "{{ output_path }}/{{ workflow_job_template_organization | regex_replace('/', '_') }}/workflow_job_templates/{{ (workflow_job_template_id ~ '_') if omit_id is not defined else '' }}{{ workflow_job_template_name | regex_replace('/', '_') }}.yaml"
