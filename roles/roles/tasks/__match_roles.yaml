@@ -1,10 +1,10 @@
 ---
 - name: "Set empty variable for roles"
-  ansible.builtin_set_fact:
+  ansible.builtin.set_fact:
     __var_roles: []
 
 - name: "Extract roles of team for certain object and put into single list"
-  ansible.builtin_set_fact:
+  ansible.builtin.set_fact:
     __var_roles: "{{ __var_roles | default([]) + [__controller['role']] }}"
   loop: "{{ controller_roles | selectattr(__member_type, 'defined') | selectattr(__member_type, 'equalto', __member) |
             selectattr(__object_type, 'defined') | selectattr(__object_type, 'equalto', __object) }}"
@@ -12,6 +12,6 @@
     loop_var: __controller
 
 - name: "Add to list of objects with matchetd roles"
-  ansible.builtin_set_fact:
+  ansible.builtin.set_fact:
     object_role_list: "{{ object_role_list | default([]) + [{__member_type: __member, __object_type: __object, 'roles': __var_roles}] }}"
 ...
