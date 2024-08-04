@@ -27,7 +27,7 @@
         marker: ""
         block: "{{ lookup('template', 'templates/current_teams.j2') }}"
       vars:
-        team_organization: "{{ (current_teams_asset_value.summary_fields.organization.name | default(organization, true) | regex_replace('/', '_') }}"
+        team_organization: "{{ current_teams_asset_value.summary_fields.organization.name | default(organization, true) | regex_replace('/', '_') }}"
         team_id: "{{ current_teams_asset_value.id }}"
         team_name: "{{ current_teams_asset_value.name | regex_replace('/', '_') }}"
         last_team: "{{ current_team_index == ((teams_lookvar | length) - 1) }}"
