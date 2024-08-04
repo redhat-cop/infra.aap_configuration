@@ -29,7 +29,7 @@
         marker: ""
         block: "{{ lookup('template', 'templates/current_job_templates.j2') }}"
       vars:
-        job_template_organization: "{{ current_job_templates_asset_value.summary_fields.organization.name | organization | default('ORGANIZATIONLESS') }}"
+        job_template_organization: "{{ current_job_templates_asset_value.summary_fields.organization.name | default(organization) }}"
         job_template_id: "{{ current_job_templates_asset_value.id }}"
         job_template_name: "{{ current_job_templates_asset_value.name | regex_replace('/', '_') }}"
         query_labels: "{{ query(controller_api_plugin, current_job_templates_asset_value.related.labels,
@@ -71,9 +71,8 @@
       loop: >-
         {{ (job_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') |
            map(attribute='organization') | map(attribute='name') | list | flatten | unique)
-           + ([(organization if organization is defined else 'ORGANIZATIONLESS')]
-           if ((job_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') |
-           list | flatten) | length > 0) else [])
+           + [organization] if ((job_templates_lookvar | map(attribute='summary_fields') |
+           selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
         }}
       loop_control:
         loop_var: needed_path
@@ -85,7 +84,7 @@
         dest: "{{ __dest }}"
         mode: '0644'
       vars:
-        job_template_organization: "{{ current_job_templates_asset_value.summary_fields.organization.name | organization | default('ORGANIZATIONLESS') }}"
+        job_template_organization: "{{ current_job_templates_asset_value.summary_fields.organization.name | default(organization) }}"
         job_template_id: "{{ current_job_templates_asset_value.id }}"
         job_template_name: "{{ current_job_templates_asset_value.name | regex_replace('/', '_') }}"
         __dest: "{{ output_path }}/{{ job_template_organization | regex_replace('/', '_') }}/job_templates/{{ (job_template_id ~ '_') if omit_id is not defined else '' }}{{ job_template_name | regex_replace('/', '_') }}.yaml"
