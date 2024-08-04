@@ -66,7 +66,7 @@
         dest: "{{ __dest }}"
         mode: '0644'
       vars:
-        __dest: "{{ output_path }}/{{ (current_notification_templates_asset_value.summary_fields.organization.name | organization | default('ORGANIZATIONLESS', true)) | regex_replace('/', '_') }}/notification_templates/{{ current_notification_templates_asset_value.name | regex_replace('/', '_') }}.yaml"
+        __dest: "{{ output_path }}/{{ (current_notification_templates_asset_value.summary_fields.organization.name |default(organization, true)) | regex_replace('/', '_') }}/notification_templates/{{ current_notification_templates_asset_value.name | regex_replace('/', '_') }}.yaml"
       loop: "{{ notification_templates_lookvar }}"
       loop_control:
         loop_var: current_notification_templates_asset_value

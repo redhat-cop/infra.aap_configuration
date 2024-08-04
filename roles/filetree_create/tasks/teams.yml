@@ -57,8 +57,8 @@
         {{
           (teams_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') |
           map(attribute='organization') | map(attribute='name') | list | unique) +
-          [organization] if ((teams_lookvar | map(attribute='summary_fields') |
-          selectattr('organization', 'undefined') | list | length) > 0) else [])
+          [organization] if (teams_lookvar | map(attribute='summary_fields') |
+          selectattr('organization', 'undefined') | list | length > 0) else []
         }}
       loop_control:
         loop_var: needed_path
@@ -70,7 +70,7 @@
         dest: "{{ __dest }}"
         mode: '0644'
       vars:
-        team_organization: "{{ (current_teams_asset_value.summary_fields.organization.name | organization | default('ORGANIZATIONLESS', true)) | regex_replace('/', '_') }}"
+        team_organization: "{{ (current_teams_asset_value.summary_fields.organization.name | default(organization, true)) | regex_replace('/', '_') }}"
         team_id: "{{ current_teams_asset_value.id }}"
         team_name: "{{ current_teams_asset_value.name | regex_replace('/', '_') }}"
         __dest: "{{ output_path }}/{{ team_organization | regex_replace('/', '_') }}/teams/{{ (team_id ~ '_') if omit_id is not defined else '' }}{{ team_name | regex_replace('/', '_') }}.yaml"
@@ -82,7 +82,7 @@
 - name: "Set the team's roles"
   ansible.builtin.include_tasks: "team_roles.yml"
   vars:
-    team_organization: "{{ (current_team.summary_fields.organization.name | organization | default('ORGANIZATIONLESS', true)) | regex_replace('/', '_') }}"
+    team_organization: "{{ (current_team.summary_fields.organization.name | default(organization, true)) | regex_replace('/', '_') }}"
     teamname: "{{ current_team.name }}"
     teamid: "{{ current_team.id }}"
     last_team_role: "{{ current_team_index_for_roles == ((teams_lookvar | length) - 1) }}"
