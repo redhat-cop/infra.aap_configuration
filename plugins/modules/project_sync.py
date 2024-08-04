@@ -53,7 +53,7 @@ extends_documentation_fragment: infra.eda_configuration.auth
 
 EXAMPLES = """
 - name: Create eda project
-  infra.eda_configuration.project:
+  infra.eda_configuration.project_sync:
     name: my_project
     wait: true
     interval: 5
