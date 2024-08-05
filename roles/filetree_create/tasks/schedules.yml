@@ -2,7 +2,7 @@
 - name: "Get current Schedules from the API"
   ansible.builtin.set_fact:
     schedules_lookvar: "{{ query(controller_api_plugin, 'api/v2/schedules/',
-                                query_params=(combine({'id': schedule_id} if schedule_id is defined else {})),
+                                query_params=({'id': schedule_id} if schedule_id is defined else {}),
                                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                 return_all=true, max_objects=query_controller_api_max_objects)
                        }}"
