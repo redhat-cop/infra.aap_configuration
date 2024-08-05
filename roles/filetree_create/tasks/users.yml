@@ -9,7 +9,11 @@
 
 - name: "Add the users the Organizations information"  # noqa jinja[spacing]
   ansible.builtin.set_fact:
-    current_users: "{{ (current_users | default([])) + [user_lookvar_item | combine({'organizations': user_lookvar_item_organizations if (user_lookvar_item_organizations | length > 1) else ['ORGANIZATIONLESS']})] }}"
+    current_users: >-
+      {{ (current_users | default([])) +
+         [user_lookvar_item | combine({'organizations': user_lookvar_item_organizations
+         if (user_lookvar_item_organizations | length > 1) else [organization]})]
+      }}
   vars:
     user_lookvar_item_organizations: "{{ query(controller_api_plugin, user_lookvar_item.related.organizations,
                                                host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,

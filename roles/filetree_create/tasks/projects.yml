@@ -28,7 +28,7 @@
         marker: ""
         block: "{{ lookup('template', 'templates/current_projects.j2') }}"
       vars:
-        project_organization: "{{ current_projects_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}"
+        project_organization: "{{ current_projects_asset_value.summary_fields.organization.name | default(organization, true) }}"
         project_id: "{{ current_projects_asset_value.id }}"
         project_name: "{{ current_projects_asset_value.name | regex_replace('/', '_') }}"
         query_notification_error: "{{ query(controller_api_plugin, current_projects_asset_value.related.notification_templates_error,
@@ -64,9 +64,12 @@
         mode: '0755'
       vars:
         __path: "{{ output_path }}/{{ needed_path | regex_replace('/', '_') }}/projects"
-      loop: "{{ (projects_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
-                + (['ORGANIZATIONLESS'] if ((projects_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
-             }}"
+      loop: >-
+        {{ (projects_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') |
+           map(attribute='organization') | map(attribute='name') | list | flatten | unique) +
+           [organization] if (projects_lookvar | map(attribute='summary_fields') |
+           selectattr('organization', 'undefined') | list | flatten | length > 0) else []
+        }}"
       loop_control:
         loop_var: needed_path
         label: "{{ __path }}"
@@ -77,7 +80,7 @@
         dest: "{{ __dest }}"
         mode: '0644'
       vars:
-        project_organization: "{{ current_projects_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}"
+        project_organization: "{{ current_projects_asset_value.summary_fields.organization.name | default(organization, true) }}"
         project_id: "{{ current_projects_asset_value.id }}"
         project_name: "{{ current_projects_asset_value.name | regex_replace('/', '_') }}"
         __dest: "{{ output_path }}/{{ project_organization | regex_replace('/', '_') }}/projects/{{ (project_id ~ '_') if omit_id is not defined else '' }}{{ project_name | regex_replace('/', '_') }}.yaml"
