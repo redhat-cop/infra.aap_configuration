@@ -230,9 +230,12 @@ def main():
     new_fields = {}
 
     requirements = module.params.get("requirements")
-    if requirements:
-        requirements_content = "\n  - ".join(requirements)
-        new_fields["requirements_file"] = "---\ncollections:\n  - " + requirements_content
+    if requirements is not None:
+        if len(requirements):
+            requirements_content = "\n  - ".join(requirements)
+            new_fields["requirements_file"] = "---\ncollections:\n  - " + requirements_content
+        else:
+            new_fields["requirements_file"] = None
 
     requirements_file = module.params.get("requirements_file")
     if requirements_file:
