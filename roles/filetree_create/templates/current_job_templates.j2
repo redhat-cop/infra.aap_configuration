@@ -4,7 +4,7 @@ controller_templates:
 {% endif %}
   - name: "{{ current_job_templates_asset_value.name }}"
     description: "{{ current_job_templates_asset_value.description }}"
-    organization: "{{ current_job_templates_asset_value.summary_fields.organization.name | default('ToDo: The job template \'' + current_job_templates_asset_value.name + '\' must belong to an organization') }}"
+    organization: "{{ current_job_templates_asset_value.summary_fields.organization.name | default(organization if organization != 'ORGANIZATIONLESS' else 'ToDo: The job template \'' + current_job_templates_asset_value.name + '\' must belong to an organization') }}"
     project: "{{ current_job_templates_asset_value.summary_fields.project.name | default('ToDo: The job template \'' + current_job_templates_asset_value.name + '\' must have a project assigned') }}"
 {% if current_job_templates_asset_value.inventory %}
     inventory: "{{ current_job_templates_asset_value.summary_fields.inventory.name }}"
