@@ -66,7 +66,7 @@
         dest: "{{ __dest }}"
         mode: '0644'
       vars:
-        label_organization: "{{ current_labels_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}"
+        label_organization: "{{ current_labels_asset_value.summary_fields.organization.name | default(organization, true) }}"
         label_id: "{{ current_labels_asset_value.id }}"
         label_name: "{{ current_labels_asset_value.name | regex_replace('/', '_') }}"
         __dest: "{{ output_path }}/{{ label_organization | regex_replace('/', '_') }}/labels/{{ (label_id ~ '_') if omit_id is not defined else '' }}{{ label_name | regex_replace('/', '_') }}.yaml"

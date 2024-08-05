@@ -24,6 +24,7 @@ The following variables are required for that role to work properly:
 | `flatten_output` | N/A | no | bool | Whether to flatten the output in single files per each object type instead of the normal exportation structure |
 | `show_encrypted` | N/A | no | bool | Whether to remove the string '\$encrypted\$' in credentials output (not the actual credential value) |
 | `omit_id` | N/A | no | bool | Whether to create output files without objects id.|
+| `organization`| N/A | no | str | Default organization for all objects that have not been set in the source controller.|
 
 ## Dependencies
 
