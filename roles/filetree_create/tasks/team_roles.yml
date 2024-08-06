@@ -7,6 +7,32 @@
                          }}"
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
+- name: "Map objects with roles (block)"
+  when: team_roles_lookvar | length > 0
+  block:
+    - name: "Get role and object types and define object_roles variable"
+      ansible.builtin.set_fact:
+        role_types: "{{ team_roles_lookvar | map(attribute='name') | unique }}"
+        object_types: "{{ team_roles_lookvar | map(attribute='summary_fields.resource_type') | unique }}"
+        object_roles: []
+
+    - name: "Match objects with roles"
+      when: (team_roles_lookvar | selectattr('name','equalto', item.0) | selectattr('summary_fields.resource_type','equalto', item.1) | map(attribute='summary_fields.resource_name')) | length > 0
+      ansible.builtin.set_fact:
+        object_roles: >-
+          {{ object_roles +
+            [{ item.0:
+              {
+                'resource_names': (team_roles_lookvar |
+                                  selectattr('name','equalto', item.0) |
+                                  selectattr('summary_fields.resource_type','equalto', item.1) |
+                                  map(attribute='summary_fields.resource_name')),
+                'resource_type': item.1,
+              }
+            }]
+          }}"
+      loop: "{{ role_types | product(object_types) | list }}"
+
 - name: "Block for to generate flatten output"
   when:
     - flatten_output is defined
@@ -28,9 +54,8 @@
         marker: ""
         block: "{{ lookup('template', 'templates/current_team_roles.j2') }}"
       vars:
-        current_team_roles_asset_value: "{{ team_roles_lookvar }}"
         first_team_role: "{{ not team_roles_file.stat.exists }}"
-      when: team_roles_lookvar | length > 0
+      when: object_roles | length > 0
 
     - name: "Remove all the blank lines introduced by the last task"
       ansible.builtin.lineinfile:
@@ -52,7 +77,5 @@
         src: "templates/current_team_roles.j2"
         dest: "{{ output_path }}/team_roles/current_roles_{{ teamname | regex_replace('/', '_') }}.yaml"
         mode: '0644'
-      vars:
-        current_team_roles_asset_value: "{{ team_roles_lookvar }}"
-      when: team_roles_lookvar | length > 0
+      when: object_roles | length > 0
 ...
