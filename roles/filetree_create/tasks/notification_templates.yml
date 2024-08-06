@@ -50,9 +50,12 @@
         mode: '0755'
       vars:
         __path: "{{ output_path }}/{{ needed_path | regex_replace('/', '_') }}/notification_templates"
-      loop: "{{ (notification_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
-                + (['ORGANIZATIONLESS'] if ((notification_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
-             }}"
+      loop: >-
+        {{ (notification_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') |
+            map(attribute='organization') | map(attribute='name') | list | flatten | unique) +
+            [organization] if (notification_templates_lookvar | map(attribute='summary_fields') |
+            selectattr('organization', 'undefined') | list | flatten | length > 0) else []
+        }}
       loop_control:
         loop_var: needed_path
         label: "{{ __path }}"
@@ -63,7 +66,7 @@
         dest: "{{ __dest }}"
         mode: '0644'
       vars:
-        __dest: "{{ output_path }}/{{ (current_notification_templates_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true)) | regex_replace('/', '_') }}/notification_templates/{{ current_notification_templates_asset_value.name | regex_replace('/', '_') }}.yaml"
+        __dest: "{{ output_path }}/{{ (current_notification_templates_asset_value.summary_fields.organization.name |default(organization, true)) | regex_replace('/', '_') }}/notification_templates/{{ current_notification_templates_asset_value.name | regex_replace('/', '_') }}.yaml"
       loop: "{{ notification_templates_lookvar }}"
       loop_control:
         loop_var: current_notification_templates_asset_value
