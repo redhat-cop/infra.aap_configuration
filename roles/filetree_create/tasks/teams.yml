@@ -27,7 +27,7 @@
         marker: ""
         block: "{{ lookup('template', 'templates/current_teams.j2') }}"
       vars:
-        team_organization: "{{ (current_teams_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true)) | regex_replace('/', '_') }}"
+        team_organization: "{{ current_teams_asset_value.summary_fields.organization.name | default(organization, true) | regex_replace('/', '_') }}"
         team_id: "{{ current_teams_asset_value.id }}"
         team_name: "{{ current_teams_asset_value.name | regex_replace('/', '_') }}"
         last_team: "{{ current_team_index == ((teams_lookvar | length) - 1) }}"
@@ -53,9 +53,13 @@
         mode: '0755'
       vars:
         __path: "{{ output_path }}/{{ needed_path | regex_replace('/', '_') }}/teams"
-      loop: "{{ (teams_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
-                + (['ORGANIZATIONLESS'] if ((teams_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
-             }}"
+      loop: >-
+        {{
+          (teams_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') |
+          map(attribute='organization') | map(attribute='name') | list | unique) +
+          [organization] if (teams_lookvar | map(attribute='summary_fields') |
+          selectattr('organization', 'undefined') | list | length > 0) else []
+        }}
       loop_control:
         loop_var: needed_path
         label: "{{ __path }}"
@@ -66,7 +70,7 @@
         dest: "{{ __dest }}"
         mode: '0644'
       vars:
-        team_organization: "{{ (current_teams_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true)) | regex_replace('/', '_') }}"
+        team_organization: "{{ (current_teams_asset_value.summary_fields.organization.name | default(organization, true)) | regex_replace('/', '_') }}"
         team_id: "{{ current_teams_asset_value.id }}"
         team_name: "{{ current_teams_asset_value.name | regex_replace('/', '_') }}"
         __dest: "{{ output_path }}/{{ team_organization | regex_replace('/', '_') }}/teams/{{ (team_id ~ '_') if omit_id is not defined else '' }}{{ team_name | regex_replace('/', '_') }}.yaml"
@@ -78,7 +82,7 @@
 - name: "Set the team's roles"
   ansible.builtin.include_tasks: "team_roles.yml"
   vars:
-    team_organization: "{{ (current_team.summary_fields.organization.name | default('ORGANIZATIONLESS', true)) | regex_replace('/', '_') }}"
+    team_organization: "{{ (current_team.summary_fields.organization.name | default(organization, true)) | regex_replace('/', '_') }}"
     teamname: "{{ current_team.name }}"
     teamid: "{{ current_team.id }}"
     last_team_role: "{{ current_team_index_for_roles == ((teams_lookvar | length) - 1) }}"

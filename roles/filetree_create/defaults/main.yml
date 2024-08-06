@@ -28,5 +28,5 @@ controller_configuration_filetree_create_secure_logging: "{{ controller_configur
 
 input_tag:
   - all
-
+organization: 'ORGANIZATIONLESS'
 ...
