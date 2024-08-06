@@ -4,7 +4,7 @@ controller_hosts:
 {% endif %}
 {% for host in current_hosts_asset_value if not host.has_inventory_sources %}
   - name: "{{ host.name }}"
-    description: "{{ host.description | regex_replace('([\\\\\"$])', '\\\\\\1') }}"
+    description: "{{ host.description | regex_replace('([\\\"])', '\\\\1') }}"
     inventory: "{{ host.summary_fields.inventory.name | default('ToDo: The host \'' + host.name + '\' must have an associated inventory') }}"
 {% if host.variables and host.variables != '---' and host.variables != '' %}
     variables:

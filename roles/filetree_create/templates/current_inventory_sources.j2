@@ -4,7 +4,7 @@ controller_inventory_sources:
 {% endif %}
 {% for inventory_source in current_inventory_sources_asset_value %}
   - name: "{{ inventory_source.name }}"
-    description: "{{ inventory_source.description | regex_replace('([\\\\\"$])', '\\\\\\1') }}"
+    description: "{{ inventory_source.description | regex_replace('([\\\"])', '\\\\1') }}"
 {% if inventory_source.summary_fields.organization is defined %}
     organization: "{{ inventory_source.summary_fields.organization.name }}"
 {% endif %}

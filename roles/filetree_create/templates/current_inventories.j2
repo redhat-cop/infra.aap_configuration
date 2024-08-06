@@ -3,7 +3,7 @@
 controller_inventories:
 {% endif %}
   - name: "{{ current_inventories_asset_value.name }}"
-    description: "{{ current_inventories_asset_value.description | regex_replace('([\\\\\"$])', '\\\\\\1') }}"
+    description: "{{ current_inventories_asset_value.description | regex_replace('([\\\"])', '\\\\1') }}"
     organization: "{{ inventory_organization }}"
 {% if current_inventories_asset_value.host_filter is defined %}
     host_filter: "{{ current_inventories_asset_value.host_filter }}"
