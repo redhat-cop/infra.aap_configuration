@@ -25,7 +25,7 @@ The following variables are required for that role to work properly:
 | `show_encrypted` | N/A | no | bool | Whether to remove the string '\$encrypted\$' in credentials output (not the actual credential value) |
 | `omit_id` | N/A | no | bool | Whether to create output files without objects id.|
 | `organization`| N/A | no | str | Default organization for all objects that have not been set in the source controller.|
-| `export_related_objects` | False | no | bool | Whether to export releated objects to workflows and job templates. |
+| `export_related_objects` | False | no | bool | Whether to export related objects (job templates related to certain workflows and the projects associated with these job templates) when a single JT or a single WFJT are being exported. |
 
 ## Dependencies
 
