@@ -12,6 +12,26 @@
       order_by: 'organization,id'
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
+- name: "Block for exporting the related job templates"
+  when: workflow_job_template_id is defined and (export_related_objects is defined and export_related_objects)
+  block:
+    - name: "Get current Job Templates related to workflow from the API"
+      ansible.builtin.set_fact:
+        workflow_node_job_templates_lookvar: "{{ query(controller_api_plugin, workflow_job_templates_lookvar[0]['related']['workflow_nodes'],
+                                                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                                                 return_all=true, max_objects=query_controller_api_max_objects)
+                                              }}"
+      no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
+
+    - name: "Export job templates related to to workflow"
+      ansible.builtin.include_tasks: "job_templates.yml"
+      vars:
+        job_template_id: "{{ current_workflow_job_node_templates_asset_value['unified_job_template'] }}"
+      loop: "{{ workflow_node_job_templates_lookvar }}"
+      loop_control:
+        loop_var: current_workflow_job_node_templates_asset_value
+      no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
+
 - name: "Block for to generate flatten output"
   when:
     - flatten_output is defined

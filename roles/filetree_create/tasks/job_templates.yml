@@ -13,6 +13,13 @@
       order_by: 'organization,id'
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
+- name: "Export project related to job_template"
+  when: job_template_id is defined and project_id is not defined and (export_related_objects is defined and export_related_objects)
+  ansible.builtin.include_tasks: "projects.yml"
+  vars:
+    project_id: "job_templates_lookvar[0]['summary_fields']['project']['id'] }}"
+  no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
+
 - name: "Block for to generate flatten output"
   when:
     - flatten_output is defined
