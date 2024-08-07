@@ -19,6 +19,7 @@
     name:                  "{{ __collection.name }}"
     version:               "{{ __collection.version | default(omit) }}"
     path:                  "{{ __collection.path | default(omit) }}"
+    repository:            "{{ __collection.repository | default(omit) }}"
     wait:                  "{{ __collection.wait | default(omit) }}"
     auto_approve:          "{{ __collection.auto_approve | default(omit) }}"
     timeout:               "{{ __collection.timeout | default(omit) }}"

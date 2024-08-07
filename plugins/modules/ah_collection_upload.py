@@ -31,6 +31,12 @@ options:
         - Can be a URL
       required: True
       type: str
+    repository:
+      description:
+        - Name of the collection's repository
+        - Defaults to 'staging'
+      required: False
+      type: str
     wait:
       description:
         - Wait for the collection to be uploaded.
@@ -59,6 +65,7 @@ def main():
     # Any additional arguments that are not fields of the item can be added here
     argument_spec = dict(
         path=dict(required=True),
+        repository=dict(required=False),
         wait=dict(type="bool", default=True),
     )
 
@@ -67,9 +74,10 @@ def main():
 
     # Extract our parameters
     path = module.params.get("path")
+    repository = module.params.get("repository") or "staging"
     wait = module.params.get("wait")
 
-    module.upload(path, "artifacts/collections", wait, item_type="collections")
+    module.upload(path, "artifacts/collections", wait, repository, item_type="collections")
     module.exit_json(**module.json_output)
 
 

@@ -155,13 +155,16 @@ class AHModule(AnsibleModule):
 
     def build_url(self, endpoint, query_params=None):
         # Make sure we start with /api/vX
-        if not endpoint.startswith("/"):
+        upload_endpoint = "content" in endpoint and "v3" in endpoint and "artifacts" in endpoint
+        if upload_endpoint and not endpoint.startswith("/api"):
+            endpoint = "/api/{0}".format(endpoint)
+        if not endpoint.startswith("/") and not upload_endpoint:
             endpoint = "/{0}".format(endpoint)
-        if not endpoint.startswith("/api/") and not self.path_prefix.startswith("/api/"):
+        if not endpoint.startswith("/api/") and not self.path_prefix.startswith("/api/") and not upload_endpoint:
             endpoint = "api/{0}/v3{1}".format(self.path_prefix, endpoint)
-        if not endpoint.startswith("/api/") and self.path_prefix.startswith("/api/"):
+        if not endpoint.startswith("/api/") and self.path_prefix.startswith("/api/") and not upload_endpoint:
             endpoint = "{0}/v3{1}".format(self.path_prefix, endpoint)
-        if not endpoint.endswith("/") and "?" not in endpoint:
+        if not endpoint.endswith("/") and "?" not in endpoint and not upload_endpoint:
             endpoint = "{0}/".format(endpoint)
 
         # Update the URL path with the endpoint
@@ -379,56 +382,19 @@ class AHModule(AnsibleModule):
 
     def authenticate(self, **kwargs):
         if self.username and self.password:
-            # Attempt to get a token from /v3/auth/token/ by giving it our username/password combo
-            # If we have a username and password, we need to get a session cookie
-            api_token_url = self.build_url("auth/token").geturl()
-            try:
-                try:
-                    response = self.session.open(
-                        "POST",
-                        api_token_url,
-                        validate_certs=self.verify_ssl,
-                        timeout=self.request_timeout,
-                        follow_redirects=True,
-                        force_basic_auth=True,
-                        url_username=self.username,
-                        url_password=self.password,
-                        headers={"Content-Type": "application/json"},
-                    )
-                except HTTPError:
-                    test_url = self.build_url("namespaces").geturl()
-                    self.basic_auth = True
-                    basic_str = base64.b64encode("{0}:{1}".format(self.username, self.password).encode("ascii"))
-                    response = self.session.open(
-                        "GET",
-                        test_url,
-                        validate_certs=self.verify_ssl,
-                        timeout=self.request_timeout,
-                        headers={
-                            "Content-Type": "application/json",
-                            "Authorization": "Basic {0}".format(basic_str.decode("ascii")),
-                        },
-                    )
-            except HTTPError as he:
-                try:
-                    resp = he.read()
-                except Exception as e:
-                    resp = "unknown {0}".format(e)
-                self.fail_json(msg="Failed to get token: {0}".format(he), response=resp)
-            except (Exception) as e:
-                # Sanity check: Did the server send back some kind of internal error?
-                self.fail_json(msg="Failed to get token: {0}".format(e))
-
-            token_response = None
-            if not self.basic_auth:
-                try:
-                    token_response = response.read()
-                    response_json = loads(token_response)
-                    self.oauth_token = response_json["token"]
-                except (Exception) as e:
-                    self.fail_json(msg="Failed to extract token information from login response: {0}".format(e), **{"response": token_response})
-
-        # If we have neither of these, then we can try un-authenticated access
+            test_url = self.build_url("namespaces").geturl()
+            self.basic_auth = True
+            basic_str = base64.b64encode("{0}:{1}".format(self.username, self.password).encode("ascii"))
+            self.session.open(
+                "GET",
+                test_url,
+                validate_certs=self.verify_ssl,
+                timeout=self.request_timeout,
+                headers={
+                    "Content-Type": "application/json",
+                    "Authorization": "Basic {0}".format(basic_str.decode("ascii")),
+                },
+            )
         self.authenticated = True
 
     def existing_item_add_url(self, existing_item, endpoint, key="url"):
@@ -730,7 +696,7 @@ class AHModule(AnsibleModule):
             time.sleep(1)
             return
 
-    def upload(self, path, endpoint, wait=True, item_type="unknown"):
+    def upload(self, path, endpoint, wait=True, repository="staging", item_type="unknown"):
         if "://" in path:
             tmppath = fetch_file(self, path)
             path = path.split("/")[-1]
@@ -739,7 +705,7 @@ class AHModule(AnsibleModule):
         ct, body = self.prepare_multipart(path)
         response = self.make_request(
             "POST",
-            endpoint,
+            "{0}/content/{1}/v3/{2}/".format(self.path_prefix, repository, endpoint),
             **{
                 "data": body,
                 "headers": {"Content-Type": str(ct)},

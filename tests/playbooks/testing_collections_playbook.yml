@@ -6,7 +6,7 @@
   collections:
     - galaxy.galaxy
   vars:
-    ah_path_prefix: 'galaxy'
+    ah_path_prefix: '/api/galaxy'
     ah_hostname: "{{ lookup('ansible.builtin.env', 'AH_HOST') }}"
     ah_username: "{{ lookup('ansible.builtin.env', 'AH_USERNAME') }}"
     ah_password: "{{ lookup('ansible.builtin.env', 'AH_PASSWORD') }}"
@@ -47,7 +47,7 @@
               - name: community_test
                 company: Community Test
                 email: user@example.com
-                avatar_url: https://github.com/ansible/awx-logos/blob/master/awx/ui/client/assets/logo-header.svg
+                avatar_url: https://github.com/ansible/awx-logos/blob/master/awx/ui/client/assets/192.png
                 description: string
                 resources: "# Community\nA Namespace test with changes"
                 links:
@@ -56,7 +56,6 @@
               - name: infra
               - name: test_namespace
               - name: galaxy
-
 
     - name: Rename namespace
       ansible.builtin.include_role:
@@ -117,16 +116,6 @@
         state: absent
         ah_host: "{{ ah_hostname }}"
         ah_token: "{{ ah_token }}"
-        ah_path_prefix: "{{ ah_path_prefix }}"
-        validate_certs: "{{ ah_validate_certs }}"
-
-    - name: Add EE Registry
-      ah_ee_registry:
-        name: myreg
-        url: https://registry.redhat.io
-        ah_host: "{{ ah_hostname }}"
-        ah_username: "{{ ah_username }}"
-        ah_password: "{{ ah_password }}"
         ah_path_prefix: "{{ ah_path_prefix }}"
         validate_certs: "{{ ah_validate_certs }}"
 

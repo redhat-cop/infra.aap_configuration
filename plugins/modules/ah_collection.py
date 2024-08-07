@@ -44,6 +44,12 @@ options:
         - Collection artifact file path.
         - If version is not specified, version will be derived from file name.
       type: str
+    repository:
+      description:
+        - Name of the destination collection for the repository (staging for uploads).
+      required: False
+      type: str
+      default: 'staging'
     wait:
       description:
         - Waits for the collection to be uploaded
@@ -114,6 +120,7 @@ def main():
         namespace=dict(required=True),
         name=dict(required=True),
         path=dict(),
+        repository=dict(default='staging'),
         wait=dict(type="bool", default=True),
         interval=dict(default=10.0, type="float"),
         timeout=dict(default=None, type="int"),
@@ -130,6 +137,7 @@ def main():
     namespace = module.params.get("namespace")
     name = module.params.get("name")
     path = module.params.get("path")
+    repository = module.params.get("repository")
     wait = module.params.get("wait")
     interval = module.params.get("interval")
     timeout = module.params.get("timeout")
@@ -176,7 +184,7 @@ def main():
             module.json_output["deleted"] = True
             module.wait_for_complete(module.json_output["task"])
             # Upload new collection
-            module.upload(path, "artifacts/collections", wait, item_type="collections")
+            module.upload(path, "artifacts/collections", wait, repository, item_type="collections")
             module.json_output["changed"] = True
             # Get new collection version
             existing_item = module.get_endpoint(collection_endpoint, **{"return_none_on_404": True})
@@ -187,7 +195,7 @@ def main():
                     interval=interval
                 )
         elif existing_item is None:
-            module.upload(path, "artifacts/collections", wait, item_type="collections")
+            module.upload(path, "artifacts/collections", wait, repository, item_type="collections")
             module.json_output["changed"] = True
             if auto_approve:
                 module.approve(
