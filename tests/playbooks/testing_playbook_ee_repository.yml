@@ -13,9 +13,9 @@
     ah_password: "{{ lookup('ansible.builtin.env', 'AH_PASSWORD') }}"
     ah_path_prefix: 'galaxy'
     ah_validate_certs: false
-    repository: test-namespace/ee-minimal-rhel8
-    tag: latest
-    fake_image: quay.io/v2/ansible/http-test-container:2.0.0
+    repository: local/http-test-container
+    tag: main
+    fake_image: ansible/http-test-container
   pre_tasks:
     - name: Include vars from ah_configs directory
       ansible.builtin.include_vars:
@@ -52,12 +52,21 @@
         name: ee_repository
       vars:
         ah_ee_repositories:
-          - name: test-namespace/ee-minimal-rhel8
+          - name: local/http-test-container
             readme_file: "{{ tempfile['path'] }}"
 
+    # - name: Repository sync
+    #   ansible.builtin.include_role:
+    #     name: ee_repository_sync
+
     - name: Repository sync
-      ansible.builtin.include_role:
-        name: ee_repository_sync
+      ah_ee_repository_sync:
+        name: local/http-test-container
+        interval: 10
+        ah_hostname: "{{ ah_hostname }}"
+        ah_username: "{{ ah_username }}"
+        ah_password: "{{ ah_password }}"
+        validate_certs: "{{ ah_validate_certs }}"
 
     - name: Registery Index
       ansible.builtin.include_role:
@@ -75,7 +84,7 @@
       vars:
         ah_ee_images:
           # Testing adding tags to the image
-          - name: "test-namespace/ee-minimal-rhel8:latest"
+          - name: local/http-test-container:main
             tags:
               - v2
               - "2.0"
@@ -86,7 +95,7 @@
       vars:
         ah_ee_images:
           # Testing adding tags to the image
-          - name: "test-namespace/ee-minimal-rhel8:latest"
+          - name: local/http-test-container:main
             append: false
             tags:
               - prod2
@@ -98,18 +107,17 @@
       vars:
         ah_ee_images:
           # Testing adding tags to the image
-          - name: "test-namespace/ee-minimal-rhel8:prod2"
+          - name: local/http-test-container:prod2
             state: present
             append: false
-            tags: latest
+            tags: main
 
     - name: Remove image
       ansible.builtin.include_role:
         name: ee_image
       vars:
         ah_ee_images:
-          # Testing adding tags to the image
-          - name: "test-namespace/ee-minimal-rhel8:latest"
+          - name: local/http-test-container
             state: absent
 
     # Testing repository deletion
@@ -118,18 +126,13 @@
         name: ee_repository
       vars:
         ah_ee_repositories:
-          - name: config_as_code_ee
-            state: absent
-          - name: test-namespace/ee-minimal-rhel8
+          # - name: config_as_code_ee
+          #   state: absent
+          - name: local/http-test-container
             state: absent
 
     - name: Ensure the temporary file is removed
       ansible.builtin.file:
         path: "{{ tempfile['path'] }}"
         state: absent
-
-    - name: Ensure the images are removed
-      ansible.builtin.command:
-        cmd: "podman rmi {{ fake_image }} {{ hub_host }}/{{ repository }}:{{ tag }}"
-      changed_when: true
 ...
