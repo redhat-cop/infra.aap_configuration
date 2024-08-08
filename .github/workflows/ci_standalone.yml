@@ -11,10 +11,10 @@ jobs:
           - stable-4.8
           - stable-4.9
           - master
-    uses: "./.github/workflows/ci_standalone_versioned.yml"
+    uses: ./.github/workflows/ci_standalone_versioned.yml
     with:
       galaxy_ng_version: ${{ matrix.galaxy_ng_version }}
-      ci_workflow: "ci_standalone"
+      ci_workflow: ci_standalone
       gh_ref: ${{ github.event.pull_request.head.sha || github.sha }}
     secrets:
       redhat_catalog_username: ${{ secrets.REDHAT_CATALOG_USERNAME }}
