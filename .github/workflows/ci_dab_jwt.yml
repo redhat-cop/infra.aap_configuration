@@ -10,10 +10,10 @@ jobs:
         galaxy_ng_version:
           # - stable-4.10
           - master
-    uses: "./.github/workflows/ci_dab_jwt_versioned.yml"
+    uses: ./.github/workflows/ci_dab_jwt_versioned.yml
     with:
       galaxy_ng_version: ${{ matrix.galaxy_ng_version }}
-      ci_workflow: "ci_dab_jwt"
+      ci_workflow: ci_dab_jwt
       gh_ref: ${{ github.event.pull_request.head.sha || github.sha }}
     secrets:
       redhat_catalog_username: ${{ secrets.REDHAT_CATALOG_USERNAME }}

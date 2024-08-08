@@ -8,6 +8,10 @@ on:
         description: The version to pull of galaxy_ng
         required: true
         type: string
+      ci_workflow:
+        description: The workflow name
+        required: true
+        type: string
       gh_ref:
         description: The ref in the repository to pull
         required: false
@@ -84,10 +88,10 @@ jobs:
         run: python3 dev/oci_env_integration/actions/ci_dab_jwt.py
 
       - name: "Perform playbook collection tests"
-        run: ansible-playbook tests/playbooks/testing_collections_playbook.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }} -e git_repo_name=${{ github.event.repository.name }} -e ci_workflow=ci_dab_jwt
+        run: ansible-playbook tests/playbooks/testing_collections_playbook.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }} -e git_repo_name=${{ github.event.repository.name }} -e ci_workflow=${{ inputs.ci_workflow }}
 
       - name: "Perform collection repository tests"
-        run: ansible-playbook tests/playbooks/testing_collections_repos.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }} -e ci_workflow=ci_dab_jwt
+        run: ansible-playbook tests/playbooks/testing_collections_repos.yml -v -e galaxy_ng_version=${{ inputs.galaxy_ng_version }} -e ci_workflow=${{ inputs.ci_workflow }}
 
       - name: "Perform playbook repository tests"
-        run: ansible-playbook tests/playbooks/testing_playbook_ee_repository.yml -vv -e galaxy_ng_version=${{ inputs.galaxy_ng_version }} -e redhat_catalog_username=${{ secrets.redhat_catalog_username }} -e redhat_catalog_password=${{ secrets.redhat_catalog_password }}
+        run: ansible-playbook tests/playbooks/testing_playbook_ee_repository.yml -vv -e galaxy_ng_version=${{ inputs.galaxy_ng_version }} -e redhat_catalog_username=${{ secrets.redhat_catalog_username }} -e redhat_catalog_password=${{ secrets.redhat_catalog_password }} -e ci_workflow=${{ inputs.ci_workflow }}
