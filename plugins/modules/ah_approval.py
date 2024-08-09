@@ -84,6 +84,9 @@ def main():
 
     module.approve(
         endpoint=endpoint,
+        namespace=namespace,
+        name=name,
+        version=version
     )
 
 

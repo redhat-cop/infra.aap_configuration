@@ -192,7 +192,10 @@ def main():
                 module.approve(
                     endpoint=collection_endpoint,
                     timeout=timeout,
-                    interval=interval
+                    interval=interval,
+                    namespace=namespace,
+                    name=name,
+                    version=version
                 )
         elif existing_item is None:
             module.upload(path, "artifacts/collections", wait, repository, item_type="collections")
@@ -201,7 +204,10 @@ def main():
                 module.approve(
                     endpoint=collection_endpoint,
                     timeout=timeout,
-                    interval=interval
+                    interval=interval,
+                    namespace=namespace,
+                    name=name,
+                    version=version
                 )
         else:
             module.json_output["changed"] = False

@@ -583,23 +583,65 @@ class AHModule(AnsibleModule):
             last_data = response["json"]
             return last_data
 
-    def approve(self, endpoint, timeout=None, interval=10.0, auto_exit=True):
+    def is_standalone(self):
+        try:
+            status_code = self.make_request("GET", "/api/")["status_code"]
+            if status_code == 200:
+                return False
+        except Exception:
+            # 404 error is standalone
+            return True
 
-        approvalEndpoint = "move/staging/published"
+    def approve(self, endpoint, namespace=None, name=None, version=None, timeout=None, interval=10.0, auto_exit=True):
 
-        if not endpoint:
-            self.fail_json(msg="Unable to approve due to missing endpoint")
+        if self.is_standalone():
+            approvalEndpoint = "move/staging/published"
 
-        response = self.post_endpoint("{0}/{1}".format(endpoint, approvalEndpoint), None, **{"return_none_on_404": True})
+            if not endpoint:
+                self.fail_json(msg="Unable to approve due to missing endpoint")
 
-        i = 0
-        while timeout is None or i < timeout:
-            if not response:
-                time.sleep(interval)
-                response = self.post_endpoint("{0}/{1}".format(endpoint, approvalEndpoint), None, **{"return_none_on_404": True})
-                i += interval
-            else:
-                break
+            response = self.post_endpoint("{0}/{1}".format(endpoint, approvalEndpoint), None, **{"return_none_on_404": True})
+
+            i = 0
+            while timeout is None or i < timeout:
+                if not response:
+                    time.sleep(interval)
+                    response = self.post_endpoint("{0}/{1}".format(endpoint, approvalEndpoint), None, **{"return_none_on_404": True})
+                    i += interval
+                else:
+                    break
+        else:
+            cv_endpoint = "/api/galaxy/pulp/api/v3/content/ansible/collection_versions/"
+            cv = self.make_request("GET", cv_endpoint, data={"namespace": namespace, "name": name, "version": version})["json"]
+            i = 0
+            # Wait for it...
+            while timeout is None or i < timeout:
+                if cv["count"] < 1:
+                    time.sleep(interval)
+                    cv = self.make_request("GET", cv_endpoint, data={"namespace": namespace, "name": name, "version": version})["json"]
+                    i += interval
+                else:
+                    # Legendary.
+                    break
+            # Get collection version pulp_href
+            cv_href = cv["results"][0]["pulp_href"]
+
+            # Get staging/published repo pulp_href
+            repos_endpoint = "/api/galaxy/pulp/api/v3/repositories/"
+            staging_href = self.make_request("GET", repos_endpoint, data={"name": "staging"})["json"]["results"][0]["pulp_href"]
+            published_href = self.make_request("GET", repos_endpoint, data={"name": "published"})["json"]["results"][0]["pulp_href"]
+
+            # Approve the collection
+            move_endpoint = staging_href + "move_collection_version/"
+            data = {
+                "collection_versions": [cv_href],
+                "destination_repositories": [published_href],
+            }
+            response = self.make_request(
+                "POST",
+                move_endpoint,
+                data=data
+            )
 
         if response and response["status_code"] in [202]:
             self.json_output["changed"] = True
