@@ -84,6 +84,7 @@ def main():
     wait = module.params.get("wait")
     interval = module.params.get("interval")
     timeout = module.params.get("timeout")
+    check_mode = module.params.get("check_mode")
 
     # Get the ansible_repository
     ansible_repository = AHPulpAnsibleRepository(module)
@@ -91,7 +92,10 @@ def main():
     if not ansible_repository.exists:
         module.fail_json(msg="The container registery with name: {name}, was not found.".format(name=name))
 
-    ansible_repository.sync(wait, interval, timeout)
+    if check_mode:
+        module.exit_json(changed=True, msg="Would have synced collection repository: {name}".format(name=name))
+    else:
+        ansible_repository.sync(wait, interval, timeout)
 
     module.exit_json(**module.json_output)
 
