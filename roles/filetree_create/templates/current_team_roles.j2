@@ -2,27 +2,30 @@
 ---
 controller_roles:
 {% endif %}
-{% for role in team_roles_lookvar %}
-{% if role.summary_fields.resource_type is defined %}
-  - team: "{{ teamname }}"
-{% if role.summary_fields.resource_type is match('organization') %}
+{% for role in object_roles %}
+{% if (role|dict2items)[0].value.resource_type is defined %}
+  - team: "{{ (role|dict2items)[0].value.team_name }}"
+{% if (role|dict2items)[0].value.resource_names | length > 0 %}
+{% if (role|dict2items)[0].value.resource_type is match('organization') %}
     organizations:
-      - "{{ role.summary_fields.resource_name }}"
-{% elif role.summary_fields.resource_type is match('team') %}
+{% elif (role|dict2items)[0].value.resource_type is match('team') %}
     target_teams:
-      - "{{ role.summary_fields.resource_name }}"
-{% elif role.summary_fields.resource_type is match('job_template') %}
-    job_template: "{{ role.summary_fields.resource_name }}"
-{% elif role.summary_fields.resource_type is match('inventory') %}
-    inventory: "{{ role.summary_fields.resource_name }}"
-{% elif role.summary_fields.resource_type is match('workflow_job_template') %}
-    workflow_job_template: "{{ role.summary_fields.resource_name }}"
-{% elif role.summary_fields.resource_type is match('project') %}
-    project: "{{ role.summary_fields.resource_name }}"
-{% elif role.summary_fields.resource_type is match('credential') %}
-    credential: "{{ role.summary_fields.resource_name }}"
+{% elif (role|dict2items)[0].value.resource_type is match('job_template') %}
+    job_templates:
+{% elif (role|dict2items)[0].value.resource_type is match('inventory') %}
+    inventories:
+{% elif (role|dict2items)[0].value.resource_type is match('workflow_job_template') %}
+    workflow_job_templates:
+{% elif (role|dict2items)[0].value.resource_type is match('project') %}
+    projects:
+{% elif (role|dict2items)[0].value.resource_type is match('credential') %}
+    credentials:
 {% endif %}
-    role: "{{ role.name | lower }}"
+{% for object_name in (role|dict2items)[0].value.resource_names %}
+      - "{{ object_name }}"
+{% endfor %}
+{% endif %}
+    role: "{% if (role|dict2items)[0].key | lower == 'approve' %}approval{% else %}{{ (role|dict2items)[0].key | lower | regex_replace(' ', '_') }}{% endif %}"
 {% endif %}
 {% endfor %}
 {% if last_team_role | default(true) | bool %}
