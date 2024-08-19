@@ -4,7 +4,7 @@ controller_schedules:
 {% endif %}
   - name: "{{ current_schedules_asset_value.name }}"
 {% if current_schedules_asset_value.description is defined %}
-    description: "{{ current_schedules_asset_value.description | regex_replace('([\\\"])', '\\\\1') }}"
+    description: "{{ current_schedules_asset_value.description | regex_replace('([\\\\\"$])', '\\\\\\1') }}"
 {% endif %}
     enabled: {{ current_schedules_asset_value.enabled }}
     unified_job_template: "{{ current_schedules_asset_value.summary_fields.unified_job_template.name }}"

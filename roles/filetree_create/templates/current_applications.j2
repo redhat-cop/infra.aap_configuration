@@ -3,7 +3,7 @@
 controller_applications:
 {% endif %}
   - name: "{{ current_applications_asset_value.name }}"
-    description: "{{ current_applications_asset_value.description | regex_replace('([\\\"])', '\\\\1') }}"
+    description: "{{ current_applications_asset_value.description | regex_replace('([\\\\\"$])', '\\\\\\1') }}"
     organization: "{{ current_applications_asset_value.summary_fields.organization.name | default(organization if organization != 'ORGANIZATIONLESS' else 'ToDo: The application \'' + current_applications_asset_value.name + '\' must have an organization') }}"
     authorization_grant_type: "{{ current_applications_asset_value.authorization_grant_type }}"
     redirect_uris: "{{ current_applications_asset_value.redirect_uris }}"

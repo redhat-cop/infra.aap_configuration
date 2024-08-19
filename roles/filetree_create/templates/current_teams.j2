@@ -3,7 +3,7 @@
 controller_teams:
 {% endif %}
   - name: "{{ current_teams_asset_value.name }}"
-    description: "{{ current_teams_asset_value.description | regex_replace('([\\\"])', '\\\\1') }}"
+    description: "{{ current_teams_asset_value.description | regex_replace('([\\\\\"$])', '\\\\\\1') }}"
     organization: "{{ current_teams_asset_value.summary_fields.organization.name }}"
 {% if last_team | default(true) | bool %}
 ...
