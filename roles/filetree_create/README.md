@@ -18,11 +18,14 @@ The following variables are required for that role to work properly:
 | `project_id` | N/A | no | int | Specifiying the project id to filter by. Exports the project belonging to the specified organization. |
 | `job_template_id` | N/A | no | int | Specifiying the job template id to filter by. Exports the job template belonging to the specified organization. |
 | `workflow_job_template_id` | N/A | no | int | Specifiying the workflow job template id to filter by. Exports the workflow job template belonging to the specified organization. |
+| `schedule_id` | N/A | no | int | Specifiying the schedule id to filter by. Exports the schedule belonging to the specified object. |
 | `output_path` | `/tmp/filetree_output` | yes | str | The path to the output directory where all the generated `yaml` files with the corresponding Objects as code will be written to. |
 | `input_tag` | `['all']` | no | List of Strings | The tags which are applied to the 'sub-roles'. If 'all' is in the list (the default value) then all roles will be called.  Valid tags include ['all', 'labels', 'applications', 'instance_groups', 'settings', 'inventory', 'credentials', 'credential_types', 'notification_templates', 'users', 'teams', 'roles', 'organizations', 'projects', 'execution_environments', 'job_templates', 'workflow_job_templates', 'workflow_job_template_nodes', 'schedules'] |
 | `flatten_output` | N/A | no | bool | Whether to flatten the output in single files per each object type instead of the normal exportation structure |
 | `show_encrypted` | N/A | no | bool | Whether to remove the string '\$encrypted\$' in credentials output (not the actual credential value) |
 | `omit_id` | N/A | no | bool | Whether to create output files without objects id.|
+| `organization`| N/A | no | str | Default organization for all objects that have not been set in the source controller.|
+| `export_related_objects` | False | no | bool | Whether to export related objects (job templates related to certain workflows and the projects associated with these job templates) when a single JT or a single WFJT are being exported. |
 
 ## Dependencies
 

@@ -22,10 +22,11 @@ output_path: "/tmp/filetree_output"
 
 # Maximum number of objects to return from the list. If a list view returns more an max_objects an exception will be raised
 query_controller_api_max_objects: 10000
+export_related_objects: false
 
 controller_configuration_filetree_create_secure_logging: "{{ controller_configuration_secure_logging | default('false') }}"
 
 input_tag:
   - all
-
+organization: 'ORGANIZATIONLESS'
 ...
