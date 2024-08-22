@@ -86,6 +86,24 @@
 
   tasks:
 
+    - name: Validate error handling
+      block:
+        - name: Add Invalid Job Templates to Controller
+          ansible.builtin.include_role:
+            name: job_templates
+          vars:
+            controller_templates: "{{ controller_templates_invalid }}"
+
+        - name: Ensure the job_templates_errors is defined and has items
+          ansible.builtin.assert:
+            that:
+              - job_templates_errors is defined
+              - job_templates_errors | length > 0
+            fail_msg: "No errors found, validate test example"
+            success_msg: "Errors found, proceeding"
+          vars:
+            job_templates_errors: __job_templates_errors_set_stats.ansible_stats.data.job_templates_errors
+
     - name: Add Controller Settings Individually
       ansible.builtin.include_role:
         name: settings
