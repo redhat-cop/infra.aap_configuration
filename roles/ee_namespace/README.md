@@ -53,8 +53,8 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Namespace name. Must be lower case containing only alphanumeric characters and underscores.|
-<!-- |`new_name`|""|yes|str|Setting this option will change the existing name (looked up via the name field.)| -->
-|`append`|true|no|bool|Whether to append or replace the groups specified for the ee_namespace.|
+|`new_name`|""|yes|str|Setting this option will change the existing name (looked up via the name field.)|
+|`append`|`true`|no|bool|Whether to append or replace the groups specified for the ee_namespace.|
 |`groups`|[]|yes|list|A list of names for groups that control the Namespace.|
 |`state`|`present`|no|str|Desired state of the ee_namespace.|
 
