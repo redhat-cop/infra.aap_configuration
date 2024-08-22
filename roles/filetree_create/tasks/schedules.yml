@@ -2,6 +2,7 @@
 - name: "Get current Schedules from the API"
   ansible.builtin.set_fact:
     schedules_lookvar: "{{ query(controller_api_plugin, 'api/v2/schedules/',
+                                query_params=({'id': schedule_id} if schedule_id is defined else {}),
                                 host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                                 return_all=true, max_objects=query_controller_api_max_objects)
                        }}"
@@ -64,7 +65,7 @@
       vars:
         label_id: "{{ current_schedules_asset_value.id }}"
         label_name: "{{ current_schedules_asset_value.name | regex_replace('/', '_') }}"
-        __dest: "{{ output_path }}/schedules/{{ label_id }}_{{ label_name | regex_replace('/', '_') }}.yaml"
+        __dest: "{{ output_path }}/schedules/{{ (label_id ~ '_') if omit_id is not defined else '' }}{{ label_name | regex_replace('/', '_') }}.yaml"
         query_credentials: "{{ query(controller_api_plugin, current_schedules_asset_value.related.credentials,
                      host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                      return_all=true, max_objects=query_controller_api_max_objects) if current_schedules_asset_value.related.credentials is defined else [] }}"

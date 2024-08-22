@@ -4,7 +4,7 @@ controller_workflows:
 {% endif %}
   - name: "{{ current_workflow_job_templates_asset_value.name }}"
     description: "{{ current_workflow_job_templates_asset_value.description }}"
-    organization: "{{ current_workflow_job_templates_asset_value.summary_fields.organization.name | default('ToDo: The WF \'' + current_workflow_job_templates_asset_value.name + '\' must belong to an organization') }}"
+    organization: "{{ current_workflow_job_templates_asset_value.summary_fields.organization.name | default(organization if organization != 'ORGANIZATIONLESS' else 'ToDo: The WF \'' + current_workflow_job_templates_asset_value.name + '\' must belong to an organization') }}"
     state: "present"
     simplified_workflow_nodes:
 {% for node in query(controller_api_plugin, 'api/v2/workflow_job_template_nodes/',
@@ -17,8 +17,12 @@ controller_workflows:
 {% if node.job_type %}
         job_type: "{{ node.job_type }}"
 {% endif %}
-        organization: "{{ current_workflow_job_templates_asset_value.summary_fields.organization.name | default('ToDo: The WF \'' + current_workflow_job_templates_asset_value.name + '\' must belong to an organization') }}"
+        organization: "{{ current_workflow_job_templates_asset_value.summary_fields.organization.name | default(organization if organization != 'ORGANIZATIONLESS' else 'ToDo: The WF \'' + current_workflow_job_templates_asset_value.name + '\' must belong to an organization') }}"
         all_parents_must_converge: "{{ node.all_parents_must_converge }}"
+{% if node.extra_data is defined and node.extra_data | length > 0 %}
+        extra_data:
+          {{ node.extra_data | to_nice_yaml | indent(10) | replace("'{{", "!unsafe \'{{") }}
+{%- endif %}
 {% if node.success_nodes is defined and node.success_nodes | length > 0 %}
         success_nodes:
 {% for success in node.success_nodes %}
@@ -44,7 +48,7 @@ controller_workflows:
     webhook_service: "{{ current_workflow_job_templates_asset_value.webhook_service }}"
 {% if current_workflow_job_templates_asset_value.extra_vars and current_workflow_job_templates_asset_value.extra_vars | length > 3 %}
     extra_vars:
-      {{ current_workflow_job_templates_asset_value.extra_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") }}
+      {{ current_workflow_job_templates_asset_value.extra_vars | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | regex_replace('(^[^:]*): (.*){{', '\1: !unsafe \2{{', multiline=True) }}
 {%- endif %}
 {% if query_labels | length > 0 %}
     labels:
@@ -79,7 +83,7 @@ controller_workflows:
     survey_enabled: {{ current_workflow_job_templates_asset_value.survey_enabled }}
 {% set survey_spec_contents = query(controller_api_plugin, current_workflow_job_templates_asset_value.related.survey_spec,
                                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)[0] |
-                                    from_yaml | to_nice_yaml(indent=2,width=500) | regex_replace("\n\n[ ]*", "\\\\n") | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") | replace("^$", "")
+                                    from_yaml | to_nice_yaml(indent=2,width=500) | regex_replace("\n\n[ ]*", "\\\\n") | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") | replace("^$", "") | replace("$encrypted$", "")
 -%}
 {% if current_workflow_job_templates_asset_value.related.survey_spec is defined and survey_spec_contents | length > 3 %}
     survey_spec:

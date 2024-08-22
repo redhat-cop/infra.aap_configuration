@@ -15,18 +15,15 @@
   register: __contents_filetree_controller_workflow_job_templates
   failed_when: "'VARIABLE IS NOT DEFINED' in __contents_filetree_controller_workflow_job_templates"
 
-- name: "Populate Workflow Job Templates list"
+- name: "Set Workflows Job Templates Data Structure"
   ansible.builtin.set_fact:
-    __populate_controller_workflow_job_templates: "{{ (__populate_controller_workflow_job_templates | default([])) + __populate_credentials_list_item.ansible_facts.controller_workflows }}"
-  loop: "{{ __contents_filetree_controller_workflow_job_templates.results }}"
-  loop_control:
-    loop_var: __populate_credentials_list_item
+    controller_workflows: >-
+      {{
+        __contents_filetree_controller_workflow_job_templates.results |
+        rejectattr('ansible_facts.controller_workflows', 'undefined') |
+        map(attribute='ansible_facts.controller_workflows') |
+        ansible.builtin.flatten
+      }}
   no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
-  when: __contents_filetree_controller_workflow_job_templates.results is defined and __populate_credentials_list_item.ansible_facts.controller_workflows is defined
-
-- name: "Set Job Templates Data Structure"
-  ansible.builtin.set_fact:
-    controller_workflows: "{{ __populate_controller_workflow_job_templates }}"
-  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
-  when: __populate_controller_workflow_job_templates is defined
+  when: __contents_filetree_controller_workflow_job_templates.results
 ...

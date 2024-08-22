@@ -20,6 +20,11 @@ argument_specs:
         required: false
         type: int
         description: Maximum number of objects to return from the list. If a list view returns more an max_objects an exception will be raised
+      omit_id:
+        default: None
+        required: false
+        type: bool
+        description: Whether to create output files without objects id.
 
 
       # Async variables

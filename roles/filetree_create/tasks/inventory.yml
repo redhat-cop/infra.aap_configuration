@@ -40,7 +40,7 @@
         marker: ''
         block: "{{ lookup('template', 'templates/current_inventories.j2') }}"
       vars:
-        inventory_organization: "{{ current_inventories_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+        inventory_organization: "{{ current_inventories_asset_value.summary_fields.organization.name | default(organization) }}"
         inventory_name: "{{ current_inventories_asset_value.name | regex_replace('/', '_') }}"
         first_inventory: "{{ not (__inventories_file.stat.exists | bool) }}"
         last_inventory: "{{ current_inventory_index == ((inventory_lookvar | length) - 1) }}"
@@ -65,7 +65,7 @@
         state: directory
         mode: '0755'
       vars:
-        inventory_organization: "{{ needed_path.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+        inventory_organization: "{{ needed_path.summary_fields.organization.name | default(organization) }}"
         inventory_name: "{{ needed_path.name | regex_replace('/', '_') }}"
         __path: "{{ output_path }}/{{ inventory_organization | regex_replace('/', '_') }}/inventories/{{ inventory_name | regex_replace('/', '_') }}"
       loop: "{{ inventory_lookvar }}"
@@ -79,9 +79,9 @@
         dest: "{{ __dest }}"
         mode: '0644'
       vars:
-        inventory_organization: "{{ current_inventories_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+        inventory_organization: "{{ current_inventories_asset_value.summary_fields.organization.name | default(organization) }}"
         inventory_name: "{{ current_inventories_asset_value.name | regex_replace('/', '_') }}"
-        __dest: "{{ output_path }}/{{ inventory_organization | regex_replace('/', '_') }}/inventories/{{ inventory_name | regex_replace('/', '_') }}/{{ current_inventories_asset_value.id }}_{{ inventory_name | regex_replace('/', '_') }}.yaml"
+        __dest: "{{ output_path }}/{{ inventory_organization | regex_replace('/', '_') }}/inventories/{{ inventory_name | regex_replace('/', '_') }}/{{ (current_inventories_asset_value.id ~ '_') if omit_id is not defined else '' }}{{ inventory_name | regex_replace('/', '_') }}.yaml"
       loop: "{{ inventory_lookvar }}"
       loop_control:
         loop_var: current_inventories_asset_value
@@ -91,7 +91,7 @@
   ansible.builtin.include_tasks: "inventory_sources.yml"
   when: current_inventory_sources.total_inventory_sources > 0
   vars:
-    inventory_organization: "{{ current_inventory_sources.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+    inventory_organization: "{{ current_inventory_sources.summary_fields.organization.name | default(organization) }}"
     inventory_name: "{{ current_inventory_sources.name | regex_replace('/', '_') }}"
     inventory_sources_output_path: "{{   (output_path + '/' + inventory_organization | regex_replace('/', '_') + '/inventories/' + inventory_name | regex_replace('/', '_'))
                                        if (flatten_output is not defined or (flatten_output | bool) == false)
@@ -113,7 +113,7 @@
 - name: "Set the inventory's hosts"
   ansible.builtin.include_tasks: "hosts.yml"
   vars:
-    inventory_organization: "{{ current_inventory_hosts.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+    inventory_organization: "{{ current_inventory_hosts.summary_fields.organization.name | default(organization) }}"
     inventory_name: "{{ current_inventory_hosts.name | regex_replace('/', '_') }}"
     hosts_output_path: "{{   (output_path + '/' + inventory_organization | regex_replace('/', '_') + '/inventories/' + inventory_name | regex_replace('/', '_'))
                            if (flatten_output is not defined or (flatten_output | bool) == false)
@@ -136,7 +136,7 @@
   ansible.builtin.include_tasks: "groups.yml"
   when: current_inventory_groups.total_groups > 0
   vars:
-    inventory_organization: "{{ current_inventory_groups.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+    inventory_organization: "{{ current_inventory_groups.summary_fields.organization.name | default(organization) }}"
     inventory_name: "{{ current_inventory_groups.name | regex_replace('/', '_') }}"
     groups_output_path: "{{   (output_path + '/' + inventory_organization | regex_replace('/', '_') + '/inventories/' + inventory_name | regex_replace('/', '_'))
                            if (flatten_output is not defined or (flatten_output | bool) == false)

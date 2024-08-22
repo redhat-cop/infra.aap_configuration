@@ -27,7 +27,7 @@
         marker: ""
         block: "{{ lookup('template', 'templates/current_applications.j2') }}"
       vars:
-        application_organization: "{{ current_applications_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}"
+        application_organization: "{{ current_applications_asset_value.summary_fields.organization.name | default(organization, true) }}"
         application_id: "{{ current_applications_asset_value.id }}"
         application_name: "{{ current_applications_asset_value.name | regex_replace('/', '_') }}"
         last_application: "{{ current_application_index == ((applications_lookvar | length) - 1) }}"
@@ -53,9 +53,12 @@
         mode: '0755'
       vars:
         __path: "{{ output_path }}/{{ needed_path | regex_replace('/', '_') }}/applications"
-      loop: "{{ (applications_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
-                + (['ORGANIZATIONLESS'] if ((applications_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
-             }}"
+      loop: >-
+        {{ (applications_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') |
+           map(attribute='organization') | map(attribute='name') | list | flatten | unique)
+           + ([default(organization)] if ((applications_lookvar | map(attribute='summary_fields')
+           | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
+        }}
       loop_control:
         loop_var: needed_path
         label: "{{ __path }}"
@@ -66,10 +69,10 @@
         dest: "{{ __dest }}"
         mode: '0644'
       vars:
-        application_organization: "{{ current_applications_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS', true) }}"
+        application_organization: "{{ current_applications_asset_value.summary_fields.organization.name | default(organization, true) }}"
         application_id: "{{ current_applications_asset_value.id }}"
         application_name: "{{ current_applications_asset_value.name | regex_replace('/', '_') }}"
-        __dest: "{{ output_path }}/{{ application_organization | regex_replace('/', '_') }}/applications/{{ application_id }}_{{ application_name | regex_replace('/', '_') }}.yaml"
+        __dest: "{{ output_path }}/{{ application_organization | regex_replace('/', '_') }}/applications/{{ (application_id ~ '_') if omit_id is not defined else '' }}{{ application_name | regex_replace('/', '_') }}.yaml"
       loop: "{{ applications_lookvar }}"
       loop_control:
         loop_var: current_applications_asset_value

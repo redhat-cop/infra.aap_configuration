@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - filetree_read speed tuning
+  - fix memory leak when there are plenty of job templates

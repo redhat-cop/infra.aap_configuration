@@ -15,18 +15,15 @@
   register: __contents_filetree_controller_templates
   failed_when: "'VARIABLE IS NOT DEFINED' in __contents_filetree_controller_templates"
 
-- name: "Populate Job Templates list"
-  ansible.builtin.set_fact:
-    __populate_controller_job_templates: "{{ (__populate_controller_job_templates | default([])) + __populate_job_templates_list_item.ansible_facts.controller_templates }}"
-  loop: "{{ __contents_filetree_controller_templates.results }}"
-  loop_control:
-    loop_var: __populate_job_templates_list_item
-  no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
-  when: __contents_filetree_controller_templates.results is defined and __populate_job_templates_list_item.ansible_facts.controller_templates is defined
-
 - name: "Set Job Templates Data Structure"
   ansible.builtin.set_fact:
-    controller_templates: "{{ __populate_controller_job_templates }}"
+    controller_templates: >-
+      {{
+        __contents_filetree_controller_templates.results |
+        rejectattr('ansible_facts.controller_templates', 'undefined') |
+        map(attribute='ansible_facts.controller_templates') |
+        ansible.builtin.flatten
+      }}
   no_log: "{{ controller_configuration_filetree_read_secure_logging }}"
-  when: __populate_controller_job_templates is defined
+  when: __contents_filetree_controller_templates.results
 ...

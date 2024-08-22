@@ -13,6 +13,13 @@
       order_by: 'organization,id'
   no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
 
+- name: "Export project related to job_template"
+  when: job_template_id is defined and project_id is not defined and (export_related_objects is defined and export_related_objects)
+  ansible.builtin.include_tasks: "projects.yml"
+  vars:
+    project_id: "job_templates_lookvar[0]['summary_fields']['project']['id'] }}"
+  no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
+
 - name: "Block for to generate flatten output"
   when:
     - flatten_output is defined
@@ -29,7 +36,7 @@
         marker: ""
         block: "{{ lookup('template', 'templates/current_job_templates.j2') }}"
       vars:
-        job_template_organization: "{{ current_job_templates_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+        job_template_organization: "{{ current_job_templates_asset_value.summary_fields.organization.name | default(organization) }}"
         job_template_id: "{{ current_job_templates_asset_value.id }}"
         job_template_name: "{{ current_job_templates_asset_value.name | regex_replace('/', '_') }}"
         query_labels: "{{ query(controller_api_plugin, current_job_templates_asset_value.related.labels,
@@ -68,9 +75,12 @@
         mode: '0755'
       vars:
         __path: "{{ output_path }}/{{ needed_path | regex_replace('/', '_') }}/job_templates"
-      loop: "{{ (job_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
-                + (['ORGANIZATIONLESS'] if ((job_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
-             }}"
+      loop: >-
+        {{ (job_templates_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') |
+           map(attribute='organization') | map(attribute='name') | list | flatten | unique) +
+           [organization] if (job_templates_lookvar | map(attribute='summary_fields') |
+           selectattr('organization', 'undefined') | list | flatten | length > 0) else []
+        }}
       loop_control:
         loop_var: needed_path
         label: "{{ __path }}"
@@ -81,10 +91,10 @@
         dest: "{{ __dest }}"
         mode: '0644'
       vars:
-        job_template_organization: "{{ current_job_templates_asset_value.summary_fields.organization.name | default('ORGANIZATIONLESS') }}"
+        job_template_organization: "{{ current_job_templates_asset_value.summary_fields.organization.name | default(organization) }}"
         job_template_id: "{{ current_job_templates_asset_value.id }}"
         job_template_name: "{{ current_job_templates_asset_value.name | regex_replace('/', '_') }}"
-        __dest: "{{ output_path }}/{{ job_template_organization | regex_replace('/', '_') }}/job_templates/{{ job_template_id }}_{{ job_template_name | regex_replace('/', '_') }}.yaml"
+        __dest: "{{ output_path }}/{{ job_template_organization | regex_replace('/', '_') }}/job_templates/{{ (job_template_id ~ '_') if omit_id is not defined else '' }}{{ job_template_name | regex_replace('/', '_') }}.yaml"
         query_labels: "{{ query(controller_api_plugin, current_job_templates_asset_value.related.labels,
                          host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
                          return_all=true, max_objects=query_controller_api_max_objects) }}"
