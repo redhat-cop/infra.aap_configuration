@@ -2,7 +2,7 @@
 
 # Sync EDA Controller Project
 - name: Sync EDA Controller project
-  project_sync:
+  infra.eda_configuration.project_sync:
     name:             "{{ __project_sync_item.name }}"
     wait:             "{{ __project_sync_item.wait | default(omit) }}"
     interval:         "{{ __project_sync_item.interval | default(eda_configuration_project_sync_async_delay) }}"

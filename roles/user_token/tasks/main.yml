@@ -2,7 +2,7 @@
 
 # Create EDA Controller User Tokens
 - name: Add EDA Controller user token
-  user_token:
+  infra.eda_configuration.user_token:
     name:             "{{ __token_item.name }}"
     new_name:         "{{ __token_item.new_name | default(omit) }}"
     description:      "{{ __token_item.description | default(omit) }}"

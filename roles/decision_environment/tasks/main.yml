@@ -2,7 +2,7 @@
 
 # Create EDA Controller Decision Environment
 - name: Add EDA Controller decision environment
-  decision_environment:
+  infra.eda_configuration.decision_environment:
     name:             "{{ __de_item.name }}"
     new_name:         "{{ __de_item.new_name | default(omit) }}"
     description:      "{{ __de_item.description | default(omit) }}"
