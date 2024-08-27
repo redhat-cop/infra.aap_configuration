@@ -2,7 +2,7 @@
 
 # Create EDA Controller Project
 - name: Add EDA Controller project
-  project:
+  infra.eda_configuration.project:
     name:             "{{ __project_item.name }}"
     new_name:         "{{ __project_item.new_name | default(omit) }}"
     description:      "{{ __project_item.description | default(omit) }}"

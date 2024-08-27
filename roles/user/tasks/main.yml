@@ -2,7 +2,7 @@
 
 # Create EDA Controller user
 - name: Add EDA Controller user
-  user:
+  infra.eda_configuration.user:
     username:         "{{ __user_item.username }}"
     new_username:     "{{ __user_item.new_username | default(omit) }}"
     first_name:       "{{ __user_item.first_name | default(omit) }}"

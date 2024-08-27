@@ -2,7 +2,7 @@
 
 # Create EDA Controller Rulebook Activation
 - name: Add EDA Controller rulebook activation
-  rulebook_activation:
+  infra.eda_configuration.rulebook_activation:
     name:                 "{{ __ra_item.name }}"
     description:          "{{ __ra_item.description | default(omit) }}"
     project:              "{{ __ra_item.project | default(omit) }}"
