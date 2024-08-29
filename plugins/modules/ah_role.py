@@ -1,11 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# Copyright: (c) 2020, Sean Sullivan <@sean-m-sullivan>
+# GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
+
 # You can consult the UI API documentation directly on a running private
 # automation hub at https://hub.example.com/pulp/api/v3/docs/
-
-# (c) 2020, Sean Sullivan <@sean-m-sullivan>
-# GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
 
@@ -17,7 +17,7 @@ DOCUMENTATION = r"""
 module: ah_role
 short_description: Manage a role of group permissions
 description:
-  - Manage a role of group permisions
+  - Manage a role of group permissions
 version_added: '1.1.0'
 author: Sean Sullivan (@sean-m-sullivan)
 options:
@@ -67,7 +67,7 @@ seealso:
   - module: galaxy.galaxy.ah_user
 notes:
   - Supports C(check_mode).
-  - This module only works up to Automation Hub version 4.6 (AAP 2.3)
+  - This module only works up to Automation Hub version 4.6 (AAP 2.3).
 extends_documentation_fragment: galaxy.galaxy.auth_ui
 """
 

@@ -1,7 +1,7 @@
 #!/usr/bin/python
-# coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-# (c) 2020, Tom Page <@Tompage1994>
+# Copyright: (c) 2020, Tom Page <@Tompage1994>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -9,18 +9,12 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-ANSIBLE_METADATA = {
-    "metadata_version": "1.1",
-    "status": ["preview"],
-    "supported_by": "community",
-}
-
-
 DOCUMENTATION = """
 ---
 module: ah_collection_upload
-author: "Tom Page (@Tompage1994)"
-short_description: Upload a collection artifact to Automation Hub.
+author:
+  - Tom Page (@Tompage1994)
+short_description: Upload a collection artifact to Automation Hub
 description:
     - Upload a collection artifact to Automation Hub. See
       U(https://www.ansible.com/) for an overview.
@@ -28,14 +22,14 @@ options:
     path:
       description:
         - Collection artifact file path.
-        - Can be a URL
+        - Can be a URL.
       required: True
       type: str
     repository:
       description:
-        - Name of the collection's repository
-        - Defaults to 'staging'
+        - Name of the collection's repository.
       required: False
+      default: staging
       type: str
     wait:
       description:
@@ -65,7 +59,7 @@ def main():
     # Any additional arguments that are not fields of the item can be added here
     argument_spec = dict(
         path=dict(required=True),
-        repository=dict(required=False),
+        repository=dict(default="staging"),
         wait=dict(type="bool", default=True),
     )
 
@@ -74,7 +68,7 @@ def main():
 
     # Extract our parameters
     path = module.params.get("path")
-    repository = module.params.get("repository") or "staging"
+    repository = module.params.get("repository")
     wait = module.params.get("wait")
 
     module.upload(path, "artifacts/collections", wait, repository, item_type="collections")

@@ -1,8 +1,8 @@
 #!/usr/bin/python
-# coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-# (c) 2020, Tom Page <@Tompage1994> original this was based on
-# (c) 2023, Sean Sullivan <@sean-m-sullivan>
+# Copyright: (c) 2020, Tom Page <@Tompage1994> original this was based on
+# Copyright: (c) 2023, Sean Sullivan <@sean-m-sullivan>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -10,18 +10,12 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-ANSIBLE_METADATA = {
-    "metadata_version": "1.1",
-    "status": ["preview"],
-    "supported_by": "community",
-}
-
-
 DOCUMENTATION = """
 ---
 module: collection_remote
-author: Tom Page (@Tompage1994)
-short_description: Configure a collection remote repository.
+author:
+  - Tom Page (@Tompage1994)
+short_description: Configure a collection remote repository
 description:
     - Configure an Automation Hub collection remote repository. See
       U(https://www.ansible.com/) for an overview.
@@ -125,20 +119,20 @@ options:
     default: False
   sync_dependencies:
     description:
-      - Whether to download depenencies when syncing collections.
+      - Whether to download dependencies when syncing collections.
     type: bool
     default: True
   proxy_url:
     description:
-      - Proxy URL to use for the connection
+      - Proxy URL to use for the connection.
     type: str
   proxy_username:
     description:
-      - Proxy URL to use for the connection
+      - Username to use for the proxy connection.
     type: str
   proxy_password:
     description:
-      - Proxy URL to use for the connection
+      - Password to use for the username for the proxy connection.
     type: str
   state:
     description:

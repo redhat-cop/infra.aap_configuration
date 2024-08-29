@@ -68,13 +68,13 @@
         ah_password: "{{ ah_password }}"
         validate_certs: "{{ ah_validate_certs }}"
 
-    - name: Registery Index
+    - name: Registry Index
       ansible.builtin.include_role:
         name: ee_registry_index
       when: galaxy_ng_version != "master"  # https://issues.redhat.com/browse/AAH-2607
 
     # Disabled
-    #    - name: Registery sync
+    #    - name: Registry sync
     #      ansible.builtin.include_role:
     #        name: ee_registry_sync
 

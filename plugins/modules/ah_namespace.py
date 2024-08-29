@@ -1,7 +1,7 @@
 #!/usr/bin/python
-# coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-# (c) 2020, Sean Sullivan <@sean-m-sullivan>
+# Copyright: (c) 2020, Sean Sullivan <@sean-m-sullivan>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -9,30 +9,24 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-ANSIBLE_METADATA = {
-    "metadata_version": "1.1",
-    "status": ["preview"],
-    "supported_by": "community",
-}
-
-
 DOCUMENTATION = """
 ---
 module: ah_namespace
 author: "Sean Sullivan (@sean-m-sullivan)"
-short_description: create, update, or destroy Automation Hub Namespace.
+short_description: create, update, or destroy Automation Hub Namespace
 description:
     - Create, update, or destroy Automation Hub Namespace. See
       U(https://www.ansible.com/) for an overview.
 options:
     name:
       description:
-        - Namespace name. Must be lower case containing only alphanumeric characters and underscores.
+        - Namespace name.
+        - Must be lower case containing only alphanumeric characters and underscores.
       required: True
       type: str
     new_name:
       description:
-        - Setting this option will change the existing name (looked up via the name field.
+        - Setting this option will change the existing name (looked up via the name field).
       type: str
     description:
       description:

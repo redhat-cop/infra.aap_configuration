@@ -146,7 +146,7 @@ class AHPulpObject(object):
                               :py:class:``AHAPIModuleError`` exception.
         :type exit_on_error: bool
 
-        :raises AHAPIModuleError: An API error occured. That exception is only
+        :raises AHAPIModuleError: An API error occurred. That exception is only
                                   raised when ``exit_on_error`` is ``False``.
 
         :return: Do not return if ``auto_exit`` is ``True``. Otherwise, return
@@ -508,7 +508,7 @@ class AHPulpEERepository(AHPulpObject):
     Although the class can be used to create a repository, the recommended
     method is to push an image, with C(podman push) for example.
     Creating the repository with this class breaks the web UI, therefore the
-    module does not provide that functionnality.
+    module does not provide that functionality.
 
     See :py:class:``AHUIEERepository`` to manage the README file associated with the repository.
 
@@ -567,7 +567,7 @@ class AHPulpEERepository(AHPulpObject):
                               :py:class:``AHAPIModuleError`` exception.
         :type exit_on_error: bool
 
-        :raises AHAPIModuleError: An API error occured. That exception is only
+        :raises AHAPIModuleError: An API error occurred. That exception is only
                                   raised when ``exit_on_error`` is ``False``.
 
         :return: A list of :py:class:``AHPulpEERepository`` objects.
@@ -1023,7 +1023,7 @@ class AHPulpGroups(AHPulpObject):
         try:
             response = self.api.make_request("GET", url, wait_for_task=False)
         except AHAPIModuleError as e:
-            self.api.fail_json(msg="Error Retrieving Permisions: {error}".format(error=e))
+            self.api.fail_json(msg="Error Retrieving Permissions: {error}".format(error=e))
 
         return response["json"]["results"]
 

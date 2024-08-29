@@ -16,12 +16,13 @@ __metaclass__ = type
 DOCUMENTATION = r"""
 ---
 module: ah_ee_registry
-short_description: Manage private automation hub execution environment remote registries.
+short_description: Manage private automation hub execution environment remote registries
 description:
   - Update and delete execution environment remote registries.
   - Grant group access to repositories.
 version_added: '0.7.0'
-author: Tom Page (@Tompage1994)
+author:
+  - Tom Page (@Tompage1994)
 options:
   name:
     description:
@@ -35,58 +36,58 @@ options:
     type: str
   username:
     description:
-      - The username to authenticate to the registry with
+      - The username to authenticate to the registry with.
     type: str
   password:
     description:
-      - The password to authenticate to the registry with
+      - The password to authenticate to the registry with.
     type: str
   tls_validation:
     description:
-      - Whether to validate TLS when connecting to the remote registry
+      - Whether to validate TLS when connecting to the remote registry.
     default: True
     type: bool
   client_key:
     description:
       - A PEM encoded private key file used for authentication.
-      - Mutually exclusive with C(client_key_path)
+      - Mutually exclusive with C(client_key_path).
     type: str
   client_cert:
     description:
       - A PEM encoded client certificate used for authentication.
-      - Mutually exclusive with C(client_cert_path)
+      - Mutually exclusive with C(client_cert_path).
     type: str
   ca_cert:
     description:
       - A PEM encoded CA certificate used for authentication.
-      - Mutually exclusive with C(ca_cert_path)
+      - Mutually exclusive with C(ca_cert_path).
     type: str
   client_key_path:
     description:
       - Path to a PEM encoded private key file used for authentication.
-      - Mutually exclusive with C(client_key)
+      - Mutually exclusive with C(client_key).
     type: str
   client_cert_path:
     description:
       - Path to a PEM encoded client certificate used for authentication.
-      - Mutually exclusive with C(client_cert)
+      - Mutually exclusive with C(client_cert).
     type: str
   ca_cert_path:
     description:
       - Path to a PEM encoded CA certificate used for authentication.
-      - Mutually exclusive with C(ca_cert)
+      - Mutually exclusive with C(ca_cert).
     type: str
   proxy_url:
     description:
-      - Proxy URL to use for the connection
+      - Proxy URL to use for the connection.
     type: str
   proxy_username:
     description:
-      - Proxy URL to use for the connection
+      - Username to use for the proxy connection.
     type: str
   proxy_password:
     description:
-      - Proxy URL to use for the connection
+      - Password for the username to use for the proxy connection.
     type: str
   download_concurrency:
     description:

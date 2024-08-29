@@ -1,7 +1,7 @@
 #!/usr/bin/python
-# coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-# (c) 2020, Tom Page <@Tompage1994>
+# Copyright: (c) 2020, Tom Page <@Tompage1994>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -9,25 +9,19 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-ANSIBLE_METADATA = {
-    "metadata_version": "1.1",
-    "status": ["preview"],
-    "supported_by": "community",
-}
-
-
 DOCUMENTATION = r"""
 ---
 module: ah_ee_repository_sync
-author: "Tom Page (@Tompage1994)"
-short_description: Initiate an execution environment repository sync.
+author:
+  - Tom Page (@Tompage1994)
+short_description: Initiate an execution environment repository sync
 description:
     - Initiate an execution environment repository sync. See
       U(https://www.ansible.com/) for an overview.
 options:
     name:
       description:
-        - repository name
+        - Repository name.
       required: True
       type: str
     wait:
@@ -45,7 +39,7 @@ options:
     timeout:
       description:
         - If waiting for the repository to update this will abort after this
-          amount of seconds
+          amount of seconds.
       type: int
 extends_documentation_fragment: galaxy.galaxy.auth_ui
 """

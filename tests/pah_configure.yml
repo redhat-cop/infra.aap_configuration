@@ -48,7 +48,7 @@
       tags:
         - ee_images
 
-    - name: Include task to manage execution enviornment namespaces
+    - name: Include task to manage execution environment namespaces
       ansible.builtin.include_tasks: tasks/manage_ee_namespaces.yml
       tags:
         - ee_namespaces

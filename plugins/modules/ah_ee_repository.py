@@ -127,7 +127,6 @@ EXAMPLES = r"""
 RETURN = r""" # """
 
 import os
-import os.path
 
 from ..module_utils.ah_api_module import AHAPIModule
 from ..module_utils.ah_ui_object import AHUIEERepository, AHUIEERegistry, AHUIEERemote

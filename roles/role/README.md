@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create role permisions in Automation Hub.
+An Ansible Role to create role permissions in Automation Hub.
 
 ## Variables
 
@@ -52,7 +52,7 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Group Name. Must be lower case containing only alphanumeric characters and underscores. Must start with 'galaxy.'.|
-|`description`|""|yes|str|The description of the permision role.|
+|`description`|""|yes|str|The description of the permission role.|
 |`perms`|""|yes|str|The list of permissions for the given role. See below for options.|
 |`state`|`present`|no|str|Desired state of the group.|
 <!-- |`new_name`|""|yes|str|Setting this option will change the existing name (looked up via the name field.| -->

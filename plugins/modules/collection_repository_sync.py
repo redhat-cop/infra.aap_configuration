@@ -1,7 +1,7 @@
 #!/usr/bin/python
-# coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-# (c) 2023, Sean Sullivan <@sean-m-sullivan>
+# Copyright: (c) 2023, Sean Sullivan <@sean-m-sullivan>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -9,18 +9,11 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-ANSIBLE_METADATA = {
-    "metadata_version": "1.1",
-    "status": ["preview"],
-    "supported_by": "community",
-}
-
-
 DOCUMENTATION = """
 ---
 module: collection_repository_sync
 author: Sean Sullivan (@sean-m-sullivan)
-short_description: Sync an Automation Hub collection repository.
+short_description: Sync an Automation Hub collection repository
 description:
     - Sync an Automation Hub collection repository.
 options:
@@ -44,7 +37,7 @@ options:
     timeout:
       description:
         - If waiting for the repository to update this will abort after this
-          amount of seconds
+          amount of seconds.
       type: int
 extends_documentation_fragment: galaxy.galaxy.auth_ui
 """
@@ -90,7 +83,7 @@ def main():
     ansible_repository = AHPulpAnsibleRepository(module)
     ansible_repository.get_object(name=name)
     if not ansible_repository.exists:
-        module.fail_json(msg="The container registery with name: {name}, was not found.".format(name=name))
+        module.fail_json(msg="The container registry with name: {name}, was not found.".format(name=name))
 
     if check_mode:
         module.exit_json(changed=True, msg="Would have synced collection repository: {name}".format(name=name))

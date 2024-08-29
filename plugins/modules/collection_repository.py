@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # coding: utf-8 -*-
 
-# (c) 2023, Jiří Jeřábek <@jerabekjiri>
+# Copyright: (c) 2023, Jiří Jeřábek <@jerabekjiri>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -9,18 +9,11 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-ANSIBLE_METADATA = {
-    "metadata_version": "1.1",
-    "status": ["preview"],
-    "supported_by": "community",
-}
-
-
 DOCUMENTATION = """
 ---
 module: collection_repository
 author: Jiří Jeřábek (@jerabekjiri)
-short_description: Create, Update, Delete repository.
+short_description: Create, Update, Delete repository
 description:
     - Configure an Automation Hub repository. See
       U(https://www.ansible.com/) for an overview.

@@ -79,7 +79,7 @@ Targets consist of the following.
 |`collection_remotes`|List of collection remotes to apply the roles to.|
 |`collection_repositories`|List of collection repositories to apply the roles to.|
 |`execution_environments`|List of execution environments to apply the roles to.|
-|`container_registery_remotes`|List of container registery remotes to apply the roles to.|
+|`container_registery_remotes`|List of container registry remotes to apply the roles to.|
 
 #### Yaml Example
 

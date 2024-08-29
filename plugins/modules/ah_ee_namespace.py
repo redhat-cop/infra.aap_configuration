@@ -52,7 +52,7 @@ options:
     elements: str
   append:
     description:
-      - If C(yes), then grant access to the additionnal groups specified in C(groups).
+      - If C(yes), then grant access to the additional groups specified in C(groups).
       - If C(no), then the module only grants access to the groups specified in C(groups), revoking the access for all other groups.
     type: bool
     default: yes
@@ -144,7 +144,7 @@ def rename_namespace(module, src_namespace_pulp, dest_namespace_pulp, dest_names
     """Rename the given namespace.
 
     The Pulp API does not provide a method to rename namespaces. That function
-    provides that functionnality.
+    provides that functionality.
     It creates the destination namespace, copies over the access rights from the
     source namespace, renames all the repositories that references the source
     namespace, and then delete the source namespace.

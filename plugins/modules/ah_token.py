@@ -1,9 +1,8 @@
 #!/usr/bin/python
-# coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-
-# (c) 2020, John Westcott IV <john.westcott.iv@redhat.com>
-# (c) 2021, Sean Sullivan <@sean-m-sullivan>
+# Copyright: (c) 2020, John Westcott IV <john.westcott.iv@redhat.com>
+# Copyright: (c) 2021, Sean Sullivan <@sean-m-sullivan>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -11,24 +10,20 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-ANSIBLE_METADATA = {
-    "metadata_version": "1.1",
-    "status": ["preview"],
-    "supported_by": "community",
-}
-
 DOCUMENTATION = """
 ---
 module: ah_token
-author: "John Westcott IV (@john-westcott-iv), Sean Sullivan (@sean-m-sullivan)"
-short_description: create, update, or destroy Automation Hub tokens.
+author:
+  - John Westcott IV (@john-westcott-iv)
+  - Sean Sullivan (@sean-m-sullivan)
+short_description: Create, update, or destroy Automation Hub tokens
 description:
     - Create or destroy Automation Hub tokens. See
       U(https://www.ansible.com/tower) for an overview.
     - In addition, the module sets an Ansible fact which can be passed into other
       ah_* modules as the parameter ah_oauthtoken. See examples for usage.
     - Because of the sensitive nature of tokens, the created token value is only available once
-      through the Ansible fact. (See RETURN for details)
+      through the Ansible fact. (See RETURN for details).
     - Due to the nature of tokens in Automation Hub this module is not idempotent. A second will
       with the same parameters will create a new token.
     - If you are creating a temporary token for use with modules you should delete the token

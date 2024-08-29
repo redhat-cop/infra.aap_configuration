@@ -1,7 +1,7 @@
 #!/usr/bin/python
-# coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-# (c) 2020, Sean Sullivan <@sean-m-sullivan>
+#  Copyright: (c) 2020, Sean Sullivan <@sean-m-sullivan>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -9,40 +9,38 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-ANSIBLE_METADATA = {
-    "metadata_version": "1.1",
-    "status": ["preview"],
-    "supported_by": "community",
-}
-
-
 DOCUMENTATION = """
 ---
 module: ah_collection
-author: "Sean Sullivan (@sean-m-sullivan), Tom Page <@Tompage1994>"
-short_description: update, or destroy Automation Hub Collections.
+author:
+  - Sean Sullivan (@sean-m-sullivan)
+  - Tom Page (@Tompage1994)
+short_description: Update, or destroy Automation Hub Collections
 description:
     - Upload, or destroy Automation Hub Collections. See
       U(https://www.ansible.com/) for an overview.
 options:
     namespace:
       description:
-        - Namespace name. Must be lower case containing only alphanumeric characters and underscores.
+        - Namespace name.
+        - Must be lower case containing only alphanumeric characters and underscores.
       required: True
       type: str
     name:
       description:
-        - Collection name. Must be lower case containing only alphanumeric characters and underscores.
+        - Collection name.
+        - Must be lower case containing only alphanumeric characters and underscores.
       required: True
       type: str
     version:
       description:
-        - Collection Version. Must be lower case containing only alphanumeric characters and underscores.
+        - Collection Version.
+        - Must be lower case containing only alphanumeric characters and underscores.
       type: str
     path:
       description:
         - Collection artifact file path.
-        - If version is not specified, version will be derived from file name.
+        - If version is not specified, version will be derived from the file name.
       type: str
     repository:
       description:
@@ -52,7 +50,7 @@ options:
       default: 'staging'
     wait:
       description:
-        - Waits for the collection to be uploaded
+        - Waits for the collection to be uploaded.
       type: bool
       default: true
     auto_approve:
@@ -63,14 +61,13 @@ options:
       default: true
     interval:
       description:
-        - The interval to request an update from Automation Hub when waiting for approval.
+        - The interval to request an update from Automation Hub when waiting for the approval.
       required: False
       default: 10
       type: float
     timeout:
       description:
-        - Waiting for the approval will abort after this
-          amount of seconds
+        - Waiting for the approval will abort after this amount of seconds.
       type: int
     overwrite_existing:
       description:

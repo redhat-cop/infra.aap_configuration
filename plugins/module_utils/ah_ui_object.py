@@ -48,7 +48,7 @@ class AHUIObject(object):
 
         # In the JSON API response message, self.id_field is the name of the
         # attribute that stores the object ID. That ID is used with DELETE, PUT,
-        # and POST resquests (https://.../users/<ID>/)
+        # and POST requests (https://.../users/<ID>/)
         self.id_field = "id"
 
         # API attributes that store a password. This is used to display a
@@ -172,7 +172,7 @@ class AHUIObject(object):
                               :py:class:``AHAPIModuleError`` exception.
         :type exit_on_error: bool
 
-        :raises AHAPIModuleError: An API error occured. That exception is only
+        :raises AHAPIModuleError: An API error occurred. That exception is only
                                   raised when ``exit_on_error`` is ``False``.
         """
         query = {self.name_field: name, "limit": "1000"}
@@ -882,7 +882,7 @@ class AHUIEENamespace(AHUIObject):
                               :py:class:``AHAPIModuleError`` exception.
         :type exit_on_error: bool
 
-        :raises AHAPIModuleError: An API error occured. That exception is only
+        :raises AHAPIModuleError: An API error occurred. That exception is only
                                   raised when ``exit_on_error`` is ``False``.
 
         :return: Do not return if ``auto_exit`` is ``True``. Otherwise, return
@@ -982,7 +982,7 @@ class AHUIEERepository(AHUIObject):
     You manage execution environment repositories through two APIs:
 
     * The Pulp API can create and delete repositories, and can update the
-      repository descrition text.
+      repository description text.
       See the :py:class:``AHPulpEERepository`` class.
     * The UI API can update the README file associated with the repository.
       That current class manages that API.
@@ -1065,7 +1065,7 @@ class AHUIEERepository(AHUIObject):
                               :py:class:``AHAPIModuleError`` exception.
         :type exit_on_error: bool
 
-        :raises AHAPIModuleError: An API error occured. That exception is only
+        :raises AHAPIModuleError: An API error occurred. That exception is only
                                   raised when ``exit_on_error`` is ``False``.
         """
         query = {self.name_field: name, "limit": "1000"}

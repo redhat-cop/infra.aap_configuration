@@ -21,7 +21,8 @@ description:
   - Delete execution environment images.
   - Update container image tags.
 version_added: '0.4.3'
-author: Herve Quatremain (@herve4m)
+author:
+  - Herve Quatremain (@herve4m)
 options:
   name:
     description:
@@ -32,19 +33,19 @@ options:
   tags:
     description:
       - List of the image tags to update.
-      - Only used when C(state) is set to C(present), otherwise ignored.
+      - Only used when O(state=present), otherwise ignored.
     type: list
     elements: str
   append:
     description:
       - If C(yes), then add the tags specified in C(tags) to the image.
-      - If C(no), then the module sets the image tags to the given list and removes all the other existing tags.
+      - If C(no), then sets the image tags to the given list and removes all the other existing tags.
     type: bool
     default: yes
   state:
     description:
-      - If C(absent), then the module deletes the image and all its tags.
-      - If C(present), then the module updates the image tags.
+      - If C(absent), then deletes the image and all its tags.
+      - If C(present), then updates the image tags.
     type: str
     default: present
     choices: [absent, present]

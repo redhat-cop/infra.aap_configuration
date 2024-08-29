@@ -207,12 +207,12 @@ class AHAPIModule(AnsibleModule):
         :type method: str
         :param url: URL to the API endpoint
         :type url: :py:class:``urllib.parse.ParseResult``
-        :param kwargs: Additionnal parameter to pass to the API (headers, data
+        :param kwargs: Additional parameter to pass to the API (headers, data
                        for PUT and POST requests, ...)
 
         :raises AHAPIModuleError: The API request failed.
 
-        :return: The reponse from the API call
+        :return: The response from the API call
         :rtype: :py:class:``http.client.HTTPResponse``
         """
         # In case someone is calling us directly; make sure we were given a method, let's not just assume a GET
@@ -281,12 +281,12 @@ class AHAPIModule(AnsibleModule):
         :type method: str
         :param url: URL to the API endpoint
         :type url: :py:class:``urllib.parse.ParseResult``
-        :param kwargs: Additionnal parameter to pass to the API (headers, data
+        :param kwargs: Additional parameter to pass to the API (headers, data
                        for PUT and POST requests, ...)
 
         :raises AHAPIModuleError: The API request failed.
 
-        :return: A dictionnary with two entries: ``status_code`` provides the
+        :return: A dictionary with two entries: ``status_code`` provides the
                  API call returned code and ``json`` provides the returned data
                  in JSON format.
         :rtype: dict
@@ -369,7 +369,7 @@ class AHAPIModule(AnsibleModule):
                          in JSON format.
         :type response: dict
 
-        :return: The error message or an empty string if the reponse does not
+        :return: The error message or an empty string if the response does not
                  provide a message.
         :rtype: str
         """

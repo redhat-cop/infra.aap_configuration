@@ -67,7 +67,7 @@ This also speeds up the overall role.
 |`timeout`|""|no|int|If waiting for the project to update this will abort after this amount of seconds.|
 |`state`|`present`|no|str|Desired state of the collection repository. Either `present` or `absent`.|
 
-#### Addtional Option Variables
+#### Additional Option Variables
 
 ```yaml
 ---

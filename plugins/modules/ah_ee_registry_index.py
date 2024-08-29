@@ -1,7 +1,7 @@
 #!/usr/bin/python
-# coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-# (c) 2020, Tom Page <@Tompage1994>
+# Copyright: (c) 2020, Tom Page <@Tompage1994>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
@@ -9,25 +9,19 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 
-ANSIBLE_METADATA = {
-    "metadata_version": "1.1",
-    "status": ["preview"],
-    "supported_by": "community",
-}
-
-
 DOCUMENTATION = r"""
 ---
 module: ah_ee_registry_index
-author: "Tom Page (@Tompage1994)"
-short_description: Initiate an execution environment registry indexing.
+author:
+  - Tom Page (@Tompage1994)
+short_description: Initiate an execution environment registry indexing
 description:
     - Initiate an execution environment registry indexing. See
       U(https://www.ansible.com/) for an overview.
 options:
     name:
       description:
-        - Registry name
+        - Registry name.
       required: True
       type: str
     wait:
@@ -45,7 +39,7 @@ options:
     timeout:
       description:
         - If waiting for the registry to index this will abort after this
-          amount of seconds
+          amount of seconds.
       type: int
 notes:
   - Only works when registry URL is registry.redhat.io
@@ -96,7 +90,7 @@ def main():
     registry.get_object(name, vers)
 
     if not registry.exists:
-        module.fail_json(msg="The registery with name: {name}, was not found.".format(name=name))
+        module.fail_json(msg="The registry with name: {name}, was not found.".format(name=name))
 
     registry.index(wait, interval, timeout)
 
