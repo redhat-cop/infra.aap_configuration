@@ -8,7 +8,7 @@
 
 # These are the default variables specific to the license role
 
-# The following two lists are mutally exclusive, you need to provide at least one of them, and ah_collections will override the collection list.
+# The following two lists are mutually exclusive, you need to provide at least one of them, and ah_collections will override the collection list.
 # A list of paths to collection tarballs to publish if you are not cloning from a git and building them.
 # ah_collection_list: []
 # a list of dictionaries describing collections to publish
