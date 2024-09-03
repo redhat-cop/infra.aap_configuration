@@ -7,28 +7,23 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-from ansible.module_utils.basic import AnsibleModule, env_fallback
-from ansible.module_utils.urls import (
-    Request,
-    SSLValidationError,
-    ConnectionError,
-    fetch_file,
-)
-from ansible.module_utils.six import string_types
-from ansible.module_utils.six import PY2, PY3
-from ansible.module_utils.six.moves.urllib.parse import urlparse, urlencode
-from ansible.module_utils.six.moves.urllib.error import HTTPError
-from ansible.module_utils.six.moves.http_cookiejar import CookieJar
-from ansible.module_utils._text import to_bytes, to_native, to_text
-import os.path
-from socket import gethostbyname
-import re
-from json import loads, dumps
 import base64
-import os
-import time
-import email.mime.multipart
 import email.mime.application
+import email.mime.multipart
+import os
+import os.path
+import time
+from json import dumps, loads
+from socket import gethostbyname
+
+from ansible.module_utils._text import to_bytes, to_native, to_text
+from ansible.module_utils.basic import AnsibleModule, env_fallback
+from ansible.module_utils.six import PY2, PY3, string_types
+from ansible.module_utils.six.moves.http_cookiejar import CookieJar
+from ansible.module_utils.six.moves.urllib.error import HTTPError
+from ansible.module_utils.six.moves.urllib.parse import urlencode, urlparse
+from ansible.module_utils.urls import (ConnectionError, Request,
+                                       SSLValidationError, fetch_file)
 
 
 class ItemNotDefined(Exception):
@@ -80,7 +75,6 @@ class AHModule(AnsibleModule):
         "oauth_token": "ah_token",
     }
     IDENTITY_FIELDS = {}
-    ENCRYPTED_STRING = "$encrypted$"
     host = "127.0.0.1"
     path_prefix = "galaxy"
     username = None
@@ -107,7 +101,7 @@ class AHModule(AnsibleModule):
 
         if direct_params is not None:
             self.params = direct_params
-        #        else:
+
         super(AHModule, self).__init__(argument_spec=full_argspec, **kwargs)
         self.session = Request(cookies=CookieJar(), validate_certs=self.verify_ssl, timeout=self.request_timeout)
 
@@ -132,7 +126,7 @@ class AHModule(AnsibleModule):
                 self.fail_json(msg=error_msg)
 
         # Perform some basic validation
-        if not re.match("^https{0,1}://", self.host):
+        if not self.host.startswith(("https://", "http://")):
             self.host = "https://{0}".format(self.host)
 
         # Try to parse the hostname as a url
@@ -340,8 +334,7 @@ class AHModule(AnsibleModule):
         if response["json"]["meta"]["count"] == 0:
             if allow_none:
                 return None
-            else:
-                self.fail_wanted_one(response, endpoint, new_kwargs.get("data"))
+            self.fail_wanted_one(response, endpoint, new_kwargs.get("data"))
         elif response["json"]["meta"]["count"] > 1:
             if name_or_id:
                 # Since we did a name or ID search and got > 1 return something if the id matches
@@ -460,9 +453,8 @@ class AHModule(AnsibleModule):
                 self.fail_json(msg="Unable to delete {0} {1}: {2}".format(item_type, item_name, response["status_code"]))
 
     def get_item_name(self, item, allow_unknown=False):
-        if item:
-            if "name" in item:
-                return item["name"]
+        if item and "name" in item:
+            return item["name"]
 
         if allow_unknown:
             return "unknown"
@@ -503,16 +495,15 @@ class AHModule(AnsibleModule):
                 require_id=require_id,
                 fixed_url=fixed_url,
             )
-        else:
-            return self.create_if_needed(
-                existing_item,
-                new_item,
-                endpoint,
-                on_create=on_create,
-                item_type=item_type,
-                auto_exit=auto_exit,
-                associations=associations,
-            )
+        return self.create_if_needed(
+            existing_item,
+            new_item,
+            endpoint,
+            on_create=on_create,
+            item_type=item_type,
+            auto_exit=auto_exit,
+            associations=associations,
+        )
 
     def create_if_needed(
         self,
@@ -598,18 +589,18 @@ class AHModule(AnsibleModule):
     def approve(self, endpoint, namespace=None, name=None, version=None, timeout=None, interval=10.0, auto_exit=True):
 
         if self.is_standalone():
-            approvalEndpoint = "move/staging/published"
+            approval_endpoint = "move/staging/published"
 
             if not endpoint:
                 self.fail_json(msg="Unable to approve due to missing endpoint")
 
-            response = self.post_endpoint("{0}/{1}".format(endpoint, approvalEndpoint), None, **{"return_none_on_404": True})
+            response = self.post_endpoint("{0}/{1}".format(endpoint, approval_endpoint), None, **{"return_none_on_404": True})
 
             i = 0
             while timeout is None or i < timeout:
                 if not response:
                     time.sleep(interval)
-                    response = self.post_endpoint("{0}/{1}".format(endpoint, approvalEndpoint), None, **{"return_none_on_404": True})
+                    response = self.post_endpoint("{0}/{1}".format(endpoint, approval_endpoint), None, **{"return_none_on_404": True})
                     i += interval
                 else:
                     break
@@ -669,7 +660,7 @@ class AHModule(AnsibleModule):
         mime = "application/x-gzip"
         m = email.mime.multipart.MIMEMultipart("form-data")
 
-        main_type, sep, sub_type = mime.partition("/")
+        main_type, dummy, sub_type = mime.partition("/")
 
         with open(to_bytes(filename, errors="surrogate_or_strict"), "rb") as f:
             part = email.mime.application.MIMEApplication(f.read())
@@ -705,7 +696,7 @@ class AHModule(AnsibleModule):
             b_data = email.utils.fix_eols(fp.getvalue())
         del m
 
-        headers, sep, b_content = b_data.partition(b"\r\n\r\n")
+        headers, dummy, b_content = b_data.partition(b"\r\n\r\n")
         del b_data
 
         if PY3:
@@ -739,7 +730,6 @@ class AHModule(AnsibleModule):
             self.fail_json(msg="Upload of collection failed: {0}".format(response["json"]["error"]["description"]))
         else:
             time.sleep(1)
-            return
 
     def upload(self, path, endpoint, wait=True, repository="staging", item_type="unknown"):
         if "://" in path:
@@ -747,13 +737,13 @@ class AHModule(AnsibleModule):
             path = path.split("/")[-1]
             os.rename(tmppath, path)
             self.add_cleanup_file(path)
-        ct, body = self.prepare_multipart(path)
+        content_type, body = self.prepare_multipart(path)
         response = self.make_request(
             "POST",
             "{0}/content/{1}/v3/{2}/".format(self.path_prefix, repository, endpoint),
             **{
                 "data": body,
-                "headers": {"Content-Type": str(ct)},
+                "headers": {"Content-Type": str(content_type)},
                 "binary": True,
                 "return_errors_on_404": True,
             }
@@ -764,15 +754,14 @@ class AHModule(AnsibleModule):
             if wait:
                 self.wait_for_complete(response["json"]["task"])
             return
+        if "json" in response and "__all__" in response["json"]:
+            self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]["__all__"][0]))
+        elif "json" in response and "errors" in response["json"] and "detail" in response["json"]["errors"][0]:
+            self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]["errors"][0]["detail"]))
+        elif "json" in response:
+            self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]))
         else:
-            if "json" in response and "__all__" in response["json"]:
-                self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]["__all__"][0]))
-            elif "json" in response and "errors" in response["json"] and "detail" in response["json"]["errors"][0]:
-                self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]["errors"][0]["detail"]))
-            elif "json" in response:
-                self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["json"]))
-            else:
-                self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["status_code"]))
+            self.fail_json(msg="Unable to create {0} from {1}: {2}".format(item_type, path, response["status_code"]))
 
     def update_if_needed(
         self,
@@ -940,6 +929,25 @@ class AHModule(AnsibleModule):
 
     def resolve_name_to_id(self, endpoint, name_or_id):
         return self.get_exactly_one(endpoint, name_or_id)["id"]
+
+    @staticmethod
+    def fields_could_be_same(old_field, new_field):
+        """Treating $encrypted$ as a wild card,
+        return False if the two values are KNOWN to be different
+        return True if the two values are the same, or could potentially be the same,
+        depending on the unknown $encrypted$ value or sub-values
+        """
+        if isinstance(old_field, dict) and isinstance(new_field, dict):
+            if set(old_field.keys()) != set(new_field.keys()):
+                return False
+            for key in new_field.keys():
+                if not AHModule.fields_could_be_same(old_field[key], new_field[key]):
+                    return False
+            return True  # all sub-fields are either equal or could be equal
+        else:
+            if old_field == AHModule.ENCRYPTED_STRING:
+                return True
+            return bool(new_field == old_field)
 
     def objects_could_be_different(self, old, new, field_set=None, warning=False):
         if field_set is None:

@@ -253,8 +253,8 @@ class AHPulpObject(object):
 
         error_msg = self.api.extract_error_msg(response)
         if error_msg:
-            self.fail_json(msg="Unable to create {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg))
-        self.fail_json(
+            self.api.fail_json(msg="Unable to create {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg))
+        self.api.fail_json(
             msg="Unable to create {object_type} {name}: {code}".format(
                 object_type=self.object_type,
                 name=self.name,
@@ -342,8 +342,8 @@ class AHPulpObject(object):
 
         error_msg = self.api.extract_error_msg(response)
         if error_msg:
-            self.fail_json(msg="Unable to update {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg))
-        self.fail_json(
+            self.api.fail_json(msg="Unable to update {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg))
+        self.api.fail_json(
             msg="Unable to update {object_type} {name}: {code}".format(
                 object_type=self.object_type,
                 name=self.name,
@@ -367,8 +367,7 @@ class AHPulpObject(object):
         """
         if self.exists:
             return self.update(new_item, auto_exit)
-        else:
-            return self.create(new_item, auto_exit)
+        return self.create(new_item, auto_exit)
 
 
 class AHPulpRolePerm(AHPulpObject):
@@ -948,20 +947,20 @@ class AHPulpTask(AHPulpObject):
         while task_status not in ["Complete", "Failed"]:
             children = self.get_children(parent_task)
             complete = True
-            for childTask in children:
-                if childTask["error"]:
+            for child_task in children:
+                if child_task["error"]:
                     task_status = "Complete"
-                    error_output = childTask["error"]["description"].split(",")
+                    error_output = child_task["error"]["description"].split(",")
                     if len(error_output) == 3:
                         self.api.fail_json(
                             status=error_output[0],
                             msg=error_output[1],
                             url=error_output[2],
-                            traceback=childTask["error"]["traceback"],
+                            traceback=child_task["error"]["traceback"],
                         )
                     else:
                         self.api.fail_json(msg="Error in tasks. tasks: {children}".format(children=children))
-                complete &= childTask["state"] == "completed"
+                complete &= child_task["state"] == "completed"
             if complete:
                 task_status = "Complete"
                 break
@@ -1057,7 +1056,7 @@ class AHPulpGroups(AHPulpObject):
                         "perms": new_permission
                     }
                 )
-            if not search_data['found'] and (state == 'present' or state == 'enforced'):
+            if not search_data['found'] and state in ('present', 'enforced'):
                 response['added'].append(self.add_permission(group=group_data, permission=new_permission))
         if state == 'enforced':
             for enforced_perm in group_data['before_perms']:
@@ -1231,20 +1230,20 @@ class AHPulpAnsibleRepository(AHPulpObject):
             if wait:
                 start = time.time()
                 task_href = response["json"]["task"]
-                taskPulp = AHPulpTask(self.api)
+                task_pulp = AHPulpTask(self.api)
                 elapsed = 0
                 while sync_status not in ["Complete", "Failed"]:
-                    taskPulp.get_object(task_href)
-                    if taskPulp.data["error"]:
+                    task_pulp.get_object(task_href)
+                    if task_pulp.data["error"]:
                         sync_status = "Complete"
-                        error_output = taskPulp.data["error"]["description"].split(",")
+                        error_output = task_pulp.data["error"]["description"].split(",")
                         self.api.fail_json(
                             status=error_output[0],
                             msg=error_output[1],
                             url=error_output[2],
-                            traceback=taskPulp.data["error"]["traceback"],
+                            traceback=task_pulp.data["error"]["traceback"],
                         )
-                    if taskPulp.data["state"] == "completed":
+                    if task_pulp.data["state"] == "completed":
                         sync_status = "Complete"
                         break
                     time.sleep(interval)

@@ -62,7 +62,7 @@ class AHUIObject(object):
         self.data = data if data else {}
 
         # Is the class instance has been initialized with a valid object?
-        self.exists = True if data else False
+        self.exists = bool(data)
 
         # The AHAPIModule class object that is used to access the API
         self.api = API_object
@@ -332,8 +332,8 @@ class AHUIObject(object):
 
         error_msg = self.api.extract_error_msg(response)
         if error_msg:
-            self.fail_json(msg="Unable to create {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg))
-        self.fail_json(
+            self.api.fail_json(msg="Unable to create {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg))
+        self.api.fail_json(
             msg="Unable to create {object_type} {name}: {code}".format(
                 object_type=self.object_type,
                 name=self.name,
@@ -410,8 +410,8 @@ class AHUIObject(object):
 
         error_msg = self.api.extract_error_msg(response)
         if error_msg:
-            self.fail_json(msg="Unable to update {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg))
-        self.fail_json(
+            self.api.fail_json(msg="Unable to update {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg))
+        self.api.fail_json(
             msg="Unable to update {object_type} {name}: {code}".format(
                 object_type=self.object_type,
                 name=self.name,
@@ -435,8 +435,7 @@ class AHUIObject(object):
         """
         if self.exists:
             return self.update(new_item, auto_exit)
-        else:
-            return self.create(new_item, auto_exit)
+        return self.create(new_item, auto_exit)
 
 
 class AHUIUser(AHUIObject):
@@ -906,7 +905,7 @@ class AHUIEENamespace(AHUIObject):
             return False
 
         if self.api.check_mode:
-            self.data["groups"].new_item
+            self.data["groups"] = new_item
             if auto_exit:
                 json_output = {
                     "name": self.name,
@@ -1172,28 +1171,28 @@ class AHUIEERepository(AHUIObject):
             if wait:
                 start = time.time()
                 task_href = response["json"]["task"]
-                taskPulp = AHPulpTask(self.api)
+                task_pulp = AHPulpTask(self.api)
                 elapsed = 0
                 while sync_status not in ["Complete", "Failed"]:
-                    taskPulp.get_object(task_href)
-                    if taskPulp.data["error"]:
+                    task_pulp.get_object(task_href)
+                    if task_pulp.data["error"]:
                         sync_status = "Complete"
-                        error_output = taskPulp.data["error"]["description"].split(",")
+                        error_output = task_pulp.data["error"]["description"].split(",")
                         if len(error_output) == 3:
                             self.api.fail_json(
                                 status=error_output[0],
                                 msg=error_output[1],
                                 url=error_output[2],
-                                traceback=taskPulp.data["error"]["traceback"],
+                                traceback=task_pulp.data["error"]["traceback"],
                             )
                         else:
                             self.api.fail_json(
                                 status="",
                                 msg="",
                                 url="",
-                                traceback=taskPulp.data["error"]["traceback"],
+                                traceback=task_pulp.data["error"]["traceback"],
                             )
-                    if taskPulp.data["state"] == "completed":
+                    if task_pulp.data["state"] == "completed":
                         sync_status = "Complete"
                         break
                     time.sleep(interval)
@@ -1251,10 +1250,10 @@ class AHUIEERepository(AHUIObject):
             return response["json"]["text"] if "text" in response["json"] else ""
         error_msg = self.api.extract_error_msg(response)
         if error_msg:
-            self.fail_json(
+            self.api.fail_json(
                 msg="Unable to retrieve the README for {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg)
             )
-        self.fail_json(
+        self.api.fail_json(
             msg="Unable to retrieve the README for {object_type} {name}: {code}".format(
                 object_type=self.object_type,
                 name=self.name,
@@ -1318,10 +1317,10 @@ class AHUIEERepository(AHUIObject):
 
         error_msg = self.api.extract_error_msg(response)
         if error_msg:
-            self.fail_json(
+            self.api.fail_json(
                 msg="Unable to update the README for {object_type} {name}: {error}".format(object_type=self.object_type, name=self.name, error=error_msg)
             )
-        self.fail_json(
+        self.api.fail_json(
             msg="Unable to update the README for {object_type} {name}: {code}".format(
                 object_type=self.object_type,
                 name=self.name,
@@ -1416,9 +1415,9 @@ class AHUIEERegistry(AHUIObject):
         if response["status_code"] == 202:
             task_status = "Started"
             if wait:
-                parentTask = response["json"]["task"]
-                taskPulp = AHPulpTask(self.api)
-                task_status = taskPulp.wait_for_children(parentTask, interval, timeout)
+                parent_task = response["json"]["task"]
+                task_pulp = AHPulpTask(self.api)
+                task_status = task_pulp.wait_for_children(parent_task, interval, timeout)
 
             if auto_exit:
                 json_output = {
@@ -1466,9 +1465,9 @@ class AHUIEERegistry(AHUIObject):
         if response["status_code"] == 202:
             task_status = "Started"
             if wait:
-                parentTask = response["json"]["task"]
-                taskPulp = AHPulpTask(self.api)
-                task_status = taskPulp.wait_for_children(parentTask, interval, timeout)
+                parent_task = response["json"]["task"]
+                task_pulp = AHPulpTask(self.api)
+                task_status = task_pulp.wait_for_children(parent_task, interval, timeout)
 
             if auto_exit:
                 json_output = {

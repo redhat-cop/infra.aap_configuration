@@ -11,19 +11,16 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import base64
-import re
-import socket
 import json
-import time
 import os
+import socket
+import time
 
+from ansible.module_utils._text import to_bytes, to_text
 from ansible.module_utils.basic import AnsibleModule, env_fallback
 from ansible.module_utils.compat.version import LooseVersion as Version
-from ansible.module_utils._text import to_bytes, to_text
-
-from ansible.module_utils.six.moves.urllib.parse import urlparse, urlencode
 from ansible.module_utils.six.moves.urllib.error import HTTPError
-
+from ansible.module_utils.six.moves.urllib.parse import urlencode, urlparse
 from ansible.module_utils.urls import Request, SSLValidationError
 
 
@@ -108,8 +105,8 @@ class AHAPIModule(AnsibleModule):
                 setattr(self, short_param, direct_value)
 
         # Perform some basic validation
-        if not re.match("^https{0,1}://", self.host):
-            self.host = "https://{host}".format(host=self.host)
+        if not self.host.startswith(("https://", "http://")):
+            self.host = "https://{0}".format(self.host)
 
         # Try to parse the hostname as a url
         try:
@@ -217,7 +214,7 @@ class AHAPIModule(AnsibleModule):
         """
         # In case someone is calling us directly; make sure we were given a method, let's not just assume a GET
         if not method:
-            raise Exception("The HTTP method must be defined")
+            raise AHAPIModuleError("The HTTP method must be defined")
 
         # Extract the provided headers and data
         headers = kwargs.get("headers", {})
@@ -239,22 +236,22 @@ class AHAPIModule(AnsibleModule):
                     "The host sent back a server error: {path}: {error}. Please check the logs and try again later".format(path=url.path, error=he)
                 )
             # Sanity check: Did we fail to authenticate properly?  If so, fail out now; this is always a failure.
-            elif he.code == 401:
+            if he.code == 401:
                 raise AHAPIModuleError("Invalid authentication credentials for {path} (HTTP 401).".format(path=url.path))
             # Sanity check: Did we get a forbidden response, which means that the user isn't allowed to do this? Report that.
-            elif he.code == 403:
+            if he.code == 403:
                 raise AHAPIModuleError("You do not have permission to {method} {path} (HTTP 403).".format(method=method, path=url.path))
             # Sanity check: Did we get a 404 response?
             # Requests with primary keys will return a 404 if there is no response, and we want to consistently trap these.
-            elif he.code == 404:
+            if he.code == 404:
                 raise AHAPIModuleError("The requested object could not be found at {path}.".format(path=url.path))
             # Sanity check: Did we get a 405 response?
             # A 405 means we used a method that isn't allowed. Usually this is a bad request, but it requires special treatment because the
             # API sends it as a logic error in a few situations (e.g. trying to cancel a job that isn't running).
-            elif he.code == 405:
+            if he.code == 405:
                 raise AHAPIModuleError("Cannot make a {method} request to this endpoint {path}".format(method=method, path=url.path))
             # Sanity check: Did we get some other kind of error?  If so, write an appropriate error message.
-            elif he.code >= 400:
+            if he.code >= 400:
                 # We are going to return a 400 so the module can decide what to do with it
                 page_data = he.read()
                 try:
@@ -298,12 +295,12 @@ class AHAPIModule(AnsibleModule):
         except Exception as e:
             if "non_field_errors" in response["json"]:
                 raise AHAPIModuleError("Errors occurred with request (HTTP 400). Errors: {errors}".format(errors=response["json"]["non_field_errors"]))
-            elif "errors" in response["json"]:
+            if "errors" in response["json"]:
                 def get_details(err):
                     return err["detail"]
                 raise AHAPIModuleError("Errors occurred with request (HTTP 400). Details: {errors}".format(
                     errors=", ".join(map(get_details, response["json"]["errors"]))))
-            elif "text" in response:
+            if "text" in response:
                 raise AHAPIModuleError("Errors occurred with request (HTTP 400). Errors: {errors}".format(errors=response["text"]))
             raise AHAPIModuleError("Failed to read response body: {error}".format(error=e))
 
