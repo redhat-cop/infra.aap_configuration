@@ -21,7 +21,7 @@ argument_specs:
         type: int
         description: Maximum number of objects to return from the list. If a list view returns more an max_objects an exception will be raised
       omit_id:
-        default: None
+        default: false
         required: false
         type: bool
         description: Whether to create output files without objects id.
