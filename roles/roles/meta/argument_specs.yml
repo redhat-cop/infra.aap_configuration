@@ -94,7 +94,7 @@ argument_specs:
         #     description: Desired state of the resource.
 
       # Async variables
-      controller_configuration_roles_async_retries:
+      controller_configuration_role_async_retries:
         default: "{{ controller_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -102,7 +102,7 @@ argument_specs:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
-      controller_configuration_roles_async_delay:
+      controller_configuration_role_async_delay:
         default: "{{ controller_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -117,7 +117,7 @@ argument_specs:
 
 
       # No_log variables
-      controller_configuration_roles_secure_logging:
+      controller_configuration_role_secure_logging:
         default: "{{ controller_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
