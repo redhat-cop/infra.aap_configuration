@@ -1,0 +1,43 @@
+---
+- name: "Http Ports | Configuration"  # noqa fqcn[action-core]
+  ansible.gateway_configuration.http_port:
+    name:                     "{{ __gateway_http_ports_item.name | mandatory }}"
+    new_name:                 "{{ __gateway_http_ports_item.new_name | default(omit) }}"
+    number:                   "{{ __gateway_http_ports_item.number | default(omit) }}"
+    use_https:                "{{ __gateway_http_ports_item.use_https | default(false) }}"
+    is_api_port:              "{{ __gateway_http_ports_item.is_api_port | default(false) }}"
+    state:                    "{{ __gateway_http_ports_item.state | default(gateway_state | default(omit, true)) }}"
+
+    # Role Standard Options
+    gateway_hostname:         "{{ gateway_hostname | default(omit, true) }}"
+    gateway_username:         "{{ gateway_username | default(omit, true) }}"
+    gateway_password:         "{{ gateway_password | default(omit, true) }}"
+    gateway_token:            "{{ gateway_oauthtoken | default(omit, true) }}"
+    gateway_request_timeout:  "{{ gateway_request_timeout | default(omit, true) }}"
+    gateway_validate_certs:   "{{ gateway_validate_certs | default(omit) }}"
+  loop: "{{ http_ports if http_ports is defined else gateway_http_ports }}"
+  loop_control:
+    loop_var: __gateway_http_ports_item
+  no_log: "{{ gateway_configuration_http_ports_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __gateway_http_ports_job_async
+  changed_when: not __gateway_http_ports_job_async.changed
+  vars:
+    ansible_async_dir: '{{ gateway_configuration_async_dir }}'
+
+- name: "Http Ports | Wait for finish the configuration"
+  ansible.builtin.async_status:
+    jid: "{{ __gateway_http_ports_job_async_results_item.ansible_job_id }}"
+  register: __gateway_http_ports_job_async_result
+  until: __gateway_http_ports_job_async_result.finished
+  retries: "{{ gateway_configuration_http_ports_async_retries }}"
+  delay: "{{ gateway_configuration_http_ports_async_delay }}"
+  loop: "{{ __gateway_http_ports_job_async.results }}"
+  loop_control:
+    loop_var: __gateway_http_ports_job_async_results_item
+  when: __gateway_http_ports_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ gateway_configuration_http_ports_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ gateway_configuration_async_dir }}'
+...

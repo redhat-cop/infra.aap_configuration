@@ -1,0 +1,51 @@
+---
+# Create gateway applications
+- name: "Managing gateway Applications"
+  ansible.gateway_configuration.application:
+    name:                           "{{ __application_item.name | mandatory }}"
+    new_name:                       "{{ __application_item.new_name | default(omit, true) }}"
+    organization:                   "{{ __application_item.organization | mandatory }}"
+    new_organization:               "{{ __application_item.new_organization | default(omit, true) }}"
+    description:                    "{{ __application_item.description | default(('' if gateway_configuration_applications_enforce_defaults else omit), true) }}"
+    authorization_grant_type:       "{{ __application_item.authorization_grant_type | default('password') }}"
+    client_type:                    "{{ __application_item.client_type | default('public') }}"
+    redirect_uris:                  "{{ __application_item.redirect_uris | default(omit) }}"
+    skip_authorization:             "{{ __application_item.skip_authorization | default((false if gateway_configuration_applications_enforce_defaults else omit), true) }}"
+    algorithm:                      "{{ __application_item.algorithm | default(omit, true) }}"
+    post_logout_redirect_uris:      "{{ __application_item.post_logout_redirect_uris | default(omit, true) }}"
+    user:                           "{{ __application_item.user | default(omit, true) }}"
+    state:                          "{{ __application_item.state | default(gateway_state | default(omit, true)) }}"
+
+    # Role specific options
+    gateway_hostname:               "{{ gateway_hostname | default(omit, true) }}"
+    gateway_username:               "{{ gateway_username | default(omit, true) }}"
+    gateway_password:               "{{ gateway_password | default(omit, true) }}"
+    gateway_token:                  "{{ gateway_oauthtoken | default(omit, true) }}"
+    gateway_request_timeout:        "{{ gateway_request_timeout | default(omit, true) }}"
+    gateway_validate_certs:         "{{ gateway_validate_certs | default(omit) }}"
+  loop: "{{ applications if applications is defined else gateway_applications }}"
+  loop_control:
+    loop_var: "__application_item"
+  no_log: "{{ gateway_configuration_applications_secure_logging }}"
+  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
+  poll: 0
+  register: __gateway_applications_job_async
+  changed_when: not __gateway_applications_job_async.changed
+  vars:
+    ansible_async_dir: '{{ gateway_configuration_async_dir }}'
+
+- name: "Applications | Wait for finish the configuration"
+  ansible.builtin.async_status:
+    jid: "{{ __gateway_applications_job_async_results_item.ansible_job_id }}"
+  register: __gateway_applications_job_async_result
+  until: __gateway_applications_job_async_result.finished
+  retries: "{{ gateway_configuration_applications_async_retries }}"
+  delay: "{{ gateway_configuration_applications_async_delay }}"
+  loop: "{{ __gateway_applications_job_async.results }}"
+  loop_control:
+    loop_var: __gateway_applications_job_async_results_item
+  when: __gateway_applications_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ gateway_configuration_applications_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ gateway_configuration_async_dir }}'
+...

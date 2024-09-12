@@ -1,0 +1,47 @@
+---
+- name: "Authenticators | Configuration"  # noqa fqcn[action-core]
+  ansible.gateway_configuration.authenticator:
+    name:                     "{{ __gateway_authenticators_item.name | mandatory }}"
+    new_name:                 "{{ __gateway_authenticators_item.new_name | default(omit) }}"
+    slug:                     "{{ __gateway_authenticators_item.slug | default(omit) }}"
+    enabled:                  "{{ __gateway_authenticators_item.enabled | default(omit) }}"
+    create_objects:           "{{ __gateway_authenticators_item.create_objects | default(omit) }}"
+    remove_users:             "{{ __gateway_authenticators_item.remove_users | default(omit) }}"
+    configuration:            "{{ __gateway_authenticators_item.configuration | default(omit) }}"
+    type:                     "{{ __gateway_authenticators_item.type | default(omit) }}"
+    order:                    "{{ __gateway_authenticators_item.order | default(omit) }}"
+    state:                    "{{ __gateway_authenticators_item.state | default(gateway_state | default(omit, true)) }}"
+
+    # Role Standard Options
+    gateway_hostname:         "{{ gateway_hostname | default(omit, true) }}"
+    gateway_username:         "{{ gateway_username | default(omit, true) }}"
+    gateway_password:         "{{ gateway_password | default(omit, true) }}"
+    gateway_token:            "{{ gateway_oauthtoken | default(omit, true) }}"
+    gateway_request_timeout:  "{{ gateway_request_timeout | default(omit, 10) }}"
+    gateway_validate_certs:   "{{ gateway_validate_certs | default(omit) }}"
+  loop: "{{ authenticators if authenticators is defined else gateway_authenticators }}"
+  loop_control:
+    loop_var: __gateway_authenticators_item
+  no_log: "{{ gateway_configuration_authenticators_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __gateway_authenticators_job_async
+  changed_when: not __gateway_authenticators_job_async.changed
+  vars:
+    ansible_async_dir: '{{ gateway_configuration_async_dir }}'
+
+- name: "Authenticators | Wait for finish the configuration"
+  ansible.builtin.async_status:
+    jid: "{{ __gateway_authenticators_job_async_results_item.ansible_job_id }}"
+  register: __gateway_authenticators_job_async_result
+  until: __gateway_authenticators_job_async_result.finished
+  retries: "{{ gateway_configuration_authenticators_async_retries }}"
+  delay: "{{ gateway_configuration_authenticators_async_delay }}"
+  loop: "{{ __gateway_authenticators_job_async.results }}"
+  loop_control:
+    loop_var: __gateway_authenticators_job_async_results_item
+  when: __gateway_authenticators_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ gateway_configuration_authenticators_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ gateway_configuration_async_dir }}'
+...

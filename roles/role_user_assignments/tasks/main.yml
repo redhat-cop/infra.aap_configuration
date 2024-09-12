@@ -1,0 +1,43 @@
+---
+- name: "Role User Assignments | Configuration"  # noqa fqcn[action-core]
+  ansible.gateway_configuration.role_user_assignment:
+    role_definition:          "{{ __gateway_role_user_assignments_item.role_definition | mandatory }}"
+    user:                     "{{ __gateway_role_user_assignments_item.user | default(omit) }}"
+    user_ansible_id:          "{{ __gateway_role_user_assignments_item.user_ansible_id | default(omit) }}"
+    object_id:                "{{ __gateway_role_user_assignments_item.object_id | default(omit) }}"
+    object_ansible_id:        "{{ __gateway_role_user_assignments_item.object_ansible_id | default(omit) }}"
+    state:                    "{{ __gateway_role_user_assignments_item.state | default(gateway_state | default(omit, true)) }}"
+
+    # Role Standard Options
+    gateway_hostname:         "{{ gateway_hostname | default(omit, true) }}"
+    gateway_username:         "{{ gateway_username | default(omit, true) }}"
+    gateway_password:         "{{ gateway_password | default(omit, true) }}"
+    gateway_token:            "{{ gateway_oauthtoken | default(omit, true) }}"
+    gateway_request_timeout:  "{{ gateway_request_timeout | default(omit, 10) }}"
+    gateway_validate_certs:   "{{ gateway_validate_certs | default(omit) }}"
+  loop: "{{ role_user_assignments if role_user_assignments is defined else gateway_role_user_assignments }}"
+  loop_control:
+    loop_var: __gateway_role_user_assignments_item
+  no_log: "{{ gateway_configuration_role_user_assignments_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __gateway_role_user_assignments_job_async
+  changed_when: not __gateway_role_user_assignments_job_async.changed
+  vars:
+    ansible_async_dir: '{{ gateway_configuration_async_dir }}'
+
+- name: "Role User Assignments | Wait for finish the configuration"
+  ansible.builtin.async_status:
+    jid: "{{ __gateway_role_user_assignments_job_async_results_item.ansible_job_id }}"
+  register: __gateway_role_user_assignments_job_async_result
+  until: __gateway_role_user_assignments_job_async_result.finished
+  retries: "{{ gateway_configuration_role_user_assignments_async_retries }}"
+  delay: "{{ gateway_configuration_role_user_assignments_async_delay }}"
+  loop: "{{ __gateway_role_user_assignments_job_async.results }}"
+  loop_control:
+    loop_var: __gateway_role_user_assignments_job_async_results_item
+  when: __gateway_role_user_assignments_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ gateway_configuration_role_user_assignments_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ gateway_configuration_async_dir }}'
+...
