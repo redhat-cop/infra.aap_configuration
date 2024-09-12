@@ -1,0 +1,19 @@
+---
+
+# These are the default variables common to most gateway_configuration roles
+# You shouldn't need to define them again and again but they should be defined
+# gateway_hostname: "{{ inventory_hostname }}"
+# gateway_token: ""
+# gateway_validate_certs: false
+
+# These are the default variables specific to the license role
+
+# a list of dictionaries describing the teams
+gateway_teams: []
+
+gateway_configuration_teams_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
+gateway_configuration_teams_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
+gateway_configuration_teams_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
+gateway_configuration_async_dir: null
+gateway_configuration_teams_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
+...

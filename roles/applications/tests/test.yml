@@ -1,0 +1,20 @@
+---
+- name: Add applications Input Sources on gateway
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    gateway_validate_certs: false
+    gateway_hostname: gateway.example.com
+    gateway_username: admin
+    gateway_password: changeme
+
+  pre_tasks:
+    - name: Include vars from gateway_configs directory
+      ansible.builtin.include_vars:
+        dir: ./configs
+        extensions: ["yml"]
+
+  roles:
+    - {role: ../.., when: gateway_applications is defined}
+...

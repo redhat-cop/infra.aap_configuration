@@ -1,0 +1,49 @@
+---
+- name: "Routes | Configuration"  # noqa fqcn[action-core]
+  ansible.gateway_configuration.route:
+    name:                     "{{ __gateway_routes_item.name | mandatory }}"
+    new_name:                 "{{ __gateway_routes_item.new_name | default(omit) }}"
+    description:              "{{ __gateway_routes_item.description | default(omit) }}"
+    gateway_path:             "{{ __gateway_routes_item.gateway_path | default(omit) }}"
+    http_port:                "{{ __gateway_routes_item.http_port | default(omit) }}"
+    service_cluster:          "{{ __gateway_routes_item.service_cluster | default(omit) }}"
+    is_service_https:         "{{ __gateway_routes_item.is_service_https | default(omit) }}"
+    enable_gateway_auth:      "{{ __gateway_routes_item.enable_gateway_auth | default(omit) }}"
+    service_path:             "{{ __gateway_routes_item.service_path | default(omit) }}"
+    service_port:             "{{ __gateway_routes_item.service_port | default(omit) }}"
+    node_tags:                "{{ __gateway_routes_item.node_tags | default(omit) }}"
+    state:                    "{{ __gateway_routes_item.state | default(gateway_state | default(omit, true)) }}"
+
+    # Role Standard Options
+    gateway_hostname:         "{{ gateway_hostname | default(omit, true) }}"
+    gateway_username:         "{{ gateway_username | default(omit, true) }}"
+    gateway_password:         "{{ gateway_password | default(omit, true) }}"
+    gateway_token:            "{{ gateway_oauthtoken | default(omit, true) }}"
+    gateway_request_timeout:  "{{ gateway_request_timeout | default(omit, 10) }}"
+    gateway_validate_certs:   "{{ gateway_validate_certs | default(omit) }}"
+  loop: "{{ routes if routes is defined else gateway_routes }}"
+  loop_control:
+    loop_var: __gateway_routes_item
+  no_log: "{{ gateway_configuration_routes_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __gateway_routes_job_async
+  changed_when: not __gateway_routes_job_async.changed
+  vars:
+    ansible_async_dir: '{{ gateway_configuration_async_dir }}'
+
+- name: "Routes | Wait for finish the configuration"
+  ansible.builtin.async_status:
+    jid: "{{ __gateway_routes_job_async_results_item.ansible_job_id }}"
+  register: __gateway_routes_job_async_result
+  until: __gateway_routes_job_async_result.finished
+  retries: "{{ gateway_configuration_routes_async_retries }}"
+  delay: "{{ gateway_configuration_routes_async_delay }}"
+  loop: "{{ __gateway_routes_job_async.results }}"
+  loop_control:
+    loop_var: __gateway_routes_job_async_results_item
+  when: __gateway_routes_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ gateway_configuration_routes_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ gateway_configuration_async_dir }}'
+...

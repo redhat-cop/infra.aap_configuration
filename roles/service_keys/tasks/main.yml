@@ -1,0 +1,46 @@
+---
+- name: "Service Keys | Configuration"  # noqa fqcn[action-core]
+  ansible.gateway_configuration.service_key:
+    name:                     "{{ __gateway_service_keys_item.name | mandatory }}"
+    new_name:                 "{{ __gateway_service_keys_item.new_name | default(omit) }}"
+    is_active:                "{{ __gateway_service_keys_item.is_active | default(omit) }}"
+    service_cluster:          "{{ __gateway_service_keys_item.service_cluster | default(omit) }}"
+    algorithm:                "{{ __gateway_service_keys_item.algorithm | default(omit) }}"
+    secret:                   "{{ __gateway_service_keys_item.secret | default(omit) }}"
+    secret_length:            "{{ __gateway_service_keys_item.secret_length | default(omit) }}"
+    mark_previous_inactive:   "{{ __gateway_service_keys_item.mark_previous_inactive | default(omit) }}"
+    state:                    "{{ __gateway_service_keys_item.state | default(gateway_state | default(omit, true)) }}"
+
+    # Role Standard Options
+    gateway_hostname:         "{{ gateway_hostname | default(omit, true) }}"
+    gateway_username:         "{{ gateway_username | default(omit, true) }}"
+    gateway_password:         "{{ gateway_password | default(omit, true) }}"
+    gateway_token:            "{{ gateway_oauthtoken | default(omit, true) }}"
+    gateway_request_timeout:  "{{ gateway_request_timeout | default(omit, 10) }}"
+    gateway_validate_certs:   "{{ gateway_validate_certs | default(omit) }}"
+  loop: "{{ service_keys if service_keys is defined else gateway_service_keys }}"
+  loop_control:
+    loop_var: __gateway_service_keys_item
+  no_log: "{{ gateway_configuration_service_keys_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __gateway_service_keys_job_async
+  changed_when: not __gateway_service_keys_job_async.changed
+  vars:
+    ansible_async_dir: '{{ gateway_configuration_async_dir }}'
+
+- name: "Service Keys | Wait for finish the configuration"
+  ansible.builtin.async_status:
+    jid: "{{ __gateway_service_keys_job_async_results_item.ansible_job_id }}"
+  register: __gateway_service_keys_job_async_result
+  until: __gateway_service_keys_job_async_result.finished
+  retries: "{{ gateway_configuration_service_keys_async_retries }}"
+  delay: "{{ gateway_configuration_service_keys_async_delay }}"
+  loop: "{{ __gateway_service_keys_job_async.results }}"
+  loop_control:
+    loop_var: __gateway_service_keys_job_async_results_item
+  when: __gateway_service_keys_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ gateway_configuration_service_keys_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ gateway_configuration_async_dir }}'
+...
