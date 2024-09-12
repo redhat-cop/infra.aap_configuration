@@ -1,0 +1,49 @@
+---
+- name: "Authenticator Map | Configuration"  # noqa fqcn[action-core]
+  ansible.gateway_configuration.authenticator_map:
+    name:                     "{{ __gateway_authenticator_maps_item.name | mandatory }}"
+    new_name:                 "{{ __gateway_authenticator_maps_item.new_name | default(omit) }}"
+    authenticator:            "{{ __gateway_authenticator_maps_item.authenticator | default(omit) }}"
+    new_authenticator:        "{{ __gateway_authenticator_maps_item.new_authenticator | default(omit) }}"
+    revoke:                   "{{ __gateway_authenticator_maps_item.revoke | default(omit) }}"
+    map_type:                 "{{ __gateway_authenticator_maps_item.map_type | default(omit) }}"
+    team:                     "{{ __gateway_authenticator_maps_item.team | default(omit) }}"
+    organization:             "{{ __gateway_authenticator_maps_item.organization | default(omit) }}"
+    role:                     "{{ __gateway_authenticator_maps_item.role | default(omit) }}"
+    triggers:                 "{{ __gateway_authenticator_maps_item.triggers | default(omit) }}"
+    order:                    "{{ __gateway_authenticator_maps_item.order | default(omit) }}"
+    state:                    "{{ __gateway_authenticator_maps_item.state | default(gateway_state | default(omit, true)) }}"
+
+    # Role Standard Options
+    gateway_hostname:         "{{ gateway_hostname | default(omit, true) }}"
+    gateway_username:         "{{ gateway_username | default(omit, true) }}"
+    gateway_password:         "{{ gateway_password | default(omit, true) }}"
+    gateway_token:            "{{ gateway_oauthtoken | default(omit, true) }}"
+    gateway_request_timeout:  "{{ gateway_request_timeout | default(omit, 10) }}"
+    gateway_validate_certs:   "{{ gateway_validate_certs | default(omit) }}"
+  loop: "{{ authenticator_maps if authenticator_maps is defined else gateway_authenticator_maps }}"
+  loop_control:
+    loop_var: __gateway_authenticator_maps_item
+  no_log: "{{ gateway_configuration_authenticator_maps_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __gateway_authenticator_maps_job_async
+  changed_when: not __gateway_authenticator_maps_job_async.changed
+  vars:
+    ansible_async_dir: '{{ gateway_configuration_async_dir }}'
+
+- name: "Authenticator Map | Wait for finish the configuration"
+  ansible.builtin.async_status:
+    jid: "{{ __gateway_authenticator_maps_job_async_results_item.ansible_job_id }}"
+  register: __gateway_authenticator_maps_job_async_result
+  until: __gateway_authenticator_maps_job_async_result.finished
+  retries: "{{ gateway_configuration_authenticator_maps_async_retries }}"
+  delay: "{{ gateway_configuration_authenticator_maps_async_delay }}"
+  loop: "{{ __gateway_authenticator_maps_job_async.results }}"
+  loop_control:
+    loop_var: __gateway_authenticator_maps_job_async_results_item
+  when: __gateway_authenticator_maps_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ gateway_configuration_authenticator_maps_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ gateway_configuration_async_dir }}'
+...

@@ -1,2 +1,3 @@
-# infra.platform_configuration
-A collection of roles to manage Ansible Automation Platform
+# Ansible Collection - infra.platform_configuration
+
+Documentation for the collection.

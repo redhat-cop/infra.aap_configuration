@@ -1,0 +1,113 @@
+---
+argument_specs:
+  main:
+    short_description: An Ansible Role to call other roles to create objects on automation platform gateway.
+    options:
+      gateway_configuration_dispatcher_roles:
+        default:
+          - role: authenticator
+            var: authenticators
+            tags: authenticators
+          - role: authenticator_map
+            var: authenticator_maps
+            tags: authenticator_maps
+          - role: settings
+            var: gateway_settings
+            tags: settings
+          - role: users
+            var: gateway_user_accounts
+            tags: users
+          - role: http_ports
+            var: http_ports
+            tags: http_ports
+          - role: organizations
+            var: organizations
+            tags: organizations
+          - role: service_clusters
+            var: gateway_service_clusters
+            tags: service_clusters
+          - role: service_keys
+            var: gateway_service_keys
+            tags: service_keys
+          - role: service_nodes
+            var: gateway_service_nodes
+            tags: service_nodes
+          - role: services
+            var: gateway_services
+            tags: services
+          - role: role_user_assignments
+            var: gateway_role_user_assignments
+            tags: role_user_assignments
+          - role: routes
+            var: gateway_routes
+            tags: routes
+          - role: teams
+            var: gateway_teams
+            tags: teams
+        required: false
+        description: List of roles, variables and tags to run through
+        type: list
+        elements: dict
+        options:
+          role:
+            required: true
+            description: Name of role from this collection to call
+            type: str
+          var:
+            required: true
+            description: Name of variable to be passed to the role
+            type: str
+          tags:
+            required: false
+            description: Tags to be applied to the role so tagging can be used to run only part of a playbook
+
+      # Async variables
+      gateway_configuration_async_retries:
+        default: 30
+        required: false
+        description: This variable sets number of retries across all roles as a default.
+      gateway_configuration_async_delay:
+        default: 1
+        required: false
+        description: This variable sets delay between retries across all roles as a default.
+
+
+      # No_log variables
+      gateway_configuration_secure_logging:
+        default: false
+        required: false
+        type: bool
+        description: This variable enables secure logging across all roles as a default.
+
+      # Generic across all roles
+      gateway_state:
+        default: present
+        required: false
+        description: The state all objects will take unless overridden by object default
+        type: str
+      gateway_hostname:
+        default: None
+        required: false
+        description: URL to the automation platform gateway.
+        type: str
+      gateway_validate_certs:
+        default: true
+        required: false
+        description: Whether or not to validate the automation platform gateway's SSL certificate.
+        type: str
+      gateway_username:
+        default: None
+        required: false
+        description: user on the automation platform gateway. Either username / password or oauthtoken need to be specified.
+        type: str
+      gateway_password:
+        default: None
+        required: false
+        description: gateway user's password on the automation platform gateway. This should be stored in an Ansible Vault at vars/gateway-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
+        type: str
+      gateway_oauthtoken:
+        default: None
+        required: false
+        description: gateway user's token on the automation platform gateway. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
+        type: str
+...
