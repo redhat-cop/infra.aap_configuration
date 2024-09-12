@@ -1,0 +1,104 @@
+---
+argument_specs:
+  main:
+    short_description: An Ansible Role to create http ports on automation platform gateway.
+    options:
+      gateway_http_ports:
+        description: Data structure describing http(s) ports where Envoy proxy listens
+        type: list
+        required: true
+        elements: dict
+        options:
+          name:
+            required: true
+            type: str
+            description: Name of the resource
+          new_name:
+            type: str
+            description: Setting this option will change the existing name (looked up via the name field)
+          number:
+            type: int
+            description:
+            - Port number, must be unique
+            - Required when creating new Http Port
+          use_https:
+            default: false
+            type: bool
+            description: Secure this port with HTTPS
+          is_api_port:
+            default: false
+            type: bool
+            description: If true, port is used for serving remote AAP APIs. Only one can be set to True
+          state:
+            default: "{{ gateway_state | default('present') }}"
+            required: false
+            type: str
+            description: Desired state of the resource
+
+      # Async variables
+      gateway_configuration_http_ports_async_retries:
+        default: "{{ gateway_configuration_async_retries | default(30) }}"
+        required: false
+        description: This variable sets the number of retries to attempt for the role.
+      gateway_configuration_async_retries:
+        default: 30
+        required: false
+        description: This variable sets number of retries across all roles as a default.
+      gateway_configuration_http_ports_async_delay:
+        default: "{{ gateway_configuration_async_delay | default(1) }}"
+        required: false
+        description: This variable sets delay between retries for the role.
+      gateway_configuration_async_delay:
+        default: 1
+        required: false
+        description: This variable sets delay between retries across all roles as a default.
+      gateway_configuration_async_dir:
+        default: null
+        required: false
+        description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `~/.ansible_async`.
+
+
+      # No_log variables
+      gateway_configuration_http_ports_secure_logging:
+        default: "{{ gateway_configuration_secure_logging | default(false) }}"
+        required: false
+        type: bool
+        description: Whether or not to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
+      gateway_configuration_secure_logging:
+        default: true
+        required: false
+        type: bool
+        description: This variable enables secure logging across all roles as a default.
+
+      # Generic across all roles
+      gateway_state:
+        default: present
+        required: false
+        description: The state all objects will take unless overridden by object default
+        type: str
+      gateway_hostname:
+        default: None
+        required: false
+        description: URL to the automation platform gateway.
+        type: str
+      gateway_validate_certs:
+        default: true
+        required: false
+        description: Whether or not to validate the automation platform gateway's SSL certificate.
+        type: str
+      gateway_username:
+        default: None
+        required: false
+        description: user on the automation platform gateway. Either username / password or oauthtoken need to be specified.
+        type: str
+      gateway_password:
+        default: None
+        required: false
+        description: gateway user's password on the automation platform gateway. This should be stored in an Ansible Vault at vars/gateway-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
+        type: str
+      gateway_oauthtoken:
+        default: None
+        required: false
+        description: gateway user's token on the automation platform gateway. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
+        type: str
+...

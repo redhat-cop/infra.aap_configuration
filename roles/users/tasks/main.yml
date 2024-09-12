@@ -1,0 +1,49 @@
+---
+- name: "Users | Configuration"  # noqa fqcn[action-core]
+  ansible.gateway_configuration.user:
+    username:                 "{{ __gateway_user_accounts_item.username | mandatory }}"
+    # the 'true' in the second default leads to no password being set if the default password is empty
+    password:                 "{{ __gateway_user_accounts_item.password | default(gateway_user_default_password | default(omit, true)) }}"
+    email:                    "{{ __gateway_user_accounts_item.email | default(omit, true) }}"
+    first_name:               "{{ __gateway_user_accounts_item.first_name | default(omit, true) }}"
+    last_name:                "{{ __gateway_user_accounts_item.last_name | default(omit, true) }}"
+    is_superuser:             "{{ __gateway_user_accounts_item.is_superuser | default(omit) }}"
+    update_secrets:           "{{ __gateway_user_accounts_item.update_secrets | default(omit) }}"
+    organizations:            "{{ __gateway_user_accounts_item.organizations | default(omit) }}"
+    authenticators:           "{{ __gateway_user_accounts_item.authenticators | default(omit) }}"
+    authenticator_uid:        "{{ __gateway_user_accounts_item.authenticator_uid | default(omit) }}"
+    state:                    "{{ __gateway_user_accounts_item.state | default(gateway_state | default(omit, true)) }}"
+
+    # Role Standard Options
+    gateway_hostname:         "{{ gateway_hostname | default(omit, true) }}"
+    gateway_username:         "{{ gateway_username | default(omit, true) }}"
+    gateway_password:         "{{ gateway_password | default(omit, true) }}"
+    gateway_token:            "{{ gateway_oauthtoken | default(omit, true) }}"
+    gateway_request_timeout:  "{{ gateway_request_timeout | default(omit, true) }}"
+    gateway_validate_certs:   "{{ gateway_validate_certs | default(omit) }}"
+  loop: "{{ gateway_users if gateway_users is defined else gateway_user_accounts }}"
+  loop_control:
+    loop_var: __gateway_user_accounts_item
+  no_log: "{{ gateway_configuration_users_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __gateway_user_accounts_job_async
+  changed_when: not __gateway_user_accounts_job_async.changed
+  vars:
+    ansible_async_dir: '{{ gateway_configuration_async_dir }}'
+
+- name: "Users | Wait for finish the configuration"
+  ansible.builtin.async_status:
+    jid: "{{ __gateway_user_accounts_job_async_results_item.ansible_job_id }}"
+  register: __gateway_user_accounts_job_async_result
+  until: __gateway_user_accounts_job_async_result.finished
+  retries: "{{ gateway_configuration_users_async_retries }}"
+  delay: "{{ gateway_configuration_users_async_delay }}"
+  loop: "{{ __gateway_user_accounts_job_async.results }}"
+  loop_control:
+    loop_var: __gateway_user_accounts_job_async_results_item
+  when: __gateway_user_accounts_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ gateway_configuration_users_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ gateway_configuration_async_dir }}'
+...

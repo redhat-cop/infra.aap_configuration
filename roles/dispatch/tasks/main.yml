@@ -1,0 +1,12 @@
+---
+- name: "Run ansible.gateway_configuration.{{ __role.role }}"
+  ansible.builtin.include_role:
+    name: "{{ __role.role }}"
+    apply:
+      tags: "{{ __role.tags }}"
+  when: vars[__role.var] is defined
+  tags: always
+  loop: "{{ gateway_configuration_dispatcher_roles }}"
+  loop_control:
+    loop_var: __role
+...
