@@ -101,6 +101,19 @@ For further details on fields see <https://docs.ansible.com/automation-controlle
           "object_query_format": "Exact"
         },
         "description": "Fill the gitlab credential from CyberArk"
+      },
+      {
+        "source_credential": "hashivault",
+        "target_credential": "gitlab",
+        "input_field_name": "password",
+        "metadata": {
+          "secret_backend": "mykv",
+          "secret_path": "vault/path/to/gitlab/secret",
+          "auth_path": "approle",
+          "secret_key": "GITLAB_PASSWORD_FROM_HASHI_VAULT",
+          "secret_version": "v2"
+        },
+        "description": "Fill the gitlab credential from HashiCorp Vault"
       }
     ]
 }
@@ -111,6 +124,16 @@ For further details on fields see <https://docs.ansible.com/automation-controlle
 ```yaml
 ---
 controller_credential_input_sources:
+  - source_credential: hashivault
+    target_credential: gitlab
+    input_field_name: password
+    metadata:
+      secret_backend: mykv
+      secret_path: vault/path/to/gitlab/secret
+      auth_path: approle
+      secret_key: GITLAB_PASSWORD_FROM_HASHI_VAULT
+      secret_version
+    description: Fill the gitlab credential from HashiCorp Vault
   - source_credential: cyberark
     target_credential: gitlab
     input_field_name: password
