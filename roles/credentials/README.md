@@ -126,6 +126,15 @@ controller_credentials:
   inputs:
     username: person
     password: password
+- name: hashivault
+  description: HashiCorp Vault Secret Lookup example using token auth
+  organization: Default
+  credential_type: HashiCorp Vault Secret Lookup
+  inputs:
+    url: https://vault.example.com:8243
+    token: token
+    cacert: "{{ lookup('ansible.builtin.file', '/path/to/ca-certificates.crt') }}"
+    api_version: v2
 - name: localuser
   description: Machine Credential example with become_method input
   credential_type: Machine
