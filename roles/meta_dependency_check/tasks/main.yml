@@ -1,0 +1,23 @@
+---
+# tasks file for meta_dependency_check
+
+- name: Check awx.awx is installed
+  ansible.builtin.command: ansible-galaxy collection verify awx.awx
+  failed_when: false
+  changed_when: false
+  register: upstream_dep
+
+- name: Check ansible.controller is installed
+  ansible.builtin.command: ansible-galaxy collection verify ansible.controller
+  failed_when: false
+  changed_when: false
+  register: downstream_dep
+
+- name: Ensure one is installed
+  ansible.builtin.fail:
+    msg: One of awx.awx or ansible.controller must be installed
+  when:
+    - "'ERROR!' in upstream_dep.stderr"
+    - "'ERROR!' in downstream_dep.stderr"
+
+...

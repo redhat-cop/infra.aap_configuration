@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Added meta role to perform dependency checks. No changes needed from a user perspective.
+...

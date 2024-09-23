@@ -95,7 +95,7 @@ controller_templates:
     survey_enabled: {{ current_job_templates_asset_value.survey_enabled | bool | lower }}
 {% set survey_spec_contents = query(controller_api_plugin, current_job_templates_asset_value.related.survey_spec,
                                     host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs)[0] |
-                                    from_yaml | to_nice_yaml(indent=2,width=500) | regex_replace("\n\n[ ]*", "\\\\n") | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") | replace("^$", "") | replace("$encrypted$", "")
+                                    from_yaml | to_nice_yaml(indent=2,width=500) | regex_replace("\n\n[ ]*", "\\\\n") | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") | replace("^$", "") | replace("$encrypted$", "") | replace("'", '"')
 -%}
 {% if current_job_templates_asset_value.related.survey_spec is defined and survey_spec_contents | length > 3 %}
     survey_spec:
