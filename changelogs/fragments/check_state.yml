@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Fix changed_when statement in all roles to show correct state
-...

@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Avoid the groups populated by a constructed inventory to be removed during object_diff.
-...
