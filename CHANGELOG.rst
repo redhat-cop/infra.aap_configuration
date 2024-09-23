@@ -1,8 +1,48 @@
-=============================================
-infra.controller\_configuration Release Notes
-=============================================
+============================================
+infra.controller_configuration Release Notes
+============================================
 
 .. contents:: Topics
+
+
+v2.9.0
+======
+
+Minor Changes
+-------------
+
+- Added `controller_configuration_loop_delay` and role specific var to give users the option to add a pause during the async loop to slow it down a bit when they are seeing controller API overloaded.
+- Added the option assign_instance_groups_to_org to allow skipping this when creating an org if desired
+- filetree_create able to filter by project_id, workflow_job_template_id or job_template_id
+
+Bugfixes
+--------
+
+- fixes an issue where spaces are stripped from variables applied to the inventories, inventory_sources, hosts, groups, credential_types and notification_templates roles
+
+v2.8.1
+======
+
+v2.8.0
+======
+
+Minor Changes
+-------------
+
+- Add two playbooks to simplify management of Configuration as Code files
+- Added option to not removing '$encrypted$' string in filetree_create credentials output
+- added new_name as an option to organization role
+
+Bugfixes
+--------
+
+- Adjusted output of boolean filetree_create fields to provide ansible-lint compatible values.
+- Avoid the groups populated by a constructed inventory to be removed during object_diff.
+- Fix "adhoc" role permission name in object diff.
+- Fix changed_when statement in all roles to show correct state
+- Fixed the empty credential scenario where the playbook looks for credential names and fails with undefied value.
+- fixed a bug where int values were being set to 0 it was being dropped and value was not being pushed to controller
+- fixed a bug where when verbosity was set to 0 it was being dropped and value was not being pushed to controller
 
 v2.7.1
 ======
