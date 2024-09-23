@@ -17,6 +17,9 @@ controller_projects:
     scm_update_on_launch: "{{ current_projects_asset_value.scm_update_on_launch }}"
     scm_update_cache_timeout: "{{ current_projects_asset_value.scm_update_cache_timeout }}"
 {% endif %}
+{% if is_aap and current_job_templates_asset_value.summary_fields.default_environment is defined %}
+    default_environment: "{{ current_job_templates_asset_value.summary_fields.default_environment.name }}"
+{% endif %}
     allow_override: "{{ current_projects_asset_value.allow_override }}"
     update_project: "{{ update_project_state | default(false) }}"
     timeout: {{ current_projects_asset_value.timeout }}

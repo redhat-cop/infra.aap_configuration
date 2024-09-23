@@ -111,6 +111,7 @@ This also speeds up the overall role.
 - `adhoc`
 - `update`
 - `use`
+- `approval`
 - `auditor`
 - `project_admin`
 - `inventory_admin`
@@ -118,6 +119,7 @@ This also speeds up the overall role.
 - `workflow_admin`
 - `notification_admin`
 - `job_template_admin`
+- `execution_environment_admin`
 
 Note that the `roles` option takes precedence over the `role` option and simply allows to specify multiple roles for a user or team (or set of users or teams).
 

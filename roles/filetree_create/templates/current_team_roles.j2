@@ -15,7 +15,7 @@ controller_roles:
 {% elif (role|dict2items)[0].value.resource_type is match('inventory') %}
     inventories:
 {% elif (role|dict2items)[0].value.resource_type is match('workflow_job_template') %}
-    workflow_job_templates:
+    workflows:
 {% elif (role|dict2items)[0].value.resource_type is match('project') %}
     projects:
 {% elif (role|dict2items)[0].value.resource_type is match('credential') %}

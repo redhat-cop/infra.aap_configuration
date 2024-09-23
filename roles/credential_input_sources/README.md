@@ -78,12 +78,12 @@ This also speeds up the overall role.
 |:---:|:---:|:---:|:---:|:---:|
 |`target_credential`|""|yes|str|Name of credential to have the input source applied|
 |`input_field_name`|""|yes|str|Name of field which will be written by the input source|
-|`source_credential`|""|no|str|Name of the source credential which points to a credential source|
+|`source_credential`|""|no|str|Name of the source credential which points to an external secret lookup credential |
 |`metadata`|""|no|dict|The metadata applied to the source.|
 |`description`|""|no|str|Description to use for the credential input source.|
 |`state`|`present`|no|str|Desired state of the resource.|
 
-For further details on fields see <https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html>
+For further details on fields see <https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html>. The input accepted by the `metadata` field will differ depending on the credential plugin being used.
 
 ### Standard Credential Input Source Data Structure
 
@@ -101,6 +101,19 @@ For further details on fields see <https://docs.ansible.com/automation-controlle
           "object_query_format": "Exact"
         },
         "description": "Fill the gitlab credential from CyberArk"
+      },
+      {
+        "source_credential": "hashivault",
+        "target_credential": "gitlab",
+        "input_field_name": "password",
+        "metadata": {
+          "secret_backend": "mykv",
+          "secret_path": "vault/path/to/gitlab/secret",
+          "auth_path": "approle",
+          "secret_key": "GITLAB_PASSWORD_FROM_HASHI_VAULT",
+          "secret_version": "v2"
+        },
+        "description": "Fill the gitlab credential from HashiCorp Vault"
       }
     ]
 }
@@ -111,6 +124,16 @@ For further details on fields see <https://docs.ansible.com/automation-controlle
 ```yaml
 ---
 controller_credential_input_sources:
+  - source_credential: hashivault
+    target_credential: gitlab
+    input_field_name: password
+    metadata:
+      secret_backend: mykv
+      secret_path: vault/path/to/gitlab/secret
+      auth_path: approle
+      secret_key: GITLAB_PASSWORD_FROM_HASHI_VAULT
+      secret_version
+    description: Fill the gitlab credential from HashiCorp Vault
   - source_credential: cyberark
     target_credential: gitlab
     input_field_name: password
