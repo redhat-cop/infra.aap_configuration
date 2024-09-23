@@ -198,3 +198,7 @@ Please read and familiarize yourself with this document.
 GNU General Public License v3.0 or later.
 
 See [LICENSE](LICENSE) to see the full text.
+
+### Contributors
+
+<img src="https://markupgo.com/github/redhat-cop/controller_configuration/contributors?count=0&circleSize=40&circleRadius=40&center=true" width="100%" /> 
