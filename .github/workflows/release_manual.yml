@@ -26,7 +26,7 @@ jobs:
       publish_url_collection_2: https://cloud.redhat.com/api/automation-hub/
       galaxy_publish_2: false
       ah_publish_2: true
-      collection_version: ${{ vars.tagged_version }}
+      collection_version: ${{ inputs.tagged_version }}
       collection_repo: https://github.com/redhat-cop/controller_configuration/
       quay_username: redhat_cop
       collection_dependencies: awx.awx
