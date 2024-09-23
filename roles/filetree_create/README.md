@@ -26,6 +26,7 @@ The following variables are required for that role to work properly:
 | `omit_id` | N/A | no | bool | Whether to create output files without objects id.|
 | `organization`| N/A | no | str | Default organization for all objects that have not been set in the source controller.|
 | `export_related_objects` | False | no | bool | Whether to export related objects (job templates related to certain workflows and the projects associated with these job templates) when a single JT or a single WFJT are being exported. |
+| `update_project_state` | False | no | bool | Wheter the project should be updated after import to the target controller |
 
 ## Dependencies
 

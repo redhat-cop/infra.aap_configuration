@@ -18,6 +18,7 @@ controller_projects:
     scm_update_cache_timeout: "{{ current_projects_asset_value.scm_update_cache_timeout }}"
 {% endif %}
     allow_override: "{{ current_projects_asset_value.allow_override }}"
+    update_project: "{{ update_project_state | default(false) }}"
     timeout: {{ current_projects_asset_value.timeout }}
 {% if query_notification_error | length > 0 %}
     notification_templates_error:
