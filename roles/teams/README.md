@@ -1,4 +1,4 @@
-# Ansible Role ansible.gateway_configuration.teams
+# Ansible Role infra.platform_configuration.teams
 
 ## Description
 
@@ -12,17 +12,17 @@ Variables specific for this role are following:
 
 | Variable Name                                  |                    Default Value                    | Required | Description                                                                                                                                                 |                                                      |
 |:-----------------------------------------------|:---------------------------------------------------:|:--------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `gateway_teams` (Alias: `teams`)               |          [below](#organization-arguments)           |   yes    | Data structure describing your team entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `gateway_configuration_teams_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive team role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `gateway_configuration_teams_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the team role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `gateway_configuration_teams_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                           | [more](../../README.md#asynchronous-retry-variables) |
-| `gateway_configuration_teams_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                           | [more](../../README.md#asynchronous-retry-variables) |
+| `teams_list` (Alias: `teams`)               |          [below](#organization-arguments)           |   yes    | Data structure describing your team entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
+| `teams_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive team role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `teams_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the team role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
+| `teams_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                           | [more](../../README.md#asynchronous-retry-variables) |
+| `teams_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                           | [more](../../README.md#asynchronous-retry-variables) |
 
 ## Data Structure
 
 ### Team Arguments
 
-Options for the `gateway_teams` variable:
+Options for the `teams` variable:
 
 | Variable Name      | Default Value | Required | Type | Description                                                                       |
 |:-------------------|:-------------:|:--------:|:----:|:----------------------------------------------------------------------------------|
@@ -45,7 +45,7 @@ Options for the `gateway_teams` variable:
 
 ```json
 {
-  "gateway_teams": [
+  "teams": [
     {
       "name": "Team 1",
       "description": "Best team",
@@ -69,7 +69,7 @@ File name: `data/gateway_teams.yml`
 
 ```yaml
 ---
-gateway_teams:
+teams:
 - name: "Happy Team"
   organization: "Productive Organization"
   state: exists

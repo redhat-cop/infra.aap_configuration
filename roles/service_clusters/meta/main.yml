@@ -21,8 +21,8 @@ galaxy_info:
     - "gateway"
     - "aap"
     - "configuration"
-    - "service_cluster"
-    - "service_clusters"
+    - "servicecluster"
+    - "serviceclusters"
 
 dependencies: []
 ...

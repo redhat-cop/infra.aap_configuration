@@ -9,11 +9,10 @@
 # These are the default variables specific to the license role
 
 # a list of dictionaries describing the teams
-gateway_teams: []
+teams_list: []
 
-gateway_configuration_teams_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
-gateway_configuration_teams_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
-gateway_configuration_teams_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
-gateway_configuration_async_dir: null
-gateway_configuration_teams_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
+teams_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
+teams_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
+teams_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
+teams_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
 ...

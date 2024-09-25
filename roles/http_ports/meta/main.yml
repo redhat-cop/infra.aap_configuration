@@ -21,8 +21,8 @@ galaxy_info:
     - "gateway"
     - "aap"
     - "configuration"
-    - "http_port"
-    - "http_ports"
+    - "httpport"
+    - "httpports"
 
 dependencies: []
 ...

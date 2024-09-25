@@ -1,4 +1,4 @@
-# Ansible Role ansible.gateway_configuration.http_ports
+# Ansible Role infra.platform_configuration.http_ports
 
 ## Description
 
@@ -12,17 +12,17 @@ Variables specific for this role are following:
 
 | Variable Name                                       |                    Default Value                    | Required | Description                                                                                                                                                       |                                                      |
 |:----------------------------------------------------|:---------------------------------------------------:|:--------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `gateway_http_ports` (Alias: `http_ports`)          |            [below](#http-port-arguments)            |   yes    | Data structure describing your http port entries described below.                                                                                                 |        [more](../../README.md#data-variables)        |
-| `gateway_configuration_http_ports_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive http_ports role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `gateway_configuration_http_ports_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the http port role.                                                                                       |      [more](../../README.md#enforcing-defaults)      |
-| `gateway_configuration_http_ports_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                 | [more](../../README.md#asynchronous-retry-variables) |
-| `gateway_configuration_http_ports_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                 | [more](../../README.md#asynchronous-retry-variables) |
+| `http_ports_list` (Alias: `http_ports`)          |            [below](#http-port-arguments)            |   yes    | Data structure describing your http port entries described below.                                                                                                 |        [more](../../README.md#data-variables)        |
+| `http_ports_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive http_ports role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `http_ports_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the http port role.                                                                                       |      [more](../../README.md#enforcing-defaults)      |
+| `http_ports_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                 | [more](../../README.md#asynchronous-retry-variables) |
+| `http_ports_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                 | [more](../../README.md#asynchronous-retry-variables) |
 
 ## Data Structure
 
 ### Http Port Arguments
 
-Options for the `gateway_http_ports` variable:
+Options for the `http_ports_list` variable:
 
 | Variable Name | Default Value | Required | Type | Description                                                                      |
 |:--------------|:-------------:|:--------:|:----:|:---------------------------------------------------------------------------------|
@@ -46,7 +46,7 @@ Options for the `gateway_http_ports` variable:
 
 ```json
 {
-  "gateway_http_ports": [
+  "http_ports_list": [
     {
       "name": "API port",
       "new_name": "Proxy API port",
@@ -68,7 +68,7 @@ File name: `data/gateway_http_ports.yml`
 
 ```yaml
 ---
-gateway_http_ports:
+http_ports_list:
 - name: "Service Port 8001"
   number: 8001
   state: absent

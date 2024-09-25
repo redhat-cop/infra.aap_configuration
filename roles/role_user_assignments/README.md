@@ -1,4 +1,4 @@
-# Ansible Role ansible.gateway_configuration.role_user_assignments
+# Ansible Role infra.platform_configuration.role_user_assignments
 
 ## Description
 
@@ -12,17 +12,17 @@ Variables specific for this role are following:
 
 | Variable Name                                                    |                    Default Value                    | Required | Description                                                                                                                                                                  |                                                      |
 |:-----------------------------------------------------------------|:---------------------------------------------------:|:--------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `gateway_role_user_assignments` (Alias: `role_user_assignments`) |      [below](#role-user-assignments-arguments)      |   yes    | Data structure describing your organization entries described below.                                                                                                         |        [more](../../README.md#data-variables)        |
-| `gateway_configuration_role_user_assignments_secure_logging`     |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive role_user_assignments role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `gateway_configuration_role_user_assignments_enforce_defaults`   | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the role_user_assignments role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `gateway_configuration_role_user_assignments_async_retries`      |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                            | [more](../../README.md#asynchronous-retry-variables) |
-| `gateway_configuration_role_user_assignments_async_delay`        |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                            | [more](../../README.md#asynchronous-retry-variables) |
+| `role_user_assignments_list` (Alias: `role_user_assignments`) |      [below](#role-user-assignments-arguments)      |   yes    | Data structure describing your organization entries described below.                                                                                                         |        [more](../../README.md#data-variables)        |
+| `role_user_assignments_secure_logging`     |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive role_user_assignments role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `role_user_assignments_enforce_defaults`   | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the role_user_assignments role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
+| `role_user_assignments_async_retries`      |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                            | [more](../../README.md#asynchronous-retry-variables) |
+| `role_user_assignments_async_delay`        |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                            | [more](../../README.md#asynchronous-retry-variables) |
 
 ## Data Structure
 
 ### Role User Assignments Arguments
 
-Options for the `gateway_role_user_assignments` variable:
+Options for the `role_user_assignments` variable:
 
 | Variable Name       | Default Value | Required | Type | Description                                                                                           |
 |:--------------------|:-------------:|:--------:|:----:|:------------------------------------------------------------------------------------------------------|
@@ -45,7 +45,7 @@ Options for the `gateway_role_user_assignments` variable:
 
 ```json
 {
-  "gateway_role_user_assignments": [
+  "role_user_assignments_list": [
     {
       "role_definition": "Organization Member",
       "user": "Bob",
@@ -63,7 +63,7 @@ File name: `data/gateway_role_user_assignments.yml`
 
 ```yaml
 ---
-gateway_role_user_assignments:
+role_user_assignments_list:
 - role_definition: Team Admin
   user: 1
   object_id: 10

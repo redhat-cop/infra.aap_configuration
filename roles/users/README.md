@@ -1,4 +1,4 @@
-# Ansible Role ansible.gateway_configuration.users
+# Ansible Role infra.platform_configuration.users
 
 ## Description
 
@@ -8,12 +8,12 @@ An Ansible Role to configure users on Ansible Automation gateway.
 
 | Variable Name                                     |                    Default Value                    | Required | Description                                                                                                                                                 |                                                      |
 |:--------------------------------------------------|:---------------------------------------------------:|:--------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `gateway_users` (Alias: `gateway_user_accounts`)  |              [below](#user-arguments)               |   yes    | Data structure describing your user entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `gateway_configuration_users_secure_logging`      |  `gateway_configuration_secure_logging` OR `true`   |    no    | Whether or not to include the sensitive user role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `gateway_configuration_users_enforce_defaults`    | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the user role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `gateway_configuration_users_async_retries`       |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                           | [more](../../README.md#asynchronous-retry-variables) |
-| `gateway_configuration_users_async_delay`         |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                           | [more](../../README.md#asynchronous-retry-variables) |
-| `gateway_user_default_password`                   |                         ""                          |    no    | Global variable to set the password for all users.                                                                                                          |                                                      |
+| `users_list` (Alias: `users`)  |              [below](#user-arguments)               |   yes    | Data structure describing your user entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
+| `users_secure_logging`      |  `gateway_configuration_secure_logging` OR `true`   |    no    | Whether or not to include the sensitive user role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `users_enforce_defaults`    | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the user role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
+| `users_async_retries`       |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                           | [more](../../README.md#asynchronous-retry-variables) |
+| `users_async_delay`         |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                           | [more](../../README.md#asynchronous-retry-variables) |
+| `users_default_password`                   |                         ""                          |    no    | Global variable to set the password for all users.                                                                                                          |                                                      |
 
 **Note**: Secure Logging defaults to True if both variables are not set
 
@@ -26,7 +26,7 @@ Options for the `gateway_users` variable:
 | Variable Name       |             Default Value             | Required | Type | Description                                                                                                                                                           |
 |:--------------------|:-------------------------------------:|:--------:|:----:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `username`          |                  N/A                  |   yes    | str  | The username of the user                                                                                                                                              |
-| `password`          | "{{ gateway_user_default_password }}" |    no    | str  | The password of the user                                                                                                                                              |
+| `password`          | "{{ users_default_password }}" |    no    | str  | The password of the user                                                                                                                                              |
 | `email`             |                  N/A                  |   yes    | str  | The email of the user                                                                                                                                                 |
 | `first_name`        |                  ""                   |    no    | str  | The first name of the user                                                                                                                                            |
 | `last_name`         |                  ""                   |    no    | str  | The last name of the user                                                                                                                                             |
@@ -48,8 +48,8 @@ Options for the `gateway_users` variable:
 
 ```json
 {
-  "gateway_user_default_password": "changeme",
-  "gateway_users": [
+  "users_default_password": "changeme",
+  "users_list": [
     {
       "username": "jsmith",
       "is_superuser": false,
@@ -73,7 +73,7 @@ File name: `data/gateway_users.yml`
 ```yaml
 ---
 gateway_state: exists
-gateway_users:
+users_list:
 - username: jsmith
 - username: jdoe
 - username: admin

@@ -1,4 +1,4 @@
-# Ansible Role ansible.gateway_configuration.service_clusters
+# Ansible Role infra.platform_configuration.service_clusters
 
 ## Description
 
@@ -12,17 +12,17 @@ Variables specific for this role are following:
 
 | Variable Name                                             |                    Default Value                    | Required | Description                                                                                                                                                            |                                                      |
 |:----------------------------------------------------------|:---------------------------------------------------:|:--------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `gateway_service_clusters` (Alias: service_clusters)      |         [below](#service-cluster-arguments)         |   yes    | Data structure describing your service_cluster entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `gateway_configuration_service_clusters_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service_cluster role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `gateway_configuration_service_clusters_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service cluster role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `gateway_configuration_service_clusters_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                      | [more](../../README.md#asynchronous-retry-variables) |
-| `gateway_configuration_service_clusters_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                      | [more](../../README.md#asynchronous-retry-variables) |
+| `service_clusters_list` (Alias: service_clusters)      |         [below](#service-cluster-arguments)         |   yes    | Data structure describing your service_cluster entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
+| `service_clusters_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service_cluster role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `service_clusters_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service cluster role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
+| `service_clusters_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                      | [more](../../README.md#asynchronous-retry-variables) |
+| `service_clusters_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                      | [more](../../README.md#asynchronous-retry-variables) |
 
 ## Data Structure
 
 ### Service Cluster Arguments
 
-Options for the `gateway_service_clusters` variable:
+Options for the `service_clusters_list` variable:
 
 | Variable Name  | Default Value |      Required      | Type | Description                                                                             |
 |:---------------|:-------------:|:------------------:|:----:|:----------------------------------------------------------------------------------------|
@@ -46,7 +46,7 @@ Options for the `gateway_service_clusters` variable:
 ```json
 {
   "gateway_state": "absent",
-  "gateway_service_clusters": [
+  "service_clusters_list": [
     {
       "name": "Automation Controller"
     },
@@ -67,11 +67,11 @@ Options for the `gateway_service_clusters` variable:
 - CHeck that Service with ID 3 exists
 - Renames Hub service
 
-File name: `data/gateway_service_clusters.yml`
+File name: `data/service_clusters.yml`
 
 ```yaml
 ---
-gateway_service_clusters:
+service_clusters_list:
 - name: "Automation Controller"
   service_type: controller
   state: present

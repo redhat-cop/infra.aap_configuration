@@ -1,0 +1,19 @@
+---
+name: Run ansible-lint
+on:
+  push:
+  pull_request:
+
+jobs:
+  ci_standalone:
+    name: ansible-lint
+    runs-on: ubuntu-22.04
+    env:
+      HEADLESS: "yes"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run ansible-lint
+        uses: ansible/ansible-lint@v24.9.0
+

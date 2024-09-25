@@ -1,4 +1,4 @@
-# Ansible Role ansible.gateway_configuration.service_keys
+# Ansible Role infra.platform_configuration.service_keys
 
 ## Description
 
@@ -12,17 +12,17 @@ Variables specific for this role are following:
 
 | Variable Name                                         |                    Default Value                    | Required | Description                                                                                                                                                        |                                                      |
 |:------------------------------------------------------|:---------------------------------------------------:|:--------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `gateway_service_keys` (Alias: `service_keys`)        |           [below](#service-key-arguments)           |   yes    | Data structure describing your service_key entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `gateway_configuration_service_keys_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service_key role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `gateway_configuration_service_keys_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service key role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `gateway_configuration_service_keys_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                  | [more](../../README.md#asynchronous-retry-variables) |
-| `gateway_configuration_service_keys_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                  | [more](../../README.md#asynchronous-retry-variables) |
+| `service_keys_list` (Alias: `service_keys`)        |           [below](#service-key-arguments)           |   yes    | Data structure describing your service_key entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
+| `service_keys_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service_key role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `service_keys_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service key role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
+| `service_keys_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                  | [more](../../README.md#asynchronous-retry-variables) |
+| `service_keys_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                  | [more](../../README.md#asynchronous-retry-variables) |
 
 ## Data Structure
 
 ### Service Key Arguments
 
-Options for the `gateway_service_keys` variable:
+Options for the `service_keys_list` variable:
 
 | Variable Name            |   Default Value    | Required | Type | Description                                                                      |
 |:-------------------------|:------------------:|:--------:|:----:|:---------------------------------------------------------------------------------|
@@ -49,7 +49,7 @@ Options for the `gateway_service_keys` variable:
 
 ```json
 {
-  "gateway_service_keys": [
+  "service_keys_list": [
     {
       "name": "Key 1",
       "state": "exists"
@@ -73,7 +73,7 @@ File name: `data/gateway_service_keys.yml`
 
 ```yaml
 ---
-gateway_service_keys:
+service_keys_list:
 - name: "Controller Key 1"
   is_active: false
   service_cluster: controller

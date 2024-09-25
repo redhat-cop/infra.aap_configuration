@@ -21,8 +21,8 @@ galaxy_info:
     - "gateway"
     - "aap"
     - "configuration"
-    - "service_key"
-    - "service_keys"
+    - "servicekey"
+    - "servicekeys"
 
 dependencies: []
 ...

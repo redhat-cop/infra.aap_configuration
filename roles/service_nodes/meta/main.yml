@@ -21,8 +21,8 @@ galaxy_info:
     - "gateway"
     - "aap"
     - "configuration"
-    - "service_node"
-    - "service_nodes"
+    - "servicenode"
+    - "servicenodes"
 
 dependencies: []
 ...

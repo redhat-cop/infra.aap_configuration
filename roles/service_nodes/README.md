@@ -1,4 +1,4 @@
-# Ansible Role ansible.gateway_configuration.service_nodes
+# Ansible Role infra.platform_configuration.service_nodes
 
 ## Description
 
@@ -12,17 +12,17 @@ Variables specific for this role are following:
 
 | Variable Name                                          |                    Default Value                    | Required | Description                                                                                                                                                         |                                                      |
 |:-------------------------------------------------------|:---------------------------------------------------:|:--------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `gateway_service_nodes` (Alias: `service_nodes`)       |          [below](#service-node-arguments)           |   yes    | Data structure describing your service_node entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `gateway_configuration_service_nodes_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service_node role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `gateway_configuration_service_nodes_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service node role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `gateway_configuration_service_nodes_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                   | [more](../../README.md#asynchronous-retry-variables) |
-| `gateway_configuration_service_nodes_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                   | [more](../../README.md#asynchronous-retry-variables) |
+| `service_nodes_list` (Alias: `service_nodes`)       |          [below](#service-node-arguments)           |   yes    | Data structure describing your service_node entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
+| `service_nodes_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service_node role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `service_nodes_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service node role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
+| `service_nodes_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                   | [more](../../README.md#asynchronous-retry-variables) |
+| `service_nodes_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                   | [more](../../README.md#asynchronous-retry-variables) |
 
 ## Data Structure
 
 ### Service Node Arguments
 
-Options for the `gateway_service_nodes` variable:
+Options for the `service_nodes_list` variable:
 
 | Variable Name     | Default Value | Required | Type | Description                                                                      |
 |:------------------|:-------------:|:--------:|:----:|:---------------------------------------------------------------------------------|
@@ -47,7 +47,7 @@ Options for the `gateway_service_nodes` variable:
 
 ```json
 {
-  "gateway_service_nodes": [
+  "service_nodes_list": [
     {
       "name": "EDA - 10.0.0.1",
       "state": "exists"
@@ -65,11 +65,11 @@ Options for the `gateway_service_nodes` variable:
 - Create node (if not exists) for Controller service (in the database)
 - Delete node (if exists) for Automation Hub Service (from the database)
 
-File name: `data/gateway_service_nodes.yml`
+File name: `data/service_nodes.yml`
 
 ```yaml
 ---
-gateway_service_nodes:
+service_nodes_list:
 - name: "Controller Node 1"
   address: 10.0.0.1
   service_cluster: controller
