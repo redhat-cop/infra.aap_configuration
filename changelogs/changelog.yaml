@@ -329,6 +329,48 @@ releases:
     fragments:
     - update_options.yml
     release_date: '2022-11-11'
+  2.10.3:
+    changes:
+      bugfixes:
+      - Fix "approval" role permission name in object diff.
+      - Fixed missing execution environemnt while exporting the project
+      - filetree_create export extra_vars with escaping any variable brackets
+      minor_changes:
+      - Added meta role to perform dependency checks. No changes needed from a user
+        perspective.
+      - filetree_create able export proper approval role
+      - filetree_create able export proper approval role (user roles)
+      - filetree_create able to bulk export role for objects
+      - filetree_create able to create files without id values
+      - filetree_create able to export project with update_project state
+      - filetree_create able to export scm_refspec of project
+      - filetree_create able to export single worfklow with related job_templates
+        and projects
+      - filetree_create able to filter by schedule_id
+      - filetree_create able to remove $encrypted$ while exporting job template and
+        workflow
+      - filetree_create able to use defined organization for organizationless objects
+      - filetree_create is missing double quote
+      - filetree_read speed tuning
+      - fix memory leak when there are plenty of job templates
+      - fix project export while exporting related objects to job template
+    fragments:
+    - aapproval_role_name_object_diff.yml
+    - dependency_check.yml
+    - filetree_create_brackets_extra_vars_issue.yml
+    - filetree_create_default_org.yml
+    - filetree_create_extra_variables.yml
+    - filetree_create_omit_id.yml
+    - filetree_create_project_ee.yml
+    - filetree_create_related_project_export.yaml
+    - filetree_create_role_approve_bug.yml
+    - filetree_create_role_export_optimization.yml
+    - filetree_create_scm_refspec.yml
+    - filetree_create_single_schedule_export.yml
+    - filetree_create_survey_password_removal.yaml
+    - filetree_create_update_project.yml
+    - filetree_read_speed_improvement.yml
+    release_date: '2024-09-25'
   2.2.4:
     changes:
       breaking_changes:

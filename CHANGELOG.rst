@@ -5,6 +5,35 @@ infra.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v2.10.3
+=======
+
+Minor Changes
+-------------
+
+- Added meta role to perform dependency checks. No changes needed from a user perspective.
+- filetree_create able export proper approval role
+- filetree_create able export proper approval role (user roles)
+- filetree_create able to bulk export role for objects
+- filetree_create able to create files without id values
+- filetree_create able to export project with update_project state
+- filetree_create able to export scm_refspec of project
+- filetree_create able to export single worfklow with related job_templates and projects
+- filetree_create able to filter by schedule_id
+- filetree_create able to remove $encrypted$ while exporting job template and workflow
+- filetree_create able to use defined organization for organizationless objects
+- filetree_create is missing double quote
+- filetree_read speed tuning
+- fix memory leak when there are plenty of job templates
+- fix project export while exporting related objects to job template
+
+Bugfixes
+--------
+
+- Fix "approval" role permission name in object diff.
+- Fixed missing execution environemnt while exporting the project
+- filetree_create export extra_vars with escaping any variable brackets
+
 v2.9.0
 ======
 
