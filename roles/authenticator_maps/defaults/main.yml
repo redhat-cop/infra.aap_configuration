@@ -9,11 +9,10 @@
 # These are the default variables specific to the license role
 
 # a list of dictionaries describing the authenticator maps
-gateway_authenticator_maps: []
+authenticator_maps_list: []
 
-gateway_configuration_authenticator_maps_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
-gateway_configuration_authenticator_maps_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
-gateway_configuration_authenticator_maps_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
-gateway_configuration_async_dir: null
-gateway_configuration_authenticator_maps_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
+authenticator_maps_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
+authenticator_maps_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
+authenticator_maps_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
+authenticator_maps_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
 ...

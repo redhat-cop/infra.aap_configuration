@@ -9,11 +9,10 @@
 # These are the default variables specific to the license role
 
 # a list of dictionaries describing the service nodes
-gateway_routes: []
+routes_list: []
 
-gateway_configuration_routes_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
-gateway_configuration_routes_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
-gateway_configuration_routes_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
-gateway_configuration_async_dir: null
-gateway_configuration_routes_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
+routes_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
+routes_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
+routes_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
+routes_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
 ...

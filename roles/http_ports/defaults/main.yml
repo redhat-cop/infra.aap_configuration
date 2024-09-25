@@ -9,7 +9,7 @@
 # These are the default variables specific to the license role
 
 # a list of dictionaries describing the envoy http ports (available GW API ports)
-gateway_http_ports: []
+http_ports_list: []
 # possible fields:
 #  - number
 #  - use_https
@@ -17,9 +17,8 @@ gateway_http_ports: []
 #  - state
 
 
-gateway_configuration_http_ports_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
-gateway_configuration_http_ports_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
-gateway_configuration_http_ports_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
-gateway_configuration_async_dir: null
-gateway_configuration_http_ports_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
+http_ports_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
+http_ports_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
+http_ports_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
+http_ports_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
 ...

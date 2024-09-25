@@ -1,4 +1,4 @@
-# Ansible Role ansible.gateway_configuration.applications
+# Ansible Role infra.platform_configuration.applications
 
 ## Description
 
@@ -12,17 +12,17 @@ Variables specific for this role are following:
 
 | Variable Name                                         |                    Default Value                    | Required | Description                                                                                                                                                        |                                        |
 |:------------------------------------------------------|:---------------------------------------------------:|:--------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------:|
-| `gateway_applications` (Alias: `applications`)        |           [below](#application-arguments)           |   yes    | Data structure describing your applications entries described below. Alias: applications                                                                           | [more](../../README.md#data-variables) |
-| `gateway_configuration_applications_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive Application role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |
-| `gateway_configuration_applications_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the applications role                                                                                      |
-| `gateway_configuration_applications_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                  |
-| `gateway_configuration_applications_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                  |
+| `applications_list` (Alias: `applications`)        |           [below](#application-arguments)           |   yes    | Data structure describing your applications entries described below. Alias: applications                                                                           | [more](../../README.md#data-variables) |
+| `applications_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive Application role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |
+| `applications_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the applications role                                                                                      |
+| `applications_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                  |
+| `applications_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                  |
 
 ## Data Structure
 
 ### Application Arguments
 
-Options for the `gateway_applications` variable:
+Options for the `applications_list` variable:
 
 | Variable Name               |    Default Value    | Required | Type | Description                                                                            |
 |:----------------------------|:-------------------:|:--------:|:----:|:---------------------------------------------------------------------------------------|
@@ -46,7 +46,7 @@ Options for the `gateway_applications` variable:
 
 ```json
  {
-  "gateway_applications": [
+  "applications_list": [
     {
       "name": "gateway Config Default Application",
       "description": "Generic application, which can be used for oauth tokens",
@@ -65,7 +65,7 @@ File name: `data/gateway_applications.yml`
 
 ```yaml
 ---
-gateway_applications:
+applications_list:
 - name: "gateway Config Default Application"
   description: "Generic application, which can be used for oauth tokens"
   organization: "Default"

@@ -3,10 +3,10 @@ argument_specs:
   main:
     short_description: An Ansible Role to create service nodes on automation platform gateway.
     options:
-      gateway_routes:
+      routes_list:
         description: Data structure describing your service nodes
         type: list
-        required: True
+        required: true
         elements: dict
         options:
           name:
@@ -21,18 +21,18 @@ argument_specs:
             description: Description of the service
           gateway_path:
             type: str
-            description:
-            - Path on the AAP gateway to listen to traffic on
-            - Required when creating a new Route
+            description: |
+              Path on the AAP gateway to listen to traffic on
+              Required when creating a new Route
           http_port:
-            description:
-            - Name or ID referencing the Http Port
-            - Required when creating a new Route
+            description: |
+              Name or ID referencing the Http Port
+              Required when creating a new Route
             type: str
           service_cluster:
-            description:
-            - Name or ID referencing the Service Cluster
-            - Required when creating a new Route
+            description: |
+              Name or ID referencing the Service Cluster
+              Required when creating a new Route
             type: str
           is_service_https:
             type: bool
@@ -43,19 +43,19 @@ argument_specs:
             description: If false, the AAP gateway will not insert a gateway token into the proxied request
           service_path:
             type: str
-            description:
-            - URL path on the AAP Service cluster to route traffic to
-            - Required when creating a new Route
+            description: |
+              URL path on the AAP Service cluster to route traffic to
+              Required when creating a new Route
           service_port:
             type: int
-            description:
-            - Port on the service to route traffic to
-            - Required when creating a new Route
+            description: |
+              Port on the service to route traffic to
+              Required when creating a new Route
           node_tags:
             type: str
-            description:
-              - Comma separated string
-              - Selects which (tagged) nodes receive traffic from this route
+            description: |
+              Comma separated string
+              Selects which (tagged) nodes receive traffic from this route
           state:
             default: "{{ gateway_state | default('present') }}"
             required: false
@@ -64,7 +64,7 @@ argument_specs:
 
 
       # Async variables
-      gateway_configuration_routes_async_retries:
+      routes_async_retries:
         default: "{{ gateway_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -72,7 +72,7 @@ argument_specs:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
-      gateway_configuration_routes_async_delay:
+      routes_async_delay:
         default: "{{ gateway_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -80,18 +80,22 @@ argument_specs:
         default: 1
         required: false
         description: This variable sets delay between retries across all roles as a default.
-      gateway_configuration_async_dir:
+      platform_configuration_async_dir:
         default: null
         required: false
-        description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `~/.ansible_async`.
+        description: >
+          Sets the directory to write the results file for async tasks.
+          The default value is set to `null` which uses the Ansible Default of `~/.ansible_async`.
 
 
       # No_log variables
-      gateway_configuration_routes_secure_logging:
+      routes_secure_logging:
         default: "{{ gateway_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
-        description: Whether or not to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
+        description: >
+          Whether or not to include the sensitive tasks from this role in the log.
+          Set this value to `true` if you will be providing your sensitive values from elsewhere.
       gateway_configuration_secure_logging:
         default: true
         required: false
@@ -122,11 +126,17 @@ argument_specs:
       gateway_password:
         default: None
         required: false
-        description: gateway user's password on the automation platform gateway. This should be stored in an Ansible Vault at vars/gateway-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
+        description: >
+          Gateway user's password on the automation platform gateway.
+          This should be stored in an Ansible Vault at vars/gateway-secrets.yml or elsewhere and called from a parent playbook.
+          Either username / password or oauthtoken need to be specified.
         type: str
       gateway_oauthtoken:
         default: None
         required: false
-        description: gateway user's token on the automation platform gateway. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
+        description: >
+          Gateway user's token on the automation platform gateway.
+          This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.
+          Either username / password or oauthtoken need to be specified.
         type: str
 ...

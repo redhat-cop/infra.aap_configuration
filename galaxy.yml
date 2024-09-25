@@ -22,11 +22,11 @@ authors:
 
 ### OPTIONAL but strongly recommended
 # A short summary description of the collection
-description: A collection of roles to manage Ansible Automation Platform 
+description: A collection of roles to manage Ansible Automation Platform
 
 # Either a single license or a list of licenses for content inside of a collection. Ansible Galaxy currently only
 # accepts L(SPDX,https://spdx.org/licenses/) licenses. This key is mutually exclusive with 'license_file'
-license:
+# license:
 
 # The path to the license file for the collection. This path is relative to the root of the collection. This key is
 # mutually exclusive with 'license'
@@ -40,7 +40,8 @@ tags: [infrastructure]
 # collection label 'namespace.name'. The value is a version range
 # L(specifiers,https://python-semanticversion.readthedocs.io/en/latest/#requirement-specification). Multiple version
 # range specifiers can be set and are separated by ','
-dependencies: {ansible.platform}
+dependencies:
+  ansible.platform: ">=2.5.0"
 
 # The URL of the originating SCM repository
 repository: https://github.com/redhat-cop/infra.platform_configuration
@@ -49,7 +50,7 @@ repository: https://github.com/redhat-cop/infra.platform_configuration
 # documentation: http://docs.example.com
 
 # The URL to the homepage of the collection/project
-#homepage: http://example.com
+# homepage: http://example.com
 
 # The URL to the collection issue tracker
 issues: https://github.com/redhat-cop/infra.platform_configuration/issues
@@ -66,4 +67,3 @@ build_ignore: []
 # 'omit_default_directives' is a boolean that controls whether the default directives are used. Mutually exclusive
 # with 'build_ignore'
 # manifest: null
-

@@ -9,11 +9,10 @@
 # These are the default variables specific to the license role
 
 # a list of dictionaries describing the organizations
-gateway_organizations: []
+organizations_list: []
 
-gateway_configuration_organizations_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
-gateway_configuration_organizations_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
-gateway_configuration_organizations_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
-gateway_configuration_async_dir: null
-gateway_configuration_organizations_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
+organizations_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
+organizations_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
+organizations_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
+organizations_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
 ...

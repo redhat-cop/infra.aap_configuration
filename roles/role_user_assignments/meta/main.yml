@@ -21,8 +21,8 @@ galaxy_info:
     - "gateway"
     - "aap"
     - "configuration"
-    - "role_user_assignment"
-    - "role_user_assignments"
+    - "roleuserassignment"
+    - "roleuserassignments"
 
 dependencies: []
 ...

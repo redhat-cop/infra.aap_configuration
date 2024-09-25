@@ -9,7 +9,7 @@
 # These are the default variables specific to the license role
 
 # a list of dictionaries describing the users
-gateway_user_accounts: []
+users_list: []
 # possible fields:
 #  - username
 #  - groups
@@ -23,11 +23,10 @@ gateway_user_accounts: []
 #  - authenticator_uid
 #  - state
 
-#gateway_user_default_password: "change_me"
+users_default_password: "change_me"
 
-gateway_configuration_users_secure_logging: "{{ gateway_configuration_secure_logging | default('true') }}"
-gateway_configuration_users_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
-gateway_configuration_users_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
-gateway_configuration_async_dir: null
-gateway_configuration_users_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
+users_secure_logging: "{{ gateway_configuration_secure_logging | default('true') }}"
+users_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
+users_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
+users_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
 ...

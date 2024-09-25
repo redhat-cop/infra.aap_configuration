@@ -1,4 +1,4 @@
-# Ansible Role ansible.gateway_configuration.routes
+# Ansible Role infra.platform_configuration.routes
 
 ## Description
 
@@ -14,17 +14,17 @@ Variables specific for this role are following:
 
 | Variable Name                                   |                    Default Value                    | Required | Description                                                                                                                                                  |                                                      |
 |:------------------------------------------------|:---------------------------------------------------:|:--------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `gateway_routes` (Alias: routes)                |             [below](#service-arguments)             |   yes    | Data structure describing your route entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `gateway_configuration_routes_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive route role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `gateway_configuration_routes_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the route role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `gateway_configuration_routes_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                            | [more](../../README.md#asynchronous-retry-variables) |
-| `gateway_configuration_routes_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                            | [more](../../README.md#asynchronous-retry-variables) |
+| `routes_list` (Alias: routes)                |             [below](#service-arguments)             |   yes    | Data structure describing your route entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
+| `routes_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive route role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `routes_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the route role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
+| `routes_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                            | [more](../../README.md#asynchronous-retry-variables) |
+| `routes_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                            | [more](../../README.md#asynchronous-retry-variables) |
 
 ## Data Structure
 
 ### Service Arguments
 
-Options for the `gateway_routes` variable:
+Options for the `routes_list` variable:
 
 | Variable Name         |    Default Value    | Required | Type | Description                                                                         |
 |:----------------------|:-------------------:|:--------:|:----:|:------------------------------------------------------------------------------------|
@@ -58,7 +58,7 @@ Options for the `gateway_routes` variable:
 
 ```json
 {
-  "gateway_services": [
+  "services_list": [
     {
       "name": "Controller Config Route",
       "state": "exists"
@@ -91,7 +91,7 @@ File name: `data/gateway_routes.yml`
 ```yaml
 ---
 gateway_state: exists
-gateway_routes:
+routes_list:
 - name: "Controller Config route"
   gateway_path: '/config/controller/'
   http_port: Port 8000

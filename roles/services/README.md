@@ -1,4 +1,4 @@
-# Ansible Role ansible.gateway_configuration.services
+# Ansible Role infra.platform_configuration.services
 
 ## Description
 
@@ -14,17 +14,17 @@ Variables specific for this role are following:
 
 | Variable Name                                     |                    Default Value                    | Required | Description                                                                                                                                                    |                                                      |
 |:--------------------------------------------------|:---------------------------------------------------:|:--------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `gateway_services` (Alias: services)              |             [below](#service-arguments)             |   yes    | Data structure describing your service entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `gateway_configuration_services_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `gateway_configuration_services_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `gateway_configuration_services_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                              | [more](../../README.md#asynchronous-retry-variables) |
-| `gateway_configuration_services_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                              | [more](../../README.md#asynchronous-retry-variables) |
+| `services_list` (Alias: services)              |             [below](#service-arguments)             |   yes    | Data structure describing your service entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
+| `services_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `services_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
+| `services_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                              | [more](../../README.md#asynchronous-retry-variables) |
+| `services_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                              | [more](../../README.md#asynchronous-retry-variables) |
 
 ## Data Structure
 
 ### Service Arguments
 
-Options for the `gateway_services` variable:
+Options for the `services_list` variable:
 
 | Variable Name         |    Default Value    | Required | Type | Description                                                                                                                                       |
 |:----------------------|:-------------------:|:--------:|:----:|:--------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -61,7 +61,7 @@ Options for the `gateway_services` variable:
 
 ```json
 {
-  "gateway_services": [
+  "services_list": [
     {
       "name": "Controller API",
       "state": "exists"
@@ -90,12 +90,12 @@ Options for the `gateway_services` variable:
 
 - Remove all gateway Services (resp. their proxy configurations)
 
-File name: `data/gateway_services.yml`
+File name: `data/services.yml`
 
 ```yaml
 ---
 gateway_state: absent
-gateway_service_clusters:
+service_clusters_list:
 - name: Controller API
 - name: Hub API
 - name: EDA API

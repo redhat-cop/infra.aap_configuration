@@ -1,4 +1,4 @@
-# Ansible Role ansible.gateway_configuration.organizations
+# Ansible Role infra.platform_configuration.organizations
 
 ## Description
 
@@ -12,11 +12,11 @@ Variables specific for this role are following:
 
 | Variable Name                                          |                    Default Value                    | Required | Description                                                                                                                                                          |                                                      |
 |:-------------------------------------------------------|:---------------------------------------------------:|:--------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `gateway_organizations` (Alias: `organizations`)       |          [below](#organization-arguments)           |   yes    | Data structure describing your organization entries described below.                                                                                                 |        [more](../../README.md#data-variables)        |
-| `gateway_configuration_organizations_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive organizations role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `gateway_configuration_organizations_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the organizations role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `gateway_configuration_organizations_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                    | [more](../../README.md#asynchronous-retry-variables) |
-| `gateway_configuration_organizations_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                    | [more](../../README.md#asynchronous-retry-variables) |
+| `organizations_list` (Alias: `organizations`)       |          [below](#organization-arguments)           |   yes    | Data structure describing your organization entries described below.                                                                                                 |        [more](../../README.md#data-variables)        |
+| `organizations_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive organizations role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `organizations_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the organizations role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
+| `organizations_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                    | [more](../../README.md#asynchronous-retry-variables) |
+| `organizations_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                    | [more](../../README.md#asynchronous-retry-variables) |
 
 ## Data Structure
 
@@ -43,7 +43,7 @@ Options for the `gateway_organizations` variable:
 
 ```json
 {
-  "gateway_organizations": [
+  "organizations_list": [
     {
       "name": "Org 1",
       "description": "First Organization"
@@ -66,7 +66,7 @@ File name: `data/gateway_organizations.yml`
 
 ```yaml
 ---
-gateway_organizations:
+organizations_list:
 - name: "Deprecated Org"
   state: absent
 - name: Org 1

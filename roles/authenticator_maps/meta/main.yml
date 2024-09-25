@@ -21,8 +21,8 @@ galaxy_info:
     - "gateway"
     - "aap"
     - "configuration"
-    - "authenticator_map"
-    - "authenticator_maps"
+    - "authenticatormap"
+    - "authenticatormaps"
 
 dependencies: []
 ...
