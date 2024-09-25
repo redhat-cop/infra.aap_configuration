@@ -1,4 +1,0 @@
----
-minor_changes:
-  - Added the option assign_instance_groups_to_org to allow skipping this when creating an org if desired
-...

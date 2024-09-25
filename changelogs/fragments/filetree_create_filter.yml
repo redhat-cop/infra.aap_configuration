@@ -1,3 +1,0 @@
----
-minor_changes:
-  - filetree_create able to filter by project_id, workflow_job_template_id or job_template_id

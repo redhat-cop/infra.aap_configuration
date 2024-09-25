@@ -1,4 +1,0 @@
----
-bugfixes:
-  - fixes an issue where spaces are stripped from variables applied to the inventories, inventory_sources, hosts, groups, credential_types and notification_templates roles
-...

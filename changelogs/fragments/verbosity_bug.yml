@@ -1,5 +1,0 @@
----
-bugfixes:
-  - fixed a bug where when verbosity was set to 0 it was being dropped and value was not being pushed to controller
-  - fixed a bug where int values were being set to 0 it was being dropped and value was not being pushed to controller
-...

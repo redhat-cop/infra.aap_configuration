@@ -1,3 +1,0 @@
----
-minor_changes:
-  - Added option to not removing '$encrypted$' string in filetree_create credentials output

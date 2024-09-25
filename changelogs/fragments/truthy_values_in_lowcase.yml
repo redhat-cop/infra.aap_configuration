@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Adjusted output of boolean filetree_create fields to provide ansible-lint compatible values.
-...
