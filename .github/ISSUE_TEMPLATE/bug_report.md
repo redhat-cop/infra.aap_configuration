@@ -11,15 +11,15 @@ assignees: ''
 <!--- Verify first that your issue is not already reported on GitHub -->
 <!--- Also test if the latest release are affected -->
 
-# Summary
+## Summary
 
 <!--- Explain the problem briefly below -->
 
-# Issue Type
+## Issue Type
 
 - Bug Report
 
-# Ansible, Collection, Event Driven Ansible Controller details
+## Ansible, Collection, Event Driven Ansible Controller details
 
 <!--- Paste verbatim output between triple backticks -->
 
@@ -34,15 +34,15 @@ Event Driven Ansible Controller version
 
 - ansible installation method: one of source, pip, OS package, EE
 
-# OS / ENVIRONMENT
+## OS / ENVIRONMENT
 
 <!--- Provide all relevant information below, e.g. target OS versions, network device firmware, etc. -->
 
-# Desired Behavior
+## Desired Behavior
 
 <!--- Describe what you expected to happen when running the steps above -->
 
-# Actual Behavior
+## Actual Behavior
 
 <!--- Describe what actually happened. If possible run with extra verbosity (-vvvv) -->
 
@@ -59,7 +59,7 @@ Include a [minimum complete verifiable example] with:
 
 ```
 
-# STEPS TO REPRODUCE
+## STEPS TO REPRODUCE
 
 <!--- Describe exactly how to reproduce the problem, using a minimal test-case -->
 
