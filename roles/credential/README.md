@@ -51,8 +51,8 @@ This also speeds up the overall role.
 |`name`|""|yes|str|Credential name. Must be lower case containing only alphanumeric characters and underscores.|
 |`new_name`|""|no|str|Setting this option will change the existing name (looked up via the name field.)|
 |`description`|""|no|str|Description to use for the credential.|
-|`username`|""|yes|str|The username of the credential.|
-|`secret`|""|yes|str|The token or password for the given username (depending upon the credential type).|
+|`organization`|""|no|Organization this Credential belongs to.|
+|`inputs`|""|no|Credential inputs where the keys are var names used in templating. Refer to the EDA controller documentation for example syntax.|
 |`credential_type`|"GitHub Personal Access Token"|yes|str|The type of the credential.|
 |`state`|`present`|no|str|Desired state of the credential.|
 
@@ -83,7 +83,7 @@ eda_credentials:
   vars:
     eda_validate_certs: false
   # Define following vars here, or in eda_configs/eda_auth.yml
-  # eda_host: ansible-eda-web-svc-test-credential.example.com
+  # controller_host: ansible-eda-web-svc-test-credential.example.com
   # eda_token: changeme
   pre_tasks:
     - name: Include vars from eda_configs directory
@@ -93,7 +93,7 @@ eda_credentials:
       tags:
         - always
   roles:
-    - ../../credential
+    - infra.eda_configuration.credential
 ```
 
 ## License

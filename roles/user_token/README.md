@@ -1,4 +1,4 @@
-# infra.eda_configuration.user_token
+# ansible.eda.user_token
 
 ## Description
 
@@ -79,7 +79,7 @@ eda_user_tokens:
   vars:
     eda_validate_certs: false
   # Define following vars here, or in eda_configs/eda_auth.yml
-  # eda_host: ansible-eda-web-svc-test-project.example.com
+  # controller_host: ansible-eda-web-svc-test-project.example.com
   # eda_token: changeme
   pre_tasks:
     - name: Include vars from eda_configs directory

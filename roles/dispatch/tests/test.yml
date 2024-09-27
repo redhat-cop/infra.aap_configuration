@@ -6,8 +6,8 @@
   vars:
     eda_validate_certs: false
     eda_hostname: eda.example.com
-    eda_username: admin
-    eda_password: changeme
+    controller_username: admin
+    controller_password: changeme
 
   collections:
     - awx.awx

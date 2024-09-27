@@ -1,4 +1,4 @@
-# infra.eda_configuration.user
+# ansible.eda.user
 
 ## Description
 
@@ -55,6 +55,7 @@ This also speeds up the overall role.
 |`email`|""|no|str|User's email address.|
 |`password`|""|yes|str|Password to use for the user.|
 |`update_secrets`|true|no|bool|Setting true will always change password if user specifies password. Password will only change if false if other fields change.|
+|`is_superuser`|""|no|bool|Make user as superuser.|
 |`roles`|""|yes|list|Roles the user will have. Current acceptable values are: Viewer, Auditor, Editor, Contributor, Operator, Admin.|
 |`state`|`present`|no|str|Desired state of the user.|
 
@@ -89,7 +90,7 @@ eda_users:
   vars:
     eda_validate_certs: false
   # Define following vars here, or in eda_configs/eda_auth.yml
-  # eda_host: ansible-eda-web-svc-test-user.example.com
+  # controller_host: ansible-eda-web-svc-test-user.example.com
   # eda_token: changeme
   pre_tasks:
     - name: Include vars from eda_configs directory

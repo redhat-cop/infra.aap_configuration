@@ -45,7 +45,7 @@ argument_specs:
         description: This variable enables secure logging across all roles as a default.
 
       # Generic across all roles
-      eda_host:
+      controller_host:
         required: false
         description: URL to the EDA Controller Server.
         type: str
@@ -59,11 +59,11 @@ argument_specs:
         required: false
         description: Specify the timeout Ansible should use in requests to the EDA Controller host.
         type: float
-      eda_username:
+      controller_username:
         required: false
         description: User for authentication on EDA Controller
         type: str
-      eda_password:
+      controller_password:
         required: false
         description: User's password For EDA Controller
         type: str

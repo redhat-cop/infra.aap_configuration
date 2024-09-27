@@ -2,7 +2,7 @@
 
 # Create EDA Controller Rulebook Activation
 - name: Add EDA Controller rulebook activation
-  infra.eda_configuration.rulebook_activation:
+  ansible.eda.rulebook_activation:
     name:                 "{{ __ra_item.name }}"
     description:          "{{ __ra_item.description | default(omit) }}"
     project:              "{{ __ra_item.project | default(omit) }}"
@@ -12,10 +12,16 @@
     restart_policy:       "{{ __ra_item.restart_policy | default(omit) }}"
     extra_vars:           "{{ __ra_item.extra_vars | default(omit) }}"
     enabled:              "{{ __ra_item.enabled | default(omit) }}"
+    organization_name:    "{{ __ra_item.organization | default(omit) }}"
+    eda_credentials:      "{{ __ra_item.eda_credentials | default(omit) }}"
+    k8s_service_name:     "{{ __ra_item.k8s_service_name | default(omit) }}"
+    swap_single_source:   "{{ __ra_item.swap_single_source | default(omit) }}"
+    event_streams:        "{{ __ra_item.event_streams | default(omit) }}"
+    log_level:            "{{ __ra_item.log_level | default(omit) }}"
     state:                "{{ __ra_item.state | default(eda_state | default('present')) }}"
-    eda_host:             "{{ eda_host | default(eda_hostname) }}"
-    eda_username:         "{{ eda_username | default(omit) }}"
-    eda_password:         "{{ eda_password | default(omit) }}"
+    controller_host:      "{{ eda_host | default(eda_hostname) }}"
+    controller_username:  "{{ eda_username | default(omit) }}"
+    controller_password:  "{{ eda_password | default(omit) }}"
     validate_certs:       "{{ eda_validate_certs | default(omit) }}"
     request_timeout:      "{{ eda_request_timeout | default(omit) }}"
   loop: "{{ eda_rulebook_activations }}"
