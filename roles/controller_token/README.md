@@ -22,11 +22,11 @@ Note that tokens cannot be updated, only created.
 The following Variables complement each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add project task does not include sensitive information.
-eda_configuration_controller_tokenssecure_logging defaults to the value of eda_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of EDA Controller configuration roles with a single variable, or for the user to selectively use it.
+eda_configuration_user_token_secure_logging defaults to the value of eda_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of EDA Controller configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`eda_configuration_controller_tokenssecure_logging`|`False`|no|Whether or not to include the sensitive Project role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`eda_configuration_user_token_secure_logging`|`False`|no|Whether or not to include the sensitive Project role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`eda_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
@@ -39,9 +39,9 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`eda_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
-|`eda_configuration_controller_tokensasync_retries`|`eda_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
+|`eda_configuration_user_token_async_retries`|`eda_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
 |`eda_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
-|`eda_configuration_controller_tokensasync_delay`|`eda_configuration_async_delay`|no|This sets the delay between retries for the role.|
+|`eda_configuration_user_token_async_delay`|`eda_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
 ## Data Structure
 
