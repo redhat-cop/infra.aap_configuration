@@ -2,18 +2,19 @@
 
 # Create EDA Controller Decision Environment
 - name: Add EDA Controller decision environment
-  infra.eda_configuration.decision_environment:
-    name:             "{{ __de_item.name }}"
-    new_name:         "{{ __de_item.new_name | default(omit) }}"
-    description:      "{{ __de_item.description | default(omit) }}"
-    image_url:        "{{ __de_item.image_url | default(omit) }}"
-    credential:       "{{ __de_item.credential | default(omit) }}"
-    state:            "{{ __de_item.state | default(eda_state | default('present')) }}"
-    eda_host:         "{{ eda_host | default(eda_hostname) }}"
-    eda_username:     "{{ eda_username | default(omit) }}"
-    eda_password:     "{{ eda_password | default(omit) }}"
-    validate_certs:   "{{ eda_validate_certs | default(omit) }}"
-    request_timeout:  "{{ eda_request_timeout | default(omit) }}"
+  ansible.eda.decision_environment:
+    name:                "{{ __de_item.name }}"
+    new_name:            "{{ __de_item.new_name | default(omit) }}"
+    description:         "{{ __de_item.description | default(omit) }}"
+    image_url:           "{{ __de_item.image_url | default(omit) }}"
+    credential:          "{{ __de_item.credential | default(omit) }}"
+    organization_name:   "{{ __de_item.organization | default(omit) }}"
+    state:               "{{ __de_item.state | default(eda_state | default('present')) }}"
+    controller_host:     "{{ eda_host | default(eda_hostname) }}"
+    controller_username: "{{ eda_username | default(omit) }}"
+    controller_password: "{{ eda_password | default(omit) }}"
+    validate_certs:      "{{ eda_validate_certs | default(omit) }}"
+    request_timeout:     "{{ eda_request_timeout | default(omit) }}"
   loop: "{{ eda_decision_environments }}"
   loop_control:
     loop_var: "__de_item"

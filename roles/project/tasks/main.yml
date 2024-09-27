@@ -2,19 +2,20 @@
 
 # Create EDA Controller Project
 - name: Add EDA Controller project
-  infra.eda_configuration.project:
-    name:             "{{ __project_item.name }}"
-    new_name:         "{{ __project_item.new_name | default(omit) }}"
-    description:      "{{ __project_item.description | default(omit) }}"
-    url:              "{{ __project_item.url | default(__project_item.scm_url | default(omit)) }}"
-    tls_validation:   "{{ __project_item.tls_validation | default(omit) }}"
-    credential:       "{{ __project_item.credential | default(omit) }}"
-    state:            "{{ __project_item.state | default(eda_state | default('present')) }}"
-    eda_host:         "{{ eda_host | default(eda_hostname) }}"
-    eda_username:     "{{ eda_username | default(omit) }}"
-    eda_password:     "{{ eda_password | default(omit) }}"
-    validate_certs:   "{{ eda_validate_certs | default(omit) }}"
-    request_timeout:  "{{ eda_request_timeout | default(omit) }}"
+  ansible.eda.project:
+    name:                "{{ __project_item.name }}"
+    new_name:            "{{ __project_item.new_name | default(omit) }}"
+    description:         "{{ __project_item.description | default(omit) }}"
+    url:                 "{{ __project_item.url | default(__project_item.scm_url | default(omit)) }}"
+    # tls_validation:    "{{ __project_item.tls_validation | default(omit) }}"
+    credential:          "{{ __project_item.credential | default(omit) }}"
+    organization_name:   "{{ __project_item.organization | default(omit) }}"
+    state:               "{{ __project_item.state | default(eda_state | default('present')) }}"
+    controller_host:     "{{ eda_host | default(eda_hostname) }}"
+    controller_username: "{{ eda_username | default(omit) }}"
+    controller_password: "{{ eda_password | default(omit) }}"
+    validate_certs:      "{{ eda_validate_certs | default(omit) }}"
+    request_timeout:     "{{ eda_request_timeout | default(omit) }}"
   loop: "{{ eda_projects }}"
   loop_control:
     loop_var: "__project_item"

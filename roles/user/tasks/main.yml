@@ -2,21 +2,22 @@
 
 # Create EDA Controller user
 - name: Add EDA Controller user
-  infra.eda_configuration.user:
-    username:         "{{ __user_item.username }}"
-    new_username:     "{{ __user_item.new_username | default(omit) }}"
-    first_name:       "{{ __user_item.first_name | default(omit) }}"
-    last_name:        "{{ __user_item.last_name | default(omit) }}"
-    email:            "{{ __user_item.email | default(omit) }}"
-    password:         "{{ __user_item.password | default(omit) }}"
-    update_secrets:   "{{ __user_item.update_secrets | default(omit) }}"
-    roles:            "{{ __user_item.roles | default(omit) }}"
-    state:            "{{ __user_item.state | default(eda_state | default('present')) }}"
-    eda_host:         "{{ eda_host | default(eda_hostname) }}"
-    eda_username:     "{{ eda_username | default(omit) }}"
-    eda_password:     "{{ eda_password | default(omit) }}"
-    validate_certs:   "{{ eda_validate_certs | default(omit) }}"
-    request_timeout:  "{{ eda_request_timeout | default(omit) }}"
+  ansible.eda.user:
+    username:            "{{ __user_item.username }}"
+    new_username:        "{{ __user_item.new_username | default(omit) }}"
+    first_name:          "{{ __user_item.first_name | default(omit) }}"
+    last_name:           "{{ __user_item.last_name | default(omit) }}"
+    email:               "{{ __user_item.email | default(omit) }}"
+    password:            "{{ __user_item.password | default(omit) }}"
+    update_secrets:      "{{ __user_item.update_secrets | default(omit) }}"
+    is_superuser:        "{{ __user_item.is_superuser | default(omit) }}"
+    roles:               "{{ __user_item.roles | default(omit) }}"
+    state:               "{{ __user_item.state | default(eda_state | default('present')) }}"
+    controller_host:     "{{ eda_host | default(eda_hostname) }}"
+    controller_username: "{{ eda_username | default(omit) }}"
+    controller_password: "{{ eda_password | default(omit) }}"
+    validate_certs:      "{{ eda_validate_certs | default(omit) }}"
+    request_timeout:     "{{ eda_request_timeout | default(omit) }}"
   loop: "{{ eda_users }}"
   loop_control:
     loop_var: "__user_item"

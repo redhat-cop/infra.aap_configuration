@@ -56,7 +56,7 @@ collections:
 
 ## Using this collection
 
-You can make use of this collection by directly invoking the roles or modules using the FQCN (fully qualified collection name).
+You can make use of this collection by directly invoking the roles using the FQCN (fully qualified collection name).
 
 In a playbook this might look like:
 
@@ -65,18 +65,6 @@ In a playbook this might look like:
   hosts: localhost
   roles:
     - infra.eda_configuration.projects
-```
-
-or
-
-```yaml
-- name: Call Project role
-  hosts: localhost
-  tasks:
-    - name: Add a project
-      infra.eda_configuration.project:
-        name: my_project
-        url: https://github.com/my/project.git
 ```
 
 ### See Also

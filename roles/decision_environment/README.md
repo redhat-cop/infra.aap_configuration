@@ -53,6 +53,7 @@ This also speeds up the overall role.
 |`description`|""|no|str|Description to use for the Project.|
 |`image_url`|""|yes|str|A URL to a a container image to use for the decision environment.|
 |`credential`|""|no|str|The credential used to access the container registry holding the image.|
+|`organization`|""|no|Organization this decision environment belongs to.|
 |`state`|`present`|no|str|Desired state of the decision environment.|
 
 ### Standard Decision Environment Data Structure
@@ -81,7 +82,7 @@ eda_decision_environments:
   vars:
     eda_validate_certs: false
   # Define following vars here, or in eda_configs/eda_auth.yml
-  # eda_host: ansible-eda-web-svc-test-project.example.com
+  # controller_host: ansible-eda-web-svc-test-project.example.com
   # eda_token: changeme
   pre_tasks:
     - name: Include vars from eda_configs directory
@@ -91,7 +92,7 @@ eda_decision_environments:
       tags:
         - always
   roles:
-    - ../../decision_environment
+    - infra.eda_configuration.decision_environment
 ```
 
 ## License

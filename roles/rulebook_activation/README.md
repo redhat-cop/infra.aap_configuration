@@ -58,6 +58,12 @@ This also speeds up the overall role.
 |`awx_token`|""|no|str|The token used to authenticate to controller.|
 |`enabled`|"true"|no|str|Whether the rulebook activation is automatically enabled to run.|
 |`state`|`present`|no|str|Desired state of the rulebook activation.|
+|`organization_name`|""|no|str|The name of the organization.|
+|`eda_credentials`|""|no|list|A list of IDs for EDA credentials used by the rulebook activation.|
+|`k8s_service_name`|""|no|str|The name of the Kubernetes service associated with this rulebook activation.|
+|`swap_single_source`|"true"|no|bool|Allow swapping of single sources in a rulebook without name match.|
+|`event_streams`|""|no|list|A list of event stream names that this rulebook activation listens to.|
+|`log_level`|""|no|str|Allow setting the desired log level.|
 
 ### Standard rulebook activation Data Structure
 
@@ -91,7 +97,7 @@ eda_rulebook_activations:
   vars:
     eda_validate_certs: false
   # Define following vars here, or in eda_configs/eda_auth.yml
-  # eda_host: ansible-eda-web-svc-test-project.example.com
+  # controller_host: ansible-eda-web-svc-test-project.example.com
   # eda_token: changeme
   pre_tasks:
     - name: Include vars from eda_configs directory

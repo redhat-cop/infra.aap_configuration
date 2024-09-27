@@ -4,7 +4,8 @@ authors:
   - Tom Page @Tompage1994
   - Sean Sullivan @sean-m-sullivan
   - David Danielsson @djdanielsson
-dependencies: {}
+dependencies:
+  ansible.eda: ">=2.1.0"
 description: Ansible content that interacts with the Ansible EDA Controller.
 documentation: https://github.com/redhat-cop/eda_configuration/blob/devel/README.md
 license:
