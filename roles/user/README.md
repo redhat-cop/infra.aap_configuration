@@ -1,4 +1,4 @@
-# ansible.eda.user
+# infra.eda_configuration.user
 
 ## Description
 
