@@ -16,7 +16,7 @@ Each role has its own variables, for information on those please see each role w
 eda_configuration_dispatcher_roles:
   - {role: user, var: eda_users, tags: user}
   - {role: credential, var: eda_credentials, tags: credential}
-  - {role: user_token, var: eda_user_tokens, tags: user_token}
+  - {role: controller_token, var: eda_controller_tokens, tags: controller_token}
   - {role: project, var: eda_projects, tags: project}
   - {role: project_sync, var: eda_projects, tags: project_sync}
   - {role: decision_environment, var: eda_decision_environments, tags: decision_environment}

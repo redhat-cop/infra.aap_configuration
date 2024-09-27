@@ -29,59 +29,9 @@ objects:
       description: An Ansible Role to create users in EDA controller.
       name: user
       version_added: null
-    user_token:
+    controller_token:
       description: An Ansible Role to create user tokens in EDA controller.
-      name: user_token
-      version_added: null
-plugins:
-  become: {}
-  cache: {}
-  callback: {}
-  cliconf: {}
-  connection: {}
-  filter: {}
-  httpapi: {}
-  inventory: {}
-  lookup:
-    eda_api:
-      description: Search the API for objects
-      name: eda_api
-      version_added: null
-  module:
-    credential:
-      description: Manage a Credential in EDA Controller
-      name: credential
-      namespace: ''
-      version_added: null
-    decision_environment:
-      description: Manage a Decision Environment in EDA Controller
-      name: decision_environment
-      namespace: ''
-      version_added: null
-    project:
-      description: Manage a project in EDA Controller
-      name: project
-      namespace: ''
-      version_added: null
-    project_sync:
-      description: Sync a project in EDA Controller
-      name: project_sync
-      namespace: ''
-      version_added: null
-    rulebook_activation:
-      description: Manage a rulebook_activation in EDA Controller
-      name: rulebook_activation
-      namespace: ''
-      version_added: null
-    user:
-      description: Manage a user in EDA Controller
-      name: user
-      namespace: ''
-      version_added: null
-    user_token:
-      description: Manage the user tokens of the current user in EDA Controller
-      name: user_token
-      namespace: ''
+      name: controller_token
       version_added: null
   netconf: {}
   shell: {}
