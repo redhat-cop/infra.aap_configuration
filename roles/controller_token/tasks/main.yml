@@ -14,7 +14,7 @@
   loop: "{{ eda_controller_tokens }}"
   loop_control:
     loop_var: "__token_item"
-  no_log: "{{ eda_configuration_controller_tokenssecure_logging }}"
+  no_log: "{{ eda_configuration_user_token_secure_logging }}"
   async: 1000
   poll: 0
   register: __controller_tokens_job_async
@@ -27,13 +27,13 @@
     jid: "{{ __controller_tokens_job_async_result_item.ansible_job_id }}"
   register: __controller_tokens_job_async_result
   until: __controller_tokens_job_async_result.finished
-  retries: "{{ eda_configuration_controller_tokensasync_retries }}"
-  delay: "{{ eda_configuration_controller_tokensasync_delay }}"
+  retries: "{{ eda_configuration_user_token_async_retries }}"
+  delay: "{{ eda_configuration_user_token_async_delay }}"
   loop: "{{ __controller_tokens_job_async.results }}"
   loop_control:
     loop_var: __controller_tokens_job_async_result_item
   when: __controller_tokens_job_async_result_item.ansible_job_id is defined
-  no_log: "{{ eda_configuration_controller_tokenssecure_logging }}"
+  no_log: "{{ eda_configuration_user_token_secure_logging }}"
   vars:
     ansible_async_dir: '{{ eda_configuration_async_dir }}'
 ...
