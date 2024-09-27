@@ -53,7 +53,7 @@ This also speeds up the overall role.
 |`description`|""|no|str|Description to use for the Project.|
 |`image_url`|""|yes|str|A URL to a a container image to use for the decision environment.|
 |`credential`|""|no|str|The credential used to access the container registry holding the image.|
-|`organization`|""|no|Organization this decision environment belongs to.|
+|`organization`|""|no|str|Organization this decision environment belongs to.|
 |`state`|`present`|no|str|Desired state of the decision environment.|
 
 ### Standard Decision Environment Data Structure
