@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "user_token"
+  role_name: controller_token
   author: "Derek Waters"
   description: "An Ansible Role to create a user token in EDA Controller."
   company: "Red Hat"
@@ -33,8 +33,6 @@ galaxy_info:
     - "edacontroller"
     - "eda"
     - "configuration"
-    - "user"
-    - "users"
 
 dependencies: []
 # List your role dependencies here, one per line. Be sure to remove the '[]' above,
