@@ -32,7 +32,6 @@ argument_specs:
             type: str
             description: Desired state of the resource.
 
-
       # Async variables
       teams_async_retries:
         default: "{{ gateway_configuration_async_retries | default(30) }}"

@@ -10,7 +10,6 @@
 
 # a list of dictionaries describing the role_user_assignments
 role_user_assignments_list: []
-
 role_user_assignments_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
 role_user_assignments_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
 role_user_assignments_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"

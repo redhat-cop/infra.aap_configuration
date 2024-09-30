@@ -1,5 +1,5 @@
 ---
-- name: "Run ansible.platform.{{ __role.role }}"
+- name: Run ansible.platform.{{ __role.role }}
   ansible.builtin.include_role:
     name: "{{ __role.role }}"
     apply:

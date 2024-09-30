@@ -10,7 +10,6 @@
 
 # a list of dictionaries describing the authenticators
 authenticators_list: []
-
 authenticators_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
 authenticators_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
 authenticators_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"

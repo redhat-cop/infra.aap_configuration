@@ -71,7 +71,6 @@ argument_specs:
         required: false
         description: This variable sets delay between retries across all roles as a default.
 
-
       # No_log variables
       gateway_configuration_secure_logging:
         default: false

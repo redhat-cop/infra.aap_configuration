@@ -10,7 +10,6 @@
 
 # a list of dictionaries describing the service keys
 service_keys_list: []
-
 service_keys_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
 service_keys_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
 service_keys_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"

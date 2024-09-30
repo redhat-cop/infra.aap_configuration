@@ -1,28 +1,28 @@
 ---
 galaxy_info:
-  role_name: "role_user_assignments"
-  author: "Martin Slemr"
-  description: "An Ansible Role to create RBAC Role User Assignments in Automation Platform gateway."
-  company: "Red Hat"
+  role_name: role_user_assignments
+  author: Martin Slemr
+  description: An Ansible Role to create RBAC Role User Assignments in Automation Platform gateway.
+  company: Red Hat
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
   # issue_tracker_url: http://example.com/issue/tracker
-  license: "GPLv3"
+  license: GPLv3
 
   min_ansible_version: 2.16.0
 
   platforms:
-    - name: "EL"
+    - name: EL
       versions:
-        - "all"
+        - all
 
   galaxy_tags:
-    - "gateway"
-    - "aap"
-    - "configuration"
-    - "roleuserassignment"
-    - "roleuserassignments"
+    - gateway
+    - aap
+    - configuration
+    - roleuserassignment
+    - roleuserassignments
 
 dependencies: []
 ...

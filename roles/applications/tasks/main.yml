@@ -1,6 +1,6 @@
 ---
 # Create gateway applications
-- name: "Managing gateway Applications"
+- name: Managing gateway Applications
   ansible.platform.application:
     name: "{{ __application_item.name | mandatory }}"
     new_name: "{{ __application_item.new_name | default(omit, true) }}"
@@ -25,16 +25,16 @@
     gateway_validate_certs: "{{ gateway_validate_certs | default(omit) }}"
   loop: "{{ applications if applications is defined else applications_list }}"
   loop_control:
-    loop_var: "__application_item"
+    loop_var: __application_item
   no_log: "{{ applications_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
   register: __gateway_applications_job_async
   changed_when: not __gateway_applications_job_async.changed
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir | default(omit) }}'
+    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
 
-- name: "Applications | Wait for finish the configuration"
+- name: Applications | Wait for finish the configuration
   ansible.builtin.async_status:
     jid: "{{ __gateway_applications_job_async_results_item.ansible_job_id }}"
   register: __gateway_applications_job_async_result
@@ -47,5 +47,5 @@
   when: __gateway_applications_job_async_results_item.ansible_job_id is defined
   no_log: "{{ applications_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir | default(omit) }}'
+    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
 ...

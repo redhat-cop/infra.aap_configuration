@@ -1,5 +1,5 @@
 ---
-- name: "Service Nodes | Configuration"  # noqa fqcn[action-core]
+- name: Service Nodes | Configuration # noqa fqcn[action-core]
   ansible.platform.service_node:
     name: "{{ __gateway_service_nodes_item.name | mandatory }}"
     new_name: "{{ __gateway_service_nodes_item.new_name | default(omit) }}"
@@ -24,9 +24,9 @@
   register: __gateway_service_nodes_job_async
   changed_when: not __gateway_service_nodes_job_async.changed
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir | default(omit) }}'
+    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
 
-- name: "Service Nodes | Wait for finish the configuration"
+- name: Service Nodes | Wait for finish the configuration
   ansible.builtin.async_status:
     jid: "{{ __gateway_service_nodes_job_async_results_item.ansible_job_id }}"
   register: __gateway_service_nodes_job_async_result
@@ -39,5 +39,5 @@
   when: __gateway_service_nodes_job_async_results_item.ansible_job_id is defined
   no_log: "{{ service_nodes_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir | default(omit) }}'
+    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
 ...

@@ -10,7 +10,6 @@
 
 # a list of dictionaries describing the authenticator maps
 authenticator_maps_list: []
-
 authenticator_maps_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
 authenticator_maps_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
 authenticator_maps_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
