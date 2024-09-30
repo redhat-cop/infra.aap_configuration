@@ -42,15 +42,12 @@ argument_specs:
             description: The type of authentication service this is
           order:
             type: int
-            description:
-              The order in which an authenticator will be tried. This only pertains to username/password authenticators
-              defaults to 1 (by API)
+            description: The order in which an authenticator will be tried. This only pertains to username/password authenticators defaults to 1 (by API)
           state:
             default: "{{ gateway_state | default('present') }}"
             required: false
             type: str
             description: Desired state of the resource.
-
 
       # Async variables
       authenticators_async_retries:

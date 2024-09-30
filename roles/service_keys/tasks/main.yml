@@ -1,5 +1,5 @@
 ---
-- name: "Service Keys | Configuration"  # noqa fqcn[action-core]
+- name: Service Keys | Configuration # noqa fqcn[action-core]
   ansible.platform.service_key:
     name: "{{ __gateway_service_keys_item.name | mandatory }}"
     new_name: "{{ __gateway_service_keys_item.new_name | default(omit) }}"
@@ -27,9 +27,9 @@
   register: __gateway_service_keys_job_async
   changed_when: not __gateway_service_keys_job_async.changed
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir | default(omit) }}'
+    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
 
-- name: "Service Keys | Wait for finish the configuration"
+- name: Service Keys | Wait for finish the configuration
   ansible.builtin.async_status:
     jid: "{{ __gateway_service_keys_job_async_results_item.ansible_job_id }}"
   register: __gateway_service_keys_job_async_result
@@ -42,5 +42,5 @@
   when: __gateway_service_keys_job_async_results_item.ansible_job_id is defined
   no_log: "{{ service_keys_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir | default(omit) }}'
+    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
 ...

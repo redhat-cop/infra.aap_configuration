@@ -23,7 +23,7 @@ users_list: []
 #  - authenticator_uid
 #  - state
 
-users_default_password: "change_me"
+users_default_password: change_me
 
 users_secure_logging: "{{ gateway_configuration_secure_logging | default('true') }}"
 users_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"

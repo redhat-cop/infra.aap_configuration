@@ -7,10 +7,18 @@ ignore: |
 rules:
   # 80 chars should be enough, but don't fail if a line is longer
   line-length: disable
+  comments:
+    min-spaces-from-content: 1
+  comments-indentation: false
+  braces:
+    max-spaces-inside: 1
+  octal-values:
+    forbid-implicit-octal: true
+    forbid-explicit-octal: true
   colons:
-    max-spaces-before: 0
+    max-spaces-before: 1
     max-spaces-after: -1
-  document-end: {present: true}
+  document-end: { present: true }
   indentation:
     level: error
     # Require indentation https://redhat-cop.github.io/automation-good-practices/#_yaml_and_jinja2_syntax
@@ -19,6 +27,6 @@ rules:
     level: error
     # Allow only YAML 1.2 booleans https://redhat-cop.github.io/automation-good-practices/#_yaml_and_jinja2_syntax
     allowed-values:
-      - 'true'
-      - 'false'
+      - "true"
+      - "false"
 ...

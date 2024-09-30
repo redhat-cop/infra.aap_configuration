@@ -25,7 +25,7 @@ argument_specs:
           algorithm:
             description: |
               algorithm to use for this Service Key
-            choices: ["HS256", "HS384", "HS512"]
+            choices: [HS256, HS384, HS512]
           secret:
             type: str
             description: |

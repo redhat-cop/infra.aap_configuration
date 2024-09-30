@@ -61,7 +61,6 @@ argument_specs:
             type: str
             description: Desired state of the application.
 
-
       # Async variables
       applications_async_retries:
         default: "{{ gateway_configuration_async_retries | default(30) }}"
@@ -80,7 +79,7 @@ argument_specs:
         required: false
         description: This variable sets delay between retries across all roles as a default.
       platform_configuration_async_dir:
-        default: null
+        default: null null
         required: false
         description: >
           Sets the directory to write the results file for async tasks.

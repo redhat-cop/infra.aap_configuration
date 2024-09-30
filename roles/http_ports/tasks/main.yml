@@ -1,5 +1,5 @@
 ---
-- name: "Http Ports | Configuration"  # noqa fqcn[action-core]
+- name: Http Ports | Configuration # noqa fqcn[action-core]
   ansible.platform.http_port:
     name: "{{ __gateway_http_ports_item.name | mandatory }}"
     new_name: "{{ __gateway_http_ports_item.new_name | default(omit) }}"
@@ -24,9 +24,9 @@
   register: __gateway_http_ports_job_async
   changed_when: not __gateway_http_ports_job_async.changed
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir | default(omit) }}'
+    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
 
-- name: "Http Ports | Wait for finish the configuration"
+- name: Http Ports | Wait for finish the configuration
   ansible.builtin.async_status:
     jid: "{{ __gateway_http_ports_job_async_results_item.ansible_job_id }}"
   register: __gateway_http_ports_job_async_result
@@ -39,5 +39,5 @@
   when: __gateway_http_ports_job_async_results_item.ansible_job_id is defined
   no_log: "{{ http_ports_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir | default(omit) }}'
+    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
 ...

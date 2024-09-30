@@ -10,7 +10,6 @@
 
 # a list of dictionaries describing the service nodes
 routes_list: []
-
 routes_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
 routes_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
 routes_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"

@@ -40,7 +40,6 @@ argument_specs:
             type: str
             description: Desired state of the resource.
 
-
       # Async variables
       role_user_assignments_async_retries:
         default: "{{ gateway_configuration_async_retries | default(30) }}"

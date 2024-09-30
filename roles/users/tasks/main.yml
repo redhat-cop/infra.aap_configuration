@@ -1,5 +1,5 @@
 ---
-- name: "Users | Configuration"  # noqa fqcn[action-core]
+- name: Users | Configuration # noqa fqcn[action-core]
   ansible.platform.user:
     username: "{{ __gateway_user_accounts_item.username | mandatory }}"
     # the 'true' in the second default leads to no password being set if the default password is empty
@@ -30,9 +30,9 @@
   register: __gateway_user_accounts_job_async
   changed_when: not __gateway_user_accounts_job_async.changed
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir | default(omit) }}'
+    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
 
-- name: "Users | Wait for finish the configuration"
+- name: Users | Wait for finish the configuration
   ansible.builtin.async_status:
     jid: "{{ __gateway_user_accounts_job_async_results_item.ansible_job_id }}"
   register: __gateway_user_accounts_job_async_result
@@ -45,5 +45,5 @@
   when: __gateway_user_accounts_job_async_results_item.ansible_job_id is defined
   no_log: "{{ users_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir | default(omit) }}'
+    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
 ...

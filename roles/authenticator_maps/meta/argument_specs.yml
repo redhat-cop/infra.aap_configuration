@@ -31,7 +31,7 @@ argument_specs:
             description: |
               What does the map work on, a team, a user flag or is this an allow rule
               Defaults to "team" (by API)
-            choices: ["allow", "is_superuser", "team", "organization", "role"]
+            choices: [allow, is_superuser, team, organization, role]
           team:
             type: str
             description: |
@@ -46,8 +46,7 @@ argument_specs:
               required if role's content type is either 'organization' or 'team'
           role:
             type: str
-            description:
-              The name of the RBAC Role Definition to be used for this map
+            description: The name of the RBAC Role Definition to be used for this map
           triggers:
             type: dict
             description: Trigger information for this rule
