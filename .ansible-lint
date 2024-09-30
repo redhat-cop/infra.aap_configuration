@@ -25,7 +25,6 @@ mock_modules:
   - ansible.platform.role_user_assignment
   - ansible.platform.application
   - ansible.platform.organization
-  - ansible.platform.route
   - ansible.platform.service
   - ansible.platform.authenticator_map
   - ansible.platform.service_node
