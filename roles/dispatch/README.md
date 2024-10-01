@@ -45,11 +45,35 @@ controller_configuration_dispatcher_roles:
   - {role: roles, var: controller_roles, tags: roles}
   - {role: job_launch, var: controller_launch_jobs, tags: job_launch}
   - {role: workflow_launch, var: controller_workflow_launch_jobs, tags: workflow_launch}
+# infra.eda_configuration.dispatch
+
+## Description
+
+An Ansible Role to run all roles on EDA Controller.
+
+## Requirements
+
+None
+
+## Variables
+
+Each role has its own variables, for information on those please see each role which this role will call. This role has one key variable `eda_configuration_dispatcher_roles` and its default value is shown below:
+
+```yaml
+eda_configuration_dispatcher_roles:
+  - {role: user, var: eda_users, tags: user}
+  - {role: credential, var: eda_credentials, tags: credential}
+  - {role: controller_token, var: eda_controller_tokens, tags: controller_token}
+  - {role: project, var: eda_projects, tags: project}
+  - {role: project_sync, var: eda_projects, tags: project_sync}
+  - {role: decision_environment, var: eda_decision_environments, tags: decision_environment}
+  - {role: rulebook_activation, var: eda_rulebook_activations, tags: rulebook_activation}
 ```
 
 Note that each item has three elements:
 
 - `role` which is the name of the role within infra.controller_configuration
+- `role` which is the name of the role within infra.eda_configuration
 - `var` which is the variable which is used in that role. We use this to prevent the role being called if the variable is not set
 - `tags` the tags which are applied to the role so it is possible to apply tags to a playbook using the dispatcher with these tags.
 
@@ -117,6 +141,11 @@ The default value is set to  `null` which uses the Ansible Default of `/root/.an
 |`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 |`ah_validate_certs`|`true`|no|Whether or not to validate the Ansible Automation Hub Server's SSL certificate.||
 |`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
+|`eda_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
+|`eda_hostname`|""|yes|URL to the EDA Server.|127.0.0.1|
+|`eda_validate_certs`|`True`|no|Whether or not to validate the EDA Controller Server's SSL certificate.||
+|`eda_username`|""|no|Admin User on the EDA Controller Server.||
+|`eda_password`|""|no|EDA Admin User's password on the EDA Controller Server. This should be stored in an Ansible Vault at vars/eda-secrets.yml or elsewhere and called from a parent playbook.||
 
 ### Secure Logging Variables
 
@@ -132,6 +161,11 @@ Each role the dispatch role calls has a separate variable which can be turned on
 |:---:|:---:|:---:|:---:|
 |`ah_configuration_ee_registry_secure_logging`|`False`|no|Whether or not to include the sensitive Registry role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`ah_configuration_secure_logging`|""|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
+Each role the dispatch role calls has a separate variable which can be turned on to enforce secure logging for that role but defaults to the value of eda_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it. If neither value is set then each role has a default value of true or false depending on the Red Hat COP suggestions.
+
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|
+|`eda_configuration_secure_logging`|""|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
 
@@ -146,6 +180,8 @@ This also speeds up the overall role. Each individual role has its own variable 
 |`controller_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
 |`ah_configuration_async_retries`|30|no|This variable sets the number of retries to attempt for the role globally.|
 |`ah_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
+|`eda_configuration_async_retries`|30|no|This variable sets the number of retries to attempt for the role globally.|
+|`eda_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
 
 ## Playbook Examples
 
@@ -183,6 +219,17 @@ This also speeds up the overall role. Each individual role has its own variable 
         extensions: ["yml"]
   roles:
     - galaxy.galaxy.dispatch
+- name: Playbook to configure EDA post installation
+  hosts: localhost
+  connection: local
+  pre_tasks:
+    - name: Include vars from eda_configs directory
+      ansible.builtin.include_vars:
+        dir: ./yaml
+        ignore_files: [eda_config.yml.template]
+        extensions: ["yml"]
+  roles:
+    - infra.eda_configuration.dispatch
 ```
 
 ## License
@@ -196,4 +243,8 @@ This also speeds up the overall role. Each individual role has its own variable 
 ## Author
 
 [Alan Wong](https://github.com/alawong)
+[GPL-3.0](https://github.com/redhat-cop/eda_configuration#licensing)
+
+## Author
+
 [Tom Page](https://github.com/Tompage1994)

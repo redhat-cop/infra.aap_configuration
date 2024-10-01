@@ -1,20 +1,16 @@
 ---
 galaxy_info:
-  role_name: "dispatch"
-  author: "Tom Page"
-  description: "An Ansible Role which launches all of the roles within the controller_configuration Collection."
-  author: "Alan Wong and Tom Page"
-  description: "An Ansible Role which launches all of the roles for which variables are found within the ah_configuration collection."
-  description: "An Ansible Role which launches all of the roles within the eda_configuration Collection."
+  role_name: "project"
+  author: "Chris Renwick"
+  description: "An Ansible Role to create a project in EDA Controller."
   company: "Red Hat"
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
   # issue_tracker_url: http://example.com/issue/tracker
-  license: GPL-3.0-or-later
+  license: "GPLv3+"
 
   min_ansible_version: 2.15.0
-  min_ansible_version: 2.14.0
 
   # Optionally specify the branch Galaxy will use when accessing the GitHub
   # repo for this role. During role install, if no tags are available,
@@ -22,6 +18,7 @@ galaxy_info:
   # this branch. If Travis integration is configured, only notifications for this
   # branch will be accepted. Otherwise, in all cases, the repo's default branch
   # (usually master) will be used.
+
   # github_branch:
 
   #
@@ -33,22 +30,11 @@ galaxy_info:
         - "all"
 
   galaxy_tags:
-    - "controller"
-    - "ah"
-    - "aap"
-    - "awx"
-    - "configuration"
-    - "dispatch"
-
-collections:
-  - ansible.controller
-  - awx.awx
+    - "edacontroller"
     - "eda"
-    - "aap"
     - "configuration"
-    - "dispatch"
-
-collections: []
+    - "project"
+    - "projects"
 
 dependencies: []
 # List your role dependencies here, one per line. Be sure to remove the '[]' above,

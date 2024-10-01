@@ -35,6 +35,17 @@ argument_specs:
     short_description: An Ansible Role to run all roles for which variables are found on Ansible Automation Hub.
     options:
       ah_configuration_dispatcher_roles:
+    short_description: An Ansible Role to call other roles to create objects on Ansible eda.
+    options:
+      eda_configuration_dispatcher_roles:
+        default:
+          - {role: user, var: eda_users, tags: user}
+          - {role: credential, var: eda_credentials, tags: credential}
+          - {role: controller_token, var: eda_controller_tokens, tags: controller_token}
+          - {role: project, var: eda_projects, tags: project}
+          - {role: project_sync, var: eda_projects, tags: project_sync}
+          - {role: decision_environment, var: eda_decision_environments, tags: decision_environment}
+          - {role: rulebook_activation, var: eda_rulebook_activations, tags: rulebook_activation}
         required: false
         description: List of roles, variables and tags to run through
         type: list
@@ -86,6 +97,14 @@ argument_specs:
         required: false
         description: This variable sets number of retries across all roles as a default.
       ah_configuration_async_delay:
+
+
+      # Async variables
+      eda_configuration_async_retries:
+        default: 30
+        required: false
+        description: This variable sets number of retries across all roles as a default.
+      eda_configuration_async_delay:
         default: 1
         required: false
         description: This variable sets delay between retries across all roles as a default.
@@ -95,6 +114,7 @@ argument_specs:
       controller_configuration_secure_logging:
       # No_log variables
       ah_configuration_secure_logging:
+      eda_configuration_secure_logging:
         default: false
         required: false
         type: bool
@@ -102,6 +122,7 @@ argument_specs:
 
       # Generic across all roles
       controller_state:
+      eda_state:
         default: present
         required: false
         description: The state all objects will take unless overridden by object default
@@ -115,11 +136,21 @@ argument_specs:
         default: true
         required: false
         description: Whether or not to validate the Ansible Controller Server's SSL certificate.
+      eda_hostname:
+        default: None
+        required: false
+        description: URL to the Ansible EDA Server.
+        type: str
+      eda_validate_certs:
+        default: true
+        required: false
+        description: Whether or not to validate the Ansible EDA Server's SSL certificate.
         type: str
       controller_username:
         default: None
         required: false
         description: Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.
+        description: Admin User on the Ansible EDA Server. Either username / password or oauthtoken need to be specified.
         type: str
       controller_password:
         default: None
@@ -157,5 +188,6 @@ argument_specs:
       ah_token:
         required: false
         description: Automation Hub token for authentication.
+        description: eda Admin User's password on the Ansible EDA Server. This should be stored in an Ansible Vault at vars/eda-secrets.yml or elsewhere and called from a parent playbook.
         type: str
 ...
