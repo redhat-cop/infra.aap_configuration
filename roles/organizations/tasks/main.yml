@@ -1,4 +1,5 @@
 ---
+<<<<<<< HEAD
 - name: "Managing Organizations"
   organization:
     name:                               "{{ __controller_organizations_item.name | mandatory }}"
@@ -58,4 +59,45 @@
   vars:
     __operation: "{{ operation_translate[__organizations_job_async_results_item.__controller_organizations_item.state | default(controller_state) | default('present')] }}"
     ansible_async_dir: '{{ controller_configuration_async_dir }}'
+=======
+- name: Organizations | Configuration # noqa fqcn[action-core]
+  ansible.platform.organization:
+    name: "{{ __gateway_organizations_item.name | mandatory }}"
+    new_name: "{{ __gateway_organizations_item.new_name | default(omit) }}"
+    description: "{{ __gateway_organizations_item.description | default(omit) }}"
+    state: "{{ __gateway_organizations_item.state | default(gateway_state | default(omit, true)) }}"
+
+    # Role Standard Options
+    gateway_hostname: "{{ gateway_hostname | default(omit, true) }}"
+    gateway_username: "{{ gateway_username | default(omit, true) }}"
+    gateway_password: "{{ gateway_password | default(omit, true) }}"
+    gateway_token: "{{ gateway_oauthtoken | default(omit, true) }}"
+    gateway_request_timeout: "{{ gateway_request_timeout | default(omit, 10) }}"
+    gateway_validate_certs: "{{ gateway_validate_certs | default(omit) }}"
+  loop: "{{ organizations if organizations is defined else organizations_list }}"
+  loop_control:
+    loop_var: __gateway_organizations_item
+  no_log: "{{ organizations_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __gateway_organizations_job_async
+  changed_when: not __gateway_organizations_job_async.changed
+  vars:
+    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
+
+- name: Organizations | Wait for finish the configuration
+  ansible.builtin.async_status:
+    jid: "{{ __gateway_organizations_job_async_results_item.ansible_job_id }}"
+  register: __gateway_organizations_job_async_result
+  until: __gateway_organizations_job_async_result.finished
+  retries: "{{ organizations_async_retries }}"
+  delay: "{{ organizations_async_delay }}"
+  loop: "{{ __gateway_organizations_job_async.results }}"
+  loop_control:
+    loop_var: __gateway_organizations_job_async_results_item
+  when: __gateway_organizations_job_async_results_item.ansible_job_id is defined
+  no_log: "{{ organizations_secure_logging }}"
+  vars:
+    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
+>>>>>>> 40b40ddac1c00aac7d878bd41af23a6d562296e5
 ...

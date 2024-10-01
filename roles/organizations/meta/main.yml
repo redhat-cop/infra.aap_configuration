@@ -1,13 +1,21 @@
 ---
 galaxy_info:
+<<<<<<< HEAD
   role_name: "organizations"
   author: "Sean Sulivan"
   description: "An Ansible Role to create Organizations in Ansible Controller."
   company: "Red Hat"
+=======
+  role_name: organizations
+  author: Martin Slemr
+  description: An Ansible Role to create organizations in Automation Platform Gateway.
+  company: Red Hat
+>>>>>>> 40b40ddac1c00aac7d878bd41af23a6d562296e5
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
   # issue_tracker_url: http://example.com/issue/tracker
+<<<<<<< HEAD
   license: GPL-3.0-or-later
 
   min_ansible_version: 2.15.0
@@ -45,4 +53,23 @@ dependencies:
   # if you add dependencies to this list.
   - role: global_vars
   - role: meta_dependency_check
+=======
+  license: GPLv3
+
+  min_ansible_version: 2.16.0
+
+  platforms:
+    - name: EL
+      versions:
+        - all
+
+  galaxy_tags:
+    - gateway
+    - aap
+    - configuration
+    - organization
+    - organizations
+
+dependencies: []
+>>>>>>> 40b40ddac1c00aac7d878bd41af23a6d562296e5
 ...

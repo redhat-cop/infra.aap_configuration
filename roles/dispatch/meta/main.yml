@@ -7,6 +7,10 @@ galaxy_info:
   description: "An Ansible Role which launches all of the roles for which variables are found within the ah_configuration collection."
   description: "An Ansible Role which launches all of the roles within the eda_configuration Collection."
   company: "Red Hat"
+  role_name: dispatch
+  author: Sean Sullivan
+  description: An Ansible Role which launches all of the roles within the gateway_configuration Collection.
+  company: Red Hat
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
@@ -53,4 +57,20 @@ collections: []
 dependencies: []
 # List your role dependencies here, one per line. Be sure to remove the '[]' above,
 # if you add dependencies to this list.
+  license: GPLv3
+
+  min_ansible_version: 2.16.0
+
+  platforms:
+    - name: EL
+      versions:
+        - all
+
+  galaxy_tags:
+    - gateway
+    - aap
+    - configuration
+    - dispatch
+
+dependencies: []
 ...

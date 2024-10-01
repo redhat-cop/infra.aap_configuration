@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # controller_configuration.dispatch
 
 ## Description
@@ -68,16 +69,48 @@ eda_configuration_dispatcher_roles:
   - {role: project_sync, var: eda_projects, tags: project_sync}
   - {role: decision_environment, var: eda_decision_environments, tags: decision_environment}
   - {role: rulebook_activation, var: eda_rulebook_activations, tags: rulebook_activation}
+=======
+# infra.platform_configuration.dispatch
+
+## Description
+
+An Ansible Role to run all roles in the infra.platform_configuration collection.
+
+## Variables
+
+Each role has its own variables, for information on those please see each role which this role will call. This role has one key variable `dispatch_roles` and its default value is shown below:
+
+```yaml
+dispatch_roles:
+  - {role: settings, var: settings_list, tags: settings}
+  - {role: users, var: users_list, tags: users}
+  - {role: authenticators, var: authenticators_list, tags: authenticators}
+  - {role: authenticator_maps, var: authenticator_maps_list, tags: authenticator_maps}
+  - {role: http_ports, var: http_ports_list, tags: http_ports}
+  - {role: organizations, var: organizations_list, tags: organizations}
+  - {role: teams, var: teams_list, tags: teams}
+  - {role: service_clusters, var: service_clusters_list, tags: service_clusters}
+  - {role: service_keys, var: service_keys_list, tags: service_keys}
+  - {role: service_nodes, var: service_nodes_list, tags: service_nodes}
+  - {role: services, var: services_list, tags: services}
+  - {role: routes, var: routes_list, tags: routes}
+  - {role: role_user_assignments, var: role_user_assignments_list, tags: role_user_assignments}
+>>>>>>> 40b40ddac1c00aac7d878bd41af23a6d562296e5
 ```
 
 Note that each item has three elements:
 
+<<<<<<< HEAD
 - `role` which is the name of the role within infra.controller_configuration
 - `role` which is the name of the role within infra.eda_configuration
+=======
+- `role` which is the name of the role within infra.platform_configuration
+>>>>>>> 40b40ddac1c00aac7d878bd41af23a6d562296e5
 - `var` which is the variable which is used in that role. We use this to prevent the role being called if the variable is not set
 - `tags` the tags which are applied to the role so it is possible to apply tags to a playbook using the dispatcher with these tags.
 
 It is possible to redefine this variable with a subset of roles or with different tags. In general we suggest keeping the same structure and perhaps just using a subset.
+<<<<<<< HEAD
 # galaxy.galaxy.dispatch
 
 ## Description
@@ -248,3 +281,12 @@ This also speeds up the overall role. Each individual role has its own variable 
 ## Author
 
 [Tom Page](https://github.com/Tompage1994)
+=======
+
+For more information about variables, see [top-level README](../../README.md). 
+For more information about roles, see each roles' README (also linked in the top-level README)
+
+## License
+
+[GPLv3](https://github.com/ansible/aap-gateway/gateway_configuration_collection/COPYING)
+>>>>>>> 40b40ddac1c00aac7d878bd41af23a6d562296e5
