@@ -1,0 +1,42 @@
+---
+
+# Create AH EE Image
+- name: Add Automation Hub EE Image
+  ah_ee_image:
+    name:             "{{ __ee_image_item.name }}"
+    # new_name:         "{{ __ee_image_item.new_name | default(omit) }}"  <-- Needs adding once new_name option added to module
+    append: "{{ __ee_image_item.append | default(omit) }}"
+    tags: "{{ __ee_image_item.tags | default(omit) }}"
+    state:            "{{ __ee_image_item.state | default(ah_state | default('present')) }}"
+    ah_host:          "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:      "{{ ah_username | default(omit) }}"
+    ah_password:      "{{ ah_password | default(omit) }}"
+    ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:   "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:  "{{ ah_request_timeout | default(omit) }}"
+  loop: "{{ ah_ee_images }}"
+  loop_control:
+    loop_var: "__ee_image_item"
+  no_log: "{{ ah_configuration_ee_image_secure_logging }}"
+  async: "{{ ah_configuration_ee_image_async_timeout }}"
+  poll: 0
+  register: __ee_images_job_async
+  changed_when: not __ee_images_job_async.changed
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+
+- name: "Create EE Image | Wait for finish the ee_image creation"
+  ansible.builtin.async_status:
+    jid: "{{ __ee_images_job_async_result_item.ansible_job_id }}"
+  register: __ee_images_job_async_result
+  until: __ee_images_job_async_result.finished
+  retries: "{{ ah_configuration_ee_image_async_retries }}"
+  delay: "{{ ah_configuration_ee_image_async_delay }}"
+  loop: "{{ __ee_images_job_async.results }}"
+  loop_control:
+    loop_var: __ee_images_job_async_result_item
+  when: __ee_images_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ ah_configuration_ee_image_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+...

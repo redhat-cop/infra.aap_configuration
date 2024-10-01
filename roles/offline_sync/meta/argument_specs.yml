@@ -1,0 +1,47 @@
+---
+argument_specs:
+  main:
+    short_description: An Ansible Role to offline sync collections in Automation Hub.
+    options:
+      ah_configuration_working_dir:
+        default: /var/tmp/pah_offline_sync
+        type: str
+        required: false
+        description: The working directory where the collections will be downloaded and any required files.
+      ah_configuration_no_deps:
+        default: false
+        type: bool
+        required: false
+        description: Whether to download all dependencies for each collection or not, if false it may cause errors if dependency sync is off in Automation Hub.
+
+      # Generic across all roles
+      ah_host:
+        required: false
+        description: URL to the Automation Hub Server.
+        type: str
+      ah_path_prefix:
+        required: false
+        description: The path for the Automation Hub API. Usually galaxy or automation-hub unless custom set in AH settings.
+      ah_validate_certs:
+        required: false
+        description: Whether or not to validate the Automation Hub Server's SSL certificate.
+        type: str
+      ah_request_timeout:
+        default: 10
+        required: false
+        description: Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.
+        type: float
+      ah_username:
+        required: false
+        description: User for authentication on Automation Hub
+        type: str
+      ah_password:
+        required: false
+        description: User's password For Automation Hub
+        type: str
+      ah_token:
+        required: false
+        description: User's token on the Automation Hub Server
+        type: str
+
+...

@@ -1,0 +1,72 @@
+---
+# Create AH repository
+- name: Get token
+  ah_token:
+    ah_host:               "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:           "{{ ah_username | default(omit) }}"
+    ah_password:           "{{ ah_password | default(omit) }}"
+    ah_path_prefix:        "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:        "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:       "{{ ah_request_timeout | default(omit) }}"
+  when:
+    - ah_token is not defined
+    - lookup("ansible.builtin.env", "AH_API_TOKEN") == ""
+    - ah_repositories | length > 1
+
+- name: Add Automation Hub repository
+  ah_repository:
+    name:                     "{{ __repository_item['name'] }}"
+    url:                      "{{ __repository_item['url'] }}"
+    auth_url:                 "{{ __repository_item['auth_url'] | default(omit) }}"
+    token:                    "{{ __repository_item['token'] | default(omit) }}"
+    username:                 "{{ __repository_item['username'] | default(omit) }}"
+    password:                 "{{ __repository_item['password'] | default(omit) }}"
+    requirements:             "{{ __repository_item['requirements'] | default(omit) }}"
+    requirements_file:        "{{ __repository_item['requirements_file'] | default(omit) }}"
+    download_concurrency:     "{{ __repository_item['download_concurrency'] | default(10) }}"
+    rate_limit:               "{{ __repository_item['rate_limit'] | default(8) }}"
+    signed_only:              "{{ __repository_item['signed_only'] | default(omit) }}"
+    tls_validation:           "{{ __repository_item['tls_validation'] | default(true) }}"
+    client_key:               "{{ __repository_item['client_key'] | default(omit) }}"
+    client_cert:              "{{ __repository_item['client_cert'] | default(omit) }}"
+    ca_cert:                  "{{ __repository_item['ca_cert'] | default(omit) }}"
+    client_key_path:          "{{ __repository_item['client_key_path'] | default(omit) }}"
+    client_cert_path:         "{{ __repository_item['client_cert_path'] | default(omit) }}"
+    ca_cert_path:             "{{ __repository_item['ca_cert_path'] | default(omit) }}"
+    proxy_url:                "{{ __repository_item.proxy_url | default(proxy_url | default(omit)) }}"
+    proxy_username:           "{{ __repository_item.proxy_username | default(proxy_username | default(omit)) }}"
+    proxy_password:           "{{ __repository_item.proxy_password | default(proxy_password | default(omit)) }}"
+    ah_host:                  "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:              "{{ ah_username | default(omit) }}"
+    ah_password:              "{{ ah_password | default(omit) }}"
+    ah_token:                 "{{ ah_token | default(omit) }}"
+    ah_path_prefix:           "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:           "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:          "{{ ah_request_timeout | default(omit) }}"
+  loop: "{{ ah_repositories }}"
+  loop_control:
+    loop_var: "__repository_item"
+  no_log: "{{ ah_configuration_repository_secure_logging }}"
+  async: "{{ ah_configuration_repository_async_timeout }}"
+  poll: 0
+  register: __repositories_job_async
+  changed_when: not __repositories_job_async.changed
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+
+- name: "Create Repository | Wait for finish the repository creation"
+  ansible.builtin.async_status:
+    jid: "{{ __repositories_job_async_result_item.ansible_job_id }}"
+  register: __repositories_job_async_result
+  until: __repositories_job_async_result.finished
+  retries: "{{ ah_configuration_repository_async_retries }}"
+  delay: "{{ ah_configuration_repository_async_delay }}"
+  loop: "{{ __repositories_job_async.results }}"
+  loop_control:
+    loop_var: __repositories_job_async_result_item
+  when: __repositories_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ ah_configuration_repository_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+
+...

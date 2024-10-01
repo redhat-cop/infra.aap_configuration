@@ -1,0 +1,19 @@
+[galaxy]
+server_list = rh-certified,validated,community,published
+ignore_certs = {% if ah_validate_certs %}false{% else %}true{% endif %}
+
+[galaxy_server.rh-certified]
+url=https://{{ ah_host }}/api/galaxy/content/rh-certified/
+token={{ ah_token }}
+
+[galaxy_server.validated]
+url=https://{{ ah_host }}/api/galaxy/content/validated/
+token={{ ah_token }}
+
+[galaxy_server.community]
+url=https://{{ ah_host }}/api/galaxy/content/community/
+token={{ ah_token }}
+
+[galaxy_server.published]
+url=https://{{ ah_host }}/api/galaxy/content/published/
+token={{ ah_token }}

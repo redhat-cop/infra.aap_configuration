@@ -1,4 +1,5 @@
 ---
+<<<<<<< HEAD
 - name: Run dispatch job to Controller
   hosts: localhost
   connection: local
@@ -14,11 +15,24 @@
 
   pre_tasks:
     - name: Include vars from controller_configs directory
+=======
+- name: Run dispatch job to Automation Hub
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  pre_tasks:
+    - name: Include vars from ah_configs directory
+>>>>>>> 2982f6c2697fc74e1590c65e30291d046f6eb121
       ansible.builtin.include_vars:
         dir: ./configs
         extensions: ["yml"]
       tags: always
 
   roles:
+<<<<<<< HEAD
     - ../..
+=======
+    - ../../dispatch
+>>>>>>> 2982f6c2697fc74e1590c65e30291d046f6eb121
 ...

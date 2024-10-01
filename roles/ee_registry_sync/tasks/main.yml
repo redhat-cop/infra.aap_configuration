@@ -1,0 +1,42 @@
+---
+
+# Create AH EE registry
+- name: Sync Automation Hub EE Registry
+  ah_ee_registry_sync:
+    name:                   "{{ __ee_registry_item.name }}"
+    wait:                   "{{ __ee_registry_item.wait | default(omit) }}"
+    interval:               "{{ __ee_registry_item.interval | default(ah_configuration_ee_registry_sync_async_delay) }}"
+    timeout:                "{{ __ee_registry_item.timeout | default(omit) }}"
+    ah_host:                "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:            "{{ ah_username | default(omit) }}"
+    ah_password:            "{{ ah_password | default(omit) }}"
+    ah_path_prefix:         "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:         "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:        "{{ ah_request_timeout | default(omit) }}"
+  loop: "{{ ah_ee_registries }}"
+  loop_control:
+    loop_var: "__ee_registry_item"
+  when: __ee_registry_item.sync | default(false)
+  no_log: "{{ ah_configuration_ee_registry_secure_logging }}"
+  async: "{{ ah_configuration_ee_registry_sync_async_timeout }}"
+  poll: 0
+  register: __ee_registry_syncs_job_async
+  changed_when: not __ee_registry_syncs_job_async.changed
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+
+- name: "EE Registry Sync | Wait for finish the ee_registry_sync to complete"
+  ansible.builtin.async_status:
+    jid: "{{ __ee_registry_syncs_job_async_result_item.ansible_job_id }}"
+  register: __ee_registry_syncs_job_async_result
+  until: __ee_registry_syncs_job_async_result.finished
+  retries: "{{ ah_configuration_ee_registry_sync_async_retries }}"
+  delay: "{{ ah_configuration_ee_registry_sync_async_delay }}"
+  loop: "{{ __ee_registry_syncs_job_async.results }}"
+  loop_control:
+    loop_var: __ee_registry_syncs_job_async_result_item
+  when: __ee_registry_syncs_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ ah_configuration_ee_registry_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+...

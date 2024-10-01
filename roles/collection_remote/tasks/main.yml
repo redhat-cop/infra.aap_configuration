@@ -1,0 +1,62 @@
+---
+# Create AH repository
+- name: Add Automation Hub Collection Remote repository
+  collection_remote:
+    name:                     "{{ __collection_remote_item.name }}"
+    url:                      "{{ __collection_remote_item.url }}"
+    auth_url:                 "{{ __collection_remote_item.auth_url | default(omit) }}"
+    token:                    "{{ __collection_remote_item.token | default(omit) }}"
+    policy:                   "{{ __collection_remote_item.policy | default(omit) }}"
+    requirements:             "{{ __collection_remote_item.requirements | default(omit) }}"
+    requirements_file:        "{{ __collection_remote_item.requirements_file | default(omit) }}"
+    username:                 "{{ __collection_remote_item.username | default(omit) }}"
+    password:                 "{{ __collection_remote_item.password | default(omit) }}"
+    tls_validation:           "{{ __collection_remote_item.tls_validation | default(true) }}"
+    client_key:               "{{ __collection_remote_item.client_key | default(omit) }}"
+    client_cert:              "{{ __collection_remote_item.client_cert | default(omit) }}"
+    ca_cert:                  "{{ __collection_remote_item.ca_cert | default(omit) }}"
+    client_key_path:          "{{ __collection_remote_item.client_key_path | default(omit) }}"
+    client_cert_path:         "{{ __collection_remote_item.client_cert_path | default(omit) }}"
+    ca_cert_path:             "{{ __collection_remote_item.ca_cert_path | default(omit) }}"
+    download_concurrency:     "{{ __collection_remote_item.download_concurrency | default(10) }}"
+    max_retries:               "{{ __collection_remote_item.max_retries | default(0) }}"
+    rate_limit:               "{{ __collection_remote_item.rate_limit | default(8) }}"
+    signed_only:              "{{ __collection_remote_item.signed_only | default(omit) }}"
+    sync_dependencies:        "{{ __collection_remote_item.sync_dependencies | default(omit) }}"
+    proxy_url:                "{{ __collection_remote_item.proxy_url | default(proxy_url | default(omit)) }}"
+    proxy_username:           "{{ __collection_remote_item.proxy_username | default(proxy_username | default(omit)) }}"
+    proxy_password:           "{{ __collection_remote_item.proxy_password | default(proxy_password | default(omit)) }}"
+    state:                    "{{ __collection_remote_item.state | default(ah_state | default('present')) }}"
+    ah_host:                  "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:              "{{ ah_username | default(omit) }}"
+    ah_password:              "{{ ah_password | default(omit) }}"
+    ah_path_prefix:           "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:           "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:          "{{ ah_request_timeout | default(omit) }}"
+  loop: "{{ ah_collection_remotes }}"
+  loop_control:
+    loop_var: "__collection_remote_item"
+  no_log: "{{ ah_configuration_collection_remote_secure_logging }}"
+  async: "{{ ah_configuration_collection_remote_async_timeout }}"
+  poll: 0
+  register: __collection_remote_job_async
+  changed_when: not __collection_remote_job_async.changed
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+
+- name: "Create Repository | Wait for finish the repository creation"
+  ansible.builtin.async_status:
+    jid: "{{ __collection_remote_job_async_result_item.ansible_job_id }}"
+  register: __collection_remote_job_async_result
+  until: __collection_remote_job_async_result.finished
+  retries: "{{ ah_configuration_collection_remote_async_retries }}"
+  delay: "{{ ah_configuration_collection_remote_async_delay }}"
+  loop: "{{ __collection_remote_job_async.results }}"
+  loop_control:
+    loop_var: __collection_remote_job_async_result_item
+  when: __collection_remote_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ ah_configuration_collection_remote_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+
+...

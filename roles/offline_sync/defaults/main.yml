@@ -1,0 +1,13 @@
+---
+
+# These are the default variables common to most ah_configuration and _utilities roles
+# You shouldn't need to define them again and again but they should be defined
+# ah_hostname: "{{ inventory_hostname }}"
+# ah_oauthtoken: ""
+# ah_validate_certs: false
+
+ah_configuration_working_dir: /var/tmp/pah_offline_sync
+ah_configuration_no_deps: false
+# ah_overwrite_existing: false
+
+...

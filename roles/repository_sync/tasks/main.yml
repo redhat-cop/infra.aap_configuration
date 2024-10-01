@@ -1,0 +1,53 @@
+---
+- name: Get token
+  ah_token:
+    ah_host:               "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:           "{{ ah_username | default(omit) }}"
+    ah_password:           "{{ ah_password | default(omit) }}"
+    ah_path_prefix:        "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:        "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:       "{{ ah_request_timeout | default(omit) }}"
+  when:
+    - ah_token is not defined
+    - lookup("ansible.builtin.env", "AH_API_TOKEN") == ""
+    - ah_repositories | length > 1
+
+- name: Sync Automation Hub repository
+  ah_repository_sync:
+    name:             "{{ __repository_item.name }}"
+    wait:             "{{ __repository_item.wait | default(omit) }}"
+    interval:         "{{ __repository_item.interval | default(1) }}"
+    timeout:          "{{ __repository_item.timeout | default(omit) }}"
+    ah_host:          "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:      "{{ ah_username | default(omit) }}"
+    ah_password:      "{{ ah_password | default(omit) }}"
+    ah_token:         "{{ ah_token | default(omit) }}"
+    ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
+    ah_verify_ssl:    "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:  "{{ ah_request_timeout | default(omit) }}"
+  loop: "{{ ah_repositories }}"
+  loop_control:
+    loop_var: "__repository_item"
+  no_log: "{{ ah_configuration_repository_secure_logging }}"
+  async: "{{ ah_configuration_repository_sync_async_timeout }}"
+  poll: 0
+  register: __repositories_syncs_job_async
+  changed_when: not __repositories_syncs_job_async.changed
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+
+- name: "Repository Sync | Wait for finish the repository_sync to finish"
+  ansible.builtin.async_status:
+    jid: "{{ __repositories_syncs_job_async_result_item.ansible_job_id }}"
+  register: __repositories_syncs_job_async_result
+  until: __repositories_syncs_job_async_result.finished
+  retries: "{{ ah_configuration_repository_sync_async_retries }}"
+  delay: "{{ ah_configuration_repository_sync_async_delay }}"
+  loop: "{{ __repositories_syncs_job_async.results }}"
+  loop_control:
+    loop_var: __repositories_syncs_job_async_result_item
+  when: __repositories_syncs_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ ah_configuration_repository_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+...

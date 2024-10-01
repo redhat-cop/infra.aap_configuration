@@ -1,0 +1,13 @@
+---
+ah_users:
+  - username: user1
+    groups:
+      - group1
+    append: true
+    first_name: user
+    last_name: one
+    email: user1@example.com
+    is_superuser: false
+    password: p4ssword
+    state: present
+...

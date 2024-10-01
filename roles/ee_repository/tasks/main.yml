@@ -1,0 +1,46 @@
+---
+
+# Create AH EE repository
+- name: Add Automation Hub EE repository
+  ah_ee_repository:
+    name:                       "{{ __ee_repository_item.name }}"
+    description:                "{{ __ee_repository_item.description | default(omit) }}"
+    readme:                     "{{ __ee_repository_item.readme | default(omit) }}"
+    readme_file:                "{{ __ee_repository_item.readme_file | default(omit) }}"
+    registry:                   "{{ __ee_repository_item.registry | default(omit) }}"
+    upstream_name:              "{{ __ee_repository_item.upstream_name | default(omit) }}"
+    include_tags:               "{{ __ee_repository_item.include_tags | default(omit) }}"
+    exclude_tags:               "{{ __ee_repository_item.exclude_tags | default(omit) }}"
+    state:                      "{{ __ee_repository_item.state | default(ah_state | default('present')) }}"
+    ah_host:                    "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:                "{{ ah_username | default(omit) }}"
+    ah_password:                "{{ ah_password | default(omit) }}"
+    ah_path_prefix:             "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:             "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:            "{{ ah_request_timeout | default(omit) }}"
+  loop: "{{ ah_ee_repositories }}"
+  loop_control:
+    loop_var: "__ee_repository_item"
+  no_log: "{{ ah_configuration_ee_repository_secure_logging }}"
+  async: "{{ ah_configuration_ee_repository_async_timeout }}"
+  poll: 0
+  register: __ee_repositories_job_async
+  changed_when: not __ee_repositories_job_async.changed
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+
+- name: "Create EE Repository | Wait for finish the ee_repository creation"
+  ansible.builtin.async_status:
+    jid: "{{ __ee_repositories_job_async_result_item.ansible_job_id }}"
+  register: __ee_repositories_job_async_result
+  until: __ee_repositories_job_async_result.finished
+  retries: "{{ ah_configuration_ee_repository_async_retries }}"
+  delay: "{{ ah_configuration_ee_repository_async_delay }}"
+  loop: "{{ __ee_repositories_job_async.results }}"
+  loop_control:
+    loop_var: __ee_repositories_job_async_result_item
+  when: __ee_repositories_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ ah_configuration_ee_repository_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+...

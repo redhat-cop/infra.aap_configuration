@@ -1,0 +1,13 @@
+---
+- name: Offline_sync collections to Automation Hub
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    ah_validate_certs: false
+  # Define following vars here, or in ah_configs/ah_auth.yml
+  # ah_host: ansible-ah-web-svc-test-project.example.com
+  # ah_token: changeme
+  roles:
+    - ../../offline_sync
+...

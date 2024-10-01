@@ -1,0 +1,60 @@
+---
+# Create AH Namespace
+- name: Get token
+  ah_token:
+    ah_host:               "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:           "{{ ah_username | default(omit) }}"
+    ah_password:           "{{ ah_password | default(omit) }}"
+    ah_path_prefix:        "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:        "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:       "{{ ah_request_timeout | default(omit) }}"
+  when:
+    - ah_token is not defined
+    - lookup("ansible.builtin.env", "AH_API_TOKEN") == ""
+    - ah_namespaces | length > 1
+
+- name: Add Automation Hub Namespace
+  ah_namespace:
+    name:             "{{ __namespace_item.name }}"
+    new_name:         "{{ __namespace_item.new_name | default('') }}"
+    description:      "{{ __namespace_item.description | default('') }}"
+    company:          "{{ __namespace_item.company | default('') }}"
+    email:            "{{ __namespace_item.email | default(omit) }}"
+    avatar_url:       "{{ __namespace_item.avatar_url | default('') }}"
+    resources:        "{{ __namespace_item.resources | default('') }}"
+    links:            "{{ __namespace_item.links | default([]) }}"
+    groups:           "{{ __namespace_item.groups | default([]) }}"
+    state:            "{{ __namespace_item.state | default(ah_state | default('present')) }}"
+    ah_host:          "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:      "{{ ah_username | default(omit) }}"
+    ah_password:      "{{ ah_password | default(omit) }}"
+    ah_token:         "{{ ah_token | default(omit) }}"
+    ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:   "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:  "{{ ah_request_timeout | default(omit) }}"
+  loop: "{{ ah_namespaces }}"
+  loop_control:
+    loop_var: "__namespace_item"
+  no_log: "{{ ah_configuration_namespace_secure_logging }}"
+  async: "{{ ah_configuration_namespace_async_timeout }}"
+  poll: 0
+  register: __namespaces_job_async
+  changed_when: not __namespaces_job_async.changed
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+
+- name: "Create Namespace | Wait for finish the namespace creation"
+  ansible.builtin.async_status:
+    jid: "{{ __namespaces_job_async_result_item.ansible_job_id }}"
+  register: __namespaces_job_async_result
+  until: __namespaces_job_async_result.finished
+  retries: "{{ ah_configuration_namespace_async_retries }}"
+  delay: "{{ ah_configuration_namespace_async_delay }}"
+  loop: "{{ __namespaces_job_async.results }}"
+  loop_control:
+    loop_var: __namespaces_job_async_result_item
+  when: __namespaces_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ ah_configuration_namespace_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+...

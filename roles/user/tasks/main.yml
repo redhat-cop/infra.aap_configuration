@@ -1,0 +1,47 @@
+---
+
+# Create AH Users
+- name: Add Automation Hub User
+  ah_user:
+    username:         "{{ __user.username | default(omit) }}"
+    # new_name:         "{{ __user.new_name | default(omit) }}"  <-- Needs adding once new_name option added to module
+    groups:           "{{ __user.groups | default(omit) }}"
+    append:           "{{ __user.append | default(omit) }}"
+    first_name:       "{{ __user.first_name | default(omit) }}"
+    last_name:        "{{ __user.last_name | default(omit) }}"
+    email:            "{{ __user.email | default(omit) }}"
+    is_superuser:     "{{ __user.is_superuser | default(omit) }}"
+    password:         "{{ __user.password | default(omit) }}"
+    state:            "{{ __user.state | default(ah_state | default('present')) }}"
+    ah_host:          "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:      "{{ ah_username | default(omit) }}"
+    ah_password:      "{{ ah_password | default(omit) }}"
+    ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:   "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:  "{{ ah_request_timeout | default(omit) }}"
+  loop: "{{ ah_users }}"
+  loop_control:
+    loop_var: "__user"
+  no_log: "{{ ah_configuration_user_secure_logging }}"
+  async: "{{ ah_configuration_user_async_timeout }}"
+  poll: 0
+  register: __users_job_async
+  changed_when: not __users_job_async.changed
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+
+- name: "Create User | Wait for finish the user creation"
+  ansible.builtin.async_status:
+    jid: "{{ __users_job_async_result_item.ansible_job_id }}"
+  register: __users_job_async_result
+  until: __users_job_async_result.finished
+  retries: "{{ ah_configuration_user_async_retries }}"
+  delay: "{{ ah_configuration_user_async_delay }}"
+  loop: "{{ __users_job_async.results }}"
+  loop_control:
+    loop_var: __users_job_async_result_item
+  when: __users_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ ah_configuration_user_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+...
