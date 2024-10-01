@@ -54,7 +54,7 @@
       vars:
         __path: "{{ output_path }}/{{ needed_path | regex_replace('/', '_') }}/labels"
       loop: "{{ (labels_lookvar | map(attribute='summary_fields') | selectattr('organization', 'defined') | map(attribute='organization') | map(attribute='name') | list | flatten | unique)
-                + (['ORGANIZATIONLESS'] if ((labels_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
+                + ([organization] if ((labels_lookvar | map(attribute='summary_fields') | selectattr('organization', 'undefined') | list | flatten) | length > 0) else [])
              }}"
       loop_control:
         loop_var: needed_path
