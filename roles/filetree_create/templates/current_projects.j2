@@ -16,7 +16,7 @@ controller_projects:
     scm_delete_on_update: "{{ current_projects_asset_value.scm_delete_on_update }}"
     scm_update_on_launch: "{{ current_projects_asset_value.scm_update_on_launch }}"
     scm_update_cache_timeout: "{{ current_projects_asset_value.scm_update_cache_timeout }}"
-    scm_refspec: "{{ current_projects_asset_value.scm_refspec }}
+    scm_refspec: "{{ current_projects_asset_value.scm_refspec }}"
 {% endif %}
 {% if is_aap and current_job_templates_asset_value.summary_fields.default_environment is defined %}
     default_environment: "{{ current_job_templates_asset_value.summary_fields.default_environment.name }}"
