@@ -1,4 +1,0 @@
----
-minor_changes:
-  - Adds tls_validation option to project module and role
-...

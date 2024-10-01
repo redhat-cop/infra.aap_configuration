@@ -1,7 +1,0 @@
-#  User may add tower auth creds to this file and encrypt it using `ansible-vault`
----
-eda_hostname: http://localhost:8000
-controller_username: admin
-controller_password: testpass
-eda_validate_certs: false
-...

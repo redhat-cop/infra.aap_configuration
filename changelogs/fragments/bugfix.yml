@@ -1,4 +1,0 @@
----
-bugfixes:
-  - fixed a bug where resolve_name_to_id data was not defined
-...
