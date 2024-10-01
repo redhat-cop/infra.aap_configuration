@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Fixes issue in collection_remotes module where the requriements could not be blanked out
-...

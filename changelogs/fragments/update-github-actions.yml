@@ -1,5 +1,0 @@
----
-minor_changes:
-  - Added AH_HOST, AH_USERNAME and AH_PASSWORD to github environment variables
-  - Added extra variable ci_workflow to allow for more flexibility in testing playbooks.
-...

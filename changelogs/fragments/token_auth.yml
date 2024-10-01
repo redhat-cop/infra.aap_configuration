@@ -1,6 +1,0 @@
----
-bugfixes:
-  - Removed token authentication from the following roles - collection_remote, collection_repository, collection_repository_sync. The corresponding modules did not support token authentication.
-  - Removed References in the readmes to token authentication for any module that does not support token authentication.
-  - ah_repository_sync incorrectly stated which module replaced it, It is being replaced by collection_repository_sync.
-...

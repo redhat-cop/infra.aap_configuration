@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Fixed an issue where where default async timeout was not set in the group role
-...

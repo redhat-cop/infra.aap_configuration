@@ -1,4 +1,0 @@
----
-minor_changes:
-  - Add new CI workflow to test Galaxy api prefix supplied from resource_provider (#403).
-...

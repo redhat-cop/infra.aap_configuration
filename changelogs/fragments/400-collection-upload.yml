@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Fixed an issue where ah_collection_upload was breaking when colelcting from a URL due to generated temp filenames
-...

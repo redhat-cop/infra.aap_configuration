@@ -1,6 +1,0 @@
----
-collections:
-  - name: infra.ee_utilities
-  - name: infra.controller_configuration
-  - name: ansible.windows
-...

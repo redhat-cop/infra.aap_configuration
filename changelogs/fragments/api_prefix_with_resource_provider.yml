@@ -1,4 +1,0 @@
----
-minor_changes:
-  - Retrieves Galaxy api prefix when resource_provider is present, defaults to existing behavior.
-...

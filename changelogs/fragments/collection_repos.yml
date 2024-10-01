@@ -1,5 +1,0 @@
----
-major_changes:
-  - Added collection_repository and collection_repository_sync roles and modules to manage collection repositories. This will only work in Galaxy 4.7 or AAP 2.4.
-  - Fix collection repository roles and modules update options and role options to behave correctly.
-...

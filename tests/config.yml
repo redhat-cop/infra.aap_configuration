@@ -1,6 +1,0 @@
----
-# See template for more information:
-# https://github.com/ansible/ansible/blob/devel/test/lib/ansible_test/config/config.yml
-modules:
-  python_requires: '>=3.5'
-...

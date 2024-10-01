@@ -1,4 +1,0 @@
----
-minor_changes:
-  - Remove testing playbook, expected to fail, from new CI workflow. (#416).
-...

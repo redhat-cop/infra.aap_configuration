@@ -1,8 +1,0 @@
----
-minor_changes:
-  - Gathers a token on collection role if necessary to prevent token becoming invalid by another async task.
-  - Gathers a token on namespace role if necessary to prevent token becoming invalid by another async task.
-  - Gathers a token on publish role if necessary to prevent token becoming invalid by another async task.
-  - Gathers a token on repository role if necessary to prevent token becoming invalid by another async task.
-  - Gathers a token on repository_sync role if necessary to prevent token becoming invalid by another async task.
-...

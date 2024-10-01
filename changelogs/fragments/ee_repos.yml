@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Fix issue where changing an execution environment repository caused an error statingCannot make a PUT request to this endpoint.
-...

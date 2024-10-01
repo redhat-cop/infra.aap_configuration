@@ -1,7 +1,0 @@
----
-minor_changes:
-  - Added request_timeout option for plugins and roles in the collection
-
-bugfixes:
-  - Fixed role readme errors and standardised variable section of role readmes
-...

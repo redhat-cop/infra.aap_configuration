@@ -1,9 +1,0 @@
----
-minor_changes:
-  - In ansible_config role, changed default singular value of ansible_config_list to take the validate_certs from the ah_validate_certs value as documented
-  - Added auth_url option for automation_hub_list in ansible_config role
-  - Changed ansible_config template to default to use ah_token and prevent two tokens being added
-  - Added argument spec for ansible_config role
-bugfixes:
-  - Fixed documentation for ansible_config role
-...

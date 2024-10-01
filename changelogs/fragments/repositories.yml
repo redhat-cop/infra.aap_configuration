@@ -1,4 +1,0 @@
----
-breaking_changes:
-  - Update collection repository roles to use allow for lists (you now need to have a name for each repo and update the variable name) as this has been expanded in the newer version of the product.
-...

@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Fixed issue in all roles where AH_HOST was not being defaulted to if no variable set.
-...

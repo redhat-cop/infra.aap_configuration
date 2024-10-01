@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Fixes issue with overwriting existing collection where timing didn't work correctly
-...

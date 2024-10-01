@@ -1,8 +1,0 @@
----
-ah_host:
-ah_username:
-ah_password:
-ah_token:
-ah_validate_certs: false
-ah_path_prefix: ""  #  Not required. API path to access the API.  Either galaxy, automation-hub, or custom.
-...
