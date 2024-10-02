@@ -371,6 +371,16 @@ releases:
     - filetree_create_update_project.yml
     - filetree_read_speed_improvement.yml
     release_date: '2024-09-25'
+  2.11.0:
+    changes:
+      bugfixes:
+      - Fixed issue with loops that were getting always empty list of objects
+      minor_changes:
+      - Add ability to disable dependency check
+    fragments:
+    - dependency_check_control.yml
+    - filetree_create_loop_issue.yaml
+    release_date: '2024-10-02'
   2.2.4:
     changes:
       breaking_changes:

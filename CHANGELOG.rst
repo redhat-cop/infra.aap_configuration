@@ -5,6 +5,19 @@ infra.controller_configuration Release Notes
 .. contents:: Topics
 
 
+v2.11.0
+=======
+
+Minor Changes
+-------------
+
+- Add ability to disable dependency check
+
+Bugfixes
+--------
+
+- Fixed issue with loops that were getting always empty list of objects
+
 v2.10.3
 =======
 
