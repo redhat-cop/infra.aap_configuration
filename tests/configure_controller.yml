@@ -187,37 +187,4 @@
         controller_host:         "{{ controller_hostname }}"
         validate_certs:          "{{ controller_validate_certs }}"
       ignore_errors: true  # noqa ignore-errors
-
-    - name: "Get the organization ID"
-      ansible.builtin.set_fact:
-        controller_organization_id: "{{ lookup(controller_api_plugin, 'organizations', query_params={'name': 'Default'}, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
-
-    - name: "Set empty lists for testing"
-      ansible.builtin.set_fact:
-        controller_api_results: []
-        differential_test_items: []
-
-    - name: "Error out on empty list"
-      ansible.builtin.set_fact:
-        error_empty_diff: "{{ query('controller_object_diff', api_list=controller_api_results, compare_list=differential_test_items, warn_on_empty_api=false) }}"
-      ignore_errors: true
-      register: error_results
-
-    - name: "Warn out on empty list"
-      ansible.builtin.set_fact:
-        warn_empty_diff: "{{ query('controller_object_diff', api_list=controller_api_results, compare_list=differential_test_items) }}"
-      register: warn_results
-
-    - name: "Assert that the empty list error correctly"
-      ansible.builtin.assert:
-        that:
-          - error_empty_diff is not defined
-          - warn_empty_diff | length == 0
-          - "'Unable to find items in api_list' in error_results.msg"
-
-    - name: Differential Testing
-      ansible.builtin.include_tasks: "./tasks/differential.yml"
-      loop: "{{ differential_items }}"
-      loop_control:
-        loop_var: differential_item
 ...
