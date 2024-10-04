@@ -1,5 +1,0 @@
----
-ah_repositories:
-  - name: abc15
-    url: ansible-ah-test-repository.example.com
-...
