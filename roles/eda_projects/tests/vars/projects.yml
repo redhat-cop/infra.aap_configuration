@@ -1,0 +1,8 @@
+---
+eda_projects:
+  - name: my_project
+    description: my awesome project
+    url: https://github.com/ansible/ansible-rulebook.git
+    tls_validation: true
+    credential: test_token
+...

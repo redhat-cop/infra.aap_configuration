@@ -1,0 +1,30 @@
+---
+
+# These are the default variables common to most ah_configuration and _utilities roles
+# You shouldn't need to define them again and again but they should be defined
+# ah_hostname: "{{ inventory_hostname }}"
+# ah_oauthtoken: ""
+# ah_validate_certs: false
+
+# These are the default variables specific to the license role
+
+# The following two lists are mutually exclusive, you need to provide at least one of them, and ah_collections will override the collection list.
+# A list of paths to collection tarballs to publish if you are not cloning from a git and building them.
+# ah_collection_list: []
+# a list of dictionaries describing collections to publish
+# ah_collections: []
+# possible fields:
+# - collection_name:  "name of collection, normally the last part before the / in a git url"  # mandatory
+#   git_url: "url to git repo."  # mandatory when type=git
+
+ah_configuration_working_dir: "/var/tmp"
+
+ah_auto_approve: false
+ah_overwrite_existing: false
+
+ah_configuration_publish_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
+ah_configuration_publish_async_timeout: "{{ ah_configuration_async_timeout | default(1000) }}"
+ah_configuration_publish_async_retries: "{{ ah_configuration_async_retries | default(50) }}"
+ah_configuration_publish_async_delay: "{{ ah_configuration_async_delay | default(1) }}"
+ah_configuration_async_dir: null
+...

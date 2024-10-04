@@ -1,11 +1,21 @@
 ---
+<<<<<<< HEAD
+<<<<<<< HEAD
 - name: Run dispatch job to Controller
+=======
+- name: Run dispatch job to EDA
+>>>>>>> 2fdfef74d073a0df037b2391c31f4e727e1cbf31
   hosts: localhost
   connection: local
   gather_facts: false
   vars:
+<<<<<<< HEAD
     controller_validate_certs: false
     controller_hostname: controller.example.com
+=======
+    eda_validate_certs: false
+    eda_hostname: eda.example.com
+>>>>>>> 2fdfef74d073a0df037b2391c31f4e727e1cbf31
     controller_username: admin
     controller_password: changeme
 
@@ -13,12 +23,33 @@
     - awx.awx
 
   pre_tasks:
+<<<<<<< HEAD
     - name: Include vars from controller_configs directory
+=======
+- name: Run dispatch job to Automation Hub
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  pre_tasks:
+    - name: Include vars from ah_configs directory
+>>>>>>> 2982f6c2697fc74e1590c65e30291d046f6eb121
+=======
+    - name: Include vars from eda_configs directory
+>>>>>>> 2fdfef74d073a0df037b2391c31f4e727e1cbf31
       ansible.builtin.include_vars:
         dir: ./configs
         extensions: ["yml"]
       tags: always
 
   roles:
+<<<<<<< HEAD
+<<<<<<< HEAD
     - ../..
+=======
+    - ../../dispatch
+>>>>>>> 2982f6c2697fc74e1590c65e30291d046f6eb121
+=======
+    - ../..
+>>>>>>> 2fdfef74d073a0df037b2391c31f4e727e1cbf31
 ...

@@ -1,0 +1,25 @@
+---
+galaxy_info:
+  role_name: settings
+  author: Sean Sullivan
+  description: A role to set some Ansible Automation gateway settings
+  company: Red Hat
+
+  license: GPLv3
+
+  min_ansible_version: 2.16.0
+
+  platforms:
+    - name: EL
+      versions:
+        - all
+
+  galaxy_tags:
+    - gateway
+    - aap
+    - configuration
+    - setting
+    - settings
+
+dependencies: []
+...

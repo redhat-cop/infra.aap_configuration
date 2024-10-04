@@ -87,4 +87,80 @@ controller_configuration_dispatcher_roles:
   - role: workflow_launch
     var: controller_workflow_launch_jobs
     tags: workflow_launch
+ah_configuration_dispatcher_roles:
+  - {role: group, var: ah_groups, tags: groups}
+  - {role: user, var: ah_users, tags: users}
+  - {role: namespace, var: ah_namespaces, tags: namespaces}
+  - {role: collection, var: ah_collections, tags: collections}
+  - {role: ee_registry, var: ah_ee_registries, tags: registries}
+  - {role: ee_repository, var: ah_ee_repositories, tags: repos}
+  - {role: ee_repository_sync, var: ah_ee_repository_sync, tags: reposync}
+  - {role: ee_image, var: ah_ee_images, tags: images}
+  - {role: ee_registry_index, var: ah_ee_registries, tags: indices}
+  - {role: ee_registry_sync, var: ah_ee_registries, tags: regsync}
+  - {role: collection_remote, var: ah_collection_remotes, tags: collectionremote}
+  - {role: collection_repository, var: ah_collection_repositories, tags: collectionsrep}
+  - {role: collection_repository_sync, var: ah_collection_repositories, tags: collectionsrepsync}
+  - {role: group_roles, var: ah_group_roles, tags: group_roles}
+eda_configuration_dispatcher_roles:
+  - role: user
+    var: eda_users
+    tags: user
+  - role: credential
+    var: eda_credentials
+    tags: credential
+  - role: controller_token
+    var: eda_controller_tokens
+    tags: controller_token
+  - role: project
+    var: eda_projects
+    tags: project
+  - role: project_sync
+    var: eda_projects
+    tags: project_sync
+  - role: decision_environment
+    var: eda_decision_environments
+    tags: decision_environment
+  - role: rulebook_activation
+    var: eda_rulebook_activations
+    tags: rulebook_activation
+dispatch_roles:
+  - role: authenticator
+    var: infra.platform_configuration.authenticators_list
+    tags: authenticators
+  - role: authenticator_map
+    var: infra.platform_configuration.authenticator_maps_list
+    tags: authenticator_maps
+  - role: infra.platform_configuration.settings_list
+    var: gateway_settings
+    tags: settings
+  - role: users
+    var: infra.platform_configuration.users_list
+    tags: users
+  - role: http_ports
+    var: infra.platform_configuration.http_ports_list
+    tags: http_ports
+  - role: organizations
+    var: infra.platform_configuration.organizations_list
+    tags: organizations
+  - role: service_clusters
+    var: infra.platform_configuration.service_clusters_list
+    tags: service_clusters
+  - role: service_keys
+    var: infra.platform_configuration.service_keys_list
+    tags: service_keys
+  - role: service_nodes
+    var: infra.platform_configuration.service_nodes_list
+    tags: service_nodes
+  - role: services
+    var: infra.platform_configuration.services_list
+    tags: services
+  - role: role_user_assignments
+    vars: infra.platform_configuration.role_user_assignments_list
+  - role: routes
+    vars: infra.platform_configuration.routes_list
+    tags: routes
+  - role: teams
+    vars: infra.platform_configuration.teams_list
+    tags: teams
 ...

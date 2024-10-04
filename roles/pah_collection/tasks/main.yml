@@ -1,0 +1,65 @@
+# Update or destroy Automation Hub Collection
+---
+- name: Get token
+  ah_token:
+    ah_host:               "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:           "{{ ah_username | default(omit) }}"
+    ah_password:           "{{ ah_password | default(omit) }}"
+    ah_path_prefix:        "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:        "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:       "{{ ah_request_timeout | default(omit) }}"
+  when:
+    - ah_token is not defined
+    - lookup("ansible.builtin.env", "AH_API_TOKEN") == ""
+    - ah_collections | length > 1
+
+- name: Update or destroy Automation Hub Collection
+  ah_collection:
+    namespace:             "{{ __collection.namespace }}"
+    name:                  "{{ __collection.name }}"
+    version:               "{{ __collection.version | default(omit) }}"
+    path:                  "{{ __collection.path | default(omit) }}"
+    repository:            "{{ __collection.repository | default(omit) }}"
+    wait:                  "{{ __collection.wait | default(omit) }}"
+    auto_approve:          "{{ __collection.auto_approve | default(omit) }}"
+    timeout:               "{{ __collection.timeout | default(omit) }}"
+    interval:              "{{ __collection.interval | default(omit) }}"
+    overwrite_existing:    "{{ __collection.overwrite_existing | default(omit) }}"
+    state:                 "{{ __collection.state | default('present') }}"
+    ah_host:               "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:           "{{ ah_username | default(omit) }}"
+    ah_password:           "{{ ah_password | default(omit) }}"
+    ah_token:              "{{ ah_token | default(omit) }}"
+    ah_path_prefix:        "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:        "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:       "{{ ah_request_timeout | default(omit) }}"
+  loop: "{{ ah_collections }}"
+  loop_control:
+    loop_var: "__collection"
+  no_log: "{{ ah_configuration_collection_secure_logging }}"
+  async: "{{ ah_configuration_collection_async_timeout }}"
+  poll: 0
+  register: __collections_job_async
+  changed_when: not __collections_job_async.changed
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+
+- name: Sleep for 10 seconds and continue with play
+  ansible.builtin.wait_for:
+    timeout: 10
+
+- name: "Update/Destroy collection | Wait for finish the update/destruction of collection"
+  ansible.builtin.async_status:
+    jid: "{{ __collections_job_async_result_item.ansible_job_id }}"
+  register: __collections_job_async_result
+  until: __collections_job_async_result.finished
+  retries: "{{ ah_configuration_collection_async_retries }}"
+  delay: "{{ ah_configuration_collection_async_delay }}"
+  loop: "{{ __collections_job_async.results }}"
+  loop_control:
+    loop_var: __collections_job_async_result_item
+  when: __collections_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ ah_configuration_collection_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+...

@@ -32,6 +32,63 @@ argument_specs:
           - {role: roles, var: controller_roles, tags: roles}
           - {role: job_launch, var: controller_launch_jobs, tags: job_launch}
           - {role: workflow_launch, var: controller_workflow_launch_jobs, tags: workflow_launch}
+    short_description: An Ansible Role to run all roles for which variables are found on Ansible Automation Hub.
+    options:
+      ah_configuration_dispatcher_roles:
+    short_description: An Ansible Role to call other roles to create objects on Ansible eda.
+    options:
+      eda_configuration_dispatcher_roles:
+        default:
+          - {role: user, var: eda_users, tags: user}
+          - {role: credential, var: eda_credentials, tags: credential}
+          - {role: controller_token, var: eda_controller_tokens, tags: controller_token}
+          - {role: project, var: eda_projects, tags: project}
+          - {role: project_sync, var: eda_projects, tags: project_sync}
+          - {role: decision_environment, var: eda_decision_environments, tags: decision_environment}
+          - {role: rulebook_activation, var: eda_rulebook_activations, tags: rulebook_activation}
+    short_description: An Ansible Role to call other roles to create objects on automation platform gateway.
+    options:
+      dispatch_roles:
+        default:
+          - role: authenticator
+            var: authenticators
+            tags: authenticators
+          - role: authenticator_map
+            var: authenticator_maps
+            tags: authenticator_maps
+          - role: settings
+            var: gateway_settings
+            tags: settings
+          - role: users
+            var: gateway_user_accounts
+            tags: users
+          - role: http_ports
+            var: http_ports
+            tags: http_ports
+          - role: organizations
+            var: organizations
+            tags: organizations
+          - role: service_clusters
+            var: gateway_service_clusters
+            tags: service_clusters
+          - role: service_keys
+            var: gateway_service_keys
+            tags: service_keys
+          - role: service_nodes
+            var: gateway_service_nodes
+            tags: service_nodes
+          - role: services
+            var: gateway_services
+            tags: services
+          - role: role_user_assignments
+            var: gateway_role_user_assignments
+            tags: role_user_assignments
+          - role: routes
+            var: gateway_routes
+            tags: routes
+          - role: teams
+            var: gateway_teams
+            tags: teams
         required: false
         description: List of roles, variables and tags to run through
         type: list
@@ -65,6 +122,39 @@ argument_specs:
         required: false
         description: This variable sets number of retries across all roles as a default.
       controller_configuration_async_delay:
+        default:
+          - {role: group, var: ah_groups, tags: groups}
+          - {role: user, var: ah_users, tags: users}
+          - {role: namespace, var: ah_namespaces, tags: namespaces}
+          - {role: collection, var: ah_collections, tags: collections}
+          - {role: ee_repository, var: ah_ee_repositories, tags: repos}
+          - {role: ee_repository_sync, var: ah_ee_repository_sync, tags: reposync}
+          - {role: ee_image, var: ah_ee_images, tags: images}
+          - {role: ee_registry, var: ah_ee_registries, tags: registries}
+          - {role: ee_registry_index, var: ah_ee_registries, tags: indices}
+          - {role: ee_registry_sync, var: ah_ee_registries, tags: regsync}
+
+      # Async variables
+      ah_configuration_async_retries:
+        default: 50
+        required: false
+        description: This variable sets number of retries across all roles as a default.
+      ah_configuration_async_delay:
+
+
+      # Async variables
+      eda_configuration_async_retries:
+        default: 30
+        required: false
+        description: This variable sets number of retries across all roles as a default.
+      eda_configuration_async_delay:
+
+      # Async variables
+      gateway_configuration_async_retries:
+        default: 30
+        required: false
+        description: This variable sets number of retries across all roles as a default.
+      gateway_configuration_async_delay:
         default: 1
         required: false
         description: This variable sets delay between retries across all roles as a default.
@@ -72,6 +162,11 @@ argument_specs:
 
       # No_log variables
       controller_configuration_secure_logging:
+      # No_log variables
+      ah_configuration_secure_logging:
+      eda_configuration_secure_logging:
+      # No_log variables
+      gateway_configuration_secure_logging:
         default: false
         required: false
         type: bool
@@ -79,6 +174,8 @@ argument_specs:
 
       # Generic across all roles
       controller_state:
+      eda_state:
+      gateway_state:
         default: present
         required: false
         description: The state all objects will take unless overridden by object default
@@ -92,11 +189,21 @@ argument_specs:
         default: true
         required: false
         description: Whether or not to validate the Ansible Controller Server's SSL certificate.
+      eda_hostname:
+        default: None
+        required: false
+        description: URL to the Ansible EDA Server.
+        type: str
+      eda_validate_certs:
+        default: true
+        required: false
+        description: Whether or not to validate the Ansible EDA Server's SSL certificate.
         type: str
       controller_username:
         default: None
         required: false
         description: Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.
+        description: Admin User on the Ansible EDA Server. Either username / password or oauthtoken need to be specified.
         type: str
       controller_password:
         default: None
@@ -107,5 +214,63 @@ argument_specs:
         default: None
         required: false
         description: Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
+      ah_host:
+        required: false
+        description: URL to the Automation Hub Server.
+        type: str
+      ah_path_prefix:
+        required: false
+        description: The path for the Automation Hub API. Usually galaxy or automation-hub unless custom set in AH settings.
+      ah_validate_certs:
+        required: false
+        description: Whether or not to validate the Automation Hub Server's SSL certificate.
+        type: str
+      ah_request_timeout:
+        default: 10
+        required: false
+        description: Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.
+        type: float
+      ah_username:
+        required: false
+        description: User for authentication on Automation Hub
+        type: str
+      ah_password:
+        required: false
+        description: User's password For Automation Hub
+        type: str
+      ah_token:
+        required: false
+        description: Automation Hub token for authentication.
+        description: eda Admin User's password on the Ansible EDA Server. This should be stored in an Ansible Vault at vars/eda-secrets.yml or elsewhere and called from a parent playbook.
+      gateway_hostname:
+        default: None
+        required: false
+        description: URL to the automation platform gateway.
+        type: str
+      gateway_validate_certs:
+        default: true
+        required: false
+        description: Whether or not to validate the automation platform gateway's SSL certificate.
+        type: str
+      gateway_username:
+        default: None
+        required: false
+        description: user on the automation platform gateway. Either username / password or oauthtoken need to be specified.
+        type: str
+      gateway_password:
+        default: None
+        required: false
+        description: >
+          Gateway user's password on the automation platform gateway.
+          This should be stored in an Ansible Vault at vars/gateway-secrets.yml or elsewhere and called from a parent playbook.
+          Either username / password or oauthtoken need to be specified.
+        type: str
+      gateway_oauthtoken:
+        default: None
+        required: false
+        description: >
+          Gateway user's token on the automation platform gateway.
+          This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.
+          Either username / password or oauthtoken need to be specified.
         type: str
 ...

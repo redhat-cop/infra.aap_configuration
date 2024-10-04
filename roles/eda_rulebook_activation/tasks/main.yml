@@ -1,0 +1,52 @@
+---
+
+# Create EDA Controller Rulebook Activation
+- name: Add EDA Controller rulebook activation
+  ansible.eda.rulebook_activation:
+    name:                 "{{ __ra_item.name }}"
+    description:          "{{ __ra_item.description | default(omit) }}"
+    project:              "{{ __ra_item.project | default(omit) }}"
+    rulebook:             "{{ __ra_item.rulebook | default(omit) }}"
+    decision_environment: "{{ __ra_item.decision_environment | default(omit) }}"
+    awx_token:            "{{ __ra_item.awx_token | default(omit) }}"
+    restart_policy:       "{{ __ra_item.restart_policy | default(omit) }}"
+    extra_vars:           "{{ __ra_item.extra_vars | default(omit) }}"
+    enabled:              "{{ __ra_item.enabled | default(omit) }}"
+    organization_name:    "{{ __ra_item.organization | default(omit) }}"
+    eda_credentials:      "{{ __ra_item.eda_credentials | default(omit) }}"
+    k8s_service_name:     "{{ __ra_item.k8s_service_name | default(omit) }}"
+    swap_single_source:   "{{ __ra_item.swap_single_source | default(omit) }}"
+    event_streams:        "{{ __ra_item.event_streams | default(omit) }}"
+    log_level:            "{{ __ra_item.log_level | default(omit) }}"
+    state:                "{{ __ra_item.state | default(eda_state | default('present')) }}"
+    controller_host:      "{{ eda_host | default(eda_hostname) }}"
+    controller_username:  "{{ eda_username | default(omit) }}"
+    controller_password:  "{{ eda_password | default(omit) }}"
+    validate_certs:       "{{ eda_validate_certs | default(omit) }}"
+    request_timeout:      "{{ eda_request_timeout | default(omit) }}"
+  loop: "{{ eda_rulebook_activations }}"
+  loop_control:
+    loop_var: "__ra_item"
+  no_log: "{{ eda_configuration_rulebook_activation_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __rulebook_activations_job_async
+  changed_when: not __rulebook_activations_job_async.changed
+  vars:
+    ansible_async_dir: '{{ eda_configuration_async_dir }}'
+
+- name: "Create rulebook_activation | Wait for finish the rulebook_activation creation"
+  ansible.builtin.async_status:
+    jid: "{{ __rulebook_activations_job_async_result_item.ansible_job_id }}"
+  register: __rulebook_activations_job_async_result
+  until: __rulebook_activations_job_async_result.finished
+  retries: "{{ eda_configuration_rulebook_activation_async_retries }}"
+  delay: "{{ eda_configuration_rulebook_activation_async_delay }}"
+  loop: "{{ __rulebook_activations_job_async.results }}"
+  loop_control:
+    loop_var: __rulebook_activations_job_async_result_item
+  when: __rulebook_activations_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ eda_configuration_rulebook_activation_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ eda_configuration_async_dir }}'
+...

@@ -1,4 +1,5 @@
 ---
+<<<<<<< HEAD
 controller_projects:
   - name: Test Project
     scm_type: git
@@ -21,4 +22,11 @@ controller_projects:
     description: ansible-examples
     organization: Satellite
     wait: true
+=======
+eda_projects:
+  - name: my_project
+    description: my awesome project
+    url: https://github.com/ansible/ansible-rulebook.git
+    credential: test_token
+>>>>>>> 2fdfef74d073a0df037b2391c31f4e727e1cbf31
 ...

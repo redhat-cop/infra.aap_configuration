@@ -1,0 +1,19 @@
+{% for section in ansible_config_list %}
+[{{ section.header }}]
+{% for key_set in (section.keypairs | default([])) %}
+{{ key_set.key }}={{ key_set.value }}
+{% endfor %}
+{% endfor %}
+
+{% for server in automation_hub_list %}
+[galaxy_server.{{ server.name }}]
+url={{ server.url }}
+{% if server.auth_url is defined %}
+auth_url={{ server.auth_url }}
+{% endif %}
+{% if server.token is defined %}
+token={{ server.token }}
+{% elif ah_token is defined %}
+token={{ ah_token }}
+{% endif %}
+{% endfor %}
