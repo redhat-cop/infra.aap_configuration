@@ -1,153 +1,184 @@
 ---
 argument_specs:
   main:
-    short_description: An Ansible Role to call other roles to create objects on Ansible Controller.
+    short_description: An Ansible Role to call other roles to create objects on Ansible Automation Platform.
     options:
+      gateway_configuration_dispatcher_roles:
+        default:
+          - role: gateway_authenticator
+            var: authenticators_list
+            tags: authenticators
+          - role: gateway_authenticator_map
+            var: authenticator_maps_list
+            tags: authenticator_maps
+          - role: gateway_settings
+            var: settings_list
+            tags: settings
+          - role: gateway_http_ports
+            var: http_ports_list
+            tags: http_ports
+          - role: gateway_organizations
+            var: organizations_list
+            tags: organizations
+          - role: gateway_service_clusters
+            var: service_clusters_list
+            tags: service_clusters
+          - role: gateway_service_keys
+            var: service_keys_list
+            tags: service_keys
+          - role: gateway_service_nodes
+            var: service_nodes_list
+            tags: service_nodes
+          - role: gateway_services
+            var: services_list
+            tags: services
+          - role: gateway_role_user_assignments
+            var: role_user_assignments_list
+            tags: role_user_assignments
+          - role: gateway_routes
+            var: routes_list
+            tags: routes
+          - role: gateway_teams
+            var: teams_list
+            tags: teams
       controller_configuration_dispatcher_roles:
         default:
-          - {role: settings, var: controller_settings, tags: settings}
-          - {role: instances, var: controller_instances, tags: instances}
-          - {role: instance_groups, var: controller_instance_groups, tags: instance_groups}
-          - {role: organizations, var: controller_organizations, tags: organizations, assign_galaxy_credentials_to_org: false, assign_default_ee_to_org: false, assign_notification_templates_to_org: false}
-          - {role: labels, var: controller_labels, tags: labels}
-          - {role: users, var: controller_user_accounts, tags: users}
-          - {role: teams, var: controller_teams, tags: teams}
-          - {role: credential_types, var: controller_credential_types, tags: credential_types}
-          - {role: credentials, var: controller_credentials, tags: credentials}
-          - {role: credential_input_sources, var: controller_credential_input_sources, tags: credential_input_sources}
-          - {role: execution_environments, var: controller_execution_environments, tags: execution_environments}
-          - {role: notification_templates, var: controller_notifications, tags: notification_templates}
-          - {role: organizations, var: controller_organizations, tags: organizations, assign_galaxy_credentials_to_org: true, assign_default_ee_to_org: true, assign_notification_templates_to_org: true}
-          - {role: projects, var: controller_projects, tags: projects}
-          - {role: inventories, var: controller_inventories, tags: inventories}
-          - {role: inventory_sources, var: controller_inventory_sources, tags: inventory_sources}
-          - {role: inventory_source_update, var: controller_inventory_sources, tags: inventory_sources}
-          - {role: applications, var: controller_applications, tags: applications}
-          - {role: hosts, var: controller_hosts, tags: hosts}
-          - {role: bulk_host_create, var: controller_bulk_hosts, tags: bulk_hosts}
-          - {role: groups, var: controller_groups, tags: inventories}
-          - {role: job_templates, var: controller_templates, tags: job_templates}
-          - {role: workflow_job_templates, var: controller_workflows, tags: workflow_job_templates}
-          - {role: schedules, var: controller_schedules, tags: schedules}
-          - {role: roles, var: controller_roles, tags: roles}
-          - {role: job_launch, var: controller_launch_jobs, tags: job_launch}
-          - {role: workflow_launch, var: controller_workflow_launch_jobs, tags: workflow_launch}
-    short_description: An Ansible Role to run all roles for which variables are found on Ansible Automation Hub.
-    options:
+          - role: controller_settings
+            var: controller_settings
+            tags: settings
+          - role: controller_instances
+            var: controller_instances
+            tags: instances
+          - role: controller_instance_groups
+            var: controller_instance_groups
+            tags: instance_groups
+          - role: controller_labels
+            var: controller_labels
+            tags: labels
+          - role: controller_credential_types
+            var: controller_credential_types
+            tags: credential_types
+          - role: controller_credentials
+            var: controller_credentials
+            tags: credentials
+          - role: controller_credential_input_sources
+            var: controller_credential_input_sources
+            tags: credential_input_sources
+          - role: controller_execution_environments
+            var: controller_execution_environments
+            tags: execution_environments
+          - role: controller_notification_templates
+            var: controller_notifications
+            tags: notification_templates
+          - role: controller_projects
+            var: controller_projects
+            tags: projects
+          - role: controller_inventories
+            var: controller_inventories
+            tags: inventories
+          - role: controller_inventory_sources
+            var: controller_inventory_sources
+            tags: inventory_sources
+          - role: controller_inventory_source_update
+            var: controller_inventory_sources
+            tags: inventory_sources
+          - role: controller_applications
+            var: controller_applications
+            tags: applications
+          - role: controller_hosts
+            var: controller_hosts
+            tags: hosts
+          - role: controller_bulk_host_create
+            var: controller_bulk_hosts
+            tags: bulk_hosts
+          - role: controller_groups
+            var: controller_groups
+            tags: inventories
+          - role: controller_job_templates
+            var: controller_templates
+            tags: job_templates
+          - role: controller_workflow_job_templates
+            var: controller_workflows
+            tags: workflow_job_templates
+          - role: controller_schedules
+            var: controller_schedules
+            tags: schedules
+          - role: controller_roles
+            var: controller_roles
+            tags: roles
+          - role: controller_job_launch
+            var: controller_launch_jobs
+            tags: job_launch
+          - role: controller_workflow_launch
+            var: controller_workflow_launch_jobs
+            tags: workflow_launch
       ah_configuration_dispatcher_roles:
-    short_description: An Ansible Role to call other roles to create objects on Ansible eda.
-    options:
+        default:
+          - role: pah_group
+            var: ah_groups
+            tags: groups
+          - role: pah_user
+            var: ah_users
+            tags: users
+          - role: pah_namespace
+            var: ah_namespaces
+            tags: namespaces
+          - role: pah_collection
+            var: ah_collections
+            tags: collections
+          - role: pah_ee_registry
+            var: ah_ee_registries
+            tags: registries
+          - role: pah_ee_repository
+            var: ah_ee_repositories
+            tags: repos
+          - role: pah_ee_repository_sync
+            var: ah_ee_repository_sync
+            tags: reposync
+          - role: pah_ee_image
+            var: ah_ee_images
+            tags: images
+          - role: pah_ee_registry_index
+            var: ah_ee_registries
+            tags: indices
+          - role: pah_ee_registry_sync
+            var: ah_ee_registries
+            tags: regsync
+          - role: pah_collection_remote
+            var: ah_collection_remotes
+            tags: collectionremote
+          - role: pah_collection_repository
+            var: ah_collection_repositories
+            tags: collectionsrep
+          - role: pah_collection_repository_sync
+            var: ah_collection_repositories
+            tags: collectionsrepsync
+          - role: pah_group_roles
+            var: ah_group_roles
+            tags: group_roles
       eda_configuration_dispatcher_roles:
         default:
-          - {role: user, var: eda_users, tags: user}
-          - {role: credential, var: eda_credentials, tags: credential}
-          - {role: controller_token, var: eda_controller_tokens, tags: controller_token}
-          - {role: project, var: eda_projects, tags: project}
-          - {role: project_sync, var: eda_projects, tags: project_sync}
-          - {role: decision_environment, var: eda_decision_environments, tags: decision_environment}
-          - {role: rulebook_activation, var: eda_rulebook_activations, tags: rulebook_activation}
-    short_description: An Ansible Role to call other roles to create objects on automation platform gateway.
-    options:
-      dispatch_roles:
-        default:
-          - role: authenticator
-            var: authenticators
-            tags: authenticators
-          - role: authenticator_map
-            var: authenticator_maps
-            tags: authenticator_maps
-          - role: settings
-            var: gateway_settings
-            tags: settings
-          - role: users
-            var: gateway_user_accounts
-            tags: users
-          - role: http_ports
-            var: http_ports
-            tags: http_ports
-          - role: organizations
-            var: organizations
-            tags: organizations
-          - role: service_clusters
-            var: gateway_service_clusters
-            tags: service_clusters
-          - role: service_keys
-            var: gateway_service_keys
-            tags: service_keys
-          - role: service_nodes
-            var: gateway_service_nodes
-            tags: service_nodes
-          - role: services
-            var: gateway_services
-            tags: services
-          - role: role_user_assignments
-            var: gateway_role_user_assignments
-            tags: role_user_assignments
-          - role: routes
-            var: gateway_routes
-            tags: routes
-          - role: teams
-            var: gateway_teams
-            tags: teams
-        required: false
-        description: List of roles, variables and tags to run through
-        type: list
-        elements: dict
-        options:
-          role:
-            required: true
-            description: Name of role from this collection to call
-            type: str
-          var:
-            required: true
-            description: Name of variable to be passed to the role
-            type: str
-          tags:
-            required: false
-            description: Tags to be applied to the role so tagging can be used to run only part of a playbook
-          assign_galaxy_credentials_to_org:
-            required: false
-            description: Variable to be applied. Whether to assign the galaxy credential to the organizations. Only relevant against the organizations role.
-          assign_default_ee_to_org:
-            required: false
-            description: Variable to be applied. Whether to assign the default execution environment to the organizations. Only relevant against the organizations role.
-          assign_notification_templates_to_org:
-            required: false
-            description: Variable to be applied. Whether to assign the notification templates to the organizations. Only relevant against the organizations role.
-
-
-      # Async variables
-      controller_configuration_async_retries:
-        default: 30
-        required: false
-        description: This variable sets number of retries across all roles as a default.
-      controller_configuration_async_delay:
-        default:
-          - {role: group, var: ah_groups, tags: groups}
-          - {role: user, var: ah_users, tags: users}
-          - {role: namespace, var: ah_namespaces, tags: namespaces}
-          - {role: collection, var: ah_collections, tags: collections}
-          - {role: ee_repository, var: ah_ee_repositories, tags: repos}
-          - {role: ee_repository_sync, var: ah_ee_repository_sync, tags: reposync}
-          - {role: ee_image, var: ah_ee_images, tags: images}
-          - {role: ee_registry, var: ah_ee_registries, tags: registries}
-          - {role: ee_registry_index, var: ah_ee_registries, tags: indices}
-          - {role: ee_registry_sync, var: ah_ee_registries, tags: regsync}
-
-      # Async variables
-      ah_configuration_async_retries:
-        default: 50
-        required: false
-        description: This variable sets number of retries across all roles as a default.
-      ah_configuration_async_delay:
-
-
-      # Async variables
-      eda_configuration_async_retries:
-        default: 30
-        required: false
-        description: This variable sets number of retries across all roles as a default.
-      eda_configuration_async_delay:
+          - role: eda_user
+            var: eda_users
+            tags: user
+          - role: eda_credential
+            var: eda_credentials
+            tags: credential
+          - role: eda_controller_token
+            var: eda_controller_tokens
+            tags: controller_token
+          - role: eda_project
+            var: eda_projects
+            tags: project
+          - role: eda_project_sync
+            var: eda_projects
+            tags: project_sync
+          - role: eda_decision_environment
+            var: eda_decision_environments
+            tags: decision_environment
+          - role: eda_rulebook_activation
+            var: eda_rulebook_activations
+            tags: rulebook_activation
 
       # Async variables
       gateway_configuration_async_retries:
@@ -161,11 +192,6 @@ argument_specs:
 
 
       # No_log variables
-      controller_configuration_secure_logging:
-      # No_log variables
-      ah_configuration_secure_logging:
-      eda_configuration_secure_logging:
-      # No_log variables
       gateway_configuration_secure_logging:
         default: false
         required: false
@@ -173,75 +199,11 @@ argument_specs:
         description: This variable enables secure logging across all roles as a default.
 
       # Generic across all roles
-      controller_state:
-      eda_state:
       gateway_state:
         default: present
         required: false
         description: The state all objects will take unless overridden by object default
         type: str
-      controller_hostname:
-        default: None
-        required: false
-        description: URL to the Ansible Controller Server.
-        type: str
-      controller_validate_certs:
-        default: true
-        required: false
-        description: Whether or not to validate the Ansible Controller Server's SSL certificate.
-      eda_hostname:
-        default: None
-        required: false
-        description: URL to the Ansible EDA Server.
-        type: str
-      eda_validate_certs:
-        default: true
-        required: false
-        description: Whether or not to validate the Ansible EDA Server's SSL certificate.
-        type: str
-      controller_username:
-        default: None
-        required: false
-        description: Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.
-        description: Admin User on the Ansible EDA Server. Either username / password or oauthtoken need to be specified.
-        type: str
-      controller_password:
-        default: None
-        required: false
-        description: Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
-        type: str
-      controller_oauthtoken:
-        default: None
-        required: false
-        description: Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
-      ah_host:
-        required: false
-        description: URL to the Automation Hub Server.
-        type: str
-      ah_path_prefix:
-        required: false
-        description: The path for the Automation Hub API. Usually galaxy or automation-hub unless custom set in AH settings.
-      ah_validate_certs:
-        required: false
-        description: Whether or not to validate the Automation Hub Server's SSL certificate.
-        type: str
-      ah_request_timeout:
-        default: 10
-        required: false
-        description: Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.
-        type: float
-      ah_username:
-        required: false
-        description: User for authentication on Automation Hub
-        type: str
-      ah_password:
-        required: false
-        description: User's password For Automation Hub
-        type: str
-      ah_token:
-        required: false
-        description: Automation Hub token for authentication.
-        description: eda Admin User's password on the Ansible EDA Server. This should be stored in an Ansible Vault at vars/eda-secrets.yml or elsewhere and called from a parent playbook.
       gateway_hostname:
         default: None
         required: false

@@ -1,24 +1,16 @@
 ---
 galaxy_info:
   role_name: "dispatch"
-  author: "Tom Page"
-  description: "An Ansible Role which launches all of the roles within the controller_configuration Collection."
-  author: "Alan Wong and Tom Page"
-  description: "An Ansible Role which launches all of the roles for which variables are found within the ah_configuration collection."
-  description: "An Ansible Role which launches all of the roles within the eda_configuration Collection."
+  author: Tom Pag, Alan Wong, and Sean Sullivan
+  description: "An Ansible Role which launches all of the roles within the platform_configuration Collection."
   company: "Red Hat"
-  role_name: dispatch
-  author: Sean Sullivan
-  description: An Ansible Role which launches all of the roles within the gateway_configuration Collection.
-  company: Red Hat
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
   # issue_tracker_url: http://example.com/issue/tracker
   license: GPL-3.0-or-later
 
-  min_ansible_version: 2.15.0
-  min_ansible_version: 2.14.0
+  min_ansible_version: 2.16.0
 
   # Optionally specify the branch Galaxy will use when accessing the GitHub
   # repo for this role. During role install, if no tags are available,
@@ -40,37 +32,18 @@ galaxy_info:
     - "controller"
     - "ah"
     - "aap"
+    - "eda"
+    - "gateway"
     - "awx"
     - "configuration"
     - "dispatch"
 
 collections:
+  - ansible.platform
   - ansible.controller
+  - ansible.hub
+  - ansible.eda
   - awx.awx
-    - "eda"
-    - "aap"
-    - "configuration"
-    - "dispatch"
-
-collections: []
-
-dependencies: []
-# List your role dependencies here, one per line. Be sure to remove the '[]' above,
-# if you add dependencies to this list.
-  license: GPLv3
-
-  min_ansible_version: 2.16.0
-
-  platforms:
-    - name: EL
-      versions:
-        - all
-
-  galaxy_tags:
-    - gateway
-    - aap
-    - configuration
-    - dispatch
 
 dependencies: []
 ...

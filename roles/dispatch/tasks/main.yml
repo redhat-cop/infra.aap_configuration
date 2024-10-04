@@ -1,34 +1,21 @@
 ---
-- name: "Run the following infra.controller_configuration roles: {{ controller_configuration_dispatcher_roles | map(attribute='role') | join(', ') }}"
-
-- name: "Run galaxy.galaxy.{{ __role.role }}"
-- name: "Run the following infra.eda_configuration roles: {{ eda_configuration_dispatcher_roles | map(attribute='role') | join(', ') }}"
-- name: Run ansible.platform.{{ __role.role }}
+- name: "Run the following infra.platform_configuration roles: {{ platform_configuration_dispatcher_roles | map(attribute='role') | join(', ') }}"
   ansible.builtin.include_role:
     name: "{{ __role.role }}"
     apply:
       tags: "{{ __role.tags }}"
   when: vars[__role.var] is defined
   tags: always
-  loop: "{{ controller_configuration_dispatcher_roles }}"
+  loop: "{{ platform_configuration_dispatcher_roles }}"
   loop_control:
     loop_var: __role
   vars:
     assign_galaxy_credentials_to_org: "{{ __role.assign_galaxy_credentials_to_org | default(false) }}"
     assign_default_ee_to_org: "{{ __role.assign_default_ee_to_org | default(false) }}"
     assign_notification_templates_to_org: "{{ __role.assign_notification_templates_to_org | default(false) }}"
-  loop: "{{ eda_configuration_dispatcher_roles }}"
-  loop_control:
-    loop_var: __role
 
 - name: "Fail the playbook if there were errors (check mode only)"
   ansible.builtin.fail:
     msg: "The execution has failed because of errors (probably due to missing dependencies caused by check mode)."
   when: ansible_check_mode and error_flag is defined and error_flag
-  when: hostvars[inventory_hostname][__role.var] is defined
-  tags: always
-  loop: "{{ ah_configuration_dispatcher_roles }}"
-  loop: "{{ dispatch_roles }}"
-  loop_control:
-    loop_var: __role
 ...
