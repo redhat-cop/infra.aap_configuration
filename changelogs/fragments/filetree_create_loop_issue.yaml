@@ -1,3 +1,0 @@
----
-bugfixes:
-  - Fixed issue with loops that were getting always empty list of objects
