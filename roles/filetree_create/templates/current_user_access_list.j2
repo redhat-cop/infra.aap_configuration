@@ -1,0 +1,29 @@
+{% if first_user_role | default(true) | bool %}
+---
+controller_roles:
+{% endif %}
+    users:
+{% for user in user_role.user %}
+      - "{{ user }}"
+{% endfor %}
+{% if user_role.resource_type[0] is match('organization') %}
+    organizations:
+      - "{{ user_role.resource_name }}"
+{% elif user_role.resource_type[0] is match('user') %}
+    target_users:
+      - "{{ user_role.resource_name }}"
+{% elif user_role.resource_type[0] is match('job_template') %}
+    job_template: "{{ user_role.resource_name }}"
+{% elif user_role.resource_type[0] is match('inventory') %}
+    inventory: "{{ user_role.resource_name }}"
+{% elif user_role.resource_type[0] is match('workflow_job_template') %}
+    workflow: "{{ user_role.resource_name }}"
+{% elif user_role.resource_type[0] is match('project') %}
+    project: "{{ user_role.resource_name }}"
+{% elif user_role.resource_type[0] is match('credential') %}
+    credential: "{{ user_role.resource_name }}"
+{% endif %}
+    role: "{% if user_role.role | lower == 'approve' %}approval{% else %}{{ user_role.role | lower | regex_replace(' ', '_') }}{% endif %}"
+{% if last_user_role | default(true) | bool %}
+...
+{% endif %}

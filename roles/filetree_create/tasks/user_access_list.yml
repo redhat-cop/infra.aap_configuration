@@ -1,0 +1,62 @@
+---
+- name: "Get access list for object from the API"
+  ansible.builtin.set_fact:
+    access_lookvar: "{{  query(controller_api_plugin, 'api/v2/{{ object_type }}/{{ object_id }}/access_list',
+                               host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                               return_all=true, max_objects=query_controller_api_max_objects)
+                    }}"
+  no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
+
+- name: "Get user list"
+  ansible.builtin.set_fact:
+    user_list: "{{ access_lookvar | selectattr('username', 'defined') | map(attribute='username') | unique }}"
+
+- name: "Set direct user access fact"
+  ansible.builtin.set_fact:
+    user_direct_access_fact: >-
+      {{ user_direct_access_fact | default([]) + access_lookvar | selectattr('username', 'equalto', item) |
+                                                                  rejectattr('summary_fields.direct_access', 'equalto', []) |
+                                                                  map(attribute='summary_fields.direct_access') | flatten |
+                                                                  map(attribute='role') |
+                                                                  rejectattr('team_name', 'defined') |
+                                                                  map('combine', {'username': item})
+      }}
+  loop: "{{ user_list }}"
+
+- name: "Set roles and object lists"
+  ansible.builtin.set_fact:
+    user_roles: "{{ user_direct_access_fact | map(attribute='name') | unique }}"
+    user_objects: "{{ user_direct_access_fact | map(attribute='resource_name') | unique }}"
+
+- name: "Set user roles matrix"
+  ansible.builtin.set_fact:
+    user_roles_matrix: >-
+      {{ user_roles_matrix | default([]) + [{ 'role': item.0,
+                                              'user': user_direct_access_fact | selectattr('name','equalto', item.0) | selectattr('resource_name','equalto', item.1) |
+                                                      map(attribute='username') | unique,
+                                              'resource_type': user_direct_access_fact | selectattr('username', 'defined') |
+                                                               selectattr('name','equalto', item.0) | selectattr('resource_name','equalto', item.1) |
+                                                               map(attribute='resource_type') | unique,
+                                              'resource_name': item.1
+                                           }]
+      }}
+  when: user_direct_access_fact | selectattr('name','equalto', item.0) | selectattr('resource_name','equalto', item.1) | map(attribute='username') | length > 0
+  loop: "{{ user_roles | product(user_objects) | list }}"
+
+- name: "Create the output directory for user roles"
+  ansible.builtin.file:
+    path: "{{ output_path }}/user_roles"
+    state: directory
+    mode: '0755'
+  loop: "{{ user_roles_matrix }}"
+  loop_control:
+    loop_var: user_role
+
+- name: "Add current roles to the output yaml file"
+  ansible.builtin.template:
+    src: "templates/current_user_access_list.j2"
+    dest: "{{ output_path }}/user_roles/{{ user_role.resource_name | default('current') }}_roles_{{ user_role.role | regex_replace('/', '_') }}.yaml"
+    mode: '0644'
+  loop: "{{ user_roles_matrix }}"
+  loop_control:
+    loop_var: user_role

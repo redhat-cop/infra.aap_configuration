@@ -1,0 +1,52 @@
+---
+- name: "Get access list for object from the API"
+  ansible.builtin.set_fact:
+    access_lookvar: "{{  query(controller_api_plugin, 'api/v2/{{ object_type }}/{{ object_id }}/access_list',
+                               host=controller_hostname, oauth_token=controller_oauthtoken, verify_ssl=controller_validate_certs,
+                               return_all=true, max_objects=query_controller_api_max_objects)
+                    }}"
+  no_log: "{{ controller_configuration_filetree_create_secure_logging }}"
+
+- name: "Set team direct access fact"
+  ansible.builtin.set_fact:
+    team_direct_access_fact: "{{ access_lookvar | map(attribute='summary_fields.direct_access') | flatten | map(attribute='role') | selectattr('team_name', 'defined') }}"
+
+- name: "Set roles and object lists"
+  ansible.builtin.set_fact:
+    team_roles: "{{ team_direct_access_fact | map(attribute='name') | unique }}"
+    team_objects: "{{ team_direct_access_fact | map(attribute='resource_name') | unique }}"
+
+- name: "Set team roles matrix"
+  ansible.builtin.set_fact:
+    team_roles_matrix: >-
+      {{ team_roles_matrix | default([]) + [{ 'role': item.0,
+                                              'team': team_direct_access_fact | selectattr('name','equalto', item.0) |
+                                                                                selectattr('resource_name','equalto', item.1) |
+                                                                                map(attribute='team_name') | unique,
+                                              'resource_type': team_direct_access_fact | selectattr('name','equalto', item.0) |
+                                                                                         selectattr('resource_name','equalto', item.1) |
+                                                                                         map(attribute='resource_type') | unique,
+                                              'resource_name': item.1
+                                           }]
+      }}
+  when: team_direct_access_fact | selectattr('name','equalto', item.0) | selectattr('resource_name','equalto', item.1) | map(attribute='team_name') | length > 0
+  loop: "{{ team_roles | product(team_objects) | list }}"
+
+- name: "Create the output directory for team roles"
+  ansible.builtin.file:
+    path: "{{ output_path }}/team_roles"
+    state: directory
+    mode: '0755'
+  loop: "{{ team_roles_matrix }}"
+  loop_control:
+    loop_var: team_role
+
+- name: "Add current roles to the output yaml file"
+  ansible.builtin.template:
+    src: "templates/current_team_access_list.j2"
+    dest: "{{ output_path }}/team_roles/{{ team_role.resource_name | default('current') }}_roles_{{ team_role.role | regex_replace('/', '_') }}.yaml"
+    mode: '0644'
+  loop: "{{ team_roles_matrix }}"
+  loop_control:
+    loop_var: team_role
+
