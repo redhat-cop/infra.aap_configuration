@@ -1,0 +1,4 @@
+---
+known_issues:
+  - currently no way to add galaxy credentials to organizations with code, this is a module issue
+...

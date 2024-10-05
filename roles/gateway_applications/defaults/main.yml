@@ -1,19 +1,8 @@
 ---
-<<<<<<< HEAD
-# a list of dictionaries describing the Controller applications
-controller_applications: []
-controller_configuration_applications_secure_logging: "{{ controller_configuration_secure_logging | default('false') }}"
-controller_configuration_applications_async_retries: "{{ controller_configuration_async_retries | default(30) }}"
-controller_configuration_applications_async_delay: "{{ controller_configuration_async_delay | default(1) }}"
-controller_configuration_applications_loop_delay: "{{ controller_configuration_loop_delay | default(0) }}"
-controller_configuration_async_dir: null
-controller_configuration_applications_enforce_defaults: "{{ controller_configuration_enforce_defaults | default(false) }}"
-=======
 # a list of dictionaries describing the gateway applications
 applications_list: []
 applications_secure_logging: "{{ gateway_configuration_secure_logging | default('false') }}"
 applications_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
 applications_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
 applications_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
->>>>>>> 40b40ddac1c00aac7d878bd41af23a6d562296e5
 ...

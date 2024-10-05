@@ -82,7 +82,7 @@ argument_specs:
         default: 1
         required: false
         description: This variable sets delay between retries across all roles as a default.
-      platform_configuration_async_dir:
+      gateway_configuration_async_dir:
         default: null
         required: false
         description: >
