@@ -1,3 +1,0 @@
-minor_changes:
-  - filetree_create able export proper approval role (user roles)
-  - filetree_create able to bulk export role for objects

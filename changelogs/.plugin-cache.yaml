@@ -176,4 +176,4 @@ plugins:
   strategy: {}
   test: {}
   vars: {}
-version: 2.9.0
+version: 2.11.0

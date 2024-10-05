@@ -1,4 +1,0 @@
----
-bugfixes:
-  - filetree_create export extra_vars with escaping any variable brackets
-...
