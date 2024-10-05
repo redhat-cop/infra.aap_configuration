@@ -1,7 +1,7 @@
 # Update or destroy Automation Hub Collection
 ---
 - name: Get token
-  ah_token:
+  ansible.hub.ah_token:
     ah_host:               "{{ ah_host | default(ah_hostname) | default(omit) }}"
     ah_username:           "{{ ah_username | default(omit) }}"
     ah_password:           "{{ ah_password | default(omit) }}"
@@ -14,7 +14,7 @@
     - ah_collections | length > 1
 
 - name: Update or destroy Automation Hub Collection
-  ah_collection:
+  ansible.hub.ah_collection:
     namespace:             "{{ __collection.namespace }}"
     name:                  "{{ __collection.name }}"
     version:               "{{ __collection.version | default(omit) }}"

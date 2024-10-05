@@ -2,7 +2,7 @@
 
 # Create AH EE Image
 - name: Add Automation Hub EE Image
-  ah_ee_image:
+  ansible.hub.ah_ee_image:
     name:             "{{ __ee_image_item.name }}"
     # new_name:         "{{ __ee_image_item.new_name | default(omit) }}"  <-- Needs adding once new_name option added to module
     append: "{{ __ee_image_item.append | default(omit) }}"

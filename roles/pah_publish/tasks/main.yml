@@ -29,7 +29,7 @@
     - __ah_collection_item.collection_local_path is defined
 
 - name: Build Collections
-  ah_build:
+  ansible.hub.ah_build:
     path:        "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}"
     output_path: "{{ ah_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}"
     force: true
@@ -69,7 +69,7 @@
   when: ah_collection_list is not defined
 
 - name: Get token
-  ah_token:
+  ansible.hub.ah_token:
     ah_host:               "{{ ah_host | default(ah_hostname) | default(omit) }}"
     ah_username:           "{{ ah_username | default(omit) }}"
     ah_password:           "{{ ah_password | default(omit) }}"
@@ -82,7 +82,7 @@
     - ah_collection_list | length > 1
 
 - name: Publish Collections
-  ah_collection:
+  ansible.hub.ah_collection:
     namespace:          "{{ (__ah_collection_file | basename).split('-')[0] }}"
     name:               "{{ (__ah_collection_file | basename).split('-')[1] }}"
     version:            "{{ (__ah_collection_file | basename).split('-')[2:] | join('-') | splitext | first | splitext | first }}"
@@ -123,7 +123,7 @@
     ansible_async_dir: '{{ ah_configuration_async_dir }}'
 
 - name: Approve Collections
-  ah_approval:
+  ansible.hub.ah_approval:
     namespace:        "{{ (__ah_collection_file | basename).split('-')[0] }}"
     name:             "{{ (__ah_collection_file | basename).split('-')[1] }}"
     version:          "{{ (__ah_collection_file | basename).split('-')[2:] | join('-') | splitext | first | splitext | first }}"
