@@ -34,7 +34,7 @@ controller_schedules:
 {% endif %}
 {% if current_schedules_asset_value.extra_data is defined %}
     extra_data:
-      {{ current_schedules_asset_value.extra_data | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") }}
+      {{ current_schedules_asset_value.extra_data | from_yaml | to_nice_yaml(indent=2) | indent(width=6, first=False) | replace("'{{", "!unsafe \'{{") | replace("$encrypted$", "") }}
 {%- endif -%}
 {% if query_credentials | length > 0 %}
     credentials:

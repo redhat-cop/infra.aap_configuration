@@ -21,7 +21,7 @@ controller_workflows:
         all_parents_must_converge: "{{ node.all_parents_must_converge }}"
 {% if node.extra_data is defined and node.extra_data | length > 0 %}
         extra_data:
-          {{ node.extra_data | to_nice_yaml | indent(10) | replace("'{{", "!unsafe \'{{") }}
+          {{ node.extra_data | to_nice_yaml | indent(10) | replace("'{{", "!unsafe \'{{") }} | replace("$encrypted$", "")
 {%- endif %}
 {% if node.success_nodes is defined and node.success_nodes | length > 0 %}
         success_nodes:
