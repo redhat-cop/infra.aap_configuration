@@ -2,7 +2,7 @@
 
 ![pre-commit tests](https://github.com/redhat-cop/aap_configuration/actions/workflows/pre-commit.yml/badge.svg)
 ![Release](https://github.com/redhat-cop/aap_configuration/actions/workflows/release.yml/badge.svg)
-<!-- markdownlint-disable-line MD033 MD034 --><a href="https://raw.githubusercontent.com/redhat-cop/controller_configuration/devel/docs/aap_config_as_code_public_meeting.ics"><img border="0" alt="Google Calendar invite" src="https://www.google.com/calendar/images/ext/gc_button1_en-GB.gif"></a>
+<!-- markdownlint-disable-line MD033 MD034 --><a href="https://raw.githubusercontent.com/redhat-cop/aap_configuration/devel/docs/aap_config_as_code_public_meeting.ics"><img border="0" alt="Google Calendar invite" src="https://www.google.com/calendar/images/ext/gc_button1_en-GB.gif"></a>
 <!-- Further CI badges go here as above -->
 
 This Ansible collection allows for easy interaction with an AWX or Ansible Controller server via Ansible roles using the AWX/Controller collection modules.
@@ -17,34 +17,36 @@ We are on the Ansible Forums and Matrix, if you want to discuss something, ask f
 
 ## Requirements
 
-The awx.awx or ansible.controller collections MUST be installed in order for this collection to work. It is recommended they be invoked in the playbook in the following way.
+The supported collections that contains the modules are required for this collection to work, you can copy this requirements.yml file example.
 
 ```yaml
 ---
-- name: Playbook to configure ansible controller post installation
-  hosts: localhost
-  connection: local
-  vars:
-    controller_validate_certs: true
-  collections:
-    - awx.awx
+collections:
+  - name: ansible.platform
+  - name: ansible.hub
+  - name: ansible.controller
+  - name: ansible.eda
+  - name: infra.aap_configuration
+...
 ```
 
 ## Links to Ansible Automation Platform Collections
 
-|                                      Collection Name                                         |                 Purpose                  |
-|:--------------------------------------------------------------------------------------------:|:----------------------------------------:|
-| [awx.awx/Ansible.controller repo](https://github.com/ansible/awx/tree/devel/awx_collection) |   Automation controller modules          |
-|        [Ansible Hub Configuration](https://github.com/ansible/automation_hub_collection)     |       Automation hub configuration       |
+|                                      Collection Name                                |            Purpose            |
+|:-----------------------------------------------------------------------------------:|:-----------------------------:|
+| ansible.platform repo (no public repo for this collection)                          | gateway/platform modules      |
+| [ansible.hub repo](https://github.com/ansible-collections/ansible_hub)              | Automation hub modules        |
+| [ansible.controller repo](https://github.com/ansible/awx/tree/devel/awx_collection) | Automation controller modules |
+| [ansible.eda repo](https://github.com/ansible/event-driven-ansible)                 | Event Driven Ansible modules  |
 
 ## Links to other Validated Configuration Collections for Ansible Automation Platform
 
-|                                      Collection Name                                       |                 Purpose                  |
-|:------------------------------------------------------------------------------------------:|:----------------------------------------:|
-| [Controller Configuration](https://github.com/redhat-cop/aap_configuration) |   Automation controller configuration    |
-|             [EE Utilities](https://github.com/redhat-cop/ee_utilities)             | Execution Environment creation utilities |
-|     [AAP installation Utilities](https://github.com/redhat-cop/aap_utilities)      |  Ansible Automation Platform Utilities   |
-|   [AAP Configuration Template](https://github.com/redhat-cop/aap_configuration_template)   |  Configuration Template for this suite   |
+|                                      Collection Name                                       |                      Purpose                      |
+|:------------------------------------------------------------------------------------------:|:-------------------------------------------------:|
+| [AAP Configuration Extended](https://github.com/redhat-cop/aap_configuration_extended)     | Where other useful roles that don't fit here live |
+| [EE Utilities](https://github.com/redhat-cop/ee_utilities)                                 | Execution Environment creation utilities          |
+| [AAP installation Utilities](https://github.com/redhat-cop/aap_utilities)                  | Ansible Automation Platform Utilities             |
+| [AAP Configuration Template](https://github.com/redhat-cop/aap_configuration_template)     | Configuration Template for this suite             |
 
 ## Included content
 
@@ -52,10 +54,10 @@ Click the `Content` button to see the list of content included in this collectio
 
 ## Installing this collection
 
-You can install the infra.controller_configuration.collection with the Ansible Galaxy CLI:
+You can install the infra.aap_configuration.collection with the Ansible Galaxy CLI:
 
 ```console
-ansible-galaxy collection install infra.controller_configuration
+ansible-galaxy collection install infra.aap_configuration
 ```
 
 You can also include it in a `requirements.yml` file and install it with `ansible-galaxy collection install -r requirements.yml`, using the format:
@@ -63,7 +65,7 @@ You can also include it in a `requirements.yml` file and install it with `ansibl
 ```yaml
 ---
 collections:
-  - name: infra.controller_configuration
+  - name: infra.aap_configuration
     # If you need a specific version of the collection, you can specify like this:
     # version: ...
 ```
@@ -79,7 +81,7 @@ The awx.awx or ansible.controller collection must be invoked in the playbook in 
 The following command will invoke the collection playbook. This is considered a starting point for the collection.
 
 ```console
-ansible-playbook infra.controller_configuration.configure_controller.yml
+ansible-playbook infra.aap_configuration.configure_controller.yml
 ```
 
 Otherwise it will look for the modules only in your base installation. If there are errors complaining about "couldn't resolve module/action" this is the most likely cause.
@@ -185,7 +187,7 @@ More information about contributing can be found in our [Contribution Guidelines
 We have a community meeting every 4 weeks. Find the agenda in the [issues](https://github.com/redhat-cop/aap_configuration/issues) and the calendar invitation below:
 
 <!-- markdownlint-disable-next-line MD033 MD034 -->
-<a target="_blank" href="https://raw.githubusercontent.com/redhat-cop/controller_configuration/devel/docs/aap_config_as_code_public_meeting.ics"><img border="0" alt="Google Calendar invite" src="https://www.google.com/calendar/images/ext/gc_button1_en-GB.gif"></a>
+<a target="_blank" href="https://raw.githubusercontent.com/redhat-cop/aap_configuration/devel/docs/aap_config_as_code_public_meeting.ics"><img border="0" alt="Google Calendar invite" src="https://www.google.com/calendar/images/ext/gc_button1_en-GB.gif"></a>
 
 ## Code of Conduct
 
