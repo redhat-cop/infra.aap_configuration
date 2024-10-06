@@ -1,5 +1,5 @@
 ---
-- name: Run dispatch job to Controller
+- name: Add workflow to Controller
   hosts: localhost
   connection: local
   gather_facts: false
@@ -17,8 +17,7 @@
       ansible.builtin.include_vars:
         dir: ./configs
         extensions: ["yml"]
-      tags: always
 
   roles:
-    - ../..
+    - {role: ../.., when: controller_workflows is defined}
 ...
