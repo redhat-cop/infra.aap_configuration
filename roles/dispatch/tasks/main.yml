@@ -1,0 +1,17 @@
+---
+- name: "Run the following infra.eda_configuration roles: {{ eda_configuration_dispatcher_roles | map(attribute='role') | join(', ') }}"
+  ansible.builtin.include_role:
+    name: "{{ __role.role }}"
+    apply:
+      tags: "{{ __role.tags }}"
+  when: vars[__role.var] is defined
+  tags: always
+  loop: "{{ eda_configuration_dispatcher_roles }}"
+  loop_control:
+    loop_var: __role
+
+- name: "Fail the playbook if there were errors (check mode only)"
+  ansible.builtin.fail:
+    msg: "The execution has failed because of errors (probably due to missing dependencies caused by check mode)."
+  when: ansible_check_mode and error_flag is defined and error_flag
+...

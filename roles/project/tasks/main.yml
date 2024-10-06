@@ -1,0 +1,44 @@
+---
+
+# Create EDA Controller Project
+- name: Add EDA Controller project
+  ansible.eda.project:
+    name:                "{{ __project_item.name }}"
+    new_name:            "{{ __project_item.new_name | default(omit) }}"
+    description:         "{{ __project_item.description | default(omit) }}"
+    url:                 "{{ __project_item.url | default(__project_item.scm_url | default(omit)) }}"
+    # tls_validation:    "{{ __project_item.tls_validation | default(omit) }}"
+    credential:          "{{ __project_item.credential | default(omit) }}"
+    organization_name:   "{{ __project_item.organization | default(omit) }}"
+    state:               "{{ __project_item.state | default(eda_state | default('present')) }}"
+    controller_host:     "{{ eda_host | default(eda_hostname) }}"
+    controller_username: "{{ eda_username | default(omit) }}"
+    controller_password: "{{ eda_password | default(omit) }}"
+    validate_certs:      "{{ eda_validate_certs | default(omit) }}"
+    request_timeout:     "{{ eda_request_timeout | default(omit) }}"
+  loop: "{{ eda_projects }}"
+  loop_control:
+    loop_var: "__project_item"
+  no_log: "{{ eda_configuration_project_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __projects_job_async
+  changed_when: not __projects_job_async.changed
+  vars:
+    ansible_async_dir: '{{ eda_configuration_async_dir }}'
+
+- name: "Create project | Wait for finish the project creation"
+  ansible.builtin.async_status:
+    jid: "{{ __projects_job_async_result_item.ansible_job_id }}"
+  register: __projects_job_async_result
+  until: __projects_job_async_result.finished
+  retries: "{{ eda_configuration_project_async_retries }}"
+  delay: "{{ eda_configuration_project_async_delay }}"
+  loop: "{{ __projects_job_async.results }}"
+  loop_control:
+    loop_var: __projects_job_async_result_item
+  when: __projects_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ eda_configuration_project_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ eda_configuration_async_dir }}'
+...

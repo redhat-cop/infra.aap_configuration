@@ -1,0 +1,39 @@
+---
+
+# Create EDA Controller Tokens
+- name: Add EDA Controller token
+  ansible.eda.controller_token:
+    name:                "{{ __token_item.name }}"
+    description:         "{{ __token_item.description | default(omit) }}"
+    token:               "{{ __token_item.token | default(omit) }}"
+    controller_host:     "{{ eda_host | default(eda_hostname) }}"
+    controller_username: "{{ eda_username | default(omit) }}"
+    controller_password: "{{ eda_password | default(omit) }}"
+    validate_certs:      "{{ eda_validate_certs | default(omit) }}"
+    request_timeout:     "{{ eda_request_timeout | default(omit) }}"
+  loop: "{{ eda_controller_tokens }}"
+  loop_control:
+    loop_var: "__token_item"
+  no_log: "{{ eda_configuration_user_token_secure_logging }}"
+  async: 1000
+  poll: 0
+  register: __controller_tokens_job_async
+  changed_when: not __controller_tokens_job_async.changed
+  vars:
+    ansible_async_dir: '{{ eda_configuration_async_dir }}'
+
+- name: "Create controller_token | Wait for finish the controller_token creation"
+  ansible.builtin.async_status:
+    jid: "{{ __controller_tokens_job_async_result_item.ansible_job_id }}"
+  register: __controller_tokens_job_async_result
+  until: __controller_tokens_job_async_result.finished
+  retries: "{{ eda_configuration_user_token_async_retries }}"
+  delay: "{{ eda_configuration_user_token_async_delay }}"
+  loop: "{{ __controller_tokens_job_async.results }}"
+  loop_control:
+    loop_var: __controller_tokens_job_async_result_item
+  when: __controller_tokens_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ eda_configuration_user_token_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ eda_configuration_async_dir }}'
+...
