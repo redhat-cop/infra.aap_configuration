@@ -37,37 +37,37 @@ gateway_configuration_dispatcher_roles:
     var: teams_list
     tags: teams
 ah_configuration_dispatcher_roles:
-  - role: pah_namespace
+  - role: hub_namespace
     var: ah_namespaces
     tags: namespaces
-  - role: pah_collection
+  - role: hub_collection
     var: ah_collections
     tags: collections
-  - role: pah_ee_registry
+  - role: hub_ee_registry
     var: ah_ee_registries
     tags: registries
-  - role: pah_ee_repository
+  - role: hub_ee_repository
     var: ah_ee_repositories
     tags: repos
-  - role: pah_ee_repository_sync
+  - role: hub_ee_repository_sync
     var: ah_ee_repository_sync
     tags: reposync
-  - role: pah_ee_image
+  - role: hub_ee_image
     var: ah_ee_images
     tags: images
-  - role: pah_ee_registry_index
+  - role: hub_ee_registry_index
     var: ah_ee_registries
     tags: indices
-  - role: pah_ee_registry_sync
+  - role: hub_ee_registry_sync
     var: ah_ee_registries
     tags: regsync
-  - role: pah_collection_remote
+  - role: hub_collection_remote
     var: ah_collection_remotes
     tags: collectionremote
-  - role: pah_collection_repository
+  - role: hub_collection_repository
     var: ah_collection_repositories
     tags: collectionsrep
-  - role: pah_collection_repository_sync
+  - role: hub_collection_repository_sync
     var: ah_collection_repositories
     tags: collectionsrepsync
 controller_configuration_dispatcher_roles:
