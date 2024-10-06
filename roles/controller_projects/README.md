@@ -173,7 +173,7 @@ controller_projects:
 
 ## License
 
-[GPL-3.0](https://github.com/redhat-cop/controller_configuration#licensing)
+[GPL-3.0](https://github.com/redhat-cop/aap_configuration#licensing)
 
 ## Author
 

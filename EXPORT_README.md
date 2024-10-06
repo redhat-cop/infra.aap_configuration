@@ -6,7 +6,7 @@ This is documentation on how to use a the Automation Controller export commands 
 
 This command allows exporting all available endpoints for Automation Controller for use in importing, templates, backups and many other uses.
 
-**NOTE:** If you use the awx export option it will NOT use the correct high level variable list naming that is expected by the rest of these roles you will need to correctly name them before being able to use the roles to import the data into your new Controller. See [#332](https://github.com/redhat-cop/controller_configuration/issues/332) for more details.
+**NOTE:** If you use the awx export option it will NOT use the correct high level variable list naming that is expected by the rest of these roles you will need to correctly name them before being able to use the roles to import the data into your new Controller. See [#332](https://github.com/redhat-cop/aap_configuration/issues/332) for more details.
 
 ## Installation
 
