@@ -1,10 +1,19 @@
 ---
+<<<<<<< HEAD
+controller_applications:
+  - name: controller_application-app1
+    organization: Satellite
+    authorization_grant_type: password
+    client_type: public
+  - name: controller_application-app2
+=======
 gateway_applications:
   - name: gateway_application-app1
     organization: Satellite
     authorization_grant_type: password
     client_type: public
   - name: gateway_application-app2
+>>>>>>> 40b40ddac1c00aac7d878bd41af23a6d562296e5
     organization: Default
     authorization_grant_type: authorization-code
     client_type: confidential
@@ -12,7 +21,11 @@ gateway_applications:
     redirect_uris:
       - http://tower.com/api/v2/
       - http://tower.com/api/v2/teams
+<<<<<<< HEAD
+  - name: controller_application-app3
+=======
   - name: gateway_application-app3
+>>>>>>> 40b40ddac1c00aac7d878bd41af23a6d562296e5
     organization: Default
     authorization_grant_type: password
     client_type: confidential

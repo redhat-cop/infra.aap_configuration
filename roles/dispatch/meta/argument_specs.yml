@@ -1,0 +1,238 @@
+---
+argument_specs:
+  main:
+    short_description: An Ansible Role to call other roles to create objects on Ansible Automation Platform.
+    options:
+      gateway_configuration_dispatcher_roles:
+        default:
+          - role: gateway_authenticator
+            var: authenticators_list
+            tags: authenticators
+          - role: gateway_authenticator_map
+            var: authenticator_maps_list
+            tags: authenticator_maps
+          - role: gateway_settings
+            var: settings_list
+            tags: settings
+          - role: gateway_http_ports
+            var: http_ports_list
+            tags: http_ports
+          - role: gateway_organizations
+            var: organizations_list
+            tags: organizations
+          - role: gateway_service_clusters
+            var: service_clusters_list
+            tags: service_clusters
+          - role: gateway_service_keys
+            var: service_keys_list
+            tags: service_keys
+          - role: gateway_service_nodes
+            var: service_nodes_list
+            tags: service_nodes
+          - role: gateway_services
+            var: services_list
+            tags: services
+          - role: gateway_role_user_assignments
+            var: role_user_assignments_list
+            tags: role_user_assignments
+          - role: gateway_routes
+            var: routes_list
+            tags: routes
+          - role: gateway_teams
+            var: teams_list
+            tags: teams
+      controller_configuration_dispatcher_roles:
+        default:
+          - role: controller_settings
+            var: controller_settings
+            tags: settings
+          - role: controller_instances
+            var: controller_instances
+            tags: instances
+          - role: controller_instance_groups
+            var: controller_instance_groups
+            tags: instance_groups
+          - role: controller_labels
+            var: controller_labels
+            tags: labels
+          - role: controller_credential_types
+            var: controller_credential_types
+            tags: credential_types
+          - role: controller_credentials
+            var: controller_credentials
+            tags: credentials
+          - role: controller_credential_input_sources
+            var: controller_credential_input_sources
+            tags: credential_input_sources
+          - role: controller_execution_environments
+            var: controller_execution_environments
+            tags: execution_environments
+          - role: controller_notification_templates
+            var: controller_notifications
+            tags: notification_templates
+          - role: controller_projects
+            var: controller_projects
+            tags: projects
+          - role: controller_inventories
+            var: controller_inventories
+            tags: inventories
+          - role: controller_inventory_sources
+            var: controller_inventory_sources
+            tags: inventory_sources
+          - role: controller_inventory_source_update
+            var: controller_inventory_sources
+            tags: inventory_sources
+          - role: controller_applications
+            var: controller_applications
+            tags: applications
+          - role: controller_hosts
+            var: controller_hosts
+            tags: hosts
+          - role: controller_bulk_host_create
+            var: controller_bulk_hosts
+            tags: bulk_hosts
+          - role: controller_groups
+            var: controller_groups
+            tags: inventories
+          - role: controller_job_templates
+            var: controller_templates
+            tags: job_templates
+          - role: controller_workflow_job_templates
+            var: controller_workflows
+            tags: workflow_job_templates
+          - role: controller_schedules
+            var: controller_schedules
+            tags: schedules
+          - role: controller_roles
+            var: controller_roles
+            tags: roles
+          - role: controller_job_launch
+            var: controller_launch_jobs
+            tags: job_launch
+          - role: controller_workflow_launch
+            var: controller_workflow_launch_jobs
+            tags: workflow_launch
+      ah_configuration_dispatcher_roles:
+        default:
+          - role: pah_group
+            var: ah_groups
+            tags: groups
+          - role: pah_user
+            var: ah_users
+            tags: users
+          - role: pah_namespace
+            var: ah_namespaces
+            tags: namespaces
+          - role: pah_collection
+            var: ah_collections
+            tags: collections
+          - role: pah_ee_registry
+            var: ah_ee_registries
+            tags: registries
+          - role: pah_ee_repository
+            var: ah_ee_repositories
+            tags: repos
+          - role: pah_ee_repository_sync
+            var: ah_ee_repository_sync
+            tags: reposync
+          - role: pah_ee_image
+            var: ah_ee_images
+            tags: images
+          - role: pah_ee_registry_index
+            var: ah_ee_registries
+            tags: indices
+          - role: pah_ee_registry_sync
+            var: ah_ee_registries
+            tags: regsync
+          - role: pah_collection_remote
+            var: ah_collection_remotes
+            tags: collectionremote
+          - role: pah_collection_repository
+            var: ah_collection_repositories
+            tags: collectionsrep
+          - role: pah_collection_repository_sync
+            var: ah_collection_repositories
+            tags: collectionsrepsync
+          - role: pah_group_roles
+            var: ah_group_roles
+            tags: group_roles
+      eda_configuration_dispatcher_roles:
+        default:
+          - role: eda_user
+            var: eda_users
+            tags: user
+          - role: eda_credential
+            var: eda_credentials
+            tags: credential
+          - role: eda_controller_token
+            var: eda_controller_tokens
+            tags: controller_token
+          - role: eda_project
+            var: eda_projects
+            tags: project
+          - role: eda_project_sync
+            var: eda_projects
+            tags: project_sync
+          - role: eda_decision_environment
+            var: eda_decision_environments
+            tags: decision_environment
+          - role: eda_rulebook_activation
+            var: eda_rulebook_activations
+            tags: rulebook_activation
+
+      # Async variables
+      gateway_configuration_async_retries:
+        default: 30
+        required: false
+        description: This variable sets number of retries across all roles as a default.
+      gateway_configuration_async_delay:
+        default: 1
+        required: false
+        description: This variable sets delay between retries across all roles as a default.
+
+
+      # No_log variables
+      gateway_configuration_secure_logging:
+        default: false
+        required: false
+        type: bool
+        description: This variable enables secure logging across all roles as a default.
+
+      # Generic across all roles
+      gateway_state:
+        default: present
+        required: false
+        description: The state all objects will take unless overridden by object default
+        type: str
+      gateway_hostname:
+        default: None
+        required: false
+        description: URL to the automation platform gateway.
+        type: str
+      gateway_validate_certs:
+        default: true
+        required: false
+        description: Whether or not to validate the automation platform gateway's SSL certificate.
+        type: str
+      gateway_username:
+        default: None
+        required: false
+        description: user on the automation platform gateway. Either username / password or oauthtoken need to be specified.
+        type: str
+      gateway_password:
+        default: None
+        required: false
+        description: >
+          Gateway user's password on the automation platform gateway.
+          This should be stored in an Ansible Vault at vars/gateway-secrets.yml or elsewhere and called from a parent playbook.
+          Either username / password or oauthtoken need to be specified.
+        type: str
+      gateway_oauthtoken:
+        default: None
+        required: false
+        description: >
+          Gateway user's token on the automation platform gateway.
+          This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.
+          Either username / password or oauthtoken need to be specified.
+        type: str
+...

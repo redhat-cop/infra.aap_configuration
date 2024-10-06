@@ -1,7 +1,7 @@
 ---
 # Sync AH repository
 - name: Sync Automation Hub Collection Remote repository
-  collection_repository_sync:
+  ansible.hub.collection_repository_sync:
     name:                     "{{ __collection_repository_sync_item.name }}"
     wait:                     "{{ __collection_repository_sync_item.wait | default(omit) }}"
     interval:                 "{{ __collection_repository_sync_item.interval | default(1) }}"

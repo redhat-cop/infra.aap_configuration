@@ -1,7 +1,7 @@
 ---
 # Create AH repository
 - name: Add Automation Hub Collection Remote repository
-  collection_remote:
+  ansible.hub.collection_remote:
     name:                     "{{ __collection_remote_item.name }}"
     url:                      "{{ __collection_remote_item.url }}"
     auth_url:                 "{{ __collection_remote_item.auth_url | default(omit) }}"

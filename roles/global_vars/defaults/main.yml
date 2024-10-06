@@ -1,0 +1,13 @@
+---
+# defaults file for global_vars
+operation_translate:
+  present:
+    verb: "Create/Update"
+    action: "creation"
+  absent:
+    verb: "Remove"
+    action: "deletion"
+  exists:
+    verb: "Already Exists"
+    action: "exists"
+...

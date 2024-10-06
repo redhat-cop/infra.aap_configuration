@@ -2,7 +2,7 @@
 
 # Create AH EE repository
 - name: Add Automation Hub EE repository
-  ah_ee_repository:
+  ansible.hub.ah_ee_repository:
     name:                       "{{ __ee_repository_item.name }}"
     description:                "{{ __ee_repository_item.description | default(omit) }}"
     readme:                     "{{ __ee_repository_item.readme | default(omit) }}"

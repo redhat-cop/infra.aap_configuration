@@ -24,7 +24,7 @@
   register: __gateway_role_user_assignments_job_async
   changed_when: not __gateway_role_user_assignments_job_async.changed
   vars:
-    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
+    ansible_async_dir: "{{ gateway_configuration_async_dir | default(omit) }}"
 
 - name: Role User Assignments | Wait for finish the configuration
   ansible.builtin.async_status:
@@ -39,5 +39,5 @@
   when: __gateway_role_user_assignments_job_async_results_item.ansible_job_id is defined
   no_log: "{{ role_user_assignments_secure_logging }}"
   vars:
-    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
+    ansible_async_dir: "{{ gateway_configuration_async_dir | default(omit) }}"
 ...

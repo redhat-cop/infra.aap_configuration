@@ -1,0 +1,7 @@
+---
+- name: Test dependency check
+  hosts: localhost
+  roles:
+    - meta_dependency_check
+
+...
