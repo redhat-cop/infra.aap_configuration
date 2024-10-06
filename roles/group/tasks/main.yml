@@ -1,0 +1,77 @@
+---
+
+# Create AH Group
+- name: Add Automation Hub group
+  ah_group:
+    name:             "{{ __group.name | default(omit) }}"
+    # new_name:         "{{ __group.new_name | default(omit) }}"  <-- Needs adding once new_name option added to module
+    state:            "{{ __group.state | default(ah_state | default('present')) }}"
+    ah_host:          "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:      "{{ ah_username | default(omit) }}"
+    ah_password:      "{{ ah_password | default(omit) }}"
+    ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:   "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:  "{{ ah_request_timeout | default(omit) }}"
+  loop: "{{ ah_groups }}"
+  loop_control:
+    loop_var: "__group"
+  no_log: "{{ ah_configuration_group_secure_logging }}"
+  async: "{{ ah_configuration_group_async_timeout }}"
+  poll: 0
+  register: __groups_job_async
+  changed_when: not __groups_job_async.changed
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+
+- name: "Create Group | Wait for finish the group creation"
+  ansible.builtin.async_status:
+    jid: "{{ __groups_job_async_result_item.ansible_job_id }}"
+  register: __groups_job_async_result
+  until: __groups_job_async_result.finished
+  retries: "{{ ah_configuration_group_async_retries }}"
+  delay: "{{ ah_configuration_group_async_delay }}"
+  loop: "{{ __groups_job_async.results }}"
+  loop_control:
+    loop_var: __groups_job_async_result_item
+  when: __groups_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ ah_configuration_group_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+
+- name: Add Automation Hub group permissions
+  ah_group_perm:
+    name:             "{{ __group.new_name | default(__group.name | default(omit)) }}"
+    perms:            "{{ __group.perms }}"
+    state:            "{{ __group.state | default(ah_state | default('present')) }}"
+    ah_host:          "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:      "{{ ah_username | default(omit) }}"
+    ah_password:      "{{ ah_password | default(omit) }}"
+    ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
+    validate_certs:   "{{ ah_validate_certs | default(omit) }}"
+  loop: "{{ ah_groups }}"
+  loop_control:
+    loop_var: "__group"
+  when: __group.perms is defined
+  no_log: "{{ ah_configuration_group_secure_logging }}"
+  async: "{{ ah_configuration_group_async_timeout }}"
+  poll: 0
+  register: __group_perms_job_async
+  changed_when: not __group_perms_job_async.changed
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+
+- name: "Create Group | Wait for finish the group creation"
+  ansible.builtin.async_status:
+    jid: "{{ __group_perms_job_async_result_item.ansible_job_id }}"
+  register: __group_perms_job_async_result
+  until: __group_perms_job_async_result.finished
+  retries: "{{ ah_configuration_group_async_retries }}"
+  delay: "{{ ah_configuration_group_async_delay }}"
+  loop: "{{ __group_perms_job_async.results }}"
+  loop_control:
+    loop_var: __group_perms_job_async_result_item
+  when: __group_perms_job_async_result_item.ansible_job_id is defined
+  no_log: "{{ ah_configuration_group_secure_logging }}"
+  vars:
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+...

@@ -1,0 +1,9 @@
+---
+ah_ee_registries:
+  - name: registry.redhat
+    url: registry.redhat.io
+    username: myuser
+    password: mypassword
+    wait: true
+    interval: 10
+...

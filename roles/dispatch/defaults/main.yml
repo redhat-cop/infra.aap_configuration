@@ -1,0 +1,17 @@
+---
+ah_configuration_dispatcher_roles:
+  - {role: group, var: ah_groups, tags: groups}
+  - {role: user, var: ah_users, tags: users}
+  - {role: namespace, var: ah_namespaces, tags: namespaces}
+  - {role: collection, var: ah_collections, tags: collections}
+  - {role: ee_registry, var: ah_ee_registries, tags: registries}
+  - {role: ee_repository, var: ah_ee_repositories, tags: repos}
+  - {role: ee_repository_sync, var: ah_ee_repository_sync, tags: reposync}
+  - {role: ee_image, var: ah_ee_images, tags: images}
+  - {role: ee_registry_index, var: ah_ee_registries, tags: indices}
+  - {role: ee_registry_sync, var: ah_ee_registries, tags: regsync}
+  - {role: collection_remote, var: ah_collection_remotes, tags: collectionremote}
+  - {role: collection_repository, var: ah_collection_repositories, tags: collectionsrep}
+  - {role: collection_repository_sync, var: ah_collection_repositories, tags: collectionsrepsync}
+  - {role: group_roles, var: ah_group_roles, tags: group_roles}
+...

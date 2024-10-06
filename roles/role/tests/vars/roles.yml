@@ -1,0 +1,10 @@
+---
+ah_roles:
+  - name: galaxy.stuff.mcstuffins
+    description: test
+    perms:
+      - add_user
+      - change_user
+      - delete_user
+      - view_user
+...

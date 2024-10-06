@@ -1,0 +1,14 @@
+---
+ah_namespaces:
+  - name: abc15
+    company: Redhat
+    email: user@example.com
+    avatar_url: https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo.svg
+    description: string
+    resources: "# Redhat\nA Namespace test with changes"
+    links:
+      - name: "New_Google"
+        url: "http://www.google.com"
+    groups:
+      - system:partner-engineers
+...

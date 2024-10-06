@@ -1,0 +1,81 @@
+---
+argument_specs:
+  main:
+    short_description: An Ansible Role to run all roles for which variables are found on Ansible Automation Hub.
+    options:
+      ah_configuration_dispatcher_roles:
+        required: false
+        description: List of roles, variables and tags to run through
+        type: list
+        elements: dict
+        options:
+          role:
+            required: true
+            description: Name of role from this collection to call
+            type: str
+          var:
+            required: true
+            description: Name of variable to be passed to the role
+            type: str
+          tags:
+            required: false
+            description: Tags to be applied to the role so tagging can be used to run only part of a playbook
+        default:
+          - {role: group, var: ah_groups, tags: groups}
+          - {role: user, var: ah_users, tags: users}
+          - {role: namespace, var: ah_namespaces, tags: namespaces}
+          - {role: collection, var: ah_collections, tags: collections}
+          - {role: ee_repository, var: ah_ee_repositories, tags: repos}
+          - {role: ee_repository_sync, var: ah_ee_repository_sync, tags: reposync}
+          - {role: ee_image, var: ah_ee_images, tags: images}
+          - {role: ee_registry, var: ah_ee_registries, tags: registries}
+          - {role: ee_registry_index, var: ah_ee_registries, tags: indices}
+          - {role: ee_registry_sync, var: ah_ee_registries, tags: regsync}
+
+      # Async variables
+      ah_configuration_async_retries:
+        default: 50
+        required: false
+        description: This variable sets number of retries across all roles as a default.
+      ah_configuration_async_delay:
+        default: 1
+        required: false
+        description: This variable sets delay between retries across all roles as a default.
+
+      # No_log variables
+      ah_configuration_secure_logging:
+        default: false
+        required: false
+        type: bool
+        description: This variable enables secure logging across all roles as a default.
+
+      # Generic across all roles
+      ah_host:
+        required: false
+        description: URL to the Automation Hub Server.
+        type: str
+      ah_path_prefix:
+        required: false
+        description: The path for the Automation Hub API. Usually galaxy or automation-hub unless custom set in AH settings.
+      ah_validate_certs:
+        required: false
+        description: Whether or not to validate the Automation Hub Server's SSL certificate.
+        type: str
+      ah_request_timeout:
+        default: 10
+        required: false
+        description: Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.
+        type: float
+      ah_username:
+        required: false
+        description: User for authentication on Automation Hub
+        type: str
+      ah_password:
+        required: false
+        description: User's password For Automation Hub
+        type: str
+      ah_token:
+        required: false
+        description: Automation Hub token for authentication.
+        type: str
+...

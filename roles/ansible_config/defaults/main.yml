@@ -1,0 +1,35 @@
+---
+
+# These are the default variables common to most ah_configuration and _utilities roles
+# You shouldn't need to define them again and again but they should be defined
+# ah_hostname: "{{ inventory_hostname }}"
+# ah_oauthtoken: ""
+# ah_validate_certs: false
+
+# These are the default variables specific to the ansible config role
+# ansible_config_owner: # optional
+# ansible_config_group: # optional
+ansible_config_mode: 0644
+ah_configuration_working_dir: "/var/tmp"
+validate_certs: false
+ah_path_prefix: galaxy
+# a list of dictionaries describing the Automation Hub namespace
+automation_hub_list: []
+# possible fields:
+#  - name: automation-hub
+#    url: "url of server"  # mandatory
+#    auth_url: "url of auth server"  # optional
+#    token: "token"  # optional
+#    username: "username"  # optional
+#    password: "password"  # optional
+
+ansible_config_list:
+  - header: galaxy
+    keypairs:
+      - key: ignore_certs
+        value: "{{ not (ah_validate_certs | default(true) | bool) }}"
+#      - key: server_list
+#        value: "{{ automation_hub_list | map(attribute="name") | join(",") }}"
+
+ah_configuration_ansible_config_secure_logging: "{{ ah_configuration_secure_logging | default(false) }}"
+...
