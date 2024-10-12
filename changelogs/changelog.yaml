@@ -402,7 +402,7 @@ releases:
     changes:
       bugfixes:
       - Enable the ability to define simple_workflow_nodes on workflow_job_templates
-        without the need to set the `state` on a workflow_job_template (https://github.com/redhat-cop/controller_configuration/issues/297).
+        without the need to set the `state` on a workflow_job_template (https://github.com/redhat-cop/aap_configuration/issues/297).
       minor_changes:
       - Add max_forks, max_concurrent_jobs as options to instance_groups role
       - Add no_log everywhere controller_api_plugin is used to avoid to expose sensitive

@@ -2,7 +2,7 @@
 
 # Create AH EE Namespace
 - name: Add Automation Hub Execution Environment Namespace
-  ah_ee_namespace:
+  ansible.hub.ah_ee_namespace:
     name:             "{{ __ee_namespace_item.name }}"
     # new_name:         "{{ __ee_namespace_item.new_name | default(omit) }}"  <-- Needs adding once new_name option added to module
     append:           "{{ __ee_namespace_item.append | default(omit) }}"

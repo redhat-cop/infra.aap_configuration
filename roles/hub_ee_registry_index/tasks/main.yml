@@ -2,7 +2,7 @@
 
 # Create AH EE registry
 - name: Index Automation Hub EE Registry
-  ah_ee_registry_index:
+  ansible.hub.ah_ee_registry_index:
     name:                   "{{ __ee_registry_item.name }}"
     wait:                   "{{ __ee_registry_item.wait | default(omit) }}"
     interval:               "{{ __ee_registry_item.interval | default(ah_configuration_ee_registry_index_async_delay) }}"
