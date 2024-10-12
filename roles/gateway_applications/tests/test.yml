@@ -1,25 +1,9 @@
 ---
-<<<<<<< HEAD
-- name: Add applications Input Sources on Controller
-=======
 - name: Add applications Input Sources on gateway
->>>>>>> 40b40ddac1c00aac7d878bd41af23a6d562296e5
   hosts: localhost
   connection: local
   gather_facts: false
   vars:
-<<<<<<< HEAD
-    controller_validate_certs: false
-    controller_hostname: controller.example.com
-    controller_username: admin
-    controller_password: changeme
-
-  collections:
-    - awx.awx
-
-  pre_tasks:
-    - name: Include vars from controller_configs directory
-=======
     gateway_validate_certs: false
     gateway_hostname: gateway.example.com
     gateway_username: admin
@@ -27,15 +11,10 @@
 
   pre_tasks:
     - name: Include vars from gateway_configs directory
->>>>>>> 40b40ddac1c00aac7d878bd41af23a6d562296e5
       ansible.builtin.include_vars:
         dir: ./configs
         extensions: ["yml"]
 
   roles:
-<<<<<<< HEAD
-    - {role: ../.., when: controller_applications is defined}
-=======
     - {role: infra.platform_configuration.applications, when: applications_list is defined}
->>>>>>> 40b40ddac1c00aac7d878bd41af23a6d562296e5
 ...
