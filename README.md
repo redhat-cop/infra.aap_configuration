@@ -1,15 +1,15 @@
-# Red Hat Communities of Practice Controller Configuration Collection
+# Red Hat Communities of Practice AAP Configuration Collection
 
 ![pre-commit tests](https://github.com/redhat-cop/aap_configuration/actions/workflows/pre-commit.yml/badge.svg)
 ![Release](https://github.com/redhat-cop/aap_configuration/actions/workflows/release.yml/badge.svg)
 <!-- markdownlint-disable-line MD033 MD034 --><a href="https://raw.githubusercontent.com/redhat-cop/aap_configuration/devel/docs/aap_config_as_code_public_meeting.ics"><img border="0" alt="Google Calendar invite" src="https://www.google.com/calendar/images/ext/gc_button1_en-GB.gif"></a>
 <!-- Further CI badges go here as above -->
 
-This Ansible collection allows for easy interaction with an AWX or Ansible Controller server via Ansible roles using the AWX/Controller collection modules.
+This Ansible collection allows for easy interaction with AAP via Ansible roles using the modules from the certified collections.
 
 ## Getting Help
 
-We are on the Ansible Forums and Matrix, if you want to discuss something, ask for help, or participate in the community, please use the #infra-config-as-code tag on the fourm, or post to the chat in Matrix.
+We are on the Ansible Forums and Matrix, if you want to discuss something, ask for help, or participate in the community, please use the #infra-config-as-code tag on the form, or post to the chat in Matrix.
 
 [Ansible Forums](https://forum.ansible.com/tag/infra-config-as-code)
 
