@@ -3,6 +3,9 @@
   ansible.builtin.find:
     paths: "{{ filetree_controller_workflow_job_templates }}"
     file_type: file
+    patterns: "{{ filetree_controller_include | default(omit) }}"
+    excludes: "{{ filltree_contorller_exclude | default(omit) }}"
+    use_regex: "{{ filetree_controller_regex | default(false) }}"
     recurse: true
   register: __list_files_controller_workflow_job_templates
 
