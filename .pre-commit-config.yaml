@@ -1,12 +1,12 @@
 ---
 repos:
   - repo: 'https://github.com/pre-commit/pre-commit-hooks'
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: 'https://github.com/ansible-community/ansible-lint.git'
-    rev: v24.7.0
+    rev: v24.9.2
     hooks:
       # see discussions here about what arguments are used, and behavior
       # https://github.com/ansible/ansible-lint/issues/649
@@ -22,11 +22,11 @@ repos:
           - "ansible-core>=2.15"
           - "yamllint>=1.26,<2.0"
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.13.0
+    rev: v0.14.0
     hooks:
       - id: markdownlint-cli2
   - repo: https://github.com/ambv/black
-    rev: 24.8.0
+    rev: 24.10.0
     hooks:
       - id: black
         name: black
