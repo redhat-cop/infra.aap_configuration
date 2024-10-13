@@ -11,7 +11,7 @@
     inputs:               "{{ __credential_item.inputs | default(omit) }}"
     state:                "{{ __credential_item.state | default(eda_state | default('present')) }}"
     controller_host:      "{{ eda_host | default(eda_hostname) }}"
-    controller_username:  "{{ eda_username | default(omit) }}"
+    platform_username:  "{{ eda_username | default(omit) }}"
     controller_password:  "{{ eda_password | default(omit) }}"
     validate_certs:       "{{ eda_validate_certs | default(omit) }}"
     request_timeout:      "{{ eda_request_timeout | default(omit) }}"

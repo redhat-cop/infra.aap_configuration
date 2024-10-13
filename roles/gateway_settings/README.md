@@ -5,16 +5,16 @@ An Ansible role to alter Settings on Ansible Automation gateway settings.
 ## Variables
 
 Detailed description of variables are provided in the [top-level README](../../README.md).  
-Settings doesn't implement the `gateway_configuration_enforce_defaults` because it's not applicable.
+Settings doesn't implement the `platform_configuration_enforce_defaults` because it's not applicable.
 
 Variables specific for this role are following:
 
 | Variable Name                                   |                   Default Value                    | Required | Description                                                                                                                                                     |                                                      |
 |:------------------------------------------------|:--------------------------------------------------:|:--------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
 | `settings_list` (Alias: `settings`)          |            [below](#settings-arguments)            |   yes    | Data structure describing your setting entries described below.                                                                                                 |        [more](../../README.md#data-variables)        |
-| `settings_secure_logging` | `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive settings role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `settings_async_retries`  |   `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                               | [more](../../README.md#asynchronous-retry-variables) |
-| `settings_async_delay`    |     `gateway_configuration_async_delay` OR `1`     |    no    | This sets the delay between retries for the role.                                                                                                               | [more](../../README.md#asynchronous-retry-variables) |
+| `settings_secure_logging` | `platform_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive settings role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `settings_async_retries`  |   `platform_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                               | [more](../../README.md#asynchronous-retry-variables) |
+| `settings_async_delay`    |     `platform_configuration_async_delay` OR `1`     |    no    | This sets the delay between retries for the role.                                                                                                               | [more](../../README.md#asynchronous-retry-variables) |
 
 **Note**: Secure Logging defaults to `True` if both variables are not set
 

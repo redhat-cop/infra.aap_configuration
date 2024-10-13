@@ -64,22 +64,22 @@ argument_specs:
 
       # Async variables
       authenticator_maps_async_retries:
-        default: "{{ gateway_configuration_async_retries | default(30) }}"
+        default: "{{ platform_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
-      gateway_configuration_async_retries:
+      platform_configuration_async_retries:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
       authenticator_maps_async_delay:
-        default: "{{ gateway_configuration_async_delay | default(1) }}"
+        default: "{{ platform_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
-      gateway_configuration_async_delay:
+      platform_configuration_async_delay:
         default: 1
         required: false
         description: This variable sets delay between retries across all roles as a default.
-      gateway_configuration_async_dir:
+      platform_configuration_async_dir:
         default: null
         required: false
         description: >
@@ -89,13 +89,13 @@ argument_specs:
 
       # No_log variables
       authenticator_maps_secure_logging:
-        default: "{{ gateway_configuration_secure_logging | default(false) }}"
+        default: "{{ platform_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
         description: >
           Whether or not to include the sensitive tasks from this role in the log.
           Set this value to `true` if you will be providing your sensitive values from elsewhere.
-      gateway_configuration_secure_logging:
+      platform_configuration_secure_logging:
         default: true
         required: false
         type: bool

@@ -10,16 +10,15 @@
     client_type:                    "{{ __application_item.client_type | default('public') }}"
     redirect_uris:                  "{{ __application_item.redirect_uris | default([]) }}"
     skip_authorization:             "{{ __application_item.skip_authorization | default((false if controller_configuration_applications_enforce_defaults else omit), true) }}"
-    state:                          "{{ __application_item.state | default(controller_state | default('present')) }}"
+    state:                          "{{ __application_item.state | default(platform_state | default('present')) }}"
 
     # Role specific options
-    controller_username:            "{{ controller_username | default(omit, true) }}"
-    controller_password:            "{{ controller_password | default(omit, true) }}"
-    controller_oauthtoken:          "{{ controller_oauthtoken | default(omit, true) }}"
-    request_timeout:                "{{ controller_request_timeout | default(omit, true) }}"
-    controller_host:                "{{ controller_hostname | default(omit, true) }}"
-    controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
-    validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
+    controller_username:            "{{ platform_username | default(omit, true) }}"
+    controller_password:            "{{ platform_password | default(omit, true) }}"
+    controller_oauthtoken:          "{{ platform_oauthtoken | default(omit, true) }}"
+    request_timeout:                "{{ platform_request_timeout | default(omit, true) }}"
+    controller_host:                "{{ controller_host | default(omit, true) }}"
+    validate_certs:                 "{{ platform_validate_certs | default(omit) }}"
   loop: "{{ applications if applications is defined else controller_applications }}"
   loop_control:
     loop_var: "__application_item"
@@ -31,8 +30,8 @@
   register: __applications_job_async
   changed_when: "(__applications_job_async.changed if ansible_check_mode else false)"
   vars:
-    __operation: "{{ operation_translate[__application_item.state | default(controller_state) | default('present')] }}"
-    ansible_async_dir: '{{ controller_configuration_async_dir }}'
+    __operation: "{{ operation_translate[__application_item.state | default(platform_state) | default('present')] }}"
+    ansible_async_dir: '{{ platform_configuration_async_dir }}'
 
 - name: "Flag for errors (check mode only)"
   ansible.builtin.set_fact:
@@ -53,6 +52,6 @@
   when: not ansible_check_mode and __applications_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_applications_secure_logging }}"
   vars:
-    __operation: "{{ operation_translate[__applications_job_async_results_item.__application_item.state | default(controller_state) | default('present')] }}"
-    ansible_async_dir: '{{ controller_configuration_async_dir }}'
+    __operation: "{{ operation_translate[__applications_job_async_results_item.__application_item.state | default(platform_state) | default('present')] }}"
+    ansible_async_dir: '{{ platform_configuration_async_dir }}'
 ...

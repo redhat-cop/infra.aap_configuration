@@ -1,8 +1,9 @@
-# User may add controller auth creds to this file and encrypt it using `ansible-vault`
+# User may add platform auth creds to this file and encrypt it using `ansible-vault`
 ---
-# controller_hostname: ansible-controller-web-svc-test-project.example.com
-controller_username: admin
-controller_password: password
-controller_validate_certs: false
-controller_configuration_enforce_defaults: true
+platform_hostname: https://aap.medina.vaultcrest.com/
+# platform_username: admin
+# platform_password: 
+platform_token: 2Vq3nN4vTclURSuWtJRiGlPl3BbWIo
+platform_validate_certs: false
+platform_configuration_enforce_defaults: true
 ...

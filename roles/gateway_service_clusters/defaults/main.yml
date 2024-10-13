@@ -10,8 +10,8 @@
 
 # a list of dictionaries describing the service clusters
 service_clusters_list: []
-service_clusters_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
-service_clusters_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
-service_clusters_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
-service_clusters_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
+service_clusters_secure_logging: "{{ platform_configuration_secure_logging | default(false) }}"
+service_clusters_async_retries: "{{ platform_configuration_async_retries | default(30) }}"
+service_clusters_async_delay: "{{ platform_configuration_async_delay | default(1) }}"
+service_clusters_enforce_defaults: "{{ platform_configuration_enforce_defaults | default(false) }}"
 ...

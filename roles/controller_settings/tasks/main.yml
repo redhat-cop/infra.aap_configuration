@@ -7,13 +7,12 @@
     value:                    "{{ __controller_setting_item.value | default(omit) }}"
 
     # Role Standard Options
-    controller_config_file:   "{{ controller_config_file | default(omit, true) }}"
-    controller_host:          "{{ controller_hostname | default(omit, true) }}"
-    controller_password:      "{{ controller_password | default(omit, true) }}"
-    controller_username:      "{{ controller_username | default(omit, true) }}"
-    controller_oauthtoken:    "{{ controller_oauthtoken | default(omit, true) }}"
-    request_timeout:          "{{ controller_request_timeout | default(omit, true) }}"
-    validate_certs:           "{{ controller_validate_certs | default(omit) }}"
+    controller_host:          "{{ controller_host | default(omit, true) }}"
+    controller_password:      "{{ platform_password | default(omit, true) }}"
+    controller_username:      "{{ platform_username | default(omit, true) }}"
+    controller_oauthtoken:    "{{ platform_oauthtoken | default(omit, true) }}"
+    request_timeout:          "{{ platform_request_timeout | default(omit, true) }}"
+    validate_certs:           "{{ platform_validate_certs | default(omit) }}"
   # controller_settings must be either a dictionary/mapping or a list of dictionaries
   loop: "{{ controller_settings is mapping | ternary([controller_settings], controller_settings) }}"
   loop_control:
@@ -26,7 +25,7 @@
   register: __controller_setting_job_async
   changed_when: "(__controller_setting_job_async.changed if ansible_check_mode else false)"
   vars:
-    ansible_async_dir: '{{ controller_configuration_async_dir }}'
+    ansible_async_dir: '{{ platform_configuration_async_dir }}'
 
 - name: "Flag for errors (check mode only)"
   ansible.builtin.set_fact:
@@ -46,5 +45,5 @@
   when: not ansible_check_mode and __controller_setting_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_settings_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ controller_configuration_async_dir }}'
+    ansible_async_dir: '{{ platform_configuration_async_dir }}'
 ...

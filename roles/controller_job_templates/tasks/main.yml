@@ -52,19 +52,18 @@
     webhook_credential:                   "{{ __controller_template_item.webhook_credential | default(omit, true) }}"
     scm_branch:                           "{{ __controller_template_item.scm_branch | default(('' if controller_configuration_job_templates_enforce_defaults else omit), true) }}"
     labels:                               "{{ (__controller_template_item.related.labels | map(attribute='name') | list if __controller_template_item.related.labels is defined) | default(__controller_template_item.labels) | default(([] if controller_configuration_job_templates_enforce_defaults else omit), true) }}"
-    state:                                "{{ __controller_template_item.state | default(controller_state | default('present')) }}"
+    state:                                "{{ __controller_template_item.state | default(platform_state | default('present')) }}"
     notification_templates_started:       "{{ (__controller_template_item.related.notification_templates_started | map(attribute='name') | list if __controller_template_item.related.notification_templates_started is defined) | default(__controller_template_item.notification_templates_started) | default(([] if controller_configuration_job_templates_enforce_defaults else omit), true) }}"
     notification_templates_success:       "{{ (__controller_template_item.related.notification_templates_success | map(attribute='name') | list if __controller_template_item.related.notification_templates_success is defined) | default(__controller_template_item.notification_templates_success) | default(([] if controller_configuration_job_templates_enforce_defaults else omit), true) }}"
     notification_templates_error:         "{{ (__controller_template_item.related.notification_templates_error | map(attribute='name') | list if __controller_template_item.related.notification_templates_error is defined) | default(__controller_template_item.notification_templates_error) | default(([] if controller_configuration_job_templates_enforce_defaults else omit), true) }}"
 
     # Role Standard Options
-    controller_username:                  "{{ controller_username | default(omit, true) }}"
-    controller_password:                  "{{ controller_password | default(omit, true) }}"
-    controller_oauthtoken:                "{{ controller_oauthtoken | default(omit, true) }}"
-    request_timeout:                      "{{ controller_request_timeout | default(omit, true) }}"
-    controller_host:                      "{{ controller_hostname | default(omit, true) }}"
-    controller_config_file:               "{{ controller_config_file | default(omit, true) }}"
-    validate_certs:                       "{{ controller_validate_certs | default(omit) }}"
+    controller_username:                  "{{ platform_username | default(omit, true) }}"
+    controller_password:                  "{{ platform_password | default(omit, true) }}"
+    controller_oauthtoken:                "{{ platform_oauthtoken | default(omit, true) }}"
+    request_timeout:                      "{{ platform_request_timeout | default(omit, true) }}"
+    controller_host:                      "{{ controller_host | default(omit, true) }}"
+    validate_certs:                       "{{ platform_validate_certs | default(omit) }}"
   loop: "{{ job_templates if job_templates is defined else controller_templates }}"
   loop_control:
     loop_var: __controller_template_item
@@ -76,8 +75,8 @@
   register: __job_templates_job_async
   changed_when: "(__job_templates_job_async.changed if ansible_check_mode else false)"
   vars:
-    __operation: "{{ operation_translate[__controller_template_item.state | default(controller_state) | default('present')] }}"
-    ansible_async_dir: '{{ controller_configuration_async_dir }}'
+    __operation: "{{ operation_translate[__controller_template_item.state | default(platform_state) | default('present')] }}"
+    ansible_async_dir: '{{ platform_configuration_async_dir }}'
 
 - name: "Flag for errors (check mode only)"
   ansible.builtin.set_fact:
@@ -93,8 +92,8 @@
   when: not ansible_check_mode and __job_templates_job_async_result_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_job_templates_secure_logging }}"
   vars:
-    __operation: "{{ operation_translate[__job_templates_job_asycn_result_item.__controller_template_item.state | default(controller_state) | default('present')] }}"
-    ansible_async_dir: '{{ controller_configuration_async_dir }}'
+    __operation: "{{ operation_translate[__job_templates_job_asycn_result_item.__controller_template_item.state | default(platform_state) | default('present')] }}"
+    ansible_async_dir: '{{ platform_configuration_async_dir }}'
 
 - name: Set Job Templates error artifact
   when: __templates_error_list is defined

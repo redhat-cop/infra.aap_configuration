@@ -7,7 +7,7 @@
     description:         "{{ __token_item.description | default(omit) }}"
     token:               "{{ __token_item.token | default(omit) }}"
     controller_host:     "{{ eda_host | default(eda_hostname) }}"
-    controller_username: "{{ eda_username | default(omit) }}"
+    platform_username: "{{ eda_username | default(omit) }}"
     controller_password: "{{ eda_password | default(omit) }}"
     validate_certs:      "{{ eda_validate_certs | default(omit) }}"
     request_timeout:     "{{ eda_request_timeout | default(omit) }}"

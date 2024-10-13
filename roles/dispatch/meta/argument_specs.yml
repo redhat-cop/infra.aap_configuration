@@ -181,18 +181,18 @@ argument_specs:
             tags: rulebook_activation
 
       # Async variables
-      gateway_configuration_async_retries:
+      platform_configuration_async_retries:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
-      gateway_configuration_async_delay:
+      platform_configuration_async_delay:
         default: 1
         required: false
         description: This variable sets delay between retries across all roles as a default.
 
 
       # No_log variables
-      gateway_configuration_secure_logging:
+      platform_configuration_secure_logging:
         default: false
         required: false
         type: bool
