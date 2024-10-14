@@ -16,13 +16,13 @@ Currently:
 
 |Variable Name|Default Value|Required|Description|Example|
 |:---|:---:|:---:|:---|:---|
-|`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
-|`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
-|`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
-|`platform_username`|""|no|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
-|`controller_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
-|`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
-|`controller_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
+|`platform_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
+|`platform_hostname`|""|yes|URL to the Ansible Automation Platform Server.|127.0.0.1|
+|`platform_validate_certs`|`True`|no|Whether or not to validate the Ansible Automation Platform Server's SSL certificate.||
+|`platform_username`|""|no|Admin User on the Ansible Automation Platform Server. Either username / password or oauthtoken need to be specified.||
+|`platform_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
+|`platform_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
+|`platform_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
 |`controller_applications`|`see below`|yes|Data structure describing your applications, described below. Alias: applications ||
 
 ### Enforcing defaults
@@ -126,12 +126,12 @@ controller_applications:
 - name: Playbook to configure ansible controller post installation
   hosts: localhost
   connection: local
-  # Define following vars here, or in controller_configs/controller_auth.yml
+  # Define following vars here, or in platform_configs/controller_auth.yml
   # controller_hostname: ansible-controller-web-svc-test-project.example.com
   # platform_username: admin
   # controller_password: changeme
   pre_tasks:
-    - name: Include vars from controller_configs directory
+    - name: Include vars from platform_configs directory
       ansible.builtin.include_vars:
         dir: ./yaml
         ignore_files: [controller_config.yml.template]

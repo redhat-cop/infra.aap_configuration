@@ -19,7 +19,7 @@
     controller_username:        "{{ platform_username | default(omit, true) }}"
     controller_password:        "{{ platform_password | default(omit, true) }}"
     request_timeout:            "{{ platform_request_timeout | default(omit, true) }}"
-    controller_oauthtoken:      "{{ platform_oauthtoken | default(omit, true) }}"
+    controller_oauthtoken:      "{{ platform_token | default(omit, true) }}"
     validate_certs:             "{{ platform_validate_certs | default(omit) }}"
   loop: "{{ inventory if inventory is defined else controller_inventories }}"
   loop_control:

@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "namespace"
+  role_name: "ansible_config"
   author: "Sean Sullivan"
   description: "An Ansible Role to create namespace in Automation Hub."
   company: "Red Hat"
@@ -33,8 +33,8 @@ galaxy_info:
     - "automationhub"
     - "galaxy"
     - "configuration"
-    - "namespace"
-    - "namespaces"
+    - "ansible"
+    - "config"
 
 dependencies: []
 # List your role dependencies here, one per line. Be sure to remove the '[]' above,

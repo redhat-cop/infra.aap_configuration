@@ -59,7 +59,7 @@ argument_specs:
           - header: galaxy
             keypairs:
               - key: ignore_certs
-                value: "{{ not (ah_validate_certs | default(true) | bool) }}"
+                value: "{{ not (platform_validate_certs | default(true) | bool) }}"
         required: false
         type: list
         description: A set of ansible config settings, a default is set, but can be overridden.
@@ -86,12 +86,12 @@ argument_specs:
                 description: Value for entry for the corresponding key.
 
       # No_log variables
-      ah_configuration_ansible_config_secure_logging:
-        default: "{{ ah_configuration_secure_logging | default(false) }}"
+      platform_configuration_ansible_config_secure_logging:
+        default: "{{ platform_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
         description: Whether or not to include the sensitive role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
-      ah_configuration_secure_logging:
+      platform_configuration_secure_logging:
         default: false
         required: false
         type: bool

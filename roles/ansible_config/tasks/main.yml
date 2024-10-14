@@ -7,5 +7,5 @@
     owner:  "{{ ansible_config_owner | default(omit) }}"
     group:  "{{ ansible_config_group | default(omit) }}"
     mode:   "{{ ansible_config_mode }}"
-  no_log: "{{ ah_configuration_ansible_config_secure_logging }}"
+  no_log: "{{ platform_configuration_ansible_config_secure_logging }}"
 ...

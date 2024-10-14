@@ -70,12 +70,12 @@
 
 - name: Get token
   ansible.hub.ah_token:
-    ah_host:               "{{ ah_host | default(ah_hostname) | default(omit) }}"
-    ah_username:           "{{ ah_username | default(omit) }}"
-    ah_password:           "{{ ah_password | default(omit) }}"
+    ah_host:               "{{ platform_hostname | default(omit) }}"
+    ah_hostname:          "{{ platform_username | default(omit) }}"
+    ah_password:           "{{ platform_password | default(omit) }}"
     ah_path_prefix:        "{{ ah_path_prefix | default(omit) }}"
-    validate_certs:        "{{ ah_validate_certs | default(omit) }}"
-    request_timeout:       "{{ ah_request_timeout | default(omit) }}"
+    validate_certs:        "{{ platform_validate_certs | default(omit) }}"
+    request_timeout:       "{{ platform_request_timeout | default(omit) }}"
   when:
     - ah_token is not defined
     - lookup("ansible.builtin.env", "AH_API_TOKEN") == ""
@@ -89,13 +89,13 @@
     path:               "{{ __ah_collection_file }}"
     auto_approve:       "{{ ah_auto_approve }}"
     overwrite_existing: "{{ ah_overwrite_existing }}"
-    ah_host:            "{{ ah_host | default(ah_hostname) | default(omit) }}"
-    ah_username:        "{{ ah_username | default(omit) }}"
-    ah_password:        "{{ ah_password | default(omit) }}"
-    ah_token:           "{{ ah_token | default(omit) }}"
+    ah_host:            "{{ platform_hostname | default(omit) }}"
+    ah_hostname:       "{{ platform_username | default(omit) }}"
+    ah_password:        "{{ platform_password | default(omit) }}"
+    ah_token:           "{{ platform_token | default(omit) }}"
     ah_path_prefix:     "{{ ah_path_prefix | default(omit) }}"
-    validate_certs:     "{{ ah_validate_certs | default(omit) }}"
-    request_timeout:    "{{ ah_request_timeout | default(omit) }}"
+    validate_certs:     "{{ platform_validate_certs | default(omit) }}"
+    request_timeout:    "{{ platform_request_timeout | default(omit) }}"
   loop: "{{ ah_collection_list }}"
   loop_control:
     loop_var: "__ah_collection_file"
@@ -105,7 +105,7 @@
   register: __publish_job_async
   changed_when: not __publish_job_async.changed
   vars:
-    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+    ansible_async_dir: '{{ platform_configuration_async_dir }}'
 
 - name: "Publish Collection | Wait for finish the publish creation"
   ansible.builtin.async_status:
@@ -120,20 +120,20 @@
   when: __publish_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_publish_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ ah_configuration_async_dir }}'
+    ansible_async_dir: '{{ platform_configuration_async_dir }}'
 
 - name: Approve Collections
   ansible.hub.ah_approval:
     namespace:        "{{ (__ah_collection_file | basename).split('-')[0] }}"
     name:             "{{ (__ah_collection_file | basename).split('-')[1] }}"
     version:          "{{ (__ah_collection_file | basename).split('-')[2:] | join('-') | splitext | first | splitext | first }}"
-    ah_host:          "{{ ah_host | default(ah_hostname) | default(omit) }}"
-    ah_username:      "{{ ah_username | default(omit) }}"
-    ah_password:      "{{ ah_password | default(omit) }}"
-    ah_token:         "{{ ah_token | default(omit) }}"
+    ah_host:          "{{ platform_hostname | default(omit) }}"
+    ah_hostname:     "{{ platform_username | default(omit) }}"
+    ah_password:      "{{ platform_password | default(omit) }}"
+    ah_token:         "{{ platform_token | default(omit) }}"
     ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
-    validate_certs:   "{{ ah_validate_certs | default(omit) }}"
-    request_timeout:  "{{ ah_request_timeout | default(omit) }}"
+    validate_certs:   "{{ platform_validate_certs | default(omit) }}"
+    request_timeout:  "{{ platform_request_timeout | default(omit) }}"
   loop: "{{ ah_collection_list }}"
   loop_control:
     loop_var: "__ah_collection_file"

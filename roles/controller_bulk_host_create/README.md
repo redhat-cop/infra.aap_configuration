@@ -121,12 +121,12 @@ controller_bulk_hosts:
 - name: Playbook to configure ansible controller post installation
   hosts: localhost
   connection: local
-  # Define following vars here, or in controller_configs/controller_auth.yml
+  # Define following vars here, or in platform_configs/controller_auth.yml
   # controller_hostname: ansible-controller-web-svc-test-project.example.com
   # platform_username: admin
   # controller_password: changeme
   pre_tasks:
-    - name: Include vars from controller_configs directory
+    - name: Include vars from platform_configs directory
       include_vars:
         dir: ./yaml
         ignore_files: [controller_config.yml.template]

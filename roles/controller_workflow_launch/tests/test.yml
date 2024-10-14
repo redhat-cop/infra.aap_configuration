@@ -13,7 +13,7 @@
     - awx.awx
 
   pre_tasks:
-    - name: Include vars from controller_configs directory
+    - name: Include vars from platform_configs directory
       ansible.builtin.include_vars:
         dir: ./configs
         extensions: ["yml"]
