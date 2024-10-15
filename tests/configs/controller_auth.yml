@@ -2,7 +2,7 @@
 ---
 # controller_hostname: ansible-controller-web-svc-test-project.example.com
 platform_username: admin
-platform_password: 
+platform_password:
 # platform_token: insertokenhere
 platform_validate_certs: false
 platform_configuration_enforce_defaults: true
