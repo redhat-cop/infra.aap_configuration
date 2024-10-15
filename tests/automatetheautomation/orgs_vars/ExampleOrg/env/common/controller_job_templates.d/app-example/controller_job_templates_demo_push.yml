@@ -1,0 +1,46 @@
+---
+controller_templates:
+  - name: "{{ orgs }} JT_Container_Group TEST DEMO First Push"
+    description: "Template to  test Container Groups"
+    organization: "{{ orgs }}"
+    project: "{{ orgs }} Container_Group"
+    inventory: "{{ orgs }} Localhost"
+    playbook: "helloworld.yml"
+    job_type: run
+    concurrent_jobs_enabled: true
+    credentials:
+      - "{{ orgs }} {{ env }} aap_vault_credentials"
+    execution_environment: "Default execution environment"
+    instance_groups:
+      - Container_Groups_Instance
+
+  - name: "{{ orgs }} JT_Container_Group TEST DEMO - Second Push"
+    description: "Template to  test Container Groups"
+    organization: "{{ orgs }}"
+    project: "{{ orgs }} Container_Group"
+    inventory: "{{ orgs }} Localhost"
+    playbook: "helloworld.yml"
+    job_type: run
+    concurrent_jobs_enabled: true
+    credentials:
+      - "{{ orgs }} {{ env }} aap_vault_credentials"
+    execution_environment: "Default execution environment"
+    instance_groups:
+      - Container_Groups_Instance
+    survey_enabled: true
+    survey_spec:
+      name: 'TEST'
+      description: 'Test'
+      spec:
+        - question_name: Target Host
+          question_description: target host is required for playbook to work, this host
+            needs to exist in the inventory
+          required: true
+          type: text
+          variable: target_hosts
+          min: 0
+          max: 1024
+          default: Localhost
+          choices: ''
+          new_question: true
+...

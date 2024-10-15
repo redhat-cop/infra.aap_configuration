@@ -25,8 +25,8 @@ users_list: []
 
 users_default_password: change_me
 
-users_secure_logging: "{{ platform_configuration_secure_logging | default('true') }}"
-users_async_retries: "{{ platform_configuration_async_retries | default(30) }}"
-users_async_delay: "{{ platform_configuration_async_delay | default(1) }}"
-users_enforce_defaults: "{{ platform_configuration_enforce_defaults | default(false) }}"
+users_secure_logging: "{{ gateway_configuration_secure_logging | default('true') }}"
+users_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
+users_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
+users_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
 ...

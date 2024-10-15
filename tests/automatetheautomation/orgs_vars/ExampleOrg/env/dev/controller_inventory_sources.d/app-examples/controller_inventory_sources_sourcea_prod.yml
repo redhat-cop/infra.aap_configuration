@@ -1,0 +1,12 @@
+---
+controller_inventory_sources:
+  - name: "Inventory Source A Prod"
+    description: "Source Inventory from Excel file SourceA prod"
+    source: scm
+    source_project: "{{ orgs }} InventorySource SourceA prod"
+    execution_environment: ee-xlsx
+    source_path: "xlsx_inventory.py"
+    inventory: "InventaryExcel"
+    update_on_launch: false
+    overwrite: true
+...

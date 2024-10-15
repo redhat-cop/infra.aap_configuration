@@ -14,15 +14,16 @@
     is_system_auditor:        "{{ __controller_user_accounts_item.is_auditor | default(__controller_user_accounts_item.is_system_auditor | default((false if controller_configuration_users_enforce_defaults else omit))) }}"
     update_secrets:           "{{ __controller_user_accounts_item.update_secrets | default((false if controller_configuration_users_enforce_defaults else omit)) }}"
     organization:             "{{ __controller_user_accounts_item.organization | default(omit) }}"
-    state:                    "{{ __controller_user_accounts_item.state | default(platform_state | default(omit, true)) }}"
+    state:                    "{{ __controller_user_accounts_item.state | default(controller_state | default(omit, true)) }}"
 
     # Role Standard Options
-    controller_host:          "{{ platform_hostname | default(omit, true) }}"
-    controller_username:      "{{ platform_username | default(omit, true) }}"
-    controller_password:      "{{ platform_password | default(omit, true) }}"
-    controller_oauthtoken:    "{{ platform_token | default(omit, true) }}"
-    request_timeout:          "{{ platform_request_timeout | default(omit, true) }}"
-    validate_certs:           "{{ platform_validate_certs | default(omit) }}"
+    controller_host:          "{{ controller_hostname | default(omit, true) }}"
+    controller_username:      "{{ controller_username | default(omit, true) }}"
+    controller_password:      "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:    "{{ controller_oauthtoken | default(omit, true) }}"
+    request_timeout:          "{{ controller_request_timeout | default(omit, true) }}"
+    validate_certs:           "{{ controller_validate_certs | default(omit) }}"
+    controller_config_file:   "{{ controller_config_file | default(omit, true) }}"
   loop: "{{ users if users is defined else controller_user_accounts }}"
   loop_control:
     loop_var: __controller_user_accounts_item
@@ -34,8 +35,8 @@
   register: __controller_user_accounts_job_async
   changed_when: "(__controller_user_accounts_job_async.changed if ansible_check_mode else false)"
   vars:
-    __operation: "{{ operation_translate[__controller_user_accounts_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    __operation: "{{ operation_translate[__controller_user_accounts_item.state | default(controller_state) | default('present')] }}"
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
 - name: "Flag for errors (check mode only)"
   ansible.builtin.set_fact:
@@ -56,6 +57,6 @@
   when: not ansible_check_mode and __controller_user_accounts_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_users_secure_logging }}"
   vars:
-    __operation: "{{ operation_translate[__controller_user_accounts_job_async_results_item.__controller_user_accounts_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    __operation: "{{ operation_translate[__controller_user_accounts_job_async_results_item.__controller_user_accounts_item.state | default(controller_state) | default('present')] }}"
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 ...

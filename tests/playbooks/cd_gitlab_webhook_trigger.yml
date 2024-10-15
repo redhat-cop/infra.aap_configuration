@@ -1,0 +1,69 @@
+---
+- name: Gitlab Webhook Trigger Playbook
+  hosts: all
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: "Get the modified files over the dirs from all the received commits"
+      ansible.builtin.set_fact:
+        env: "{{ awx_webhook_payload.ref.split('/')[2] if awx_webhook_payload.ref.split('/')[1] == 'heads' else awx_webhook_payload.project.default_branch }}"
+        gitlab_scm_branch: "{{ awx_webhook_payload.ref.split('/')[2] }}"
+        orgs: "{{ awx_webhook_payload.project.name }}"
+        list_of_dirs: "{{ ((awx_webhook_payload.commits | map(attribute='added') | list) +
+                           (awx_webhook_payload.commits | map(attribute='modified') | list) +
+                           (awx_webhook_payload.commits | map(attribute='removed') | list))
+                       | flatten }}"
+    - name: "Set regular expression to filter files list from repository"
+      ansible.builtin.set_fact:
+        regexpression: "/([^/]*)/env/(common|{{ env }})/controller_(.*).d/"
+
+    - name: "Get the Organization and the tags to run the CasC"
+      ansible.builtin.set_fact:
+        org_dirs_dict: "{{ (org_dirs_dict | default({})) | combine({input_var[0]: (((org_dirs_dict[input_var[0]] | default([])) + [input_var[1]] + (['projects', 'schedules'] if awx_webhook_payload.ref.split('/')[1] == 'tags' else [''])) | unique | reject('match', '^$'))}) }}"
+      vars:
+        input_var: "{{ item | regex_search(regexpression, '\\1', '\\3') }}"
+      loop: "{{ list_of_dirs }}"
+      when: input_var | type_debug is match('list')
+
+    - name: Configure Controller Job Launch | Launch launch_jobs Drop Diff (Delete)
+      ansible.builtin.include_role:
+        name: infra.controller_configuration.job_launch
+      vars:
+        controller_launch_jobs:
+          - name: "{{ org_tags.key }} CasC_JobTemplates_AAP_Drop_Diff"
+            scm_branch: "{{ gitlab_scm_branch }}"
+            extra_vars:
+              orgs: "{{ org_tags.key }}"
+              dir_orgs_vars: 'orgs_vars'
+              ansible_python_interpreter: "/usr/bin/python3"
+              env: "{{ env }}"
+              gitlab_scm_branch: "{{ gitlab_scm_branch }}"
+            tags: "{{ org_tags.value }}"
+            wait: true
+            verbosity: 0
+      with_dict: "{{ org_dirs_dict }}"
+      loop_control:
+        loop_var: org_tags
+      when: org_dirs_dict is defined
+
+    - name: Configure Controller Job Launch | Launch launch_jobs creation
+      ansible.builtin.include_role:
+        name: infra.controller_configuration.job_launch
+      vars:
+        controller_launch_jobs:
+          - name: "{{ org_tags.key }} CasC_JobTemplates_AAP_CD_Config_Controller"
+            scm_branch: "{{ gitlab_scm_branch }}"
+            extra_vars:
+              orgs: "{{ org_tags.key }}"
+              dir_orgs_vars: 'orgs_vars'
+              ansible_python_interpreter: "/usr/bin/python3"
+              env: "{{ env }}"
+              gitlab_scm_branch: "{{ gitlab_scm_branch }}"
+            tags: "{{ org_tags.value }}"
+            wait: true
+            verbosity: 0
+      with_dict: "{{ org_dirs_dict }}"
+      loop_control:
+        loop_var: org_tags
+      when: org_dirs_dict is defined
+...

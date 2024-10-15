@@ -1,5 +1,5 @@
 ---
-gateway_teams:
+controller_teams:
   - name: satellite-qe
     organization: Satellite
   - name: satlab-admin

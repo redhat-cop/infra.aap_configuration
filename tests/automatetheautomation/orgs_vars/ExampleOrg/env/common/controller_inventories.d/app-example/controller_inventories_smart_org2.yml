@@ -1,0 +1,26 @@
+---
+controller_inventories:
+  - name: "SmartInventory CPD BCN Org2 dev"
+    description: "SmartInventory CPD BCN Org2"
+    host_filter: "groups__name=Patching_cpd_bcn and groups__name=Patching_os_entorno_dev and groups__name=Patching_os_vendor_redhat and groups__name=Patching_area_org02"
+    kind: smart
+    organization: "{{ orgs }}"
+
+  - name: "SmartInventory CPD MAD Org2 dev"
+    description: "SmartInventory CPD MAD Org2"
+    host_filter: "groups__name=Patching_cpd_mad and groups__name=Patching_os_entorno_dev and groups__name=Patching_os_vendor_redhat and groups__name=Patching_area_org02"
+    kind: smart
+    organization: "{{ orgs }}"
+
+  - name: "SmartInventory CPD BCN Org2 prod"
+    description: "SmartInventory CPD BCN Org2"
+    host_filter: "groups__name=Patching_cpd_bcn and groups__name=Patching_os_entorno_prod and groups__name=Patching_os_vendor_redhat and groups__name=Patching_area_org02"
+    kind: smart
+    organization: "{{ orgs }}"
+
+  - name: "SmartInventory CPD MAD Org2 prod"
+    description: "SmartInventory CPD MAD Org2"
+    host_filter: "groups__name=Patching_cpd_mad and groups__name=Patching_os_entorno_prod and groups__name=Patching_os_vendor_redhat and groups__name=Patching_area_org02"
+    kind: smart
+    organization: "{{ orgs }}"
+...

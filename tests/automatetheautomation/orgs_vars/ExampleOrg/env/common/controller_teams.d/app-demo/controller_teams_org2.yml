@@ -1,0 +1,10 @@
+---
+controller_teams:
+  - name: "Organization2 admins-team"
+    description: "Team for Admin Organization2 Org"
+    organization: "Organization2"
+
+  - name: "Organization2 users-team"
+    description: "Team for Normal Organization2 Org"
+    organization: "Organization2"
+...

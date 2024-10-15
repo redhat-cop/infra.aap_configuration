@@ -2,12 +2,12 @@
 # Create AH Namespace
 - name: Get token
   ansible.hub.ah_token:
-    ah_host:               "{{ platform_hostname | default(omit) }}"
-    ah_hostname:          "{{ platform_username | default(omit) }}"
-    ah_password:           "{{ platform_password | default(omit) }}"
+    ah_host:               "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:           "{{ ah_username | default(omit) }}"
+    ah_password:           "{{ ah_password | default(omit) }}"
     ah_path_prefix:        "{{ ah_path_prefix | default(omit) }}"
-    validate_certs:        "{{ platform_validate_certs | default(omit) }}"
-    request_timeout:       "{{ platform_request_timeout | default(omit) }}"
+    validate_certs:        "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:       "{{ ah_request_timeout | default(omit) }}"
   when:
     - ah_token is not defined
     - lookup("ansible.builtin.env", "AH_API_TOKEN") == ""
@@ -25,13 +25,13 @@
     links:            "{{ __namespace_item.links | default([]) }}"
     groups:           "{{ __namespace_item.groups | default([]) }}"
     state:            "{{ __namespace_item.state | default(ah_state | default('present')) }}"
-    ah_host:          "{{ platform_hostname | default(omit) }}"
-    ah_hostname:     "{{ platform_username | default(omit) }}"
-    ah_password:      "{{ platform_password | default(omit) }}"
-    ah_token:         "{{ platform_token | default(omit) }}"
+    ah_host:          "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:      "{{ ah_username | default(omit) }}"
+    ah_password:      "{{ ah_password | default(omit) }}"
+    ah_token:         "{{ ah_token | default(omit) }}"
     ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
-    validate_certs:   "{{ platform_validate_certs | default(omit) }}"
-    request_timeout:  "{{ platform_request_timeout | default(omit) }}"
+    validate_certs:   "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:  "{{ ah_request_timeout | default(omit) }}"
   loop: "{{ ah_namespaces }}"
   loop_control:
     loop_var: "__namespace_item"
@@ -41,7 +41,7 @@
   register: __namespaces_job_async
   changed_when: not __namespaces_job_async.changed
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
 
 - name: "Create Namespace | Wait for finish the namespace creation"
   ansible.builtin.async_status:
@@ -56,5 +56,5 @@
   when: __namespaces_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_namespace_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
 ...

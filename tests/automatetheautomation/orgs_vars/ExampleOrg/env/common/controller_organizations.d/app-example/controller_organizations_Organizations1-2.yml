@@ -1,0 +1,11 @@
+---
+controller_organizations:
+  - name: "Organization1"
+    description: "Organization 1 to tests"
+    galaxy_credentials: "{{ common_galaxy_credentials }}"
+  - name: "Organization2"
+    description: "Organization 2 to tests"
+    galaxy_credentials: "{{ common_galaxy_credentials }}"
+common_galaxy_credentials:
+  - "Ansible Galaxy"
+...

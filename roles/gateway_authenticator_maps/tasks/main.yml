@@ -15,12 +15,12 @@
     state: "{{ __gateway_authenticator_maps_item.state | default(gateway_state | default(omit, true)) }}"
 
     # Role Standard Options
-    gateway_hostname: "{{ platform_hostname | default(omit, true) }}"
-    gateway_username: "{{ platform_username | default(omit, true) }}"
-    gateway_password: "{{ platform_password | default(omit, true) }}"
-    gateway_token: "{{ platform_token | default(omit, true) }}"
-    gateway_request_timeout: "{{ platform_request_timeout | default(omit, 10) }}"
-    gateway_validate_certs: "{{ platform_validate_certs | default(omit) }}"
+    gateway_hostname: "{{ gateway_hostname | default(omit, true) }}"
+    gateway_username: "{{ gateway_username | default(omit, true) }}"
+    gateway_password: "{{ gateway_password | default(omit, true) }}"
+    gateway_token: "{{ gateway_oauthtoken | default(omit, true) }}"
+    gateway_request_timeout: "{{ gateway_request_timeout | default(omit, 10) }}"
+    gateway_validate_certs: "{{ gateway_validate_certs | default(omit) }}"
   loop: "{{ authenticator_maps if authenticator_maps is defined else authenticator_maps_list }}"
   loop_control:
     loop_var: __gateway_authenticator_maps_item
@@ -30,7 +30,7 @@
   register: __gateway_authenticator_maps_job_async
   changed_when: not __gateway_authenticator_maps_job_async.changed
   vars:
-    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
+    ansible_async_dir: "{{ gateway_configuration_async_dir | default(omit) }}"
 
 - name: Authenticator Map | Wait for finish the configuration
   ansible.builtin.async_status:
@@ -45,5 +45,5 @@
   when: __gateway_authenticator_maps_job_async_results_item.ansible_job_id is defined
   no_log: "{{ authenticator_maps_secure_logging }}"
   vars:
-    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
+    ansible_async_dir: "{{ gateway_configuration_async_dir | default(omit) }}"
 ...

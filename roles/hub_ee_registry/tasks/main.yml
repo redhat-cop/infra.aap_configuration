@@ -11,12 +11,12 @@
     download_concurrency:   "{{ __ee_registry_item.download_concurrency | default(omit) }}"
     rate_limit:             "{{ __ee_registry_item.rate_limit | default(omit) }}"
     state:                  "{{ __ee_registry_item.state | default(ah_state | default('present')) }}"
-    ah_host:                "{{ platform_hostname | default(omit) }}"
-    ah_hostname:           "{{ platform_username | default(omit) }}"
-    ah_password:            "{{ platform_password | default(omit) }}"
+    ah_host:                "{{ ah_host | default(ah_hostname) | default(omit) }}"
+    ah_username:            "{{ ah_username | default(omit) }}"
+    ah_password:            "{{ ah_password | default(omit) }}"
     ah_path_prefix:         "{{ ah_path_prefix | default(omit) }}"
-    validate_certs:         "{{ platform_validate_certs | default(omit) }}"
-    request_timeout:        "{{ platform_request_timeout | default(omit) }}"
+    validate_certs:         "{{ ah_validate_certs | default(omit) }}"
+    request_timeout:        "{{ ah_request_timeout | default(omit) }}"
     proxy_url:              "{{ __ee_registry_item.proxy_url | default(proxy_url | default(omit)) }}"
     proxy_username:         "{{ __ee_registry_item.proxy_username | default(proxy_username | default(omit)) }}"
     proxy_password:         "{{ __ee_registry_item.proxy_password | default(proxy_password | default(omit)) }}"
@@ -29,7 +29,7 @@
   register: __ee_registries_job_async
   changed_when: not __ee_registries_job_async.changed
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
 
 - name: "Create EE Registry | Wait for finish the ee_registry creation"
   ansible.builtin.async_status:
@@ -44,5 +44,5 @@
   when: __ee_registries_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_ee_registry_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ ah_configuration_async_dir }}'
 ...

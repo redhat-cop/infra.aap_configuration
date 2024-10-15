@@ -13,15 +13,16 @@
     notification_templates_started:     "{{ (__controller_organizations_item.related.notification_templates_started | map(attribute='name') | list if __controller_organizations_item.related.notification_templates_started is defined) | default(__controller_organizations_item.notification_templates_started) | default(([] if controller_configuration_organizations_enforce_defaults else omit), true) if (assign_notification_templates_to_org is defined and assign_notification_templates_to_org) else omit }}"
     notification_templates_success:     "{{ (__controller_organizations_item.related.notification_templates_success | map(attribute='name') | list if __controller_organizations_item.related.notification_templates_success is defined) | default(__controller_organizations_item.notification_templates_success) | default(([] if controller_configuration_organizations_enforce_defaults else omit), true) if (assign_notification_templates_to_org is defined and assign_notification_templates_to_org) else omit }}"
     notification_templates_error:       "{{ (__controller_organizations_item.related.notification_templates_error | map(attribute='name') | list if __controller_organizations_item.related.notification_templates_error is defined) | default(__controller_organizations_item.notification_templates_error) | default(([] if controller_configuration_organizations_enforce_defaults else omit), true) if (assign_notification_templates_to_org is defined and assign_notification_templates_to_org) else omit }}"
-    state:                              "{{ __controller_organizations_item.state | default(platform_state | default('present')) }}"
+    state:                              "{{ __controller_organizations_item.state | default(controller_state | default('present')) }}"
 
     # Role Standard Options
-    controller_username:                "{{ platform_username | default(omit, true) }}"
-    controller_password:                "{{ platform_password | default(omit, true) }}"
-    controller_oauthtoken:              "{{ platform_token | default(omit, true) }}"
-    request_timeout:                    "{{ platform_request_timeout | default(omit, true) }}"
-    controller_host:                    "{{ platform_hostname | default(omit, true) }}"
-    validate_certs:                     "{{ platform_validate_certs | default(omit) }}"
+    controller_username:                "{{ controller_username | default(omit, true) }}"
+    controller_password:                "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:              "{{ controller_oauthtoken | default(omit, true) }}"
+    request_timeout:                    "{{ controller_request_timeout | default(omit, true) }}"
+    controller_host:                    "{{ controller_hostname | default(omit, true) }}"
+    controller_config_file:             "{{ controller_config_file | default(omit, true) }}"
+    validate_certs:                     "{{ controller_validate_certs | default(omit) }}"
   loop: "{{ organizations if organizations is defined else controller_organizations }}"
   loop_control:
     loop_var: __controller_organizations_item
@@ -33,8 +34,8 @@
   register: __organizations_job_async
   changed_when: "(__organizations_job_async.changed if ansible_check_mode else false)"
   vars:
-    __operation: "{{ operation_translate[__controller_organizations_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    __operation: "{{ operation_translate[__controller_organizations_item.state | default(controller_state) | default('present')] }}"
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
 - name: "Flag for errors (check mode only)"
   ansible.builtin.set_fact:
@@ -55,6 +56,6 @@
   when: not ansible_check_mode and __organizations_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_organizations_secure_logging }}"
   vars:
-    __operation: "{{ operation_translate[__organizations_job_async_results_item.__controller_organizations_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    __operation: "{{ operation_translate[__organizations_job_async_results_item.__controller_organizations_item.state | default(controller_state) | default('present')] }}"
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 ...
