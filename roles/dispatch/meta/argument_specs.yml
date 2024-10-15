@@ -39,7 +39,7 @@ argument_specs:
             var: routes_list
             tags: routes
           - role: gateway_teams
-            var: teams_list
+            var: platform_teams
             tags: teams
       controller_configuration_dispatcher_roles:
         default:

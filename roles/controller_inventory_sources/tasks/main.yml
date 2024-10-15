@@ -30,7 +30,7 @@
     notification_templates_error:         "{{ (__controller_source_item.related.notification_templates_error | map(attribute='name') | list if __controller_source_item.related.notification_templates_error is defined) | default(__controller_source_item.notification_templates_error) | default(([] if controller_configuration_inventory_sources_enforce_defaults else omit), true) }}"
 
     # Role Standard Options
-    controller_host:                      "{{ controller_host | default(omit, true) }}"
+    controller_host:                      "{{ platform_hostname | default(omit, true) }}"
     controller_username:                  "{{ platform_username | default(omit, true) }}"
     controller_password:                  "{{ platform_password | default(omit, true) }}"
     controller_oauthtoken:                "{{ platform_token | default(omit, true) }}"

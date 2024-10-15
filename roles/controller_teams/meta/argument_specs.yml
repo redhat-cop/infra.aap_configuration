@@ -31,7 +31,7 @@ argument_specs:
         #     description: Desired state of the resource.
 
       # Async variables
-      controller_configuration_teams_async_retries:
+      controller_configuration_platform_teams_async_retries:
         default: "{{ platform_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -39,7 +39,7 @@ argument_specs:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
-      controller_configuration_teams_async_delay:
+      controller_configuration_platform_teams_async_delay:
         default: "{{ platform_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -54,7 +54,7 @@ argument_specs:
 
 
       # No_log variables
-      controller_configuration_teams_secure_logging:
+      controller_configuration_platform_teams_secure_logging:
         default: "{{ platform_configuration_secure_logging | default(false) }}"
         required: false
         type: bool

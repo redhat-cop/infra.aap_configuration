@@ -1,5 +1,5 @@
 ---
-controller_user_accounts:
+users_list:
   - user: controller_user
     is_superuser: false
     password: controller_password

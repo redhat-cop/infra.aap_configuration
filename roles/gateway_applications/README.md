@@ -84,4 +84,4 @@ ansible-playbook manage_data.yml -e @data/gateway_applications.yml
 
 ## License
 
-[GPLv3](https://github.com/ansible/aap-gateway/gateway_configuration_collection/COPYING)
+[GPL-3.0](https://github.com/redhat-cop/aap_configuration#licensing)

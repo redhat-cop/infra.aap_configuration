@@ -17,7 +17,7 @@
     state:                    "{{ __controller_user_accounts_item.state | default(platform_state | default(omit, true)) }}"
 
     # Role Standard Options
-    controller_host:          "{{ controller_host | default(omit, true) }}"
+    controller_host:          "{{ platform_hostname | default(omit, true) }}"
     controller_username:      "{{ platform_username | default(omit, true) }}"
     controller_password:      "{{ platform_password | default(omit, true) }}"
     controller_oauthtoken:    "{{ platform_token | default(omit, true) }}"

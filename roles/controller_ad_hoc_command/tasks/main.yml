@@ -23,7 +23,7 @@
     controller_password:    "{{ platform_password | default(omit, true) }}"
     controller_oauthtoken:  "{{ platform_token | default(omit, true) }}"
     request_timeout:        "{{ platform_request_timeout | default(omit, true) }}"
-    controller_host:        "{{ controller_host | default(omit, true) }}"
+    controller_host:        "{{ platform_hostname | default(omit, true) }}"
     validate_certs:         "{{ platform_validate_certs | default(omit) }}"
   loop: "{{ controller_ad_hoc_commands }}"
   loop_control:
