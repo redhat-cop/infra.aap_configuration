@@ -27,20 +27,19 @@
     ask_skip_tags_on_launch:            "{{ __workflow_loop_item.ask_skip_tags | default(__workflow_loop_item.ask_skip_tags_on_launch | default((false if controller_configuration_workflows_enforce_defaults else omit))) }}"
     workflow_nodes:                     "{{ __workflow_loop_item.related.workflow_nodes | default(__workflow_loop_item.workflow_nodes | default(([] if controller_configuration_workflows_enforce_defaults else omit), true)) }}"
     destroy_current_nodes:              "{{ __workflow_loop_item.destroy_current_nodes | default(__workflow_loop_item.destroy_current_schema | default((false if controller_configuration_workflows_enforce_defaults else omit))) }}"
-    state:                              "{{ __workflow_loop_item.state | default(controller_state | default('present')) }}"
+    state:                              "{{ __workflow_loop_item.state | default(platform_state | default('present')) }}"
     notification_templates_started:     "{{ (__workflow_loop_item.related.notification_templates_started | map(attribute='name') | list if __workflow_loop_item.related.notification_templates_started is defined) | default(__workflow_loop_item.notification_templates_started) | default(([] if controller_configuration_workflows_enforce_defaults else omit), true) }}"
     notification_templates_success:     "{{ (__workflow_loop_item.related.notification_templates_success | map(attribute='name') | list if __workflow_loop_item.related.notification_templates_success is defined) | default(__workflow_loop_item.notification_templates_success) | default(([] if controller_configuration_workflows_enforce_defaults else omit), true) }}"
     notification_templates_error:       "{{ (__workflow_loop_item.related.notification_templates_error | map(attribute='name') | list if __workflow_loop_item.related.notification_templates_error is defined) | default(__workflow_loop_item.notification_templates_error) | default(([] if controller_configuration_workflows_enforce_defaults else omit), true) }}"
     notification_templates_approvals:   "{{ (__workflow_loop_item.related.notification_templates_approvals | map(attribute='name') | list if __workflow_loop_item.related.notification_templates_approvals is defined) | default(__workflow_loop_item.notification_templates_approvals) | default(([] if controller_configuration_workflows_enforce_defaults else omit), true) }}"
 
     # Role Standard Options
-    controller_username:                "{{ controller_username | default(omit, true) }}"
-    controller_password:                "{{ controller_password | default(omit, true) }}"
-    controller_oauthtoken:              "{{ controller_oauthtoken | default(omit, true) }}"
-    request_timeout:                    "{{ controller_request_timeout | default(omit, true) }}"
-    controller_host:                    "{{ controller_hostname | default(omit, true) }}"
-    controller_config_file:             "{{ controller_config_file | default(omit, true) }}"
-    validate_certs:                     "{{ controller_validate_certs | default(omit) }}"
+    controller_username:                "{{ platform_username | default(omit, true) }}"
+    controller_password:                "{{ platform_password | default(omit, true) }}"
+    controller_oauthtoken:              "{{ platform_token | default(omit, true) }}"
+    request_timeout:                    "{{ platform_request_timeout | default(omit, true) }}"
+    controller_host:                    "{{ platform_hostname | default(omit, true) }}"
+    validate_certs:                     "{{ platform_validate_certs | default(omit) }}"
   loop: "{{ workflow_job_templates if workflow_job_templates is defined else controller_workflows }}"
   loop_control:
     loop_var: __workflow_loop_item
@@ -51,8 +50,8 @@
   register: __workflows_job_async
   changed_when: "(__workflows_job_async.changed if ansible_check_mode else false)"
   vars:
-    __operation: "{{ operation_translate[__workflow_loop_item.state | default(controller_state) | default('present')] }}"
-    ansible_async_dir: '{{ controller_configuration_async_dir }}'
+    __operation: "{{ operation_translate[__workflow_loop_item.state | default(platform_state) | default('present')] }}"
+    ansible_async_dir: '{{ platform_configuration_async_dir }}'
 
 - name: "Flag for errors (check mode only)"
   ansible.builtin.set_fact:
@@ -73,8 +72,8 @@
   when: not ansible_check_mode and __workflows_job_async_results_item.ansible_job_id is defined
   no_log: "{{ workflow_job_templates_secure_logging }}"
   vars:
-    __operation: "{{ operation_translate[__workflows_job_async_results_item.__workflow_loop_item.state | default(controller_state) | default('present')] }}"
-    ansible_async_dir: '{{ controller_configuration_async_dir }}'
+    __operation: "{{ operation_translate[__workflows_job_async_results_item.__workflow_loop_item.state | default(platform_state) | default('present')] }}"
+    ansible_async_dir: '{{ platform_configuration_async_dir }}'
 
 # Create links between workflow node
 - name: Loop over nodes in schema to add to workflow templates

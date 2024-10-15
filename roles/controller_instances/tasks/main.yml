@@ -13,13 +13,12 @@
     peers_from_control_nodes:       "{{ __controller_instance_item.peers_from_control_nodes | default((false if controller_configuration_instances_enforce_defaults else omit), true) }}"
 
     # Role Standard Options
-    controller_username:            "{{ controller_username | default(omit, true) }}"
-    controller_password:            "{{ controller_password | default(omit, true) }}"
-    controller_oauthtoken:          "{{ controller_oauthtoken | default(omit, true) }}"
-    request_timeout:                "{{ controller_request_timeout | default(omit, true) }}"
-    controller_host:                "{{ controller_hostname | default(omit, true) }}"
-    controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
-    validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
+    controller_username:            "{{ platform_username | default(omit, true) }}"
+    controller_password:            "{{ platform_password | default(omit, true) }}"
+    controller_oauthtoken:          "{{ platform_token | default(omit, true) }}"
+    request_timeout:                "{{ platform_request_timeout | default(omit, true) }}"
+    controller_host:                "{{ platform_hostname | default(omit, true) }}"
+    validate_certs:                 "{{ platform_validate_certs | default(omit) }}"
   loop: "{{ controller_instances }}"
   loop_control:
     loop_var: __controller_instance_item
@@ -32,7 +31,7 @@
   register: __instance_job_async
   changed_when: "(__instance_job_async.changed if ansible_check_mode else false)"
   vars:
-    ansible_async_dir: '{{ controller_configuration_async_dir }}'
+    ansible_async_dir: '{{ platform_configuration_async_dir }}'
 
 - name: "Flag for errors (check mode only)"
   ansible.builtin.set_fact:
@@ -52,5 +51,5 @@
   when: not ansible_check_mode and __instance_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_instances_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ controller_configuration_async_dir }}'
+    ansible_async_dir: '{{ platform_configuration_async_dir }}'
 ...

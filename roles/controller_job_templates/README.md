@@ -16,13 +16,13 @@ Currently:
 
 |Variable Name|Default Value|Required|Description|Example|
 |:---|:---:|:---:|:---|:---|
-|`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
-|`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
-|`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
-|`controller_username`|""|no|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
-|`controller_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
-|`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
-|`controller_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
+|`platform_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
+|`platform_hostname`|""|yes|URL to the Ansible Automation Platform Server.|127.0.0.1|
+|`platform_validate_certs`|`True`|no|Whether or not to validate the Ansible Automation Platform Server's SSL certificate.||
+|`platform_username`|""|no|Admin User on the Ansible Automation Platform Server. Either username / password or oauthtoken need to be specified.||
+|`platform_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
+|`platform_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
+|`platform_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
 |`controller_templates`|`see below`|yes|Data structure describing your job template or job templates Described below. Alias: job_templates ||
 
 ### Enforcing defaults
@@ -46,12 +46,12 @@ Enabling this will enforce configurtion without specifying every option in the c
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add job_template task does not include sensitive information.
-controller_configuration_job_templates_secure_logging defaults to the value of controller_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
+controller_configuration_job_templates_secure_logging defaults to the value of platform_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`controller_configuration_job_templates_secure_logging`|`False`|no|Whether or not to include the sensitive Job Template role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`controller_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
+|`platform_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
 
@@ -62,13 +62,13 @@ This also speeds up the overall role.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`controller_configuration_async_retries`|30|no|This variable sets the number of retries to attempt for the role globally.|
-|`controller_configuration_job_templates_async_retries`|`{{ controller_configuration_async_retries }}`|no|This variable sets the number of retries to attempt for the role.|
-|`controller_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
-|`controller_configuration_job_templates_async_delay`|`controller_configuration_async_delay`|no|This sets the delay between retries for the role.|
+|`platform_configuration_async_retries`|30|no|This variable sets the number of retries to attempt for the role globally.|
+|`controller_configuration_job_templates_async_retries`|`{{ platform_configuration_async_retries }}`|no|This variable sets the number of retries to attempt for the role.|
+|`platform_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
+|`controller_configuration_job_templates_async_delay`|`platform_configuration_async_delay`|no|This sets the delay between retries for the role.|
 |`controller_configuration_loop_delay`|0|no|This sets the pause between each item in the loop for the roles globally. To help when API is getting overloaded.|
 |`controller_configuration_job_templates_loop_delay`|`controller_configuration_loop_delay`|no|This sets the pause between each item in the loop for the role. To help when API is getting overloaded.|
-|`controller_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
+|`platform_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
 ## Data Structure
 
@@ -126,7 +126,7 @@ This also speeds up the overall role.
 |`webhook_service`|""|no|str|Service that webhook requests will be accepted from (github, gitlab)|
 |`webhook_credential`|""|no|str|Personal Access Token for posting back the status to the service API|
 |`scm_branch`|""|no|str|Branch to use in job run. Project default used if blank. Only allowed if project allow_override field is set to true.|
-|`labels`|""|no|list|The labels applied to this job template. NOTE: Labels must be created with the [labels](https://github.com/redhat-cop/aap_configuration/tree/devel/roles/labels) role first, an error will occur if the label supplied to this role does not exist.|
+|`labels`|""|no|list|The labels applied to this job template. NOTE: Labels must be created with the [labels](https://github.com/redhat-cop/aap_configuration/tree/devel/roles/controller_labels) role first, an error will occur if the label supplied to this role does not exist.|
 |`custom_virtualenv`|""|no|str|Local absolute file path containing a custom Python virtualenv to use.|
 |`notification_templates_started`|""|no|list|The notifications on started to use for this organization in a list.|
 |`notification_templates_success`|""|no|list|The notifications on success to use for this organization in a list.|
@@ -284,12 +284,12 @@ controller_templates:
 - name: Playbook to configure ansible controller post installation
   hosts: localhost
   connection: local
-  # Define following vars here, or in controller_configs/controller_auth.yml
+  # Define following vars here, or in platform_configs/controller_auth.yml
   # controller_hostname: ansible-controller-web-svc-test-project.example.com
-  # controller_username: admin
+  # platform_username: admin
   # controller_password: changeme
   pre_tasks:
-    - name: Include vars from controller_configs directory
+    - name: Include vars from platform_configs directory
       ansible.builtin.include_vars:
         dir: ./yaml
         ignore_files: [controller_config.yml.template]
