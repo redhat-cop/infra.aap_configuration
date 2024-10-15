@@ -63,22 +63,22 @@ argument_specs:
 
       # Async variables
       applications_async_retries:
-        default: "{{ platform_configuration_async_retries | default(30) }}"
+        default: "{{ gateway_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
-      platform_configuration_async_retries:
+      gateway_configuration_async_retries:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
       applications_async_delay:
-        default: "{{ platform_configuration_async_delay | default(1) }}"
+        default: "{{ gateway_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
-      platform_configuration_async_delay:
+      gateway_configuration_async_delay:
         default: 1
         required: false
         description: This variable sets delay between retries across all roles as a default.
-      platform_configuration_async_dir:
+      gateway_configuration_async_dir:
         default: null
         required: false
         description: >
@@ -87,13 +87,13 @@ argument_specs:
 
       # No_log variables
       applications_secure_logging:
-        default: "{{ platform_configuration_secure_logging | default(false) }}"
+        default: "{{ gateway_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
         description: >
           Whether or not to include the sensitive tasks from this role in the log.
           Set this value to `true` if you will be providing your sensitive values from elsewhere.
-      platform_configuration_secure_logging:
+      gateway_configuration_secure_logging:
         default: false
         required: false
         type: bool

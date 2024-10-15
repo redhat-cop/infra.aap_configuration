@@ -12,65 +12,61 @@ argument_specs:
 
       # Async variables
       ah_configuration_user_async_retries:
-        default: "{{ platform_configuration_async_retries | default(50) }}"
+        default: "{{ ah_configuration_async_retries | default(50) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
-      platform_configuration_async_retries:
+      ah_configuration_async_retries:
         default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
       ah_configuration_user_async_delay:
-        default: "{{ platform_configuration_async_delay | default(1) }}"
+        default: "{{ ah_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
-      platform_configuration_async_delay:
+      ah_configuration_async_delay:
         default: 1
         required: false
         description: This variable sets delay between retries across all roles as a default.
-      platform_configuration_async_dir:
+      ah_configuration_async_dir:
         default: null
         required: false
         description: Sets the directory to write the results file for async tasks. The default value is set to  `null` which uses the Ansible Default of `/root/.ansible_async/`.
 
       # No_log variables
       ah_configuration_user_secure_logging:
-        default: "{{ platform_configuration_secure_logging | default(false) }}"
+        default: "{{ ah_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
         description: Whether or not to include the sensitive role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
-      platform_configuration_secure_logging:
+      ah_configuration_secure_logging:
         default: false
         required: false
         type: bool
         description: This variable enables secure logging across all roles as a default.
 
       # Generic across all roles
-      platform_hostname:
-        default: None
+      ah_host:
         required: false
-        description: URL to the Ansible Automation Platform Server.
+        description: URL to the Automation Hub Server.
         type: str
       ah_path_prefix:
         required: false
         description: The path for the Automation Hub API. Usually galaxy or automation-hub unless custom set in AH settings.
-      platform_validate_certs:
-        default: true
+      ah_validate_certs:
         required: false
-        description: Whether or not to validate the Ansible Automation Platform Server's SSL certificate.
+        description: Whether or not to validate the Automation Hub Server's SSL certificate.
         type: str
-      platform_request_timeout:
+      ah_request_timeout:
         default: 10
         required: false
-        description: Specify the timeout Ansible should use in requests to the Ansible Automation Platform Server.
+        description: Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.
         type: float
-      platform_username:
-        default: None
+      ah_username:
         required: false
-        description: Admin User on the Ansible Automation Platform Server. Either username / password or oauthtoken need to be specified.
+        description: User for authentication on Automation Hub
         type: str
-      platform_password:
-        default: None
+      ah_password:
         required: false
-        description: Controller Admin User's password on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
+        description: User's password For Automation Hub
         type: str
 ...

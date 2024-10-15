@@ -1,0 +1,100 @@
+---
+argument_specs:
+  main:
+    short_description: An Ansible Role to create ansible.cfg files based on your Automation Hub servers
+    options:
+      ah_token:
+        required: false
+        type: str
+        description: Token for access to the Automation Hub server
+      ah_path_prefix:
+        default: galaxy
+        required: false
+        type: str
+        description: API path used to access the api for the Automation Hub server.
+      ansible_config_mode:
+        default: 0644
+        required: false
+        type: str
+        description: Mode for the created ansible.cfg file to take
+      ansible_config_owner:
+        required: false
+        type: str
+        description: The owner of the created ansible.cfg file
+      ansible_config_group:
+        required: false
+        type: str
+        description: The group owner of the created ansible.cfg file
+      ah_configuration_working_dir:
+        default: /var/tmp
+        required: false
+        type: str
+        description: The location the ansible.cfg will be stored
+      automation_hub_list:
+        default: []
+        required: false
+        type: list
+        description: A list of Automation hubs and galaxies to put in the ansible config
+        elements: dict
+        options:
+          name:
+            required: true
+            type: str
+            description: The name to use to reference the AH repository
+          url:
+            required: true
+            type: str
+            description: The URL for the AH repository
+          auth_url:
+            required: false
+            type: str
+            description: The URL for the authentication to AH server. Most likely to be used to connect to Red Hat Cloud Automation Hub.
+          token:
+            default: "{{ ah_token | default(omit) }}"
+            required: false
+            type: str
+            description: The token to use to authenticate to the AH server
+      ansible_config_list:
+        default:
+          - header: galaxy
+            keypairs:
+              - key: ignore_certs
+                value: "{{ not (ah_validate_certs | default(true) | bool) }}"
+        required: false
+        type: list
+        description: A set of ansible config settings, a default is set, but can be overridden.
+        elements: str
+        options:
+          header:
+            required: true
+            type: str
+            description: The section header for the ansible.cfg file
+          keypairs:
+            required: false
+            default: []
+            type: list
+            description: List key value pairs for settings in the ansible.cfg
+            elements: dict
+            options:
+              key:
+                required: true
+                type: str
+                description: Key for entry under the header
+              value:
+                required: true
+                type: str
+                description: Value for entry for the corresponding key.
+
+      # No_log variables
+      ah_configuration_ansible_config_secure_logging:
+        default: "{{ ah_configuration_secure_logging | default(false) }}"
+        required: false
+        type: bool
+        description: Whether or not to include the sensitive role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
+      ah_configuration_secure_logging:
+        default: false
+        required: false
+        type: bool
+        description: This variable enables secure logging across all roles as a default.
+
+...

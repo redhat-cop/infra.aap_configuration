@@ -7,7 +7,7 @@ gateway_configuration_dispatcher_roles:
     var: authenticator_maps_list
     tags: authenticator_maps
   - role: gateway_settings
-    var: gateway_settings
+    var: settings_list
     tags: settings
   - role: gateway_http_ports
     var: http_ports_list
@@ -34,7 +34,7 @@ gateway_configuration_dispatcher_roles:
     var: routes_list
     tags: routes
   - role: gateway_teams
-    var: platform_teams
+    var: teams_list
     tags: teams
 ah_configuration_dispatcher_roles:
   - role: hub_namespace

@@ -24,17 +24,18 @@
     timeout:                        "{{ __workflow_loop_node_item.timeout | default(omit, true) }}"
     approval_node:                  "{{ __workflow_loop_node_item.approval_node | default(omit, true) }}"
     workflow:                       "{{ __workflow_loop_item.name | mandatory }}"        # Workflow job template name to associate with
-    state:                          "{{ __workflow_loop_node_item.state | default(platform_state | default('present')) }}"
+    state:                          "{{ __workflow_loop_node_item.state | default(controller_state | default('present')) }}"
     all_parents_must_converge:      "{{ __workflow_loop_node_item.all_parents_must_converge | default('false') }}"
     organization:                   "{{ __workflow_loop_item.organization.name | default(__workflow_loop_item.organization) }}"  # Workflow job template organization
 
     # Role Standard Options
-    controller_username:            "{{ platform_username | default(omit, true) }}"
-    controller_password:            "{{ platform_password | default(omit, true) }}"
-    controller_oauthtoken:          "{{ platform_token | default(omit, true) }}"
-    request_timeout:                "{{ platform_request_timeout | default(omit, true) }}"
-    controller_host:                "{{ platform_hostname | default(omit, true) }}"
-    validate_certs:                 "{{ platform_validate_certs | default(omit) }}"
+    controller_username:            "{{ controller_username | default(omit, true) }}"
+    controller_password:            "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:          "{{ controller_oauthtoken | default(omit, true) }}"
+    request_timeout:                "{{ controller_request_timeout | default(omit, true) }}"
+    controller_host:                "{{ controller_hostname | default(omit, true) }}"
+    controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
+    validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
   loop: "{{ __workflow_loop_item.simplified_workflow_nodes }}"
   loop_control:
     loop_var: __workflow_loop_node_item
@@ -46,7 +47,7 @@
   register: __workflows_node_async
   changed_when: not __workflows_node_async.changed
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
 - name: "Flag for errors (check mode only)"
   ansible.builtin.set_fact:
@@ -65,7 +66,7 @@
   when: not ansible_check_mode and __workflows_node_async_results_item.ansible_job_id is defined
   no_log: "{{ workflow_job_templates_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
 # Create links between workflow node
 - name: Create links between Workflow Nodes
@@ -75,14 +76,15 @@
     always_nodes:                   "{{ __workflow_loop_node_item.always_nodes | default(__workflow_loop_node_item.related.always_nodes | default([], true) | selectattr('identifier', 'defined') | map(attribute='identifier')) | list }}"  # Nodes to advance on always (blue links)
     success_nodes:                  "{{ __workflow_loop_node_item.success_nodes | default(__workflow_loop_node_item.related.success_nodes | default([], true) | selectattr('identifier', 'defined') | map(attribute='identifier')) | list }}"  # Nodes to advance on success (green links)
     failure_nodes:                  "{{ __workflow_loop_node_item.failure_nodes | default(__workflow_loop_node_item.related.failure_nodes | default([], true) | selectattr('identifier', 'defined') | map(attribute='identifier')) | list }}"  # Nodes to advance on failure (red links)
-    state:                          "{{ __workflow_loop_node_item.state | default(platform_state | default('present')) }}"
+    state:                          "{{ __workflow_loop_node_item.state | default(controller_state | default('present')) }}"
     organization:                   "{{ __workflow_loop_item.organization.name | default(__workflow_loop_item.organization) }}"  # Workflow job template organization
-    controller_username:         "{{ platform_username | default(omit, true) }}"
-    controller_password:            "{{ platform_password | default(omit, true) }}"
-    controller_oauthtoken:          "{{ platform_token | default(omit, true) }}"
-    request_timeout:                "{{ platform_request_timeout | default(omit, true) }}"
-    controller_host:                "{{ platform_hostname | default(omit, true) }}"
-    validate_certs:                 "{{ platform_validate_certs | default(omit) }}"
+    controller_username:            "{{ controller_username | default(omit, true) }}"
+    controller_password:            "{{ controller_password | default(omit, true) }}"
+    controller_oauthtoken:          "{{ controller_oauthtoken | default(omit, true) }}"
+    request_timeout:                "{{ controller_request_timeout | default(omit, true) }}"
+    controller_host:                "{{ controller_hostname | default(omit, true) }}"
+    controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
+    validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
   loop: "{{ __workflow_loop_item.simplified_workflow_nodes }}"
   loop_control:
     loop_var: __workflow_loop_node_item
@@ -96,7 +98,7 @@
   poll: 0
   register: __workflows_link_async
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 
 - name: "Flag for errors (check mode only)"
   ansible.builtin.set_fact:
@@ -116,5 +118,5 @@
   when: not ansible_check_mode and __workflows_link_async_results_item.ansible_job_id is defined
   no_log: "{{ workflow_job_templates_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ controller_configuration_async_dir }}'
 ...

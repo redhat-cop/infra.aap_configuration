@@ -1,0 +1,10 @@
+---
+controller_organizations:
+  - name: "ExampleOrg"
+    description: "Organization Example"
+    galaxy_credentials:
+      - "Ansible Galaxy"
+      - "{{ orgs }} {{ env }} Automation Hub Community Repository"
+      - "{{ orgs }} {{ env }} Automation Hub Published Repository"
+      - "{{ orgs }} {{ env }} Automation Hub RH Certified Repository"
+...

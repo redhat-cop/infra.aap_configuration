@@ -15,10 +15,10 @@ Variables specific for this role are following:
 | Variable Name                                     |                    Default Value                    | Required | Description                                                                                                                                                    |                                                      |
 |:--------------------------------------------------|:---------------------------------------------------:|:--------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
 | `services_list` (Alias: services)              |             [below](#service-arguments)             |   yes    | Data structure describing your service entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `services_secure_logging`   |  `platform_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `services_enforce_defaults` | `platform_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `services_async_retries`    |    `platform_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                              | [more](../../README.md#asynchronous-retry-variables) |
-| `services_async_delay`      |     `platform_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                              | [more](../../README.md#asynchronous-retry-variables) |
+| `services_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `services_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
+| `services_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                              | [more](../../README.md#asynchronous-retry-variables) |
+| `services_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                              | [more](../../README.md#asynchronous-retry-variables) |
 
 ## Data Structure
 
@@ -32,8 +32,8 @@ Options for the `services_list` variable:
 | `new_name`            |         N/A         |    no    | str  | Setting this option will change the existing name (looked up via the name field)                                                                  |
 | `description`         |         ""          |    no    | str  | Description of the service                                                                                                                        |
 | `api_slug`            |         ""          |    no    | str  | URL slug for the gateway API path for the Controller, Hub and EDA services (gateway API route requires value "gateway", but the slug is not used) |
-| `http_port`           |         N/A         |    no    | str  | ID or name referencing the [Http Port](../gateway_http_ports/README.md)                                                                                   |
-| `service_cluster`     |         N/A         |    no    | str  | ID or name referencing the [Service Cluster](../gateway_service_clusters/README.md)                                                                       |
+| `http_port`           |         N/A         |    no    | str  | ID or name referencing the [Http Port](../http_ports/README.md)                                                                                   |
+| `service_cluster`     |         N/A         |    no    | str  | ID or name referencing the [Service Cluster](../service_clusters/README.md)                                                                       |
 | `is_service_https`    |       `false`       |    no    | bool | Flag whether or not the service cluster uses https                                                                                                |
 | `enable_gateway_auth` | N/A (`true` by API) |    no    | bool | If false, the AAP gateway will not insert a gateway token into the proxied request                                                                |
 | `service_path`        |         ""          |    no    | str  | URL path on the AAP Service cluster to route traffic to                                                                                           |
@@ -112,4 +112,4 @@ ansible-playbook manage_data.yml -e @data/gateway_services.yml
 
 ## License
 
-[GPL-3.0](https://github.com/redhat-cop/aap_configuration#licensing)
+[GPLv3](https://github.com/ansible/aap-gateway/gateway_configuration_collection/COPYING)

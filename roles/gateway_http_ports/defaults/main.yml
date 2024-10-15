@@ -15,8 +15,8 @@ http_ports_list: []
 #  - use_https
 #  - is_api_port
 #  - state
-http_ports_secure_logging: "{{ platform_configuration_secure_logging | default(false) }}"
-http_ports_async_retries: "{{ platform_configuration_async_retries | default(30) }}"
-http_ports_async_delay: "{{ platform_configuration_async_delay | default(1) }}"
-http_ports_enforce_defaults: "{{ platform_configuration_enforce_defaults | default(false) }}"
+http_ports_secure_logging: "{{ gateway_configuration_secure_logging | default(false) }}"
+http_ports_async_retries: "{{ gateway_configuration_async_retries | default(30) }}"
+http_ports_async_delay: "{{ gateway_configuration_async_delay | default(1) }}"
+http_ports_enforce_defaults: "{{ gateway_configuration_enforce_defaults | default(false) }}"
 ...

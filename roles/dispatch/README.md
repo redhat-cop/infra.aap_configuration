@@ -16,7 +16,7 @@ gateway_dispatch_roles:
   - {role: authenticator_maps, var: authenticator_maps_list, tags: authenticator_maps}
   - {role: http_ports, var: http_ports_list, tags: http_ports}
   - {role: organizations, var: organizations_list, tags: organizations}
-  - {role: teams, var: platform_teams, tags: teams}
+  - {role: teams, var: teams_list, tags: teams}
   - {role: service_clusters, var: service_clusters_list, tags: service_clusters}
   - {role: service_keys, var: service_keys_list, tags: service_keys}
   - {role: service_nodes, var: service_nodes_list, tags: service_nodes}
@@ -38,4 +38,4 @@ For more information about roles, see each roles' README (also linked in the top
 
 ## License
 
-[GPL-3.0](https://github.com/redhat-cop/aap_configuration#licensing)
+[GPLv3](https://github.com/ansible/aap-gateway/gateway_configuration_collection/COPYING)
