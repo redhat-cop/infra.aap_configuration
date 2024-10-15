@@ -1,6 +1,0 @@
----
-controller_inventories:
-  - name: "{{ orgs }} Localhost"
-    description: "Inventory for the Localhost"
-    organization: "{{ orgs }}"
-...

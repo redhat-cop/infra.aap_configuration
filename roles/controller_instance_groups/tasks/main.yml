@@ -12,16 +12,15 @@
     max_forks:                      "{{ __controller_instance_group_item.max_forks | default(0, true) if __controller_instance_group_item.max_forks is defined or controller_configuration_instance_groups_enforce_defaults else omit }}"
     pod_spec_override:              "{{ __controller_instance_group_item.pod_spec_override | default(('' if controller_configuration_instance_groups_enforce_defaults else omit), true) }}"
     instances:                      "{{ __controller_instance_group_item.instances | default(([] if controller_configuration_instance_groups_enforce_defaults else omit), true) }}"
-    state:                          "{{ __controller_instance_group_item.state | default(controller_state | default('present')) }}"
+    state:                          "{{ __controller_instance_group_item.state | default(platform_state | default('present')) }}"
 
     # Role Standard Options
-    controller_username:            "{{ controller_username | default(omit, true) }}"
-    controller_password:            "{{ controller_password | default(omit, true) }}"
-    controller_oauthtoken:          "{{ controller_oauthtoken | default(omit, true) }}"
-    request_timeout:                "{{ controller_request_timeout | default(omit, true) }}"
-    controller_host:                "{{ controller_hostname | default(omit, true) }}"
-    controller_config_file:         "{{ controller_config_file | default(omit, true) }}"
-    validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
+    controller_username:            "{{ platform_username | default(omit, true) }}"
+    controller_password:            "{{ platform_password | default(omit, true) }}"
+    controller_oauthtoken:          "{{ platform_token | default(omit, true) }}"
+    request_timeout:                "{{ platform_request_timeout | default(omit, true) }}"
+    controller_host:                "{{ platform_hostname | default(omit, true) }}"
+    validate_certs:                 "{{ platform_validate_certs | default(omit) }}"
   loop: "{{ controller_instance_groups }}"
   loop_control:
     loop_var: __controller_instance_group_item
@@ -34,8 +33,8 @@
   register: __instance_groups_job_async
   changed_when: "(__instance_groups_job_async.changed if ansible_check_mode else false)"
   vars:
-    __operation: "{{ operation_translate[__controller_instance_group_item.state | default(controller_state) | default('present')] }}"
-    ansible_async_dir: '{{ controller_configuration_async_dir }}'
+    __operation: "{{ operation_translate[__controller_instance_group_item.state | default(platform_state) | default('present')] }}"
+    ansible_async_dir: '{{ platform_configuration_async_dir }}'
 
 - name: "Flag for errors (check mode only)"
   ansible.builtin.set_fact:
@@ -56,6 +55,6 @@
   when: not ansible_check_mode and __instance_groups_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_instance_groups_secure_logging }}"
   vars:
-    __operation: "{{ operation_translate[__instance_groups_job_async_results_item.__controller_instance_group_item.state | default(controller_state) | default('present')] }}"
-    ansible_async_dir: '{{ controller_configuration_async_dir }}'
+    __operation: "{{ operation_translate[__instance_groups_job_async_results_item.__controller_instance_group_item.state | default(platform_state) | default('present')] }}"
+    ansible_async_dir: '{{ platform_configuration_async_dir }}'
 ...

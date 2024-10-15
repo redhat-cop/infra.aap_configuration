@@ -24,7 +24,7 @@ jobs:
     with:
       collection_namespace: infra
       collection_name: controller_configuration
-      collection_version: 2.10.0
+      collection_version: 1.0.0
       collection_repo: https://github.com/redhat-cop/aap_configuration/
       collection_dependencies: awx.awx
 ...

@@ -11,11 +11,11 @@
     credential:          "{{ __project_item.credential | default(omit) }}"
     organization_name:   "{{ __project_item.organization | default(omit) }}"
     state:               "{{ __project_item.state | default(eda_state | default('present')) }}"
-    controller_host:     "{{ eda_host | default(eda_hostname) }}"
-    controller_username: "{{ eda_username | default(omit) }}"
-    controller_password: "{{ eda_password | default(omit) }}"
-    validate_certs:      "{{ eda_validate_certs | default(omit) }}"
-    request_timeout:     "{{ eda_request_timeout | default(omit) }}"
+    controller_host:     "{{ platform_hostname}}"
+    eda_username: "{{ platform_username| default(omit) }}"
+    controller_password: "{{ platform_password | default(omit) }}"
+    validate_certs:      "{{ platform_validate_certs| default(omit) }}"
+    request_timeout:     "{{ platform_request_timeout | default(omit) }}"
   loop: "{{ eda_projects }}"
   loop_control:
     loop_var: "__project_item"
@@ -25,7 +25,7 @@
   register: __projects_job_async
   changed_when: not __projects_job_async.changed
   vars:
-    ansible_async_dir: '{{ eda_configuration_async_dir }}'
+    ansible_async_dir: '{{ platform_configuration_async_dir }}'
 
 - name: "Create project | Wait for finish the project creation"
   ansible.builtin.async_status:
@@ -40,5 +40,5 @@
   when: __projects_job_async_result_item.ansible_job_id is defined
   no_log: "{{ eda_configuration_project_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ eda_configuration_async_dir }}'
+    ansible_async_dir: '{{ platform_configuration_async_dir }}'
 ...
