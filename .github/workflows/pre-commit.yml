@@ -26,5 +26,5 @@ jobs:
       collection_name: aap_configuration
       collection_version: 3.0.0-devel
       collection_repo: https://github.com/redhat-cop/aap_configuration/
-      collection_dependencies: awx.awx
+      collection_dependencies: awx.awx ansible.eda ansible.hub
 ...
