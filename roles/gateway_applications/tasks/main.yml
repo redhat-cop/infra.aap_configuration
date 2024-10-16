@@ -17,12 +17,12 @@
     state: "{{ __application_item.state | default(gateway_state | default(omit, true)) }}"
 
     # Role specific options
-    gateway_hostname: "{{ gateway_hostname | default(omit, true) }}"
-    gateway_username: "{{ gateway_username | default(omit, true) }}"
-    gateway_password: "{{ gateway_password | default(omit, true) }}"
-    gateway_token: "{{ gateway_oauthtoken | default(omit, true) }}"
-    gateway_request_timeout: "{{ gateway_request_timeout | default(omit, true) }}"
-    gateway_validate_certs: "{{ gateway_validate_certs | default(omit) }}"
+    gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
+    gateway_username: "{{ aap_username | default(omit, true) }}"
+    gateway_password: "{{ aap_password | default(omit, true) }}"
+    gateway_token: "{{ aap_token | default(omit, true) }}"
+    gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+    gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
   loop: "{{ applications if applications is defined else applications_list }}"
   loop_control:
     loop_var: __application_item
@@ -32,7 +32,7 @@
   register: __gateway_applications_job_async
   changed_when: not __gateway_applications_job_async.changed
   vars:
-    ansible_async_dir: "{{ gateway_configuration_async_dir | default(omit) }}"
+    ansible_async_dir: "{{ aap_configuration_async_dir | default(omit) }}"
 
 - name: Applications | Wait for finish the configuration
   ansible.builtin.async_status:
@@ -47,5 +47,5 @@
   when: __gateway_applications_job_async_results_item.ansible_job_id is defined
   no_log: "{{ applications_secure_logging }}"
   vars:
-    ansible_async_dir: "{{ gateway_configuration_async_dir | default(omit) }}"
+    ansible_async_dir: "{{ aap_configuration_async_dir | default(omit) }}"
 ...

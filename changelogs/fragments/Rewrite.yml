@@ -1,0 +1,9 @@
+---
+breaking_changes:
+  - Major overhaul to all code completed, variables have changed, role names have changed, please see the tranition guide for more details.
+major_changes:
+  - Roles from infra.ah_configuration and infra.eda_configuration have migrated into this collection
+  - Rename of collection to infra.aap_configuration
+  - Introduction of roles for gateway
+bugfixes:
+  - Controller credentials role now includes request timeout option.  

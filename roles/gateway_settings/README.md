@@ -1,6 +1,6 @@
 # Ansible Role infra.platform_configuration.settings
 
-An Ansible role to alter Settings on Ansible Automation gateway settings.
+An Ansible role to alter Settings on Ansible Automation Gateway.
 
 ## Variables
 
@@ -11,10 +11,10 @@ Variables specific for this role are following:
 
 | Variable Name                                   |                   Default Value                    | Required | Description                                                                                                                                                     |                                                      |
 |:------------------------------------------------|:--------------------------------------------------:|:--------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `settings_list` (Alias: `settings`)          |            [below](#settings-arguments)            |   yes    | Data structure describing your setting entries described below.                                                                                                 |        [more](../../README.md#data-variables)        |
-| `settings_secure_logging` | `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive settings role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `settings_async_retries`  |   `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                               | [more](../../README.md#asynchronous-retry-variables) |
-| `settings_async_delay`    |     `gateway_configuration_async_delay` OR `1`     |    no    | This sets the delay between retries for the role.                                                                                                               | [more](../../README.md#asynchronous-retry-variables) |
+| `gateway_settings`          |            [below](#settings-arguments)            |   yes    | Data structure describing your setting entries described below.                                                                                                 |        [more](../../README.md#data-variables)        |
+| `gateway_settings_secure_logging` | `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive settings role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `gateway_settings_async_retries`  |   `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                               | [more](../../README.md#asynchronous-retry-variables) |
+| `gateway_settings_async_delay`    |     `aap_configuration_async_delay` OR `1`     |    no    | This sets the delay between retries for the role.                                                                                                               | [more](../../README.md#asynchronous-retry-variables) |
 
 **Note**: Secure Logging defaults to `True` if both variables are not set
 
@@ -30,7 +30,7 @@ Provide settings as a single dict under `settings_list`.
 
 ```json
 {
-  "settings_list": {
+  "gateway_settings": {
     "gateway_token_name": "X-DAB-JW-TOKEN",
     "gateway_access_token_expiration": 600,
     "gateway_basic_auth_enabled": true,
@@ -52,7 +52,7 @@ File name: `data/gateway_settings.yml`
 
 ```yaml
 ---
-settings_list:
+gateway_settings:
   gateway_token_name: X-DAB-JW-TOKEN
   gateway_access_token_expiration: 600
   gateway_basic_auth_enabled: true
@@ -77,4 +77,4 @@ ansible-playbook manage_data.yml -e @data/gateway_settings.yml
 
 ## License
 
-[GPLv3](https://github.com/ansible/aap-gateway/gateway_configuration_collection/COPYING)
+[GPL-3.0](https://github.com/redhat-cop/aap_configuration#licensing)

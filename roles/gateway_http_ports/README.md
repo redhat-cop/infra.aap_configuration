@@ -13,10 +13,10 @@ Variables specific for this role are following:
 | Variable Name                                       |                    Default Value                    | Required | Description                                                                                                                                                       |                                                      |
 |:----------------------------------------------------|:---------------------------------------------------:|:--------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
 | `http_ports_list` (Alias: `http_ports`)          |            [below](#http-port-arguments)            |   yes    | Data structure describing your http port entries described below.                                                                                                 |        [more](../../README.md#data-variables)        |
-| `http_ports_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive http_ports role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `http_ports_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the http port role.                                                                                       |      [more](../../README.md#enforcing-defaults)      |
-| `http_ports_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                 | [more](../../README.md#asynchronous-retry-variables) |
-| `http_ports_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                 | [more](../../README.md#asynchronous-retry-variables) |
+| `http_ports_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive http_ports role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `http_ports_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the http port role.                                                                                       |      [more](../../README.md#enforcing-defaults)      |
+| `http_ports_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                 | [more](../../README.md#asynchronous-retry-variables) |
+| `http_ports_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                 | [more](../../README.md#asynchronous-retry-variables) |
 
 ## Data Structure
 
@@ -89,4 +89,4 @@ ansible-playbook manage_data.yml -e @data/gateway_http_ports.yml
 
 ## License
 
-[GPLv3](https://github.com/ansible/aap-gateway/gateway_configuration_collection/COPYING)
+[GPL-3.0](https://github.com/redhat-cop/aap_configuration#licensing)

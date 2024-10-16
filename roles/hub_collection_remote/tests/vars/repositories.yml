@@ -4,5 +4,5 @@ ah_collection_remotes:
     url: https://beta-galaxy.ansible.com/
     requirements:
       - name: infra.ee_utilities
-      - name: infra.controller_configuration
+      - name: infra.aap_configuration
 ...

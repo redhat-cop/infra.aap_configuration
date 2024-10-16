@@ -13,13 +13,12 @@
     timeout:                  "{{ __workflow_launch_item.timeout | default(omit, true) }}"
 
     # Role Standard Options
-    controller_username:     "{{ controller_username | default(omit, true) }}"
-    controller_password:     "{{ controller_password | default(omit, true) }}"
-    controller_oauthtoken:   "{{ controller_oauthtoken | default(omit, true) }}"
-    request_timeout:         "{{ controller_request_timeout | default(omit, true) }}"
-    controller_host:         "{{ controller_hostname | default(omit, true) }}"
-    controller_config_file:  "{{ controller_config_file | default(omit, true) }}"
-    validate_certs:     "{{ controller_validate_certs | default(omit) }}"
+    controller_username:     "{{ aap_username | default(omit, true) }}"
+    controller_password:     "{{ aap_password | default(omit, true) }}"
+    controller_oauthtoken:   "{{ aap_token | default(omit, true) }}"
+    request_timeout:         "{{ aap_request_timeout | default(omit, true) }}"
+    controller_host:         "{{ aap_hostname | default(omit, true) }}"
+    validate_certs:     "{{ aap_validate_certs | default(omit) }}"
   loop: "{{ controller_workflow_launch_jobs }}"
   loop_control:
     loop_var: "__workflow_launch_item"

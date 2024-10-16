@@ -1,0 +1,36 @@
+---
+ah_group_roles:
+  - state: present
+    groups:
+      - santa
+      - group1
+    role_list:
+      - roles:
+          - container.containerdistribution_owner
+        targets:
+          execution_environments:
+            - redhat_cop/config_as_code_ee
+      - roles:
+          - galaxy.container_remote
+        targets:
+          container_registery_remotes:
+            - quay
+      - roles:
+          - galaxy.user_admin
+          - galaxy.group_admin
+      - roles:
+          - galaxy.ansible_repository_owner
+        targets:
+          collection_repositories:
+            - validated
+      - roles:
+          - galaxy.collection_remote_owner
+        targets:
+          collection_remotes:
+            - community
+      - roles:
+          - galaxy.collection_namespace_owner
+        targets:
+          collection_namespaces:
+            - autohubtest2
+...

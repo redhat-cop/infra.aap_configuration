@@ -1,5 +1,5 @@
 ============================================
-infra.controller_configuration Release Notes
+infra.aap_configuration Release Notes
 ============================================
 
 .. contents:: Topics
@@ -284,7 +284,7 @@ Minor Changes
 Bugfixes
 --------
 
-- Enable the ability to define simple_workflow_nodes on workflow_job_templates without the need to set the `state` on a workflow_job_template (https://github.com/redhat-cop/aap_configuration/issues/297).
+- Enable the ability to define simple_workflow_nodes on workflow_job_templates without the need to set the `state` on a workflow_job_template (https://github.com/redhat-cop/controller_configuration/issues/297).
 
 v2.2.4
 ======

@@ -4,16 +4,16 @@
   connection: local
   gather_facts: false
   vars:
-    controller_validate_certs: false
-    controller_hostname: controller.example.com
-    controller_username: admin
-    controller_password: changeme
+    aap_validate_certs: false
+    aap_hostname: controller.example.com
+    aap_username: admin
+    aap_password: changeme
 
   collections:
     - awx.awx
 
   pre_tasks:
-    - name: Include vars from controller_configs directory
+    - name: Include vars from platform_configs directory
       ansible.builtin.include_vars:
         dir: ./configs
         extensions: ["yml"]

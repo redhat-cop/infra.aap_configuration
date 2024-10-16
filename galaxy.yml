@@ -18,6 +18,7 @@ build_ignore:
     - release.yml
     - .github
     - '*.tar.gz'
+    - tests/*
 license:
     - GPL-3.0-or-later
 tags:

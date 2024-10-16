@@ -6,7 +6,7 @@
     - alltags
 
 - import_role:
-    name: infra.controller_configuration.users
+    name: infra.aap_configuration.users
   tags:
     - users
     - alltags

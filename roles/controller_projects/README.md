@@ -17,10 +17,10 @@ Currently:
 |Variable Name|Default Value|Required|Type|Description|Example|
 |:---|:---:|:---:|:---|:---|:---|
 |`controller_state`|"present"|no|str|The state all objects will take unless overridden by object default|'absent'|
-|`controller_hostname`|""|yes|str|URL to the Ansible Controller Server.|127.0.0.1|
-|`controller_validate_certs`|`True`|no|str|Whether or not to validate the Ansible Controller Server's SSL certificate.||
-|`controller_username`|""|no|str|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
-|`controller_password`|""|no|str|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
+|`aap_hostname`|""|yes|str|URL to the Ansible Controller Server.|127.0.0.1|
+|`aap_validate_certs`|`True`|no|str|Whether or not to validate the Ansible Controller Server's SSL certificate.||
+|`aap_username`|""|no|str|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
+|`aap_password`|""|no|str|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_oauthtoken`|""|no|str|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_request_timeout`|`10`|no|int|Specify the timeout in seconds Ansible should use in requests to the controller host.||
 |`controller_projects`|`see below`|yes|str|Data structure describing your project or projects Described below. Alias: projects ||
@@ -46,12 +46,12 @@ Enabling this will enforce configurtion without specifying every option in the c
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add projects task does not include sensitive information.
-controller_configuration_projects_secure_logging defaults to the value of controller_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
+controller_configuration_projects_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---|
 |`controller_configuration_projects_secure_logging`|`False`|no|str|Whether or not to include the sensitive Project role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`controller_configuration_secure_logging`|`False`|no|str|This variable enables secure logging as well, but is shared across multiple roles, see above.|
+|`aap_configuration_secure_logging`|`False`|no|str|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
 
@@ -62,13 +62,13 @@ This also speeds up the overall role.
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---|
-|`controller_configuration_async_retries`|30|no|str|This variable sets the number of retries to attempt for the role globally.|
-|`controller_configuration_projects_async_retries`|`{{ controller_configuration_async_retries }}`|no|str|This variable sets the number of retries to attempt for the role.|
-|`controller_configuration_async_delay`|1|no|str|This sets the delay between retries for the role globally.|
-|`controller_configuration_projects_async_delay`|`controller_configuration_async_delay`|no|str|This sets the delay between retries for the role.|
+|`aap_configuration_async_retries`|30|no|str|This variable sets the number of retries to attempt for the role globally.|
+|`controller_configuration_projects_async_retries`|`{{ aap_configuration_async_retries }}`|no|str|This variable sets the number of retries to attempt for the role.|
+|`aap_configuration_async_delay`|1|no|str|This sets the delay between retries for the role globally.|
+|`controller_configuration_projects_async_delay`|`aap_configuration_async_delay`|no|str|This sets the delay between retries for the role.|
 |`controller_configuration_loop_delay`|0|no|int|This sets the pause between each item in the loop for the roles globally. To help when API is getting overloaded.|
 |`controller_configuration_projects_loop_delay`|`controller_configuration_loop_delay`|no|int|This sets the pause between each item in the loop for the role. To help when API is getting overloaded.|
-|`controller_configuration_async_dir`|`null`|no|bool|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
+|`aap_configuration_async_dir`|`null`|no|bool|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
 ## Data Structure
 
@@ -157,18 +157,18 @@ controller_projects:
 - name: Playbook to configure ansible controller post installation
   hosts: localhost
   connection: local
-  # Define following vars here, or in controller_configs/controller_auth.yml
-  # controller_hostname: ansible-controller-web-svc-test-project.example.com
-  # controller_username: admin
-  # controller_password: changeme
+  # Define following vars here, or in platform_configs/controller_auth.yml
+  # aap_hostname: ansible-controller-web-svc-test-project.example.com
+  # aap_username: admin
+  # aap_password: changeme
   pre_tasks:
-    - name: Include vars from controller_configs directory
+    - name: Include vars from platform_configs directory
       ansible.builtin.include_vars:
         dir: ./yaml
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: infra.controller_configuration.projects, when: controller_projects is defined}
+    - {role: infra.aap_configuration.projects, when: controller_projects is defined}
 ```
 
 ## License

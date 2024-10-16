@@ -29,7 +29,7 @@
   gather_facts: false
   collections:
     - ansible.controller
-    - infra.controller_configuration
+    - infra.aap_configuration
 
   vars:
     absent_present: "present"

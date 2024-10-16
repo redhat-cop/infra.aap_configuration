@@ -7,7 +7,7 @@ gateway_configuration_dispatcher_roles:
     var: authenticator_maps_list
     tags: authenticator_maps
   - role: gateway_settings
-    var: settings_list
+    var: gateway_settings
     tags: settings
   - role: gateway_http_ports
     var: http_ports_list
@@ -34,7 +34,7 @@ gateway_configuration_dispatcher_roles:
     var: routes_list
     tags: routes
   - role: gateway_teams
-    var: teams_list
+    var: platform_teams
     tags: teams
 ah_configuration_dispatcher_roles:
   - role: hub_namespace
@@ -163,7 +163,7 @@ eda_configuration_dispatcher_roles:
     var: eda_rulebook_activations
     tags: rulebook_activation
 
-platform_configuration_dispatcher_roles: >
+aap_configuration_dispatcher_roles: >
   {{ gateway_configuration_dispatcher_roles
    + ah_configuration_dispatcher_roles
    + controller_configuration_dispatcher_roles

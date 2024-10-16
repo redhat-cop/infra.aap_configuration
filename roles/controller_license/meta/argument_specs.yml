@@ -65,45 +65,45 @@ argument_specs:
 
       # No_log variables
       controller_configuration_labels_secure_logging:
-        default: "{{ controller_configuration_secure_logging | default(false) }}"
+        default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
         description: Whether or not to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
-      controller_configuration_secure_logging:
+      aap_configuration_secure_logging:
         default: false
         required: false
         type: bool
         description: This variable enables secure logging across all roles as a default.
 
       # Generic across all roles
-      controller_state:
+      platform_state:
         default: present
         required: false
         description: The state all objects will take unless overridden by object default
         type: str
-      controller_hostname:
+      aap_hostname:
         default: None
         required: false
-        description: URL to the Ansible Controller Server.
+        description: URL to the Ansible Automation Platform Server.
         type: str
-      controller_validate_certs:
+      aap_validate_certs:
         default: true
         required: false
-        description: Whether or not to validate the Ansible Controller Server's SSL certificate.
+        description: Whether or not to validate the Ansible Automation Platform Server's SSL certificate.
         type: str
-      controller_username:
+      aap_username:
         default: None
         required: false
-        description: Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.
+        description: Admin User on the Ansible Automation Platform Server. Either username / password or oauthtoken need to be specified.
         type: str
-      controller_password:
+      aap_password:
         default: None
         required: false
-        description: Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
+        description: Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.
         type: str
-      controller_oauthtoken:
+      aap_token:
         default: None
         required: false
-        description: Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
+        description: Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
         type: str
 ...

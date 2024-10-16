@@ -13,10 +13,10 @@ Variables specific for this role are following:
 | Variable Name                                                    |                    Default Value                    | Required | Description                                                                                                                                                                  |                                                      |
 |:-----------------------------------------------------------------|:---------------------------------------------------:|:--------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
 | `role_user_assignments_list` (Alias: `role_user_assignments`) |      [below](#role-user-assignments-arguments)      |   yes    | Data structure describing your organization entries described below.                                                                                                         |        [more](../../README.md#data-variables)        |
-| `role_user_assignments_secure_logging`     |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive role_user_assignments role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `role_user_assignments_enforce_defaults`   | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the role_user_assignments role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `role_user_assignments_async_retries`      |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                            | [more](../../README.md#asynchronous-retry-variables) |
-| `role_user_assignments_async_delay`        |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                            | [more](../../README.md#asynchronous-retry-variables) |
+| `role_user_assignments_secure_logging`     |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive role_user_assignments role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `role_user_assignments_enforce_defaults`   | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the role_user_assignments role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
+| `role_user_assignments_async_retries`      |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                            | [more](../../README.md#asynchronous-retry-variables) |
+| `role_user_assignments_async_delay`        |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                            | [more](../../README.md#asynchronous-retry-variables) |
 
 ## Data Structure
 
@@ -79,4 +79,4 @@ ansible-playbook manage_data.yml -e @data/gateway_role_user_assignments.yml
 
 ## License
 
-[GPLv3](https://github.com/ansible/aap-gateway/gateway_configuration_collection/COPYING)
+[GPL-3.0](https://github.com/redhat-cop/aap_configuration#licensing)

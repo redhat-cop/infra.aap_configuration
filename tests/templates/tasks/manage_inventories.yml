@@ -6,7 +6,7 @@
     - alltags
 
 - import_role:
-    name: infra.controller_configuration.inventories
+    name: infra.aap_configuration.inventories
   tags:
     - inventory
     - alltags

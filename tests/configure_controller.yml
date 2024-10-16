@@ -3,15 +3,15 @@
   hosts: localhost
   connection: local
   vars:
-    controller_validate_certs: false
+    aap_validate_certs: false
     controller_configuration_secure_logging: false
   # Define following vars here, or in configs/controller_auth.yml
-  # controller_hostname: controller.example.com
-  # controller_username: admin
-  # controller_password: changeme
+  # aap_hostname: controller.example.com
+  # aap_username: admin
+  # aap_password: changeme
   collections:
     - awx.awx
-    - infra.controller_configuration
+    - infra.aap_configuration
 
   pre_tasks:
 
@@ -48,9 +48,9 @@
 
     - name: Wait for Controller to come up
       ansible.builtin.uri:
-        url: "https://{{ controller_hostname }}/api/v2/ping/"
+        url: "https://{{ aap_hostname }}/api/v2/ping/"
         status_code: 200
-        validate_certs: "{{ controller_validate_certs }}"
+        validate_certs: "{{ aap_validate_certs }}"
       register: result
       until: result.status == 200
       retries: 10
@@ -59,9 +59,9 @@
 
     - name: Wait for the controller node to be up
       ansible.builtin.uri:
-        url: "https://{{ controller_hostname }}/api/v2/mesh_visualizer/"
-        user: "{{ controller_username }}"
-        password: "{{ controller_password }}"
+        url: "https://{{ aap_hostname }}/api/v2/mesh_visualizer/"
+        user: "{{ aap_username }}"
+        password: "{{ aap_password }}"
         method: GET
         validate_certs: false
         force_basic_auth: true
@@ -182,9 +182,9 @@
         job_id: "{{ launched_controller_workflows.results[0].id }}"
         job_type: workflow_jobs
         timeout: 180
-        controller_username:     "{{ controller_username }}"
-        controller_password:     "{{ controller_password }}"
-        controller_host:         "{{ controller_hostname }}"
-        validate_certs:          "{{ controller_validate_certs }}"
+        aap_username:     "{{ aap_username }}"
+        aap_password:     "{{ aap_password }}"
+        controller_host:         "{{ aap_hostname }}"
+        validate_certs:          "{{ aap_validate_certs }}"
       ignore_errors: true  # noqa ignore-errors
 ...

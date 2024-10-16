@@ -9,10 +9,10 @@ An Ansible Role to configure users on Ansible Automation gateway.
 | Variable Name                                     |                    Default Value                    | Required | Description                                                                                                                                                 |                                                      |
 |:--------------------------------------------------|:---------------------------------------------------:|:--------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
 | `users_list` (Alias: `users`)  |              [below](#user-arguments)               |   yes    | Data structure describing your user entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `users_secure_logging`      |  `gateway_configuration_secure_logging` OR `true`   |    no    | Whether or not to include the sensitive user role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `users_enforce_defaults`    | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the user role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `users_async_retries`       |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                           | [more](../../README.md#asynchronous-retry-variables) |
-| `users_async_delay`         |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                           | [more](../../README.md#asynchronous-retry-variables) |
+| `users_secure_logging`      |  `aap_configuration_secure_logging` OR `true`   |    no    | Whether or not to include the sensitive user role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `users_enforce_defaults`    | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the user role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
+| `users_async_retries`       |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                           | [more](../../README.md#asynchronous-retry-variables) |
+| `users_async_delay`         |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                           | [more](../../README.md#asynchronous-retry-variables) |
 | `users_default_password`                   |                         ""                          |    no    | Global variable to set the password for all users.                                                                                                          |                                                      |
 
 **Note**: Secure Logging defaults to True if both variables are not set
@@ -89,4 +89,4 @@ ansible-playbook manage_data.yml -e @data/gateway_users.yml
 
 ## License
 
-[GPLv3](https://github.com/ansible/aap-gateway/gateway_configuration_collection/COPYING)
+[GPL-3.0](https://github.com/redhat-cop/aap_configuration#licensing)

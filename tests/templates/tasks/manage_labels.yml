@@ -6,7 +6,7 @@
     - alltags
 
 - import_role:
-    name: infra.controller_configuration.labels
+    name: infra.aap_configuration.labels
   tags:
     - labels
     - alltags

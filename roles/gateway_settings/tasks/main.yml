@@ -2,15 +2,15 @@
 # tasks file for gateway_settings
 - name: Update automation platform gateway Settings
   ansible.platform.settings:
-    settings: "{{ settings_list | default(omit, true) }}"
+    settings: "{{ gateway_settings | default(omit, true) }}"
 
     # Role Standard Options
-    gateway_hostname: "{{ gateway_hostname | default(omit, true) }}"
-    gateway_password: "{{ gateway_password | default(omit, true) }}"
-    gateway_username: "{{ gateway_username | default(omit, true) }}"
-    gateway_token: "{{ gateway_oauthtoken | default(omit, true) }}"
-    gateway_request_timeout: "{{ gateway_request_timeout | default(omit, true) }}"
-    gateway_validate_certs: "{{ gateway_validate_certs | default(omit) }}"
-  no_log: "{{ settings_secure_logging }}"
+    gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
+    gateway_password: "{{ aap_password | default(omit, true) }}"
+    gateway_username: "{{ aap_username | default(omit, true) }}"
+    gateway_token: "{{ aap_token | default(omit, true) }}"
+    gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+    gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
+  no_log: "{{ gateway_settings_secure_logging }}"
   register: __gateway_setting_job
 ...

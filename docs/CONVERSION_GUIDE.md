@@ -15,10 +15,10 @@ Otherwise it will look for the modules only in your base installation. If there 
   hosts: localhost
   connection: local
   vars:
-    controller_validate_certs: false
+    aap_validate_certs: false
   collections:
     - awx.awx
-    - infra.controller_configuration
+    - infra.aap_configuration
 ```
 
 ## Variable name changes
@@ -60,12 +60,12 @@ The Following Variables need to be changed:
 
 |Tower Variable Name|Controller Variable Name|
 |:---:|:---:|
-|`tower_username`|`controller_username`|
-|`tower_password`|`controller_password`|
+|`tower_username`|`aap_username`|
+|`tower_password`|`aap_password`|
 |`tower_oauthtoken`|`controller_oauthtoken`|
-|`tower_hostname`|`controller_hostname`|
+|`tower_hostname`|`aap_hostname`|
 |`tower_config_file`|`controller_config_file`|
-|`tower_validate_certs`|`controller_validate_certs`|
+|`tower_validate_certs`|`aap_validate_certs`|
 
 ### Specific Changes in Roles
 

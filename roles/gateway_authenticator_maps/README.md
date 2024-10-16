@@ -13,10 +13,10 @@ Variables specific for this role are following:
 | Variable Name                                               |                    Default Value                    | Required | Description                                                                                                                                                              |                                                      |
 |:------------------------------------------------------------|:---------------------------------------------------:|:--------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
 | `authenticator_maps_list` (Alias: `authenticator_maps`)  |          [below](#organization-arguments)           |   yes    | Data structure describing your authenticator_map entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `authenticator_maps_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive authenticator_map role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `authenticator_maps_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the authenticator_map role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `authenticator_maps_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                        | [more](../../README.md#asynchronous-retry-variables) |
-| `authenticator_maps_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                        | [more](../../README.md#asynchronous-retry-variables) |
+| `authenticator_maps_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive authenticator_map role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `authenticator_maps_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the authenticator_map role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
+| `authenticator_maps_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                        | [more](../../README.md#asynchronous-retry-variables) |
+| `authenticator_maps_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                        | [more](../../README.md#asynchronous-retry-variables) |
 
 ## Data Structure
 
@@ -133,4 +133,4 @@ ansible-playbook manage_data.yml -e @data/gateway_authenticator_maps.yml
 
 ## License
 
-[GPLv3](https://github.com/ansible/aap-gateway/gateway_configuration_collection/COPYING)
+[GPL-3.0](https://github.com/redhat-cop/aap_configuration#licensing)

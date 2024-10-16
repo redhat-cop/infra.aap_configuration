@@ -13,10 +13,10 @@ Variables specific for this role are following:
 | Variable Name                                         |                    Default Value                    | Required | Description                                                                                                                                                        |                                                      |
 |:------------------------------------------------------|:---------------------------------------------------:|:--------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
 | `service_keys_list` (Alias: `service_keys`)        |           [below](#service-key-arguments)           |   yes    | Data structure describing your service_key entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `service_keys_secure_logging`   |  `gateway_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service_key role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `service_keys_enforce_defaults` | `gateway_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service key role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `service_keys_async_retries`    |    `gateway_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                  | [more](../../README.md#asynchronous-retry-variables) |
-| `service_keys_async_delay`      |     `gateway_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                  | [more](../../README.md#asynchronous-retry-variables) |
+| `service_keys_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service_key role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
+| `service_keys_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service key role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
+| `service_keys_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                  | [more](../../README.md#asynchronous-retry-variables) |
+| `service_keys_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                  | [more](../../README.md#asynchronous-retry-variables) |
 
 ## Data Structure
 
@@ -92,4 +92,4 @@ ansible-playbook manage_data.yml -e @data/gateway_service_keys.yml
 
 ## License
 
-[GPLv3](https://github.com/ansible/aap-gateway/gateway_configuration_collection/COPYING)
+[GPL-3.0](https://github.com/redhat-cop/aap_configuration#licensing)

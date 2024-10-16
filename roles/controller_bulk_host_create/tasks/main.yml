@@ -6,13 +6,12 @@
     inventory:                          "{{ __controller_bulk_hosts_item.inventory }}"
 
     # Role Standard options
-    controller_username:                "{{ controller_username | default(omit, true) }}"
-    controller_password:                "{{ controller_password | default(omit, true) }}"
-    controller_oauthtoken:              "{{ controller_oauthtoken | default(omit, true) }}"
-    request_timeout:                    "{{ controller_request_timeout | default(omit, true) }}"
-    controller_host:                    "{{ controller_hostname | default(omit, true) }}"
-    controller_config_file:             "{{ controller_config_file | default(omit, true) }}"
-    validate_certs:                 "{{ controller_validate_certs | default(omit) }}"
+    controller_username:                "{{ aap_username | default(omit, true) }}"
+    controller_password:                "{{ aap_password | default(omit, true) }}"
+    controller_oauthtoken:              "{{ aap_token | default(omit, true) }}"
+    request_timeout:                    "{{ aap_request_timeout | default(omit, true) }}"
+    controller_host:                    "{{ aap_hostname | default(omit, true) }}"
+    validate_certs:                 "{{ aap_validate_certs | default(omit) }}"
   loop: "{{ controller_bulk_hosts }}"
   loop_control:
     loop_var: __controller_bulk_hosts_item
@@ -23,7 +22,7 @@
   register: __controller_bulk_hosts_job_async
   changed_when: "(__controller_bulk_hosts_job_async.changed if ansible_check_mode else false)"
   vars:
-    ansible_async_dir: '{{ controller_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Flag for errors (check mode only)"
   ansible.builtin.set_fact:
@@ -43,5 +42,5 @@
   when: not ansible_check_mode and __controller_bulk_hosts_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_bulk_hosts_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ controller_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 ...
