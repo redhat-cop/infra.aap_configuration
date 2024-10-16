@@ -1,10 +1,10 @@
 ---
 # a list of dictionaries describing the Controller applications
 controller_applications: []
-controller_configuration_applications_secure_logging: "{{ platform_configuration_secure_logging | default('false') }}"
-controller_configuration_applications_async_retries: "{{ platform_configuration_async_retries | default(30) }}"
-controller_configuration_applications_async_delay: "{{ platform_configuration_async_delay | default(1) }}"
+controller_configuration_applications_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
+controller_configuration_applications_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+controller_configuration_applications_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 controller_configuration_applications_loop_delay: "{{ controller_configuration_loop_delay | default(0) }}"
-platform_configuration_async_dir: null
+aap_configuration_async_dir: null
 controller_configuration_applications_enforce_defaults: "{{ controller_configuration_enforce_defaults | default(false) }}"
 ...

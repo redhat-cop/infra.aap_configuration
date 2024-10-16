@@ -163,7 +163,7 @@ eda_configuration_dispatcher_roles:
     var: eda_rulebook_activations
     tags: rulebook_activation
 
-platform_configuration_dispatcher_roles: >
+aap_configuration_dispatcher_roles: >
   {{ gateway_configuration_dispatcher_roles
    + ah_configuration_dispatcher_roles
    + controller_configuration_dispatcher_roles

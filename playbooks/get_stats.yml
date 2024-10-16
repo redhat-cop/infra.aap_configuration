@@ -7,19 +7,19 @@
   gather_facts: true
   vars:
     # Using the Tower env names for backwards compatibility
-    controller_hostname: "{{ lookup('ansible.builtin.env', 'TOWER_HOST') }}"
-    controller_username: "{{ lookup('ansible.builtin.env', 'TOWER_USERNAME') }}"
-    controller_password: "{{ lookup('ansible.builtin.env', 'TOWER_PASSWORD') }}"
-    controller_validate_certs: "{{ lookup('ansible.builtin.env', 'TOWER_VERIFY_SSL') | default(false) }}"
+    aap_hostname: "{{ lookup('ansible.builtin.env', 'TOWER_HOST') }}"
+    aap_username: "{{ lookup('ansible.builtin.env', 'TOWER_USERNAME') }}"
+    aap_password: "{{ lookup('ansible.builtin.env', 'TOWER_PASSWORD') }}"
+    aap_validate_certs: "{{ lookup('ansible.builtin.env', 'TOWER_VERIFY_SSL') | default(false) }}"
 
   tasks:
     - name: Get number of JT
       ansible.builtin.uri:
-        url: "https://{{ controller_hostname }}/api/v2/metrics/?format=json"
+        url: "https://{{ aap_hostname }}/api/v2/metrics/?format=json"
         method: GET
         force_basic_auth: true
-        user: "{{ controller_username }}"
-        password: "{{ controller_password }}"
+        user: "{{ aap_username }}"
+        password: "{{ aap_password }}"
         return_content: true
         headers:
           Content-Type: application/json
@@ -39,11 +39,11 @@
 
     - name: Get users info
       ansible.builtin.uri:
-        url: "https://{{ controller_hostname }}/api/v2/users/?format=json"
+        url: "https://{{ aap_hostname }}/api/v2/users/?format=json"
         method: GET
         force_basic_auth: true
-        user: "{{ controller_username }}"
-        password: "{{ controller_password }}"
+        user: "{{ aap_username }}"
+        password: "{{ aap_password }}"
         return_content: true
         headers:
           Content-Type: application/json
@@ -82,11 +82,11 @@
 
     - name: Get subscription info
       ansible.builtin.uri:
-        url: "https://{{ controller_hostname }}/api/v2/settings/all/?format=json"
+        url: "https://{{ aap_hostname }}/api/v2/settings/all/?format=json"
         method: GET
         force_basic_auth: true
-        user: "{{ controller_username }}"
-        password: "{{ controller_password }}"
+        user: "{{ aap_username }}"
+        password: "{{ aap_password }}"
         return_content: true
         headers:
           Content-Type: application/json

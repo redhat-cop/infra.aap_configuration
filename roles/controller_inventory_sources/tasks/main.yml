@@ -30,12 +30,12 @@
     notification_templates_error:         "{{ (__controller_source_item.related.notification_templates_error | map(attribute='name') | list if __controller_source_item.related.notification_templates_error is defined) | default(__controller_source_item.notification_templates_error) | default(([] if controller_configuration_inventory_sources_enforce_defaults else omit), true) }}"
 
     # Role Standard Options
-    controller_host:                      "{{ platform_hostname | default(omit, true) }}"
-    controller_username:                  "{{ platform_username | default(omit, true) }}"
-    controller_password:                  "{{ platform_password | default(omit, true) }}"
-    controller_oauthtoken:                "{{ platform_token | default(omit, true) }}"
-    request_timeout:                      "{{ platform_request_timeout | default(omit, true) }}"
-    validate_certs:                       "{{ platform_validate_certs | default(omit) }}"
+    controller_host:                      "{{ aap_hostname | default(omit, true) }}"
+    controller_username:                  "{{ aap_username | default(omit, true) }}"
+    controller_password:                  "{{ aap_password | default(omit, true) }}"
+    controller_oauthtoken:                "{{ aap_token | default(omit, true) }}"
+    request_timeout:                      "{{ aap_request_timeout | default(omit, true) }}"
+    validate_certs:                       "{{ aap_validate_certs | default(omit) }}"
   loop: "{{ inventory_sources if inventory_sources is defined else controller_inventory_sources }}"
   loop_control:
     loop_var: __controller_source_item
@@ -49,7 +49,7 @@
   when: (__controller_source_item.source | default(('scm' if controller_configuration_inventory_sources_enforce_defaults else omit), true)) != "constructed"
   vars:
     __operation: "{{ operation_translate[__controller_source_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Flag for errors (check mode only)"
   ansible.builtin.set_fact:
@@ -71,5 +71,5 @@
   no_log: "{{ controller_configuration_inventory_sources_secure_logging }}"
   vars:
     __operation: "{{ operation_translate[__inventory_source_job_async_results_item.__controller_source_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 ...

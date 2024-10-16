@@ -1,12 +1,12 @@
 ---
-- name: "Run the following infra.platform_configuration roles: {{ platform_configuration_dispatcher_roles | map(attribute='role') | join(', ') }}"
+- name: "Run the following infra.platform_configuration roles: {{ aap_configuration_dispatcher_roles | map(attribute='role') | join(', ') }}"
   ansible.builtin.include_role:
     name: "{{ __role.role }}"
     apply:
       tags: "{{ __role.tags }}"
   when: vars[__role.var] is defined
   tags: always
-  loop: "{{ platform_configuration_dispatcher_roles }}"
+  loop: "{{ aap_configuration_dispatcher_roles }}"
   loop_control:
     loop_var: __role
   vars:

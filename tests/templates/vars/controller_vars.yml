@@ -1,6 +1,6 @@
 ---
-controller_hostname: ''
-controller_password: ''
-controller_username: ''
-controller_validate_certs: false
+aap_hostname: ''
+aap_password: ''
+aap_username: ''
+aap_validate_certs: false
 ...

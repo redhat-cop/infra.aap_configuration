@@ -5,7 +5,7 @@
   tasks:
     - name: Include vars from configs directory
       ansible.builtin.include_vars:
-        dir: "{{ controller_configs_dir | default((lookup('env', 'CONTROLLER_CONFIGS_DIR') == '') | ternary('./configs', lookup('env', 'CONTROLLER_CONFIGS_DIR'))) }}"
+        dir: "{{ aap_configs_dir | default((lookup('env', 'AAP_CONFIGS_DIR') == '') | ternary('./configs', lookup('env', 'AAP_CONFIGS_DIR'))) }}"
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
       tags:
@@ -13,5 +13,5 @@
 
     - name: Call dispatch role
       ansible.builtin.include_role:
-        name: infra.controller_configuration.dispatch
+        name: infra.aap_configuration.dispatch
 ...

@@ -1,7 +1,7 @@
 ---
 - name: "Get the API list in the Default Organization of all {{ differential_item.name }}"
   ansible.builtin.set_fact:
-    controller_api_results: "{{ query(controller_api_plugin, differential_item.name, query_params=({'organization': controller_organization_id.id}) if differential_item.name is not match('hosts') else {}, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=false) }}"
+    controller_api_results: "{{ query(controller_api_plugin, differential_item.name, query_params=({'organization': controller_organization_id.id}) if differential_item.name is not match('hosts') else {}, host=aap_hostname, username=aap_username, password=aap_password, verify_ssl=false) }}"
 
 - name: "Find the difference between what is on the Controller versus curated list of {{ differential_item.name }}"
   ansible.builtin.set_fact:

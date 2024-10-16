@@ -10,8 +10,8 @@
 
 # a list of dictionaries describing the authenticator maps
 authenticator_maps_list: []
-authenticator_maps_secure_logging: "{{ platform_configuration_secure_logging | default(false) }}"
-authenticator_maps_async_retries: "{{ platform_configuration_async_retries | default(30) }}"
-authenticator_maps_async_delay: "{{ platform_configuration_async_delay | default(1) }}"
-authenticator_maps_enforce_defaults: "{{ platform_configuration_enforce_defaults | default(false) }}"
+authenticator_maps_secure_logging: "{{ aap_configuration_secure_logging | default(false) }}"
+authenticator_maps_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+authenticator_maps_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
+authenticator_maps_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 ...

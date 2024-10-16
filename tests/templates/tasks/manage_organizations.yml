@@ -3,11 +3,11 @@
   uri:
     force_basic_auth: true
     method: GET
-    password: "{{ controller_password }}"
+    password: "{{ aap_password }}"
     return_content: true
-    url: "https://{{ controller_hostname }}/api/v2/organizations/"
-    user: "{{ controller_username }}"
-    validate_certs: "{{ controller_validate_certs }}"
+    url: "https://{{ aap_hostname }}/api/v2/organizations/"
+    user: "{{ aap_username }}"
+    validate_certs: "{{ aap_validate_certs }}"
   register: existing_organizations
   tags:
     - orgs
@@ -42,7 +42,7 @@
     - alltags
 
 - include_role:
-    name: infra.controller_configuration.organizations
+    name: infra.aap_configuration.organizations
   tags:
     - orgs
     - alltags

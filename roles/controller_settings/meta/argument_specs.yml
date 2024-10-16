@@ -23,22 +23,22 @@ argument_specs:
 
       # Async variables
       controller_configuration_settings_async_retries:
-        default: "{{ platform_configuration_async_retries | default(30) }}"
+        default: "{{ aap_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
-      platform_configuration_async_retries:
+      aap_configuration_async_retries:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
       controller_configuration_settings_async_delay:
-        default: "{{ platform_configuration_async_delay | default(1) }}"
+        default: "{{ aap_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
-      platform_configuration_async_delay:
+      aap_configuration_async_delay:
         default: 1
         required: false
         description: This variable sets delay between retries across all roles as a default.
-      platform_configuration_async_dir:
+      aap_configuration_async_dir:
         default: null
         required: false
         description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.
@@ -46,11 +46,11 @@ argument_specs:
 
       # No_log variables
       controller_configuration_settings_secure_logging:
-        default: "{{ platform_configuration_secure_logging | default(false) }}"
+        default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
         description: Whether or not to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
-      platform_configuration_secure_logging:
+      aap_configuration_secure_logging:
         default: false
         required: false
         type: bool
@@ -62,27 +62,27 @@ argument_specs:
         required: false
         description: The state all objects will take unless overridden by object default
         type: str
-      platform_hostname:
+      aap_hostname:
         default: None
         required: false
         description: URL to the Ansible Automation Platform Server.
         type: str
-      platform_validate_certs:
+      aap_validate_certs:
         default: true
         required: false
         description: Whether or not to validate the Ansible Automation Platform Server's SSL certificate.
         type: str
-      platform_username:
+      aap_username:
         default: None
         required: false
         description: Admin User on the Ansible Automation Platform Server. Either username / password or oauthtoken need to be specified.
         type: str
-      platform_password:
+      aap_password:
         default: None
         required: false
         description: Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.
         type: str
-      platform_token:
+      aap_token:
         default: None
         required: false
         description: Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.

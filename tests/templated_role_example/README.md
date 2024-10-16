@@ -19,10 +19,10 @@ Currently:
 |Variable Name|Default Value|Required|Description|Example|
 |:---|:---:|:---:|:---|:---|
 |`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
-|`controller_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
-|`controller_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
-|`controller_username`|""|no|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
-|`controller_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
+|`aap_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
+|`aap_validate_certs`|`True`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
+|`aap_username`|""|no|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
+|`aap_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_************`|`see below`|yes|Data structure describing your organization or organizations Described below.||
 
@@ -94,9 +94,9 @@ This also speeds up the overall role.
   hosts: localhost
   connection: local
   # Define following vars here, or in controller_configs/controller_auth.yml
-  # controller_hostname: ansible-controller-web-svc-test-project.example.com
-  # controller_username: admin
-  # controller_password: changeme
+  # aap_hostname: ansible-controller-web-svc-test-project.example.com
+  # aap_username: admin
+  # aap_password: changeme
   pre_tasks:
     - name: Include vars from controller_configs directory
       include_vars:

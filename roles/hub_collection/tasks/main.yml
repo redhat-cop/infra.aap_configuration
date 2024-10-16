@@ -3,12 +3,12 @@
 # Test if this is still needed
 # - name: Get token
 #   ansible.hub.ah_token:
-#     ah_host:               "{{ platform_hostname | default(omit) }}"
-#     ah_hostname:          "{{ platform_username | default(omit) }}"
-#     ah_password:           "{{ platform_password | default(omit) }}"
+#     ah_host:               "{{ aap_hostname | default(omit) }}"
+#     ah_username:          "{{ aap_username | default(omit) }}"
+#     ah_password:           "{{ aap_password | default(omit) }}"
 #     ah_path_prefix:        "{{ ah_path_prefix | default(omit) }}"
-#     validate_certs:        "{{ platform_validate_certs | default(omit) }}"
-#     request_timeout:       "{{ platform_request_timeout | default(omit) }}"
+#     validate_certs:        "{{ aap_validate_certs | default(omit) }}"
+#     request_timeout:       "{{ aap_request_timeout | default(omit) }}"
 #   when:
 #     - ah_token is not defined
 #     - lookup("ansible.builtin.env", "AH_API_TOKEN") == ""
@@ -27,13 +27,13 @@
     interval:              "{{ __collection.interval | default(omit) }}"
     overwrite_existing:    "{{ __collection.overwrite_existing | default(omit) }}"
     state:                 "{{ __collection.state | default('present') }}"
-    ah_host:               "{{ platform_hostname | default(omit) }}"
-    ah_hostname:          "{{ platform_username | default(omit) }}"
-    ah_password:           "{{ platform_password | default(omit) }}"
-    ah_token:              "{{ platform_token | default(omit) }}"
+    ah_host:               "{{ aap_hostname | default(omit) }}"
+    ah_username:          "{{ aap_username | default(omit) }}"
+    ah_password:           "{{ aap_password | default(omit) }}"
+    ah_token:              "{{ aap_token | default(omit) }}"
     ah_path_prefix:        "{{ ah_path_prefix | default(omit) }}"
-    validate_certs:        "{{ platform_validate_certs | default(omit) }}"
-    request_timeout:       "{{ platform_request_timeout | default(omit) }}"
+    validate_certs:        "{{ aap_validate_certs | default(omit) }}"
+    request_timeout:       "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ ah_collections }}"
   loop_control:
     loop_var: "__collection"
@@ -43,7 +43,7 @@
   register: __collections_job_async
   changed_when: not __collections_job_async.changed
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: Sleep for 10 seconds and continue with play
   ansible.builtin.wait_for:
@@ -62,5 +62,5 @@
   when: __collections_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_collection_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 ...

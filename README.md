@@ -91,18 +91,18 @@ Otherwise it will look for the modules only in your base installation. If there 
   hosts: localhost
   connection: local
   vars:
-    controller_validate_certs: true
+    aap_validate_certs: true
   collections:
     - awx.awx
 ```
 
-Define following vars here, or in `controller_configs/controller_auth.yml`
-`controller_hostname: ansible-controller-web-svc-test-project.example.com`
+Define following vars here, or in `aap_configs/controller_auth.yml`
+`aap_hostname: ansible-controller-web-svc-test-project.example.com`
 
 You can also specify authentication by a combination of either:
 
-- `controller_hostname`, `controller_username`, `controller_password`
-- `controller_hostname`, `controller_oauthtoken`
+- `aap_hostname`, `aap_username`, `aap_password`
+- `aap_hostname`, `controller_oauthtoken`
 
 The OAuth2 token is the preferred method. You can obtain the token through the preferred `controller_token` module, or through the
 AWX CLI [login](https://docs.ansible.com/automation-controller/latest/html/controllerapi/authentication.html)
@@ -133,9 +133,9 @@ Controller token module would be invoked with this code:
         description: 'Creating token to test controller jobs'
         scope: "write"
         state: present
-        controller_host: "{{ controller_hostname }}"
-        controller_username: "{{ controller_username }}"
-        controller_password: "{{ controller_password }}"
+        controller_host: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
 
 ```
 

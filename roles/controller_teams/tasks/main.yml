@@ -8,12 +8,12 @@
     state:                    "{{ __controller_team_item.state | default(platform_state | default('present')) }}"
 
     # Role Standard Options
-    controller_host:          "{{ platform_hostname | default(omit, true) }}"
-    controller_password:      "{{ platform_password | default(omit, true) }}"
-    controller_username:      "{{ platform_username | default(omit, true) }}"
-    controller_oauthtoken:    "{{ platform_token | default(omit, true) }}"
-    request_timeout:          "{{ platform_request_timeout | default(omit, true) }}"
-    validate_certs:           "{{ platform_validate_certs | default(omit) }}"
+    controller_host:          "{{ aap_hostname | default(omit, true) }}"
+    controller_password:      "{{ aap_password | default(omit, true) }}"
+    controller_username:      "{{ aap_username | default(omit, true) }}"
+    controller_oauthtoken:    "{{ aap_token | default(omit, true) }}"
+    request_timeout:          "{{ aap_request_timeout | default(omit, true) }}"
+    validate_certs:           "{{ aap_validate_certs | default(omit) }}"
   loop: "{{ teams if teams is defined else controller_teams }}"
   loop_control:
     loop_var: __controller_team_item
@@ -26,7 +26,7 @@
   changed_when: "(__controller_team_job_async.changed if ansible_check_mode else false)"
   vars:
     __operation: "{{ operation_translate[__controller_team_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Flag for errors (check mode only)"
   ansible.builtin.set_fact:
@@ -48,5 +48,5 @@
   no_log: "{{ controller_configuration_platform_teams_secure_logging }}"
   vars:
     __operation: "{{ operation_translate[__controller_team_job_asycn_results_item.__controller_team_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 ...

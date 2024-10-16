@@ -17,12 +17,12 @@ Currently:
 |Variable Name|Default Value|Required|Description|Example|
 |:---|:---:|:---:|:---|:---|
 |`platform_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
-|`platform_hostname`|""|yes|URL to the Ansible Automation Platform Server.|127.0.0.1|
-|`platform_validate_certs`|`True`|no|Whether or not to validate the Ansible Automation Platform Server's SSL certificate.||
-|`platform_username`|""|no|Admin User on the Ansible Automation Platform Server. Either username / password or oauthtoken need to be specified.||
-|`platform_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
-|`platform_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
-|`platform_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
+|`aap_hostname`|""|yes|URL to the Ansible Automation Platform Server.|127.0.0.1|
+|`aap_validate_certs`|`True`|no|Whether or not to validate the Ansible Automation Platform Server's SSL certificate.||
+|`aap_username`|""|no|Admin User on the Ansible Automation Platform Server. Either username / password or oauthtoken need to be specified.||
+|`aap_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
+|`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
+|`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
 |`controller_ad_hoc_commands_cancel`|`see below`|yes|Data structure describing your ad hoc jobs to cancel Described below.||
 
 ### Secure Logging Variables
@@ -30,12 +30,12 @@ Currently:
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add ad hoc commands cancel task does not include sensitive information.
-controller_configuration_ad_hoc_command_secure_logging defaults to the value of platform_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
+controller_configuration_ad_hoc_command_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`controller_configuration_ad_hoc_command_cancel_secure_logging`|`False`|no|Whether or not to include the sensitive ad_hoc_command_cancel role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`platform_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
+|`aap_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ## Data Structure
 
@@ -76,9 +76,9 @@ controller_ad_hoc_commands_cancel:
   hosts: localhost
   connection: local
   # Define following vars here, or in platform_configs/controller_auth.yml
-  # controller_hostname: ansible-controller-web-svc-test-project.example.com
-  # platform_username: admin
-  # controller_password: changeme
+  # aap_hostname: ansible-controller-web-svc-test-project.example.com
+  # aap_username: admin
+  # aap_password: changeme
   pre_tasks:
     - name: Include vars from platform_configs directory
       ansible.builtin.include_vars:
@@ -86,7 +86,7 @@ controller_ad_hoc_commands_cancel:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: infra.controller_configuration.ad_hoc_command_cancel, when: controller_ad_hoc_commands is defined}
+    - {role: infra.aap_configuration.ad_hoc_command_cancel, when: controller_ad_hoc_commands is defined}
 ```
 
 ## License

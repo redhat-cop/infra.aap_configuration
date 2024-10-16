@@ -17,12 +17,12 @@ Currently:
 |Variable Name|Default Value|Required|Description|Example|
 |:---|:---:|:---:|:---|:---|
 |`platform_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
-|`platform_hostname`|""|yes|URL to the Ansible Automation Platform Server.|127.0.0.1|
-|`platform_validate_certs`|`True`|no|Whether or not to validate the Ansible Automation Platform Server's SSL certificate.||
-|`platform_username`|""|no|Admin User on the Ansible Automation Platform Server. Either username / password or oauthtoken need to be specified.||
-|`platform_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
-|`platform_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
-|`platform_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
+|`aap_hostname`|""|yes|URL to the Ansible Automation Platform Server.|127.0.0.1|
+|`aap_validate_certs`|`True`|no|Whether or not to validate the Ansible Automation Platform Server's SSL certificate.||
+|`aap_username`|""|no|Admin User on the Ansible Automation Platform Server. Either username / password or oauthtoken need to be specified.||
+|`aap_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
+|`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
+|`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
 |`controller_workflows`|`see below`|yes|Data structure describing your workflow job templates described below. Alias: workflow_job_templates ||
 
 ### Enforcing defaults
@@ -46,12 +46,12 @@ Enabling this will enforce configurtion without specifying every option in the c
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add Workflow Job Templates task does not include sensitive information.
-workflow_job_templates_secure_logging defaults to the value of platform_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of genie roles with a single variable, or for the user to selectively use it.
+workflow_job_templates_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of genie roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`workflow_job_templates_secure_logging`|`False`|no|Whether or not to include the sensitive Workflow Job Templates role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere.|
-|`platform_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
+|`aap_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
 
@@ -62,13 +62,13 @@ This also speeds up the overall role.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`platform_configuration_async_retries`|30|no|This variable sets the number of retries to attempt for the role globally.|
-|`controller_configuration_workflow_async_retries`|`{{ platform_configuration_async_retries }}`|no|This variable sets the number of retries to attempt for the role.|
-|`platform_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
-|`controller_configuration_workflow_async_delay`|`platform_configuration_async_delay`|no|This sets the delay between retries for the role.|
+|`aap_configuration_async_retries`|30|no|This variable sets the number of retries to attempt for the role globally.|
+|`controller_configuration_workflow_async_retries`|`{{ aap_configuration_async_retries }}`|no|This variable sets the number of retries to attempt for the role.|
+|`aap_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
+|`controller_configuration_workflow_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
 |`controller_configuration_loop_delay`|0|no|This sets the pause between each item in the loop for the roles globally. To help when API is getting overloaded.|
 |`controller_configuration_workflow__loop_delay`|`controller_configuration_loop_delay`|no|This sets the pause between each item in the loop for the role. To help when API is getting overloaded.|
-|`platform_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
+|`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
 ## Data Structure
 
@@ -410,9 +410,9 @@ controller_workflows:
   hosts: localhost
   connection: local
   # Define following vars here, or in platform_configs/controller_auth.yml
-  # controller_hostname: ansible-controller-web-svc-test-project.example.com
-  # platform_username: admin
-  # controller_password: changeme
+  # aap_hostname: ansible-controller-web-svc-test-project.example.com
+  # aap_username: admin
+  # aap_password: changeme
   pre_tasks:
     - name: Include vars from platform_configs directory
       ansible.builtin.include_vars:
@@ -420,7 +420,7 @@ controller_workflows:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: infra.controller_configuration.workflow_job_templates, when: controller_workflows is defined}
+    - {role: infra.aap_configuration.workflow_job_templates, when: controller_workflows is defined}
 
 ```
 

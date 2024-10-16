@@ -17,12 +17,12 @@
     health_check_healthy_threshold: "{{ __gateway_service_clusters_item.health_check_healthy_threshold | default(omit) }}"
 
     # Role Standard Options
-    gateway_hostname: "{{ platform_hostname | default(omit, true) }}"
-    gateway_username: "{{ platform_username | default(omit, true) }}"
-    gateway_password: "{{ platform_password | default(omit, true) }}"
-    gateway_token: "{{ platform_token | default(omit, true) }}"
-    gateway_request_timeout: "{{ platform_request_timeout | default(omit, 10) }}"
-    gateway_validate_certs: "{{ platform_validate_certs | default(omit) }}"
+    gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
+    gateway_username: "{{ aap_username | default(omit, true) }}"
+    gateway_password: "{{ aap_password | default(omit, true) }}"
+    gateway_token: "{{ aap_token | default(omit, true) }}"
+    gateway_request_timeout: "{{ aap_request_timeout | default(omit, 10) }}"
+    gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
   loop: "{{ service_clusters if service_clusters is defined else service_clusters_list }}"
   loop_control:
     loop_var: __gateway_service_clusters_item
@@ -32,7 +32,7 @@
   register: __gateway_service_clusters_job_async
   changed_when: not __gateway_service_clusters_job_async.changed
   vars:
-    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
+    ansible_async_dir: "{{ aap_configuration_async_dir | default(omit) }}"
 
 - name: Service Clusters | Wait for finish the configuration
   ansible.builtin.async_status:
@@ -47,5 +47,5 @@
   when: __gateway_service_clusters_job_async_results_item.ansible_job_id is defined
   no_log: "{{ service_clusters_secure_logging }}"
   vars:
-    ansible_async_dir: "{{ platform_configuration_async_dir | default(omit) }}"
+    ansible_async_dir: "{{ aap_configuration_async_dir | default(omit) }}"
 ...

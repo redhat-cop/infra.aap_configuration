@@ -14,12 +14,12 @@
     interval:                 "{{ __collection_repository_item.interval | default(1) }}"
     timeout:                  "{{ __collection_repository_item.timeout | default(omit) }}"
     state:                    "{{ __collection_repository_item.state | default(ah_state | default('present')) }}"
-    ah_host:                  "{{ platform_hostname | default(omit) }}"
-    ah_hostname:             "{{ platform_username | default(omit) }}"
-    ah_password:              "{{ platform_password | default(omit) }}"
+    ah_host:                  "{{ aap_hostname | default(omit) }}"
+    ah_username:             "{{ aap_username | default(omit) }}"
+    ah_password:              "{{ aap_password | default(omit) }}"
     ah_path_prefix:           "{{ ah_path_prefix | default(omit) }}"
-    validate_certs:           "{{ platform_validate_certs | default(omit) }}"
-    request_timeout:          "{{ platform_request_timeout | default(omit) }}"
+    validate_certs:           "{{ aap_validate_certs | default(omit) }}"
+    request_timeout:          "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ ah_collection_repositories }}"
   loop_control:
     loop_var: "__collection_repository_item"
@@ -29,7 +29,7 @@
   register: __collection_repository_job_async
   changed_when: not __collection_repository_job_async.changed
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Create Repository | Wait for finish the repository creation"
   ansible.builtin.async_status:
@@ -44,6 +44,6 @@
   when: __collection_repository_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_collection_repository_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 ...

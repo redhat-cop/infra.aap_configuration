@@ -10,8 +10,8 @@
 
 # a list of dictionaries describing the service nodes
 routes_list: []
-routes_secure_logging: "{{ platform_configuration_secure_logging | default(false) }}"
-routes_async_retries: "{{ platform_configuration_async_retries | default(30) }}"
-routes_async_delay: "{{ platform_configuration_async_delay | default(1) }}"
-routes_enforce_defaults: "{{ platform_configuration_enforce_defaults | default(false) }}"
+routes_secure_logging: "{{ aap_configuration_secure_logging | default(false) }}"
+routes_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+routes_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
+routes_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 ...

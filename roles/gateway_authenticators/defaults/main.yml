@@ -10,8 +10,8 @@
 
 # a list of dictionaries describing the authenticators
 authenticators_list: []
-authenticators_secure_logging: "{{ platform_configuration_secure_logging | default(false) }}"
-authenticators_async_retries: "{{ platform_configuration_async_retries | default(30) }}"
-authenticators_async_delay: "{{ platform_configuration_async_delay | default(1) }}"
-authenticators_enforce_defaults: "{{ platform_configuration_enforce_defaults | default(false) }}"
+authenticators_secure_logging: "{{ aap_configuration_secure_logging | default(false) }}"
+authenticators_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+authenticators_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
+authenticators_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 ...

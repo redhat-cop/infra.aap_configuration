@@ -1,7 +1,7 @@
 ---
 # list of dicts (or a single dict) describing the gateway settings
 gateway_settings: {}
-gateway_settings_secure_logging: "{{ platform_configuration_secure_logging | default('false') }}"
-gateway_settings_async_retries: "{{ platform_configuration_async_retries | default(30) }}"
-gateway_settings_async_delay: "{{ platform_configuration_async_delay | default(1) }}"
+gateway_settings_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
+gateway_settings_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+gateway_settings_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 ...

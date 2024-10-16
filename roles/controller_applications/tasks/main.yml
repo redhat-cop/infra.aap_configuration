@@ -13,12 +13,12 @@
     state:                          "{{ __application_item.state | default(platform_state | default('present')) }}"
 
     # Role specific options
-    controller_username:            "{{ platform_username | default(omit, true) }}"
-    controller_password:            "{{ platform_password | default(omit, true) }}"
-    controller_oauthtoken:          "{{ platform_token | default(omit, true) }}"
-    request_timeout:                "{{ platform_request_timeout | default(omit, true) }}"
-    controller_host:                "{{ platform_hostname | default(omit, true) }}"
-    validate_certs:                 "{{ platform_validate_certs | default(omit) }}"
+    controller_username:            "{{ aap_username | default(omit, true) }}"
+    controller_password:            "{{ aap_password | default(omit, true) }}"
+    controller_oauthtoken:          "{{ aap_token | default(omit, true) }}"
+    request_timeout:                "{{ aap_request_timeout | default(omit, true) }}"
+    controller_host:                "{{ aap_hostname | default(omit, true) }}"
+    validate_certs:                 "{{ aap_validate_certs | default(omit) }}"
   loop: "{{ applications if applications is defined else controller_applications }}"
   loop_control:
     loop_var: "__application_item"
@@ -31,7 +31,7 @@
   changed_when: "(__applications_job_async.changed if ansible_check_mode else false)"
   vars:
     __operation: "{{ operation_translate[__application_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Flag for errors (check mode only)"
   ansible.builtin.set_fact:
@@ -53,5 +53,5 @@
   no_log: "{{ controller_configuration_applications_secure_logging }}"
   vars:
     __operation: "{{ operation_translate[__applications_job_async_results_item.__application_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 ...

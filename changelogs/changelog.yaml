@@ -384,7 +384,7 @@ releases:
   2.2.4:
     changes:
       breaking_changes:
-      - infra.controller_configuration 2.2.3 is broken, it is aap_utilities release.
+      - infra.aap_configuration 2.2.3 is broken, it is aap_utilities release.
         We are bumping the version to minimize the issues.
       - rewrote playbooks/controller_configure.yml and removed all other playbooks
       minor_changes:
@@ -412,7 +412,7 @@ releases:
       - Add or fix some variables or extra_vars exported from objects like notifications,
         inventory, inventory_source, hosts, groups, jt or wjt.
       - Add roles object to object_diff role and controller_object_diff lookup plugin.
-      - Fix one query with controller_password to change it and set oauth_token=controller_oauthtoken.
+      - Fix one query with aap_password to change it and set oauth_token=controller_oauthtoken.
       - Fixed typos in README.md.
       - Improve template to export settings with filetree_create role. Settings will
         be in yaml format.

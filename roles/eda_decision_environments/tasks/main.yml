@@ -10,11 +10,11 @@
     credential:          "{{ __de_item.credential | default(omit) }}"
     organization_name:   "{{ __de_item.organization | default(omit) }}"
     state:               "{{ __de_item.state | default(eda_state | default('present')) }}"
-    controller_host:     "{{ platform_hostname}}"
-    eda_username: "{{ platform_username| default(omit) }}"
-    controller_password: "{{ platform_password | default(omit) }}"
-    validate_certs:      "{{ platform_validate_certs| default(omit) }}"
-    request_timeout:     "{{ platform_request_timeout | default(omit) }}"
+    controller_host:     "{{ aap_hostname}}"
+    eda_username: "{{ aap_username| default(omit) }}"
+    aap_password: "{{ aap_password | default(omit) }}"
+    validate_certs:      "{{ aap_validate_certs| default(omit) }}"
+    request_timeout:     "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ eda_decision_environments }}"
   loop_control:
     loop_var: "__de_item"
@@ -24,7 +24,7 @@
   register: __decision_environments_job_async
   changed_when: not __decision_environments_job_async.changed
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Create decision_environment | Wait for finish the decision_environment creation"
   ansible.builtin.async_status:
@@ -39,5 +39,5 @@
   when: __decision_environments_job_async_result_item.ansible_job_id is defined
   no_log: "{{ eda_configuration_decision_environment_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 ...

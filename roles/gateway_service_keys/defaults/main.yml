@@ -10,8 +10,8 @@
 
 # a list of dictionaries describing the service keys
 service_keys_list: []
-service_keys_secure_logging: "{{ platform_configuration_secure_logging | default(false) }}"
-service_keys_async_retries: "{{ platform_configuration_async_retries | default(30) }}"
-service_keys_async_delay: "{{ platform_configuration_async_delay | default(1) }}"
-service_keys_enforce_defaults: "{{ platform_configuration_enforce_defaults | default(false) }}"
+service_keys_secure_logging: "{{ aap_configuration_secure_logging | default(false) }}"
+service_keys_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+service_keys_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
+service_keys_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 ...

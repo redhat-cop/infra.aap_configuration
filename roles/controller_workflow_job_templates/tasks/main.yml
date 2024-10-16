@@ -34,12 +34,12 @@
     notification_templates_approvals:   "{{ (__workflow_loop_item.related.notification_templates_approvals | map(attribute='name') | list if __workflow_loop_item.related.notification_templates_approvals is defined) | default(__workflow_loop_item.notification_templates_approvals) | default(([] if controller_configuration_workflows_enforce_defaults else omit), true) }}"
 
     # Role Standard Options
-    controller_username:                "{{ platform_username | default(omit, true) }}"
-    controller_password:                "{{ platform_password | default(omit, true) }}"
-    controller_oauthtoken:              "{{ platform_token | default(omit, true) }}"
-    request_timeout:                    "{{ platform_request_timeout | default(omit, true) }}"
-    controller_host:                    "{{ platform_hostname | default(omit, true) }}"
-    validate_certs:                     "{{ platform_validate_certs | default(omit) }}"
+    controller_username:                "{{ aap_username | default(omit, true) }}"
+    controller_password:                "{{ aap_password | default(omit, true) }}"
+    controller_oauthtoken:              "{{ aap_token | default(omit, true) }}"
+    request_timeout:                    "{{ aap_request_timeout | default(omit, true) }}"
+    controller_host:                    "{{ aap_hostname | default(omit, true) }}"
+    validate_certs:                     "{{ aap_validate_certs | default(omit) }}"
   loop: "{{ workflow_job_templates if workflow_job_templates is defined else controller_workflows }}"
   loop_control:
     loop_var: __workflow_loop_item
@@ -51,7 +51,7 @@
   changed_when: "(__workflows_job_async.changed if ansible_check_mode else false)"
   vars:
     __operation: "{{ operation_translate[__workflow_loop_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Flag for errors (check mode only)"
   ansible.builtin.set_fact:
@@ -73,7 +73,7 @@
   no_log: "{{ workflow_job_templates_secure_logging }}"
   vars:
     __operation: "{{ operation_translate[__workflows_job_async_results_item.__workflow_loop_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 # Create links between workflow node
 - name: Loop over nodes in schema to add to workflow templates

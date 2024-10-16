@@ -6,7 +6,7 @@
     - alltags
 
 - import_role:
-    name: infra.controller_configuration.projects
+    name: infra.aap_configuration.projects
   tags:
     - projects
     - alltags

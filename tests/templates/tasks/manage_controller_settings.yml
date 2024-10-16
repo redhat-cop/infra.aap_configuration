@@ -6,7 +6,7 @@
     - alltags
 
 - import_role:
-    name: infra.controller_configuration.settings
+    name: infra.aap_configuration.settings
   tags:
     - settings
     - alltags
@@ -18,7 +18,7 @@
     - alltags
 
 - import_role:
-    name: infra.controller_configuration.settings
+    name: infra.aap_configuration.settings
   tags:
     - settings
     - alltags

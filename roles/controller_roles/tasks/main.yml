@@ -25,12 +25,12 @@
     state:                          "{{ __controller_role_item.0.state | default(__controller_role_item.state) | default(platform_state | default('present')) }}"
 
     # Role Standard Options
-    controller_username:            "{{ platform_username | default(omit, true) }}"
-    controller_password:            "{{ platform_password | default(omit, true) }}"
-    controller_oauthtoken:          "{{ platform_token | default(omit, true) }}"
-    request_timeout:                "{{ platform_request_timeout | default(omit, true) }}"
-    controller_host:                "{{ platform_hostname | default(omit, true) }}"
-    validate_certs:                 "{{ platform_validate_certs | default(omit) }}"
+    controller_username:            "{{ aap_username | default(omit, true) }}"
+    controller_password:            "{{ aap_password | default(omit, true) }}"
+    controller_oauthtoken:          "{{ aap_token | default(omit, true) }}"
+    request_timeout:                "{{ aap_request_timeout | default(omit, true) }}"
+    controller_host:                "{{ aap_hostname | default(omit, true) }}"
+    validate_certs:                 "{{ aap_validate_certs | default(omit) }}"
   loop: "{{ (controller_roles | subelements(['roles'], skip_missing=true)) + controller_roles | selectattr('roles', 'undefined') }}"
   loop_control:
     loop_var: __controller_role_item
@@ -43,7 +43,7 @@
   changed_when: "(__controller_role_job_async.changed if ansible_check_mode else false)"
   vars:
     __operation: "{{ operation_translate[__controller_role_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Flag for errors (check mode only)"
   ansible.builtin.set_fact:
@@ -65,5 +65,5 @@
   no_log: "{{ controller_configuration_role_secure_logging }}"
   vars:
     __operation: "{{ operation_translate[__controller_role_job_async_results_item.__controller_role_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 ...

@@ -1,8 +1,8 @@
 ---
 eda_credentials: []
 
-eda_configuration_credential_secure_logging: "{{ platform_configuration_secure_logging | default(true) }}"
-eda_configuration_credential_async_retries: "{{ platform_configuration_async_retries | default(50) }}"
-eda_configuration_credential_async_delay: "{{ platform_configuration_async_delay| default(1) }}"
-platform_configuration_async_dir: null
+eda_configuration_credential_secure_logging: "{{ aap_configuration_secure_logging | default(true) }}"
+eda_configuration_credential_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
+eda_configuration_credential_async_delay: "{{ aap_configuration_async_delay| default(1) }}"
+aap_configuration_async_dir: null
 ...

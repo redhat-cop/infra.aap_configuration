@@ -19,11 +19,11 @@
     event_streams:        "{{ __ra_item.event_streams | default(omit) }}"
     log_level:            "{{ __ra_item.log_level | default(omit) }}"
     state:                "{{ __ra_item.state | default(eda_state | default('present')) }}"
-    controller_host:      "{{ platform_hostname}}"
+    controller_host:      "{{ aap_hostname}}"
     eda_username:  "{{ eda_username | default(omit) }}"
-    controller_password:  "{{ platform_password | default(omit) }}"
-    validate_certs:       "{{ platform_validate_certs| default(omit) }}"
-    request_timeout:      "{{ platform_request_timeout | default(omit) }}"
+    aap_password:  "{{ aap_password | default(omit) }}"
+    validate_certs:       "{{ aap_validate_certs| default(omit) }}"
+    request_timeout:      "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ eda_rulebook_activations }}"
   loop_control:
     loop_var: "__ra_item"
@@ -33,7 +33,7 @@
   register: __rulebook_activations_job_async
   changed_when: not __rulebook_activations_job_async.changed
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Create rulebook_activation | Wait for finish the rulebook_activation creation"
   ansible.builtin.async_status:
@@ -48,5 +48,5 @@
   when: __rulebook_activations_job_async_result_item.ansible_job_id is defined
   no_log: "{{ eda_configuration_rulebook_activation_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ platform_configuration_async_dir }}'
+    ansible_async_dir: '{{ aap_configuration_async_dir }}'
 ...

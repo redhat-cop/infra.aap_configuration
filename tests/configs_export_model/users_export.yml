@@ -6,7 +6,7 @@ users:
     email: joe@example.org
     is_superuser: false
     is_system_auditor: false
-    password: controller_password
+    password: aap_password
     related:
       roles:
         - name: Execute
@@ -26,7 +26,7 @@ users:
     email: joe@example.org
     is_superuser: false
     is_system_auditor: false
-    password: controller_password
+    password: aap_password
     related:
       roles: []
     natural_key:
