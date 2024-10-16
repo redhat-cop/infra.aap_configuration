@@ -273,7 +273,7 @@ Minor Changes
 - Add no_log everywhere controller_api_plugin is used to avoid to expose sensitive information in case of crashes.
 - Add or fix some variables or extra_vars exported from objects like notifications, inventory, inventory_source, hosts, groups, jt or wjt.
 - Add roles object to object_diff role and controller_object_diff lookup plugin.
-- Fix one query with aap_password to change it and set oauth_token=controller_oauthtoken.
+- Fix one query with controller_password to change it and set oauth_token=controller_oauthtoken.
 - Fixed typos in README.md.
 - Improve template to export settings with filetree_create role. Settings will be in yaml format.
 - Renamed the field `update` to `update_project` to avoid colliding with the Python dict update method
@@ -284,7 +284,7 @@ Minor Changes
 Bugfixes
 --------
 
-- Enable the ability to define simple_workflow_nodes on workflow_job_templates without the need to set the `state` on a workflow_job_template (https://github.com/redhat-cop/aap_configuration/issues/297).
+- Enable the ability to define simple_workflow_nodes on workflow_job_templates without the need to set the `state` on a workflow_job_template (https://github.com/redhat-cop/controller_configuration/issues/297).
 
 v2.2.4
 ======
@@ -298,7 +298,7 @@ Minor Changes
 Breaking Changes / Porting Guide
 --------------------------------
 
-- infra.aap_configuration 2.2.3 is broken, it is aap_utilities release. We are bumping the version to minimize the issues.
+- infra.controller_configuration 2.2.3 is broken, it is aap_utilities release. We are bumping the version to minimize the issues.
 - rewrote playbooks/controller_configure.yml and removed all other playbooks
 
 Removed Features (previously deprecated)
