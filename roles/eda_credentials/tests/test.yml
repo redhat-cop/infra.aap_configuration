@@ -16,5 +16,5 @@
       tags:
         - always
   roles:
-    - ../../credential
+    - ../../eda_credentials
 ...

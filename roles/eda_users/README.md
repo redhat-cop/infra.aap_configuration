@@ -101,7 +101,7 @@ eda_users:
       tags:
         - always
   roles:
-    - ../../user
+    - ../../eda_users
 ```
 
 ## License

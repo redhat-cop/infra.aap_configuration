@@ -18,6 +18,7 @@ An Ansible Role to update, or destroy Automation Hub Collections.
 |`ah_collections`|`see below`|yes|Data structure describing your collections, described below.||
 
 These are the sub options for the vars `ah_collections` which are dictionaries with the options you want. See examples for details.
+
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
 |`namespace`|""|yes|Namespace name. Must be lower case containing only alphanumeric characters and underscores.|"awx"|

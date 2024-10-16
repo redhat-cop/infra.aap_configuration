@@ -89,7 +89,7 @@ eda_controller_tokens:
       tags:
         - always
   roles:
-    - infra.eda_configuration.controller_token
+    - infra.eda_configuration.controller_tokens
 ```
 
 ## License

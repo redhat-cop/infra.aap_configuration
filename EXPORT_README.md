@@ -2,7 +2,7 @@
 
 ## Description
 
-This is documentation on how to use a the Automation Controller export commands in development. You can also look at the [filetree_create](roles/filetree_create/README.md) role as another method to export data.
+This is documentation on how to use a the Automation Controller export commands in development. You can also look at the [filetree_create](https://github.com/redhat-cop/aap_configuration_extended/blob/devel/roles/filetree_create/README.md) role as another method to export data.
 
 This command allows exporting all available endpoints for Automation Controller for use in importing, templates, backups and many other uses.
 

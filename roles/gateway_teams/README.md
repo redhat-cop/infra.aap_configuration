@@ -12,11 +12,11 @@ Variables specific for this role are following:
 
 | Variable Name                                  |                    Default Value                    | Required | Description                                                                                                                                                 |                                                      |
 |:-----------------------------------------------|:---------------------------------------------------:|:--------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `platform_teams` (Alias: `teams`)               |          [below](#organization-arguments)           |   yes    | Data structure describing your team entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `platform_teams_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive team role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `platform_teams_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the team role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `platform_teams_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                           | [more](../../README.md#asynchronous-retry-variables) |
-| `platform_teams_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                           | [more](../../README.md#asynchronous-retry-variables) |
+| `platform_teams` (Alias: `teams`)               |          [below](#Team Arguments)           |   yes    | Data structure describing your team entries described below.                                                                                                |                |
+| `platform_teams_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive team role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |      |
+| `platform_teams_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the team role.                                                                                      |      README.md#enforcing-defaults)      |
+| `platform_teams_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                           |  |
+| `platform_teams_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                           |  |
 
 ## Data Structure
 
@@ -29,11 +29,11 @@ Options for the `teams` variable:
 | `name`             |      N/A      |   yes    | str  | The name of the resource                                                          |
 | `new_name`         |      N/A      |    no    | str  | Setting this option will change the existing name (looked up via the name field)  |
 | `description`      |      N/A      |    no    | str  | Description of the organization                                                   |
-| `organization`     |      N/A      |   yes    | str  | The name or ID referencing the [Organization](../organizations/README.md)         |
+| `organization`     |      N/A      |   yes    | str  | The name or ID referencing the [Organization](../gateway_organizations/README.md) |
 | `new_organization` |      N/A      |    no    | str  | The name or ID referencing newly associated organization                          |
 | `state`            |   `present`   |    no    | str  | Desired state of the resource.                                                    |
 
-** Unique value: **
+### Unique value
 
 - [`name`, `organization`]
 

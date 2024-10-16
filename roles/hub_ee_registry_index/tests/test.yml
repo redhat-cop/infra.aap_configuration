@@ -16,5 +16,5 @@
       tags:
         - always
   roles:
-    - ../../ee_registry_index
+    - ../../hub_ee_registry_index
 ...

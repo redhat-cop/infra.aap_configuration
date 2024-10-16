@@ -16,5 +16,5 @@
       tags:
         - always
   roles:
-    - ../../group_roles
+    - ../../hub_group_roles
 ...

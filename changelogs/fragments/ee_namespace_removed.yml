@@ -1,0 +1,2 @@
+removed_features:
+  - ee_namespace role has been removed, this was removed in AAP 2.4, and was depreciated then.
