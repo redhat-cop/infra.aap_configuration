@@ -108,7 +108,7 @@ eda_rulebook_activations:
       tags:
         - always
   roles:
-    - ../../rulebook_activation
+    - ../../eda_rulebook_activations
 ```
 
 ## License

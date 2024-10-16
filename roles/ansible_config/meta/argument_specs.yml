@@ -13,7 +13,7 @@ argument_specs:
         type: str
         description: API path used to access the api for the Automation Hub server.
       ansible_config_mode:
-        default: 0644
+        default: "0644"
         required: false
         type: str
         description: Mode for the created ansible.cfg file to take

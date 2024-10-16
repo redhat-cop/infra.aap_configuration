@@ -16,5 +16,5 @@
       tags:
         - always
   roles:
-    - ../../project
+    - ../../eda_projects
 ...

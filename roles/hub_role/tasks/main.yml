@@ -2,7 +2,7 @@
 
 # Create AH Role
 - name: Add Automation Hub role
-  ah_role:
+  ansible.hub.ah_role:
     name:             "{{ __role.name }}"
     description:      "{{ __role.description | default(omit) }}"
     perms:            "{{ __role.perms | default(omit) }}"

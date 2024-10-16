@@ -16,5 +16,5 @@
       tags:
         - always
   roles:
-    - ../../publish
+    - ../../hub_publish
 ...

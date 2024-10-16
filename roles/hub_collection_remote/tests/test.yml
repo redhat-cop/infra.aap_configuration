@@ -16,5 +16,5 @@
       tags:
         - always
   roles:
-    - ../../collection_remote
+    - ../../hub_collection_remote
 ...

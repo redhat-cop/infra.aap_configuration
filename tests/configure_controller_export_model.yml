@@ -60,72 +60,16 @@
 
 
   roles:
-    - {role: organizations, when: organizations is defined, tags: organizations}
-    - {role: users, when: users is defined, tags: users}
-    - {role: teams, when: teams is defined, tags: teams}
-    - {role: credential_types, when: credential_types is defined, tags: credential_types}
-    - {role: credentials, when: credentials is defined, tags: credentials}
-    - {role: inventories, when: inventory is defined, tags: inventories}
-    - {role: inventory_sources, when: inventory_sources is defined, tags: inventory_sources}
-    - {role: projects, when: projects is defined, tags: projects}
-    - {role: project_update, when: projects is defined, tags: projects}
-    - {role: job_templates, when: job_templates is defined, tags: job_templates}
-    - {role: workflow_job_templates, when: workflow_job_templates is defined, tags: workflow_job_templates}
-    - {role: notification_templates, when: notification_templates is defined, tags: notification_templates}
-
-  tasks:
-    # Need to install inside the venv for collection testing.
-    - name: Install awxkit python package
-      ansible.builtin.pip:
-        name: awxkit
-        version: 22.3.0
-
-    - name: Export workflow job template
-      infra.aap_configuration.controller_export_diff:
-        all: true
-        compare_items:
-          organizations: "{{ organizations }}"
-          projects: "{{ projects }}"
-          credential_types: "{{ credential_types }}"
-          credentials: "{{ credentials }}"
-          inventory: "{{ inventory }}"
-          inventory_sources: "{{ inventory_sources }}"
-          notification_templates: "{{ notification_templates }}"
-          teams: "{{ teams }}"
-          users: "{{ users }}"
-          job_templates: "{{ job_templates }}"
-        with_present: false
-        controller_host: "{{ aap_hostname }}"
-        aap_username: "{{ aap_username }}"
-        aap_password: "{{ aap_password }}"
-        validate_certs: "{{ aap_validate_certs }}"
-      register: export_results
-
-    - name: Determine if AWX>=25.0.0
-      ansible.builtin.set_fact:
-        __is_gte_awx25: "{{ awx_version == 'devel' or awx_version is version('25.0.0', '>=') }}"
-
-    - name: Export output
-      ansible.builtin.debug:
-        var: export_results.difference
-
-    - name: Differential_expected output
-      ansible.builtin.debug:
-        var: differential_expected
-      when: not __is_gte_awx25
-
-    - name: Differential_expected output
-      ansible.builtin.debug:
-        var: differential_expected_gte_awx25
-      when: __is_gte_awx25
-
-    - name: "Assert that the expected results match for {{ differential_item.name }}"
-      ansible.builtin.assert:
-        that: export_results.difference == differential_expected
-      when: not __is_gte_awx25
-
-    - name: "Assert that the expected results match for {{ differential_item.name }}"
-      ansible.builtin.assert:
-        that: export_results.difference == differential_expected_gte_awx25
-      when: __is_gte_awx25
+    - {role: gateway_organizations, when: organizations is defined, tags: organizations}
+    - {role: gateway_users, when: users is defined, tags: users}
+    - {role: gateway_teams, when: teams is defined, tags: teams}
+    - {role: controller_credential_types, when: credential_types is defined, tags: credential_types}
+    - {role: controller_credentials, when: credentials is defined, tags: credentials}
+    - {role: controller_inventories, when: inventory is defined, tags: inventories}
+    - {role: controller_inventory_sources, when: inventory_sources is defined, tags: inventory_sources}
+    - {role: controller_projects, when: projects is defined, tags: projects}
+    - {role: controller_project_update, when: projects is defined, tags: projects}
+    - {role: controller_job_templates, when: job_templates is defined, tags: job_templates}
+    - {role: controller_workflow_job_templates, when: workflow_job_templates is defined, tags: workflow_job_templates}
+    - {role: controller_notification_templates, when: notification_templates is defined, tags: notification_templates}
 ...

@@ -2,7 +2,7 @@
 
 # Create AH Users
 - name: Add Automation Hub User
-  ah_user:
+  ansible.hub.ah_user:
     username:         "{{ __user.username | default(omit) }}"
     # new_name:         "{{ __user.new_name | default(omit) }}"  <-- Needs adding once new_name option added to module
     groups:           "{{ __user.groups | default(omit) }}"

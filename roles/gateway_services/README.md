@@ -14,11 +14,11 @@ Variables specific for this role are following:
 
 | Variable Name                                     |                    Default Value                    | Required | Description                                                                                                                                                    |                                                      |
 |:--------------------------------------------------|:---------------------------------------------------:|:--------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `services_list` (Alias: services)              |             [below](#service-arguments)             |   yes    | Data structure describing your service entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `services_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `services_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `services_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                              | [more](../../README.md#asynchronous-retry-variables) |
-| `services_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                              | [more](../../README.md#asynchronous-retry-variables) |
+| `services_list` (Alias: services)              |             [below](#service-arguments)             |   yes    | Data structure describing your service entries described below.                                                                                                |                |
+| `services_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |      |
+| `services_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service role.                                                                                      |      README.md#enforcing-defaults)      |
+| `services_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                              |  |
+| `services_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                              |  |
 
 ## Data Structure
 
@@ -40,7 +40,7 @@ Options for the `services_list` variable:
 | `service_port`        |         N/A         |    no    | int  | Port on the service cluster to route traffic to                                                                                                   |
 | `order`               |  "" (`50` by API)   |    no    | int  | The order to apply the routes in lower numbers are first. Items with the same value have no guaranteed order                                      |
 | `tags`                |         ""          |    no    | str  | Comma-separated string, selects which (tagged) nodes receive traffic from this route                                                              |
-| `state`               |      `present`      |    no    | str  | [more](../../README.md#state-variable)                                                                                                            |
+| `state`               |      `present`      |    no    | str  | README.md#state-variable)                                                                                                            |
 
 **Unique value:**
 
@@ -51,7 +51,7 @@ Options for the `services_list` variable:
 
 ## Usage
 
-#### Json Example
+### Json Example
 
 - Check that Controller API Route exists
 - Create or update gateway API Route on proxy port (http port) with id 1 and path '/' proxying gateway on path '

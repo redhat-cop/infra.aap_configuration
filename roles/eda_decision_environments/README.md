@@ -93,7 +93,7 @@ eda_decision_environments:
       tags:
         - always
   roles:
-    - infra.eda_configuration.decision_environment
+    - infra.eda_configuration.decision_environments
 ```
 
 ## License

@@ -16,5 +16,5 @@
       tags:
         - always
   roles:
-    - ../../rulebook_activation
+    - ../../eda_rulebook_activations
 ...

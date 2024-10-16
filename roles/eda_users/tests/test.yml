@@ -16,5 +16,5 @@
       tags:
         - always
   roles:
-    - ../../user
+    - ../../eda_users
 ...

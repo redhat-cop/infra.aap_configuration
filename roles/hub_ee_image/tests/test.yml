@@ -16,5 +16,5 @@
       tags:
         - always
   roles:
-    - ../../ee_image
+    - ../../hub_ee_image
 ...

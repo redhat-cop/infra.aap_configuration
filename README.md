@@ -143,8 +143,6 @@ Controller token module would be invoked with this code:
 
 Every Ansible Controller instance has it's own particularities and needs. Every administrator team has it's own practices and customs. This collection allows adaptation to every need, from small to large scale, having the objects distributed across multiple environments and leveraging Automation Webhook that can be used to link a Git repository and Ansible automation natively.
 
-A complete example of how to use all of the roles present in the collection is available at the following [README.md](roles/filetree_create/automatetheautomation.md), where all the phases to allow CI/CD for the Controller Configuration are provided.
-
 #### Scale at your needs
 
 The input data can be organized in a very flexible way, letting the user use anything from a single file to an entire file tree to store the controller objects definitions, which could be used as a logical segregation of different applications, as needed in real scenarios.

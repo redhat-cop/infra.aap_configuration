@@ -10,11 +10,23 @@ rules:
   colons:
     max-spaces-before: 0
     max-spaces-after: -1
+  comments:
+    min-spaces-from-content: 1 # prettier compatibility
+  comments-indentation: false
+  document-start: disable
   document-end: {present: true}
   indentation:
     level: error
     # Require indentation https://redhat-cop.github.io/automation-good-practices/#_yaml_and_jinja2_syntax
     indent-sequences: true
+  braces:
+    min-spaces-inside: 0 # yamllint defaults to 0
+    max-spaces-inside: 1 # yamllint defaults to 0
+  key-duplicates:
+    forbid-duplicated-merge-keys: true # not enabled by default
+  octal-values:
+    forbid-implicit-octal: true # yamllint defaults to false
+    forbid-explicit-octal: true # yamllint defaults to false
   truthy:
     level: error
     # Allow only YAML 1.2 booleans https://redhat-cop.github.io/automation-good-practices/#_yaml_and_jinja2_syntax

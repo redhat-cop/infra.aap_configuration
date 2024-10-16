@@ -12,14 +12,13 @@ authors:
     - Sean Sullivan @sean-m-sullivan
     - David Danielsson @djdanielsson
 repository: {{ collection_repo }}
-issues: {{ collection_repo }}/issues
+issues: {{ collection_repo }}issues
 build_ignore:
     - galaxy.yml.j2
     - release.yml
     - .github
-    - .ansiblelint.yml
-    - .yamllint.yml
     - '*.tar.gz'
+    - tests/*
 license:
     - GPL-3.0-or-later
 tags:
