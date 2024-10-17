@@ -6,4 +6,4 @@ major_changes:
   - Rename of collection to infra.aap_configuration
   - Introduction of roles for gateway
 bugfixes:
-  - Controller credentials role now includes request timeout option.  
+  - Controller credentials role now includes request timeout option.
