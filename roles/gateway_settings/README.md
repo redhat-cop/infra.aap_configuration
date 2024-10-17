@@ -11,10 +11,10 @@ Variables specific for this role are following:
 
 | Variable Name                                   |                   Default Value                    | Required | Description                                                                                                                                                     |                                                      |
 |:------------------------------------------------|:--------------------------------------------------:|:--------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `gateway_settings`          |            [below](#settings-arguments)            |   yes    | Data structure describing your setting entries described below.                                                                                                 |        [more](../../README.md#data-variables)        |
-| `gateway_settings_secure_logging` | `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive settings role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `gateway_settings_async_retries`  |   `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                               | [more](../../README.md#asynchronous-retry-variables) |
-| `gateway_settings_async_delay`    |     `aap_configuration_async_delay` OR `1`     |    no    | This sets the delay between retries for the role.                                                                                                               | [more](../../README.md#asynchronous-retry-variables) |
+| `gateway_settings`          |            [below](#settings-arguments)            |   yes    | Data structure describing your setting entries described below.                                                                                                 |                |
+| `gateway_settings_secure_logging` | `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive settings role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |      |
+| `gateway_settings_async_retries`  |   `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                               |  |
+| `gateway_settings_async_delay`    |     `aap_configuration_async_delay` OR `1`     |    no    | This sets the delay between retries for the role.                                                                                                               |  |
 
 **Note**: Secure Logging defaults to `True` if both variables are not set
 
@@ -26,7 +26,7 @@ Provide settings as a single dict under `settings_list`.
 
 ## Usage
 
-#### Json Example
+### Json Example
 
 ```json
 {
@@ -46,7 +46,7 @@ Provide settings as a single dict under `settings_list`.
 
 ```
 
-#### Yaml Example
+### Yaml Example
 
 File name: `data/gateway_settings.yml`
 

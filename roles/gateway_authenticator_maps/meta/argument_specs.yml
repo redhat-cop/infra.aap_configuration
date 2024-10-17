@@ -63,7 +63,7 @@ argument_specs:
             description: Desired state of the resource.
 
       # Async variables
-      authenticator_maps_async_retries:
+      gateway_authenticator_maps_async_retries:
         default: "{{ aap_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -71,7 +71,7 @@ argument_specs:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
-      authenticator_maps_async_delay:
+      gateway_authenticator_maps_async_delay:
         default: "{{ aap_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -88,7 +88,7 @@ argument_specs:
 
 
       # No_log variables
-      authenticator_maps_secure_logging:
+      gateway_authenticator_maps_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool

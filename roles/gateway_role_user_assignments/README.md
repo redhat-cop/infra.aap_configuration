@@ -12,11 +12,11 @@ Variables specific for this role are following:
 
 | Variable Name                                                    |                    Default Value                    | Required | Description                                                                                                                                                                  |                                                      |
 |:-----------------------------------------------------------------|:---------------------------------------------------:|:--------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `role_user_assignments_list` (Alias: `role_user_assignments`) |      [below](#role-user-assignments-arguments)      |   yes    | Data structure describing your organization entries described below.                                                                                                         |        [more](../../README.md#data-variables)        |
-| `role_user_assignments_secure_logging`     |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive role_user_assignments role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `role_user_assignments_enforce_defaults`   | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the role_user_assignments role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `role_user_assignments_async_retries`      |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                            | [more](../../README.md#asynchronous-retry-variables) |
-| `role_user_assignments_async_delay`        |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                            | [more](../../README.md#asynchronous-retry-variables) |
+| `role_user_assignments_list` (Alias: `role_user_assignments`) |      [below](#role-user-assignments-arguments)      |   yes    | Data structure describing your organization entries described below.                                                                                                         |                |
+| `role_user_assignments_secure_logging`     |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive role_user_assignments role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |      |
+| `role_user_assignments_enforce_defaults`   | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the role_user_assignments role.                                                                                      |      README.md#enforcing-defaults)      |
+| `role_user_assignments_async_retries`      |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                            |  |
+| `role_user_assignments_async_delay`        |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                            |  |
 
 ## Data Structure
 
@@ -33,7 +33,7 @@ Options for the `role_user_assignments` variable:
 | `object_ansible_id` |      N/A      |    no    | str  | Resource id of the object this role applies to. Alternative to the object_id field.                   |
 | `state`             |   `present`   |    no    | str  | Desired state of the resource.                                                                        |
 
-** Unique value: **
+**Unique value:**
 
 - [`user`, `object_id`] (`*_ansible_id` alternatives can be provided)
 

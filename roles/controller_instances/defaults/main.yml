@@ -3,7 +3,7 @@ controller_instances: []
 controller_configuration_instances_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
 controller_configuration_instances_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
 controller_configuration_instances_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
-controller_configuration_instances_loop_delay: "{{ controller_configuration_loop_delay | default(0) }}"
+controller_configuration_instances_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 aap_configuration_async_dir: null
 controller_configuration_instances_enforce_defaults: "{{ controller_configuration_enforce_defaults | default(false) }}"
 ...

@@ -16,5 +16,5 @@
       tags:
         - always
   roles:
-    - ../../controller_token
+    - ../../eda_controller_tokens
 ...

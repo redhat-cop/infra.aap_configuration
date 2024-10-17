@@ -17,6 +17,7 @@ skip_list:
   #   so a FQCN cannot be used in module names
   - fqcn[action]
   - fqcn[keyword]
+  - jinja[spacing]
   - meta-runtime  # This collection with the appropriate awx.awx or ansible.controller still works with older ansible.
   - role-name[path]
   - sanity[cannot-ignore]  # We're only ignoring sanity rules when we have to
@@ -31,4 +32,20 @@ kinds:
   - vars: "**/examples/configs_export_model/*.yml"
   - vars: "**/examples/vars/*.yml"
   - vars: "**/roles/**/tests/configs/*.yml"
+mock_modules:
+  - ansible.platform.authenticator_map
+  - ansible.platform.user
+  - ansible.platform.authenticator
+  - ansible.platform.role_user_assignment
+  - ansible.platform.service_node
+  - ansible.platform.service_key
+  - ansible.platform.service_cluster
+  - ansible.platform.organization
+  - ansible.platform.settings
+  - ansible.platform.service
+  - ansible.platform.team
+  - ansible.platform.application
+  - ansible.platform.http_port
+  - ansible.platform.route
+  - job_wait
 ...

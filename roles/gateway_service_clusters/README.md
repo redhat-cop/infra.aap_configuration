@@ -12,11 +12,11 @@ Variables specific for this role are following:
 
 | Variable Name                                             |                    Default Value                    | Required | Description                                                                                                                                                            |                                                      |
 |:----------------------------------------------------------|:---------------------------------------------------:|:--------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `service_clusters_list` (Alias: service_clusters)      |         [below](#service-cluster-arguments)         |   yes    | Data structure describing your service_cluster entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `service_clusters_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service_cluster role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `service_clusters_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service cluster role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `service_clusters_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                      | [more](../../README.md#asynchronous-retry-variables) |
-| `service_clusters_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                      | [more](../../README.md#asynchronous-retry-variables) |
+| `service_clusters_list` (Alias: service_clusters)      |         [below](#service-cluster-arguments)         |   yes    | Data structure describing your service_cluster entries described below.                                                                                                |                |
+| `service_clusters_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service_cluster role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |      |
+| `service_clusters_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service cluster role.                                                                                      |      README.md#enforcing-defaults)      |
+| `service_clusters_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                      |  |
+| `service_clusters_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                      |  |
 
 ## Data Structure
 
@@ -29,7 +29,7 @@ Options for the `service_clusters_list` variable:
 | `name`         |      N/A      |        yes         | str  | The name of the resource                                                                |
 | `new_name`     |      N/A      |         no         | str  | Setting this option will change the existing name (looked up via the name field)        |
 | `service_type` |      N/A      | state is 'present' | str  | The type of service for this cluster. Choices : ["hub", "controller", "eda", "gateway"] |
-| `state`        |   `present`   |         no         | str  | [more](../../README.md#state-variable)                                                  |
+| `state`        |   `present`   |         no         | str  | README.md#state-variable)                                                  |
 
 **Unique value:**
 
@@ -38,7 +38,7 @@ Options for the `service_clusters_list` variable:
 
 ## Usage
 
-#### Json Example
+### Json Example
 
 - Check that Controller and EDA (Event Driven Automation) services are deleted (if present) (from the database):
 - Check that gateway service exists (in the database)

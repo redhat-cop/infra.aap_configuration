@@ -16,5 +16,5 @@
         extensions: ["yml"]
 
   roles:
-    - {role: infra.platform_configuration.applications, when: applications_list is defined}
+    - {role: gateway_applications, when: applications_list is defined}
 ...

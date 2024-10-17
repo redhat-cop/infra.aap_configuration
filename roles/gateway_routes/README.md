@@ -14,11 +14,11 @@ Variables specific for this role are following:
 
 | Variable Name                                   |                    Default Value                    | Required | Description                                                                                                                                                  |                                                      |
 |:------------------------------------------------|:---------------------------------------------------:|:--------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `routes_list` (Alias: routes)                |             [below](#service-arguments)             |   yes    | Data structure describing your route entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `routes_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive route role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `routes_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the route role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `routes_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                            | [more](../../README.md#asynchronous-retry-variables) |
-| `routes_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                            | [more](../../README.md#asynchronous-retry-variables) |
+| `routes_list` (Alias: routes)                |             [below](#service-arguments)             |   yes    | Data structure describing your route entries described below.                                                                                                |                |
+| `routes_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive route role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |      |
+| `routes_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the route role.                                                                                      |      README.md#enforcing-defaults)      |
+| `routes_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                            |  |
+| `routes_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                            |  |
 
 ## Data Structure
 
@@ -32,14 +32,14 @@ Options for the `routes_list` variable:
 | `new_name`            |         N/A         |    no    | str  | Setting this option will change the existing name (looked up via the name field)    |
 | `description`         |         ""          |    no    | str  | Description of the route                                                            |
 | `gateway_path`        |         N/A         |    no    | str  | Path on the AAP gateway to listen to traffic on                                     |
-| `http_port`           |         N/A         |    no    | str  | ID or name referencing the [Http Port](../http_ports/README.md)                     |
-| `service_cluster`     |         N/A         |    no    | str  | ID or name referencing the [Service Cluster](../service_clusters/README.md)         |
+| `http_port`           |         N/A         |    no    | str  | ID or name referencing the [Http Port](../gateway_http_ports/README.md)             |
+| `service_cluster`     |         N/A         |    no    | str  | ID or name referencing the [Service Cluster](../gateway_service_clusters/README.md) |
 | `is_service_https`    |       `false`       |    no    | bool | Flag whether or not the service cluster uses https                                  |
 | `enable_gateway_auth` | N/A (`true` by API) |    no    | bool | If false, the AAP gateway will not insert a gateway token into the proxied request  |
 | `service_path`        |         N/A         |    no    | str  | URL path on the AAP Service cluster to route traffic to                             |
 | `service_port`        |         N/A         |    no    | int  | Port on the service cluster to route traffic to                                     |
 | `tags`                |         ""          |    no    | str  | Comma-separated string, selects which (tagged) nodes receive traffic from this route|
-| `state`               |      `present`      |    no    | str  | [more](../../README.md#state-variable)                                              |
+| `state`               |      `present`      |    no    | str  | README.md#state-variable)                                              |
 
 **Unique value:**
 
@@ -50,7 +50,7 @@ Options for the `routes_list` variable:
 
 ## Usage
 
-#### Json Example
+### Json Example
 
 - Check that Controller's config route exists
 - Update gateway route to the port 8000 and path '/non-api/v2'

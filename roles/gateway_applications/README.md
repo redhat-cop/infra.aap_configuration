@@ -10,9 +10,9 @@ Detailed description of variables are provided in the [top-level README](../../R
 
 Variables specific for this role are following:
 
-| Variable Name                                         |                    Default Value                    | Required | Description                                                                                                                                                        |                                        |
-|:------------------------------------------------------|:---------------------------------------------------:|:--------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------:|
-| `applications_list` (Alias: `applications`)        |           [below](#application-arguments)           |   yes    | Data structure describing your applications entries described below. Alias: applications                                                                           | [more](../../README.md#data-variables) |
+| Variable Name                                         |                    Default Value                    | Required | Description |
+|:------------------------------------------------------|:---------------------------------------------------:|:--------:|:-----------:|
+| `applications_list` (Alias: `applications`)        |           [below](#application-arguments)           |   yes    | Data structure describing your applications entries described below. Alias: applications (../../ |
 | `applications_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive Application role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |
 | `applications_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the applications role                                                                                      |
 | `applications_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                  |

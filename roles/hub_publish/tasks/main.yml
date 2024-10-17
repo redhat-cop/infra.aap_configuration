@@ -19,7 +19,7 @@
     src:  "{{ __ah_collection_item.collection_local_path }}/"
     dest: "{{ aap_configuration_working_dir }}/{{ __ah_collection_item.collection_name }}"
     remote_src: true
-    mode: 0755
+    mode: "0755"
   loop: "{{ ah_collections }}"
   loop_control:
     loop_var: "__ah_collection_item"

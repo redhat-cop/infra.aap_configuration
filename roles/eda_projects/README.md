@@ -94,7 +94,7 @@ eda_projects:
       tags:
         - always
   roles:
-    - infra.eda_configuration.project
+    - infra.eda_configuration.projects
 ```
 
 ## License

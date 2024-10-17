@@ -12,11 +12,11 @@ Variables specific for this role are following:
 
 | Variable Name                                          |                    Default Value                    | Required | Description                                                                                                                                                         |                                                      |
 |:-------------------------------------------------------|:---------------------------------------------------:|:--------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `service_nodes_list` (Alias: `service_nodes`)       |          [below](#service-node-arguments)           |   yes    | Data structure describing your service_node entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `service_nodes_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service_node role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `service_nodes_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service node role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `service_nodes_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                   | [more](../../README.md#asynchronous-retry-variables) |
-| `service_nodes_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                   | [more](../../README.md#asynchronous-retry-variables) |
+| `service_nodes_list` (Alias: `service_nodes`)       |          [below](#service-node-arguments)           |   yes    | Data structure describing your service_node entries described below.                                                                                                |                |
+| `service_nodes_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service_node role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |      |
+| `service_nodes_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service node role.                                                                                      |      README.md#enforcing-defaults)      |
+| `service_nodes_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                   |  |
+| `service_nodes_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                   |  |
 
 ## Data Structure
 
@@ -29,9 +29,9 @@ Options for the `service_nodes_list` variable:
 | `name`            |      N/A      |   yes    | str  | The name of the resource                                                         |
 | `new_name`        |      N/A      |    no    | str  | Setting this option will change the existing name (looked up via the name field) |
 | `address`         |      N/A      |    no    | str  | Network address for this service                                                 |
-| `service_cluster` |      N/A      |    no    | str  | ID or name referencing the [Service Cluster](../service_clusters/README.md)      |
+| `service_cluster` |      N/A      |    no    | str  | ID or name referencing the [Service Cluster](../gateway_service_clusters/README.md)      |
 | `tags`            |      N/A      |    no    | str  | Comma separated list of tags to assign to the node, for filtering route traffic  |
-| `state`           |   `present`   |    no    | str  | [more](../../README.md#state-variable)                                           |
+| `state`           |   `present`   |    no    | str  | README.md#state-variable)                                           |
 
 **Unique value:**
 

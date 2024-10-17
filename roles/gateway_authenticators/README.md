@@ -12,11 +12,11 @@ Variables specific for this role are following:
 
 | Variable Name                                           |                    Default Value                    | Required | Description                                                                                                                                                          |                                                      |
 |:--------------------------------------------------------|:---------------------------------------------------:|:--------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `authenticators_list` (Alias: `authenticators`)      |          [below](#authenticator-arguments)          |   yes    | Data structure describing your organization entries described below.                                                                                                 |        [more](../../README.md#data-variables)        |
-| `authenticators_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive organizations role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `authenticators_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the organizations role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `authenticators_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                    | [more](../../README.md#asynchronous-retry-variables) |
-| `authenticators_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                    | [more](../../README.md#asynchronous-retry-variables) |
+| `authenticators_list` (Alias: `authenticators`)      |          [below](#Authenticator Arguments)          |   yes    | Data structure describing your organization entries described below.                                                                                                 |                |
+| `authenticators_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive organizations role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |      |
+| `authenticators_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the organizations role.                                                                                      |      README.md#enforcing-defaults)      |
+| `authenticators_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                    |  |
+| `authenticators_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                    |  |
 
 ## Data Structure
 
@@ -37,7 +37,7 @@ Options for the `authenticators_list` variable:
 | `order`          |  N/A (`1` by API)   |    no    | int  | The order in which an authenticator will be tried. This only pertains to username/password authenticators                    |
 | `state`          |      `present`      |    no    | str  | Desired state of the resource.                                                                                               |
 
-** Unique value: **
+### Unique value
 
 - `name`
 - `slug` (can't be used as an identificator)
@@ -71,7 +71,7 @@ Options for the `authenticators_list` variable:
 
 - Deletes 1 authenticator
 - Creates an AzureAD authenticator with configuration provided by the `ansible_base.authentication.authenticator_plugins.azuread` module
-  - configuration class can be found in https://github.com/ansible/django-ansible-base/tree/devel/ansible_base/authentication/authenticator_plugins
+  - configuration class can be found in [in ansible-django-base](https://github.com/ansible/django-ansible-base/tree/devel/ansible_base/authentication/authenticator_plugins)
 
 File name: `data/gateway_authenticators.yml`
 

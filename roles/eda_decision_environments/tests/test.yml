@@ -16,5 +16,5 @@
       tags:
         - always
   roles:
-    - ../../decision_environment
+    - ../../eda_decision_environments
 ...

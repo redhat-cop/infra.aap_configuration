@@ -12,11 +12,11 @@ Variables specific for this role are following:
 
 | Variable Name                                          |                    Default Value                    | Required | Description                                                                                                                                                          |                                                      |
 |:-------------------------------------------------------|:---------------------------------------------------:|:--------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `organizations_list` (Alias: `organizations`)       |          [below](#organization-arguments)           |   yes    | Data structure describing your organization entries described below.                                                                                                 |        [more](../../README.md#data-variables)        |
-| `organizations_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive organizations role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `organizations_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the organizations role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `organizations_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                    | [more](../../README.md#asynchronous-retry-variables) |
-| `organizations_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                    | [more](../../README.md#asynchronous-retry-variables) |
+| `organizations_list` (Alias: `organizations`)       |          [below](#organization-arguments)           |   yes    | Data structure describing your organization entries described below.                                                                                                 |                |
+| `organizations_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive organizations role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |      |
+| `organizations_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the organizations role.                                                                                      |      README.md#enforcing-defaults)      |
+| `organizations_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                    |  |
+| `organizations_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                    |  |
 
 ## Data Structure
 
@@ -31,7 +31,7 @@ Options for the `gateway_organizations` variable:
 | `description` |      N/A      |    no    | str  | Description of the organization                                                  |
 | `state`       |   `present`   |    no    | str  | Desired state of the resource.                                                   |
 
-** Unique value: **
+### Unique value
 
 - `name`
 

@@ -24,7 +24,7 @@
   loop: "{{ authenticator_maps if authenticator_maps is defined else authenticator_maps_list }}"
   loop_control:
     loop_var: __gateway_authenticator_maps_item
-  no_log: "{{ authenticator_maps_secure_logging }}"
+  no_log: "{{ gateway_authenticator_maps_secure_logging }}"
   async: 1000
   poll: 0
   register: __gateway_authenticator_maps_job_async
@@ -37,13 +37,13 @@
     jid: "{{ __gateway_authenticator_maps_job_async_results_item.ansible_job_id }}"
   register: __gateway_authenticator_maps_job_async_result
   until: __gateway_authenticator_maps_job_async_result.finished
-  retries: "{{ authenticator_maps_async_retries }}"
-  delay: "{{ authenticator_maps_async_delay }}"
+  retries: "{{ gateway_authenticator_maps_async_retries }}"
+  delay: "{{ gateway_authenticator_maps_async_delay }}"
   loop: "{{ __gateway_authenticator_maps_job_async.results }}"
   loop_control:
     loop_var: __gateway_authenticator_maps_job_async_results_item
   when: __gateway_authenticator_maps_job_async_results_item.ansible_job_id is defined
-  no_log: "{{ authenticator_maps_secure_logging }}"
+  no_log: "{{ gateway_authenticator_maps_secure_logging }}"
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir | default(omit) }}"
 ...

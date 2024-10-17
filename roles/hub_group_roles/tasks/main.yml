@@ -1,7 +1,7 @@
 ---
 # Add Group Roles
 - name: Add Roles to Groups in Automation Hubs
-  group_roles:
+  ansible.hub.group_roles:
     groups:           "{{ __group_role.groups | default(omit) }}"
     role_list:        "{{ __group_role.role_list | default(omit) }}"
     state:            "{{ __group_role.state | default(ah_state | default('present')) }}"

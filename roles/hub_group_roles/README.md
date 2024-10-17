@@ -143,7 +143,7 @@ ah_group_roles:
       tags:
         - always
   roles:
-    - ../../group_roles
+    - ../../hub_group_roles
 ```
 
 ## License

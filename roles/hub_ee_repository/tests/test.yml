@@ -16,5 +16,5 @@
       tags:
         - always
   roles:
-    - ../../ee_repository
+    - ../../hub_ee_repository
 ...

@@ -12,11 +12,11 @@ Variables specific for this role are following:
 
 | Variable Name                                         |                    Default Value                    | Required | Description                                                                                                                                                        |                                                      |
 |:------------------------------------------------------|:---------------------------------------------------:|:--------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------:|
-| `service_keys_list` (Alias: `service_keys`)        |           [below](#service-key-arguments)           |   yes    | Data structure describing your service_key entries described below.                                                                                                |        [more](../../README.md#data-variables)        |
-| `service_keys_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service_key role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |   [more](../../README.md#secure-logging-variables)   |
-| `service_keys_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service key role.                                                                                      |      [more](../../README.md#enforcing-defaults)      |
-| `service_keys_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                  | [more](../../README.md#asynchronous-retry-variables) |
-| `service_keys_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                  | [more](../../README.md#asynchronous-retry-variables) |
+| `service_keys_list` (Alias: `service_keys`)        |           [below](#service-key-arguments)           |   yes    | Data structure describing your service_key entries described below.                                                                                                |                |
+| `service_keys_secure_logging`   |  `aap_configuration_secure_logging` OR `false`  |    no    | Whether or not to include the sensitive service_key role tasks in the log. Set this value to `True` if you will be providing your sensitive values from elsewhere. |      |
+| `service_keys_enforce_defaults` | `aap_configuration_enforce_defaults` OR `false` |    no    | Whether or not to enforce default option values on only the service key role.                                                                                      |      README.md#enforcing-defaults)      |
+| `service_keys_async_retries`    |    `aap_configuration_async_retries` OR `30`    |    no    | This variable sets the number of retries to attempt for the role.                                                                                                  |  |
+| `service_keys_async_delay`      |     `aap_configuration_async_delay` OR `1`      |    no    | This sets the delay between retries for the role.                                                                                                                  |  |
 
 ## Data Structure
 
@@ -29,12 +29,12 @@ Options for the `service_keys_list` variable:
 | `name`                   |        N/A         |   yes    | str  | The name of the resource                                                         |
 | `new_name`               |        N/A         |    no    | str  | Setting this option will change the existing name (looked up via the name field) |
 | `is_active`              | N/A (true by API)  |    no    | bool | Flag for setting the active state of the Service Key                             |
-| `service_cluster`        |        N/A         |    no    | str  | ID or name referencing the [Service Cluster](../service_clusters/README.md)      |
+| `service_cluster`        |        N/A         |    no    | str  | ID or name referencing the [Service Cluster](../gateway_service_clusters/README.md)      |
 | `algorithm`              | N/A (HS256 by API) |    no    | str  | Algorithm to use for this Service Key. Choices: ["HS256", "HS384", "HS512"]      |
 | `secret`                 |        N/A         |    no    | str  | A secret to use for this Service Key. Non-editable                               |
 | `secret_length`          |        N/A         |    no    | int  | The number of random bytes in the secret                                         |
 | `mark_previous_inactive` |        N/A         |    no    | bool | If true any other secret keys for this service will become inactive              |
-| `state`                  |     `present`      |    no    | str  | [more](../../README.md#state-variable)                                           |
+| `state`                  |     `present`      |    no    | str  | README.md#state-variable)                                           |
 
 **Unique value:**
 
