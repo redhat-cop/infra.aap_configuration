@@ -12,7 +12,7 @@
     organizations: "{{ __gateway_user_accounts_item.organizations | default(omit) }}"
     authenticators: "{{ __gateway_user_accounts_item.authenticators | default(omit) }}"
     authenticator_uid: "{{ __gateway_user_accounts_item.authenticator_uid | default(omit) }}"
-    state: "{{ __gateway_user_accounts_item.state | default(gateway_state | default(omit, true)) }}"
+    state: "{{ __gateway_user_accounts_item.state | default(platform_state | default(omit, true)) }}"
 
     # Role Standard Options
     gateway_hostname: "{{ aap_hostname | default(omit, true) }}"

@@ -54,7 +54,7 @@ argument_specs:
         #     type: str
         #     description: The uid associated with the users authenticators
         #   state:
-        #     default: "{{ gateway_state | default('present') }}"
+        #     default: "{{ platform_state | default('present') }}"
         #     required: false
         #     type: str
         #     description: Desired state of the resource.

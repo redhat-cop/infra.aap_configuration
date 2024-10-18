@@ -60,7 +60,7 @@ argument_specs:
             type: int
             description: The order to apply the routes in lower numbers are first. Items with the same value have no guaranteed order
           state:
-            default: "{{ gateway_state | default('present') }}"
+            default: "{{ platform_state | default('present') }}"
             required: false
             type: str
             description: Desired state of the resource.

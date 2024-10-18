@@ -9,14 +9,14 @@
     secret: "{{ __gateway_service_keys_item.secret | default(omit) }}"
     secret_length: "{{ __gateway_service_keys_item.secret_length | default(omit) }}"
     mark_previous_inactive: "{{ __gateway_service_keys_item.mark_previous_inactive | default(omit) }}"
-    state: "{{ __gateway_service_keys_item.state | default(gateway_state | default(omit, true)) }}"
+    state: "{{ __gateway_service_keys_item.state | default(platform_state | default(omit, true)) }}"
 
     # Role Standard Options
     gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
     gateway_username: "{{ aap_username | default(omit, true) }}"
     gateway_password: "{{ aap_password | default(omit, true) }}"
     gateway_token: "{{ aap_token | default(omit, true) }}"
-    gateway_request_timeout: "{{ aap_request_timeout | default(omit, 10) }}"
+    gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
   loop: "{{ service_keys if service_keys is defined else service_keys_list }}"
   loop_control:

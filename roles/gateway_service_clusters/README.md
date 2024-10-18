@@ -45,7 +45,7 @@ Options for the `service_clusters_list` variable:
 
 ```json
 {
-  "gateway_state": "absent",
+  "platform_state": "absent",
   "service_clusters_list": [
     {
       "name": "Automation Controller"

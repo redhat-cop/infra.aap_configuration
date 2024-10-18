@@ -3,7 +3,7 @@ argument_specs:
   main:
     short_description: An Ansible Role to create http ports on automation platform gateway.
     options:
-      http_ports_list:
+      http_ports:
         description: Data structure describing http(s) ports where Envoy proxy listens
         type: list
         required: true
@@ -30,13 +30,13 @@ argument_specs:
             type: bool
             description: If true, port is used for serving remote AAP APIs. Only one can be set to True
           state:
-            default: "{{ gateway_state | default('present') }}"
+            default: "{{ platform_state | default('present') }}"
             required: false
             type: str
             description: Desired state of the resource
 
       # Async variables
-      http_ports_async_retries:
+      gateway_http_ports_async_retries:
         default: "{{ aap_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -44,7 +44,7 @@ argument_specs:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
-      http_ports_async_delay:
+      gateway_http_ports_async_delay:
         default: "{{ aap_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -61,7 +61,7 @@ argument_specs:
 
 
       # No_log variables
-      http_ports_secure_logging:
+      gateway_http_ports_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool

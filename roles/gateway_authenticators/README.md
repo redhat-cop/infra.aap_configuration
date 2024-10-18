@@ -15,7 +15,7 @@ An Ansible Role to add Authenticators on Ansible Automation gateway.
 |`aap_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
-|`authenticators_list`|`see below`|yes|Data structure describing your authenticators Described below.||
+|`gateway_authenticators`|`see below`|yes|Data structure describing your gateway_authenticators Described below.||
 
 ### Secure Logging Variables
 
@@ -38,12 +38,13 @@ This also speeds up the overall role.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`aap_configuration_async_timeout`|1000|no|This variable sets the async timeout for the role globally.|
-|`gateway_authenticators_async_timeout`|`aap_configuration_async_timeout`|no|This variable sets the async timeout for the role.|
-|`gateway_authenticator_maps_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
+|`aap_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
 |`gateway_authenticators_async_retries`|`aap_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
-|`gateway_authenticators_hosts_loop_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
 |`aap_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
+|`gateway_authenticators_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
+|`aap_configuration_loop_delay`|1000|no|This variable sets the loop_delay for the role globally.|
+|`gateway_authenticators_loop_delay`|`aap_configuration_loop_delay`|no|This variable sets the loop_delay for the role.|
+|`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
 ## Data Structure
 
@@ -78,7 +79,7 @@ Options for the `authenticators_list` variable:
 
 ```json
 {
-  "authenticators_list": [
+  "gateway_authenticators": [
     {
       "name": "local authenticator",
       "slug": "local-authenticator",
@@ -104,7 +105,7 @@ File name: `data/gateway_authenticators.yml`
 
 ```yaml
 ---
-authenticators_list:
+gateway_authenticators:
 - name: "Deprecated Authenticator"
   state: absent
 - name: Auth AzureAD

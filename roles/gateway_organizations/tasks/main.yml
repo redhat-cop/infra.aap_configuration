@@ -4,19 +4,21 @@
     name: "{{ __gateway_organizations_item.name | mandatory }}"
     new_name: "{{ __gateway_organizations_item.new_name | default(omit) }}"
     description: "{{ __gateway_organizations_item.description | default(omit) }}"
-    state: "{{ __gateway_organizations_item.state | default(gateway_state | default(omit, true)) }}"
+    state: "{{ __gateway_organizations_item.state | default(platform_state | default(omit, true)) }}"
 
     # Role Standard Options
     gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
     gateway_username: "{{ aap_username | default(omit, true) }}"
     gateway_password: "{{ aap_password | default(omit, true) }}"
     gateway_token: "{{ aap_token | default(omit, true) }}"
-    gateway_request_timeout: "{{ aap_request_timeout | default(omit, 10) }}"
+    gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ organizations if organizations is defined else controller_organizations }}"
+  loop: "{{ gateway_organizations }}"
   loop_control:
     loop_var: __gateway_organizations_item
-  no_log: "{{ organizations_secure_logging }}"
+    label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organizations_item.name }}"
+    pause: "{{ gateway_organizations_loop_delay }}"
+  no_log: "{{ gateway_organizations_secure_logging }}"
   async: 1000
   poll: 0
   register: __gateway_organizations_job_async
@@ -29,13 +31,14 @@
     jid: "{{ __gateway_organizations_job_async_results_item.ansible_job_id }}"
   register: __gateway_organizations_job_async_result
   until: __gateway_organizations_job_async_result.finished
-  retries: "{{ organizations_async_retries }}"
-  delay: "{{ organizations_async_delay }}"
+  retries: "{{ gateway_organizations_async_retries }}"
+  delay: "{{ gateway_organizations_async_delay }}"
   loop: "{{ __gateway_organizations_job_async.results }}"
   loop_control:
     loop_var: __gateway_organizations_job_async_results_item
+    label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organizations_job_async_result.__gateway_organizations_item.name }} | Wait for finish the Organizations {{ __operation.action }}"
   when: __gateway_organizations_job_async_results_item.ansible_job_id is defined
-  no_log: "{{ organizations_secure_logging }}"
+  no_log: "{{ gateway_organizations_secure_logging }}"
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir | default(omit) }}"
 ...

@@ -3,7 +3,7 @@ argument_specs:
   main:
     short_description: An Ansible Role to create Applications on Ansible gateway.
     options:
-      applications_list:
+      gateway_applications:
         description: Data structure describing your applications
         type: list
         required: true
@@ -56,7 +56,7 @@ argument_specs:
             type: str
             description: The ID or username of the user who owns this application
           state:
-            default: "{{ gateway_state | default('present') }}"
+            default: "{{ platform_state | default('present') }}"
             required: false
             type: str
             description: Desired state of the application.
@@ -86,7 +86,7 @@ argument_specs:
           The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.
 
       # No_log variables
-      applications_secure_logging:
+      gateway_applications_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
@@ -100,27 +100,27 @@ argument_specs:
         description: This variable enables secure logging across all roles as a default.
 
       # Generic across all roles
-      gateway_state:
+      platform_state:
         default: present
         required: false
         description: The state all objects will take unless overridden by object default
         type: str
-      gateway_hostname:
+      aap_hostname:
         default: None
         required: false
         description: URL to the Ansible gateway Server.
         type: str
-      gateway_validate_certs:
+      aap_validate_certs:
         default: true
         required: false
         description: Whether or not to validate the Ansible gateway Server's SSL certificate.
         type: str
-      gateway_username:
+      aap_username:
         default: None
         required: false
         description: Admin User on the Ansible gateway Server. Either username / password or oauthtoken need to be specified.
         type: str
-      gateway_password:
+      aap_password:
         default: None
         required: false
         description: >
@@ -128,7 +128,7 @@ argument_specs:
           This should be stored in an Ansible Vault at vars/gateway-secrets.yml or elsewhere and called from a parent playbook.
           Either username / password or oauthtoken need to be specified.
         type: str
-      gateway_oauthtoken:
+      aap_token:
         default: None
         required: false
         description: >

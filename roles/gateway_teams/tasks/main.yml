@@ -6,14 +6,14 @@
     description: "{{ __gateway_teams_item.description | default(omit) }}"
     organization: "{{ __gateway_teams_item.organization | default(omit) }}"
     new_organization: "{{ __gateway_teams_item.new_organization | default(omit) }}"
-    state: "{{ __gateway_teams_item.state | default(gateway_state | default(omit, true)) }}"
+    state: "{{ __gateway_teams_item.state | default(platform_state | default(omit, true)) }}"
 
     # Role Standard Options
     gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
     gateway_username: "{{ aap_username | default(omit, true) }}"
     gateway_password: "{{ aap_password | default(omit, true) }}"
     gateway_token: "{{ aap_token | default(omit, true) }}"
-    gateway_request_timeout: "{{ aap_request_timeout | default(omit, 10) }}"
+    gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
   loop: "{{ platform_teams }}"
   loop_control:

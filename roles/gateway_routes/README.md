@@ -90,7 +90,7 @@ File name: `data/gateway_routes.yml`
 
 ```yaml
 ---
-gateway_state: exists
+platform_state: exists
 routes_list:
 - name: "Controller Config route"
   gateway_path: '/config/controller/'

@@ -57,7 +57,7 @@ argument_specs:
               Comma separated string
               Selects which (tagged) nodes receive traffic from this route
           state:
-            default: "{{ gateway_state | default('present') }}"
+            default: "{{ platform_state | default('present') }}"
             required: false
             type: str
             description: Desired state of the resource.

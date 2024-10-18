@@ -94,7 +94,7 @@ File name: `data/services.yml`
 
 ```yaml
 ---
-gateway_state: absent
+platform_state: absent
 service_clusters_list:
 - name: Controller API
 - name: Hub API

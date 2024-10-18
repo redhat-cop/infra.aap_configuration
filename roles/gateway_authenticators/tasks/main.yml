@@ -10,18 +10,20 @@
     configuration: "{{ __gateway_authenticators_item.configuration | default(omit) }}"
     type: "{{ __gateway_authenticators_item.type | default(omit) }}"
     order: "{{ __gateway_authenticators_item.order | default(omit) }}"
-    state: "{{ __gateway_authenticators_item.state | default(gateway_state | default(omit, true)) }}"
+    state: "{{ __gateway_authenticators_item.state | default(platform_state | default(omit, true)) }}"
 
     # Role Standard Options
     gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
     gateway_username: "{{ aap_username | default(omit, true) }}"
     gateway_password: "{{ aap_password | default(omit, true) }}"
     gateway_token: "{{ aap_token | default(omit, true) }}"
-    gateway_request_timeout: "{{ aap_request_timeout | default(omit, 10) }}"
+    gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ authenticators if authenticators is defined else authenticators_list }}"
+  loop: "{{ gateway_authenticators }}"
   loop_control:
     loop_var: __gateway_authenticators_item
+    label: "{{ __operation.verb }} AAP Platform Authenticators {{ __gateway_authenticators_item.name }}"
+    pause: "{{ gateway_authenticators_loop_delay }}"
   no_log: "{{gateway_authenticators_secure_logging }}"
   async: 1000
   poll: 0
@@ -35,11 +37,12 @@
     jid: "{{ __gateway_authenticators_job_async_results_item.ansible_job_id }}"
   register: __gateway_authenticators_job_async_result
   until: __gateway_authenticators_job_async_result.finished
-  retries: "{{ authenticators_async_retries }}"
-  delay: "{{ authenticators_async_delay }}"
+  retries: "{{ gateway_authenticators_async_retries }}"
+  delay: "{{ gateway_authenticators_async_delay }}"
   loop: "{{ __gateway_authenticators_job_async.results }}"
   loop_control:
     loop_var: __gateway_authenticators_job_async_results_item
+    label: "{{ __operation.verb }} AAP Platform Authenticators {{ __gateway_authenticators_job_async_result.__gateway_authenticators_item.name }} | Wait for finish the Authenticators {{ __operation.action }}"
   when: __gateway_authenticators_job_async_results_item.ansible_job_id is defined
   no_log: "{{gateway_authenticators_secure_logging }}"
   vars:
