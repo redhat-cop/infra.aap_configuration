@@ -1,4 +1,4 @@
-# Ansible Role infra.platform_configuration.service_clusters
+# Ansible Role infra.aap_configuration.service_clusters
 
 ## Description
 

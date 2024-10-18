@@ -1,4 +1,4 @@
-# Ansible Role infra.platform_configuration.users
+# Ansible Role infra.aap_configuration.users
 
 ## Description
 

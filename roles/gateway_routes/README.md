@@ -1,4 +1,4 @@
-# Ansible Role infra.platform_configuration.routes
+# Ansible Role infra.aap_configuration.routes
 
 ## Description
 

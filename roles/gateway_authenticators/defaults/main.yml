@@ -10,8 +10,7 @@
 
 # a list of dictionaries describing the authenticators
 authenticators_list: []
-authenticators_secure_logging: "{{ aap_configuration_secure_logging | default(false) }}"
-authenticators_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
-authenticators_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
-authenticators_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
+gateway_authenticators_secure_logging: "{{ aap_configuration_secure_logging | default(false) }}"
+gateway_authenticator_maps_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+gateway_authenticators_async_timeout: "{{ aap_configuration_async_delay | default(1) }}"
 ...

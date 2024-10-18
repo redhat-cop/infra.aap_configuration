@@ -22,7 +22,7 @@
   loop: "{{ authenticators if authenticators is defined else authenticators_list }}"
   loop_control:
     loop_var: __gateway_authenticators_item
-  no_log: "{{ authenticators_secure_logging }}"
+  no_log: "{{gateway_authenticators_secure_logging }}"
   async: 1000
   poll: 0
   register: __gateway_authenticators_job_async
@@ -41,7 +41,7 @@
   loop_control:
     loop_var: __gateway_authenticators_job_async_results_item
   when: __gateway_authenticators_job_async_results_item.ansible_job_id is defined
-  no_log: "{{ authenticators_secure_logging }}"
+  no_log: "{{gateway_authenticators_secure_logging }}"
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir | default(omit) }}"
 ...

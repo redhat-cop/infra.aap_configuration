@@ -75,7 +75,7 @@ argument_specs:
 
 
       # No_log variables
-      authenticators_secure_logging:
+     gateway_authenticators_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
