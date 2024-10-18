@@ -4,7 +4,7 @@
     name: "{{ __gateway_service_clusters_item.name | mandatory }}"
     new_name: "{{ __gateway_service_clusters_item.new_name | default(omit) }}"
     service_type: "{{ __gateway_service_clusters_item.service_type | default(omit) }}"
-    state: "{{ __gateway_service_clusters_item.state | default(gateway_state | default(omit, true)) }}"
+    state: "{{ __gateway_service_clusters_item.state | default(platform_state | default(omit, true)) }}"
     outlier_detection_enabled: "{{ __gateway_service_clusters_item.outlier_detection_enabled | default(omit) }}"
     outlier_detection_consecutive_5xx: "{{ __gateway_service_clusters_item.outlier_detection_consecutive_5xx | default(omit) }}"
     outlier_detection_interval_seconds: "{{ __gateway_service_clusters_item.outlier_detection_interval_seconds | default(omit) }}"
@@ -21,7 +21,7 @@
     gateway_username: "{{ aap_username | default(omit, true) }}"
     gateway_password: "{{ aap_password | default(omit, true) }}"
     gateway_token: "{{ aap_token | default(omit, true) }}"
-    gateway_request_timeout: "{{ aap_request_timeout | default(omit, 10) }}"
+    gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
   loop: "{{ service_clusters if service_clusters is defined else service_clusters_list }}"
   loop_control:

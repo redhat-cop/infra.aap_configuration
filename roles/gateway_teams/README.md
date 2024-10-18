@@ -1,4 +1,4 @@
-# Ansible Role infra.platform_configuration.teams
+# Ansible Role infra.aap_configuration.teams
 
 ## Description
 

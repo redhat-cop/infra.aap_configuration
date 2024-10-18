@@ -6,5 +6,5 @@ controller_configuration_role_async_retries: "{{ aap_configuration_async_retries
 controller_configuration_role_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 controller_configuration_role_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 aap_configuration_async_dir: null
-controller_configuration_role_enforce_defaults: "{{ controller_configuration_enforce_defaults | default(false) }}"
+controller_configuration_role_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 ...

@@ -1,8 +1,8 @@
-# infra.platform_configuration.dispatch
+# infra.aap_configuration.dispatch
 
 ## Description
 
-An Ansible Role to run all roles in the infra.platform_configuration collection.
+An Ansible Role to run all roles in the infra.aap_configuration collection.
 
 ## Variables
 
@@ -27,7 +27,7 @@ gateway_dispatch_roles:
 
 Note that each item has three elements:
 
-- `role` which is the name of the role within infra.platform_configuration
+- `role` which is the name of the role within infra.aap_configuration
 - `var` which is the variable which is used in that role. We use this to prevent the role being called if the variable is not set
 - `tags` the tags which are applied to the role so it is possible to apply tags to a playbook using the dispatcher with these tags.
 

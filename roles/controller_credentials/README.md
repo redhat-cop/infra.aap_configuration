@@ -34,12 +34,12 @@ This should be enabled to enforce configuration and prevent configuration drift.
 
 Enabling this will enforce configurtion without specifying every option in the configuration files.
 
-'controller_configuration_credentials_enforce_defaults' defaults to the value of 'controller_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
+'controller_configuration_credentials_enforce_defaults' defaults to the value of 'aap_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`controller_configuration_credentials_enforce_defaults`|`False`|no|Whether or not to enforce default option values on only the applications role|
-|`controller_configuration_enforce_defaults`|`False`|no|This variable enables enforced default values as well, but is shared across multiple roles, see above.|
+|`aap_configuration_enforce_defaults`|`False`|no|This variable enables enforced default values as well, but is shared across multiple roles, see above.|
 
 ### Secure Logging Variables
 

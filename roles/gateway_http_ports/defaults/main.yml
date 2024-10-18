@@ -2,21 +2,22 @@
 
 # These are the default variables common to most gw_conf roles
 # You shouldn't need to define them again and again but they should be defined
-# gateway_hostname: "{{ inventory_hostname }}"
+# aap_hostname: "{{ inventory_hostname }}"
 # gateway_token: ""
-# gateway_validate_certs: false
+# aap_validate_certs: false
 
 # These are the default variables specific to the license role
 
 # a list of dictionaries describing the envoy http ports (available GW API ports)
-http_ports_list: []
+http_ports: []
 # possible fields:
 #  - number
 #  - use_https
 #  - is_api_port
 #  - state
-http_ports_secure_logging: "{{ aap_configuration_secure_logging | default(false) }}"
-http_ports_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
-http_ports_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
-http_ports_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
+gateway_http_ports_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
+gateway_http_ports_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+gateway_http_ports_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
+gateway_http_ports_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
+aap_configuration_async_dir: null
 ...

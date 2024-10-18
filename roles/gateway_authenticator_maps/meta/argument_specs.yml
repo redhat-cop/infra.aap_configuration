@@ -3,7 +3,7 @@ argument_specs:
   main:
     short_description: An Ansible Role to create authenticator maps on automation platform gateway.
     options:
-      authenticator_maps_list:
+      gateway_authenticator_maps:
         description: Data structure describing your authenticator maps
         type: list
         required: true
@@ -57,7 +57,7 @@ argument_specs:
               Items with the same order will be executed in random order
               Value must be greater or equal to 0
           state:
-            default: "{{ gateway_state | default('present') }}"
+            default: "{{ platform_state | default('present') }}"
             required: false
             type: str
             description: Desired state of the resource.

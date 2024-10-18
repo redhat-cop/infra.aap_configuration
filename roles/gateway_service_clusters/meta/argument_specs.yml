@@ -22,7 +22,7 @@ argument_specs:
               Type of service ["hub", "controller", "eda", "gateway"]
               Required when creating new Service Cluster
           state:
-            default: "{{ gateway_state | default('present') }}"
+            default: "{{ platform_state | default('present') }}"
             required: false
             type: str
             description: Desired state of the resource.

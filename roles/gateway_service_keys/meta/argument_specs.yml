@@ -40,7 +40,7 @@ argument_specs:
             description: |
               If true any other secret keys for this service will become inactive
           state:
-            default: "{{ gateway_state | default('present') }}"
+            default: "{{ platform_state | default('present') }}"
             required: false
             type: str
             description: Desired state of the resource.

@@ -1,4 +1,4 @@
-# Ansible Role infra.platform_configuration.services
+# Ansible Role infra.aap_configuration.services
 
 ## Description
 
@@ -94,7 +94,7 @@ File name: `data/services.yml`
 
 ```yaml
 ---
-gateway_state: absent
+platform_state: absent
 service_clusters_list:
 - name: Controller API
 - name: Hub API

@@ -1,4 +1,4 @@
-# Ansible Role infra.platform_configuration.routes
+# Ansible Role infra.aap_configuration.routes
 
 ## Description
 
@@ -90,7 +90,7 @@ File name: `data/gateway_routes.yml`
 
 ```yaml
 ---
-gateway_state: exists
+platform_state: exists
 routes_list:
 - name: "Controller Config route"
   gateway_path: '/config/controller/'

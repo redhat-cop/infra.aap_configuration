@@ -1,4 +1,4 @@
-# Ansible Role infra.platform_configuration.users
+# Ansible Role infra.aap_configuration.users
 
 ## Description
 
@@ -72,7 +72,7 @@ File name: `data/gateway_users.yml`
 
 ```yaml
 ---
-gateway_state: exists
+platform_state: exists
 users_list:
 - username: jsmith
 - username: jdoe
