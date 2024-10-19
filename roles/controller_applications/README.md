@@ -23,7 +23,7 @@ Currently:
 |`aap_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
-|`controller_applications`|`see below`|yes|Data structure describing your applications, described below. Alias: applications ||
+|`aap_applications`|`see below`|yes|Data structure describing your applications, described below. Alias: applications ||
 
 ### Enforcing defaults
 
@@ -92,7 +92,7 @@ This also speeds up the overall role.
 
 ```json
  {
-    "controller_applications": [
+    "aap_applications": [
       {
         "name": "controller Config Default Application",
         "description": "Generic application, which can be used for oauth tokens",
@@ -109,7 +109,7 @@ This also speeds up the overall role.
 
 ```yaml
 ---
-controller_applications:
+aap_applications:
   - name: "controller Config Default Application"
     description: "Generic application, which can be used for oauth tokens"
     organization: "Default"
@@ -137,7 +137,7 @@ controller_applications:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: infra.aap_configuration.applications, when: controller_applications is defined}
+    - {role: infra.aap_configuration.applications, when: aap_applications is defined}
 ```
 
 ## License

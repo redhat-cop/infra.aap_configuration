@@ -19,7 +19,7 @@
     request_timeout:                "{{ aap_request_timeout | default(omit, true) }}"
     controller_host:                "{{ aap_hostname | default(omit, true) }}"
     validate_certs:                 "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ applications if applications is defined else controller_applications }}"
+  loop: "{{ aap_applications }}"
   loop_control:
     loop_var: "__application_item"
     label: "{{ __operation.verb }} Controller Application {{ __application_item.name }}"

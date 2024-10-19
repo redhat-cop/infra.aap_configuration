@@ -1,6 +1,6 @@
 ---
 # list of dicts describing Controller users
-controller_user_accounts: []
+aap_user_accounts: []
 # if you're too lazy to give your users a password, this is the default they will get
 # set this variable to something false and there won't be a default password
 controller_user_default_password: "change_me"

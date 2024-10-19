@@ -23,7 +23,7 @@ Currently:
 |`aap_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
-|`controller_teams`|`see below`|yes|Data structure describing your Teams described below. Alias: teams ||
+|`aap_teams`|`see below`|yes|Data structure describing your Teams described below. Alias: teams ||
 
 ### Enforcing defaults
 
@@ -70,7 +70,7 @@ This also speeds up the overall role.
 |`controller_configuration_teams_loop_delay`|`aap_configuration_loop_delay`|no|This sets the pause between each item in the loop for the role. To help when API is getting overloaded.|
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
-### Data structure `controller_teams:` should include following vars
+### Data structure `aap_teams:` should include following vars
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
@@ -100,7 +100,7 @@ This also speeds up the overall role.
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: infra.aap_configuration.teams, when: controller_teams is defined}
+    - {role: infra.aap_configuration.teams, when: aap_teams is defined}
 ```
 
 ## License

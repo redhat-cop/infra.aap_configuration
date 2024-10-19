@@ -9,11 +9,14 @@ gateway_configuration_dispatcher_roles:
   - role: gateway_settings
     var: gateway_settings
     tags: settings
+  - role: gateway_applications
+    var: gateway_applications
+    tags: applications
   - role: gateway_http_ports
     var: http_ports_list
     tags: http_ports
   - role: gateway_organizations
-    var: controller_organizations
+    var: aap_organizations
     tags: organizations
   - role: gateway_service_clusters
     var: service_clusters_list
@@ -34,7 +37,7 @@ gateway_configuration_dispatcher_roles:
     var: routes_list
     tags: routes
   - role: gateway_teams
-    var: platform_teams
+    var: aap_teams
     tags: teams
 ah_configuration_dispatcher_roles:
   - role: hub_namespace
@@ -75,7 +78,7 @@ controller_configuration_dispatcher_roles:
     var: controller_settings
     tags: settings
   - role: controller_organizations
-    var: controller_organizations
+    var: aap_organizations
     tags: organizations
     assign_galaxy_credentials_to_org: false
     assign_default_ee_to_org: false
@@ -101,11 +104,14 @@ controller_configuration_dispatcher_roles:
   - role: controller_execution_environments
     var: controller_execution_environments
     tags: execution_environments
+  - role: controller_applications
+    var: aap_applications
+    tags: applications
   - role: controller_notification_templates
     var: controller_notifications
     tags: notification_templates
   - role: controller_organizations
-    var: controller_organizations
+    var: aap_organizations
     tags: organizations
     assign_galaxy_credentials_to_org: true
     assign_default_ee_to_org: true

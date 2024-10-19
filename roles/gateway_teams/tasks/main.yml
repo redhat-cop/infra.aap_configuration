@@ -15,7 +15,7 @@
     gateway_token: "{{ aap_token | default(omit, true) }}"
     gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ platform_teams }}"
+  loop: "{{ aap_teams }}"
   loop_control:
     loop_var: __gateway_teams_item
   no_log: "{{ platform_teams_secure_logging }}"

@@ -15,7 +15,7 @@ An Ansible Role to create users in Automation Hub.
 |`aap_request_timeout`|`10`|no|Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.||
 |`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
-|`ah_users`|`see below`|yes|Data structure describing your execution environment images, described below.||
+|`aap_user_accounts`|`see below`|yes|Data structure describing your execution environment images, described below.||
 
 ### Secure Logging Variables
 
@@ -68,7 +68,7 @@ This also speeds up the overall role.
 
 ```yaml
 ---
-ah_users:
+aap_user_accounts:
   - username: user1
     groups:
       - group1

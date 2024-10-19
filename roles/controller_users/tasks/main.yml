@@ -23,7 +23,7 @@
     controller_oauthtoken:    "{{ aap_token | default(omit, true) }}"
     request_timeout:          "{{ aap_request_timeout | default(omit, true) }}"
     validate_certs:           "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ users if users is defined else controller_user_accounts }}"
+  loop: "{{ aap_user_accounts }}"
   loop_control:
     loop_var: __controller_user_accounts_item
     label: "{{ __operation.verb }} Controller User {{ __controller_user_accounts_item.user | default(__controller_user_accounts_item.username) }}"

@@ -23,11 +23,11 @@
     gateway_token: "{{ aap_token | default(omit, true) }}"
     gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ gateway_authenticator_maps }}"
+  loop: "{{ aap_applications }}"
   loop_control:
     loop_var: __gateway_application_item
     label: "{{ __operation.verb }} AAP Platform Applications {{ __gateway_application_item.name }}"
-    pause: "{{ gateway_authenticator_maps_loop_delay }}"
+    pause: "{{ gateway_applications_loop_delay }}"
   no_log: "{{ gateway_applications_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
@@ -41,8 +41,8 @@
     jid: "{{ __gateway_applications_job_async_results_item.ansible_job_id }}"
   register: __gateway_applications_job_async_result
   until: __gateway_applications_job_async_result.finished
-  retries: "{{ gateway_authenticator_maps_async_retries }}"
-  delay: "{{ gateway_authenticator_maps_async_delay }}"
+  retries: "{{ gateway_applications_async_retries }}"
+  delay: "{{ gateway_applications_async_delay }}"
   loop: "{{ __gateway_applications_job_async.results }}"
   loop_control:
     loop_var: __gateway_applications_job_async_results_item

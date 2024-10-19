@@ -15,7 +15,7 @@ An Ansible Role to create/update/remove Applications on Ansible gateway.
 |`aap_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
-|`gateway_applications`|`see below`|yes|Data structure describing your gateway_applications Described below.||
+|`aap_applications`|`see below`|yes|Data structure describing your aap_applications Described below.||
 
 ### Enforcing defaults
 
@@ -26,11 +26,11 @@ This should be enabled to enforce configuration and prevent configuration drift.
 
 Enabling this will enforce configurtion without specifying every option in the configuration files.
 
-'gateway_applications_enforce_defaults' defaults to the value of 'aap_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
+'aap_applications_enforce_defaults' defaults to the value of 'aap_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`gateway_applications_enforce_defaults`|`False`|no|Whether or not to enforce default option values on only the applications role|
+|`aap_applications_enforce_defaults`|`False`|no|Whether or not to enforce default option values on only the applications role|
 |`aap_configuration_enforce_defaults`|`False`|no|This variable enables enforced default values as well, but is shared globally.|
 
 ### Secure Logging Variables
@@ -38,11 +38,11 @@ Enabling this will enforce configurtion without specifying every option in the c
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add ee_registry task does not include sensitive information.
-gateway_applications_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of automation hub configuration roles with a single variable, or for the user to selectively use it.
+aap_applications_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of automation hub configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`gateway_applications_secure_logging`|`False`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`aap_applications_secure_logging`|`False`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`aap_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
@@ -55,18 +55,18 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`aap_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
-|`gateway_applications_async_retries`|`aap_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
+|`aap_applications_async_retries`|`aap_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
 |`aap_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
-|`gateway_applications_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
+|`aap_applications_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
 |`aap_configuration_loop_delay`|1000|no|This variable sets the loop_delay for the role globally.|
-|`gateway_applications_loop_delay`|`aap_configuration_loop_delay`|no|This variable sets the loop_delay for the role.|
+|`aap_applications_loop_delay`|`aap_configuration_loop_delay`|no|This variable sets the loop_delay for the role.|
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
 ## Data Structure
 
 ### Application Arguments
 
-Options for the `gateway_applications` variable:
+Options for the `aap_applications` variable:
 
 | Variable Name               |    Default Value    | Required | Type | Description                                                                            |
 |:----------------------------|:-------------------:|:--------:|:----:|:---------------------------------------------------------------------------------------|
@@ -90,7 +90,7 @@ Options for the `gateway_applications` variable:
 
 ```json
  {
-  "gateway_applications": [
+  "aap_applications": [
     {
       "name": "gateway Config Default Application",
       "description": "Generic application, which can be used for oauth tokens",
@@ -105,11 +105,11 @@ Options for the `gateway_applications` variable:
 
 #### Yaml Example
 
-File name: `data/gateway_applications.yml`
+File name: `data/aap_applications.yml`
 
 ```yaml
 ---
-gateway_applications:
+aap_applications:
 - name: "gateway Config Default Application"
   description: "Generic application, which can be used for oauth tokens"
   organization: "Default"

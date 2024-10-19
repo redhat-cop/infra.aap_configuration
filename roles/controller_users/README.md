@@ -23,7 +23,7 @@ Currently:
 |`aap_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
-|`controller_user_accounts`|`see below`|yes|Data structure describing your user entries described below.  Alias: users ||
+|`aap_user_accounts`|`see below`|yes|Data structure describing your user entries described below.  Alias: users ||
 |`controller_user_default_password`|""|no|Global variable to set the password for all users.||
 
 ### Enforcing defaults
@@ -95,7 +95,7 @@ This also speeds up the overall role.
 
 ```json
 {
-  "controller_user_accounts": [
+  "aap_user_accounts": [
     {
       "user": "jsmith",
       "is_superuser": false,
@@ -110,7 +110,7 @@ This also speeds up the overall role.
 
 ```yaml
 ---
-controller_user_accounts:
+aap_user_accounts:
   - user: controller_user
     is_superuser: false
     password: aap_password
@@ -136,7 +136,7 @@ controller_user_accounts:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: infra.aap_configuration.users, when: controller_user_accounts is defined}
+    - {role: infra.aap_configuration.users, when: aap_user_accounts is defined}
 ```
 
 ## License

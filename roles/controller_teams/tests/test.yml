@@ -19,5 +19,5 @@
         extensions: ["yml"]
 
   roles:
-    - {role: ../.., when: controller_teams is defined}
+    - {role: ../.., when: aap_teams is defined}
 ...

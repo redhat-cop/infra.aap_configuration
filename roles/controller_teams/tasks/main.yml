@@ -14,7 +14,7 @@
     controller_oauthtoken:    "{{ aap_token | default(omit, true) }}"
     request_timeout:          "{{ aap_request_timeout | default(omit, true) }}"
     validate_certs:           "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ teams if teams is defined else controller_teams }}"
+  loop: "{{ aap_teams }}"
   loop_control:
     loop_var: __controller_team_item
     label: "{{ __operation.verb }} Ansible Controller Team {{ __controller_team_item.name }}"

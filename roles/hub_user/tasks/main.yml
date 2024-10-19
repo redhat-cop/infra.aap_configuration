@@ -19,7 +19,7 @@
     ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
     validate_certs:   "{{ aap_validate_certs | default(omit) }}"
     request_timeout:  "{{ aap_request_timeout | default(omit) }}"
-  loop: "{{ ah_users }}"
+  loop: "{{ aap_user_accounts }}"
   loop_control:
     loop_var: "__user"
   no_log: "{{ ah_configuration_user_secure_logging }}"

@@ -1,5 +1,5 @@
 ---
-controller_organizations: []
+aap_organizations: []
 controller_configuration_organizations_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
 controller_configuration_organizations_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
 controller_configuration_organizations_async_delay: "{{ aap_configuration_async_delay | default(1) }}"

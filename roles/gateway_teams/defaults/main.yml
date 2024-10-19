@@ -9,7 +9,7 @@
 # These are the default variables specific to the license role
 
 # a list of dictionaries describing the teams
-platform_teams: []
+aap_teams: []
 platform_teams_secure_logging: "{{ aap_configuration_secure_logging | default(false) }}"
 platform_teams_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
 platform_teams_async_delay: "{{ aap_configuration_async_delay | default(1) }}"

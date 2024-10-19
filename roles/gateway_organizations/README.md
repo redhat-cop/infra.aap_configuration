@@ -15,18 +15,18 @@ An Ansible Role to add Organizations on Ansible Automation gateway.
 |`aap_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
-|`gateway_organizations`|`see below`|yes|Data structure describing your organizations Described below.||
+|`aap_organizations`|`see below`|yes|Data structure describing your organizations Described below.||
 
 ### Secure Logging Variables
 
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to False as normally the add ee_registry task does not include sensitive information.
-gateway_organizations_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of automation hub configuration roles with a single variable, or for the user to selectively use it.
+aap_organizations_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of automation hub configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`gateway_organizations_secure_logging`|`False`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
+|`aap_organizations_secure_logging`|`False`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
 |`aap_configuration_secure_logging`|`False`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
@@ -39,18 +39,18 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`aap_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
-|`gateway_organizations_async_retries`|`aap_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
+|`aap_organizations_async_retries`|`aap_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
 |`aap_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
-|`gateway_organizations_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
+|`aap_organizations_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
 |`aap_configuration_loop_delay`|1000|no|This variable sets the loop_delay for the role globally.|
-|`gateway_organizations_loop_delay`|`aap_configuration_loop_delay`|no|This variable sets the loop_delay for the role.|
+|`aap_organizations_loop_delay`|`aap_configuration_loop_delay`|no|This variable sets the loop_delay for the role.|
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
 ## Data Structure
 
 ### Organization Arguments
 
-Options for the `gateway_organizations` variable:
+Options for the `aap_organizations` variable:
 
 | Variable Name | Default Value | Required | Type | Description                                                                      |
 |:--------------|:-------------:|:--------:|:----:|:---------------------------------------------------------------------------------|
@@ -71,7 +71,7 @@ Options for the `gateway_organizations` variable:
 
 ```json
 {
-  "gateway_organizations": [
+  "aap_organizations": [
     {
       "name": "Org 1",
       "description": "First Organization"
@@ -90,11 +90,11 @@ Options for the `gateway_organizations` variable:
 - Get or create Org 2
 - Rename Org 3
 
-File name: `data/gateway_organizations.yml`
+File name: `data/aap_organizations.yml`
 
 ```yaml
 ---
-gateway_organizations:
+aap_organizations:
 - name: "Deprecated Org"
   state: absent
 - name: Org 1
@@ -109,7 +109,7 @@ gateway_organizations:
 File name: [manage_data.yml](../../README.md#example-ansible-playbook) can be found in the top-level README.
 
 ```shell
-ansible-playbook manage_data.yml -e @data/gateway_organizations.yml
+ansible-playbook manage_data.yml -e @data/aap_organizations.yml
 ```
 
 ## License

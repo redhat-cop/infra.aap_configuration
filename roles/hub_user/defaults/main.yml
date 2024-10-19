@@ -9,7 +9,7 @@
 # These are the default variables specific to the license role
 
 # a list of dictionaries describing the Automation Hub users
-ah_users: []
+aap_user_accounts: []
 # possible fields:
 #  - username
 #  - groups
