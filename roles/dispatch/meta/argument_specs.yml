@@ -21,7 +21,7 @@ argument_specs:
             var: aap_organizations
             tags: organizations
           - role: gateway_service_clusters
-            var: service_clusters_list
+            var: gateway_service_clusters
             tags: service_clusters
           - role: gateway_service_keys
             var: service_keys_list
@@ -36,7 +36,7 @@ argument_specs:
             var: role_user_assignments_list
             tags: role_user_assignments
           - role: gateway_routes
-            var: routes_list
+            var: gateway_routes
             tags: routes
           - role: gateway_teams
             var: platform_teams

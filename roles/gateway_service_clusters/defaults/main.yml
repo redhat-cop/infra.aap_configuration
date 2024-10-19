@@ -9,9 +9,9 @@
 # These are the default variables specific to the license role
 
 # a list of dictionaries describing the service clusters
-service_clusters_list: []
-service_clusters_secure_logging: "{{ aap_configuration_secure_logging | default(false) }}"
-service_clusters_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
-service_clusters_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
-service_clusters_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
+gateway_service_clusters: []
+gateway_service_clusters_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+gateway_service_clusters_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
+gateway_service_clusters_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
+aap_configuration_async_dir: null
 ...

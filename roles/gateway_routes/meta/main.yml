@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: routes
+  role_name: gateway_routes
   author: Martin Slemr
   description: An Ansible Role to create service non-API routes in automation platform gateway.
   company: Red Hat

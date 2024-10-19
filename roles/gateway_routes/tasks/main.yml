@@ -21,10 +21,12 @@
     gateway_token: "{{ aap_token | default(omit, true) }}"
     gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ routes if routes is defined else routes_list }}"
+  loop: "{{ gateway_routes }}"
   loop_control:
     loop_var: __gateway_routes_item
-  no_log: "{{ routes_secure_logging }}"
+    label: "{{ __operation.verb }} the label {{ __gateway_routes_item.name }} to Controller"
+    pause: "{{ controller_configuration_labels_loop_delay }}"
+  no_log: "{{ gateway_routes_secure_logging }}"
   async: 1000
   poll: 0
   register: __gateway_routes_job_async
@@ -42,8 +44,9 @@
   loop: "{{ __gateway_routes_job_async.results }}"
   loop_control:
     loop_var: __gateway_routes_job_async_results_item
+    label: "{{ __operation.verb }} Label {{ __gateway_routes_job_async_results_item.__gateway_routes_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __gateway_routes_job_async_results_item.ansible_job_id is defined
-  no_log: "{{ routes_secure_logging }}"
+  no_log: "{{ gateway_routes_secure_logging }}"
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir | default(omit) }}"
 ...

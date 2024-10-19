@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: authenticator_maps
+  role_name: gateway_authenticator_maps
   author: Martin Slemr
   description: An Ansible Role to create authenticator maps in automation platform gateway.
   company: Red Hat

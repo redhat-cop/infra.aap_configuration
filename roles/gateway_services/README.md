@@ -95,7 +95,7 @@ File name: `data/services.yml`
 ```yaml
 ---
 platform_state: absent
-service_clusters_list:
+gateway_service_clusters:
 - name: Controller API
 - name: Hub API
 - name: EDA API
