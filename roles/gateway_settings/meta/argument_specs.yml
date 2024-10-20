@@ -35,7 +35,7 @@ argument_specs:
 
 
       # No_log variables
-      settings_secure_logging:
+      gateway_services_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(true) }}"
         required: false
         type: bool

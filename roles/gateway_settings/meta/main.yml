@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: settings
+  role_name: gateway_settings
   author: Sean Sullivan
   description: A role to set some Ansible Automation gateway settings
   company: Red Hat

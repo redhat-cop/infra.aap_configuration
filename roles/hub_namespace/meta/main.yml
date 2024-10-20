@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "namespace"
+  role_name: "hub_namespace"
   author: "Sean Sullivan"
   description: "An Ansible Role to create namespace in Automation Hub."
   company: "Red Hat"

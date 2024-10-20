@@ -19,7 +19,7 @@ gateway_configuration_dispatcher_roles:
     var: aap_organizations
     tags: organizations
   - role: gateway_service_clusters
-    var: service_clusters_list
+    var: gateway_service_nodes
     tags: service_clusters
   - role: gateway_service_keys
     var: service_keys_list

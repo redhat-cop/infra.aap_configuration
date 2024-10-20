@@ -9,7 +9,7 @@
 # These are the default variables specific to the license role
 
 # a list of dictionaries describing the users
-users_list: []
+aap_user_accounts: []
 # possible fields:
 #  - username
 #  - groups
@@ -25,8 +25,9 @@ users_list: []
 
 users_default_password: change_me
 
-users_secure_logging: "{{ aap_configuration_secure_logging | default('true') }}"
-users_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
-users_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
-users_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
+gateway_users_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
+gateway_users_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+gateway_users_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
+gateway_users_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
+aap_configuration_async_dir: null
 ...

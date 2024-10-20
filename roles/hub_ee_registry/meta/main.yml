@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "ee_registry"
+  role_name: "hub_ee_registry"
   author: "Tom Page"
   description: "An Ansible Role to create ee_registry in Automation Hub."
   company: "Red Hat"

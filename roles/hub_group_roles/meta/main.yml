@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: group_roles
+  role_name: hub_group_roles
   author: Sean Sullivan
   description: "An Ansible Role to manage groups roles in Automation Hub."
   company: "Red Hat"

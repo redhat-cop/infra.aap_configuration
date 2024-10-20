@@ -24,6 +24,8 @@
   loop: "{{ users if users is defined else users_list }}"
   loop_control:
     loop_var: __gateway_user_accounts_item
+    label: "{{ __operation.verb }} the label {{ __gateway_user_accounts_item.name }} to Controller"
+    pause: "{{ gateway_users_loop_delay }}"
   no_log: "{{ users_secure_logging }}"
   async: 1000
   poll: 0
@@ -42,6 +44,7 @@
   loop: "{{ __gateway_user_accounts_job_async.results }}"
   loop_control:
     loop_var: __gateway_user_accounts_job_async_results_item
+    label: "{{ __operation.verb }} Label {{ __gateway_user_accounts_job_async_result.__gateway_user_accounts_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __gateway_user_accounts_job_async_results_item.ansible_job_id is defined
   no_log: "{{ users_secure_logging }}"
   vars:

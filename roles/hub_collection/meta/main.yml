@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "collection"
+  role_name: "hub_collection"
   author: "Inderpal Tiwana"
   description: "An Ansible Role to update, or destroy Automation Hub Collections."
   company: "Red Hat"

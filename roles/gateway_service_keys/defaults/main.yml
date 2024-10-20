@@ -9,9 +9,8 @@
 # These are the default variables specific to the service_key role
 
 # a list of dictionaries describing the service keys
-service_keys_list: []
-service_keys_secure_logging: "{{ aap_configuration_secure_logging | default(false) }}"
-service_keys_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
-service_keys_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
-service_keys_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
+gateway_gateway_service_keys: []
+gateway_service_keys_secure_logging: "{{ aap_configuration_secure_logging | default(false) }}"
+gateway_service_keys_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+gateway_service_keys_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 ...

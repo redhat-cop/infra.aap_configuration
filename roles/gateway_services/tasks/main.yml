@@ -22,9 +22,11 @@
     gateway_token: "{{ aap_token | default(omit, true) }}"
     gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ services if services is defined else services_list }}"
+  loop: "{{ gateway_services }}"
   loop_control:
     loop_var: __gateway_services_item
+    label: "{{ __operation.verb }} the label {{ __gateway_services_item.name }} to Controller"
+    pause: "{{ gateway_services_loop_delay }}"
   no_log: "{{ services_secure_logging }}"
   async: 1000
   poll: 0
@@ -43,6 +45,7 @@
   loop: "{{ __gateway_services_job_async.results }}"
   loop_control:
     loop_var: __gateway_services_job_async_results_item
+    label: "{{ __operation.verb }} Label {{ __gateway_services_job_async_results_item.__gateway_services_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __gateway_services_job_async_results_item.ansible_job_id is defined
   no_log: "{{ services_secure_logging }}"
   vars:

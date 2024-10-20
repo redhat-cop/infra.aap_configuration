@@ -18,7 +18,9 @@
   loop: "{{ aap_teams }}"
   loop_control:
     loop_var: __gateway_teams_item
-  no_log: "{{ platform_teams_secure_logging }}"
+    label: "{{ __operation.verb }} the label {{ __gateway_teams_item.name }} to Controller"
+    pause: "{{ gateway_teams_loop_delay }}"
+  no_log: "{{ gateway_teams_secure_logging }}"
   async: 1000
   poll: 0
   register: __gateway_teams_job_async
@@ -31,11 +33,12 @@
     jid: "{{ __gateway_teams_job_async_results_item.ansible_job_id }}"
   register: __gateway_teams_job_async_result
   until: __gateway_teams_job_async_result.finished
-  retries: "{{ platform_teams_async_retries }}"
-  delay: "{{ platform_teams_async_delay }}"
+  retries: "{{ gateway_teams_async_retries }}"
+  delay: "{{ gateway_teams_async_delay }}"
   loop: "{{ __gateway_teams_job_async.results }}"
   loop_control:
     loop_var: __gateway_teams_job_async_results_item
+    label: "{{ __operation.verb }} Label {{ __gateway_teams_job_async_results_item.__gateway_teams_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __gateway_teams_job_async_results_item.ansible_job_id is defined
   no_log: "{{ platform_teams_secure_logging }}"
   vars:

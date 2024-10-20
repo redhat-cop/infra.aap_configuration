@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "ee_repository_sync"
+  role_name: "hub_ee_repository_sync"
   author: "Tom Page"
   description: "An Ansible Role to sync ee_repository in Automation Hub."
   company: "Red Hat"

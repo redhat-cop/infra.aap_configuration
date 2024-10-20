@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "collection_remote"
+  role_name: "hub_collection_remote"
   author: "Sean Sullivan"
   description: "An Ansible Role to create collection remotes in Automation Hub."
   company: "Red Hat"

@@ -27,10 +27,10 @@ argument_specs:
             var: service_keys_list
             tags: service_keys
           - role: gateway_service_nodes
-            var: service_nodes_list
+            var: gateway_service_nodes
             tags: service_nodes
           - role: gateway_services
-            var: services_list
+            var: gateway_services
             tags: services
           - role: gateway_role_user_assignments
             var: role_user_assignments_list

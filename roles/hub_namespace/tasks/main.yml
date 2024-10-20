@@ -1,17 +1,17 @@
 ---
 # Create AH Namespace
-- name: Get token
-  ansible.hub.ah_token:
-    ah_host:               "{{ aap_hostname | default(omit) }}"
-    ah_username:          "{{ aap_username | default(omit) }}"
-    ah_password:           "{{ aap_password | default(omit) }}"
-    ah_path_prefix:        "{{ ah_path_prefix | default(omit) }}"
-    validate_certs:        "{{ aap_validate_certs | default(omit) }}"
-    request_timeout:       "{{ aap_request_timeout | default(omit) }}"
-  when:
-    - ah_token is not defined
-    - lookup("ansible.builtin.env", "AH_API_TOKEN") == ""
-    - ah_namespaces | length > 1
+# - name: Get token
+#   ansible.hub.ah_token:
+#     ah_host:               "{{ aap_hostname | default(omit) }}"
+#     ah_username:          "{{ aap_username | default(omit) }}"
+#     ah_password:           "{{ aap_password | default(omit) }}"
+#     ah_path_prefix:        "{{ ah_path_prefix | default(omit) }}"
+#     validate_certs:        "{{ aap_validate_certs | default(omit) }}"
+#     request_timeout:       "{{ aap_request_timeout | default(omit) }}"
+#   when:
+#     - ah_token is not defined
+#     - lookup("ansible.builtin.env", "AH_API_TOKEN") == ""
+#     - ah_namespaces | length > 1
 
 - name: Add Automation Hub Namespace
   ansible.hub.ah_namespace:
@@ -35,6 +35,8 @@
   loop: "{{ ah_namespaces }}"
   loop_control:
     loop_var: "__namespace_item"
+    label: "{{ __operation.verb }} the label {{ __ah_configuration_namespace__item.name }} to Controller"
+    pause: "{{ ah_configuration_namespace__loop_delay }}"
   no_log: "{{ ah_configuration_namespace_secure_logging }}"
   async: "{{ ah_configuration_namespace_async_timeout }}"
   poll: 0
@@ -53,6 +55,7 @@
   loop: "{{ __namespaces_job_async.results }}"
   loop_control:
     loop_var: __namespaces_job_async_result_item
+    label: "{{ __operation.verb }} Label {{ __namespaces_job_async_result_item.__namespace_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __namespaces_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_namespace_secure_logging }}"
   vars:

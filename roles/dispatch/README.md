@@ -19,8 +19,8 @@ gateway_dispatch_roles:
   - {role: teams, var: platform_teams, tags: teams}
   - {role: service_clusters, var: gateway_service_clusters, tags: service_clusters}
   - {role: service_keys, var: service_keys_list, tags: service_keys}
-  - {role: service_nodes, var: service_nodes_list, tags: service_nodes}
-  - {role: services, var: services_list, tags: services}
+  - {role: service_nodes, var: gateway_service_nodes, tags: service_nodes}
+  - {role: services, var: gateway_services, tags: services}
   - {role: routes, var: gateway_routes, tags: routes}
   - {role: role_user_assignments, var: role_user_assignments_list, tags: role_user_assignments}
 ```

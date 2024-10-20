@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "group"
+  role_name: "hub_group"
   author: "Tom Page"
   description: "An Ansible Role to manage groups in Automation Hub."
   company: "Red Hat"

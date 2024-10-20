@@ -3,7 +3,7 @@ argument_specs:
   main:
     short_description: An Ansible Role to create service nodes on automation platform gateway.
     options:
-      service_nodes_list:
+      gateway_service_nodes:
         description: Data structure describing your service nodes
         type: list
         required: true
@@ -34,7 +34,7 @@ argument_specs:
             description: Desired state of the resource.
 
       # Async variables
-      service_nodes_async_retries:
+      gateway_service_nodes_async_retries:
         default: "{{ aap_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -42,7 +42,7 @@ argument_specs:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
-      service_nodes_async_delay:
+      gateway_service_nodes_async_delay:
         default: "{{ aap_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -59,7 +59,7 @@ argument_specs:
 
 
       # No_log variables
-      service_nodes_secure_logging:
+      gateway_service_nodes_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool

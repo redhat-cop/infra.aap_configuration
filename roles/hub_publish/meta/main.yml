@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "publish"
+  role_name: "hub_publish"
   author: "Sean Sullivan"
   description: "An Ansible Role to publish collections to Automation Hub or Galaxies."
   company: "Red Hat"

@@ -50,7 +50,7 @@ This also speeds up the overall role.
 
 ### Service Cluster Arguments
 
-Options for the `service_clusters_list` variable:
+Options for the `gateway_service_nodes` variable:
 
 | Variable Name  | Default Value |      Required      | Type | Description                                                                             |
 |:---------------|:-------------:|:------------------:|:----:|:----------------------------------------------------------------------------------------|
@@ -108,14 +108,6 @@ gateway_service_clusters:
 - name: "Automation Hub"
   new_name: "Ansible Galaxy"
   ```
-
-## Run Playbook
-
-File name: [manage_data.yml](../../README.md#example-ansible-playbook) can be found in the top-level README.
-
-```shell
-ansible-playbook manage_data.yml -e @data/gateway_service_clusters.yml
-```
 
 ## License
 

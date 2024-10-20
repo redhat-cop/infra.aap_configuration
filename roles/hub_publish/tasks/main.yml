@@ -9,6 +9,8 @@
   loop: "{{ ah_collections }}"
   loop_control:
     loop_var: "__ah_collection_item"
+    label: "{{ __operation.verb }} the label {{ __ah_configuration_publish__item.name }} to Controller"
+    pause: "{{ ah_configuration_publish__loop_delay }}"
   no_log: "{{ ah_configuration_publish_secure_logging }}"
   when:
     - ah_collection_list is not defined
@@ -23,6 +25,7 @@
   loop: "{{ ah_collections }}"
   loop_control:
     loop_var: "__ah_collection_item"
+    label: "{{ __operation.verb }} Label {{ __ah_collection_item.__ah_collection_item.name }} | Wait for finish the Label {{ __operation.action }}"
   no_log: "{{ ah_configuration_publish_secure_logging }}"
   when:
     - ah_collection_list is not defined

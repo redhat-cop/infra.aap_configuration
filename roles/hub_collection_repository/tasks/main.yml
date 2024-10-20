@@ -23,6 +23,8 @@
   loop: "{{ ah_collection_repositories }}"
   loop_control:
     loop_var: "__collection_repository_item"
+    label: "{{ __operation.verb }} the label {{ __ah_configuration_collection_repository__item.name }} to Controller"
+    pause: "{{ ah_configuration_collection_repository__loop_delay }}"
   no_log: "{{ ah_configuration_collection_repository_secure_logging }}"
   async: "{{ ah_configuration_collection_repository_async_timeout }}"
   poll: 0
@@ -41,6 +43,7 @@
   loop: "{{ __collection_repository_job_async.results }}"
   loop_control:
     loop_var: __collection_repository_job_async_result_item
+    label: "{{ __operation.verb }} Label {{ __collection_repository_job_async_result_item.__collection_repository_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __collection_repository_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_collection_repository_secure_logging }}"
   vars:

@@ -16,6 +16,8 @@
   loop: "{{ ah_ee_repositories }}"
   loop_control:
     loop_var: "__ee_repository_item"
+    label: "{{ __operation.verb }} the label {{ __ah_configuration_ee_repository_sync__item.name }} to Controller"
+    pause: "{{ ah_configuration_ee_repository_sync__loop_delay }}"
   when: __ee_repository_item.sync | default(false)
   no_log: "{{ ah_configuration_ee_repository_secure_logging }}"
   async: "{{ ah_configuration_ee_repository_sync_async_timeout }}"
@@ -35,6 +37,7 @@
   loop: "{{ __ee_repository_syncs_job_async.results }}"
   loop_control:
     loop_var: __ee_repository_syncs_job_async_result_item
+    label: "{{ __operation.verb }} Label {{ __ee_repository_syncs_job_async_result_item.__ee_repository_sync_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __ee_repository_syncs_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_ee_repository_secure_logging }}"
   vars:

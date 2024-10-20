@@ -46,7 +46,7 @@ This also speeds up the overall role.
 |`gateway_routes_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
 |`aap_configuration_loop_delay`|1000|no|This variable sets the loop_delay for the role globally.|
 |`gateway_routes_loop_delay`|`aap_configuration_loop_delay`|no|This variable sets the loop_delay for the role.|
-|`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|                                                                                  |  |
+|`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
 ## Data Structure
 
@@ -86,7 +86,7 @@ Options for the `routes_list` variable:
 
 ```json
 {
-  "services_list": [
+  "gateway_services": [
     {
       "name": "Controller Config Route",
       "state": "exists"
@@ -126,14 +126,6 @@ routes_list:
 - name: "Hub Config route"
 - name: 3
 - name: 4
-```
-
-## Run Playbook
-
-File name: [manage_data.yml](../../README.md#example-ansible-playbook) can be found in the top-level README.
-
-```shell
-ansible-playbook manage_data.yml -e @data/gateway_routes.yml
 ```
 
 ## License

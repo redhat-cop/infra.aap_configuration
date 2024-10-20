@@ -9,9 +9,10 @@
 # These are the default variables specific to the license role
 
 # a list of dictionaries describing the service nodes
-service_nodes_list: []
-service_nodes_secure_logging: "{{ aap_configuration_secure_logging | default(false) }}"
-service_nodes_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
-service_nodes_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
-service_nodes_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
+gateway_service_nodes: []
+gateway_service_nodes_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
+gateway_service_nodes_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+gateway_service_nodes_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
+gateway_service_nodes_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
+aap_configuration_async_dir: null
 ...

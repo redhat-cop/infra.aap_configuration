@@ -33,7 +33,7 @@ argument_specs:
             description: Desired state of the resource.
 
       # Async variables
-      platform_teams_async_retries:
+      gateway_teams_async_retries:
         default: "{{ aap_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -41,7 +41,7 @@ argument_specs:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
-      platform_teams_async_delay:
+      gateway_teams_async_delay:
         default: "{{ aap_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -58,7 +58,7 @@ argument_specs:
 
 
       # No_log variables
-      platform_teams_secure_logging:
+      gateway_teams_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool

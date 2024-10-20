@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "role"
+  role_name: "hub_role"
   author: Sean Sullivan
   description: "An Ansible Role to manage roles in Automation Hub."
   company: "Red Hat"

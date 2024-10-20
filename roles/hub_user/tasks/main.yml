@@ -22,6 +22,8 @@
   loop: "{{ aap_user_accounts }}"
   loop_control:
     loop_var: "__user"
+    label: "{{ __operation.verb }} the label {{ __user.name }} to Controller"
+    pause: "{{ ah_configuration_user_accounts__loop_delay }}"
   no_log: "{{ ah_configuration_user_secure_logging }}"
   async: "{{ ah_configuration_user_async_timeout }}"
   poll: 0
@@ -40,6 +42,7 @@
   loop: "{{ __users_job_async.results }}"
   loop_control:
     loop_var: __users_job_async_result_item
+    label: "{{ __operation.verb }} Label {{ __users_job_async_result_item.__user.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __users_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_user_secure_logging }}"
   vars:
