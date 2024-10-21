@@ -4,7 +4,7 @@
     name: "{{ __gateway_service_clusters_item.name | mandatory }}"
     new_name: "{{ __gateway_service_clusters_item.new_name | default(omit) }}"
     service_type: "{{ __gateway_service_clusters_item.service_type | default(omit) }}"
-    state: "{{ __gateway_service_clusters_item.state | default(gateway_state | default(omit, true)) }}"
+    state: "{{ __gateway_service_clusters_item.state | default(platform_state | default(omit, true)) }}"
     outlier_detection_enabled: "{{ __gateway_service_clusters_item.outlier_detection_enabled | default(omit) }}"
     outlier_detection_consecutive_5xx: "{{ __gateway_service_clusters_item.outlier_detection_consecutive_5xx | default(omit) }}"
     outlier_detection_interval_seconds: "{{ __gateway_service_clusters_item.outlier_detection_interval_seconds | default(omit) }}"
@@ -21,12 +21,14 @@
     gateway_username: "{{ aap_username | default(omit, true) }}"
     gateway_password: "{{ aap_password | default(omit, true) }}"
     gateway_token: "{{ aap_token | default(omit, true) }}"
-    gateway_request_timeout: "{{ aap_request_timeout | default(omit, 10) }}"
+    gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ service_clusters if service_clusters is defined else service_clusters_list }}"
+  loop: "{{ gateway_service_clusters }}"
   loop_control:
     loop_var: __gateway_service_clusters_item
-  no_log: "{{ service_clusters_secure_logging }}"
+    label: "{{ __operation.verb }} the label {{ __gateway_service_clusters_item.name }} to Controller"
+    pause: "{{ controller_configuration_labels_loop_delay }}"
+  no_log: "{{ gateway_service_clusters_secure_logging }}"
   async: 1000
   poll: 0
   register: __gateway_service_clusters_job_async
@@ -39,13 +41,14 @@
     jid: "{{ __gateway_service_clusters_job_async_results_item.ansible_job_id }}"
   register: __gateway_service_clusters_job_async_result
   until: __gateway_service_clusters_job_async_result.finished
-  retries: "{{ service_clusters_async_retries }}"
-  delay: "{{ service_clusters_async_delay }}"
+  retries: "{{ gateway_service_clusters_async_retries }}"
+  delay: "{{ gateway_service_clusters_async_delay }}"
   loop: "{{ __gateway_service_clusters_job_async.results }}"
   loop_control:
     loop_var: __gateway_service_clusters_job_async_results_item
+    label: "{{ __operation.verb }} Label {{ __gateway_service_clusters_job_async_results_item.__gateway_service_clusters_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __gateway_service_clusters_job_async_results_item.ansible_job_id is defined
-  no_log: "{{ service_clusters_secure_logging }}"
+  no_log: "{{ gateway_service_clusters_secure_logging }}"
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir | default(omit) }}"
 ...

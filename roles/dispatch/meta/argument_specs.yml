@@ -18,25 +18,25 @@ argument_specs:
             var: http_ports_list
             tags: http_ports
           - role: gateway_organizations
-            var: organizations_list
+            var: aap_organizations
             tags: organizations
           - role: gateway_service_clusters
-            var: service_clusters_list
+            var: gateway_service_clusters
             tags: service_clusters
           - role: gateway_service_keys
             var: service_keys_list
             tags: service_keys
           - role: gateway_service_nodes
-            var: service_nodes_list
+            var: gateway_service_nodes
             tags: service_nodes
           - role: gateway_services
-            var: services_list
+            var: gateway_services
             tags: services
           - role: gateway_role_user_assignments
             var: role_user_assignments_list
             tags: role_user_assignments
           - role: gateway_routes
-            var: routes_list
+            var: gateway_routes
             tags: routes
           - role: gateway_teams
             var: platform_teams
@@ -83,7 +83,7 @@ argument_specs:
             var: controller_inventory_sources
             tags: inventory_sources
           - role: controller_applications
-            var: controller_applications
+            var: aap_applications
             tags: applications
           - role: controller_hosts
             var: controller_hosts
@@ -118,7 +118,7 @@ argument_specs:
             var: ah_groups
             tags: groups
           - role: pah_user
-            var: ah_users
+            var: aap_user_accounts
             tags: users
           - role: pah_namespace
             var: ah_namespaces

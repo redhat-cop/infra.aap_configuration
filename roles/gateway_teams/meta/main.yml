@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: teams
+  role_name: gateway_teams
   author: Martin Slemr
   description: An Ansible Role to create teams in automation platform gateway.
   company: Red Hat

@@ -7,3 +7,4 @@ major_changes:
   - Introduction of roles for gateway
 bugfixes:
   - Controller credentials role now includes request timeout option.
+  - meta_dependency_check set to default to false. This is due to feature not working on controller, or in offline environments without a hub. Set controller_dependency_check to 'true' to re-enable feature.

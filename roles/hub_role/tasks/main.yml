@@ -16,6 +16,8 @@
   loop: "{{ ah_roles }}"
   loop_control:
     loop_var: "__role"
+    label: "{{ __operation.verb }} the label {{ __ah_configuration_role__item.name }} to Controller"
+    pause: "{{ ah_configuration_role__loop_delay }}"
   no_log: "{{ ah_configuration_role_secure_logging }}"
   async: "{{ ah_configuration_role_async_timeout }}"
   poll: 0
@@ -34,6 +36,7 @@
   loop: "{{ __roles_job_async.results }}"
   loop_control:
     loop_var: __roles_job_async_result_item
+    label: "{{ __operation.verb }} Label {{ __roles_job_async_result_item.__role.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __roles_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_role_secure_logging }}"
   vars:

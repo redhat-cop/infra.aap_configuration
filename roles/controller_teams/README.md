@@ -23,7 +23,7 @@ Currently:
 |`aap_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
-|`controller_teams`|`see below`|yes|Data structure describing your Teams described below. Alias: teams ||
+|`aap_teams`|`see below`|yes|Data structure describing your Teams described below. Alias: teams ||
 
 ### Enforcing defaults
 
@@ -34,12 +34,12 @@ This should be enabled to enforce configuration and prevent configuration drift.
 
 Enabling this will enforce configurtion without specifying every option in the configuration files.
 
-'controller_configuration_platform_teams_enforce_defaults' defaults to the value of 'controller_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
+'controller_configuration_platform_teams_enforce_defaults' defaults to the value of 'aap_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`controller_configuration_platform_teams_enforce_defaults`|`False`|no|Whether or not to enforce default option values on only the applications role|
-|`controller_configuration_enforce_defaults`|`False`|no|This variable enables enforced default values as well, but is shared across multiple roles, see above.|
+|`aap_configuration_enforce_defaults`|`False`|no|This variable enables enforced default values as well, but is shared across multiple roles, see above.|
 
 ### Secure Logging Variables
 
@@ -70,7 +70,7 @@ This also speeds up the overall role.
 |`controller_configuration_teams_loop_delay`|`aap_configuration_loop_delay`|no|This sets the pause between each item in the loop for the role. To help when API is getting overloaded.|
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
-### Data structure `controller_teams:` should include following vars
+### Data structure `aap_teams:` should include following vars
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
@@ -100,7 +100,7 @@ This also speeds up the overall role.
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: infra.aap_configuration.teams, when: controller_teams is defined}
+    - {role: infra.aap_configuration.teams, when: aap_teams is defined}
 ```
 
 ## License

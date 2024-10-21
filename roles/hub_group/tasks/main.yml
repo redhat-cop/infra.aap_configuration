@@ -15,6 +15,8 @@
   loop: "{{ ah_groups }}"
   loop_control:
     loop_var: "__group"
+    label: "{{ __operation.verb }} the label {{ __ah_configuration_group__item.name }} to Controller"
+    pause: "{{ ah_configuration_group__loop_delay }}"
   no_log: "{{ ah_configuration_group_secure_logging }}"
   async: "{{ ah_configuration_group_async_timeout }}"
   poll: 0
@@ -33,6 +35,7 @@
   loop: "{{ __groups_job_async.results }}"
   loop_control:
     loop_var: __groups_job_async_result_item
+    label: "{{ __operation.verb }} Label {{ __groups_job_async_result_item.__group_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __groups_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_group_secure_logging }}"
   vars:

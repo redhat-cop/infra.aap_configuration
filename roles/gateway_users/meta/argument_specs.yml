@@ -3,7 +3,7 @@ argument_specs:
   main:
     short_description: An Ansible Role to create users on automation platform gateway.
     options:
-      users_list:
+      aap_user_accounts:
         description: Data structure describing your users
         type: list
         required: true
@@ -54,7 +54,7 @@ argument_specs:
         #     type: str
         #     description: The uid associated with the users authenticators
         #   state:
-        #     default: "{{ gateway_state | default('present') }}"
+        #     default: "{{ platform_state | default('present') }}"
         #     required: false
         #     type: str
         #     description: Desired state of the resource.
@@ -66,7 +66,7 @@ argument_specs:
         description: Global variable to set the password for all users.
 
       # Async variables
-      users_async_retries:
+      gateway_users_async_retries:
         default: "{{ aap_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -74,7 +74,7 @@ argument_specs:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
-      users_async_delay:
+      gateway_users_async_delay:
         default: "{{ aap_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -91,7 +91,7 @@ argument_specs:
 
 
       # No_log variables
-      users_secure_logging:
+      gateway_users_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(true) }}"
         required: false
         type: bool

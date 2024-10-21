@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: "dispatch"
   author: Tom Pag, Alan Wong, and Sean Sullivan
-  description: "An Ansible Role which launches all of the roles within the platform_configuration Collection."
+  description: "An Ansible Role which launches all of the roles within the aap_configuration Collection."
   company: "Red Hat"
 
   # If the issue tracker for your role is not on github, uncomment the

@@ -1,6 +1,6 @@
 ---
 # list of dicts describing Controller users
-controller_user_accounts: []
+aap_user_accounts: []
 # if you're too lazy to give your users a password, this is the default they will get
 # set this variable to something false and there won't be a default password
 controller_user_default_password: "change_me"
@@ -10,5 +10,5 @@ controller_configuration_users_async_retries: "{{ aap_configuration_async_retrie
 controller_configuration_users_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 controller_configuration_users_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 aap_configuration_async_dir: null
-controller_configuration_users_enforce_defaults: "{{ controller_configuration_enforce_defaults | default(false) }}"
+controller_configuration_users_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 ...

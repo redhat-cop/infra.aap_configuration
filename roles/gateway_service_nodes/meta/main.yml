@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: service_nodes
+  role_name: gateway_service_nodes
   author: Martin Slemr
   description: An Ansible Role to create service nodes in automation platform gateway.
   company: Red Hat

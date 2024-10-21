@@ -12,7 +12,7 @@
     organizations: "{{ __gateway_user_accounts_item.organizations | default(omit) }}"
     authenticators: "{{ __gateway_user_accounts_item.authenticators | default(omit) }}"
     authenticator_uid: "{{ __gateway_user_accounts_item.authenticator_uid | default(omit) }}"
-    state: "{{ __gateway_user_accounts_item.state | default(gateway_state | default(omit, true)) }}"
+    state: "{{ __gateway_user_accounts_item.state | default(platform_state | default(omit, true)) }}"
 
     # Role Standard Options
     gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
@@ -24,6 +24,8 @@
   loop: "{{ users if users is defined else users_list }}"
   loop_control:
     loop_var: __gateway_user_accounts_item
+    label: "{{ __operation.verb }} the label {{ __gateway_user_accounts_item.name }} to Controller"
+    pause: "{{ gateway_users_loop_delay }}"
   no_log: "{{ users_secure_logging }}"
   async: 1000
   poll: 0
@@ -42,6 +44,7 @@
   loop: "{{ __gateway_user_accounts_job_async.results }}"
   loop_control:
     loop_var: __gateway_user_accounts_job_async_results_item
+    label: "{{ __operation.verb }} Label {{ __gateway_user_accounts_job_async_result.__gateway_user_accounts_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __gateway_user_accounts_job_async_results_item.ansible_job_id is defined
   no_log: "{{ users_secure_logging }}"
   vars:

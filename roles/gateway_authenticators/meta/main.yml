@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: authenticators
+  role_name: gateway_authenticators
   author: Martin Slemr
   description: An Ansible Role to create authenticators in Automation Platform Gateway.
   company: Red Hat

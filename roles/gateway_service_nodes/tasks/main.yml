@@ -6,18 +6,20 @@
     address: "{{ __gateway_service_nodes_item.address | default(omit) }}"
     service_cluster: "{{ __gateway_service_nodes_item.service_cluster | default(omit) }}"
     tags: "{{ __gateway_service_nodes_item.tags | default(omit) }}"
-    state: "{{ __gateway_service_nodes_item.state | default(gateway_state | default(omit, true)) }}"
+    state: "{{ __gateway_service_nodes_item.state | default(platform_state | default(omit, true)) }}"
 
     # Role Standard Options
     gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
     gateway_username: "{{ aap_username | default(omit, true) }}"
     gateway_password: "{{ aap_password | default(omit, true) }}"
     gateway_token: "{{ aap_token | default(omit, true) }}"
-    gateway_request_timeout: "{{ aap_request_timeout | default(omit, 10) }}"
+    gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ service_nodes if service_nodes is defined else service_nodes_list }}"
+  loop: "{{ gateway_service_nodes }}"
   loop_control:
     loop_var: __gateway_service_nodes_item
+    label: "{{ __operation.verb }} the label {{ __gateway_service_nodes_item.name }} to Controller"
+    pause: "{{ gateway_service_nodes_loop_delay }}"
   no_log: "{{ service_nodes_secure_logging }}"
   async: 1000
   poll: 0
@@ -36,6 +38,7 @@
   loop: "{{ __gateway_service_nodes_job_async.results }}"
   loop_control:
     loop_var: __gateway_service_nodes_job_async_results_item
+    label: "{{ __operation.verb }} Label {{ __gateway_service_nodes_job_async_results_item.__gateway_service_nodes_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __gateway_service_nodes_job_async_results_item.ansible_job_id is defined
   no_log: "{{ service_nodes_secure_logging }}"
   vars:

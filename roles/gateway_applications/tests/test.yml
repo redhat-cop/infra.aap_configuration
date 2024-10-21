@@ -4,10 +4,10 @@
   connection: local
   gather_facts: false
   vars:
-    gateway_validate_certs: false
-    gateway_hostname: gateway.example.com
-    gateway_username: admin
-    gateway_password: changeme
+    aap_validate_certs: false
+    aap_hostname: gateway.example.com
+    aap_username: admin
+    aap_password: changeme
 
   pre_tasks:
     - name: Include vars from gateway_configs directory
@@ -16,5 +16,5 @@
         extensions: ["yml"]
 
   roles:
-    - {role: gateway_applications, when: applications_list is defined}
+    - {role: gateway_applications, when: gateway_applications is defined}
 ...

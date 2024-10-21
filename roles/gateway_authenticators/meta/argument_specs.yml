@@ -3,7 +3,7 @@ argument_specs:
   main:
     short_description: An Ansible Role to create authenticators on automation platform gateway.
     options:
-      authenticators_list:
+      gateway_authenticators:
         description: Data structure describing your authenticators
         type: list
         required: true
@@ -44,13 +44,13 @@ argument_specs:
             type: int
             description: The order in which an authenticator will be tried. This only pertains to username/password authenticators defaults to 1 (by API)
           state:
-            default: "{{ gateway_state | default('present') }}"
+            default: "{{ platform_state | default('present') }}"
             required: false
             type: str
             description: Desired state of the resource.
 
       # Async variables
-      authenticators_async_retries:
+      gateway_authenticators_async_retries:
         default: "{{ aap_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -58,7 +58,7 @@ argument_specs:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
-      authenticators_async_delay:
+      gateway_authenticators_async_delay:
         default: "{{ aap_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -75,7 +75,7 @@ argument_specs:
 
 
       # No_log variables
-      authenticators_secure_logging:
+      gateway_authenticators_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool

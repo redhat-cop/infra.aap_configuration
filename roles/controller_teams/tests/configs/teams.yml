@@ -1,5 +1,5 @@
 ---
-controller_teams:
+aap_teams:
   - name: "team1"
     description: "My first team"
     organization: "Default"

@@ -3,7 +3,7 @@ argument_specs:
   main:
     short_description: An Ansible Role to create teams on automation platform gateway.
     options:
-      platform_teams:
+      aap_teams:
         description: Data structure describing your teams
         type: list
         required: true
@@ -27,13 +27,13 @@ argument_specs:
             type: str
             description: Setting this option will change the existing organization (looked up via the organization field)
           state:
-            default: "{{ gateway_state | default('present') }}"
+            default: "{{ platform_state | default('present') }}"
             required: false
             type: str
             description: Desired state of the resource.
 
       # Async variables
-      platform_teams_async_retries:
+      gateway_teams_async_retries:
         default: "{{ aap_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -41,7 +41,7 @@ argument_specs:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
-      platform_teams_async_delay:
+      gateway_teams_async_delay:
         default: "{{ aap_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -58,7 +58,7 @@ argument_specs:
 
 
       # No_log variables
-      platform_teams_secure_logging:
+      gateway_teams_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool

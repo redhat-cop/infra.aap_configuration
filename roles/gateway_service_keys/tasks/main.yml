@@ -9,19 +9,21 @@
     secret: "{{ __gateway_service_keys_item.secret | default(omit) }}"
     secret_length: "{{ __gateway_service_keys_item.secret_length | default(omit) }}"
     mark_previous_inactive: "{{ __gateway_service_keys_item.mark_previous_inactive | default(omit) }}"
-    state: "{{ __gateway_service_keys_item.state | default(gateway_state | default(omit, true)) }}"
+    state: "{{ __gateway_service_keys_item.state | default(platform_state | default(omit, true)) }}"
 
     # Role Standard Options
     gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
     gateway_username: "{{ aap_username | default(omit, true) }}"
     gateway_password: "{{ aap_password | default(omit, true) }}"
     gateway_token: "{{ aap_token | default(omit, true) }}"
-    gateway_request_timeout: "{{ aap_request_timeout | default(omit, 10) }}"
+    gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ service_keys if service_keys is defined else service_keys_list }}"
+  loop: "{{ gateway_gateway_service_keys }}"
   loop_control:
     loop_var: __gateway_service_keys_item
-  no_log: "{{ service_keys_secure_logging }}"
+    label: "{{ __operation.verb }} the label {{ __gateway_service_keys_item.name }} to Controller"
+    pause: "{{ gateway_gateway_service_keys_loop_delay }}"
+  no_log: "{{ gateway_service_keys_secure_logging }}"
   async: 1000
   poll: 0
   register: __gateway_service_keys_job_async
@@ -34,13 +36,14 @@
     jid: "{{ __gateway_service_keys_job_async_results_item.ansible_job_id }}"
   register: __gateway_service_keys_job_async_result
   until: __gateway_service_keys_job_async_result.finished
-  retries: "{{ service_keys_async_retries }}"
-  delay: "{{ service_keys_async_delay }}"
+  retries: "{{ gateway_service_keys_async_retries }}"
+  delay: "{{ gateway_service_keys_async_delay }}"
   loop: "{{ __gateway_service_keys_job_async.results }}"
   loop_control:
     loop_var: __gateway_service_keys_job_async_results_item
+    label: "{{ __operation.verb }} Label {{ __gateway_service_keys_job_async_results_item.__gateway_service_keys_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __gateway_service_keys_job_async_results_item.ansible_job_id is defined
-  no_log: "{{ service_keys_secure_logging }}"
+  no_log: "{{ gateway_gateway_service_keys_secure_logging }}"
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir | default(omit) }}"
 ...

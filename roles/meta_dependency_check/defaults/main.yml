@@ -1,3 +1,3 @@
 ---
-controller_dependency_check: true
+controller_dependency_check: false
 ...

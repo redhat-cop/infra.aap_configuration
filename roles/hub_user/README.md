@@ -15,7 +15,7 @@ An Ansible Role to create users in Automation Hub.
 |`aap_request_timeout`|`10`|no|Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.||
 |`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
-|`ah_users`|`see below`|yes|Data structure describing your execution environment images, described below.||
+|`aap_user_accounts`|`see below`|yes|Data structure describing your execution environment images, described below.||
 
 ### Secure Logging Variables
 
@@ -42,6 +42,8 @@ This also speeds up the overall role.
 |`ah_configuration_user_async_timeout`|`aap_configuration_async_timeout`|no|This variable sets the async timeout for the role.|
 |`aap_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
 |`ah_configuration_user_async_retries`|`aap_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
+|`aap_configuration_loop_delay`|1000|no|This variable sets the loop_delay for the role globally.|
+|`ah_configuration_user_accounts_loop_delay`|`aap_configuration_loop_delay`|no|This variable sets the loop_delay for the role.|
 |`aap_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
 |`ah_configuration_user_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
@@ -68,7 +70,7 @@ This also speeds up the overall role.
 
 ```yaml
 ---
-ah_users:
+aap_user_accounts:
   - username: user1
     groups:
       - group1
