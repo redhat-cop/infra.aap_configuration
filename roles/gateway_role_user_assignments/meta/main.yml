@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: role_user_assignments
+  role_name: gateway_role_user_assignments
   author: Martin Slemr
   description: An Ansible Role to create RBAC Role User Assignments in Automation Platform gateway.
   company: Red Hat

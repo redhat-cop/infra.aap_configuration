@@ -3,7 +3,7 @@ argument_specs:
   main:
     short_description: An Ansible Role to create organizations on automation platform gateway.
     options:
-      organizations_list:
+      aap_organizations:
         description: Data structure describing your organizations
         type: list
         required: true
@@ -20,13 +20,13 @@ argument_specs:
             type: str
             description: Description of the organization
           state:
-            default: "{{ gateway_state | default('present') }}"
+            default: "{{ platform_state | default('present') }}"
             required: false
             type: str
             description: Desired state of the resource.
 
       # Async variables
-      organizations_async_retries:
+      gateway_organizations_async_retries:
         default: "{{ aap_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -34,7 +34,7 @@ argument_specs:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
-      organizations_async_delay:
+      gateway_organizations_async_delay:
         default: "{{ aap_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -51,7 +51,7 @@ argument_specs:
 
 
       # No_log variables
-      organizations_secure_logging:
+      gateway_organizations_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool

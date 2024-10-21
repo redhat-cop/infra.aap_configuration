@@ -23,7 +23,7 @@ Currently:
 |`aap_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
-|`controller_applications`|`see below`|yes|Data structure describing your applications, described below. Alias: applications ||
+|`aap_applications`|`see below`|yes|Data structure describing your applications, described below. Alias: applications ||
 
 ### Enforcing defaults
 
@@ -34,12 +34,12 @@ This should be enabled to enforce configuration and prevent configuration drift.
 
 Enabling this will enforce configurtion without specifying every option in the configuration files.
 
-'controller_configuration_applications_enforce_defaults' defaults to the value of 'controller_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
+'controller_configuration_applications_enforce_defaults' defaults to the value of 'aap_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`controller_configuration_applications_enforce_defaults`|`False`|no|Whether or not to enforce default option values on only the applications role|
-|`controller_configuration_enforce_defaults`|`False`|no|This variable enables enforced default values as well, but is shared across multiple roles, see above.|
+|`aap_configuration_enforce_defaults`|`False`|no|This variable enables enforced default values as well, but is shared across multiple roles, see above.|
 
 ### Secure Logging Variables
 
@@ -92,7 +92,7 @@ This also speeds up the overall role.
 
 ```json
  {
-    "controller_applications": [
+    "aap_applications": [
       {
         "name": "controller Config Default Application",
         "description": "Generic application, which can be used for oauth tokens",
@@ -109,7 +109,7 @@ This also speeds up the overall role.
 
 ```yaml
 ---
-controller_applications:
+aap_applications:
   - name: "controller Config Default Application"
     description: "Generic application, which can be used for oauth tokens"
     organization: "Default"
@@ -137,7 +137,7 @@ controller_applications:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: infra.aap_configuration.applications, when: controller_applications is defined}
+    - {role: infra.aap_configuration.applications, when: aap_applications is defined}
 ```
 
 ## License

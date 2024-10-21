@@ -3,7 +3,7 @@ argument_specs:
   main:
     short_description: An Ansible Role to create teams on Ansible Controller.
     options:
-      controller_teams:
+      aap_teams:
         description: Data structure describing your teams
         type: list
         elements: dict

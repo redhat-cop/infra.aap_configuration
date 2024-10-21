@@ -6,14 +6,14 @@
     user_ansible_id: "{{ __gateway_role_user_assignments_item.user_ansible_id | default(omit) }}"
     object_id: "{{ __gateway_role_user_assignments_item.object_id | default(omit) }}"
     object_ansible_id: "{{ __gateway_role_user_assignments_item.object_ansible_id | default(omit) }}"
-    state: "{{ __gateway_role_user_assignments_item.state | default(gateway_state | default(omit, true)) }}"
+    state: "{{ __gateway_role_user_assignments_item.state | default(platform_state | default(omit, true)) }}"
 
     # Role Standard Options
     gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
     gateway_username: "{{ aap_username | default(omit, true) }}"
     gateway_password: "{{ aap_password | default(omit, true) }}"
     gateway_token: "{{ aap_token | default(omit, true) }}"
-    gateway_request_timeout: "{{ aap_request_timeout | default(omit, 10) }}"
+    gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
   loop: "{{ role_user_assignments if role_user_assignments is defined else role_user_assignments_list }}"
   loop_control:

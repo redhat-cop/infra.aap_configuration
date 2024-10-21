@@ -23,7 +23,7 @@ Currently:
 |`aap_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
-|`controller_organizations`|`see below`|yes|Data structure describing your organization or organizations Described below. Alias: organizations ||
+|`aap_organizations`|`see below`|yes|Data structure describing your organization or organizations Described below. Alias: organizations ||
 |`assign_galaxy_credentials_to_org`|`true`|no|Boolean to indicate whether credentials should be assigned or not. It should be noted that credentials must exist before adding it. The dispatch role will set this to `false`, before re-running the role with it set to `true`. ||
 |`assign_default_ee_to_org`|`true`|no|Boolean to indicate whether default execution environment should be assigned or not. It should be noted that execution environment must exist before adding it. The dispatch role will set this to `false`, before re-running the role with it set to `true`. ||
 |`assign_notification_templates_to_org`|`true`|no|Boolean to indicate whether notification templates should be assigned or not. It should be noted that the templates must exist before adding them. The dispatch role will set this to `false`, before re-running the role with it set to `true`. ||
@@ -38,12 +38,12 @@ This should be enabled to enforce configuration and prevent configuration drift.
 
 Enabling this will enforce configurtion without specifying every option in the configuration files.
 
-'controller_configuration_organizations_enforce_defaults' defaults to the value of 'controller_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
+'controller_configuration_organizations_enforce_defaults' defaults to the value of 'aap_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`controller_configuration_organizations_enforce_defaults`|`False`|no|Whether or not to enforce default option values on only the applications role|
-|`controller_configuration_enforce_defaults`|`False`|no|This variable enables enforced default values as well, but is shared across multiple roles, see above.|
+|`aap_configuration_enforce_defaults`|`False`|no|This variable enables enforced default values as well, but is shared across multiple roles, see above.|
 
 ### Secure Logging Variables
 
@@ -102,7 +102,7 @@ This role accepts two data models. A simple straightforward easy to maintain mod
 
 ```json
 {
-    "controller_organizations": [
+    "aap_organizations": [
       {
         "name": "Default",
         "description": "This is the Default Group"
@@ -125,7 +125,7 @@ This role accepts two data models. A simple straightforward easy to maintain mod
 
 ```yaml
 ---
-controller_organizations:
+aap_organizations:
 - name: Default
   description: This is the Default Group
 - name: Automation Group
@@ -140,7 +140,7 @@ controller_organizations:
 
 ```yaml
 ---
-controller_organizations:
+aap_organizations:
 - name: Satellite
   description: Satellite
   max_hosts: 0
@@ -184,7 +184,7 @@ controller_organizations:
         ignore_files: [controller_config.yml.template]
         extensions: ["yml"]
   roles:
-    - {role: infra.aap_configuration.organizations, when: controller_organizations is defined}
+    - {role: infra.aap_configuration.organizations, when: aap_organizations is defined}
 ```
 
 ## License

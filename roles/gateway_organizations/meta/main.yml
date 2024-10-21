@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: organizations
+  role_name: gateway_organizations
   author: Martin Slemr
   description: An Ansible Role to create organizations in Automation Platform Gateway.
   company: Red Hat

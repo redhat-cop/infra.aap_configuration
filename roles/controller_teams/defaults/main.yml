@@ -1,10 +1,10 @@
 ---
 # These are the default variables specific to the teams role
-controller_teams: []
+aap_teams: []
 controller_configuration_platform_teams_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
 controller_configuration_platform_teams_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
 controller_configuration_platform_teams_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 controller_configuration_teams_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 aap_configuration_async_dir: null
-controller_configuration_platform_teams_enforce_defaults: "{{ controller_configuration_enforce_defaults | default(false) }}"
+controller_configuration_platform_teams_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 ...

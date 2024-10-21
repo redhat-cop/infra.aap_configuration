@@ -6,7 +6,7 @@
     number: "{{ __gateway_http_ports_item.number | default(omit) }}"
     use_https: "{{ __gateway_http_ports_item.use_https | default(false) }}"
     is_api_port: "{{ __gateway_http_ports_item.is_api_port | default(false) }}"
-    state: "{{ __gateway_http_ports_item.state | default(gateway_state | default(omit, true)) }}"
+    state: "{{ __gateway_http_ports_item.state | default(platform_state | default(omit, true)) }}"
 
     # Role Standard Options
     gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
@@ -15,10 +15,12 @@
     gateway_token: "{{ aap_token | default(omit, true) }}"
     gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ http_ports if http_ports is defined else http_ports_list }}"
+  loop: "{{ http_ports }}"
   loop_control:
     loop_var: __gateway_http_ports_item
-  no_log: "{{ http_ports_secure_logging }}"
+    label: "{{ __operation.verb }} AAP Platform Http Ports {{ __gateway_http_ports_item.name }}"
+    pause: "{{ gateway_http_ports_loop_delay }}"
+  no_log: "{{ gateway_http_ports_secure_logging }}"
   async: 1000
   poll: 0
   register: __gateway_http_ports_job_async
@@ -31,13 +33,14 @@
     jid: "{{ __gateway_http_ports_job_async_results_item.ansible_job_id }}"
   register: __gateway_http_ports_job_async_result
   until: __gateway_http_ports_job_async_result.finished
-  retries: "{{ http_ports_async_retries }}"
-  delay: "{{ http_ports_async_delay }}"
+  retries: "{{ gateway_http_ports_async_retries }}"
+  delay: "{{ gateway_http_ports_async_delay }}"
   loop: "{{ __gateway_http_ports_job_async.results }}"
   loop_control:
     loop_var: __gateway_http_ports_job_async_results_item
+    label: "{{ __operation.verb }} AAP Platform Http Ports {{ __gateway_http_ports_job_async_result.__gateway_http_ports_item.name }} | Wait for finish the Http Ports {{ __operation.action }}"
   when: __gateway_http_ports_job_async_results_item.ansible_job_id is defined
-  no_log: "{{ http_ports_secure_logging }}"
+  no_log: "{{ gateway_http_ports_secure_logging }}"
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir | default(omit) }}"
 ...

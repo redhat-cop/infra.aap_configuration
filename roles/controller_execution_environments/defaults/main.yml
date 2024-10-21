@@ -5,5 +5,5 @@ controller_configuration_execution_environments_async_retries: "{{ aap_configura
 controller_configuration_execution_environments_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 controller_configuration_execution_environments_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 aap_configuration_async_dir: null
-controller_configuration_execution_environments_enforce_defaults: "{{ controller_configuration_enforce_defaults | default(false) }}"
+controller_configuration_execution_environments_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 ...

@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "collection_repository"
+  role_name: "hub_collection_repository"
   author: "Sean Sullivan"
   description: "An Ansible Role to create collection remote in Automation Hub."
   company: "Red Hat"
@@ -10,7 +10,7 @@ galaxy_info:
   # issue_tracker_url: http://example.com/issue/tracker
   license: GPL-3.0-or-later
 
-  min_ansible_version: 2.14.0
+  min_ansible_version: 2.16.0
 
   # Optionally specify the branch Galaxy will use when accessing the GitHub
   # repo for this role. During role install, if no tags are available,

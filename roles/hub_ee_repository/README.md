@@ -42,6 +42,8 @@ This also speeds up the overall role.
 |`ah_configuration_ee_repository_async_timeout`|`aap_configuration_async_timeout`|no|This variable sets the async timeout for the role.|
 |`aap_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
 |`ah_configuration_ee_repository_async_retries`|`aap_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
+|`aap_configuration_loop_delay`|1000|no|This variable sets the loop_delay for the role globally.|
+|`ah_configuration_ee_registry_sync_loop_delay`|`aap_configuration_loop_delay`|no|This variable sets the loop_delay for the role.|
 |`aap_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
 |`ah_configuration_ee_repository_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
 

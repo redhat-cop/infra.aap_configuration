@@ -19,5 +19,5 @@
         extensions: ["yml"]
 
   roles:
-    - {role: ../.., when: controller_user_accounts is defined}
+    - {role: ../.., when: aap_user_accounts is defined}
 ...

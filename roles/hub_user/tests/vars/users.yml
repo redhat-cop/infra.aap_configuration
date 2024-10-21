@@ -1,5 +1,5 @@
 ---
-ah_users:
+aap_user_accounts:
   - username: user1
     groups:
       - group1

@@ -3,7 +3,7 @@ argument_specs:
   main:
     short_description: An Ansible Role to create services on automation platform gateway.
     options:
-      services_list:
+      gateway_services:
         description: Data structure describing your services
         type: list
         required: true
@@ -60,13 +60,13 @@ argument_specs:
             type: int
             description: The order to apply the routes in lower numbers are first. Items with the same value have no guaranteed order
           state:
-            default: "{{ gateway_state | default('present') }}"
+            default: "{{ platform_state | default('present') }}"
             required: false
             type: str
             description: Desired state of the resource.
 
       # Async variables
-      services_async_retries:
+      gateway_services_async_retries:
         default: "{{ aap_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -74,7 +74,7 @@ argument_specs:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
-      services_async_delay:
+      gateway_services_async_delay:
         default: "{{ aap_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -91,7 +91,7 @@ argument_specs:
 
 
       # No_log variables
-      services_secure_logging:
+      gateway_services_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool

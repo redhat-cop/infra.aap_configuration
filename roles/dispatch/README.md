@@ -1,8 +1,8 @@
-# infra.platform_configuration.dispatch
+# infra.aap_configuration.dispatch
 
 ## Description
 
-An Ansible Role to run all roles in the infra.platform_configuration collection.
+An Ansible Role to run all roles in the infra.aap_configuration collection.
 
 ## Variables
 
@@ -17,17 +17,17 @@ gateway_dispatch_roles:
   - {role: http_ports, var: http_ports_list, tags: http_ports}
   - {role: organizations, var: organizations_list, tags: organizations}
   - {role: teams, var: platform_teams, tags: teams}
-  - {role: service_clusters, var: service_clusters_list, tags: service_clusters}
+  - {role: service_clusters, var: gateway_service_clusters, tags: service_clusters}
   - {role: service_keys, var: service_keys_list, tags: service_keys}
-  - {role: service_nodes, var: service_nodes_list, tags: service_nodes}
-  - {role: services, var: services_list, tags: services}
-  - {role: routes, var: routes_list, tags: routes}
+  - {role: service_nodes, var: gateway_service_nodes, tags: service_nodes}
+  - {role: services, var: gateway_services, tags: services}
+  - {role: routes, var: gateway_routes, tags: routes}
   - {role: role_user_assignments, var: role_user_assignments_list, tags: role_user_assignments}
 ```
 
 Note that each item has three elements:
 
-- `role` which is the name of the role within infra.platform_configuration
+- `role` which is the name of the role within infra.aap_configuration
 - `var` which is the variable which is used in that role. We use this to prevent the role being called if the variable is not set
 - `tags` the tags which are applied to the role so it is possible to apply tags to a playbook using the dispatcher with these tags.
 

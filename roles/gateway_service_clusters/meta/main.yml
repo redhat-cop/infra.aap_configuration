@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: service_clusters
+  role_name: gateway_service_clusters
   author: Martin Slemr
   description: An Ansible Role to create service clusters in automation platform gateway.
   company: Red Hat
