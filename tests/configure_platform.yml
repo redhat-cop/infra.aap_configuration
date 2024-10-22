@@ -45,8 +45,7 @@
         extensions: ["yml"]
       tags:
         - always
-    - debug:
-        var: aap_configuration_secure_logging
+
     # - name: Wait for Controller to come up
     #   ansible.builtin.uri:
     #     url: "https://{{ aap_hostname }}/api/v2/ping/"
@@ -83,8 +82,7 @@
     #   delegate_to: localhost
 
   roles:
-    - gateway_users
-    # - dispatch  # The dispatch role calls all of the other roles.
+    - dispatch  # The dispatch role calls all of the other roles.
   # tasks:
 
   #   - name: Validate error handling
