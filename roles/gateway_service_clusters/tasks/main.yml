@@ -26,7 +26,7 @@
   loop: "{{ gateway_service_clusters }}"
   loop_control:
     loop_var: __gateway_service_clusters_item
-    label: "{{ __operation.verb }} the label {{ __gateway_service_clusters_item.name }} to Controller"
+    label: "{{ __operation.verb }} the  {{ __gateway_service_clusters_item.name }} to Controller"
     pause: "{{ controller_configuration_labels_loop_delay }}"
   no_log: "{{ gateway_service_clusters_secure_logging }}"
   async: 1000
