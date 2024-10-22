@@ -24,7 +24,7 @@
   loop: "{{ aap_user_accounts }}"
   loop_control:
     loop_var: __gateway_user_accounts_item
-    label: "{{ __operation.verb }} the label {{ __gateway_user_accounts_item.name }} to Controller"
+    label: "{{ __operation.verb }} the Gateway user {{ __gateway_user_accounts_item.username }}"
     pause: "{{ gateway_users_loop_delay }}"
   no_log: "{{ users_secure_logging }}"
   async: 1000

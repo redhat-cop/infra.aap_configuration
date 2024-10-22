@@ -23,7 +23,7 @@
   loop: "{{ ah_collection_repositories }}"
   loop_control:
     loop_var: __collection_repository_item
-    label: "{{ __operation.verb }} the label {{ __ah_configuration_collection_repository__item.name }} to Controller"
+    label: "{{ __operation.verb }} the remote repository {{ __ah_configuration_collection_repository__item.name }} in Hub"
     pause: "{{ ah_configuration_collection_repository__loop_delay }}"
   no_log: "{{ ah_configuration_collection_repository_secure_logging }}"
   async: "{{ ah_configuration_collection_repository_async_timeout }}"

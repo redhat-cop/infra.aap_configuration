@@ -18,7 +18,7 @@
   loop: "{{ aap_teams }}"
   loop_control:
     loop_var: __gateway_teams_item
-    label: "{{ __operation.verb }} the label {{ __gateway_teams_item.name }} to Controller"
+    label: "{{ __operation.verb }} the Gateway team {{ __gateway_teams_item.name }}"
     pause: "{{ gateway_teams_loop_delay }}"
   no_log: "{{ gateway_teams_secure_logging }}"
   async: 1000
