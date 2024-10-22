@@ -34,6 +34,7 @@
   register: __gateway_applications_job_async
   changed_when: not __gateway_applications_job_async.changed
   vars:
+    __operation: "{{ operation_translate[__gateway_application_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir | default(omit) }}"
 
 - name: Applications | Wait for finish the configuration
@@ -46,9 +47,11 @@
   loop: "{{ __gateway_applications_job_async.results }}"
   loop_control:
     loop_var: __gateway_applications_job_async_results_item
-    label: "{{ __operation.verb }} AAP Platform Applications {{ __gateway_applications_job_async_result.__gateway_application_item.name }} | Wait for finish the Applications {{ __operation.action }}"
+    label: "{{ __operation.verb }} AAP Platform Applications {{ __gateway_applications_job_async_result.__gateway_application_item.name }} | Wait for finish the Applications
+      {{ __operation.action }}"
   when: __gateway_applications_job_async_results_item.ansible_job_id is defined
   no_log: "{{ applications_secure_logging }}"
   vars:
+    __operation: "{{ operation_translate[__gateway_applications_job_async_results_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir | default(omit) }}"
 ...

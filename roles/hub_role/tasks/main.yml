@@ -1,21 +1,20 @@
 ---
-
 # Create AH Role
 - name: Add Automation Hub role
   ansible.hub.ah_role:
-    name:             "{{ __role.name }}"
-    description:      "{{ __role.description | default(omit) }}"
-    perms:            "{{ __role.perms | default(omit) }}"
-    state:            "{{ __role.state | default(ah_state | default('present')) }}"
-    ah_host:          "{{ aap_hostname | default(omit) }}"
-    ah_username:     "{{ aap_username | default(omit) }}"
-    ah_password:      "{{ aap_password | default(omit) }}"
-    ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
-    validate_certs:   "{{ aap_validate_certs | default(omit) }}"
-    request_timeout:  "{{ aap_request_timeout | default(omit) }}"
+    name: "{{ __role_item.name }}"
+    description: "{{ __role_item.description | default(omit) }}"
+    perms: "{{ __role_item.perms | default(omit) }}"
+    state: "{{ __role_item.state | default(ah_state | default('present')) }}"
+    ah_host: "{{ aap_hostname | default(omit) }}"
+    ah_username: "{{ aap_username | default(omit) }}"
+    ah_password: "{{ aap_password | default(omit) }}"
+    ah_path_prefix: "{{ ah_path_prefix | default(omit) }}"
+    validate_certs: "{{ aap_validate_certs | default(omit) }}"
+    request_timeout: "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ ah_roles }}"
   loop_control:
-    loop_var: "__role"
+    loop_var: __role_item
     label: "{{ __operation.verb }} the label {{ __ah_configuration_role__item.name }} to Controller"
     pause: "{{ ah_configuration_role__loop_delay }}"
   no_log: "{{ ah_configuration_role_secure_logging }}"
@@ -24,9 +23,10 @@
   register: __roles_job_async
   changed_when: not __roles_job_async.changed
   vars:
-    ansible_async_dir: '{{ aap_configuration_async_dir }}'
+    __operation: "{{ operation_translate[__role_item.state | default(platform_state) | default('present')] }}"
+    ansible_async_dir: "{{ aap_configuration_async_dir }}"
 
-- name: "Create Role | Wait for finish the role creation"
+- name: Create Role | Wait for finish the role creation
   ansible.builtin.async_status:
     jid: "{{ __roles_job_async_result_item.ansible_job_id }}"
   register: __roles_job_async_result
@@ -36,9 +36,10 @@
   loop: "{{ __roles_job_async.results }}"
   loop_control:
     loop_var: __roles_job_async_result_item
-    label: "{{ __operation.verb }} Label {{ __roles_job_async_result_item.__role.name }} | Wait for finish the Label {{ __operation.action }}"
+    label: "{{ __operation.verb }} Label {{ __roles_job_async_result_item.__role_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __roles_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_role_secure_logging }}"
   vars:
-    ansible_async_dir: '{{ aap_configuration_async_dir }}'
+    __operation: "{{ operation_translate[__roles_job_async_result_item.state | default(platform_state) | default('present')] }}"
+    ansible_async_dir: "{{ aap_configuration_async_dir }}"
 ...
