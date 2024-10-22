@@ -3,10 +3,10 @@
 # Create AH EE registry
 - name: Index Automation Hub EE Registry
   ansible.hub.ah_ee_registry_index:
-    name:                   "{{ __ee_registry_item.name }}"
-    wait:                   "{{ __ee_registry_item.wait | default(omit) }}"
-    interval:               "{{ __ee_registry_item.interval | default(ah_configuration_ee_registry_index_async_delay) }}"
-    timeout:                "{{ __ee_registry_item.timeout | default(omit) }}"
+    name:                   "{{ __ee_registry_index_item.name }}"
+    wait:                   "{{ __ee_registry_index_item.wait | default(omit) }}"
+    interval:               "{{ __ee_registry_index_item.interval | default(ah_configuration_ee_registry_index_async_delay) }}"
+    timeout:                "{{ __ee_registry_index_item.timeout | default(omit) }}"
     ah_host:                "{{ aap_hostname | default(omit) }}"
     ah_username:           "{{ aap_username | default(omit) }}"
     ah_password:            "{{ aap_password | default(omit) }}"
@@ -15,17 +15,17 @@
     request_timeout:        "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ ah_ee_registries }}"
   loop_control:
-    loop_var: __ee_registry_item
-    label: "{{ __operation.verb }} the label {{ __ah_configuration_ee_registry_index__item.name }} to Controller"
+    loop_var: __ee_registry_index_item
+    label: "{{ __operation.verb }} the EE registry index {{ __ah_configuration_ee_registry_index__item.name }} in Hub"
     pause: "{{ ah_configuration_ee_registry_index__loop_delay }}"
-  when: __ee_registry_item.index | default(false)
+  when: __ee_registry_index_item.index | default(false)
   no_log: "{{ ah_configuration_ee_registry_secure_logging }}"
   async: "{{ ah_configuration_ee_registry_index_async_timeout }}"
   poll: 0
   register: __ee_registry_indexes_job_async
   changed_when: not __ee_registry_indexes_job_async.changed
   vars:
-    __operation: "{{ operation_translate[__ee_registry_item.state | default(platform_state) | default('present')] }}"
+    __operation: "{{ operation_translate[__ee_registry_index_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Index EE Registry | Wait for finish the ee_registry_index creation"

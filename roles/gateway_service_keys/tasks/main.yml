@@ -21,7 +21,7 @@
   loop: "{{ gateway_gateway_service_keys }}"
   loop_control:
     loop_var: __gateway_service_keys_item
-    label: "{{ __operation.verb }} the label {{ __gateway_service_keys_item.name }} to Controller"
+    label: "{{ __operation.verb }} the Gateway service key {{ __gateway_service_keys_item.name }}"
     pause: "{{ gateway_gateway_service_keys_loop_delay }}"
   no_log: "{{ gateway_service_keys_secure_logging }}"
   async: 1000

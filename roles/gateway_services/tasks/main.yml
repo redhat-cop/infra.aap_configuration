@@ -25,7 +25,7 @@
   loop: "{{ gateway_services }}"
   loop_control:
     loop_var: __gateway_services_item
-    label: "{{ __operation.verb }} the label {{ __gateway_services_item.name }} to Controller"
+    label: "{{ __operation.verb }} the Gateway service {{ __gateway_services_item.name }}"
     pause: "{{ gateway_services_loop_delay }}"
   no_log: "{{ services_secure_logging }}"
   async: 1000

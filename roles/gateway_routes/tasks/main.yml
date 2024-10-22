@@ -24,7 +24,7 @@
   loop: "{{ gateway_routes }}"
   loop_control:
     loop_var: __gateway_routes_item
-    label: "{{ __operation.verb }} the label {{ __gateway_routes_item.name }} to Controller"
+    label: "{{ __operation.verb }} the Gateway route {{ __gateway_routes_item.name }}"
     pause: "{{ controller_configuration_labels_loop_delay }}"
   no_log: "{{ gateway_routes_secure_logging }}"
   async: 1000

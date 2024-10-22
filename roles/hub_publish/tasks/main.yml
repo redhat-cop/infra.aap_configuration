@@ -8,8 +8,7 @@
     ssh_opts: "{{ __ah_collection_item.ssh_opts | default(omit) }}"
   loop: "{{ ah_collections }}"
   loop_control:
-    loop_var: "__ah_collection_item"
-    label: "{{ __operation.verb }} the label {{ __ah_configuration_publish__item.name }} to Controller"
+    loop_var: __ah_collection_item
     pause: "{{ ah_configuration_publish__loop_delay }}"
   no_log: "{{ ah_configuration_publish_secure_logging }}"
   when:
@@ -24,8 +23,7 @@
     mode: "0755"
   loop: "{{ ah_collections }}"
   loop_control:
-    loop_var: "__ah_collection_item"
-    label: "{{ __operation.verb }} Label {{ __ah_collection_item.__ah_collection_item.name }} | Wait for finish the Label {{ __operation.action }}"
+    loop_var: __ah_collection_item
   no_log: "{{ ah_configuration_publish_secure_logging }}"
   when:
     - ah_collection_list is not defined
@@ -39,7 +37,7 @@
   register: ah_build_results
   loop: "{{ ah_collections }}"
   loop_control:
-    loop_var: "__ah_collection_item"
+    loop_var: __ah_collection_item
   no_log: "{{ ah_configuration_publish_secure_logging }}"
   when: ah_collection_list is not defined
 
@@ -50,7 +48,7 @@
   no_log: "{{ ah_configuration_publish_secure_logging }}"
   loop: "{{ ah_build_results.results }}"
   loop_control:
-    loop_var: "__ah_build_result_item"
+    loop_var: __ah_build_result_item
   when: ah_collection_list is not defined
 
 # __ah_build_result_item.results.path will be the output_path in ansible<2.10 but the actual built path in ansible>=2.10
