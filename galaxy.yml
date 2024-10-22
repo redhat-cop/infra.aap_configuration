@@ -22,8 +22,8 @@ build_ignore:
 license:
     - GPL-3.0-or-later
 dependencies:
-    - ansible.eda
-    - ansible.hub
+    "ansible.eda": ">=2.2.0"
+    "ansible.hub": ">=1.0.0"
 tags:
     - controller
     - collection

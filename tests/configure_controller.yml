@@ -102,7 +102,7 @@
             fail_msg: "No errors found, validate test example"
             success_msg: "Errors found, proceeding"
           vars:
-            job_templates_errors: __job_templates_errors_set_stats.ansible_stats.data.job_templates_errors
+            job_templates_errors: "{{ __job_templates_errors_set_stats.ansible_stats.data.job_templates_errors }}"
 
     - name: Add Controller Settings Individually
       ansible.builtin.include_role:
