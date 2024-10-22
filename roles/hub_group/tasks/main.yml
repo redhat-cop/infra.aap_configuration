@@ -12,7 +12,7 @@
     ah_path_prefix:   "{{ ah_path_prefix | default(omit) }}"
     validate_certs:   "{{ aap_validate_certs | default(omit) }}"
     request_timeout:  "{{ aap_request_timeout | default(omit) }}"
-  loop: "{{ ah_groups }}"
+  loop: "{{ aap_teams }}"
   loop_control:
     loop_var: "__group"
     label: "{{ __operation.verb }} the label {{ __ah_configuration_group__item.name }} to Controller"

@@ -15,6 +15,7 @@ An Ansible Role to create Decision Environments in EDA Controller.
 |`aap_validate_certs`|`False`|no|Whether or not to validate the Ansible Automation Platform Server's SSL certificate.||
 |`aap_request_timeout`|`10`|no|Specify the timeout Ansible should use in requests to the Automation Platform host.||
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
+|`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`eda_decision_environments`|`see below`|yes|Data structure describing your decision environments, described below.||
 
 ### Secure Logging Variables

@@ -9,7 +9,7 @@
 # These are the default variables specific to the license role
 
 # a list of dictionaries describing the Automation Hub groups
-ah_groups: []
+aap_teams: []
 # possible fields:
 #  - name
 #  - perms

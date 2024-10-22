@@ -10,7 +10,7 @@ gateway_configuration_dispatcher_roles:
     var: gateway_settings
     tags: settings
   - role: gateway_applications
-    var: gateway_applications
+    var: aap_applications
     tags: applications
   - role: gateway_http_ports
     var: http_ports_list

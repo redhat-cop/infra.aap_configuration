@@ -21,6 +21,9 @@ build_ignore:
     - tests/*
 license:
     - GPL-3.0-or-later
+dependencies:
+    - ansible.eda
+    - ansible.hub
 tags:
     - controller
     - collection
