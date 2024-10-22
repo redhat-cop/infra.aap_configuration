@@ -23,7 +23,7 @@
   loop_control:
     loop_var: __user_item
     label: "{{ __operation.verb }} the user {{ __user_item.name }} to Hub"
-    pause: "{{ ah_configuration_user_accounts__loop_delay }}"
+    pause: "{{ ah_configuration_user_accounts_loop_delay }}"
   no_log: "{{ ah_configuration_user_secure_logging }}"
   async: "{{ ah_configuration_user_async_timeout }}"
   poll: 0

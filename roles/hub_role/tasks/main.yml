@@ -17,7 +17,7 @@
   loop_control:
     loop_var: __role_item
     label: "{{ __operation.verb }} the role {{ __ah_configuration_role__item.name }} to Hub"
-    pause: "{{ ah_configuration_role__loop_delay }}"
+    pause: "{{ ah_configuration_role_loop_delay }}"
   no_log: "{{ ah_configuration_role_secure_logging }}"
   async: "{{ ah_configuration_role_async_timeout }}"
   poll: 0

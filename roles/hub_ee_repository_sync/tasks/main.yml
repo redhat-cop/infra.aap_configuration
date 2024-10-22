@@ -17,7 +17,7 @@
   loop_control:
     loop_var: __ee_repository_sync_item
     label: "{{ __operation.verb }} the EE repository sync {{ __ah_configuration_ee_repository_sync__item.name }} in Hub"
-    pause: "{{ ah_configuration_ee_repository_sync__loop_delay }}"
+    pause: "{{ ah_configuration_ee_repository_sync_loop_delay }}"
   when: __ee_repository_sync_item.sync | default(false)
   no_log: "{{ ah_configuration_ee_repository_secure_logging }}"
   async: "{{ ah_configuration_ee_repository_sync_async_timeout }}"

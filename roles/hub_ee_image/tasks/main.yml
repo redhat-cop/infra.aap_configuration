@@ -18,7 +18,7 @@
   loop_control:
     loop_var: __ee_image_item
     label: "{{ __operation.verb }} the EE image {{ __ah_configuration_ee_image__item.name }} in Hub"
-    pause: "{{ ah_configuration_ee_image__loop_delay }}"
+    pause: "{{ ah_configuration_ee_image_loop_delay }}"
   no_log: "{{ ah_configuration_ee_image_secure_logging }}"
   async: "{{ ah_configuration_ee_image_async_timeout }}"
   poll: 0

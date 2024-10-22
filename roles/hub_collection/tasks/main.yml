@@ -38,7 +38,7 @@
   loop_control:
     loop_var: __collections_item
     label: "{{ __operation.verb }} the collection {{ __ah_configuration_collection__item.name }} in Hub"
-    pause: "{{ ah_configuration_collection__loop_delay }}"
+    pause: "{{ ah_configuration_collection_loop_delay }}"
   no_log: "{{ ah_configuration_collection_secure_logging }}"
   async: "{{ ah_configuration_collection_async_timeout }}"
   poll: 0

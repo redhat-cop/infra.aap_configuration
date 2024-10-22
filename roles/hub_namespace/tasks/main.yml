@@ -36,7 +36,7 @@
   loop_control:
     loop_var: __namespace_item
     label: "{{ __operation.verb }} the namespace {{ __ah_configuration_namespace__item.name }} in Hub"
-    pause: "{{ ah_configuration_namespace__loop_delay }}"
+    pause: "{{ ah_configuration_namespace_loop_delay }}"
   no_log: "{{ ah_configuration_namespace_secure_logging }}"
   async: "{{ ah_configuration_namespace_async_timeout }}"
   poll: 0

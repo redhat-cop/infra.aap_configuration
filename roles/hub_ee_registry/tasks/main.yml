@@ -24,7 +24,7 @@
   loop_control:
     loop_var: __ee_registry_item
     label: "{{ __operation.verb }} the EE registry {{ __ah_configuration_ee_registry__item.name }} in Hub"
-    pause: "{{ ah_configuration_ee_registry__loop_delay }}"
+    pause: "{{ ah_configuration_ee_registry_loop_delay }}"
   no_log: "{{ ah_configuration_ee_registry_secure_logging }}"
   async: "{{ ah_configuration_ee_registry_async_timeout }}"
   poll: 0

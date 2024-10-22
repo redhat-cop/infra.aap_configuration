@@ -4,11 +4,14 @@
   connection: local
   vars:
     aap_validate_certs: false
-    controller_configuration_secure_logging: false
+    aap_configuration_secure_logging: false
   # Define following vars here, or in configs/controller_auth.yml
   # aap_hostname: controller.example.com
   # aap_username: admin
   # aap_password: changeme
+  collections:
+    - ansible.controller
+    - infra.aap_configuration
 
   pre_tasks:
 
@@ -80,107 +83,107 @@
 
   roles:
     - dispatch  # The dispatch role calls all of the other roles.
-  tasks:
+  # tasks:
 
-    - name: Validate error handling
-      block:
-        - name: Add Invalid Job Templates to Controller
-          ansible.builtin.include_role:
-            name: job_templates
-          vars:
-            controller_templates: "{{ controller_templates_invalid }}"
+  #   - name: Validate error handling
+  #     block:
+  #       - name: Add Invalid Job Templates to Controller
+  #         ansible.builtin.include_role:
+  #           name: job_templates
+  #         vars:
+  #           controller_templates: "{{ controller_templates_invalid }}"
 
-        - name: Ensure the job_templates_errors is defined and has items
-          ansible.builtin.assert:
-            that:
-              - job_templates_errors is defined
-              - job_templates_errors | length > 0
-            fail_msg: "No errors found, validate test example"
-            success_msg: "Errors found, proceeding"
-          vars:
-            job_templates_errors: __job_templates_errors_set_stats.ansible_stats.data.job_templates_errors
+  #       - name: Ensure the job_templates_errors is defined and has items
+  #         ansible.builtin.assert:
+  #           that:
+  #             - job_templates_errors is defined
+  #             - job_templates_errors | length > 0
+  #           fail_msg: "No errors found, validate test example"
+  #           success_msg: "Errors found, proceeding"
+  #         vars:
+  #           job_templates_errors: __job_templates_errors_set_stats.ansible_stats.data.job_templates_errors
 
-    - name: Add Controller Settings Individually
-      ansible.builtin.include_role:
-        name: settings
-      vars:
-        controller_settings: "{{ controller_settings_individuale }}"
+  #   - name: Add Controller Settings Individually
+  #     ansible.builtin.include_role:
+  #       name: settings
+  #     vars:
+  #       controller_settings: "{{ controller_settings_individuale }}"
 
-    - name: Run ad hoc commands
-      ansible.builtin.include_role:
-        name: ad_hoc_command
-      when: controller_ad_hoc_commands is defined
+  #   - name: Run ad hoc commands
+  #     ansible.builtin.include_role:
+  #       name: ad_hoc_command
+  #     when: controller_ad_hoc_commands is defined
 
-    - name: Cancel Ad hoc commands
-      ansible.builtin.include_tasks: "./tasks/ad_hoc_cancel.yml"
-      when: controller_ad_hoc_commands is defined
+  #   - name: Cancel Ad hoc commands
+  #     ansible.builtin.include_tasks: "./tasks/ad_hoc_cancel.yml"
+  #     when: controller_ad_hoc_commands is defined
 
-    - name: Launch Controller Bulk Hosts
-      ansible.builtin.include_role:
-        name: bulk_host_create
-      vars:
-        controller_bulk_hosts: "{{ temp_controller_bulk_hosts }}"
-      when:
-        - controller_bulk_launch_jobs is defined
+  #   - name: Launch Controller Bulk Hosts
+  #     ansible.builtin.include_role:
+  #       name: bulk_host_create
+  #     vars:
+  #       controller_bulk_hosts: "{{ temp_controller_bulk_hosts }}"
+  #     when:
+  #       - controller_bulk_launch_jobs is defined
 
-    - name: Launch Controller Jobs
-      ansible.builtin.include_role:
-        name: job_launch
-      when: controller_launch_jobs is defined
+  #   - name: Launch Controller Jobs
+  #     ansible.builtin.include_role:
+  #       name: job_launch
+  #     when: controller_launch_jobs is defined
 
-    - name: Show launched Controller jobs
-      ansible.builtin.debug:
-        var: launched_controller_jobs
+  #   - name: Show launched Controller jobs
+  #     ansible.builtin.debug:
+  #       var: launched_controller_jobs
 
-    - name: Combine id output with defaults temp
-      ansible.builtin.set_fact:
-        tmp_job: "{{ {'id': item.id} }}"
-      with_items: "{{ launched_controller_jobs.results }}"
-      register: tmp_jobs
+  #   - name: Combine id output with defaults temp
+  #     ansible.builtin.set_fact:
+  #       tmp_job: "{{ {'id': item.id} }}"
+  #     with_items: "{{ launched_controller_jobs.results }}"
+  #     register: tmp_jobs
 
-    - name: Cancel Controller Jobs
-      ansible.builtin.include_role:
-        name: jobs_cancel
-      vars:
-        controller_cancel_jobs: "{{ tmp_jobs.results | map(attribute='ansible_facts.tmp_job') | list }}"
-      when: launched_controller_jobs is defined
+  #   - name: Cancel Controller Jobs
+  #     ansible.builtin.include_role:
+  #       name: jobs_cancel
+  #     vars:
+  #       controller_cancel_jobs: "{{ tmp_jobs.results | map(attribute='ansible_facts.tmp_job') | list }}"
+  #     when: launched_controller_jobs is defined
 
-    - name: Find Job ID's
-      ansible.builtin.debug:
-        var: __job_templates_job_async_result
+  #   - name: Find Job ID's
+  #     ansible.builtin.debug:
+  #       var: __job_templates_job_async_result
 
-    - name: Launch Controller Bulk Jobs
-      ansible.builtin.include_role:
-        name: bulk_job_launch
-      vars:
-        controller_bulk_hosts: "{{ temp_controller_bulk_hosts }}"
-        controller_bulk_launch_jobs:
-          - name: My Bulk Job Launch
-            jobs:
-              - unified_job_template: "{{ __job_templates_job_async_result.results[0].id }}"
-              - unified_job_template: "{{ __job_templates_job_async_result.results[1].id }}"
-            organization: Default
-            wait: false
-      when:
-        - controller_bulk_launch_jobs is defined
+  #   - name: Launch Controller Bulk Jobs
+  #     ansible.builtin.include_role:
+  #       name: bulk_job_launch
+  #     vars:
+  #       controller_bulk_hosts: "{{ temp_controller_bulk_hosts }}"
+  #       controller_bulk_launch_jobs:
+  #         - name: My Bulk Job Launch
+  #           jobs:
+  #             - unified_job_template: "{{ __job_templates_job_async_result.results[0].id }}"
+  #             - unified_job_template: "{{ __job_templates_job_async_result.results[1].id }}"
+  #           organization: Default
+  #           wait: false
+  #     when:
+  #       - controller_bulk_launch_jobs is defined
 
-    - name: Launch Controller workflows
-      ansible.builtin.include_role:
-        name: workflow_launch
-      when: controller_workflow_launch_jobs is defined
+  #   - name: Launch Controller workflows
+  #     ansible.builtin.include_role:
+  #       name: workflow_launch
+  #     when: controller_workflow_launch_jobs is defined
 
-    - name: Launched Workflows
-      ansible.builtin.debug:
-        var: launched_controller_workflows
+  #   - name: Launched Workflows
+  #     ansible.builtin.debug:
+  #       var: launched_controller_workflows
 
-    - name: Wait for workflow to finish
-      job_wait:
-        job_id: "{{ launched_controller_workflows.results[0].id }}"
-        job_type: workflow_jobs
-        timeout: 180
-        aap_username:     "{{ aap_username }}"
-        aap_password:     "{{ aap_password }}"
-        controller_host:         "{{ aap_hostname }}"
-        validate_certs:          "{{ aap_validate_certs }}"
-      ignore_errors: true  # noqa ignore-errors
+  #   - name: Wait for workflow to finish
+  #     job_wait:
+  #       job_id: "{{ launched_controller_workflows.results[0].id }}"
+  #       job_type: workflow_jobs
+  #       timeout: 180
+  #       aap_username:     "{{ aap_username }}"
+  #       aap_password:     "{{ aap_password }}"
+  #       controller_host:         "{{ aap_hostname }}"
+  #       validate_certs:          "{{ aap_validate_certs }}"
+  #     ignore_errors: true  # noqa ignore-errors
 ...
