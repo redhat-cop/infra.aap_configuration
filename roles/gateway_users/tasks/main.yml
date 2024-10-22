@@ -21,7 +21,7 @@
     gateway_token: "{{ aap_token | default(omit, true) }}"
     gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ users if users is defined else users_list }}"
+  loop: "{{ aap_user_accounts }}"
   loop_control:
     loop_var: __gateway_user_accounts_item
     label: "{{ __operation.verb }} the label {{ __gateway_user_accounts_item.name }} to Controller"
