@@ -11,7 +11,7 @@ Each role has its own variables, for information on those please see each role w
 ```yaml
 gateway_dispatch_roles:
   - {role: settings, var: settings_list, tags: settings}
-  - {role: users, var: users_list, tags: users}
+  - {role: users, var: aap_user_accounts, tags: users}
   - {role: authenticators, var: authenticators_list, tags: authenticators}
   - {role: authenticator_maps, var: authenticator_maps_list, tags: authenticator_maps}
   - {role: http_ports, var: http_ports_list, tags: http_ports}
