@@ -34,7 +34,7 @@
     request_timeout:  "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ ah_namespaces }}"
   loop_control:
-    loop_var: "__namespace_item"
+    loop_var: __namespace_item
     label: "{{ __operation.verb }} the label {{ __ah_configuration_namespace__item.name }} to Controller"
     pause: "{{ ah_configuration_namespace__loop_delay }}"
   no_log: "{{ ah_configuration_namespace_secure_logging }}"
@@ -43,6 +43,7 @@
   register: __namespaces_job_async
   changed_when: not __namespaces_job_async.changed
   vars:
+    __operation: "{{ operation_translate[__namespace_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Create Namespace | Wait for finish the namespace creation"
@@ -59,5 +60,6 @@
   when: __namespaces_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_namespace_secure_logging }}"
   vars:
+    __operation: "{{ operation_translate[__namespaces_job_async_result_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 ...

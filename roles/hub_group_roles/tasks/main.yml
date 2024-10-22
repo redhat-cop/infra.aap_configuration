@@ -2,9 +2,9 @@
 # Add Group Roles
 - name: Add Roles to Groups in Automation Hubs
   ansible.hub.group_roles:
-    groups:           "{{ __group_role.groups | default(omit) }}"
-    role_list:        "{{ __group_role.role_list | default(omit) }}"
-    state:            "{{ __group_role.state | default(ah_state | default('present')) }}"
+    groups:           "{{ __group_roles_item.groups | default(omit) }}"
+    role_list:        "{{ __group_roles_item.role_list | default(omit) }}"
+    state:            "{{ __group_roles_item.state | default(ah_state | default('present')) }}"
     ah_host:          "{{ aap_hostname | default(omit) }}"
     ah_username:     "{{ aap_username | default(omit) }}"
     ah_password:      "{{ aap_password | default(omit) }}"
@@ -13,7 +13,7 @@
     request_timeout:  "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ ah_group_roles }}"
   loop_control:
-    loop_var: "__group_role"
+    loop_var: __group_roles_item
     label: "{{ __operation.verb }} the label {{ __ah_configuration_group_roles__item.name }} to Controller"
     pause: "{{ ah_configuration_group_roles__loop_delay }}"
   no_log: "{{ ah_configuration_group_roles_secure_logging }}"
@@ -22,6 +22,7 @@
   register: __group_roles_job_async
   changed_when: not __group_roles_job_async.changed
   vars:
+    __operation: "{{ operation_translate[__group_roles_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Add Roles to Groups | Wait for finish the group creation"
@@ -38,5 +39,6 @@
   when: __group_roles_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_group_roles_secure_logging }}"
   vars:
+    __operation: "{{ operation_translate[__group_roles_job_async_result_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 ...
