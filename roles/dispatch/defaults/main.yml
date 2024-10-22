@@ -39,6 +39,10 @@ gateway_configuration_dispatcher_roles:
   - role: gateway_teams
     var: aap_teams
     tags: teams
+  - role: gateway_users
+    var: aap_user_accounts
+    tags: teams
+
 ah_configuration_dispatcher_roles:
   - role: hub_namespace
     var: ah_namespaces

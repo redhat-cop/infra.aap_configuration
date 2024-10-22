@@ -17,7 +17,7 @@
   loop_control:
     loop_var: __ee_registry_index_item
     label: "{{ __operation.verb }} the EE registry index {{ __ah_configuration_ee_registry_index__item.name }} in Hub"
-    pause: "{{ ah_configuration_ee_registry_index__loop_delay }}"
+    pause: "{{ ah_configuration_ee_registry_index_loop_delay }}"
   when: __ee_registry_index_item.index | default(false)
   no_log: "{{ ah_configuration_ee_registry_secure_logging }}"
   async: "{{ ah_configuration_ee_registry_index_async_timeout }}"

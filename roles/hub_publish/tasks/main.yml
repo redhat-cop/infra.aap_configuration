@@ -9,7 +9,7 @@
   loop: "{{ ah_collections }}"
   loop_control:
     loop_var: __ah_collection_item
-    pause: "{{ ah_configuration_publish__loop_delay }}"
+    pause: "{{ ah_configuration_publish_loop_delay }}"
   no_log: "{{ ah_configuration_publish_secure_logging }}"
   when:
     - ah_collection_list is not defined

@@ -39,7 +39,7 @@
   loop_control:
     loop_var: __workflow_loop_node_item
     label: "{{ __workflow_loop_item.name }}/{{ __workflow_loop_node_item.identifier }}"
-    pause: "{{ controller_configuration_workflow__loop_delay }}"
+    pause: "{{ controller_configuration_workflow_loop_delay }}"
   no_log: "{{ workflow_job_templates_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0

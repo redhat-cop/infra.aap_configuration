@@ -15,7 +15,7 @@
   loop_control:
     loop_var: __group_roles_item
     label: "{{ __operation.verb }} the group role {{ __ah_configuration_group_roles__item.name }} in Hub"
-    pause: "{{ ah_configuration_group_roles__loop_delay }}"
+    pause: "{{ ah_configuration_group_roles_loop_delay }}"
   no_log: "{{ ah_configuration_group_roles_secure_logging }}"
   async: "{{ ah_configuration_group_roles_async_timeout }}"
   poll: 0
