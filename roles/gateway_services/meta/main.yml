@@ -24,5 +24,6 @@ galaxy_info:
     - service
     - services
 
-dependencies: []
+dependencies:
+  - role: global_vars
 ...

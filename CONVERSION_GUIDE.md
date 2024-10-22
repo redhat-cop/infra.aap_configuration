@@ -11,7 +11,7 @@ infra.eda_configuration
 
 These have been combined along with new roles to configure the gateway aspect of AAP.
 
-It is recomended to use the old collections when interacting with the Ansible Automation Platforms with versions 2.4 or prior. While some aspects of the collection may work, it can have unintended changes or behaviors.
+It is recommended to use the old collections when interacting with the Ansible Automation Platforms with versions 2.4 or prior. While some aspects of the collection may work, it can have unintended changes or behaviors.
 The collections have been revamped to use a single set of connection variables and to standardize variables throughout the collections.
 
 This guide will go through some of the standard variables what they were before and what to change them to.
@@ -31,7 +31,7 @@ These collections are required for this collection to work, While ansible.contro
 
 ## Connection and Global Variables
 
-These are the variables that are used to connecto the platfrom and are the same accross all Roles. Various environment variables can be used as specfied by their module collections, but it is recomended to use ansible vars as they can be homogonized to be single variables.
+These are the variables that are used to connect the platform and are the same across all Roles. Various environment variables can be used as specified by their module collections, but it is recommended to use ansible vars as they can be homogenized to be single variables.
 
 ### Connection Variables
 
@@ -48,7 +48,7 @@ These are the connection variables, These are used to connect to the platform.
 
 ### Global Variables
 
-Other Variables that will apply to all roles when used globally. Each of these has a per role that can override the default value if you wish to selectivly use them. This is useful for things like retries and delay on projects, or secure logging for a role.
+Other Variables that will apply to all roles when used globally. Each of these has a per role that can override the default value if you wish to selectively use them. This is useful for things like retries and delay on projects, or secure logging for a role.
 
 |Variable Name|Default Value|Required|Description|
 |:---|:---:|:---:|:---|:---|
@@ -118,6 +118,7 @@ controller_configuration vars:
 - controller_schedules
 - controller_launch_jobs
 - controller_workflow_launch_jobs
+- aap_user_accounts <- controller_user_accounts
 
 eda_configuration vars:
 

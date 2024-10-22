@@ -24,5 +24,6 @@ galaxy_info:
     - httpport
     - httpports
 
-dependencies: []
+dependencies:
+  - role: global_vars
 ...

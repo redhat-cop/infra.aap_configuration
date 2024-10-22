@@ -21,5 +21,6 @@ galaxy_info:
     - setting
     - settings
 
-dependencies: []
+dependencies:
+  - role: global_vars
 ...
