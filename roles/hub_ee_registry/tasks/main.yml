@@ -22,7 +22,7 @@
     proxy_password:         "{{ __ee_registry_item.proxy_password | default(proxy_password | default(omit)) }}"
   loop: "{{ ah_ee_registries }}"
   loop_control:
-    loop_var: "__ee_registry_item"
+    loop_var: __ee_registry_item
     label: "{{ __operation.verb }} the label {{ __ah_configuration_ee_registry__item.name }} to Controller"
     pause: "{{ ah_configuration_ee_registry__loop_delay }}"
   no_log: "{{ ah_configuration_ee_registry_secure_logging }}"
@@ -31,6 +31,7 @@
   register: __ee_registries_job_async
   changed_when: not __ee_registries_job_async.changed
   vars:
+    __operation: "{{ operation_translate[__ee_registry_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Create EE Registry | Wait for finish the ee_registry creation"
@@ -47,5 +48,6 @@
   when: __ee_registries_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_ee_registry_secure_logging }}"
   vars:
+    __operation: "{{ operation_translate[__ee_registries_job_async_result_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 ...

@@ -14,7 +14,7 @@
     request_timeout:          "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ ah_collection_repositories }}"
   loop_control:
-    loop_var: "__collection_repository_sync_item"
+    loop_var: __collection_repository_sync_item
     label: "{{ __operation.verb }} the label {{ __ah_configuration_collection_repository_sync__item.name }} to Controller"
     pause: "{{ ah_configuration_collection_repository_sync__loop_delay }}"
   no_log: "{{ ah_configuration_collection_repository_sync_secure_logging }}"
@@ -23,6 +23,7 @@
   register: __collection_repository_sync_job_async
   changed_when: not __collection_repository_sync_job_async.changed
   vars:
+    __operation: "{{ operation_translate[__collection_repository_sync_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Sync Repository | Wait for finish the repository sync"
@@ -39,6 +40,7 @@
   when: __collection_repository_sync_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_collection_repository_sync_secure_logging }}"
   vars:
+    __operation: "{{ operation_translate[__collection_repository_sync_job_async_result_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 ...

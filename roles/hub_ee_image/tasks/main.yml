@@ -16,7 +16,7 @@
     request_timeout:  "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ ah_ee_images }}"
   loop_control:
-    loop_var: "__ee_image_item"
+    loop_var: __ee_image_item
     label: "{{ __operation.verb }} the label {{ __ah_configuration_ee_image__item.name }} to Controller"
     pause: "{{ ah_configuration_ee_image__loop_delay }}"
   no_log: "{{ ah_configuration_ee_image_secure_logging }}"
@@ -25,6 +25,7 @@
   register: __ee_images_job_async
   changed_when: not __ee_images_job_async.changed
   vars:
+    __operation: "{{ operation_translate[__ee_image_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Create EE Image | Wait for finish the ee_image creation"
@@ -41,5 +42,6 @@
   when: __ee_images_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_ee_image_secure_logging }}"
   vars:
+    __operation: "{{ operation_translate[__ee_images_job_async_result_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 ...

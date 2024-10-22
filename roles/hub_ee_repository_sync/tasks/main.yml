@@ -15,7 +15,7 @@
     request_timeout:        "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ ah_ee_repositories }}"
   loop_control:
-    loop_var: "__ee_repository_item"
+    loop_var: __ee_repository_item
     label: "{{ __operation.verb }} the label {{ __ah_configuration_ee_repository_sync__item.name }} to Controller"
     pause: "{{ ah_configuration_ee_repository_sync__loop_delay }}"
   when: __ee_repository_item.sync | default(false)
@@ -25,6 +25,7 @@
   register: __ee_repository_syncs_job_async
   changed_when: not __ee_repository_syncs_job_async.changed
   vars:
+    __operation: "{{ operation_translate[__ee_repository_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "EE Repository Sync | Wait for finish the ee_repository_sync to finish"
@@ -41,5 +42,6 @@
   when: __ee_repository_syncs_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_ee_repository_secure_logging }}"
   vars:
+    __operation: "{{ operation_translate[__ee_repository_syncs_job_async_result_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 ...
