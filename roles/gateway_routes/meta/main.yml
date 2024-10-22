@@ -24,5 +24,6 @@ galaxy_info:
     - route
     - routes
 
-dependencies: []
+dependencies:
+  - role: global_vars
 ...

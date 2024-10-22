@@ -24,5 +24,6 @@ galaxy_info:
     - team
     - teams
 
-dependencies: []
+dependencies:
+  - role: global_vars
 ...

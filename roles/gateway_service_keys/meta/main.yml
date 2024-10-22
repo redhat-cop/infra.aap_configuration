@@ -24,5 +24,6 @@ galaxy_info:
     - servicekey
     - servicekeys
 
-dependencies: []
+dependencies:
+  - role: global_vars
 ...

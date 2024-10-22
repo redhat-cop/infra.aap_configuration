@@ -24,5 +24,6 @@ galaxy_info:
     - organization
     - organizations
 
-dependencies: []
+dependencies:
+  - role: global_vars
 ...
