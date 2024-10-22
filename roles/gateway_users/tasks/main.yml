@@ -32,7 +32,7 @@
   register: __gateway_user_accounts_job_async
   changed_when: not __gateway_user_accounts_job_async.changed
   vars:
-    __operation: "{{ operation_translate[__gateway_user_accounts_job_async.state | default(platform_state) | default('present')] }}"
+    __operation: "{{ operation_translate[__gateway_user_accounts_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir | default(omit) }}"
 
 - name: Users | Wait for finish the configuration
