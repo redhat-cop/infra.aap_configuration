@@ -15,7 +15,7 @@
     gateway_token: "{{ aap_token | default(omit, true) }}"
     gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ role_user_assignments if role_user_assignments is defined else role_user_assignments_list }}"
+  loop: "{{ gateway_role_user_assignments }}"
   loop_control:
     loop_var: __gateway_role_user_assignments_item
   no_log: "{{ role_user_assignments_secure_logging }}"

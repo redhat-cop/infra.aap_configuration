@@ -11,10 +11,10 @@ An Ansible Role to create Credentials in EDA Controller.
 |`eda_host`|""|yes|URL to the EDA Controller (alias: `eda_hostname`)|127.0.0.1|
 |`aap_username`|""|yes|Admin User on the Ansible Automation Platform Server. Either username / password or oauthtoken need to be specified.||
 |`aap_password`|""|yes|Platform Admin User's password on the EDA Controller Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
-
 |`aap_validate_certs`|`False`|no|Whether or not to validate the Ansible Automation Platform Server's SSL certificate.||
 |`aap_request_timeout`|`10`|no|Specify the timeout Ansible should use in requests to the Automation Platform host.||
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
+|`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`eda_credentials`|`see below`|yes|Data structure describing your credentials, described below.||
 
 ### Secure Logging Variables
