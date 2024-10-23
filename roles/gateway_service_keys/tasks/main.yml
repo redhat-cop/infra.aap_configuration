@@ -18,11 +18,11 @@
     gateway_token: "{{ aap_token | default(omit, true) }}"
     gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ gateway_gateway_service_keys }}"
+  loop: "{{ gateway_service_keys }}"
   loop_control:
     loop_var: __gateway_service_keys_item
     label: "{{ __operation.verb }} the Gateway service key {{ __gateway_service_keys_item.name }}"
-    pause: "{{ gateway_gateway_service_keys_loop_delay }}"
+    pause: "{{ gateway_service_keys_loop_delay }}"
   no_log: "{{ gateway_service_keys_secure_logging }}"
   async: 1000
   poll: 0
@@ -44,7 +44,7 @@
     loop_var: __gateway_service_keys_job_async_results_item
     label: "{{ __operation.verb }} Label {{ __gateway_service_keys_job_async_results_item.__gateway_service_keys_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __gateway_service_keys_job_async_results_item.ansible_job_id is defined
-  no_log: "{{ gateway_gateway_service_keys_secure_logging }}"
+  no_log: "{{ gateway_service_keys_secure_logging }}"
   vars:
     __operation: "{{ operation_translate[__gateway_service_keys_job_async_results_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir }}"

@@ -27,7 +27,7 @@
   loop_control:
     loop_var: __gateway_application_item
     label: "{{ __operation.verb }} AAP Platform Applications {{ __gateway_application_item.name }}"
-    pause: "{{ gateway_applications_loop_delay }}"
+    pause: "{{ aap_applications_loop_delay }}"
   no_log: "{{ gateway_applications_secure_logging }}"
   async: "{{ ansible_check_mode | ternary(0, 1000) }}"
   poll: 0
@@ -47,9 +47,9 @@
   loop: "{{ __gateway_applications_job_async.results }}"
   loop_control:
     loop_var: __gateway_applications_job_async_results_item
-    label: "{{ __operation.verb }} AAP Platform Applications {{ __gateway_applications_job_async_result.__gateway_application_item.name }} | Wait for finish the Applications {{ __operation.action }}"
+    label: "{{ __operation.verb }} AAP Platform Applications {{ __gateway_applications_job_async_results_item.__gateway_application_item.name }} | Wait for finish the Applications {{ __operation.action }}"
   when: __gateway_applications_job_async_results_item.ansible_job_id is defined
-  no_log: "{{ applications_secure_logging }}"
+  no_log: "{{ gateway_applications_secure_logging }}"
   vars:
     __operation: "{{ operation_translate[__gateway_applications_job_async_results_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir }}"

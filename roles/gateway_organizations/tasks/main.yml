@@ -1,10 +1,10 @@
 ---
 - name: Organizations | Configuration # noqa fqcn[action-core]
   ansible.platform.organization:
-    name: "{{ __gateway_organizations_item.name | mandatory }}"
-    new_name: "{{ __gateway_organizations_item.new_name | default(omit) }}"
-    description: "{{ __gateway_organizations_item.description | default(omit) }}"
-    state: "{{ __gateway_organizations_item.state | default(platform_state | default(omit, true)) }}"
+    name: "{{ __gateway_organization_item.name | mandatory }}"
+    new_name: "{{ __gateway_organization_item.new_name | default(omit) }}"
+    description: "{{ __gateway_organization_item.description | default(omit) }}"
+    state: "{{ __gateway_organization_item.state | default(platform_state | default(omit, true)) }}"
 
     # Role Standard Options
     gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
@@ -15,8 +15,8 @@
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
   loop: "{{ aap_organizations }}"
   loop_control:
-    loop_var: __gateway_organizations_item
-    label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organizations_item.name }}"
+    loop_var: __gateway_organization_item
+    label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organization_item.name }}"
     pause: "{{ gateway_organizations_loop_delay }}"
   no_log: "{{ gateway_organizations_secure_logging }}"
   async: 1000
@@ -24,7 +24,7 @@
   register: __gateway_organizations_job_async
   changed_when: not __gateway_organizations_job_async.changed
   vars:
-    __operation: "{{ operation_translate[__gateway_organizations_item.state | default(platform_state) | default('present')] }}"
+    __operation: "{{ operation_translate[__gateway_organization_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
 
 - name: Organizations | Wait for finish the configuration
@@ -37,7 +37,7 @@
   loop: "{{ __gateway_organizations_job_async.results }}"
   loop_control:
     loop_var: __gateway_organizations_job_async_results_item
-    label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organizations_job_async_result.__gateway_organizations_item.name }} | Wait for finish the Organizations {{ __operation.action }}"
+    label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organizations_job_async_result.__gateway_organizations_job_async_results_item.__gateway_organization_item.name }} | Wait for finish the Organizations {{ __operation.action }}"
   when: __gateway_organizations_job_async_results_item.ansible_job_id is defined
   no_log: "{{ gateway_organizations_secure_logging }}"
   vars:

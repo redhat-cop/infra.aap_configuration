@@ -3,9 +3,9 @@
 # Create AH Group
 - name: Add Automation Hub group
   ansible.hub.ah_group:
-    name:             "{{ __group_item.name | default(omit) }}"
+    name:             "{{ __hub_group_item.name | default(omit) }}"
     # new_name:         "{{ __group.new_name | default(omit) }}"  <-- Needs adding once new_name option added to module
-    state:            "{{ __group_item.state | default(ah_state | default('present')) }}"
+    state:            "{{ __hub_group_item.state | default(ah_state | default('present')) }}"
     ah_host:          "{{ aap_hostname | default(omit) }}"
     ah_username:     "{{ aap_username | default(omit) }}"
     ah_password:      "{{ aap_password | default(omit) }}"
@@ -14,8 +14,8 @@
     request_timeout:  "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ aap_teams }}"
   loop_control:
-    loop_var: __group_item
-    label: "{{ __operation.verb }} the group {{ __ah_configuration_group__item.name }} in Hub"
+    loop_var: __hub_group_item
+    label: "{{ __operation.verb }} the group {{ __hub_group_item.name }} in Hub"
     pause: "{{ ah_configuration_group_loop_delay }}"
   no_log: "{{ ah_configuration_group_secure_logging }}"
   async: "{{ ah_configuration_group_async_timeout }}"
@@ -23,7 +23,7 @@
   register: __groups_job_async
   changed_when: not __groups_job_async.changed
   vars:
-    __operation: "{{ operation_translate[__group_item.state | default(platform_state) | default('present')] }}"
+    __operation: "{{ operation_translate[__hub_group_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Create Group | Wait for finish the group creation"
@@ -36,7 +36,7 @@
   loop: "{{ __groups_job_async.results }}"
   loop_control:
     loop_var: __groups_job_async_result_item
-    label: "{{ __operation.verb }} Label {{ __groups_job_async_result_item.__group_item.name }} | Wait for finish the Label {{ __operation.action }}"
+    label: "{{ __operation.verb }} Label {{ __groups_job_async_result_item.__hub_group_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __groups_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_group_secure_logging }}"
   vars:

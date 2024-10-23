@@ -3,7 +3,7 @@ argument_specs:
   main:
     short_description: An Ansible Role to create service keys on automation platform gateway.
     options:
-      gateway_gateway_service_keys:
+      gateway_service_keys:
         description: Data structure describing your service keys
         type: list
         required: true

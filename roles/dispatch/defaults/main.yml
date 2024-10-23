@@ -1,10 +1,10 @@
 ---
 gateway_configuration_dispatcher_roles:
   - role: gateway_authenticators
-    var: authenticators_list
+    var: gateway_authenticators
     tags: authenticators
   - role: gateway_authenticator_maps
-    var: authenticator_maps_list
+    var: gateway_authenticator_maps
     tags: authenticator_maps
   - role: gateway_settings
     var: gateway_settings
@@ -19,22 +19,22 @@ gateway_configuration_dispatcher_roles:
     var: aap_organizations
     tags: organizations
   - role: gateway_service_clusters
-    var: gateway_service_nodes
+    var: gateway_service_clusters
     tags: service_clusters
   - role: gateway_service_keys
-    var: service_keys_list
+    var: gateway_service_keys
     tags: service_keys
   - role: gateway_service_nodes
-    var: service_nodes_list
+    var: gateway_service_nodes
     tags: service_nodes
   - role: gateway_services
-    var: services_list
+    var: gateway_services
     tags: services
   - role: gateway_role_user_assignments
-    var: role_user_assignments_list
+    var: gateway_role_user_assignments
     tags: role_user_assignments
   - role: gateway_routes
-    var: routes_list
+    var: gateway_routes
     tags: routes
   - role: gateway_teams
     var: aap_teams
@@ -62,9 +62,12 @@ ah_configuration_dispatcher_roles:
   - role: hub_ee_image
     var: ah_ee_images
     tags: images
+  - role: hub_ee_registry
+    var: ah_ee_registries
+    tags: registry
   - role: hub_ee_registry_index
     var: ah_ee_registries
-    tags: indices
+    tags: ee_indices
   - role: hub_ee_registry_sync
     var: ah_ee_registries
     tags: regsync
@@ -163,9 +166,9 @@ eda_configuration_dispatcher_roles:
   - role: eda_projects
     var: eda_projects
     tags: project
-  # - role: eda_project_sync
-  #   var: eda_projects
-  #   tags: project_sync
+  - role: eda_project_sync
+    var: eda_projects
+    tags: project_sync
   - role: eda_decision_environments
     var: eda_decision_environments
     tags: decision_environment

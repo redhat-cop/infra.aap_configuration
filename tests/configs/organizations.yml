@@ -1,6 +1,7 @@
 ---
-controller_organizations:
+aap_organizations:
   - name: Satellite
+    description: Satellite
   - name: Default
   - name: Test-dispatch-dependencies
     galaxy_credentials:

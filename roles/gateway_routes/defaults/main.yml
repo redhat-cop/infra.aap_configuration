@@ -9,7 +9,7 @@
 # These are the default variables specific to the license role
 
 # a list of dictionaries describing the service nodes
-gateway_gateway_routes: []
+gateway_routes: []
 gateway_routes_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
 gateway_routes_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
 gateway_routes_async_delay: "{{ aap_configuration_async_delay | default(1) }}"

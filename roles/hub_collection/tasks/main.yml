@@ -16,17 +16,17 @@
 
 - name: Update or destroy Automation Hub Collection
   ansible.hub.ah_collection:
-    namespace:             "{{ __collections_item.namespace }}"
-    name:                  "{{ __collections_item.name }}"
-    version:               "{{ __collections_item.version | default(omit) }}"
-    path:                  "{{ __collections_item.path | default(omit) }}"
-    repository:            "{{ __collections_item.repository | default(omit) }}"
-    wait:                  "{{ __collections_item.wait | default(omit) }}"
-    auto_approve:          "{{ __collections_item.auto_approve | default(omit) }}"
-    timeout:               "{{ __collections_item.timeout | default(omit) }}"
-    interval:              "{{ __collections_item.interval | default(omit) }}"
-    overwrite_existing:    "{{ __collections_item.overwrite_existing | default(omit) }}"
-    state:                 "{{ __collections_item.state | default('present') }}"
+    namespace:             "{{ __hub_collection_item.namespace }}"
+    name:                  "{{ __hub_collection_item.name }}"
+    version:               "{{ __hub_collection_item.version | default(omit) }}"
+    path:                  "{{ __hub_collection_item.path | default(omit) }}"
+    repository:            "{{ __hub_collection_item.repository | default(omit) }}"
+    wait:                  "{{ __hub_collection_item.wait | default(omit) }}"
+    auto_approve:          "{{ __hub_collection_item.auto_approve | default(omit) }}"
+    timeout:               "{{ __hub_collection_item.timeout | default(omit) }}"
+    interval:              "{{ __hub_collection_item.interval | default(omit) }}"
+    overwrite_existing:    "{{ __hub_collection_item.overwrite_existing | default(omit) }}"
+    state:                 "{{ __hub_collection_item.state | default('present') }}"
     ah_host:               "{{ aap_hostname | default(omit) }}"
     ah_username:          "{{ aap_username | default(omit) }}"
     ah_password:           "{{ aap_password | default(omit) }}"
@@ -36,8 +36,8 @@
     request_timeout:       "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ ah_collections }}"
   loop_control:
-    loop_var: __collections_item
-    label: "{{ __operation.verb }} the collection {{ __ah_configuration_collection__item.name }} in Hub"
+    loop_var: __hub_collection_item
+    label: "{{ __operation.verb }} the collection {{ __hub_collection_item.name }} in Hub"
     pause: "{{ ah_configuration_collection_loop_delay }}"
   no_log: "{{ ah_configuration_collection_secure_logging }}"
   async: "{{ ah_configuration_collection_async_timeout }}"
@@ -45,7 +45,7 @@
   register: __collections_job_async
   changed_when: not __collections_job_async.changed
   vars:
-    __operation: "{{ operation_translate[__collections_item.state | default(platform_state) | default('present')] }}"
+    __operation: "{{ operation_translate[__hub_collection_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: Sleep for 10 seconds and continue with play
@@ -62,7 +62,7 @@
   loop: "{{ __collections_job_async.results }}"
   loop_control:
     loop_var: __collections_job_async_result_item
-    label: "{{ __operation.verb }} Label {{ __collections_job_async_result_item.__collections_item.name }} | Wait for finish the Label {{ __operation.action }}"
+    label: "{{ __operation.verb }} Collection {{ __collections_job_async_result_item.__hub_collection_item.name }} | Wait for finish the Collection {{ __operation.action }}"
   when: __collections_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_collection_secure_logging }}"
   vars:

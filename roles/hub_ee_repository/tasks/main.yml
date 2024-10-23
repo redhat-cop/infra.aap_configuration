@@ -3,15 +3,15 @@
 # Create AH EE repository
 - name: Add Automation Hub EE repository
   ansible.hub.ah_ee_repository:
-    name:                       "{{ __ee_repository_item.name }}"
-    description:                "{{ __ee_repository_item.description | default(omit) }}"
-    readme:                     "{{ __ee_repository_item.readme | default(omit) }}"
-    readme_file:                "{{ __ee_repository_item.readme_file | default(omit) }}"
-    registry:                   "{{ __ee_repository_item.registry | default(omit) }}"
-    upstream_name:              "{{ __ee_repository_item.upstream_name | default(omit) }}"
-    include_tags:               "{{ __ee_repository_item.include_tags | default(omit) }}"
-    exclude_tags:               "{{ __ee_repository_item.exclude_tags | default(omit) }}"
-    state:                      "{{ __ee_repository_item.state | default(ah_state | default('present')) }}"
+    name:                       "{{ __hub_ee_repository_sync_item.name }}"
+    description:                "{{ __hub_ee_repository_sync_item.description | default(omit) }}"
+    readme:                     "{{ __hub_ee_repository_sync_item.readme | default(omit) }}"
+    readme_file:                "{{ __hub_ee_repository_sync_item.readme_file | default(omit) }}"
+    registry:                   "{{ __hub_ee_repository_sync_item.registry | default(omit) }}"
+    upstream_name:              "{{ __hub_ee_repository_sync_item.upstream_name | default(omit) }}"
+    include_tags:               "{{ __hub_ee_repository_sync_item.include_tags | default(omit) }}"
+    exclude_tags:               "{{ __hub_ee_repository_sync_item.exclude_tags | default(omit) }}"
+    state:                      "{{ __hub_ee_repository_sync_item.state | default(ah_state | default('present')) }}"
     ah_host:                    "{{ aap_hostname | default(omit) }}"
     ah_username:               "{{ aap_username | default(omit) }}"
     ah_password:                "{{ aap_password | default(omit) }}"
@@ -20,8 +20,8 @@
     request_timeout:            "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ ah_ee_repositories }}"
   loop_control:
-    loop_var: __ee_repository_item
-    label: "{{ __operation.verb }} the EE repository {{ __ah_configuration_ee_registry_sync__item.name }} in Hub"
+    loop_var: __hub_ee_repository_sync_item
+    label: "{{ __operation.verb }} the EE repository {{ __ee_repository_sync_item.name }} in Hub"
     pause: "{{ ah_configuration_ee_registry_sync_loop_delay }}"
   no_log: "{{ ah_configuration_ee_repository_secure_logging }}"
   async: "{{ ah_configuration_ee_repository_async_timeout }}"
@@ -29,7 +29,7 @@
   register: __ee_repositories_job_async
   changed_when: not __ee_repositories_job_async.changed
   vars:
-    __operation: "{{ operation_translate[__ee_repository_item.state | default(platform_state) | default('present')] }}"
+    __operation: "{{ operation_translate[__hub_ee_repository_sync_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Create EE Repository | Wait for finish the ee_repository creation"

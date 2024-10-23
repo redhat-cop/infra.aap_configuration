@@ -11,6 +11,6 @@
 
 - name: Cancel ad hoc commands
   ansible.builtin.include_role:
-    name: ad_hoc_command_cancel
+    name: controller_ad_hoc_command_cancel
   when: controller_ad_hoc_commands is defined
 ...
