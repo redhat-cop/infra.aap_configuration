@@ -2,9 +2,9 @@
 # Add Group Roles
 - name: Add Roles to Groups in Automation Hubs
   ansible.hub.group_roles:
-    groups:           "{{ __group_roles_item.groups | default(omit) }}"
-    role_list:        "{{ __group_roles_item.role_list | default(omit) }}"
-    state:            "{{ __group_roles_item.state | default(ah_state | default('present')) }}"
+    groups:           "{{ __hub_group_roles_item.groups | default(omit) }}"
+    role_list:        "{{ __hub_group_roles_item.role_list | default(omit) }}"
+    state:            "{{ __hub_group_roles_item.state | default(ah_state | default('present')) }}"
     ah_host:          "{{ aap_hostname | default(omit) }}"
     ah_username:     "{{ aap_username | default(omit) }}"
     ah_password:      "{{ aap_password | default(omit) }}"
@@ -13,8 +13,8 @@
     request_timeout:  "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ ah_group_roles }}"
   loop_control:
-    loop_var: __group_roles_item
-    label: "{{ __operation.verb }} the group role {{ __ah_configuration_group_roles__item.name }} in Hub"
+    loop_var: __hub_group_roles_item
+    label: "{{ __operation.verb }} the group role {{ __hub_group_roles_item.name }} in Hub"
     pause: "{{ ah_configuration_group_roles_loop_delay }}"
   no_log: "{{ ah_configuration_group_roles_secure_logging }}"
   async: "{{ ah_configuration_group_roles_async_timeout }}"
@@ -22,7 +22,7 @@
   register: __group_roles_job_async
   changed_when: not __group_roles_job_async.changed
   vars:
-    __operation: "{{ operation_translate[__group_roles_item.state | default(platform_state) | default('present')] }}"
+    __operation: "{{ operation_translate[__hub_group_roles_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: '{{ aap_configuration_async_dir }}'
 
 - name: "Add Roles to Groups | Wait for finish the group creation"
@@ -35,7 +35,7 @@
   loop: "{{ __group_roles_job_async.results }}"
   loop_control:
     loop_var: __group_roles_job_async_result_item
-    label: "{{ __operation.verb }} Label {{ __group_roles_job_async_result_item.__group_roles_item.name }} | Wait for finish the Label {{ __operation.action }}"
+    label: "{{ __operation.verb }} Label {{ __group_roles_job_async_result_item.__hub_group_roles_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __group_roles_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_group_roles_secure_logging }}"
   vars:

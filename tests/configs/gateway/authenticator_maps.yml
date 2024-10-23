@@ -1,0 +1,54 @@
+---
+gateway_authenticators:
+  - name: 'Test-Authenticator-1'
+    slug: 'Test-Authenticator-1'
+    type: ansible_base.authentication.authenticator_plugins.local
+    configuration: {}
+  - name: 'Test-Authenticator-2'
+    slug: 'Test-Authenticator-2'
+    type: ansible_base.authentication.authenticator_plugins.local
+    configuration: {}
+gateway_authenticator_maps:
+  - name: 'Test-AMap-1'
+    authenticator: 'Test-Authenticator-1'
+    revoke: false
+    map_type: organization
+    role: Organization Member
+    organization: Organization 1
+    triggers:
+      always: {}
+      never: {}
+    order: 10
+  - name: 'Test-AMap-2'
+    authenticator: 'Test-Authenticator-1'
+    revoke: true
+    map_type: team
+    role: Team Admin
+    team: Team 2
+    organization: Organization 1
+    triggers:
+      groups:
+        has_or:
+          - group1
+          - group2
+        has_and:
+          - group3
+          - group4
+    order: 2
+  - name: 'Test-AMap-3'
+    authenticator: 'Test-Authenticator-2'
+    map_type: allow
+    triggers:
+      attributes:
+        join_condition: or
+        attr_1:
+          contains: redhat
+          matches: ansible
+          ends_with: best
+        attr_2:
+          in:
+            - ansible
+            - automation
+            - gateway
+    order: 10
+...

@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: gateway_gateway_service_keys
+  role_name: gateway_service_keys
   author: Martin Slemr
   description: An Ansible Role to create service keys in automation platform gateway.
   company: Red Hat
