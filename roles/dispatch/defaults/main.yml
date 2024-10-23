@@ -166,9 +166,6 @@ eda_configuration_dispatcher_roles:
   - role: eda_projects
     var: eda_projects
     tags: project
-  - role: eda_project_sync
-    var: eda_projects
-    tags: project_sync
   - role: eda_decision_environments
     var: eda_decision_environments
     tags: decision_environment
