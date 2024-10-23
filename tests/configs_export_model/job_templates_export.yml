@@ -155,7 +155,7 @@ job_templates:
             type: text
           - question_description: Choosing yes or no.
             min: 0
-            default: yes
+            default: true
             max: 0
             required: true
             choices: |-
