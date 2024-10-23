@@ -4,9 +4,9 @@
 # https://github.com/ansible/ansible-lint/issues/371
 # exclude_paths:
 exclude_paths:
-  - '.github/'
-  - 'changelogs/'
-  - 'tests/templated_role_example'
+  - .github/
+  - changelogs/
+  - tests/templated_role_example
 parseable: true
 use_default_rules: true
 # https://github.com/ansible/ansible-lint/issues/808
@@ -18,9 +18,9 @@ skip_list:
   - fqcn[action]
   - fqcn[keyword]
   - jinja[spacing]
-  - meta-runtime  # This collection with the appropriate awx.awx or ansible.controller still works with older ansible.
+  - meta-runtime # This collection with the appropriate awx.awx or ansible.controller still works with older ansible.
   - role-name[path]
-  - sanity[cannot-ignore]  # We're only ignoring sanity rules when we have to
+  - sanity[cannot-ignore] # We're only ignoring sanity rules when we have to
   - var-naming[no-role-prefix]
 kinds:
   - playbooks: "**/examples/templates/*.{yml,yaml}"

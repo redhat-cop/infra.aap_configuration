@@ -12,5 +12,5 @@ ah_configuration_collection_repository_async_timeout: "{{ aap_configuration_asyn
 ah_configuration_collection_repository_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 ah_configuration_collection_repository_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 ah_configuration_collection_repository_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
-aap_configuration_async_dir: null
+aap_configuration_async_dir:
 ...
