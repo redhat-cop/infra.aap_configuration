@@ -238,7 +238,7 @@ workflow_job_templates:
             variable: option_true_false
             min:
             max:
-            default: 'yes'
+            default: true
             choices: |-
               yes
               no
