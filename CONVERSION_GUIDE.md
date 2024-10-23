@@ -37,7 +37,7 @@ These are the variables that are used to connect the platform and are the same a
 
 These are the connection variables, These are used to connect to the platform.
 
-|Variable Name|Default Value|Required|Description|
+|Variable Name|Default Value|Required|Description|Example|
 |:---|:---:|:---:|:---|:---|
 |`aap_hostname`|""|yes|URL to the Ansible Automation Platform Server.|127.0.0.1|
 |`aap_validate_certs`|`True`|no|Whether or not to validate the Ansible Automation Platform Server's SSL certificate.||
@@ -50,7 +50,7 @@ These are the connection variables, These are used to connect to the platform.
 
 Other Variables that will apply to all roles when used globally. Each of these has a per role that can override the default value if you wish to selectively use them. This is useful for things like retries and delay on projects, or secure logging for a role.
 
-|Variable Name|Default Value|Required|Description|
+|Variable Name|Default Value|Required|Description|Example|
 |:---|:---:|:---:|:---|:---|
 |`aap_configuration_enforce_defaults`|`False`|no|Whether or not to enforce default option values. This is not universal and it is a best effort to enforce the default values of fields.|
 |`aap_configuration_secure_logging`|`False`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `True` if you will be providing your sensitive values from elsewhere.|
