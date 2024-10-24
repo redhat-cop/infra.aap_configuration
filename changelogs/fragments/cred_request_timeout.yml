@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - BACKPORT - Add missing request_timeout option to credential role
