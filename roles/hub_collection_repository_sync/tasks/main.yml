@@ -36,7 +36,7 @@
   loop: "{{ __collection_repository_sync_job_async.results }}"
   loop_control:
     loop_var: __collection_repository_sync_job_async_result_item
-    label: "{{ __operation.verb }} Label {{ __collection_repository_sync_job_async_result_item.__hub_collection_repository_sync_item.name }} | Wait for finish the Label {{ __operation.action }}"
+    label: "{{ __operation.verb }} Collection repository sync {{ __collection_repository_sync_job_async_result_item.__hub_collection_repository_sync_item.name }} | Wait for finish the Label {{ __operation.action }}"
   when: __collection_repository_sync_job_async_result_item.ansible_job_id is defined
   no_log: "{{ ah_configuration_collection_repository_sync_secure_logging }}"
   vars:
