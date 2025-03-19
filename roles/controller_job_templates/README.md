@@ -77,7 +77,7 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Name of Job Template|
-|`new_name`|""|str|no|Setting this option will change the existing name (looked up via the name field).|
+|`new_name`|""|no|str|Setting this option will change the existing name (looked up via the name field).|
 |`copy_from`|""|no|str|Name or id to copy the job template from. This will copy an existing credential and change any parameters supplied.|
 |`description`|`false`|no|str|Description to use for the job template.|
 |`execution_environment`|""|no|str|Execution Environment to use for the job template.|
