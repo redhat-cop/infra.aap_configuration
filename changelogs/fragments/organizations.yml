@@ -1,0 +1,5 @@
+---
+major_changes:
+  - Restucture the gateway_organizations role so that only one role needs to be called to create and configure the organization. Adds the logic which existed from the controller_organizations role previously.
+  - Dispatch no longer calls the controller_organizations role by default, as the gateway_organizations role should be sufficient.
+...
