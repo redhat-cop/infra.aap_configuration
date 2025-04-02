@@ -4,6 +4,26 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v3.2.0
+======
+
+Major Changes
+-------------
+
+- Dispatch no longer calls the controller_organizations role by default, as the gateway_organizations role should be sufficient.
+- Restucture the gateway_organizations role so that only one role needs to be called to create and configure the organization. Adds the logic which existed from the controller_organizations role previously.
+
+Bugfixes
+--------
+
+- Correct README.md to indicate destroy_current_nodes is bool
+- Fixed the object creation order for the gateway staf.
+- Update loop label to only show name of credential type instead of entire json object
+- Update loop label to only show name of job template instead of entire json object
+- Update loop label to only show name of workflow job template instead of entire json object
+- added missing references to controller_roles in dispatcher defaults
+- added missing references to eda_credential_types and eda_event_streams in dispatcher defaults
+
 v3.1.0
 ======
 
