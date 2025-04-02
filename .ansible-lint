@@ -23,6 +23,31 @@ parseable: true
 mock_modules:
   - ansible.controller.organization
   - ansible.eda.controller_token
+  - ansible.eda.credential
+  - ansible.eda.credential_type
+  - ansible.eda.decision_environment
+  - ansible.eda.event_stream
+  - ansible.eda.project
+  - ansible.eda.rulebook_activation
+  - ansible.eda.user
+  - ansible.hub.ah_approval
+  - ansible.hub.ah_build
+  - ansible.hub.ah_collection
+  - ansible.hub.ah_ee_image
+  - ansible.hub.ah_ee_registry
+  - ansible.hub.ah_ee_registry_index
+  - ansible.hub.ah_ee_registry_sync
+  - ansible.hub.ah_ee_repository
+  - ansible.hub.ah_ee_repository_sync
+  - ansible.hub.ah_group
+  - ansible.hub.ah_namespace
+  - ansible.hub.ah_role
+  - ansible.hub.ah_token
+  - ansible.hub.ah_user
+  - ansible.hub.collection_remote
+  - ansible.hub.collection_repository
+  - ansible.hub.collection_repository_sync
+  - ansible.hub.group_roles
   - ansible.platform.application
   - ansible.platform.authenticator
   - ansible.platform.authenticator_map
