@@ -21,20 +21,22 @@ parseable: true
 
 # Mock modules or roles in order to pass ansible-playbook --syntax-check
 mock_modules:
-  - ansible.platform.authenticator_map
-  - ansible.platform.user
-  - ansible.platform.authenticator
-  - ansible.platform.role_user_assignment
-  - ansible.platform.service_node
-  - ansible.platform.service_key
-  - ansible.platform.service_cluster
-  - ansible.platform.organization
-  - ansible.platform.settings
-  - ansible.platform.service
-  - ansible.platform.team
+  - ansible.controller.organization
+  - ansible.eda.controller_token
   - ansible.platform.application
+  - ansible.platform.authenticator
+  - ansible.platform.authenticator_map
   - ansible.platform.http_port
+  - ansible.platform.organization
+  - ansible.platform.role_user_assignment
   - ansible.platform.route
+  - ansible.platform.service
+  - ansible.platform.service_cluster
+  - ansible.platform.service_key
+  - ansible.platform.service_node
+  - ansible.platform.settings
+  - ansible.platform.team
+  - ansible.platform.user
   - job_wait
 
 # mock_roles:
