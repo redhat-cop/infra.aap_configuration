@@ -41,6 +41,9 @@ gateway_configuration_dispatcher_roles:
   - role: gateway_organizations
     var: aap_organizations
     tags: organizations
+    assign_galaxy_credentials_to_org: false
+    assign_default_ee_to_org: false
+    assign_notification_templates_to_org: false
   - role: gateway_service_clusters
     var: gateway_service_clusters
     tags: service_clusters
@@ -116,12 +119,6 @@ controller_configuration_dispatcher_roles:
   - role: controller_settings
     var: controller_settings
     tags: settings
-  - role: controller_organizations
-    var: aap_organizations
-    tags: organizations
-    assign_galaxy_credentials_to_org: false
-    assign_default_ee_to_org: false
-    assign_notification_templates_to_org: false
   - role: controller_instances
     var: controller_instances
     tags: instances
@@ -149,7 +146,7 @@ controller_configuration_dispatcher_roles:
   - role: controller_notification_templates
     var: controller_notifications
     tags: notification_templates
-  - role: controller_organizations
+  - role: gateway_organizations
     var: aap_organizations
     tags: organizations
     assign_galaxy_credentials_to_org: true

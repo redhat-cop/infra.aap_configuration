@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create/update/remove Organizations on Ansible Controller.
+An Ansible Role to create/update/remove Organizations on Ansible Controller. Note that this role will not create organizations in AAP 2.5 and beyond. Instead, make use of the `gateway_organizations` role from this collection.
 
 ## Requirements
 
