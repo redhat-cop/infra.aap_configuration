@@ -19,6 +19,7 @@ build_ignore:
   - .github
   - "*.tar.gz"
   - tests/*
+  - .ansible/
 license:
   - GPL-3.0-or-later
 tags:
