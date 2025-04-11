@@ -1,7 +1,7 @@
 ---
 # Update Inventory sources
 - name: Run Controller inventory source update
-  inventory_source_update:
+  ansible.controller.inventory_source_update:
     name: "{{ __inventory_source_update_item.name | mandatory }}"
     inventory: "{{ __inventory_source_update_item.inventory | mandatory }}"
     organization: "{{ __inventory_source_update_item.organization | default(omit, true) }}"

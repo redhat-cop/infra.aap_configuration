@@ -1,7 +1,7 @@
 ---
 # Create Controller applications
 - name: Managing Controller Applications
-  application:
+  ansible.controller.application:
     name: "{{ __application_item.name | mandatory }}"
     new_name: "{{ __application_item.new_name | default(omit, true) }}"
     organization: "{{ __application_item.organization | mandatory }}"

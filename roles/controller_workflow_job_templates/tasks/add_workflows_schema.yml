@@ -1,7 +1,7 @@
 ---
 # Creating Workflow Node
 - name: add_workflows_schema | Create the Workflow Nodes
-  workflow_job_template_node:
+  ansible.controller.workflow_job_template_node:
     identifier: "{{ __workflow_loop_node_item.identifier | mandatory }}" # internal identification ID
     extra_data: "{{ __workflow_loop_node_item.extra_data | default(omit, true) }}"
     inventory: "{{ __workflow_loop_node_item.inventory | default(omit, true) }}"

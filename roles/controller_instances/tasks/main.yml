@@ -1,7 +1,7 @@
 ---
 # Add Controller Instances
 - name: Add Controller Instance
-  instance:
+  ansible.controller.instance:
     hostname: "{{ __controller_instance_item.hostname | mandatory }}"
     capacity_adjustment: "{{ __controller_instance_item.capacity_adjustment | default((1.0 if controller_configuration_instances_enforce_defaults else omit), true) }}"
     enabled: "{{ __controller_instance_item.enabled | default((true if controller_configuration_instances_enforce_defaults else omit), true) }}"

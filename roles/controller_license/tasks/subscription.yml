@@ -2,7 +2,7 @@
 # tasks file for license role - Subscription
 
 - name: subscription | Get subscriptions with a filter
-  subscriptions:
+  ansible.controller.subscriptions:
     username: "{{ redhat_subscription_username }}"
     password: "{{ redhat_subscription_password }}"
     filters: "{{ controller_license.filters | default(_redhat_cop_license_filters) }}"
@@ -19,7 +19,7 @@
     - controller_license.use_lookup
 
 - name: subscription | Install the Controller license
-  license:
+  ansible.controller.license:
     pool_id: "{{ controller_license.pool_id | default(subscription.subscriptions[(controller_license.list_num | default(0))].pool_id) }}"
     force: "{{ controller_license.force | default(omit) }}"
     state: "{{ controller_license.state | default(omit) }}"

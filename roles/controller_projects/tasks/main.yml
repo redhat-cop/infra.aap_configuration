@@ -1,6 +1,6 @@
 ---
 - name: Managing Projects
-  project:
+  ansible.controller.project:
     name: "{{ __controller_project_item.name | mandatory }}"
     new_name: "{{ __controller_project_item.new_name | default(omit, true) }}"
     copy_from: "{{ __controller_project_item.copy_from | default(omit, true) }}"

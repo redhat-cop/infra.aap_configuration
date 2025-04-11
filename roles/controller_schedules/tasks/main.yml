@@ -1,6 +1,6 @@
 ---
 - name: Managing Controller Schedules
-  schedule:
+  ansible.controller.schedule:
     name: "{{ __controller_schedule_item.name | mandatory }}"
     new_name: "{{ __controller_schedule_item.new_name | default(omit, true) }}"
     description: "{{ __controller_schedule_item.description | default(('' if controller_configuration_schedules_enforce_defaults else omit), true) }}"

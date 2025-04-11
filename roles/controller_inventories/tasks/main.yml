@@ -1,6 +1,6 @@
 ---
 - name: Managing Inventories
-  inventory:
+  ansible.controller.inventory:
     name: "{{ __controller_inventory_item.name | mandatory }}"
     new_name: "{{ __controller_inventory_item.new_name | default(omit, true) }}"
     copy_from: "{{ __controller_inventory_item.copy_from | default(omit, true) }}"

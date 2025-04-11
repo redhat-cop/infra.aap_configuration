@@ -1,6 +1,6 @@
 ---
 - name: Managing Role Based Access Entries on Controller
-  role:
+  ansible.controller.role:
     user: "{{ __controller_role_item.0.user | default(__controller_role_item.user) | default(omit, true) }}"
     users: "{{ __controller_role_item.0.users | default(__controller_role_item.users) | default(([] if controller_configuration_role_enforce_defaults else omit), true) }}"
     team: "{{ __controller_role_item.0.team | default(__controller_role_item.team) | default(omit, true) }}"

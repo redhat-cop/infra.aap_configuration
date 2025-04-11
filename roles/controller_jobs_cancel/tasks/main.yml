@@ -1,7 +1,7 @@
 ---
 # Cancel a Controller Job
 - name: Cancel a Controller Job
-  job_cancel:
+  ansible.controller.job_cancel:
     job_id: "{{ __controller_jobs_cancel_item.id | mandatory }}"
     fail_if_not_running: "{{ __controller_jobs_cancel_item.fail_if_not_running | default(omit) }}"
 

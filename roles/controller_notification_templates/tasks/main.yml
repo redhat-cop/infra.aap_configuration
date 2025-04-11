@@ -1,6 +1,6 @@
 ---
 - name: Managing Controller Notifications
-  notification_template:
+  ansible.controller.notification_template:
     name: "{{ __controller_notification_item.name | mandatory }}"
     new_name: "{{ __controller_notification_item.new_name | default(omit, true) }}"
     copy_from: "{{ __controller_notification_item.copy_from | default(omit, true) }}"

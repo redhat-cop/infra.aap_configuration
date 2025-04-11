@@ -1,6 +1,6 @@
 ---
 - name: Managing Controller Credential Input Sources
-  credential_input_source:
+  ansible.controller.credential_input_source:
     target_credential: "{{ __cred_input_src_item.target_credential | mandatory }}"
     input_field_name: "{{ __cred_input_src_item.input_field_name | mandatory }}"
     source_credential: "{{ __cred_input_src_item.source_credential | default(omit, true) }}"

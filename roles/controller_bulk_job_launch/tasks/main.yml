@@ -1,7 +1,7 @@
 ---
 # Launch Controller Job
 - name: Bulk Launch Controller Jobs
-  bulk_job_launch:
+  ansible.controller.bulk_job_launch:
     jobs: "{{ __bulk_job_launch_item.jobs | mandatory }}"
     name: "{{ __bulk_job_launch_item.name | default(omit, true) }}"
     description: "{{ __bulk_job_launch_item.description | default(omit, true) }}"

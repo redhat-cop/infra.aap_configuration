@@ -1,7 +1,7 @@
 ---
 # Create Job Template
 - name: Add Controller hosts in bulk
-  bulk_host_create:
+  ansible.controller.bulk_host_create:
     hosts: "{{ __controller_bulk_hosts_item.hosts }}"
     inventory: "{{ __controller_bulk_hosts_item.inventory }}"
 

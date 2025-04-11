@@ -2,7 +2,7 @@
 # The group module is also an ansible.builtin module, but due to supporting both the awx.awx and automation.controller collections
 # the FQCN cannot be used here.
 - name: Managing Controller Groups # noqa fqcn[action-core]
-  group:
+  ansible.controller.group:
     name: "{{ __controller_groups_item.name | mandatory }}"
     new_name: "{{ __controller_groups_item.new_name | default(omit, true) }}"
     description: "{{ __controller_groups_item.description | default(('' if controller_configuration_groups_enforce_defaults else omit), true) }}"

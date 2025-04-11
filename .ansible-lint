@@ -13,6 +13,7 @@ exclude_paths:
   - .github/
   - changelogs/
   - tests/templated_role_example
+  - .ansible/
 
 parseable: true
 # quiet: true

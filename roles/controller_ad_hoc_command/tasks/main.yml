@@ -1,7 +1,7 @@
 ---
 # Run Ad Hoc Commands
 - name: Run Controller ad hoc command
-  ad_hoc_command:
+  ansible.controller.ad_hoc_command:
     job_type: "{{ __ad_hoc_command_item.job_type | default('run') }}"
     inventory: "{{ __ad_hoc_command_item.inventory }}"
     limit: "{{ __ad_hoc_command_item.limit | default(omit, true) }}"

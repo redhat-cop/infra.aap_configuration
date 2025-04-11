@@ -1,7 +1,7 @@
 ---
 # Cancel Ad Hoc Commands
 - name: Cancel Controller ad hoc command
-  ad_hoc_command_cancel:
+  ansible.controller.ad_hoc_command_cancel:
     command_id: "{{ __ad_hoc_command_cancel_item.id }}"
     fail_if_not_running: "{{ __ad_hoc_command_cancel_item.fail_if_not_running | default(omit) }}"
     interval: "{{ __ad_hoc_command_cancel_item.interval | default(omit) }}"

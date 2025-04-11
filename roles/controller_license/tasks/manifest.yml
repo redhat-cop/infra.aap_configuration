@@ -38,7 +38,7 @@
     - not controller_license.manifest is defined
 
 - name: manifest | Install the Controller license
-  license:
+  ansible.controller.license:
     manifest: "{{ __controller_manifest_path | default(omit) }}"
     eula_accepted: "{{ controller_license.eula_accepted | default(omit) }}" # Depreciated only for Tower 3.8.x or lower
     pool_id: "{{ controller_license.pool_id | default(omit) }}"

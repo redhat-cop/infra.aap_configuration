@@ -1,7 +1,7 @@
 ---
 # Launch Controller Job
 - name: Launch a Controller Job
-  job_launch:
+  ansible.controller.job_launch:
     name: "{{ __job_launch_item.name | mandatory }}"
     job_type: "{{ __job_launch_item.job_type | default(omit, true) }}"
     inventory: "{{ __job_launch_item.inventory | default(omit, true) }}"

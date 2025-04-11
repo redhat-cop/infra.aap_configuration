@@ -1,6 +1,6 @@
 ---
 - name: Managing Controller Job Templates
-  job_template:
+  ansible.controller.job_template:
     name: "{{ __controller_template_item.name | mandatory }}"
     new_name: "{{ __controller_template_item.new_name | default(omit, true) }}"
     copy_from: "{{ __controller_template_item.copy_from | default(omit, true) }}"
