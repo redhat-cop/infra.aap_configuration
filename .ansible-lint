@@ -138,9 +138,6 @@ use_default_rules: true
 # When putting ignores inside the ignore file, they are marked as ignored, but
 # still visible, making it easier to address later.
 skip_list:
-  # Skipping fqcn[action] because this collection supports using either the awx.awx or ansible.controller collection
-  #   so a FQCN cannot be used in module names
-  - fqcn[action]
   - fqcn[keyword]
   - jinja[spacing]
   - meta-runtime # This collection with the appropriate awx.awx or ansible.controller still works with older ansible.
