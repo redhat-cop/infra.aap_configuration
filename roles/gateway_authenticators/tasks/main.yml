@@ -35,12 +35,7 @@
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
 
 - name: Authenticators | Wait for finish the configuration
-  ansible.builtin.async_status:
-    jid: "{{ __gateway_authenticators_job_async_results_item.ansible_job_id }}"
-  register: __gateway_authenticators_job_async_result
-  until: __gateway_authenticators_job_async_result.finished
-  retries: "{{ gateway_authenticators_async_retries }}"
-  delay: "{{ gateway_authenticators_async_delay }}"
+  ansible.builtin.include_tasks: async_gateway_authenticator.yml
   loop: "{{ __gateway_authenticators_job_async.results }}"
   loop_control:
     loop_var: __gateway_authenticators_job_async_results_item

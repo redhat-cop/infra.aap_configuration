@@ -31,12 +31,7 @@
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
 
 - name: Role User Assignments | Wait for finish the configuration
-  ansible.builtin.async_status:
-    jid: "{{ __gateway_role_user_assignments_job_async_results_item.ansible_job_id }}"
-  register: __gateway_role_user_assignments_job_async_result
-  until: __gateway_role_user_assignments_job_async_result.finished
-  retries: "{{ gateway_role_user_assignments_async_retries }}"
-  delay: "{{ gateway_role_user_assignments_async_delay }}"
+  ansible.builtin.include_tasks: async_gateway_role_user_assignment.yml
   loop: "{{ __gateway_role_user_assignments_job_async.results }}"
   loop_control:
     loop_var: __gateway_role_user_assignments_job_async_results_item

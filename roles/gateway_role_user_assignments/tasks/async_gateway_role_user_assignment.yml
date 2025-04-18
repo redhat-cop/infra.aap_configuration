@@ -1,0 +1,34 @@
+---
+- name: async_gateway_role_user_assignment | An async_gateway_role_user_assignment block
+  block:
+    - name: async_gateway_role_user_assignment | Managing Role User Assignments | Wait for finish the role user assignment
+      ansible.builtin.async_status:
+        jid: "{{ __gateway_role_user_assignments_job_async_results_item.ansible_job_id }}"
+      register: __gateway_role_user_assignments_job_async_result
+      until: __gateway_role_user_assignments_job_async_result.finished
+      retries: "{{ gateway_role_user_assignments_async_retries }}"
+      delay: "{{ gateway_role_user_assignments_async_delay }}"
+  rescue:
+    - name: async_gateway_role_user_assignment | Load error details
+      ansible.builtin.include_vars:
+        file: "{{ __gateway_role_user_assignment_job_async_result.results_file }}"
+        name: __error_data
+
+    - name: async_gateway_role_user_assignment | Show error and stop execution
+      when: not collect_logs
+      ansible.builtin.fail:
+        msg: "error: {{ __error_data['msg'] }}, response: {{ __error_data['response'] | default ('N/A') }}"
+
+    - name: async_gateway_role_user_assignment | Building list of not processed role user assignments
+      ansible.builtin.set_fact:
+        __gateway_role_user_assignment_error_list: "{{ __gateway_role_user_assignment_error_list | default([]) + [
+                                                                                  {
+                                                                                   'user': __error_data['invocation']['module_args']['user'] | default(''),
+                                                                                   'role_definition': __error_data['invocation']['module_args']['role_definition'] | default(''),
+                                                                                   'role_definition_id': __error_data['invocation']['module_args']['role_definition_id'] | default(''),
+                                                                                   'object_ansible_id': __error_data['invocation']['module_args']['object_ansible_id'] | default(''),
+                                                                                   'error': __error_data['msg'] | default('')
+                                                                                  }
+                                                                                 ]
+                                         }}"
+...

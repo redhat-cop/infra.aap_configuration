@@ -38,12 +38,7 @@
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
 
 - name: Applications | Wait for finish the configuration
-  ansible.builtin.async_status:
-    jid: "{{ __gateway_applications_job_async_results_item.ansible_job_id }}"
-  register: __gateway_applications_job_async_result
-  until: __gateway_applications_job_async_result.finished
-  retries: "{{ gateway_applications_async_retries }}"
-  delay: "{{ gateway_applications_async_delay }}"
+  ansible.builtin.include_tasks: async_gateway_application.yml
   loop: "{{ __gateway_applications_job_async.results }}"
   loop_control:
     loop_var: __gateway_applications_job_async_results_item

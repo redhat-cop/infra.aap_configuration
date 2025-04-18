@@ -1,0 +1,31 @@
+---
+- name: async_gateway_user_accounts | An async_gateway_user_accounts block
+  block:
+    - name: async_gateway_user_accounts | Managing users | Wait for finish the user_accounts  operation
+      ansible.builtin.async_status:
+        jid: "{{ __gateway_user_accounts_job_async_results_item.ansible_job_id }}"
+      register: __gateway_user_accounts_job_async_result
+      until: __gateway_users_job_async_result.finished
+      retries: "{{ gateway_users_async_retries }}"
+      delay: "{{ gateway_users_async_delay }}"
+  rescue:
+    - name: async_gateway_user_accounts | Load error details
+      ansible.builtin.include_vars:
+        file: "{{ __gateway_user_accounts_job_async_result.results_file }}"
+        name: __error_data
+
+    - name: async_gateway_user_accounts | Show error and stop execution
+      when: not collect_logs
+      ansible.builtin.fail:
+        msg: "error: {{ __error_data['msg'] }}, response: {{ __error_data['response'] | default ('N/A') }}"
+
+    - name: async_gateway_user_accounts | Building list of not procesed users
+      ansible.builtin.set_fact:
+        __gateway_user_accounts_error_list: "{{ __gateway_user_accounts_error_list | default([]) + [
+                                                                                  {
+                                                                                   'username': __error_data['invocation']['module_args']['username'] | default(''),
+                                                                                   'error': __error_data['msg'] | default('')
+                                                                                  }
+                                                                                 ]
+                                            }}"
+...
