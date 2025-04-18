@@ -22,16 +22,10 @@
   changed_when: not __controller_tokens_job_async.changed
   vars:
     __operation: "{{ operation_translate[__controller_tokens_job_async.state | default(platform_state) | default('present')] }}"
-
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
 
 - name: Create controller_token | Wait for finish the controller_token creation
-  ansible.builtin.async_status:
-    jid: "{{ __controller_tokens_job_async_result_item.ansible_job_id }}"
-  register: __controller_tokens_job_async_result
-  until: __controller_tokens_job_async_result.finished
-  retries: "{{ eda_configuration_users_token_async_retries }}"
-  delay: "{{ eda_configuration_users_token_async_delay }}"
+  ansible.builtin.include_tasks: async_eda_controller_token.yml
   loop: "{{ __controller_tokens_job_async.results }}"
   loop_control:
     loop_var: __controller_tokens_job_async_result_item

@@ -38,12 +38,7 @@
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
 
 - name: Create rulebook_activation | Wait for finish the rulebook_activation creation
-  ansible.builtin.async_status:
-    jid: "{{ __rulebook_activations_job_async_result_item.ansible_job_id }}"
-  register: __rulebook_activations_job_async_result
-  until: __rulebook_activations_job_async_result.finished
-  retries: "{{ eda_configuration_rulebook_activations_async_retries }}"
-  delay: "{{ eda_configuration_rulebook_activations_async_delay }}"
+  ansible.builtin.include_tasks: async_eda_rulebook_activation.yml
   loop: "{{ __rulebook_activations_job_async.results }}"
   loop_control:
     loop_var: __rulebook_activations_job_async_result_item

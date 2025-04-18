@@ -16,6 +16,7 @@ An Ansible Role to create Event Streams in EDA Controller.
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
 |`eda_event_streams`|`see below`|yes|Data structure describing your users Described below.||
+|`collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to Event Stream creation in EDA, instead of failing on the first error.||
 
 ### Secure Logging Variables
 
