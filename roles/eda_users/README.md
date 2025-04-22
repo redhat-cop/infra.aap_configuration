@@ -18,7 +18,6 @@ An Ansible Role to create users in EDA Controller.
 |`aap_user_accounts`|`see below`|yes|Data structure describing your users Described below.||
 |`collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to User creation in EDA, instead of failing on the first error.||
 
-
 ### Secure Logging Variables
 
 The following Variables compliment each other.
