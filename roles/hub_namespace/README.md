@@ -90,7 +90,8 @@ hub_namespaces:
         url: "http://www.google.com"
     groups:
       - system::partner-engineers
-      - Default
+      - "<organization>::<team>"
+      - "team"
 
 ```
 
