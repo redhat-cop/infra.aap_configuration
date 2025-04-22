@@ -28,12 +28,7 @@
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
 
 - name: EE Registry Sync | Wait for finish the ee_registry_sync to complete
-  ansible.builtin.async_status:
-    jid: "{{ __ee_registry_syncs_job_async_result_item.ansible_job_id }}"
-  register: __ee_registry_syncs_job_async_result
-  until: __ee_registry_syncs_job_async_result.finished
-  retries: "{{ hub_configuration_ee_registry_sync_async_retries }}"
-  delay: "{{ hub_configuration_ee_registry_sync_async_delay }}"
+  ansible.builtin.include_tasks: async_hub_ee_registry_sync.yml
   loop: "{{ __ee_registry_syncs_job_async.results }}"
   loop_control:
     loop_var: __ee_registry_syncs_job_async_result_item

@@ -16,6 +16,7 @@ An Ansible Role to sync a Collection Repository.
 |`hub_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
 |`hub_collection_repositories`|`see below`|yes|Data structure describing your collection remote repository, described below.||
+|`collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to hub collection repository sync, instead of failing on the first error.||
 
 The `aap_configuration_async_dir` variable sets the directory to write the results file for async tasks.
 The default value is set to  `null` which uses the Ansible Default of `/root/.ansible_async/`.

@@ -1,0 +1,31 @@
+---
+- name: async_hub_namespace | An async_hub_namespace block
+  block:
+    - name: async_hub_namespace | Managing hub namespace | Wait for finish the hub namespace operation
+      ansible.builtin.async_status:
+        jid: "{{ __namespaces_job_async_result_item.ansible_job_id }}"
+      register: __namespaces_job_async_result
+      until: __namespaces_job_async_result.finished
+      retries: "{{ hub_configuration_namespace_async_retries }}"
+      delay: "{{ hub_configuration_namespace_async_delay }}"
+  rescue:
+    - name: async_hub_namespace | Load error details
+      ansible.builtin.include_vars:
+        file: "{{ __namespaces_job_async_result.results_file }}"
+        name: __error_data
+
+    - name: async_hub_namespace | Show error and stop execution
+      when: not collect_logs
+      ansible.builtin.fail:
+        msg: "error: {{ __error_data['msg'] }}, response: {{ __error_data['response'] | default ('N/A') }}"
+
+    - name: async_hub_namespace | Building list of not processed hub namespace
+      ansible.builtin.set_fact:
+        __hub_namespace_error_list: "{{ __hub_namespace_error_list | default([]) + [
+                                                                            {
+                                                                             'name': __error_data['invocation']['module_args']['name'] | default(''),
+                                                                             'error': __error_data['msg'] | default('')
+                                                                            }
+                                                                           ]
+                                }}"
+...

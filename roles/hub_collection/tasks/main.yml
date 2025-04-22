@@ -39,12 +39,7 @@
     timeout: 10
 
 - name: Update/Destroy collection | Wait for finish the update/destruction of collection
-  ansible.builtin.async_status:
-    jid: "{{ __collections_job_async_result_item.ansible_job_id }}"
-  register: __collections_job_async_result
-  until: __collections_job_async_result.finished
-  retries: "{{ hub_configuration_collection_async_retries }}"
-  delay: "{{ hub_configuration_collection_async_delay }}"
+  ansible.builtin.include_tasks: async_hub_collection.yml
   loop: "{{ __collections_job_async.results }}"
   loop_control:
     loop_var: __collections_job_async_result_item

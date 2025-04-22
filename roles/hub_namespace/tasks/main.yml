@@ -47,12 +47,7 @@
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
 
 - name: Create Namespace | Wait for finish the namespace creation
-  ansible.builtin.async_status:
-    jid: "{{ __namespaces_job_async_result_item.ansible_job_id }}"
-  register: __namespaces_job_async_result
-  until: __namespaces_job_async_result.finished
-  retries: "{{ hub_configuration_namespace_async_retries }}"
-  delay: "{{ hub_configuration_namespace_async_delay }}"
+  ansible.builtin.include_tasks: async_hub_namespace.yml
   loop: "{{ __namespaces_job_async.results }}"
   loop_control:
     loop_var: __namespaces_job_async_result_item

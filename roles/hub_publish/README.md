@@ -21,6 +21,7 @@ An Ansible Role to publish collections to Automation Hub or Galaxies.
 |`ah_overwrite_existing`|`false`|no|Whether the collection will be automatically overwrite an existing collection in Automation Hub. This will only work if the account being used has correct privileges.||
 |`hub_collections`|`see below`|no|Data structure describing your collections, mutually exclusive to ah_collection_list, described below.||
 |`ah_collection_list`|`list`|no|Data structure file paths to pre built collections, mutually exclusive with hub_collections.||
+|`collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to hub publish collecion, instead of failing on the first error.||
 
 ### Secure Logging Variables
 
