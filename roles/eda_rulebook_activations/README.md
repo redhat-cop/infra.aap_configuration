@@ -18,7 +18,6 @@ An Ansible Role to create rulebook activations in EDA Controller.
 |`eda_rulebook_activations`|`see below`|yes|Data structure describing your users Described below.||
 |`collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to Rulebook activation creation in EDA, instead of failing on the first error.||
 
-
 ### Secure Logging Variables
 
 The following Variables compliment each other.
