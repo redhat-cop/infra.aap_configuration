@@ -92,7 +92,6 @@ hub_namespaces:
       - system::partner-engineers
       - "<organization>::<team>"
       - "team"
-
 ```
 
 ## Playbook Examples
