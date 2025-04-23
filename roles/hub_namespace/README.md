@@ -92,7 +92,7 @@ hub_namespaces:
       # For groups that participate in an organization for example, system organization
       - system::partner-engineers
       # For groups without organizations
-      - team 
+      - team
 ```
 
 ## Playbook Examples
