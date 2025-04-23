@@ -89,9 +89,10 @@ hub_namespaces:
       - name: "New_Google"
         url: "http://www.google.com"
     groups:
+      # For groups that participate in an organization for example, system organization
       - system::partner-engineers
-      - "<organization>::<team>"
-      - "team"
+      # For groups without organizations
+      - team 
 ```
 
 ## Playbook Examples
