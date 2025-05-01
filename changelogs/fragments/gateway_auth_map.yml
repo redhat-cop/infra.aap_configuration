@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - added auto_migrate_users_to option to the gateway authenticator role.
+...

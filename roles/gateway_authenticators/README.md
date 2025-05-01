@@ -62,6 +62,7 @@ Options for the `authenticators_list` variable:
 | `remove_users`   | N/A(`true` by API)  |    no    | bool | When a user authenticates from this source should they be removed from any other groups they were previously added to        |
 | `configuration`  |         N/A         |    no    | dict | The required configuration for this source (dict keys specified by the module in 'type')                                     |
 | `type`           |         N/A         |    no    | str  | The type of authentication service this is. Can be one of the modules: `ansible_base.authentication.authenticator_plugins.*` |
+| `auto_migrate_users_to` |      'false' |    no    | bool  | Automatically move users from this authenticator to the target authenticator when a matching user logs in via the target authenticator. |
 | `order`          |  N/A (`1` by API)   |    no    | int  | The order in which an authenticator will be tried. This only pertains to username/password authenticators                    |
 | `state`          |      `present`      |    no    | str  | Desired state of the resource.                                                                                               |
 

@@ -8,6 +8,7 @@
     create_objects: "{{ __gateway_authenticators_item.create_objects | default(omit) }}"
     remove_users: "{{ __gateway_authenticators_item.remove_users | default(omit) }}"
     configuration: "{{ __gateway_authenticators_item.configuration | default(omit) }}"
+    auto_migrate_users_to:  "{{ __gateway_authenticators_item.auto_migrate_users_to | default('false') }}"
     type: "{{ __gateway_authenticators_item.type | default(omit) }}"
     order: "{{ __gateway_authenticators_item.order | default(omit) }}"
     state: "{{ __gateway_authenticators_item.state | default(platform_state | default(omit, true)) }}"
