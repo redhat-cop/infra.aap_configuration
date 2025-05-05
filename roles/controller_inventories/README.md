@@ -156,6 +156,7 @@ controller_inventories:
   - name: All RHEL 7 Hosts
     organization: Default
     description: created by Ansible Playbook - Constructed Inventory
+    kind: constructed
     input_inventories: Satellite
 ```
 
