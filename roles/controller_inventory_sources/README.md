@@ -140,6 +140,14 @@ The role will strip the double space between the curly bracket in order to provi
       "overwrite": true,
       "update_on_launch": true,
       "update_cache_timeout": 0
+    },
+    {
+      "name": "Auto-created source for: All RHEL 7 Hosts",
+      "inventory": "All RHEL 7 Hosts",
+      "limit": "rhel7_hosts",
+      "source_vars": "---\nplugin: ansible.builtin.constructed\ngroups:\n  \"'rhel7' in foreman_content_attributes.lifecycle_environment_name\"",
+      "update_cache_timeout": 0,
+      "verbosity": 0
     }
   ]
 }
@@ -159,6 +167,16 @@ controller_inventory_sources:
     overwrite: true
     update_on_launch: true
     update_cache_timeout: 0
+  - name: "Auto-created source for: All RHEL 7 Hosts"
+    inventory: All RHEL 7 Hosts
+    limit: "rhel7_hosts"
+    source_vars:
+      plugin: ansible.builtin.constructed
+      groups:
+        rhel7_hosts: "'rhel7' in foreman_content_attributes.lifecycle_environment_name"
+      strict: false
+    update_cache_timeout: 0
+    verbosity: 0
 
 ```
 
