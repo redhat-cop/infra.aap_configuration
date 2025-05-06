@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - The creation order for the workflows is 'workflow -> workflow nodes'. The deletion order is the same one, but in reverse.
+...
