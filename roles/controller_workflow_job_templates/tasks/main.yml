@@ -9,7 +9,6 @@
   when:
     - (__workflow_loop_item.state | default(platform_state | default('present'))) is not match('present')
     - __workflow_loop_item.simplified_workflow_nodes is defined
-    - (__workflow_loop_item.state | default('present')) ==  "present"
 
 - name: Managing Workflows
   ansible.controller.workflow_job_template:
@@ -97,5 +96,4 @@
   when:
     - (__workflow_loop_item.state | default(platform_state | default('present'))) is match('present')
     - __workflow_loop_item.simplified_workflow_nodes is defined
-    - (__workflow_loop_item.state | default('present')) ==  "present"
 ...
