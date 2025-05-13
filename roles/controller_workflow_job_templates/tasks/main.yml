@@ -1,4 +1,15 @@
 ---
+# Create links between workflow node
+- name: Loop over nodes in schema to add to workflow templates
+  ansible.builtin.include_tasks: add_workflows_schema.yml
+  loop: "{{ controller_workflows | default(workflow_job_templates) }}"
+  loop_control:
+    loop_var: __workflow_loop_item
+    label: "Workflow {{ __workflow_loop_item.name }}"
+  when:
+    - (__workflow_loop_item.state | default(platform_state | default('present'))) is match('absent')
+    - __workflow_loop_item.simplified_workflow_nodes is defined
+
 - name: Managing Workflows
   ansible.controller.workflow_job_template:
     name: "{{ __workflow_loop_item.name | mandatory }}"
@@ -83,6 +94,6 @@
     loop_var: __workflow_loop_item
     label: "Workflow {{ __workflow_loop_item.name }}"
   when:
+    - (__workflow_loop_item.state | default(platform_state | default('present'))) is match('present')
     - __workflow_loop_item.simplified_workflow_nodes is defined
-    - (__workflow_loop_item.state | default('present')) ==  "present"
 ...
