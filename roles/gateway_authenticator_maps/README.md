@@ -88,8 +88,6 @@ Options for the `authenticator_maps_list` variable:
       "map_type": "organization",
       "organization": "Organization 1",
       "triggers": {
-        "always": {},
-        "never": {}
       },
       "order": 10
     },
@@ -101,7 +99,6 @@ Options for the `authenticator_maps_list` variable:
       "organization": "Organization 1",
       "role": "Team Member",
       "triggers": {
-        "never": {}
       }
     }
   ]
@@ -123,8 +120,6 @@ gateway_authenticator_maps:
   organization: Organization 1
   role: Organization Admin
   triggers:
-    always: { }
-    never: { }
     groups:
       has_or:
       - has_or_11
