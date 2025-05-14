@@ -55,6 +55,7 @@ This also speeds up the overall role.
 |`name`|""|yes|str|Project name. Must be lower case containing only alphanumeric characters and underscores.|
 |`new_name`|""|no|str|Setting this option will change the existing name (looked up via the name field.)|
 |`description`|""|no|str|Description to use for the Project.|
+|`scm_branch`|""|no|str|The scm branch of the git project.|
 |`url`|""|yes|str|A URL to a remote archive, such as a Github Release or a build artifact stored in Artifactory and unpacks it into the project path for use. (Alias: scm_url)|
 |`organization`|""|no|str|Organization this project belongs to.|
 |`credential`|""|no|str|The token needed to utilize the SCM URL.|

@@ -6,6 +6,7 @@
     new_name: "{{ __project_item.new_name | default(omit) }}"
     description: "{{ __project_item.description | default(omit) }}"
     url: "{{ __project_item.url | default(__project_item.scm_url | default(omit)) }}"
+    scm_branch: "{{ __project_item.scm_branch | default(omit) }}"
     credential: "{{ __project_item.credential | default(omit) }}"
     organization_name: "{{ __project_item.organization | default(omit) }}"
     state: "{{ __project_item.state | default(eda_state | default('present')) }}"
