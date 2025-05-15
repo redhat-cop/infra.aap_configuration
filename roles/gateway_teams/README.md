@@ -50,7 +50,7 @@ This also speeds up the overall role.
 
 ### Team Arguments
 
-Options for the `teams` variable:
+Options for the `aap_teams` variable:
 
 | Variable Name      | Default Value | Required | Type | Description                                                                       |
 |:-------------------|:-------------:|:--------:|:----:|:----------------------------------------------------------------------------------|
@@ -73,7 +73,7 @@ Options for the `teams` variable:
 
 ```json
 {
-  "teams": [
+  "aap_teams": [
     {
       "name": "Team 1",
       "description": "Best team",
@@ -97,7 +97,7 @@ File name: `data/gateway_teams.yml`
 
 ```yaml
 ---
-teams:
+aap_teams:
 - name: "Happy Team"
   organization: "Productive Organization"
   state: exists
