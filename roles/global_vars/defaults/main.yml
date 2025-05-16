@@ -10,4 +10,10 @@ operation_translate:
   exists:
     verb: Already Exists
     action: exists
+  enabled:
+    verb: Enabled
+    action: enabled
+  disabled:
+    verb: Disabled
+    action: disabled
 ...

@@ -1,4 +1,0 @@
----
-trivial:
-  - Added an example for constructed inventories, that reference both infra.aap_configuration.controller_inventories and infra.aap_configuration.controller_inventory_sources
-...
