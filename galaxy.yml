@@ -1,7 +1,7 @@
 ---
 namespace: infra
 name: aap_configuration
-version: 3.2.0-devel
+version: 3.3.0-devel
 description: A collection of roles to manage Ansible Controller
 readme: README.md
 authors:
@@ -27,9 +27,4 @@ tags:
   - controller_configuration
   - automation_platform
   - infrastructure
-dependencies:
-  "ansible.platform": ">=2.5.0"
-  "ansible.hub": ">=1.0.0"
-  "ansible.controller": ">=4.6.0"
-  "ansible.eda": ">=2.5.0"
 ...

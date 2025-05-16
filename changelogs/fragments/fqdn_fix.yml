@@ -1,4 +1,0 @@
----
-breaking_changes:
-  - In order to comply with stricter linting rules and to make the collection more explicit, controller roles were chagned to be explicit with ansible.controller. awx.awx was not compatible and this just codifies the change. Please transition to using the certified ansible.controller collection to continue using this collection.
-...

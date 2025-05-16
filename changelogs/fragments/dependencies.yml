@@ -1,5 +1,0 @@
----
-minor_changes:
-  - added scm_branch option to the eda_projects role, this requires ansible.eda >2.8.0, and fixes #1070
-  - added dependencies to our galaxy.yml, the lowest version has been set to collections compatible with AAP 2.5, which this collection already requires, This should not be a breaking or major change for anyone, just codifies our dependencies, now that a bug in console.redhat.com has been fixed.
-...

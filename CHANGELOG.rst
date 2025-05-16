@@ -4,6 +4,22 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v3.3.0
+======
+
+Minor Changes
+-------------
+
+- The creation order for the workflows is 'workflow -> workflow nodes'. The deletion order is the same one, but in reverse.
+- added auto_migrate_users_to option to the gateway authenticator role.
+- added dependencies to our galaxy.yml, the lowest version has been set to collections compatible with AAP 2.5, which this collection already requires, This should not be a breaking or major change for anyone, just codifies our dependencies, now that a bug in console.redhat.com has been fixed.
+- added scm_branch option to the eda_projects role, this requires ansible.eda >2.8.0, and fixes
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- In order to comply with stricter linting rules and to make the collection more explicit, controller roles were chagned to be explicit with ansible.controller. awx.awx was not compatible and this just codifies the change. Please transition to using the certified ansible.controller collection to continue using this collection.
+
 v3.2.0
 ======
 
