@@ -125,6 +125,7 @@ The role will strip the double space between the curly bracket in order to provi
 |`notification_templates_error`|""|no|The notifications on error to use for this inventory source in a list.|
 
 #### Source Types
+
 - "scm"
 - "ec2"
 - "gce"
