@@ -14,6 +14,6 @@ auth_url={{ server.auth_url }}
 {% if server.token is defined %}
 token={{ server.token }}
 {% elif aap_token is defined %}
-token={{ aap_token }}
+token={{ aap_token | default(ah_token) }}
 {% endif %}
 {% endfor %}
