@@ -101,7 +101,7 @@ The role will strip the double space between the curly bracket in order to provi
 |`description`|`false`|no|The description to use for the inventory source.|
 |`inventory`|""|yes|Inventory the group should be made a member of.|
 |`organization`|""|no|Organization the inventory belongs to.|
-|`source`|""|no|The source to use for this group. If set to `constructed` this role will be skipped as they are not meant to be edited.|
+|`source`|""|no|The source to use for this group. If set to `constructed` this role will be skipped as they are not meant to be edited. See the list below for choices.|
 |`source_path`|""|no|For an SCM based inventory source, the source path points to the file within the repo to use as an inventory.|
 |`source_vars`|""|no|The variables or environment fields to apply to this source type.|
 |`enabled_var`|""|no|The variable to use to determine enabled state e.g., "status.power_state".|
@@ -123,6 +123,21 @@ The role will strip the double space between the curly bracket in order to provi
 |`notification_templates_started`|""|no|The notifications on started to use for this inventory source in a list.|
 |`notification_templates_success`|""|no|The notifications on success to use for this inventory source in a list.|
 |`notification_templates_error`|""|no|The notifications on error to use for this inventory source in a list.|
+
+#### Source Types
+
+- "scm"
+- "ec2"
+- "gce"
+- "azure_rm"
+- "vmware"
+- "satellite6"
+- "openstack"
+- "rhv"
+- "controller"
+- "insights"
+- "terraform"
+- "openshift_virtualization"
 
 ### Standard Inventory Source Data Structure
 
@@ -159,6 +174,14 @@ The role will strip the double space between the curly bracket in order to provi
 ```yaml
 ---
 controller_inventory_sources:
+  - name: sourced_from_project
+    source: scm
+    source_project: inventory-project
+    source_path: inventories/my_inv
+    inventory: SCM-01
+    description: Inventory sourced from a Project
+    overwrite: true
+    update_on_launch: true
   - name: RHVM-01
     source: rhv
     inventory: RHVM-01

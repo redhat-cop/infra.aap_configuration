@@ -12,7 +12,7 @@
 ansible_config_mode: "0644"
 aap_configuration_working_dir: /var/tmp
 validate_certs: false
-ah_path_prefix: galaxy
+hub_path_prefix: galaxy
 # a list of dictionaries describing the Automation Hub namespace
 automation_hub_list: []
 # possible fields:

@@ -11,10 +11,10 @@ An Ansible Role to create Namespaces in Automation Hub.
 |`aap_hostname`|""|yes|URL to the Ansible Automation Platform Server.|127.0.0.1|
 |`aap_username`|""|no|Admin User on the Ansible Automation Platform Server. Either username / password or oauthtoken need to be specified.||
 |`aap_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
-|`ah_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
+|`aap_token`|""|yes|Tower Admin User's token on the Automation Hub Server.  This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook.||
 |`aap_validate_certs`|`true`|no|Whether or not to validate the Ansible Automation Platform Server's SSL certificate.||
 |`aap_request_timeout`|`10`|no|Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.||
-|`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
+|`hub_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
 |`hub_namespaces`|`see below`|yes|Data structure describing your namespaces, described below.||
 
@@ -109,7 +109,7 @@ hub_namespaces:
     aap_validate_certs: false
   # Define following vars here, or in ah_configs/ah_auth.yml
   # ah_host: ansible-ah-web-svc-test-project.example.com
-  # ah_token: changeme
+  # aap_token: changeme
   pre_tasks:
     - name: Include vars from ah_configs directory
       ansible.builtin.include_vars:

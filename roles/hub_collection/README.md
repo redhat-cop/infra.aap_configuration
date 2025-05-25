@@ -13,7 +13,7 @@ An Ansible Role to update, or destroy Automation Hub Collections.
 |`aap_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
 |`aap_validate_certs`|`true`|no|Whether or not to validate the Ansible Automation Platform Server's SSL certificate.||
 |`aap_request_timeout`|`10`|no|Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.||
-|`ah_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
+|`hub_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
 |`hub_collections`|`see below`|yes|Data structure describing your collections, described below.||
 
@@ -99,7 +99,7 @@ hub_collections:
     aap_validate_certs: false
   # Define following vars here, or in ah_configs/ah_auth.yml
   # ah_host: ansible-ah-web-svc-test-project.example.com
-  # ah_token: changeme
+  # aap_token: changeme
   pre_tasks:
     - name: Include vars from ah_configs directory
       ansible.builtin.include_vars:

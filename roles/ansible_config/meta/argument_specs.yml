@@ -3,11 +3,11 @@ argument_specs:
   main:
     short_description: An Ansible Role to create ansible.cfg files based on your Automation Hub servers
     options:
-      ah_token:
+      aap_token:
         required: false
         type: str
         description: Token for access to the Automation Hub server
-      ah_path_prefix:
+      hub_path_prefix:
         default: galaxy
         required: false
         type: str
@@ -50,7 +50,7 @@ argument_specs:
             type: str
             description: The URL for the authentication to AH server. Most likely to be used to connect to Red Hat Cloud Automation Hub.
           token:
-            default: "{{ ah_token | default(omit) }}"
+            default: "{{ aap_token | default(omit) }}"
             required: false
             type: str
             description: The token to use to authenticate to the AH server

@@ -74,11 +74,11 @@
     ah_host: "{{ aap_hostname | default(omit) }}"
     ah_username: "{{ aap_username | default(omit) }}"
     ah_password: "{{ aap_password | default(omit) }}"
-    ah_path_prefix: "{{ ah_path_prefix | default(omit) }}"
+    ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
     validate_certs: "{{ aap_validate_certs | default(omit) }}"
     request_timeout: "{{ aap_request_timeout | default(omit) }}"
   when:
-    - ah_token is not defined
+    - aap_token is not defined
     - lookup("ansible.builtin.env", "AH_API_TOKEN") == ""
     - ah_collection_list | length > 1
 
@@ -94,7 +94,7 @@
     ah_username: "{{ aap_username | default(omit) }}"
     ah_password: "{{ aap_password | default(omit) }}"
     ah_token: "{{ aap_token | default(omit) }}"
-    ah_path_prefix: "{{ ah_path_prefix | default(omit) }}"
+    ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
     validate_certs: "{{ aap_validate_certs | default(omit) }}"
     request_timeout: "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ ah_collection_list }}"
@@ -132,7 +132,7 @@
     ah_username: "{{ aap_username | default(omit) }}"
     ah_password: "{{ aap_password | default(omit) }}"
     ah_token: "{{ aap_token | default(omit) }}"
-    ah_path_prefix: "{{ ah_path_prefix | default(omit) }}"
+    ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
     validate_certs: "{{ aap_validate_certs | default(omit) }}"
     request_timeout: "{{ aap_request_timeout | default(omit) }}"
   loop: "{{ ah_collection_list }}"

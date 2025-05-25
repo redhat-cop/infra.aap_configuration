@@ -13,7 +13,7 @@ auth_url={{ server.auth_url }}
 {% endif %}
 {% if server.token is defined %}
 token={{ server.token }}
-{% elif ah_token is defined %}
-token={{ ah_token }}
+{% elif aap_token is defined %}
+token={{ aap_token }}
 {% endif %}
 {% endfor %}

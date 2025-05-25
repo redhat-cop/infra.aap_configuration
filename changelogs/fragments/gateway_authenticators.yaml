@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - The 'auto_migrate_users_to' field can't be 'false' as default. Omit instead.
+...

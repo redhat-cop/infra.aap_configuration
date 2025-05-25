@@ -50,7 +50,7 @@ argument_specs:
         required: false
         description: URL to the Ansible Automation Platform Server.
         type: str
-      ah_path_prefix:
+      hub_path_prefix:
         required: false
         description: The path for the Automation Hub API. Usually galaxy or automation-hub unless custom set in AH settings.
       aap_validate_certs:
