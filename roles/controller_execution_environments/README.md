@@ -7,10 +7,6 @@ An Ansible Role to create/update/remove execution_environments on Ansible Contro
 ## Requirements
 
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
-Currently:
-  awx.awx
-  or
-  ansible.controller
 
 ## Variables
 

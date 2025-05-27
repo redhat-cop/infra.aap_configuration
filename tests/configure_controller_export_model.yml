@@ -5,8 +5,6 @@
   vars:
     workflow_job_templates_secure_logging: false
     aap_validate_certs: false
-  collections:
-    - awx.awx
     - infra.aap_configuration
   # Define following vars here, or in configs/controller_auth.yml
   # aap_hostname: controller.example.com

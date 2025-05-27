@@ -5,10 +5,6 @@ An Ansible role to alter Settings on Ansible Controller.
 ## Requirements
 
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
-Currently:
-  awx.awx
-  or
-  ansible.controller
 
 ## Variables
 

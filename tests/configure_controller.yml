@@ -9,8 +9,6 @@
   # aap_hostname: controller.example.com
   # aap_username: admin
   # aap_password: changeme
-  collections:
-    - awx.awx
     - infra.aap_configuration
 
   pre_tasks:

@@ -9,9 +9,6 @@
     aap_username: admin
     aap_password: changeme
 
-  collections:
-    - awx.awx
-
   pre_tasks:
     - name: Include vars from platform_configs directory
       ansible.builtin.include_vars:
