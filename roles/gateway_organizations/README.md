@@ -145,10 +145,9 @@ aap_organizations:
 
 ### Run Playbook
 
-File name: [manage_data.yml](../../README.md#example-ansible-playbook) can be found in the top-level README.
-
+File name: [configure_aap.yml](https://github.com/redhat-cop/infra.aap_configuration/blob/devel/playbooks/configure_aap.yml) can be found in the top level playbooks directory.
 ```shell
-ansible-playbook manage_data.yml -e @data/aap_organizations.yml
+ansible-playbook infra.aap_configuration.configure_aap.yml
 ```
 
 ## License
