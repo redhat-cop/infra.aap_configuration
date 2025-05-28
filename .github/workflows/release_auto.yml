@@ -33,6 +33,7 @@ jobs:
           level: ${{ steps.bump_level.outputs.level }}
 
       - name: Release
+        if: steps.bump_level.outputs.level != 'major'
         uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
@@ -40,6 +41,7 @@ jobs:
           generate_release_notes: true
 
   release:
+    if: steps.bump_level.outputs.level != 'major'
     uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline_dual.yml@main"
     with:
       # Galaxy Publish
