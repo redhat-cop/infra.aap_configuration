@@ -9,7 +9,7 @@ argument_specs:
             var: authenticators_list
             tags: authenticators
           - role: gateway_authenticator_map
-            var: authenticator_maps_list
+            var: gateway_authenticator_maps
             tags: authenticator_maps
           - role: gateway_settings
             var: settings_list

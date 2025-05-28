@@ -50,7 +50,7 @@ This also speeds up the overall role.
 
 ### Authenticator Map Arguments
 
-Options for the `authenticator_maps_list` variable:
+Options for the `gateway_authenticator_maps` variable:
 
 | Variable Name       |  Default Value  | Required | Type | Description                                                                                                                                 |
 |:--------------------|:---------------:|:--------:|:----:|:--------------------------------------------------------------------------------------------------------------------------------------------|
