@@ -1,0 +1,68 @@
+---
+# This workflow action will run pre-commit, which will execute ansible and yaml linting
+# See .pre-commit-config.yaml for what hooks are executed
+name: Release - Automated
+
+on:
+  schedule:
+    - cron: "0 0 1,15 * *"
+  workflow_dispatch:
+
+jobs:
+  calculate_version:
+    runs-on: ubuntu-latest
+    outputs:
+      collection_version: ${{ steps.set_version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions-ecosystem/action-get-latest-tag@v1
+        id: get-latest-tag
+        with:
+          semver_only: true
+
+      - name: calculate bump level
+        id: bump_level
+        shell: bash
+        run: .github/files/calculate_change.sh
+
+      - uses: actions-ecosystem/action-bump-semver@v1
+        id: bump-semver
+        with:
+          current_version: ${{ steps.get-latest-tag.outputs.tag }}
+          level: ${{ steps.bump_level.outputs.level }}
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          tag_name: ${{ steps.bump-semver.outputs.new_version }}
+          generate_release_notes: true
+
+  release:
+    uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline_dual.yml@main"
+    with:
+      # Galaxy Publish
+      collection_namespace_1: infra
+      collection_name_1: aap_configuration
+      publish_url_collection_1: https://galaxy.ansible.com/api/
+      galaxy_publish_1: true
+      ah_publish_1: false
+      # CRC Publish
+      collection_namespace_2: infra
+      collection_name_2: aap_configuration
+      publish_url_collection_2: https://cloud.redhat.com/api/automation-hub/
+      galaxy_publish_2: false
+      ah_publish_2: true
+      collection_version: ${{ steps.bump-semver.outputs.new_version }}
+      collection_repo: https://github.com/redhat-cop/aap_configuration/
+      quay_username: redhat_cop
+      collection_dependencies: ansible.controller ansible.platform ansible.eda ansible.hub
+      matrix_message: This Ansible collection allows for easy interaction with an AWX or Ansible Controller server via Ansible roles using the AWX/Controller collection modules.
+    secrets:
+      collection_api_key_1: ${{ secrets.GALAXY_INFRA_KEY }}
+      collection_api_key_2: ${{ secrets.CRC_PUBLISH_KEY }}
+      git_token: ${{ secrets.GH_WORKFLOW_KEY }}
+      quay_token: ${{ secrets.quay_token }}
+      matrix_token: ${{ secrets.matrix_token }}
+...
