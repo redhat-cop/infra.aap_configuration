@@ -41,7 +41,8 @@ jobs:
           generate_release_notes: true
 
   release:
-    if: steps.bump_level.outputs.level != 'major'
+    needs: calculate_version
+    if: needs.calculate_version.outputs.level != 'major'
     uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline_dual.yml@main"
     with:
       # Galaxy Publish
@@ -56,7 +57,7 @@ jobs:
       publish_url_collection_2: https://cloud.redhat.com/api/automation-hub/
       galaxy_publish_2: false
       ah_publish_2: true
-      collection_version: ${{ steps.bump-semver.outputs.new_version }}
+      collection_version: ${{ needs.calculate_version.outputs.new_version }}
       collection_repo: https://github.com/redhat-cop/aap_configuration/
       quay_username: redhat_cop
       collection_dependencies: ansible.controller ansible.platform ansible.eda ansible.hub
