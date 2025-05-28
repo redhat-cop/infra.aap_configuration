@@ -31,7 +31,7 @@ jobs:
           level: ${{ steps.bump_level.outputs.level }}
 
       - name: Release
-        if: steps.bump_level.outputs.level != 'major'
+        if: steps.bump_level.outputs.level != 'major' || github.event_name == 'workflow_dispatch'
         uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
@@ -43,7 +43,7 @@ jobs:
 
   release:
     needs: calculate_version
-    if: needs.calculate_version.outputs.change_level != 'major'
+    if: needs.calculate_version.outputs.change_level != 'major' || github.event_name == 'workflow_dispatch'
     uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline_dual.yml@main"
     with:
       # Galaxy Publish
