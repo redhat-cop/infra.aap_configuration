@@ -5,7 +5,7 @@
 <!-- markdownlint-disable-line MD033 MD034 --><a href="https://raw.githubusercontent.com/redhat-cop/infra.controller_configuration/devel/docs/aap_config_as_code_public_meeting.ics"><img border="0" alt="Google Calendar invite" width="60" src="https://ssl.gstatic.com/calendar/images/dynamiclogo_2020q4/calendar_20_2x.png"></a>
 <!-- Further CI badges go here as above -->
 
-This Ansible collection allows for easy interaction with AAP via Ansible roles using the modules from the certified collections.
+This Ansible collection allows for easy interaction with AAP 2.5+ via Ansible roles using the modules from the certified collections.
 
 ## Getting Help
 
