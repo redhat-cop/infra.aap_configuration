@@ -9,9 +9,6 @@
     aap_username: admin
     aap_password: changeme
 
-  collections:
-    - awx.awx
-
   pre_tasks:
     - name: Include vars from controller_configs directory
       include_vars:

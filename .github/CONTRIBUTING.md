@@ -8,8 +8,8 @@ If you see something you'd like changed, but aren't sure how to change it, submi
 
 ## Working Locally
 
-Ensure you install the awx collections, so that roles and playbooks can be properly linted:
-`ansible-galaxy collection install awx.awx -p collections/`
+Ensure you install dependencies collections (which should be pulled when installing this collection), so that roles and playbooks can be properly linted:
+`ansible-galaxy collection install infra.aap_configuration`
 
 Python's pre-commit tool can be installed, and hooks installed, to cleanup whitespace, newlines, and run yamllint and ansible-lint against your local changes before committing. This will help you avoid failures in the github workflows.
 

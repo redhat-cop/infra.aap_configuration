@@ -7,10 +7,6 @@ An Ansible Role to add/update/remove hosts on Ansible Controller.
 ## Requirements
 
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
-Currently:
-  awx.awx
-  or
-  ansible.controller
 
 ## Variables
 

@@ -1,0 +1,6 @@
+---
+minor_changes:
+  - Removed all references to awx.awx because we no longer support that officially
+  - Moved some docs to the docs folder
+  - Updated links to use FQDN vs short links so they will work outside of github
+...

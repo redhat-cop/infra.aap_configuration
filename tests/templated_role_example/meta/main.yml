@@ -38,7 +38,6 @@ galaxy_info:
 
 collections:
   - ansible.controller
-  - awx.awx
 
 dependencies:
   - role: global_vars
