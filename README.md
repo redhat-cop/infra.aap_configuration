@@ -80,18 +80,21 @@ If you were using a version of infra.controller_configuration, please refer to o
 
 **Install This Collection:**
 Ensure this collection (`infra.aap_configuration`) is installed:
+
 ```bash
 ansible-galaxy collection install infra.aap_configuration
 ```
 
 **Run Playbooks from This Collection:**
 To execute a playbook packaged within this collection (e.g., `configure_aap.yml`):
+
 ```console
 ansible-playbook infra.aap_configuration.configure_aap.yml
 ```
 
 **Troubleshooting "couldn't resolve module/action":**
 This error usually means the required Ansible collection (e.g., `infra.aap_configuration` or a dependency like ansible.controller) is:
+
 * Not installed.
 * Incorrectly named in the playbook.
 * Not found in Ansible's configured collection paths.
@@ -103,8 +106,8 @@ Define following vars here, or in `aap_configs/controller_auth.yml`
 
 You can also specify authentication by a combination of either:
 
-- `aap_hostname`, `aap_username`, `aap_password`
-- `aap_hostname`, `aap_token`
+* `aap_hostname`, `aap_username`, `aap_password`
+* `aap_hostname`, `aap_token`
 
 The OAuth2 token is the preferred method. You can obtain the token through the preferred `controller_token` module, or through the
 AWX CLI [login](https://docs.ansible.com/automation-controller/latest/html/controllerapi/authentication.html)
@@ -112,11 +115,11 @@ command.
 
 These can be specified via (from highest to lowest precedence):
 
-- direct role variables as mentioned above
-- environment variables (most useful when running against localhost)
-- a config file path specified by the `controller_config_file` parameter
-- a config file at `~/.controller_cli.cfg`
-- a config file at `/etc/controller/controller_cli.cfg`
+* direct role variables as mentioned above
+* environment variables (most useful when running against localhost)
+* a config file path specified by the `controller_config_file` parameter
+* a config file at `~/.controller_cli.cfg`
+* a config file at `/etc/controller/controller_cli.cfg`
 
 Config file syntax looks like this:
 
@@ -161,7 +164,7 @@ A [Template to use in order to start using the collections can be found here](ht
 
 ### See Also
 
-- [Ansible Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for more details.
+[Ansible Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html) for more details.
 
 ## Release and Upgrade Notes
 

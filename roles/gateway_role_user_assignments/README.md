@@ -100,6 +100,7 @@ gateway_role_user_assignments:
 ### Run Playbook
 
 File name: [configure_aap.yml](https://github.com/redhat-cop/infra.aap_configuration/blob/devel/playbooks/configure_aap.yml) can be found in the top level playbooks directory.
+
 ```shell
 ansible-playbook infra.aap_configuration.configure_aap.yml
 ```

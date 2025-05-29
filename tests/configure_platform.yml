@@ -152,7 +152,7 @@
         var: launched_controller_workflows
 
     - name: Wait for workflow to finish
-      job_wait:
+      ansible.controller.job_wait:
         job_id: "{{ launched_controller_workflows.results[0].id }}"
         job_type: workflow_jobs
         timeout: 180
