@@ -40,7 +40,7 @@ awx export --conf.host https://localhost --conf.username admin --conf.password *
 
   tasks:
     - name: Export projects
-      awx.awx.export: # or ansible.controller.export
+      ansible.controller.export: # or awx.awx.export
         projects: all
       register: export_results
 

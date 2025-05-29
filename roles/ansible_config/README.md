@@ -7,8 +7,6 @@ An Ansible Role to create ansible.cfg files based on your Automation Hub servers
 ## Requirements
 
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
-Currently:
-  awx.awx
 
 ## Variables
 

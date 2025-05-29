@@ -1,6 +1,6 @@
 ---
 minor_changes:
-  - Renamed 'ah_state', 'ah_path_prefix', 'ah_token' variables to 'hub_state', 'hub_path_prefix', 'hub_token' in hub_ roles.
+  - Renamed 'ah_state', 'ah_path_prefix', 'ah_token' variables to 'hub_state', 'hub_path_prefix', 'hub_token' in hub roles.
   - Defaulted the new variables 'hub_state', 'hub_path_prefix', 'hub_token' to the old ones for backward compatibility.
   - Dependent collections added to galaxy.yml
 ...

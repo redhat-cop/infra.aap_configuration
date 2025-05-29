@@ -9,10 +9,6 @@ This will either accept a manifest file, or use redhat subscription account cred
 ## Requirements
 
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed
-Currently:
-  awx.awx
-  or
-  ansible.controller
 
 ## Variables
 

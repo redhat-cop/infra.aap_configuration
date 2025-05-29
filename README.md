@@ -5,7 +5,7 @@
 <!-- markdownlint-disable-line MD033 MD034 --><a href="https://raw.githubusercontent.com/redhat-cop/infra.controller_configuration/devel/docs/aap_config_as_code_public_meeting.ics"><img border="0" alt="Google Calendar invite" width="60" src="https://ssl.gstatic.com/calendar/images/dynamiclogo_2020q4/calendar_20_2x.png"></a>
 <!-- Further CI badges go here as above -->
 
-This Ansible collection allows for easy interaction with AAP via Ansible roles using the modules from the certified collections.
+This Ansible collection allows for easy interaction with AAP 2.5+ via Ansible roles using the modules from the certified collections.
 
 ## Getting Help
 
@@ -72,31 +72,31 @@ collections:
     # version: ...
 ```
 
-## Conversion from tower_configuration
+## Conversion from controller_configuration
 
-If you were using a version of redhat_cop.tower_configuration, please refer to our Conversion Guide here: [Conversion Guide](docs/CONVERSION_GUIDE.md)
+If you were using a version of infra.controller_configuration, please refer to our Conversion Guide here: [Conversion Guide](https://github.com/redhat-cop/infra.aap_configuration/blob/devel/docs/CONVERSION_GUIDE.md)
 
-## Using this collection
+## Using This Collection
 
-The awx.awx or ansible.controller collection must be invoked in the playbook in order for Ansible to pick up the correct modules to use.
+**Install This Collection:**
+Ensure this collection (`infra.aap_configuration`) is installed:
+```bash
+ansible-galaxy collection install infra.aap_configuration
+```
 
-The following command will invoke the collection playbook. This is considered a starting point for the collection.
-
+**Run Playbooks from This Collection:**
+To execute a playbook packaged within this collection (e.g., `configure_aap.yml`):
 ```console
 ansible-playbook infra.aap_configuration.configure_aap.yml
 ```
 
-Otherwise it will look for the modules only in your base installation. If there are errors complaining about "couldn't resolve module/action" this is the most likely cause.
+**Troubleshooting "couldn't resolve module/action":**
+This error usually means the required Ansible collection (e.g., `infra.aap_configuration` or a dependency like ansible.controller) is:
+* Not installed.
+* Incorrectly named in the playbook.
+* Not found in Ansible's configured collection paths.
 
-```yaml
-- name: Playbook to configure ansible controller post installation
-  hosts: localhost
-  connection: local
-  vars:
-    aap_validate_certs: true
-  collections:
-    - awx.awx
-```
+Verify installation with `ansible-galaxy collection list` and that you have all the stated dependencies listed above in the requirements section.
 
 Define following vars here, or in `aap_configs/controller_auth.yml`
 `aap_hostname: ansible-controller-web-svc-test-project.example.com`
@@ -131,7 +131,7 @@ Controller token module would be invoked with this code:
 
 ```yaml
     - name: Create a new token using controller username/password
-      awx.awx.token:
+      ansible.controller.token:
         description: 'Creating token to test controller jobs'
         scope: "write"
         state: present
@@ -152,8 +152,8 @@ The input data can be organized in a very flexible way, letting the user use any
 ### Controller Export
 
 The awx command line can export json that is compatible with this collection.
-In addition there is an awx.awx/ansible.controller export module that use the awx command line to export.
-[More details can be found here](EXPORT_README.md)
+In addition there is an ansible.controller export module that use the awx command line to export.
+[More details can be found here](https://github.com/redhat-cop/infra.aap_configuration/blob/devel/docs/EXPORT_README.md)
 
 ### Template Example
 
@@ -165,7 +165,7 @@ A [Template to use in order to start using the collections can be found here](ht
 
 ## Release and Upgrade Notes
 
-For details on changes between versions, please see [the changelog for this collection](CHANGELOG.rst).
+For details on changes between versions, please see [the changelog for this collection](https://github.com/redhat-cop/infra.aap_configuration/blob/devel/CHANGELOG.rst).
 
 ## Releasing, Versioning and Deprecation
 
@@ -196,4 +196,4 @@ Please read and familiarize yourself with this document.
 
 GNU General Public License v3.0 or later.
 
-See [LICENSE](LICENSE) to see the full text.
+See [LICENSE](https://github.com/redhat-cop/infra.aap_configuration/blob/devel/LICENSE) to see the full text.
