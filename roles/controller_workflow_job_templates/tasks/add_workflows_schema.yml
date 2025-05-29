@@ -70,7 +70,7 @@
 
 # Create links between workflow node
 - name: add_workflows_schema | Create links between Workflow Nodes
-  workflow_job_template_node:
+  ansible.controller.workflow_job_template_node:
     identifier: "{{ __workflow_loop_node_item.identifier | mandatory }}"
     workflow: "{{ __workflow_loop_item.name | mandatory }}"
     always_nodes: "{{ __workflow_loop_node_item.always_nodes | default(__workflow_loop_node_item.related.always_nodes | default([], true) | selectattr('identifier',
