@@ -10,40 +10,50 @@ on:
 
 jobs:
   calculate_version:
+    name: Calculate Collection Version
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions-ecosystem/action-get-latest-tag@v1
+      - name: Get the most recent tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
         id: get-latest-tag
         with:
           semver_only: true
 
-      - name: calculate bump level
+      - name: Calculate bump level
         id: bump_level
         shell: bash
         run: .github/files/calculate_change.sh
 
-      - uses: actions-ecosystem/action-bump-semver@v1
+      - name: Bump version
+        uses: actions-ecosystem/action-bump-semver@v1
         id: bump-semver
         with:
           current_version: ${{ steps.get-latest-tag.outputs.tag }}
           level: ${{ steps.bump_level.outputs.level }}
-
-      - name: Release
-        if: steps.bump_level.outputs.level != 'major' || github.event_name == 'workflow_dispatch'
-        uses: softprops/action-gh-release@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-          tag_name: ${{ steps.bump-semver.outputs.new_version }}
-          generate_release_notes: true
     outputs:
       collection_version: ${{ steps.bump-semver.outputs.new_version }}
       change_level: ${{ steps.bump_level.outputs.level }}
+      change_present: ${{ steps.bump_level.outputs.change_present }}
+
+  create_github_release:
+    name: Create GitHub Release
+    needs: calculate_version
+    runs-on: ubuntu-latest
+    if: (needs.calculate_version.outputs.change_level != 'major' && needs.calculate_version.outputs.change_present != 'false') || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Create Github Release
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ needs.calculate_version.outputs.collection_version }}
+          generate_release_notes: true
 
   release:
-    needs: calculate_version
-    if: needs.calculate_version.outputs.change_level != 'major' || github.event_name == 'workflow_dispatch'
+    name: Release Collection to galaxy/AH
+    needs: create_github_release
+    if: (needs.calculate_version.outputs.change_level != 'major' && needs.calculate_version.outputs.change_present != 'false') || github.event_name == 'workflow_dispatch'
     uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline_dual.yml@main"
     with:
       # Galaxy Publish
