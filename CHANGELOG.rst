@@ -4,6 +4,25 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v3.4.0
+======
+
+Minor Changes
+-------------
+
+- Defaulted the new variables 'hub_state', 'hub_path_prefix', 'hub_token' to the old ones for backward compatibility.
+- Dependent collections added to galaxy.yml
+- Moved some docs to the docs folder
+- Removed all references to awx.awx because we no longer support that officially
+- Renamed 'ah_state', 'ah_path_prefix', 'ah_token' variables to 'hub_state', 'hub_path_prefix', 'hub_token' in hub roles.
+- Updated links to use FQDN vs short links so they will work outside of github
+
+Bugfixes
+--------
+
+- The 'auto_migrate_users_to' field can't be 'false' as default. Omit instead.
+- changes the 2 places that authenticator_maps_list was used vs gateway_authenticator_maps
+
 v3.3.0
 ======
 

@@ -1,4 +1,0 @@
----
-bugfixes:
-  - changes the 2 places that authenticator_maps_list was used vs gateway_authenticator_maps
-...
