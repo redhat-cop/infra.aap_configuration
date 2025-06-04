@@ -9,52 +9,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  calculate_version:
-    name: Calculate Collection Version
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Get the most recent tag
-        uses: actions-ecosystem/action-get-latest-tag@v1
-        id: get-latest-tag
-        with:
-          semver_only: true
-
-      - name: Calculate bump level
-        id: bump_level
-        shell: bash
-        run: .github/files/calculate_change.sh
-
-      - name: Bump version
-        uses: actions-ecosystem/action-bump-semver@v1
-        id: bump-semver
-        with:
-          current_version: ${{ steps.get-latest-tag.outputs.tag }}
-          level: ${{ steps.bump_level.outputs.level }}
-    outputs:
-      collection_version: ${{ steps.bump-semver.outputs.new_version }}
-      change_level: ${{ steps.bump_level.outputs.level }}
-      change_present: ${{ steps.bump_level.outputs.change_present }}
-
-  create_github_release:
-    name: Create GitHub Release
-    needs: calculate_version
-    runs-on: ubuntu-latest
-    if: (needs.calculate_version.outputs.change_level != 'major' && needs.calculate_version.outputs.change_present != 'false') || github.event_name == 'workflow_dispatch'
-    steps:
-      - name: Create Github Release
-        uses: softprops/action-gh-release@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: ${{ needs.calculate_version.outputs.collection_version }}
-          generate_release_notes: true
-
   release:
     name: Release Collection to galaxy/AH
-    needs: create_github_release
     if: (needs.calculate_version.outputs.change_level != 'major' && needs.calculate_version.outputs.change_present != 'false') || github.event_name == 'workflow_dispatch'
-    uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline_dual.yml@main"
+    uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline_dual_crc.yml@main"
     with:
       # Galaxy Publish
       collection_namespace_1: infra
@@ -68,7 +26,6 @@ jobs:
       publish_url_collection_2: https://cloud.redhat.com/api/automation-hub/
       galaxy_publish_2: false
       ah_publish_2: true
-      collection_version: ${{ needs.calculate_version.outputs.collection_version }}
       collection_repo: https://github.com/redhat-cop/aap_configuration/
       quay_username: redhat_cop
       collection_dependencies: ansible.controller ansible.platform ansible.eda ansible.hub
