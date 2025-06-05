@@ -28,7 +28,7 @@ jobs:
       collection_repo: https://github.com/redhat-cop/aap_configuration/
       quay_username: redhat_cop
       collection_dependencies: ansible.controller ansible.platform ansible.eda ansible.hub
-      matrix_message: This Ansible collection allows for easy interaction with an AWX or Ansible Controller server via Ansible roles using the AWX/Controller collection modules.
+      matrix_message: This Ansible collection allows for easy interaction with Ansible Automation Platform via Ansible roles using the supported collections modules.
     secrets:
       collection_api_key_1: ${{ secrets.GALAXY_INFRA_KEY }}
       collection_api_key_2: ${{ secrets.CRC_PUBLISH_KEY }}
