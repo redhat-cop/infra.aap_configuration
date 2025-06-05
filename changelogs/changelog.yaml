@@ -844,3 +844,11 @@ releases:
     - fix_readmes_requirements.yml
     - gateway_authenticators.yaml
     release_date: '2025-06-04'
+  3.4.1:
+    changes:
+      bugfixes:
+      - Reverts the aap_token being applied to hub roles. Instead hub_token is now
+        used.
+    fragments:
+    - hub_token.yml
+    release_date: '2025-06-05'

@@ -4,6 +4,14 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v3.4.1
+======
+
+Bugfixes
+--------
+
+- Reverts the aap_token being applied to hub roles. Instead hub_token is now used.
+
 v3.4.0
 ======
 
