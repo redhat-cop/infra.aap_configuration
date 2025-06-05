@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Reverts the aap_token being applied to hub roles. Instead hub_token is now used.
+...
