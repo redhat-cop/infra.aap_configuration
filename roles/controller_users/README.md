@@ -93,7 +93,7 @@ This also speeds up the overall role.
 {
   "aap_user_accounts": [
     {
-      "user": "jsmith",
+      "username": "jsmith",
       "is_superuser": false,
       "password": "p4ssword",
       "email": "jsmith@example.com"
@@ -107,7 +107,7 @@ This also speeds up the overall role.
 ```yaml
 ---
 aap_user_accounts:
-  - user: controller_user
+  - username: controller_user
     is_superuser: false
     password: aap_password
 ```
