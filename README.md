@@ -25,6 +25,7 @@ collections:
   - name: ansible.platform
   - name: ansible.hub
   - name: ansible.controller
+    version: ">=4.6.0"
   - name: ansible.eda
   - name: infra.aap_configuration
 ...
