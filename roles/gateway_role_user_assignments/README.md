@@ -57,8 +57,9 @@ Options for the `role_user_assignments` variable:
 | `role_definition`   |      N/A      |   yes    | str  | The name or id of the role definition to assign to the user.                                          |
 | `user`              |      N/A      |    no    | str  | The username of the user to assign to the object.                                                     |
 | `user_ansible_id`   |      N/A      |    no    | str  | Resource id of the user who will receive permissions from this assignment. Alternative to user field. |
-| `object_id`         |      N/A      |    no    | int  | Primary key of the object this assignment applies to.                                                 |
-| `object_ansible_id` |      N/A      |    no    | str  | Resource id of the object this role applies to. Alternative to the object_id field.                   |
+| `object_id`         |      N/A      |    no    | int  | Primary key of the object this assignment applies to.  This option is deprecated and will be removed in a release after 2026-01-31.                                               |
+| `object_ids`         |      N/A     |    no    | list | List of object IDs(Primary Key ) or names this assignment applies to.                                                 |
+| `object_ansible_id` |      N/A      |    no    | str  | Resource id of the object this role applies to. Alternative to the object_id field.                         |
 | `state`             |   `present`   |    no    | str  | Desired state of the resource.                                                                        |
 
 **Unique value:**
