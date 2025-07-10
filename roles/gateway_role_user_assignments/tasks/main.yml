@@ -5,6 +5,7 @@
     user: "{{ __gateway_role_user_assignments_item.user | default(omit) }}"
     user_ansible_id: "{{ __gateway_role_user_assignments_item.user_ansible_id | default(omit) }}"
     object_id: "{{ __gateway_role_user_assignments_item.object_id | default(omit) }}"
+    object_ids: "{{ __gateway_role_user_assignments_item.object_ids | default(omit) }}"
     object_ansible_id: "{{ __gateway_role_user_assignments_item.object_ansible_id | default(omit) }}"
     state: "{{ __gateway_role_user_assignments_item.state | default(platform_state | default(omit, true)) }}"
 
