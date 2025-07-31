@@ -17,8 +17,13 @@ argument_specs:
           object_id:
             description:
               - Primary key of the object this assignment applies to.
-            required: true
+            required: false
             type: int
+          object_ids:
+            description:
+              - List of object IDs (Primary Key) or names this assignment applies to.
+            required: false
+            type: list
           user:
             description:
               - The name or id of the user to assign to the object.
