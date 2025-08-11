@@ -1,0 +1,3 @@
+---
+minor_change:
+  - gateway_role_user_assignments - ansible.platform.role_user_assignment as of version 2.5.20250702 supports the objects_ids parameters and marks object_id as deprecated. pull request #1135 added support for object_ids, but the argument spec was missing. This changes sets object_id to optional (was required) and adds object_ids to argument specs.
