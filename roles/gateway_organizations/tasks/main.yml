@@ -1,96 +1,125 @@
 ---
-- name: Organizations | Configuration # noqa fqcn[action-core]
-  ansible.platform.organization:
-    name: "{{ __gateway_organization_item.name | mandatory }}"
-    new_name: "{{ __gateway_organization_item.new_name | default(omit) }}"
-    description: "{{ __gateway_organization_item.description | default(omit) }}"
-    state: "{{ __gateway_organization_item.state | default(platform_state | default(omit, true)) }}"
-
-    # Role Standard Options
-    gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
-    gateway_username: "{{ aap_username | default(omit, true) }}"
-    gateway_password: "{{ aap_password | default(omit, true) }}"
-    gateway_token: "{{ aap_token | default(omit, true) }}"
-    gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-    gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ aap_organizations }}"
-  loop_control:
-    loop_var: __gateway_organization_item
-    label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organization_item.name }}"
-    pause: "{{ gateway_organizations_loop_delay }}"
-  no_log: "{{ gateway_organizations_secure_logging }}"
-  async: 1000
-  poll: 0
-  register: __gateway_organizations_job_async
-  changed_when: not __gateway_organizations_job_async.changed
+- name: Manage Organizations Block
   vars:
-    __operation: "{{ operation_translate[__gateway_organization_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-
-- name: Organizations | Wait for finish the configuration
-  ansible.builtin.include_tasks: async_gateway_organization.yml
-  loop: "{{ __gateway_organizations_job_async.results }}"
-  loop_control:
-    loop_var: __gateway_organizations_job_async_results_item
-    label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organizations_job_async_result.__gateway_organizations_job_async_results_item.__gateway_organization_item.name }} | Wait for finish the Organizations {{ __operation.action }}"
-  when: __gateway_organizations_job_async_results_item.ansible_job_id is defined
   no_log: "{{ gateway_organizations_secure_logging }}"
-  vars:
-    __operation: "{{ operation_translate[__gateway_organizations_job_async_results_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  block:
+    - name: Organizations | Configuration
+      ansible.platform.organization:
+        name: "{{ __gateway_organization_item.name | mandatory }}"
+        new_name: "{{ __gateway_organization_item.new_name | default(omit) }}"
+        description: "{{ __gateway_organization_item.description | default(omit) }}"
+        state: "{{ __gateway_organization_item.state | default(platform_state | default(omit, true)) }}"
 
-- name: Organizations | Controller Configuration
-  ansible.controller.organization:
-    name: "{{ __controller_organizations_item.name | mandatory }}"
-    new_name: "{{ __controller_organizations_item.new_name | default(omit) }}"
-    description: "{{ __controller_organizations_item.description | default(('' if gateway_organizations_enforce_defaults else omit), true) }}"
-    custom_virtualenv: "{{ __controller_organizations_item.custom_virtualenv | default(omit, true) }}"
-    max_hosts: "{{ __controller_organizations_item.max_hosts | default((0 if gateway_organizations_enforce_defaults else omit), true) }}"
-    instance_groups: "{{ (__controller_organizations_item.instance_groups | default(([] if gateway_organizations_enforce_defaults else omit), true))if (assign_instance_groups_to_org is defined and assign_instance_groups_to_org) else omit }}"
-    default_environment: "{{ (__controller_organizations_item.default_environment.name | default(__controller_organizations_item.default_environment | default(__controller_organizations_item.execution_environment | default(omit)))) if (assign_default_ee_to_org is defined and assign_default_ee_to_org) else omit }}"
-    galaxy_credentials: "{{ (__controller_organizations_item.galaxy_credentials | default(([] if gateway_organizations_enforce_defaults else omit), true)) if (assign_galaxy_credentials_to_org is defined and assign_galaxy_credentials_to_org) else omit }}"
-    notification_templates_approvals: "{{ (__controller_organizations_item.related.notification_templates_approvals | map(attribute='name') | list if __controller_organizations_item.related.notification_templates_approvals is defined) | default(__controller_organizations_item.notification_templates_approvals) | default(([] if gateway_organizations_enforce_defaults else omit), true) if (assign_notification_templates_to_org is defined and assign_notification_templates_to_org) else omit }}"
-    notification_templates_started: "{{ (__controller_organizations_item.related.notification_templates_started | map(attribute='name') | list if __controller_organizations_item.related.notification_templates_started is defined) | default(__controller_organizations_item.notification_templates_started) | default(([] if gateway_organizations_enforce_defaults else omit), true) if (assign_notification_templates_to_org is defined and assign_notification_templates_to_org) else omit }}"
-    notification_templates_success: "{{ (__controller_organizations_item.related.notification_templates_success | map(attribute='name') | list if __controller_organizations_item.related.notification_templates_success is defined) | default(__controller_organizations_item.notification_templates_success) | default(([] if gateway_organizations_enforce_defaults else omit), true) if (assign_notification_templates_to_org is defined and assign_notification_templates_to_org) else omit }}"
-    notification_templates_error: "{{ (__controller_organizations_item.related.notification_templates_error | map(attribute='name') | list if __controller_organizations_item.related.notification_templates_error is defined) | default(__controller_organizations_item.notification_templates_error) | default(([] if gateway_organizations_enforce_defaults else omit), true) if (assign_notification_templates_to_org is defined and assign_notification_templates_to_org) else omit }}"
-    state: "{{ __controller_organizations_item.state | default(platform_state | default('present')) }}"
+        # Role Standard Options
+        gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
+        gateway_username: "{{ aap_username | default(omit, true) }}"
+        gateway_password: "{{ aap_password | default(omit, true) }}"
+        gateway_token: "{{ aap_token | default(omit, true) }}"
+        gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      loop: "{{ aap_organizations }}"
+      loop_control:
+        loop_var: __gateway_organization_item
+        label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organization_item.name }}"
+        pause: "{{ gateway_organizations_loop_delay }}"
+      async: 1000
+      poll: 0
+      register: __gateway_organizations_job_async
+      changed_when: not __gateway_organizations_job_async.changed
+      vars:
+        __operation: "{{ operation_translate[__gateway_organization_item.state | default(platform_state) | default('present')] }}"
 
-    # Role Standard Options
-    controller_username: "{{ aap_username | default(omit, true) }}"
-    controller_password: "{{ aap_password | default(omit, true) }}"
-    controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
-    request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-    controller_host: "{{ aap_hostname | default(omit, true) }}"
-    validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ aap_organizations }}"
-  loop_control:
-    loop_var: __controller_organizations_item
-    label: "{{ __operation.verb }} organization {{ __controller_organizations_item.name }}"
-    pause: "{{ gateway_organizations_loop_delay }}"
-  no_log: "{{ gateway_organizations_secure_logging }}"
-  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
-  poll: 0
-  register: __organizations_job_async
-  changed_when: (__organizations_job_async.changed if ansible_check_mode else false)
-  vars:
-    __operation: "{{ operation_translate[__controller_organizations_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+    - name: Organizations | Wait for finish the configuration
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __gateway_organizations_job_async.results }}"
+      loop_control:
+        loop_var: __gateway_organizations_job_async_results_item
+        label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organizations_job_async_results_item.__gateway_organization_item.name }} | Wait for finish the Organizations {{ __operation.action }}"
+      when:
+        - not ansible_check_mode
+        - __gateway_organizations_job_async_results_item.ansible_job_id is defined
+      vars:
+        cas_secure_logging: "{{ gateway_organizations_secure_logging }}"
+        cas_job_async_results_item: "{{ __gateway_organizations_job_async_results_item }}"
+        cas_error_list_var_name: "aap_organizations_errors"
+        __operation: "{{ operation_translate[__gateway_organizations_job_async_results_item.state | default(platform_state) | default('present')] }}"
 
-- name: Flag for errors (check mode only)
-  ansible.builtin.set_fact:
-    error_flag: true
-  when: ansible_check_mode and __organizations_job_async.failed is defined and __organizations_job_async.failed
+    - name: Organizations | Controller Configuration
+      ansible.controller.organization:
+        name: "{{ __controller_organizations_item.name | mandatory }}"
+        new_name: "{{ __controller_organizations_item.new_name | default(omit) }}"
+        description: "{{ __controller_organizations_item.description | default(('' if gateway_organizations_enforce_defaults else omit), true) }}"
+        custom_virtualenv: "{{ __controller_organizations_item.custom_virtualenv | default(omit, true) }}"
+        max_hosts: "{{ __controller_organizations_item.max_hosts | default((0 if gateway_organizations_enforce_defaults else omit), true) }}"
+        instance_groups: "{{ (__controller_organizations_item.instance_groups | default(([] if gateway_organizations_enforce_defaults else omit), true))if (assign_instance_groups_to_org is defined and assign_instance_groups_to_org) else omit }}"
+        default_environment: "{{ (__controller_organizations_item.default_environment.name | default(__controller_organizations_item.default_environment | default(__controller_organizations_item.execution_environment | default(omit)))) if (assign_default_ee_to_org is defined and assign_default_ee_to_org) else omit }}"
+        galaxy_credentials: "{{ (__controller_organizations_item.galaxy_credentials | default(([] if gateway_organizations_enforce_defaults else omit), true)) if (assign_galaxy_credentials_to_org is defined and assign_galaxy_credentials_to_org) else omit }}"
+        notification_templates_approvals: "{{ (__controller_organizations_item.related.notification_templates_approvals | map(attribute='name') | list if __controller_organizations_item.related.notification_templates_approvals is defined) | default(__controller_organizations_item.notification_templates_approvals) | default(([] if gateway_organizations_enforce_defaults else omit), true) if (assign_notification_templates_to_org is defined and assign_notification_templates_to_org) else omit }}"
+        notification_templates_started: "{{ (__controller_organizations_item.related.notification_templates_started | map(attribute='name') | list if __controller_organizations_item.related.notification_templates_started is defined) | default(__controller_organizations_item.notification_templates_started) | default(([] if gateway_organizations_enforce_defaults else omit), true) if (assign_notification_templates_to_org is defined and assign_notification_templates_to_org) else omit }}"
+        notification_templates_success: "{{ (__controller_organizations_item.related.notification_templates_success | map(attribute='name') | list if __controller_organizations_item.related.notification_templates_success is defined) | default(__controller_organizations_item.notification_templates_success) | default(([] if gateway_organizations_enforce_defaults else omit), true) if (assign_notification_templates_to_org is defined and assign_notification_templates_to_org) else omit }}"
+        notification_templates_error: "{{ (__controller_organizations_item.related.notification_templates_error | map(attribute='name') | list if __controller_organizations_item.related.notification_templates_error is defined) | default(__controller_organizations_item.notification_templates_error) | default(([] if gateway_organizations_enforce_defaults else omit), true) if (assign_notification_templates_to_org is defined and assign_notification_templates_to_org) else omit }}"
+        state: "{{ __controller_organizations_item.state | default(platform_state | default('present')) }}"
 
-- name: Managing Controller Organizations | Wait for finish the Organizations management
-  ansible.builtin.include_tasks: async_organization.yml
-  loop: "{{ __organizations_job_async.results }}"
-  loop_control:
-    loop_var: __organizations_job_async_results_item
-    label: "{{ __operation.verb }} Controller Organization {{ __organizations_job_async_results_item.__controller_organizations_item.name }} | Wait for finish the
-      organization {{ __operation.action }}"
-  when: not ansible_check_mode and __organizations_job_async_results_item.ansible_job_id is defined
-  no_log: "{{ gateway_organizations_secure_logging }}"
-  vars:
-    __operation: "{{ operation_translate[__organizations_job_async_results_item.__controller_organizations_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+        # Role Standard Options
+        controller_username: "{{ aap_username | default(omit, true) }}"
+        controller_password: "{{ aap_password | default(omit, true) }}"
+        controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        controller_host: "{{ aap_hostname | default(omit, true) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      loop: "{{ aap_organizations }}"
+      loop_control:
+        loop_var: __controller_organizations_item
+        label: "{{ __operation.verb }} organization {{ __controller_organizations_item.name }}"
+        pause: "{{ gateway_organizations_loop_delay }}"
+      async: "{{ ansible_check_mode | ternary(0, 1000) }}"
+      poll: 0
+      register: __organizations_job_async
+      changed_when: (__organizations_job_async.changed if ansible_check_mode else false)
+      vars:
+        __operation: "{{ operation_translate[__controller_organizations_item.state | default(platform_state) | default('present')] }}"
+
+    - name: Flag for errors (check mode only)
+      ansible.builtin.set_fact:
+        error_flag: true
+      when:
+        - ansible_check_mode
+        - __organizations_job_async.failed is defined
+        - __organizations_job_async.failed
+
+    - name: Managing Controller Organizations | Wait for finish the Organizations management
+      when:
+        - not ansible_check_mode
+        - __organizations_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __organizations_job_async.results }}"
+      loop_control:
+        loop_var: __organizations_job_async_results_item
+        label: "{{ __operation.verb }} Controller Organization {{ __organizations_job_async_results_item.__controller_organizations_item.name }} | Wait for finish the
+          organization {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ gateway_organizations_secure_logging }}"
+        cas_job_async_results_item: "{{ __organizations_job_async_results_item }}"
+        cas_error_list_var_name: "aap_organizations_errors"
+        __operation: "{{ operation_translate[__organizations_job_async_results_item.__controller_organizations_item.state | default(platform_state) | default('present')] }}"
+
+  always:
+    - name: Debug
+      ansible.builtin.debug:
+        msg: "{{ __gateway_organizations_job_async.results | default([]) + __organizations_job_async.results | default([]) }}"
+
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __organization_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __organization_job_async_results_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __gateway_organizations_job_async.results | default([]) + __organizations_job_async.results | default([]) }}"
+      loop_control:
+        loop_var: __organization_job_async_results_item
+        label: "Cleaning up job results file: {{ __organization_job_async_results_item.results_file | default('Unknown') }}"
 ...
