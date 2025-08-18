@@ -19,7 +19,7 @@ gateway_configuration_dispatcher_roles:
     var: aap_applications
     tags: applications
   - role: gateway_http_ports
-    var: http_ports_list
+    var: gateway_http_ports
     tags: http_ports
   - role: gateway_service_clusters
     var: gateway_service_clusters
@@ -202,5 +202,5 @@ aap_configuration_dispatcher_roles: >
    + controller_configuration_dispatcher_roles
    + eda_configuration_dispatcher_roles }}
 
-collect_logs: false
+aap_configuration_collect_logs: false
 ...
