@@ -1,41 +1,61 @@
 ---
 # Create AH EE registry
-- name: Index Automation Hub EE Registry
-  ansible.hub.ah_ee_registry_index:
-    name: "{{ __hub_ee_registry_index_item.name }}"
-    wait: "{{ __hub_ee_registry_index_item.wait | default(omit) }}"
-    interval: "{{ __hub_ee_registry_index_item.interval | default(hub_configuration_ee_registry_index_async_delay) }}"
-    timeout: "{{ __hub_ee_registry_index_item.timeout | default(omit) }}"
-    ah_host: "{{ aap_hostname | default(omit) }}"
-    ah_username: "{{ aap_username | default(omit) }}"
-    ah_password: "{{ aap_password | default(omit) }}"
-    ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
-    validate_certs: "{{ aap_validate_certs | default(omit) }}"
-    request_timeout: "{{ aap_request_timeout | default(omit) }}"
-  loop: "{{ hub_ee_registries }}"
-  loop_control:
-    loop_var: __hub_ee_registry_index_item
-    label: "{{ __operation.verb }} the EE registry index {{ __hub_ee_registry_index_item.name }} in Hub"
-    pause: "{{ hub_configuration_ee_registry_index_loop_delay }}"
-  when: __hub_ee_registry_index_item.index | default(false)
-  no_log: "{{ hub_configuration_ee_registry_secure_logging }}"
-  async: "{{ hub_configuration_ee_registry_index_async_timeout }}"
-  poll: 0
-  register: __ee_registry_indexes_job_async
-  changed_when: not __ee_registry_indexes_job_async.changed
+- name: Manage Hub EE Registry Index Block
   vars:
-    __operation: "{{ operation_translate[__hub_ee_registry_index_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  no_log: "{{ hub_configuration_ee_registry_secure_logging }}"
+  block:
+    - name: Index Automation Hub EE Registry
+      ansible.hub.ah_ee_registry_index:
+        name: "{{ __hub_ee_registry_index_item.name }}"
+        wait: "{{ __hub_ee_registry_index_item.wait | default(omit) }}"
+        interval: "{{ __hub_ee_registry_index_item.interval | default(hub_configuration_ee_registry_index_async_delay) }}"
+        timeout: "{{ __hub_ee_registry_index_item.timeout | default(omit) }}"
+        ah_host: "{{ aap_hostname | default(omit) }}"
+        ah_username: "{{ aap_username | default(omit) }}"
+        ah_password: "{{ aap_password | default(omit) }}"
+        ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit) }}"
+      loop: "{{ hub_ee_registries }}"
+      loop_control:
+        loop_var: __hub_ee_registry_index_item
+        label: "{{ __operation.verb }} the EE registry index {{ __hub_ee_registry_index_item.name }} in Hub"
+        pause: "{{ hub_configuration_ee_registry_index_loop_delay }}"
+      when: __hub_ee_registry_index_item.index | default(false)
+      async: "{{ hub_configuration_ee_registry_index_async_timeout }}"
+      poll: 0
+      register: __ee_registry_indexes_job_async
+      changed_when: not __ee_registry_indexes_job_async.changed
+      vars:
+        __operation: "{{ operation_translate[__hub_ee_registry_index_item.state | default(platform_state) | default('present')] }}"
 
-- name: Index EE Registry | Wait for finish the ee_registry_index creation
-  ansible.builtin.include_tasks: async_hub_ee_registry_index.yml
-  loop: "{{ __ee_registry_indexes_job_async.results }}"
-  loop_control:
-    loop_var: __ee_registry_indexes_job_async_result_item
-    label: "{{ __operation.verb }} EE registry index {{ __ee_registry_indexes_job_async_result_item.__hub_ee_registry_index_item.name }} | Wait for finish the EE registry index {{ __operation.action }}"
-  when: __ee_registry_indexes_job_async_result_item.ansible_job_id is defined
-  no_log: "{{ hub_configuration_ee_registry_secure_logging }}"
-  vars:
-    __operation: "{{ operation_translate[__ee_registry_indexes_job_async_result_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+    - name: Index EE Registry | Wait for finish the ee_registry_index creation
+      when:
+        - not ansible_check_mode
+        - __ee_registry_indexes_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __ee_registry_indexes_job_async.results }}"
+      loop_control:
+        loop_var: __ee_registry_indexes_job_async_result_item
+        label: "{{ __operation.verb }} EE registry index {{ __ee_registry_indexes_job_async_result_item.__hub_ee_registry_index_item.name }} | Wait for finish the EE registry index {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ hub_configuration_ee_registry_secure_logging }}"
+        cas_job_async_results_item: "{{ __ee_registry_indexes_job_async_result_item }}"
+        cas_error_list_var_name: "hub_ee_registry_index_errors"
+        __operation: "{{ operation_translate[__ee_registry_indexes_job_async_result_item.state | default(platform_state) | default('present')] }}"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __ee_registry_indexes_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __ee_registry_indexes_job_async_result_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __ee_registry_indexes_job_async.results }}"
+      loop_control:
+        loop_var: __ee_registry_indexes_job_async_result_item
+        label: "Cleaning up job results file: {{ __ee_registry_indexes_job_async_result_item.results_file | default('Unknown') }}"
 ...
