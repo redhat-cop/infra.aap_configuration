@@ -145,6 +145,57 @@ Controller token module would be invoked with this code:
 
 ```
 
+### Error Handling
+
+Many of the roles in this collection use asynchrous tasks to perform their
+actions. By default the first failed asyncronous task will cause the playbook to
+fail. Setting the `aap_configuration_collect_logs` variable to `true` will
+enable collecting all asyncronous task failure messages and allow the playbook
+to run to completion. 
+
+When `aap_configuration_collect_logs` is enabled the reported errors are
+collected in a variable called `aap_configuration_role_errors`. This variable is
+a dictionary where each key is the type of the configuration item that failed to
+be applied. The value of each key is a list of all the failures of that type.
+
+When the `dispatch` role is used and `aap_configuration_collect_logs` is enabled
+it will display any errors encountered while applying the configurations and
+fail.
+
+Example Output when using the `dispatch` role and encoutering failures:
+
+```yaml
+fatal: [localhost]: FAILED! => {
+    "msg": [
+        "Errors encountered applying configurations:",
+        {
+            "aap_organizations_errors": [
+                {
+                    "ERROR_MESSAGE": "Request to /api/controller/v2/instance_groups/?name=not-real returned 0 items, expected 1",
+                    "name": "Test Organization"
+                },
+                {
+                    "ERROR_MESSAGE": "Request to /api/controller/v2/instance_groups/?name=not-real returned 0 items, expected 1",
+                    "name": "Test Organization 2"
+                }
+            ],
+            "controller_applications_errors": [
+                {
+                    "ERROR_MESSAGE": "Request to /api/controller/v2/organizations/?name=UnknownOrg returned 0 items, expected 1",
+                    "name": "controller_application-failed-app1",
+                    "organization": "UnknownOrg"
+                },
+                {
+                    "ERROR_MESSAGE": "value of authorization_grant_type must be one of: password, authorization-code, got: password2",
+                    "name": "controller_application-failed-app2",
+                    "organization": "Default"
+                }
+            ],
+        }
+    ]
+}
+```
+
 ### Automate the Automation
 
 Every Ansible Controller instance has it's own particularities and needs. Every administrator team has it's own practices and customs. This collection allows adaptation to every need, from small to large scale, having the objects distributed across multiple environments and leveraging Automation Webhook that can be used to link a Git repository and Ansible automation natively.

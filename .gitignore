@@ -9,3 +9,4 @@ tests/output
 ansible.cfg
 tests/localtest.yml
 .ansible/
+.venv
