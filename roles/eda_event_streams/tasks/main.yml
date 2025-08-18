@@ -1,42 +1,62 @@
 ---
 # Create EDA Controller Event stream
-- name: Add EDA Controller Event Stream
-  ansible.eda.event_stream:
-    name: "{{ __event_stream_item.name }}"
-    new_name: "{{ __event_stream_item.new_name | default(omit) }}"
-    credential_name: "{{ __event_stream_item.credential_name | default(omit) }}"
-    organization: "{{ __event_stream_item.organization | default(omit) }}"
-    headers: "{{ __event_stream_item.headers | default(omit) }}"
-    forward_events: "{{ __event_stream_item.forward_events | default(omit) }}"
-    state: "{{ __event_stream_item.state | default(eda_state | default('present')) }}"
-    controller_host: "{{ aap_hostname | default(omit, true) }}"
-    controller_username: "{{ aap_username | default(omit, true) }}"
-    controller_password: "{{ aap_password | default(omit, true) }}"
-    request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-    validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ eda_event_streams }}"
-  loop_control:
-    loop_var: __event_stream_item
-    label: "{{ __operation.verb }} the Event stream {{ __event_stream_item.name }} to EDA"
-    pause: "{{ eda_configuration_event_streams_async_delay }}"
-  no_log: "{{ eda_configuration_event_streams_secure_logging }}"
-  async: 1000
-  poll: 0
-  register: __event_streams_job_async
-  changed_when: not __event_streams_job_async.changed
+- name: Manage EDA Controller Event Stream Block
   vars:
-    __operation: "{{ operation_translate[__event_stream_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  no_log: "{{ eda_configuration_event_streams_secure_logging }}"
+  block:
+    - name: Add EDA Controller Event Stream
+      ansible.eda.event_stream:
+        name: "{{ __event_stream_item.name }}"
+        new_name: "{{ __event_stream_item.new_name | default(omit) }}"
+        credential_name: "{{ __event_stream_item.credential_name | default(omit) }}"
+        organization: "{{ __event_stream_item.organization | default(omit) }}"
+        headers: "{{ __event_stream_item.headers | default(omit) }}"
+        forward_events: "{{ __event_stream_item.forward_events | default(omit) }}"
+        state: "{{ __event_stream_item.state | default(eda_state | default('present')) }}"
+        controller_host: "{{ aap_hostname | default(omit, true) }}"
+        controller_username: "{{ aap_username | default(omit, true) }}"
+        controller_password: "{{ aap_password | default(omit, true) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      loop: "{{ eda_event_streams }}"
+      loop_control:
+        loop_var: __event_stream_item
+        label: "{{ __operation.verb }} the Event stream {{ __event_stream_item.name }} to EDA"
+        pause: "{{ eda_configuration_event_streams_async_delay }}"
+      async: 1000
+      poll: 0
+      register: __event_streams_job_async
+      changed_when: not __event_streams_job_async.changed
+      vars:
+        __operation: "{{ operation_translate[__event_stream_item.state | default(platform_state) | default('present')] }}"
 
-- name: Create Event stream | Wait for finish the Event stream creation
-  ansible.builtin.include_tasks: async_eda_event_stream.yml
-  loop: "{{ __event_streams_job_async.results }}"
-  loop_control:
-    loop_var: __event_streams_job_async_result_item
-    label: "{{ __operation.verb }} Event stream {{ __event_streams_job_async_result_item.__event_stream_item.name }} | Wait for finish the Event stream {{ __operation.action }}"
-  when: __event_streams_job_async_result_item.ansible_job_id is defined
-  no_log: "{{ eda_configuration_event_streams_secure_logging }}"
-  vars:
-    __operation: "{{ operation_translate[__event_streams_job_async_result_item.__event_stream_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+    - name: Create Event stream | Wait for finish the Event stream creation
+      when:
+        - not ansible_check_mode
+        - __event_streams_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __event_streams_job_async.results }}"
+      loop_control:
+        loop_var: __event_streams_job_async_result_item
+        label: "{{ __operation.verb }} Event stream {{ __event_streams_job_async_result_item.__event_stream_item.name }} | Wait for finish the Event stream {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ eda_configuration_event_streams_secure_logging }}"
+        cas_job_async_results_item: "{{ __event_streams_job_async_result_item }}"
+        cas_error_list_var_name: "eda_event_streams_errors"
+        __operation: "{{ operation_translate[__event_streams_job_async_result_item.__event_stream_item.state | default(platform_state) | default('present')] }}"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __event_streams_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __event_streams_job_async_result_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __event_streams_job_async.results }}"
+      loop_control:
+        loop_var: __event_streams_job_async_result_item
+        label: "Cleaning up job results file: {{ __event_streams_job_async_result_item.results_file | default('Unknown') }}"
 ...
