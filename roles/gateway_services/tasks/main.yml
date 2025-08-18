@@ -1,50 +1,70 @@
 ---
-- name: Services | Configuration # noqa fqcn[action-core]
-  ansible.platform.service:
-    name: "{{ __gateway_services_item.name | mandatory }}"
-    new_name: "{{ __gateway_services_item.new_name | default(omit) }}"
-    description: "{{ __gateway_services_item.description | default(omit) }}"
-    api_slug: "{{ __gateway_services_item.api_slug | default(omit) }}"
-    http_port: "{{ __gateway_services_item.http_port | default(omit) }}"
-    service_cluster: "{{ __gateway_services_item.service_cluster | default(omit) }}"
-    is_service_https: "{{ __gateway_services_item.is_service_https | default(omit) }}"
-    enable_gateway_auth: "{{ __gateway_services_item.enable_gateway_auth | default(omit) }}"
-    service_path: "{{ __gateway_services_item.service_path | default(omit) }}"
-    service_port: "{{ __gateway_services_item.service_port | default(omit) }}"
-    node_tags: "{{ __gateway_services_item.node_tags | default(omit) }}"
-    order: "{{ __gateway_services_item.order | default(omit) }}"
-    state: "{{ __gateway_services_item.state | default(platform_state | default(omit, true)) }}"
-
-    # Role Standard Options
-    gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
-    gateway_username: "{{ aap_username | default(omit, true) }}"
-    gateway_password: "{{ aap_password | default(omit, true) }}"
-    gateway_token: "{{ aap_token | default(omit, true) }}"
-    gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-    gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ gateway_services }}"
-  loop_control:
-    loop_var: __gateway_services_item
-    label: "{{ __operation.verb }} the Gateway service {{ __gateway_services_item.name }}"
-    pause: "{{ gateway_services_loop_delay }}"
-  no_log: "{{ gateway_services_secure_logging }}"
-  async: 1000
-  poll: 0
-  register: __gateway_services_job_async
-  changed_when: not __gateway_services_job_async.changed
+- name: Manage Gateway Services Block
   vars:
-    __operation: "{{ operation_translate[__gateway_services_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-
-- name: Services | Wait for finish the configuration
-  ansible.builtin.include_tasks: async_gateway_service.yml
-  loop: "{{ __gateway_services_job_async.results }}"
-  loop_control:
-    loop_var: __gateway_services_job_async_results_item
-    label: "{{ __operation.verb }} Gateway service {{ __gateway_services_job_async_results_item.__gateway_services_item.name }} | Wait for finish the Gateway service {{ __operation.action }}"
-  when: __gateway_services_job_async_results_item.ansible_job_id is defined
   no_log: "{{ gateway_services_secure_logging }}"
-  vars:
-    __operation: "{{ operation_translate[__gateway_services_job_async_results_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  block:
+    - name: Services | Configuration
+      ansible.platform.service:
+        name: "{{ __gateway_services_item.name | mandatory }}"
+        new_name: "{{ __gateway_services_item.new_name | default(omit) }}"
+        description: "{{ __gateway_services_item.description | default(omit) }}"
+        api_slug: "{{ __gateway_services_item.api_slug | default(omit) }}"
+        http_port: "{{ __gateway_services_item.http_port | default(omit) }}"
+        service_cluster: "{{ __gateway_services_item.service_cluster | default(omit) }}"
+        is_service_https: "{{ __gateway_services_item.is_service_https | default(omit) }}"
+        enable_gateway_auth: "{{ __gateway_services_item.enable_gateway_auth | default(omit) }}"
+        service_path: "{{ __gateway_services_item.service_path | default(omit) }}"
+        service_port: "{{ __gateway_services_item.service_port | default(omit) }}"
+        node_tags: "{{ __gateway_services_item.node_tags | default(omit) }}"
+        order: "{{ __gateway_services_item.order | default(omit) }}"
+        state: "{{ __gateway_services_item.state | default(platform_state | default(omit, true)) }}"
+
+        # Role Standard Options
+        gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
+        gateway_username: "{{ aap_username | default(omit, true) }}"
+        gateway_password: "{{ aap_password | default(omit, true) }}"
+        gateway_token: "{{ aap_token | default(omit, true) }}"
+        gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      loop: "{{ gateway_services }}"
+      loop_control:
+        loop_var: __gateway_services_item
+        label: "{{ __operation.verb }} the Gateway service {{ __gateway_services_item.name }}"
+        pause: "{{ gateway_services_loop_delay }}"
+      async: 1000
+      poll: 0
+      register: __gateway_services_job_async
+      changed_when: not __gateway_services_job_async.changed
+      vars:
+        __operation: "{{ operation_translate[__gateway_services_item.state | default(platform_state) | default('present')] }}"
+
+    - name: Services | Wait for finish the configuration
+      when:
+        - not ansible_check_mode
+        - __gateway_services_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __gateway_services_job_async.results }}"
+      loop_control:
+        loop_var: __gateway_services_job_async_results_item
+        label: "{{ __operation.verb }} Gateway service {{ __gateway_services_job_async_results_item.__gateway_services_item.name }} | Wait for finish the Gateway service {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ gateway_services_secure_logging }}"
+        cas_job_async_results_item: "{{ __gateway_services_job_async_results_item }}"
+        cas_error_list_var_name: "gateway_services_errors"
+        __operation: "{{ operation_translate[__gateway_services_job_async_results_item.state | default(platform_state) | default('present')] }}"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __gateway_services_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __gateway_services_job_async_results_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __gateway_services_job_async.results }}"
+      loop_control:
+        loop_var: __gateway_services_job_async_results_item
+        label: "Cleaning up job results file: {{ __gateway_services_job_async_results_item.results_file | default('Unknown') }}"
 ...
