@@ -14,79 +14,16 @@
     assign_default_ee_to_org: "{{ __role.assign_default_ee_to_org | default(false) }}"
     assign_notification_templates_to_org: "{{ __role.assign_notification_templates_to_org | default(false) }}"
 
-- name: "Collect logs (block)"
-  when: collect_logs
-- name: "Collect logs"
-  ansible.builtin.set_fact:
-    error_dict: "{{ {
-                     'applications': __applications_error_list | default([]),
-                     'bulk_hosts': __bulk_hosts_error_list | default([]),
-                     'controller_organization': __controller_organization_error_list | default([]),
-                     'credential_inputs': __credential_inputs_error_list | default([]),
-                     'credentialtypes': __credentialtypes_error_list | default([]),
-                     'credentials': __credentials_error_list | default([]),
-                     'eda_controller_token': __eda_controller_token_error_list | default([]),
-                     'eda_credential_type': __eda_credential_type_error_list | default([]),
-                     'eda_decision_environment': __eda_decision_environment_error_list | default([]),
-                     'eda_event_stream': __eda_event_stream_error_list | default([]),
-                     'eda_projects': __eda_projects_error_list | default([]),
-                     'eda_rulebook_activation': __eda_rulebook_activation_error_list | default([]),
-                     'eda_user': __eda_user_error_list | default([]),
-                     'execution_environments': __execution_environments_error_list | default([]),
-                     'gateway_applications': __gateway_applications_error_list | default([]),
-                     'gateway_authenticator_maps': __gateway_authenticator_maps_error_list | default([]),
-                     'gateway_authenticators': __gateway_authenticators_error_list | default([]),
-                     'gateway_http_ports': __gateway_http_ports_error_list | default([]),
-                     'gateway_organization': __gateway_organization_error_list | default([]),
-                     'gateway_role_user_assignment': __gateway_role_user_assignment_error_list | default([]),
-                     'gateway_routes': __gateway_routes_error_list | default([]),
-                     'gateway_service': __gateway_service_error_list | default([]),
-                     'gateway_service_cluster': __gateway_service_cluster_error_list | default([]),
-                     'gateway_service_key': __gateway_service_key_error_list | default([]),
-                     'gateway_service_node': __gateway_service_node_error_list | default([]),
-                     'gateway_team': __gateway_team_error_list | default([]),
-                     'gateway_user_accounts': __gateway_user_accounts_error_list | default([]),
-                     'host_group': __host_group_error_list | default([]),
-                     'hosts': __hosts_error_list | default([]),
-                     'hub_collection': __hub_collection_error_list | default([]),
-                     'hub_collection_remote': __hub_collection_remote_error_list | default([]),
-                     'hub_collection_repository': __hub_collection_repository_error_list | default([]),
-                     'hub_collection_repository_sync': __hub_collection_repository_sync_error_list | default([]),
-                     'hub_ee_image': __hub_ee_image_error_list | default([]),
-                     'hub_ee_registry': __hub_ee_registry_error_list | default([]),
-                     'hub_ee_registry_index': __hub_ee_registry_index_error_list | default([]),
-                     'hub_ee_registry_sync': __hub_ee_registry_sync_error_list | default([]),
-                     'hub_ee_repository': __hub_ee_repository_error_list | default([]),
-                     'hub_ee_repository_sync': __hub_ee_repository_sync_error_list | default([]),
-                     'hub_group': __hub_group_error_list | default([]),
-                     'hub_group_role': __hub_group_role_error_list | default([]),
-                     'hub_namespace': __hub_namespace_error_list | default([]),
-                     'hub_publish': __hub_publish_error_list | default([]),
-                     'hub_role': __hub_role_error_list | default([]),
-                     'hub_user': __hub_user_error_list | default([]),
-                     'instance_groups': __instance_groups_error_list | default([]),
-                     'instances': __instances_error_list | default([]),
-                     'inventories': __inventories_error_list | default([]),
-                     'inventory_sources': __inventory_sources_error_list | default([]),
-                     'labels': __labels_error_list | default([]),
-                     'notification_templates': __notification_templates_error_list | default([]),
-                     'organizations': __organizations_error_list | default([]),
-                     'projects': __projects_error_list | default([]),
-                     'roles': __roles_error_list | default([]),
-                     'schedules': __schedules_error_list | default([]),
-                     'teams': __teams_error_list | default([]),
-                     'templates': __templates_error_list | default([]),
-                     'users': __users_error_list | default([]),
-                     'workflow_nodes': __workflow_nodes_error_list | default([]),
-                     'workflows': __workflows_error_list | default([])
-                } }}"
-
-
-- name: "Display errors"
-  ansible.builtin.fail:
-    msg: "{{ error_dict }}"
-  when: error_dict | dict2items | selectattr('value', 'ne', []) | list | length > 0
-
+- name: Display errors and fail
+  when:
+    - aap_configuration_role_errors is defined
+    - aap_configuration_role_errors is mapping
+    - aap_configuration_role_errors | dict2items | selectattr('value', 'ne', []) | list | length > 0
+  ansible.builtin.debug:
+    msg:
+      - "Errors encountered applying configurations:"
+      - "{{ aap_configuration_role_errors }}"
+  failed_when: aap_configuration_role_errors | dict2items | selectattr('value', 'ne', []) | list | length > 0
 
 - name: Fail the playbook if there were errors (check mode only)
   ansible.builtin.fail:
