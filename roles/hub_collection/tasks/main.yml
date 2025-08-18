@@ -1,52 +1,72 @@
 # Update or destroy Automation Hub Collection
 ---
-- name: Update or destroy Automation Hub Collection
-  ansible.hub.ah_collection:
-    namespace: "{{ __hub_collection_item.namespace }}"
-    name: "{{ __hub_collection_item.name }}"
-    version: "{{ __hub_collection_item.version | default(omit) }}"
-    path: "{{ __hub_collection_item.path | default(omit) }}"
-    repository: "{{ __hub_collection_item.repository | default(omit) }}"
-    wait: "{{ __hub_collection_item.wait | default(omit) }}"
-    auto_approve: "{{ __hub_collection_item.auto_approve | default(omit) }}"
-    timeout: "{{ __hub_collection_item.timeout | default(omit) }}"
-    interval: "{{ __hub_collection_item.interval | default(omit) }}"
-    overwrite_existing: "{{ __hub_collection_item.overwrite_existing | default(omit) }}"
-    state: "{{ __hub_collection_item.state | default('present') }}"
-    ah_host: "{{ aap_hostname | default(omit) }}"
-    ah_username: "{{ aap_username | default(omit) }}"
-    ah_password: "{{ aap_password | default(omit) }}"
-    ah_token: "{{ hub_token | default(omit) }}"
-    ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
-    validate_certs: "{{ aap_validate_certs | default(omit) }}"
-    request_timeout: "{{ aap_request_timeout | default(omit) }}"
-  loop: "{{ hub_collections }}"
-  loop_control:
-    loop_var: __hub_collection_item
-    label: "{{ __operation.verb }} the collection {{ __hub_collection_item.name }} in Hub"
-    pause: "{{ hub_configuration_collection_loop_delay }}"
-  no_log: "{{ hub_configuration_collection_secure_logging }}"
-  async: "{{ hub_configuration_collection_async_timeout }}"
-  poll: 0
-  register: __collections_job_async
-  changed_when: not __collections_job_async.changed
+- name: Manage Hub Collections Block
   vars:
-    __operation: "{{ operation_translate[__hub_collection_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-
-- name: Sleep for 10 seconds and continue with play
-  ansible.builtin.wait_for:
-    timeout: 10
-
-- name: Update/Destroy collection | Wait for finish the update/destruction of collection
-  ansible.builtin.include_tasks: async_hub_collection.yml
-  loop: "{{ __collections_job_async.results }}"
-  loop_control:
-    loop_var: __collections_job_async_result_item
-    label: "{{ __operation.verb }} Collection {{ __collections_job_async_result_item.__hub_collection_item.name }} | Wait for finish the Collection {{ __operation.action }}"
-  when: __collections_job_async_result_item.ansible_job_id is defined
   no_log: "{{ hub_configuration_collection_secure_logging }}"
-  vars:
-    __operation: "{{ operation_translate[__collections_job_async_result_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  block:
+    - name: Update or destroy Automation Hub Collection
+      ansible.hub.ah_collection:
+        namespace: "{{ __hub_collection_item.namespace }}"
+        name: "{{ __hub_collection_item.name }}"
+        version: "{{ __hub_collection_item.version | default(omit) }}"
+        path: "{{ __hub_collection_item.path | default(omit) }}"
+        repository: "{{ __hub_collection_item.repository | default(omit) }}"
+        wait: "{{ __hub_collection_item.wait | default(omit) }}"
+        auto_approve: "{{ __hub_collection_item.auto_approve | default(omit) }}"
+        timeout: "{{ __hub_collection_item.timeout | default(omit) }}"
+        interval: "{{ __hub_collection_item.interval | default(omit) }}"
+        overwrite_existing: "{{ __hub_collection_item.overwrite_existing | default(omit) }}"
+        state: "{{ __hub_collection_item.state | default('present') }}"
+        ah_host: "{{ aap_hostname | default(omit) }}"
+        ah_username: "{{ aap_username | default(omit) }}"
+        ah_password: "{{ aap_password | default(omit) }}"
+        ah_token: "{{ hub_token | default(omit) }}"
+        ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit) }}"
+      loop: "{{ hub_collections }}"
+      loop_control:
+        loop_var: __hub_collection_item
+        label: "{{ __operation.verb }} the collection {{ __hub_collection_item.name }} in Hub"
+        pause: "{{ hub_configuration_collection_loop_delay }}"
+      async: "{{ hub_configuration_collection_async_timeout }}"
+      poll: 0
+      register: __collections_job_async
+      changed_when: not __collections_job_async.changed
+      vars:
+        __operation: "{{ operation_translate[__hub_collection_item.state | default(platform_state) | default('present')] }}"
+
+    - name: Sleep for 10 seconds and continue with play
+      ansible.builtin.wait_for:
+        timeout: 10
+
+    - name: Update/Destroy collection | Wait for finish the update/destruction of collection
+      when:
+        - not ansible_check_mode
+        - __collections_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __collections_job_async.results }}"
+      loop_control:
+        loop_var: __collections_job_async_result_item
+        label: "{{ __operation.verb }} Collection {{ __collections_job_async_result_item.__hub_collection_item.name }} | Wait for finish the Collection {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ hub_configuration_collection_secure_logging }}"
+        cas_job_async_results_item: "{{ __collections_job_async_result_item }}"
+        cas_error_list_var_name: "hub_collections_errors"
+        __operation: "{{ operation_translate[__collections_job_async_result_item.state | default(platform_state) | default('present')] }}"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __collections_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __collections_job_async_result_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __collections_job_async.results }}"
+      loop_control:
+        loop_var: __collections_job_async_result_item
+        label: "Cleaning up job results file: {{ __collections_job_async_result_item.results_file | default('Unknown') }}"
 ...
