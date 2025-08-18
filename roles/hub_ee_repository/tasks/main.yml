@@ -1,45 +1,65 @@
 ---
 # Create AH EE repository
-- name: Add Automation Hub EE repository
-  ansible.hub.ah_ee_repository:
-    name: "{{ __hub_ee_repository_sync_item.name }}"
-    description: "{{ __hub_ee_repository_sync_item.description | default(omit) }}"
-    readme: "{{ __hub_ee_repository_sync_item.readme | default(omit) }}"
-    readme_file: "{{ __hub_ee_repository_sync_item.readme_file | default(omit) }}"
-    registry: "{{ __hub_ee_repository_sync_item.registry | default(omit) }}"
-    upstream_name: "{{ __hub_ee_repository_sync_item.upstream_name | default(omit) }}"
-    include_tags: "{{ __hub_ee_repository_sync_item.include_tags | default(omit) }}"
-    exclude_tags: "{{ __hub_ee_repository_sync_item.exclude_tags | default(omit) }}"
-    state: "{{ __hub_ee_repository_sync_item.state | default(hub_state | default(ah_state | default('present'))) }}"
-    ah_host: "{{ aap_hostname | default(omit) }}"
-    ah_username: "{{ aap_username | default(omit) }}"
-    ah_password: "{{ aap_password | default(omit) }}"
-    ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
-    validate_certs: "{{ aap_validate_certs | default(omit) }}"
-    request_timeout: "{{ aap_request_timeout | default(omit) }}"
-  loop: "{{ hub_ee_repositories }}"
-  loop_control:
-    loop_var: __hub_ee_repository_sync_item
-    label: "{{ __operation.verb }} the EE repository {{ __hub_ee_repository_sync_item.name }} in Hub"
-    pause: "{{ hub_configuration_ee_repository_sync_loop_delay }}"
-  no_log: "{{ hub_configuration_ee_repository_secure_logging }}"
-  async: "{{ hub_configuration_ee_repository_async_timeout }}"
-  poll: 0
-  register: __ee_repositories_job_async
-  changed_when: not __ee_repositories_job_async.changed
+- name: Manage Hub EE Repository Block
   vars:
-    __operation: "{{ operation_translate[__hub_ee_repository_sync_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  no_log: "{{ hub_configuration_ee_repository_secure_logging }}"
+  block:
+    - name: Add Automation Hub EE repository
+      ansible.hub.ah_ee_repository:
+        name: "{{ __hub_ee_repository_sync_item.name }}"
+        description: "{{ __hub_ee_repository_sync_item.description | default(omit) }}"
+        readme: "{{ __hub_ee_repository_sync_item.readme | default(omit) }}"
+        readme_file: "{{ __hub_ee_repository_sync_item.readme_file | default(omit) }}"
+        registry: "{{ __hub_ee_repository_sync_item.registry | default(omit) }}"
+        upstream_name: "{{ __hub_ee_repository_sync_item.upstream_name | default(omit) }}"
+        include_tags: "{{ __hub_ee_repository_sync_item.include_tags | default(omit) }}"
+        exclude_tags: "{{ __hub_ee_repository_sync_item.exclude_tags | default(omit) }}"
+        state: "{{ __hub_ee_repository_sync_item.state | default(hub_state | default(ah_state | default('present'))) }}"
+        ah_host: "{{ aap_hostname | default(omit) }}"
+        ah_username: "{{ aap_username | default(omit) }}"
+        ah_password: "{{ aap_password | default(omit) }}"
+        ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit) }}"
+      loop: "{{ hub_ee_repositories }}"
+      loop_control:
+        loop_var: __hub_ee_repository_sync_item
+        label: "{{ __operation.verb }} the EE repository {{ __hub_ee_repository_sync_item.name }} in Hub"
+        pause: "{{ hub_configuration_ee_repository_sync_loop_delay }}"
+      async: "{{ hub_configuration_ee_repository_async_timeout }}"
+      poll: 0
+      register: __ee_repositories_job_async
+      changed_when: not __ee_repositories_job_async.changed
+      vars:
+        __operation: "{{ operation_translate[__hub_ee_repository_sync_item.state | default(platform_state) | default('present')] }}"
 
-- name: Create EE Repository | Wait for finish the ee_repository creation
-  ansible.builtin.include_tasks: async_hub_ee_repository.yml
-  loop: "{{ __ee_repositories_job_async.results }}"
-  loop_control:
-    loop_var: __ee_repositories_job_async_result_item
-    label: "{{ __operation.verb }} EE Repository {{ __ee_repositories_job_async_result_item.__hub_ee_repository_sync_item.name }} | Wait for finish the EE Repository {{ __operation.action }}"
-  when: __ee_repositories_job_async_result_item.ansible_job_id is defined
-  no_log: "{{ hub_configuration_ee_repository_secure_logging }}"
-  vars:
-    __operation: "{{ operation_translate[__ee_repositories_job_async_result_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+    - name: Create EE Repository | Wait for finish the ee_repository creation
+      when:
+        - not ansible_check_mode
+        - __ee_repositories_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __ee_repositories_job_async.results }}"
+      loop_control:
+        loop_var: __ee_repositories_job_async_result_item
+        label: "{{ __operation.verb }} EE Repository {{ __ee_repositories_job_async_result_item.__hub_ee_repository_sync_item.name }} | Wait for finish the EE Repository {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ hub_configuration_ee_repository_secure_logging }}"
+        cas_job_async_results_item: "{{ __ee_repositories_job_async_result_item }}"
+        cas_error_list_var_name: "hub_ee_repository_errors"
+        __operation: "{{ operation_translate[__ee_repositories_job_async_result_item.state | default(platform_state) | default('present')] }}"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __ee_repositories_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __ee_repositories_job_async_result_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __ee_repositories_job_async.results }}"
+      loop_control:
+        loop_var: __ee_repositories_job_async_result_item
+        label: "Cleaning up job results file: {{ __ee_repositories_job_async_result_item.results_file | default('Unknown') }}"
 ...
