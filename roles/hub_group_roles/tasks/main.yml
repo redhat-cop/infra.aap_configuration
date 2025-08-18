@@ -1,39 +1,59 @@
 ---
 # Add Group Roles
-- name: Add Roles to Groups in Automation Hubs
-  ansible.hub.group_roles:
-    groups: "{{ __hub_group_roles_item.groups | default(omit) }}"
-    role_list: "{{ __hub_group_roles_item.role_list | default(omit) }}"
-    state: "{{ __hub_group_roles_item.state | default(hub_state | default(ah_state | default('present'))) }}"
-    ah_host: "{{ aap_hostname | default(omit) }}"
-    ah_username: "{{ aap_username | default(omit) }}"
-    ah_password: "{{ aap_password | default(omit) }}"
-    ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
-    validate_certs: "{{ aap_validate_certs | default(omit) }}"
-    request_timeout: "{{ aap_request_timeout | default(omit) }}"
-  loop: "{{ hub_group_roles }}"
-  loop_control:
-    loop_var: __hub_group_roles_item
-    label: "{{ __operation.verb }} the group role {{ __hub_group_roles_item.groups }} in Hub"
-    pause: "{{ hub_configuration_group_roles_loop_delay }}"
-  no_log: "{{ hub_configuration_group_roles_secure_logging }}"
-  async: "{{ hub_configuration_group_roles_async_timeout }}"
-  poll: 0
-  register: __group_roles_job_async
-  changed_when: not __group_roles_job_async.changed
+- name: Manage Hub Group Roles Block
   vars:
-    __operation: "{{ operation_translate[__hub_group_roles_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  no_log: "{{ hub_configuration_group_roles_secure_logging }}"
+  block:
+    - name: Add Roles to Groups in Automation Hubs
+      ansible.hub.group_roles:
+        groups: "{{ __hub_group_roles_item.groups | default(omit) }}"
+        role_list: "{{ __hub_group_roles_item.role_list | default(omit) }}"
+        state: "{{ __hub_group_roles_item.state | default(hub_state | default(ah_state | default('present'))) }}"
+        ah_host: "{{ aap_hostname | default(omit) }}"
+        ah_username: "{{ aap_username | default(omit) }}"
+        ah_password: "{{ aap_password | default(omit) }}"
+        ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit) }}"
+      loop: "{{ hub_group_roles }}"
+      loop_control:
+        loop_var: __hub_group_roles_item
+        label: "{{ __operation.verb }} the group role {{ __hub_group_roles_item.groups }} in Hub"
+        pause: "{{ hub_configuration_group_roles_loop_delay }}"
+      async: "{{ hub_configuration_group_roles_async_timeout }}"
+      poll: 0
+      register: __group_roles_job_async
+      changed_when: not __group_roles_job_async.changed
+      vars:
+        __operation: "{{ operation_translate[__hub_group_roles_item.state | default(platform_state) | default('present')] }}"
 
-- name: Add Roles to Groups | Wait for finish the group creation
-  ansible.builtin.include_tasks: async_hub_group_roles.yml
-  loop: "{{ __group_roles_job_async.results }}"
-  loop_control:
-    loop_var: __group_roles_job_async_result_item
-    label: "{{ __operation.verb }} Group roles {{ __group_roles_job_async_result_item.__hub_group_roles_item.groups }} | Wait for finish the Group roles {{ __operation.action }}"
-  when: __group_roles_job_async_result_item.ansible_job_id is defined
-  no_log: "{{ hub_configuration_group_roles_secure_logging }}"
-  vars:
-    __operation: "{{ operation_translate[__group_roles_job_async_result_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+    - name: Add Roles to Groups | Wait for finish the group creation
+      when:
+        - not ansible_check_mode
+        - __group_roles_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __group_roles_job_async.results }}"
+      loop_control:
+        loop_var: __group_roles_job_async_result_item
+        label: "{{ __operation.verb }} Group roles {{ __group_roles_job_async_result_item.__hub_group_roles_item.groups }} | Wait for finish the Group roles {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ hub_configuration_group_roles_secure_logging }}"
+        cas_job_async_results_item: "{{ __group_roles_job_async_result_item }}"
+        cas_error_list_var_name: "hub_group_roles_errors"
+        __operation: "{{ operation_translate[__group_roles_job_async_result_item.state | default(platform_state) | default('present')] }}"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __group_roles_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __group_roles_job_async_result_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __group_roles_job_async.results }}"
+      loop_control:
+        loop_var: __group_roles_job_async_result_item
+        label: "Cleaning up job results file: {{ __group_roles_job_async_result_item.results_file | default('Unknown') }}"
 ...
