@@ -13,48 +13,68 @@
 #     - lookup("ansible.builtin.env", "AH_API_TOKEN") == ""
 #     - hub_namespaces | length > 1
 
-- name: Add Automation Hub Namespace
-  ansible.hub.ah_namespace:
-    name: "{{ __hub_namespace_item.name }}"
-    new_name: "{{ __hub_namespace_item.new_name | default('') }}"
-    description: "{{ __hub_namespace_item.description | default('') }}"
-    company: "{{ __hub_namespace_item.company | default('') }}"
-    email: "{{ __hub_namespace_item.email | default(omit) }}"
-    avatar_url: "{{ __hub_namespace_item.avatar_url | default('') }}"
-    resources: "{{ __hub_namespace_item.resources | default('') }}"
-    links: "{{ __hub_namespace_item.links | default([]) }}"
-    groups: "{{ __hub_namespace_item.groups | default([]) }}"
-    state: "{{ __hub_namespace_item.state | default(hub_state | default(ah_state | default('present'))) }}"
-    ah_host: "{{ aap_hostname | default(omit) }}"
-    ah_username: "{{ aap_username | default(omit) }}"
-    ah_password: "{{ aap_password | default(omit) }}"
-    ah_token: "{{ hub_token | default(omit) }}"
-    ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
-    validate_certs: "{{ aap_validate_certs | default(omit) }}"
-    request_timeout: "{{ aap_request_timeout | default(omit) }}"
-  loop: "{{ hub_namespaces }}"
-  loop_control:
-    loop_var: __hub_namespace_item
-    label: "{{ __operation.verb }} the namespace {{ __hub_namespace_item.name }} in Hub"
-    pause: "{{ hub_configuration_namespace_loop_delay }}"
-  no_log: "{{ hub_configuration_namespace_secure_logging }}"
-  async: "{{ hub_configuration_namespace_async_timeout }}"
-  poll: 0
-  register: __namespaces_job_async
-  changed_when: not __namespaces_job_async.changed
+- name: Manage Hub Namespaces Block
   vars:
-    __operation: "{{ operation_translate[__hub_namespace_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  no_log: "{{ hub_configuration_namespace_secure_logging }}"
+  block:
+    - name: Add Automation Hub Namespace
+      ansible.hub.ah_namespace:
+        name: "{{ __hub_namespace_item.name }}"
+        new_name: "{{ __hub_namespace_item.new_name | default('') }}"
+        description: "{{ __hub_namespace_item.description | default('') }}"
+        company: "{{ __hub_namespace_item.company | default('') }}"
+        email: "{{ __hub_namespace_item.email | default(omit) }}"
+        avatar_url: "{{ __hub_namespace_item.avatar_url | default('') }}"
+        resources: "{{ __hub_namespace_item.resources | default('') }}"
+        links: "{{ __hub_namespace_item.links | default([]) }}"
+        groups: "{{ __hub_namespace_item.groups | default([]) }}"
+        state: "{{ __hub_namespace_item.state | default(hub_state | default(ah_state | default('present'))) }}"
+        ah_host: "{{ aap_hostname | default(omit) }}"
+        ah_username: "{{ aap_username | default(omit) }}"
+        ah_password: "{{ aap_password | default(omit) }}"
+        ah_token: "{{ hub_token | default(omit) }}"
+        ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit) }}"
+      loop: "{{ hub_namespaces }}"
+      loop_control:
+        loop_var: __hub_namespace_item
+        label: "{{ __operation.verb }} the namespace {{ __hub_namespace_item.name }} in Hub"
+        pause: "{{ hub_configuration_namespace_loop_delay }}"
+      async: "{{ hub_configuration_namespace_async_timeout }}"
+      poll: 0
+      register: __namespaces_job_async
+      changed_when: not __namespaces_job_async.changed
+      vars:
+        __operation: "{{ operation_translate[__hub_namespace_item.state | default(platform_state) | default('present')] }}"
 
-- name: Create Namespace | Wait for finish the namespace creation
-  ansible.builtin.include_tasks: async_hub_namespace.yml
-  loop: "{{ __namespaces_job_async.results }}"
-  loop_control:
-    loop_var: __namespaces_job_async_result_item
-    label: "{{ __operation.verb }} Namespace {{ __namespaces_job_async_result_item.__hub_namespace_item.name }} | Wait for finish the Namespace {{ __operation.action }}"
-  when: __namespaces_job_async_result_item.ansible_job_id is defined
-  no_log: "{{ hub_configuration_namespace_secure_logging }}"
-  vars:
-    __operation: "{{ operation_translate[__namespaces_job_async_result_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+    - name: Create Namespace | Wait for finish the namespace creation
+      when:
+        - not ansible_check_mode
+        - __namespaces_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __namespaces_job_async.results }}"
+      loop_control:
+        loop_var: __namespaces_job_async_result_item
+        label: "{{ __operation.verb }} Namespace {{ __namespaces_job_async_result_item.__hub_namespace_item.name }} | Wait for finish the Namespace {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ hub_configuration_namespace_secure_logging }}"
+        cas_job_async_results_item: "{{ __namespaces_job_async_result_item }}"
+        cas_error_list_var_name: "hub_namespace_errors"
+        __operation: "{{ operation_translate[__namespaces_job_async_result_item.state | default(platform_state) | default('present')] }}"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __namespaces_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __namespaces_job_async_result_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __namespaces_job_async.results }}"
+      loop_control:
+        loop_var: __namespaces_job_async_result_item
+        label: "Cleaning up job results file: {{ __namespaces_job_async_result_item.results_file | default('Unknown') }}"
 ...
