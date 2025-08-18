@@ -1,45 +1,65 @@
 ---
 # Create EDA Controller user
-- name: Add EDA Controller user
-  ansible.eda.user:
-    username: "{{ __user_item.username }}"
-    new_username: "{{ __user_item.new_username | default(omit) }}"
-    first_name: "{{ __user_item.first_name | default(omit) }}"
-    last_name: "{{ __user_item.last_name | default(omit) }}"
-    email: "{{ __user_item.email | default(omit) }}"
-    password: "{{ __user_item.password | default(omit) }}"
-    update_secrets: "{{ __user_item.update_secrets | default(omit) }}"
-    is_superuser: "{{ __user_item.is_superuser | default(omit) }}"
-    roles: "{{ __user_item.roles | default(omit) }}"
-    state: "{{ __user_item.state | default(eda_state | default('present')) }}"
-    controller_host: "{{ aap_hostname | default(omit, true) }}"
-    controller_username: "{{ aap_username | default(omit, true) }}"
-    controller_password: "{{ aap_password | default(omit, true) }}"
-    request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-    validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ aap_user_accounts }}"
-  loop_control:
-    loop_var: __user_item
-    label: "{{ __operation.verb }} the user {{ __user_item.username }} to EDA"
-    pause: "{{ eda_configuration_users_async_delay }}"
-  no_log: "{{ eda_configuration_users_secure_logging }}"
-  async: 1000
-  poll: 0
-  register: __users_job_async
-  changed_when: not __users_job_async.changed
+- name: Manage EDA Controller user Block
   vars:
-    __operation: "{{ operation_translate[__user_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  no_log: "{{ eda_configuration_users_secure_logging }}"
+  block:
+    - name: Add EDA Controller user
+      ansible.eda.user:
+        username: "{{ __user_item.username }}"
+        new_username: "{{ __user_item.new_username | default(omit) }}"
+        first_name: "{{ __user_item.first_name | default(omit) }}"
+        last_name: "{{ __user_item.last_name | default(omit) }}"
+        email: "{{ __user_item.email | default(omit) }}"
+        password: "{{ __user_item.password | default(omit) }}"
+        update_secrets: "{{ __user_item.update_secrets | default(omit) }}"
+        is_superuser: "{{ __user_item.is_superuser | default(omit) }}"
+        roles: "{{ __user_item.roles | default(omit) }}"
+        state: "{{ __user_item.state | default(eda_state | default('present')) }}"
+        controller_host: "{{ aap_hostname | default(omit, true) }}"
+        controller_username: "{{ aap_username | default(omit, true) }}"
+        controller_password: "{{ aap_password | default(omit, true) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      loop: "{{ aap_user_accounts }}"
+      loop_control:
+        loop_var: __user_item
+        label: "{{ __operation.verb }} the user {{ __user_item.username }} to EDA"
+        pause: "{{ eda_configuration_users_async_delay }}"
+      async: 1000
+      poll: 0
+      register: __users_job_async
+      changed_when: not __users_job_async.changed
+      vars:
+        __operation: "{{ operation_translate[__user_item.state | default(platform_state) | default('present')] }}"
 
-- name: Create user | Wait for finish the user creation
-  ansible.builtin.include_tasks: async_eda_user.yml
-  loop: "{{ __users_job_async.results }}"
-  loop_control:
-    loop_var: __users_job_async_result_item
-    label: "{{ __operation.verb }} user {{ __users_job_async_result_item.__user_item.username }} | Wait for finish the rulebook activation {{ __operation.action }}"
-  when: __users_job_async_result_item.ansible_job_id is defined
-  no_log: "{{ eda_configuration_users_secure_logging }}"
-  vars:
-    __operation: "{{ operation_translate[__users_job_async_result.__user_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+    - name: Create user | Wait for finish the user creation
+      when:
+        - not ansible_check_mode
+        - __users_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __users_job_async.results }}"
+      loop_control:
+        loop_var: __users_job_async_result_item
+        label: "{{ __operation.verb }} user {{ __users_job_async_result_item.__user_item.username }} | Wait for finish the rulebook activation {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ eda_configuration_users_secure_logging }}"
+        cas_job_async_results_item: "{{ __users_job_async_result_item }}"
+        cas_error_list_var_name: "eda_users_errors"
+        __operation: "{{ operation_translate[__users_job_async_result.__user_item.state | default(platform_state) | default('present')] }}"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __users_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __users_job_async_result_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __users_job_async.results }}"
+      loop_control:
+        loop_var: __users_job_async_result_item
+        label: "Cleaning up job results file: {{ __users_job_async_result_item.results_file | default('Unknown') }}"
 ...
