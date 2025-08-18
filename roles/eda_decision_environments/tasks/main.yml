@@ -1,43 +1,63 @@
 ---
 # Create EDA Controller Decision Environment
-- name: Add EDA Controller decision environment
-  ansible.eda.decision_environment:
-    name: "{{ __de_item.name }}"
-    new_name: "{{ __de_item.new_name | default(omit) }}"
-    description: "{{ __de_item.description | default(omit) }}"
-    image_url: "{{ __de_item.image_url | default(omit) }}"
-    credential: "{{ __de_item.credential | default(omit) }}"
-    organization_name: "{{ __de_item.organization | default(omit) }}"
-    state: "{{ __de_item.state | default(eda_state | default('present')) }}"
-    controller_host: "{{ aap_hostname | default(omit, true) }}"
-    controller_username: "{{ aap_username | default(omit, true) }}"
-    controller_password: "{{ aap_password | default(omit, true) }}"
-    request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-    validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ eda_decision_environments }}"
-  loop_control:
-    loop_var: __de_item
-    label: "{{ __operation.verb }} the decisiion environment {{ __de_item.name }} to EDA"
-    pause: "{{ eda_configuration_decision_environments_async_delay }}"
-  no_log: "{{ eda_configuration_decision_environments_secure_logging }}"
-  async: 1000
-  poll: 0
-  register: __decision_environments_job_async
-  changed_when: not __decision_environments_job_async.changed
+- name: Manage EDA Controller decision environment Block
   vars:
-    __operation: "{{ operation_translate[__de_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  no_log: "{{ eda_configuration_decision_environments_secure_logging }}"
+  block:
+    - name: Add EDA Controller decision environment
+      ansible.eda.decision_environment:
+        name: "{{ __de_item.name }}"
+        new_name: "{{ __de_item.new_name | default(omit) }}"
+        description: "{{ __de_item.description | default(omit) }}"
+        image_url: "{{ __de_item.image_url | default(omit) }}"
+        credential: "{{ __de_item.credential | default(omit) }}"
+        organization_name: "{{ __de_item.organization | default(omit) }}"
+        state: "{{ __de_item.state | default(eda_state | default('present')) }}"
+        controller_host: "{{ aap_hostname | default(omit, true) }}"
+        controller_username: "{{ aap_username | default(omit, true) }}"
+        controller_password: "{{ aap_password | default(omit, true) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      loop: "{{ eda_decision_environments }}"
+      loop_control:
+        loop_var: __de_item
+        label: "{{ __operation.verb }} the decisiion environment {{ __de_item.name }} to EDA"
+        pause: "{{ eda_configuration_decision_environments_async_delay }}"
+      async: 1000
+      poll: 0
+      register: __decision_environments_job_async
+      changed_when: not __decision_environments_job_async.changed
+      vars:
+        __operation: "{{ operation_translate[__de_item.state | default(platform_state) | default('present')] }}"
 
-- name: Create decision_environment | Wait for finish the decision_environment creation
-  ansible.builtin.include_tasks: async_eda_decision_environment.yml
-  loop: "{{ __decision_environments_job_async.results }}"
-  loop_control:
-    loop_var: __decision_environments_job_async_result_item
-    label: "{{ __operation.verb }} decisiion environment {{ __decision_environments_job_async_result_item.__de_item.name }} | Wait for finish the decisiion environment
-      {{ __operation.action }}"
-  when: __decision_environments_job_async_result_item.ansible_job_id is defined
-  no_log: "{{ eda_configuration_decision_environments_secure_logging }}"
-  vars:
-    __operation: "{{ operation_translate[__decision_environments_job_async_result_item.__de_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+    - name: Create decision_environment | Wait for finish the decision_environment creation
+      when:
+        - not ansible_check_mode
+        - __decision_environments_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __decision_environments_job_async.results }}"
+      loop_control:
+        loop_var: __decision_environments_job_async_result_item
+        label: "{{ __operation.verb }} decisiion environment {{ __decision_environments_job_async_result_item.__de_item.name }} | Wait for finish the decisiion environment
+          {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ eda_configuration_decision_environments_secure_logging }}"
+        cas_job_async_results_item: "{{ __decision_environments_job_async_result_item }}"
+        cas_error_list_var_name: "eda_decision_environments_errors"
+        __operation: "{{ operation_translate[__decision_environments_job_async_result_item.__de_item.state | default(platform_state) | default('present')] }}"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __decision_environments_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __decision_environments_job_async_result_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __decision_environments_job_async.results }}"
+      loop_control:
+        loop_var: __decision_environments_job_async_result_item
+        label: "Cleaning up job results file: {{ __decision_environments_job_async_result_item.results_file | default('Unknown') }}"
 ...
