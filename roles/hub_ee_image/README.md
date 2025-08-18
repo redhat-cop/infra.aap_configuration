@@ -16,7 +16,7 @@ An Ansible Role to create execution environment images in Automation Hub.
 |`hub_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
 |`hub_ee_images`|`see below`|yes|Data structure describing your execution environment images, described below.||
-|`collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to hub ee image creation, instead of failing on the first error.||
+|`aap_configuration_collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to hub ee image creation, instead of failing on the first error.||
 
 ### Secure Logging Variables
 

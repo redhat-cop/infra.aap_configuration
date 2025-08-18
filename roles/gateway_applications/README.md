@@ -16,7 +16,7 @@ An Ansible Role to create/update/remove Applications on Ansible gateway.
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`aap_applications`|`see below`|yes|Data structure describing your aap_applications Described below.||
-|`collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to gateway application creation, modification, or deletion, instead of failing on the first error.||
+|`aap_configuration_collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to gateway application creation, modification, or deletion, instead of failing on the first error.||
 
 ### Enforcing defaults
 

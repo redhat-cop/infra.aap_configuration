@@ -24,7 +24,7 @@ This role requires both `ansible.platform` and `ansible.controller` collections.
 |`assign_default_ee_to_org`|`true`|no|Boolean to indicate whether default execution environment should be assigned or not. It should be noted that execution environment must exist before adding it. The dispatch role will set this to `false`, before re-running the role with it set to `true`. ||
 |`assign_notification_templates_to_org`|`true`|no|Boolean to indicate whether notification templates should be assigned or not. It should be noted that the templates must exist before adding them. The dispatch role will set this to `false`, before re-running the role with it set to `true`. ||
 |`assign_instance_groups_to_org`|`true`|no|Boolean to indicate whether an instance group should be assigned or not. It should be noted that the instance group must exist before adding it. ||
-|`collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to gateway and controller organization creation, instead of failing on the first error.||
+|`aap_configuration_collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to gateway and controller organization creation, instead of failing on the first error.||
 
 ### Enforcing defaults
 

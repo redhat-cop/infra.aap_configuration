@@ -16,7 +16,7 @@ An Ansible Role to sync EE Repositories in Automation Hub.
 |`hub_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
 |`hub_ee_repositories`|`see below`|yes|Data structure describing your ee_repositories, described below. (Note this is the same as for the `ee_repository` role and the variable can be combined. Note that this role will only do anything if the `sync` sub-option of this variable is set to true.)||
-|`collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to hub sync ee repositories, instead of failing on the first error.||
+|`aap_configuration_collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to hub sync ee repositories, instead of failing on the first error.||
 
 ### Secure Logging Variables
 

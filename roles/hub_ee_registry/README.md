@@ -19,7 +19,7 @@ An Ansible Role to create EE Registries in Automation Hub.
 |`proxy_username`|""|no|str|The username for the proxy authentication. Defaults to global `proxy_username` variable.|
 |`proxy_password`|""|no|str|The password for the proxy authentication. Defaults to global `proxy_password` variable.|
 |`hub_ee_registries`|`see below`|yes|Data structure describing your ee_registries, described below.||
-|`collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to hub ee registries creation, instead of failing on the first error.||
+|`aap_configuration_collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to hub ee registries creation, instead of failing on the first error.||
 
 ### Secure Logging Variables
 

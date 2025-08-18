@@ -16,7 +16,7 @@ An Ansible Role to add proxy Http Ports on Ansible Automation gateway.
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`gateway_http_ports`|`see below`|yes|Data structure describing your http_ports entries Described below.||
-|`collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to gateway proxy http port creation, instead of failing on the first error.||
+|`aap_configuration_collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to gateway proxy http port creation, instead of failing on the first error.||
 
 ### Secure Logging Variables
 
