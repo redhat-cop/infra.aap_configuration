@@ -11,11 +11,11 @@
   rescue:
     - name: async_gateway_team | Load error details
       ansible.builtin.include_vars:
-        file: "{{ __gateway_teams_job_async_result.results_file }}"
+        file: "{{ __gateway_teams_job_async_result.results_file | default('Unknown') }}"
         name: __error_data
 
     - name: async_gateway_team | Show error and stop execution
-      when: not collect_logs
+      when: not aap_configuration_collect_logs
       ansible.builtin.fail:
         msg: "error: {{ __error_data['msg'] }}, response: {{ __error_data['response'] | default ('N/A') }}"
 
