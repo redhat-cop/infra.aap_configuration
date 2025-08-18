@@ -1,0 +1,18 @@
+---
+- name: An async_error_reporting block
+  no_log: "{{ cas_secure_logging }}"
+  block:
+    - name: Managing AAP Object | Wait for management to complete
+      ansible.builtin.async_status:
+        jid: "{{ cas_job_async_results_item.ansible_job_id }}"
+      register: __cas_job_async_result
+      until: __cas_job_async_result.finished
+      retries: "{{ cas_async_retries }}"
+      delay: "{{ cas_async_delay }}"
+      ignore_errors: true
+
+    - name: Handle Async Job Failure
+      when: __cas_job_async_result is failed
+      ansible.builtin.include_tasks:
+        file: handle_error.yml
+...

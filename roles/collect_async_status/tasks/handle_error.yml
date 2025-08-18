@@ -1,0 +1,109 @@
+---
+- name: handle_error | Handle Errors Block
+  block:
+    - name: handle_error | Show error and stop execution
+      when: not aap_configuration_collect_logs
+      ansible.builtin.fail:
+        msg: "error: {{ __cas_job_async_result['msg'] | default('Unknown Error') }}"
+
+    - name: handle_error | Set item details fact
+      ansible.builtin.set_fact:
+        __cas_job_async_item: {}
+
+    - name: handle_error | Set loop variable name
+      ansible.builtin.set_fact:
+        __cas_job_async_item_loop_var: "{{ cas_job_async_results_item.ansible_loop_var }}"
+
+    - name: handle_error | Check item for name
+      when:
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["name"] is defined
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["name"] is not none
+      ansible.builtin.set_fact:
+        __cas_job_async_item: "{{ __cas_job_async_item | combine({ 'name': cas_job_async_results_item[__cas_job_async_item_loop_var]['name']}) }}"
+
+    - name: handle_error | Check item for organization
+      when:
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["organization"] is defined
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["organization"] is not none
+      ansible.builtin.set_fact:
+        __cas_job_async_item: "{{ __cas_job_async_item | combine({ 'organization': cas_job_async_results_item[__cas_job_async_item_loop_var]['organization']}) }}"
+
+    - name: handle_error | Check item for hostname
+      when:
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["hostname"] is defined
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["hostname"] is not none
+      ansible.builtin.set_fact:
+        __cas_job_async_item: "{{ __cas_job_async_item | combine({ 'hostname': cas_job_async_results_item[__cas_job_async_item_loop_var]['hostname']}) }}"
+
+    - name: handle_error | Check item for source_credential
+      when:
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["source_credential"] is defined
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["source_credential"] is not none
+      ansible.builtin.set_fact:
+        __cas_job_async_item: "{{ __cas_job_async_item | combine({ 'source_credential': cas_job_async_results_item[__cas_job_async_item_loop_var]['source_credential']}) }}"
+
+    - name: handle_error | Check item for target_credential
+      when:
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["target_credential"] is defined
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["target_credential"] is not none
+      ansible.builtin.set_fact:
+        __cas_job_async_item: "{{ __cas_job_async_item | combine({ 'target_credential': cas_job_async_results_item[__cas_job_async_item_loop_var]['target_credential']}) }}"
+
+    - name: handle_error | Check item for inventory
+      when:
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["inventory"] is defined
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["inventory"] is not none
+      ansible.builtin.set_fact:
+        __cas_job_async_item: "{{ __cas_job_async_item | combine({ 'inventory': cas_job_async_results_item[__cas_job_async_item_loop_var]['inventory']}) }}"
+
+    - name: handle_error | Check item for role
+      when:
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["role"] is defined
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["role"] is not none
+      ansible.builtin.set_fact:
+        __cas_job_async_item: "{{ __cas_job_async_item | combine({ 'role': cas_job_async_results_item[__cas_job_async_item_loop_var]['role']}) }}"
+
+    - name: handle_error | Check item for user
+      when:
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["user"] is defined
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["user"] is not none
+      ansible.builtin.set_fact:
+        __cas_job_async_item: "{{ __cas_job_async_item | combine({ 'user': cas_job_async_results_item[__cas_job_async_item_loop_var]['user']}) }}"
+
+    - name: handle_error | Check item for username
+      when:
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["username"] is defined
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["username"] is not none
+      ansible.builtin.set_fact:
+        __cas_job_async_item: "{{ __cas_job_async_item | combine({ 'username': cas_job_async_results_item[__cas_job_async_item_loop_var]['username']}) }}"
+
+    - name: handle_error | Check item for groups
+      when:
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["groups"] is defined
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["groups"] is not none
+      ansible.builtin.set_fact:
+        __cas_job_async_item: "{{ __cas_job_async_item | combine({ 'groups': cas_job_async_results_item[__cas_job_async_item_loop_var]['groups']}) }}"
+
+    - name: handle_error | Build consolidated list of failed objects and the error
+      ansible.builtin.set_fact:
+        aap_configuration_role_errors: "{{ aap_configuration_role_errors | default({})
+                                              | ansible.builtin.combine(
+                                                  { cas_error_list_var_name: aap_configuration_role_errors[cas_error_list_var_name]
+                                                      | default([]) + [__new_error]
+                                                  }
+                                                )
+                                        }}"
+      vars:
+        __new_error:
+          ERROR_MESSAGE: "{{ __cas_job_async_result['msg'] | default('UNKNOWN ERROR') }}"
+          name: "{{ __cas_job_async_item['name'] | default(omit) }}"
+          organization: "{{ __cas_job_async_item['organization'] | default(omit) }}"
+          hostname: "{{ __cas_job_async_item['hostname'] | default(omit) }}"
+          source_credential: "{{ __cas_job_async_item['source_credential'] | default(omit) }}"
+          target_credential: "{{ __cas_job_async_item['target_credential'] | default(omit) }}"
+          inventory: "{{ __cas_job_async_item['inventory'] | default(omit) }}"
+          role: "{{ __cas_job_async_item['role'] | default(omit) }}"
+          user: "{{ __cas_job_async_item['user'] | default(omit) }}"
+          username: "{{ __cas_job_async_item['username'] | default(omit) }}"
+          groups: "{{ __cas_job_async_item['groups'] | default(omit) }}"
+...
