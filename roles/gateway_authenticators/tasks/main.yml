@@ -1,49 +1,69 @@
 ---
-- name: Authenticators | Configuration # noqa fqcn[action-core]
-  ansible.platform.authenticator:
-    name: "{{ __gateway_authenticators_item.name | mandatory }}"
-    new_name: "{{ __gateway_authenticators_item.new_name | default(omit) }}"
-    slug: "{{ __gateway_authenticators_item.slug | default(omit) }}"
-    enabled: "{{ __gateway_authenticators_item.enabled | default(omit) }}"
-    create_objects: "{{ __gateway_authenticators_item.create_objects | default(omit) }}"
-    remove_users: "{{ __gateway_authenticators_item.remove_users | default(omit) }}"
-    configuration: "{{ __gateway_authenticators_item.configuration | default(omit) }}"
-    auto_migrate_users_to:  "{{ __gateway_authenticators_item.auto_migrate_users_to | default(omit) }}"
-    type: "{{ __gateway_authenticators_item.type | default(omit) }}"
-    order: "{{ __gateway_authenticators_item.order | default(omit) }}"
-    state: "{{ __gateway_authenticators_item.state | default(platform_state | default(omit, true)) }}"
-
-    # Role Standard Options
-    gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
-    gateway_username: "{{ aap_username | default(omit, true) }}"
-    gateway_password: "{{ aap_password | default(omit, true) }}"
-    gateway_token: "{{ aap_token | default(omit, true) }}"
-    gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-    gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ gateway_authenticators }}"
-  loop_control:
-    loop_var: __gateway_authenticators_item
-    label: "{{ __operation.verb }} AAP Platform Authenticators {{ __gateway_authenticators_item.name }}"
-    pause: "{{ gateway_authenticators_loop_delay }}"
-  no_log: "{{gateway_authenticators_secure_logging }}"
-  async: 1000
-  poll: 0
-  register: __gateway_authenticators_job_async
-  changed_when: not __gateway_authenticators_job_async.changed
+- name: Manage Gateway Authenticators Block
   vars:
-    __operation: "{{ operation_translate[__gateway_authenticators_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  no_log: "{{ gateway_authenticators_secure_logging }}"
+  block:
+    - name: Authenticators | Configuration
+      ansible.platform.authenticator:
+        name: "{{ __gateway_authenticators_item.name | mandatory }}"
+        new_name: "{{ __gateway_authenticators_item.new_name | default(omit) }}"
+        slug: "{{ __gateway_authenticators_item.slug | default(omit) }}"
+        enabled: "{{ __gateway_authenticators_item.enabled | default(omit) }}"
+        create_objects: "{{ __gateway_authenticators_item.create_objects | default(omit) }}"
+        remove_users: "{{ __gateway_authenticators_item.remove_users | default(omit) }}"
+        configuration: "{{ __gateway_authenticators_item.configuration | default(omit) }}"
+        auto_migrate_users_to:  "{{ __gateway_authenticators_item.auto_migrate_users_to | default(omit) }}"
+        type: "{{ __gateway_authenticators_item.type | default(omit) }}"
+        order: "{{ __gateway_authenticators_item.order | default(omit) }}"
+        state: "{{ __gateway_authenticators_item.state | default(platform_state | default(omit, true)) }}"
 
-- name: Authenticators | Wait for finish the configuration
-  ansible.builtin.include_tasks: async_gateway_authenticator.yml
-  loop: "{{ __gateway_authenticators_job_async.results }}"
-  loop_control:
-    loop_var: __gateway_authenticators_job_async_results_item
-    label: "{{ __operation.verb }} AAP Platform Authenticators {{ __gateway_authenticators_job_async_results_item.__gateway_authenticators_item.name }} | Wait for
-      finish the Authenticators {{ __operation.action }}"
-  when: __gateway_authenticators_job_async_results_item.ansible_job_id is defined
-  no_log: "{{gateway_authenticators_secure_logging }}"
-  vars:
-    __operation: "{{ operation_translate[__gateway_authenticators_job_async_results_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+        # Role Standard Options
+        gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
+        gateway_username: "{{ aap_username | default(omit, true) }}"
+        gateway_password: "{{ aap_password | default(omit, true) }}"
+        gateway_token: "{{ aap_token | default(omit, true) }}"
+        gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      loop: "{{ gateway_authenticators }}"
+      loop_control:
+        loop_var: __gateway_authenticators_item
+        label: "{{ __operation.verb }} AAP Platform Authenticators {{ __gateway_authenticators_item.name }}"
+        pause: "{{ gateway_authenticators_loop_delay }}"
+      async: 1000
+      poll: 0
+      register: __gateway_authenticators_job_async
+      changed_when: not __gateway_authenticators_job_async.changed
+      vars:
+        __operation: "{{ operation_translate[__gateway_authenticators_item.state | default(platform_state) | default('present')] }}"
+
+    - name: Authenticators | Wait for finish the configuration
+      when:
+        - not ansible_check_mode
+        - __gateway_authenticators_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __gateway_authenticators_job_async.results }}"
+      loop_control:
+        loop_var: __gateway_authenticators_job_async_results_item
+        label: "{{ __operation.verb }} AAP Platform Authenticators {{ __gateway_authenticators_job_async_results_item.__gateway_authenticators_item.name }} | Wait for
+          finish the Authenticators {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ gateway_authenticators_secure_logging }}"
+        cas_job_async_results_item: "{{ __gateway_authenticators_job_async_results_item }}"
+        cas_error_list_var_name: "gateway_authenticators_errors"
+        __operation: "{{ operation_translate[__gateway_authenticators_job_async_results_item.state | default(platform_state) | default('present')] }}"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __gateway_authenticators_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __gateway_authenticators_job_async_results_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __gateway_authenticators_job_async.results }}"
+      loop_control:
+        loop_var: __gateway_authenticators_job_async_results_item
+        label: "Cleaning up job results file: {{ __gateway_authenticators_job_async_results_item.results_file | default('Unknown') }}"
 ...
