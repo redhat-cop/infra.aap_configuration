@@ -1,52 +1,72 @@
 ---
-- name: Service Clusters | Configuration # noqa fqcn[action-core]
-  ansible.platform.service_cluster:
-    name: "{{ __gateway_service_clusters_item.name | mandatory }}"
-    new_name: "{{ __gateway_service_clusters_item.new_name | default(omit) }}"
-    service_type: "{{ __gateway_service_clusters_item.service_type | default(omit) }}"
-    state: "{{ __gateway_service_clusters_item.state | default(platform_state | default(omit, true)) }}"
-    outlier_detection_enabled: "{{ __gateway_service_clusters_item.outlier_detection_enabled | default(omit) }}"
-    outlier_detection_consecutive_5xx: "{{ __gateway_service_clusters_item.outlier_detection_consecutive_5xx | default(omit) }}"
-    outlier_detection_interval_seconds: "{{ __gateway_service_clusters_item.outlier_detection_interval_seconds | default(omit) }}"
-    outlier_detection_base_ejection_time_seconds: "{{ __gateway_service_clusters_item.outlier_detection_base_ejection_time_seconds | default(omit) }}"
-    outlier_detection_max_ejection_percent: "{{ __gateway_service_clusters_item.outlier_detection_max_ejection_percent | default(omit) }}"
-    health_checks_enabled: "{{ __gateway_service_clusters_item.health_checks_enabled | default(omit) }}"
-    health_check_timeout_seconds: "{{ __gateway_service_clusters_item.health_check_timeout_seconds | default(omit) }}"
-    health_check_interval_seconds: "{{ __gateway_service_clusters_item.health_check_interval_seconds | default(omit) }}"
-    health_check_unhealthy_threshold: "{{ __gateway_service_clusters_item.health_check_unhealthy_threshold | default(omit) }}"
-    health_check_healthy_threshold: "{{ __gateway_service_clusters_item.health_check_healthy_threshold | default(omit) }}"
-
-    # Role Standard Options
-    gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
-    gateway_username: "{{ aap_username | default(omit, true) }}"
-    gateway_password: "{{ aap_password | default(omit, true) }}"
-    gateway_token: "{{ aap_token | default(omit, true) }}"
-    gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-    gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ gateway_service_clusters }}"
-  loop_control:
-    loop_var: __gateway_service_clusters_item
-    label: "{{ __operation.verb }} the Gateway service cluster {{ __gateway_service_clusters_item.name }}"
-    pause: "{{ gateway_service_clusters_loop_delay }}"
-  no_log: "{{ gateway_service_clusters_secure_logging }}"
-  async: 1000
-  poll: 0
-  register: __gateway_service_clusters_job_async
-  changed_when: not __gateway_service_clusters_job_async.changed
+- name: Manage Service Clusters Block
   vars:
-    __operation: "{{ operation_translate[__gateway_service_clusters_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-
-- name: Service Clusters | Wait for finish the configuration
-  ansible.builtin.include_tasks: async_gateway_service_cluster.yml
-  loop: "{{ __gateway_service_clusters_job_async.results }}"
-  loop_control:
-    loop_var: __gateway_service_clusters_job_async_results_item
-    label: "{{ __operation.verb }} Gateway service cluster {{ __gateway_service_clusters_job_async_results_item.__gateway_service_clusters_item.name }} | Wait for finish the Gateway service cluster
-      {{ __operation.action }}"
-  when: __gateway_service_clusters_job_async_results_item.ansible_job_id is defined
   no_log: "{{ gateway_service_clusters_secure_logging }}"
-  vars:
-    __operation: "{{ operation_translate[__gateway_service_clusters_job_async_results_item.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  block:
+    - name: Service Clusters | Configuration
+      ansible.platform.service_cluster:
+        name: "{{ __gateway_service_clusters_item.name | mandatory }}"
+        new_name: "{{ __gateway_service_clusters_item.new_name | default(omit) }}"
+        service_type: "{{ __gateway_service_clusters_item.service_type | default(omit) }}"
+        state: "{{ __gateway_service_clusters_item.state | default(platform_state | default(omit, true)) }}"
+        outlier_detection_enabled: "{{ __gateway_service_clusters_item.outlier_detection_enabled | default(omit) }}"
+        outlier_detection_consecutive_5xx: "{{ __gateway_service_clusters_item.outlier_detection_consecutive_5xx | default(omit) }}"
+        outlier_detection_interval_seconds: "{{ __gateway_service_clusters_item.outlier_detection_interval_seconds | default(omit) }}"
+        outlier_detection_base_ejection_time_seconds: "{{ __gateway_service_clusters_item.outlier_detection_base_ejection_time_seconds | default(omit) }}"
+        outlier_detection_max_ejection_percent: "{{ __gateway_service_clusters_item.outlier_detection_max_ejection_percent | default(omit) }}"
+        health_checks_enabled: "{{ __gateway_service_clusters_item.health_checks_enabled | default(omit) }}"
+        health_check_timeout_seconds: "{{ __gateway_service_clusters_item.health_check_timeout_seconds | default(omit) }}"
+        health_check_interval_seconds: "{{ __gateway_service_clusters_item.health_check_interval_seconds | default(omit) }}"
+        health_check_unhealthy_threshold: "{{ __gateway_service_clusters_item.health_check_unhealthy_threshold | default(omit) }}"
+        health_check_healthy_threshold: "{{ __gateway_service_clusters_item.health_check_healthy_threshold | default(omit) }}"
+
+        # Role Standard Options
+        gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
+        gateway_username: "{{ aap_username | default(omit, true) }}"
+        gateway_password: "{{ aap_password | default(omit, true) }}"
+        gateway_token: "{{ aap_token | default(omit, true) }}"
+        gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      loop: "{{ gateway_service_clusters }}"
+      loop_control:
+        loop_var: __gateway_service_clusters_item
+        label: "{{ __operation.verb }} the Gateway service cluster {{ __gateway_service_clusters_item.name }}"
+        pause: "{{ gateway_service_clusters_loop_delay }}"
+      async: 1000
+      poll: 0
+      register: __gateway_service_clusters_job_async
+      changed_when: not __gateway_service_clusters_job_async.changed
+      vars:
+        __operation: "{{ operation_translate[__gateway_service_clusters_item.state | default(platform_state) | default('present')] }}"
+
+    - name: Service Clusters | Wait for finish the configuration
+      when:
+        - not ansible_check_mode
+        - __gateway_service_clusters_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __gateway_service_clusters_job_async.results }}"
+      loop_control:
+        loop_var: __gateway_service_clusters_job_async_results_item
+        label: "{{ __operation.verb }} Gateway service cluster {{ __gateway_service_clusters_job_async_results_item.__gateway_service_clusters_item.name }} | Wait for finish the Gateway service cluster
+          {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ gateway_service_clusters_secure_logging }}"
+        cas_job_async_results_item: "{{ __gateway_service_clusters_job_async_results_item }}"
+        cas_error_list_var_name: "gateway_service_clusters_errors"
+        __operation: "{{ operation_translate[__gateway_service_clusters_job_async_results_item.state | default(platform_state) | default('present')] }}"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __gateway_service_clusters_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __gateway_service_clusters_job_async_results_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __gateway_service_clusters_job_async.results }}"
+      loop_control:
+        loop_var: __gateway_service_clusters_job_async_results_item
+        label: "Cleaning up job results file: {{ __gateway_service_clusters_job_async_results_item.results_file | default('Unknown') }}"
 ...
