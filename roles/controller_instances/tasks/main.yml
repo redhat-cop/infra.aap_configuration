@@ -1,55 +1,69 @@
 ---
 # Add Controller Instances
-- name: Add Controller Instance
-  ansible.controller.instance:
-    hostname: "{{ __controller_instance_item.hostname | mandatory }}"
-    capacity_adjustment: "{{ __controller_instance_item.capacity_adjustment | default((1.0 if controller_configuration_instances_enforce_defaults else omit), true) }}"
-    enabled: "{{ __controller_instance_item.enabled | default((true if controller_configuration_instances_enforce_defaults else omit), true) }}"
-    managed_by_policy: "{{ __controller_instance_item.managed_by_policy | default((true if controller_configuration_instances_enforce_defaults else omit), true) }}"
-    node_type: "{{ __controller_instance_item.node_type | default(omit, true) }}"
-    node_state: "{{ __controller_instance_item.node_state | default(omit, true) }}"
-    listener_port: "{{ __controller_instance_item.listener_port | default((27199 if controller_configuration_instances_enforce_defaults else omit), true) }}"
-    peers: "{{ __controller_instance_item.peers | default(([] if controller_configuration_instances_enforce_defaults else omit), true) }}"
-    peers_from_control_nodes: "{{ __controller_instance_item.peers_from_control_nodes | default((false if controller_configuration_instances_enforce_defaults else omit), true) }}"
-
-    # Role Standard Options
-    controller_username: "{{ aap_username | default(omit, true) }}"
-    controller_password: "{{ aap_password | default(omit, true) }}"
-    controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
-    request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-    controller_host: "{{ aap_hostname | default(omit, true) }}"
-    validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ controller_instances }}"
-  loop_control:
-    loop_var: __controller_instance_item
-    label: "{{ __controller_instance_item.hostname }}"
-    pause: "{{ controller_configuration_instances_loop_delay }}"
-  no_log: "{{ controller_configuration_instances_secure_logging }}"
-  when: controller_instances is defined
-  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
-  poll: 0
-  register: __instance_job_async
-  changed_when: (__instance_job_async.changed if ansible_check_mode else false)
+- name: Manage Controller Instances Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-
-- name: Flag for errors (check mode only)
-  ansible.builtin.set_fact:
-    error_flag: true
-  when: ansible_check_mode and __instance_job_async.failed is defined and __instance_job_async.failed
-
-- name: Configure Controller instances | Wait for finish the instance creation
-  ansible.builtin.async_status:
-    jid: "{{ __instance_job_async_results_item.ansible_job_id }}"
-  register: __instance_job_async_result
-  until: __instance_job_async_result.finished
-  retries: "{{ controller_configuration_instances_async_retries }}"
-  delay: "{{ controller_configuration_instances_async_delay }}"
-  loop: "{{ __instance_job_async.results }}"
-  loop_control:
-    loop_var: __instance_job_async_results_item
-  when: not ansible_check_mode and __instance_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_instances_secure_logging }}"
-  vars:
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  block:
+    - name: Add Controller Instance
+      ansible.controller.instance:
+        hostname: "{{ __controller_instance_item.hostname | mandatory }}"
+        capacity_adjustment: "{{ __controller_instance_item.capacity_adjustment | default((1.0 if controller_configuration_instances_enforce_defaults else omit), true) }}"
+        enabled: "{{ __controller_instance_item.enabled | default((true if controller_configuration_instances_enforce_defaults else omit), true) }}"
+        managed_by_policy: "{{ __controller_instance_item.managed_by_policy | default((true if controller_configuration_instances_enforce_defaults else omit), true) }}"
+        node_type: "{{ __controller_instance_item.node_type | default(omit, true) }}"
+        node_state: "{{ __controller_instance_item.node_state | default(omit, true) }}"
+        listener_port: "{{ __controller_instance_item.listener_port | default((27199 if controller_configuration_instances_enforce_defaults else omit), true) }}"
+        peers: "{{ __controller_instance_item.peers | default(([] if controller_configuration_instances_enforce_defaults else omit), true) }}"
+        peers_from_control_nodes: "{{ __controller_instance_item.peers_from_control_nodes | default((false if controller_configuration_instances_enforce_defaults else omit), true) }}"
+
+        # Role Standard Options
+        controller_username: "{{ aap_username | default(omit, true) }}"
+        controller_password: "{{ aap_password | default(omit, true) }}"
+        controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        controller_host: "{{ aap_hostname | default(omit, true) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      loop: "{{ controller_instances }}"
+      loop_control:
+        loop_var: __controller_instance_item
+        label: "{{ __controller_instance_item.hostname }}"
+        pause: "{{ controller_configuration_instances_loop_delay }}"
+      when: controller_instances is defined
+      async: "{{ ansible_check_mode | ternary(0, 1000) }}"
+      poll: 0
+      register: __instance_job_async
+      changed_when: (__instance_job_async.changed if ansible_check_mode else false)
+
+    - name: Flag for errors (check mode only)
+      ansible.builtin.set_fact:
+        error_flag: true
+      when: ansible_check_mode and __instance_job_async.failed is defined and __instance_job_async.failed
+
+    - name: Configure Controller instances | Wait for finish the instance creation
+      when:
+        - not ansible_check_mode
+        - __instance_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __instance_job_async.results }}"
+      loop_control:
+        loop_var: __instance_job_async_results_item
+      vars:
+        cas_secure_logging: "{{ controller_configuration_instances_secure_logging }}"
+        cas_job_async_results_item: "{{ __instance_job_async_results_item }}"
+        cas_error_list_var_name: "controller_instances_errors"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __instance_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __instance_job_async_results_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __instance_job_async.results }}"
+      loop_control:
+        loop_var: __instance_job_async_results_item
+        label: "Cleaning up job results file: {{ __instance_job_async_results_item.results_file | default('Unknown') }}"
 ...
