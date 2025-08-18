@@ -1,41 +1,60 @@
 ---
-# Create Job Template
-- name: Add Controller hosts in bulk
-  ansible.controller.bulk_host_create:
-    hosts: "{{ __controller_bulk_hosts_item.hosts }}"
-    inventory: "{{ __controller_bulk_hosts_item.inventory }}"
-
-    # Role Standard options
-    controller_username: "{{ aap_username | default(omit, true) }}"
-    controller_password: "{{ aap_password | default(omit, true) }}"
-    controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
-    request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-    controller_host: "{{ aap_hostname | default(omit, true) }}"
-    validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ controller_bulk_hosts }}"
-  loop_control:
-    loop_var: __controller_bulk_hosts_item
-    pause: "{{ controller_configuration_bulk_hosts_loop_delay }}"
-  no_log: "{{ controller_configuration_bulk_hosts_secure_logging }}"
-  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
-  poll: 0
-  register: __controller_bulk_hosts_job_async
-  changed_when: (__controller_bulk_hosts_job_async.changed if ansible_check_mode else false)
+- name: Manage Controller hosts in bulk Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-
-- name: Flag for errors (check mode only)
-  ansible.builtin.set_fact:
-    error_flag: true
-  when: ansible_check_mode and __controller_bulk_hosts_job_async.failed is defined and __controller_bulk_hosts_job_async.failed
-
-- name: Configure bulk_hosts | Wait for finish the bulk_hosts creation
-  ansible.builtin.include_tasks: async_bulk_host.yml
-  loop: "{{ __controller_bulk_hosts_job_async.results }}"
-  loop_control:
-    loop_var: __controller_bulk_hosts_job_async_results_item
-  when: not ansible_check_mode and __controller_bulk_hosts_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_bulk_hosts_secure_logging }}"
-  vars:
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  block:
+    # Create controller hosts
+    - name: Add Controller hosts in bulk
+      ansible.controller.bulk_host_create:
+        hosts: "{{ __controller_bulk_hosts_item.hosts }}"
+        inventory: "{{ __controller_bulk_hosts_item.inventory }}"
+
+        # Role Standard options
+        controller_username: "{{ aap_username | default(omit, true) }}"
+        controller_password: "{{ aap_password | default(omit, true) }}"
+        controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        controller_host: "{{ aap_hostname | default(omit, true) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      loop: "{{ controller_bulk_hosts }}"
+      loop_control:
+        loop_var: __controller_bulk_hosts_item
+        pause: "{{ controller_configuration_bulk_hosts_loop_delay }}"
+      async: "{{ ansible_check_mode | ternary(0, 1000) }}"
+      poll: 0
+      register: __controller_bulk_hosts_job_async
+      changed_when: (__controller_bulk_hosts_job_async.changed if ansible_check_mode else false)
+
+    - name: Flag for errors (check mode only)
+      ansible.builtin.set_fact:
+        error_flag: true
+      when: ansible_check_mode and __controller_bulk_hosts_job_async.failed is defined and __controller_bulk_hosts_job_async.failed
+
+    - name: Configure bulk_hosts | Wait for finish the bulk_hosts creation
+      when:
+        - not ansible_check_mode
+        - __controller_bulk_hosts_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __controller_bulk_hosts_job_async.results }}"
+      loop_control:
+        loop_var: __controller_bulk_hosts_job_async_results_item
+      vars:
+        cas_secure_logging: "{{ controller_configuration_bulk_hosts_secure_logging }}"
+        cas_job_async_results_item: "{{ __controller_bulk_hosts_job_async_results_item }}"
+        cas_error_list_var_name: "controller_bulk_hosts_errors"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __controller_bulk_hosts_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __controller_bulk_hosts_job_async_results_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __controller_bulk_hosts_job_async.results }}"
+      loop_control:
+        loop_var: __controller_bulk_hosts_job_async_results_item
+        label: "Cleaning up job results file: {{ __controller_bulk_hosts_job_async_results_item.results_file | default('Unknown') }}"
 ...
