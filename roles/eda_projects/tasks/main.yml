@@ -1,43 +1,63 @@
 ---
 # Create EDA Controller Project
-- name: Add EDA Controller project
-  ansible.eda.project:
-    name: "{{ __project_item.name }}"
-    new_name: "{{ __project_item.new_name | default(omit) }}"
-    description: "{{ __project_item.description | default(omit) }}"
-    url: "{{ __project_item.url | default(__project_item.scm_url | default(omit)) }}"
-    scm_branch: "{{ __project_item.scm_branch | default(omit) }}"
-    credential: "{{ __project_item.credential | default(omit) }}"
-    organization_name: "{{ __project_item.organization | default(omit) }}"
-    state: "{{ __project_item.state | default(eda_state | default('present')) }}"
-    controller_host: "{{ aap_hostname | default(omit, true) }}"
-    controller_username: "{{ aap_username | default(omit, true) }}"
-    controller_password: "{{ aap_password | default(omit, true) }}"
-    request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-    validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  loop: "{{ eda_projects }}"
-  loop_control:
-    loop_var: __project_item
-    label: "{{ __operation.verb }} the project {{ __project_item.name }} to EDA"
-    pause: "{{ eda_configuration_projects_async_delay }}"
-  no_log: "{{ eda_configuration_projects_secure_logging }}"
-  async: 1000
-  poll: 0
-  register: __projects_job_async
-  changed_when: not __projects_job_async.changed
+- name: Manage EDA Controller project Block
   vars:
-    __operation: "{{ operation_translate[__project_item.state | default(platform_state) | default('present')] }}"
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  no_log: "{{ eda_configuration_projects_secure_logging }}"
+  block:
+    - name: Add EDA Controller project
+      ansible.eda.project:
+        name: "{{ __project_item.name }}"
+        new_name: "{{ __project_item.new_name | default(omit) }}"
+        description: "{{ __project_item.description | default(omit) }}"
+        url: "{{ __project_item.url | default(__project_item.scm_url | default(omit)) }}"
+        scm_branch: "{{ __project_item.scm_branch | default(omit) }}"
+        credential: "{{ __project_item.credential | default(omit) }}"
+        organization_name: "{{ __project_item.organization | default(omit) }}"
+        state: "{{ __project_item.state | default(eda_state | default('present')) }}"
+        controller_host: "{{ aap_hostname | default(omit, true) }}"
+        controller_username: "{{ aap_username | default(omit, true) }}"
+        controller_password: "{{ aap_password | default(omit, true) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      loop: "{{ eda_projects }}"
+      loop_control:
+        loop_var: __project_item
+        label: "{{ __operation.verb }} the project {{ __project_item.name }} to EDA"
+        pause: "{{ eda_configuration_projects_async_delay }}"
+      async: 1000
+      poll: 0
+      register: __projects_job_async
+      changed_when: not __projects_job_async.changed
+      vars:
+        __operation: "{{ operation_translate[__project_item.state | default(platform_state) | default('present')] }}"
 
-- name: Create project | Wait for finish the project creation
-  ansible.builtin.include_tasks: async_eda_project.yml
-  loop: "{{ __projects_job_async.results }}"
-  loop_control:
-    loop_var: __projects_job_async_result_item
-    label: "{{ __operation.verb }} project {{ __projects_job_async_result_item.__project_item.name }} | Wait for finish the project {{ __operation.action }}"
-  when: __projects_job_async_result_item.ansible_job_id is defined
-  no_log: "{{ eda_configuration_projects_secure_logging }}"
-  vars:
-    __operation: "{{ operation_translate[__projects_job_async_result.__projects_job_async.state | default(platform_state) | default('present')] }}"
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+    - name: Create project | Wait for finish the project creation
+      when:
+        - not ansible_check_mode
+        - __projects_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __projects_job_async.results }}"
+      loop_control:
+        loop_var: __projects_job_async_result_item
+        label: "{{ __operation.verb }} project {{ __projects_job_async_result_item.__project_item.name }} | Wait for finish the project {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ eda_configuration_projects_secure_logging }}"
+        cas_job_async_results_item: "{{ __projects_job_async_result_item }}"
+        cas_error_list_var_name: "eda_projects_errors"
+        __operation: "{{ operation_translate[__projects_job_async_result.__projects_job_async.state | default(platform_state) | default('present')] }}"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __projects_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __projects_job_async_result_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __projects_job_async.results }}"
+      loop_control:
+        loop_var: __projects_job_async_result_item
+        label: "Cleaning up job results file: {{ __projects_job_async_result_item.results_file | default('Unknown') }}"
 ...
