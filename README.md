@@ -151,7 +151,7 @@ Many of the roles in this collection use asynchrous tasks to perform their
 actions. By default the first failed asyncronous task will cause the playbook to
 fail. Setting the `aap_configuration_collect_logs` variable to `true` will
 enable collecting all asyncronous task failure messages and allow the playbook
-to run to completion. 
+to run to completion.
 
 When `aap_configuration_collect_logs` is enabled the reported errors are
 collected in a variable called `aap_configuration_role_errors`. This variable is
