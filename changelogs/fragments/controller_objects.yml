@@ -2,4 +2,3 @@
 minor_changes:
   - Add the ability to collect error logs while configuring the object, instead of failing on the first error.
   - Fix variable name in dispatch role.
-
