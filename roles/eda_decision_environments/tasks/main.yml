@@ -22,7 +22,7 @@
       loop: "{{ eda_decision_environments }}"
       loop_control:
         loop_var: __de_item
-        label: "{{ __operation.verb }} the decisiion environment {{ __de_item.name }} to EDA"
+        label: "{{ __operation.verb }} the decision environment {{ __de_item.name }} to EDA"
         pause: "{{ eda_configuration_decision_environments_async_delay }}"
       async: 1000
       poll: 0
@@ -40,7 +40,7 @@
       loop: "{{ __decision_environments_job_async.results }}"
       loop_control:
         loop_var: __decision_environments_job_async_result_item
-        label: "{{ __operation.verb }} decisiion environment {{ __decision_environments_job_async_result_item.__de_item.name }} | Wait for finish the decisiion environment
+        label: "{{ __operation.verb }} decision environment {{ __decision_environments_job_async_result_item.__de_item.name }} | Wait for finish the decision environment
           {{ __operation.action }}"
       vars:
         cas_secure_logging: "{{ eda_configuration_decision_environments_secure_logging }}"
