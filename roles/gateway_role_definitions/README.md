@@ -2,7 +2,7 @@
 
 # 📃 Role overview
 
-## gateway_role_user_assignments
+## gateway_role_definitions
 
 ```
 Role belongs to infra/aap_configuration
@@ -12,7 +12,7 @@ Version - 3.4.1-devel
 Repository - https://github.com/redhat-cop/aap_configuration/
 ```
 
-Description: An Ansible Role to create RBAC Role User Assignments in Automation Platform gateway.
+Description: An Ansible Role to create role_definitions in Ansible gateway.
 
 
 | Field                | Value           |
@@ -26,21 +26,21 @@ Description: An Ansible Role to create RBAC Role User Assignments in Automation 
 <summary><b>🧩 Argument Specifications in meta/argument_specs</b></summary>
 
 #### Key: main
-**Description**: An Ansible Role to create role_user_assignments on Ansible gateway.
+**Description**: An Ansible Role to create role_definitions on Ansible gateway.
 
 
-  - **aap_role_user_assignments**
+  - **aap_role_definitions**
     - **Required**: True
     - **Type**: list
     - **Default**: none
-    - **Description**: Data structure describing your role_user_assignments
+    - **Description**: Data structure describing your role_definitions
   
   
   
     
   
 
-  - **role_user_assignments_async_retries**
+  - **role_definitions_async_retries**
     - **Required**: False
     - **Type**: 
     - **Default**: {{ aap_configuration_async_retries | default(30) }}
@@ -58,7 +58,7 @@ Description: An Ansible Role to create RBAC Role User Assignments in Automation 
   
   
 
-  - **role_user_assignments_async_delay**
+  - **role_definitions_async_delay**
     - **Required**: False
     - **Type**: 
     - **Default**: {{ aap_configuration_async_delay | default(1) }}
@@ -85,7 +85,7 @@ Description: An Ansible Role to create RBAC Role User Assignments in Automation 
   
   
 
-  - **gateway_role_user_assignments_secure_logging**
+  - **gateway_role_definitions_secure_logging**
     - **Required**: False
     - **Type**: bool
     - **Default**: {{ aap_configuration_secure_logging | default(false) }}
@@ -170,12 +170,12 @@ Description: An Ansible Role to create RBAC Role User Assignments in Automation 
 
 | Var          | Type         | Value       |Required    | Title       |
 |--------------|--------------|-------------|-------------|-------------|
-| [gateway_role_user_assignments](defaults/main.yml#L11)   | list   | `[]` |    n/a  |  n/a |
-| [gateway_role_user_assignments_secure_logging](defaults/main.yml#L12)   | str   | `{{ aap_configuration_secure_logging ¦ default('false') }}` |    n/a  |  n/a |
-| [gateway_role_user_assignments_async_retries](defaults/main.yml#L13)   | str   | `{{ aap_configuration_async_retries ¦ default(30) }}` |    n/a  |  n/a |
-| [gateway_role_user_assignments_async_delay](defaults/main.yml#L14)   | str   | `{{ aap_configuration_async_delay ¦ default(1) }}` |    n/a  |  n/a |
-| [gateway_role_user_assignments_enforce_defaults](defaults/main.yml#L15)   | str   | `{{ aap_configuration_enforce_defaults ¦ default(false) }}` |    n/a  |  n/a |
-| [gateway_role_user_assignments_loop_delay](defaults/main.yml#L16)   | str   | `{{ aap_configuration_loop_delay ¦ default(0) }}` |    n/a  |  n/a |
+| [gateway_role_definitions](defaults/main.yml#L11)   | list   | `[]` |    n/a  |  n/a |
+| [gateway_role_definitions_secure_logging](defaults/main.yml#L12)   | str   | `{{ aap_configuration_secure_logging ¦ default('false') }}` |    n/a  |  n/a |
+| [gateway_role_definitions_async_retries](defaults/main.yml#L13)   | str   | `{{ aap_configuration_async_retries ¦ default(30) }}` |    n/a  |  n/a |
+| [gateway_role_definitions_async_delay](defaults/main.yml#L14)   | str   | `{{ aap_configuration_async_delay ¦ default(1) }}` |    n/a  |  n/a |
+| [gateway_role_definitions_enforce_defaults](defaults/main.yml#L15)   | str   | `{{ aap_configuration_enforce_defaults ¦ default(false) }}` |    n/a  |  n/a |
+| [gateway_role_definitions_loop_delay](defaults/main.yml#L16)   | str   | `{{ aap_configuration_loop_delay ¦ default(0) }}` |    n/a  |  n/a |
 | [aap_configuration_async_dir](defaults/main.yml#L17)   | NoneType   | `None` |    n/a  |  n/a |
 
 
@@ -189,9 +189,9 @@ Description: An Ansible Role to create RBAC Role User Assignments in Automation 
 
 | Name | Module | Has Conditions |
 | ---- | ------ | --------- |
-| Manage Gateway Role User Assignments Block | block | False |
-| Role User Assignments ¦ Configuration | ansible.platform.role_user_assignment | False |
-| Role User Assignments ¦ Wait for finish the configuration | ansible.builtin.include_role | True |
+| Manage Gateway Role definitions Block | block | False |
+| Role definitions ¦ Configuration | ansible.platform.role_definition | False |
+| Role definitions ¦ Wait for finish the configuration | ansible.builtin.include_role | True |
 
 
 
@@ -200,7 +200,7 @@ Description: An Ansible Role to create RBAC Role User Assignments in Automation 
 
 
 ## Author Information
-Martin Slemr
+Auto Generated
 
 #### License
 

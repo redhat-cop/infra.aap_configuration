@@ -1,45 +1,39 @@
 ---
 argument_specs:
   main:
-    short_description: An Ansible Role to create role_user_assignments on Ansible gateway.
+    short_description: An Ansible Role to create role_definitions on Ansible gateway.
     options:
-      aap_role_user_assignments:
-        description: Data structure describing your role_user_assignments
+      aap_role_definitions:
+        description: Data structure describing your role_definitions
         type: list
         required: true
         elements: dict
         options:
-          object_ansible_id:
-            required: false
-            type: str
-            description: ['UUID of the object(team/organization) this role applies to. Alternative to the object_id/object_ids field.', 'This option is mutually exclusive with I(object_id) and I(object_ids)']
-          object_id:
-            required: false
-            type: int
-            description: ['B(Deprecated)', 'This option is deprecated and will be removed in a release after 2026-01-31.', 'For associating a user to team(s)/organization(s), please use the object_ids param.', 'HORIZONTALLINE', 'Primary key/Name of the object this assignment applies to.', 'This option is mutually exclusive with I(object_ids) and I(object_ansible_id).']
-          object_ids:
-            required: false
-            type: list
-            description: ['List of object IDs(Primary Key ) or names this assignment applies to.', 'This option is mutually exclusive with I(object_id) and I(object_ansible_id).']
-          role_definition:
+          content_type:
             required: true
             type: str
-            description: ['The name or id of the role definition to assign to the user.']
+            description: The content type for which the role applies (e.g., awx.inventory)
+          description:
+            type: str
+            description: Description of the role definition
+          name:
+            required: true
+            type: str
+            description: The name of the role definition (must be unique)
+          new_name:
+            type: str
+            description: Setting this option will change the existing name (looked up via the name field)
+          permissions:
+            required: true
+            type: list
+            description: List of permission strings to associate with the role (e.g., awx.view_inventory)
           state:
             default: present
             type: str
-            description: ['Desired state of the resource.']
-          user:
-            required: false
-            type: str
-            description: ['The name or id of the user to assign to the object.', 'This option is mutually exclusive with I(user_ansible_id).']
-          user_ansible_id:
-            required: false
-            type: str
-            description: ['Resource id of the user who will receive permissions from this assignment. Alternative to user field.', 'This option is mutually exclusive with I(user).']
+            description: Desired state of the role definition
 
       # Async variables
-      role_user_assignments_async_retries:
+      role_definitions_async_retries:
         default: "{{ aap_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -47,7 +41,7 @@ argument_specs:
         default: 30
         required: false
         description: This variable sets number of retries across all roles as a default.
-      role_user_assignments_async_delay:
+      role_definitions_async_delay:
         default: "{{ aap_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -61,7 +55,7 @@ argument_specs:
         description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.
 
       # No_log variables
-      gateway_role_user_assignments_secure_logging:
+      gateway_role_definitions_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
