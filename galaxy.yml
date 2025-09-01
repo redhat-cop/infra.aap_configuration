@@ -1,7 +1,7 @@
 ---
 namespace: infra
 name: aap_configuration
-version: 3.4.1-devel
+version: 3.5.0-devel
 description: A collection of roles to manage Ansible Controller
 readme: README.md
 authors:
@@ -11,7 +11,6 @@ authors:
   - Tom Page @Tompage1994
   - Sean Sullivan @sean-m-sullivan
   - David Danielsson @djdanielsson
-  - Brant Evans @branic
 repository: https://github.com/redhat-cop/aap_configuration/
 issues: https://github.com/redhat-cop/aap_configuration/issues
 build_ignore:

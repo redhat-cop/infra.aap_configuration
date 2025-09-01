@@ -4,6 +4,22 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v3.5.0
+======
+
+Minor Changes
+-------------
+
+- Add object_ids parameter to gateway_role_user_assignments role
+- Add the ability to collect error logs while configuring the object, instead of failing on the first error.
+- Fix variable name in dispatch role.
+- gateway_role_user_assignments - ansible.platform.role_user_assignment as of version 2.5.20250702 supports the objects_ids parameters and marks object_id as deprecated. pull request
+
+Bugfixes
+--------
+
+- Corrected README for controller_credentials, API URL reference was pointed to AAP 2.4 API not 2.5
+
 v3.4.1
 ======
 
