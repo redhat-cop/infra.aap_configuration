@@ -124,6 +124,9 @@
 
   always:
     - name: add_workflows_schema | Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __workflows_schema_results_item.ansible_job_id is defined
       ansible.builtin.async_status:
         jid: "{{ __workflows_schema_results_item.ansible_job_id }}"
         mode: cleanup
