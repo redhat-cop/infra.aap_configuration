@@ -65,7 +65,9 @@
       loop_control:
         loop_var: __workflows_node_async_results_item
       vars:
-        cas_secure_logging: "{{ workflow_job_templates_secure_logging }}"
+        cas_secure_logging: "{{ workflow_job_templates }}"
+        cas_async_delay: "{{ workflow_job_templates_async_delay }}"
+        cas_async_retries: "{{ workflow_job_templates_async_retries }}"
         cas_job_async_results_item: "{{ __workflows_node_async_results_item }}"
         cas_error_list_var_name: "controller_workflows_errors"
 
@@ -118,7 +120,9 @@
       loop_control:
         loop_var: __workflows_link_async_results_item
       vars:
-        cas_secure_logging: "{{ workflow_job_templates_secure_logging }}"
+        cas_secure_logging: "{{ workflow_job_templates }}"
+        cas_async_delay: "{{ workflow_job_templates_async_delay }}"
+        cas_async_retries: "{{ workflow_job_templates_async_retries }}"
         cas_job_async_results_item: "{{ __workflows_link_async_results_item }}"
         cas_error_list_var_name: "controller_workflows_errors"
 

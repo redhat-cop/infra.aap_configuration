@@ -49,7 +49,9 @@
       loop_control:
         loop_var: __project_update_job_async_results_item
       vars:
-        cas_secure_logging: "{{ controller_configuration_project_update_secure_logging }}"
+        cas_secure_logging: "{{ controller_configuration_project_update }}"
+        cas_async_delay: "{{ controller_configuration_project_update_async_delay }}"
+        cas_async_retries: "{{ controller_configuration_project_update_async_retries }}"
         cas_job_async_results_item: "{{ __project_update_job_async_results_item }}"
         cas_error_list_var_name: "controller_project_update_errors"
 
