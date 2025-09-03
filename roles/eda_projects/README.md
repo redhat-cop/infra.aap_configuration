@@ -74,6 +74,7 @@ eda_projects:
     url: https://github.com/ansible/ansible-rulebook.git
     tls_validation: true
     credential: test_token
+    organization: Default
 ```
 
 ## Playbook Examples

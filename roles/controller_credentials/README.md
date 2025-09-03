@@ -86,7 +86,7 @@ This also speeds up the overall role.
 
 ### Credential types
 
-To get a list of all the available builtin credential types, [checkout the ansible doc's link here](https://docs.ansible.com/automation-controller/latest/html/userguide/credentials.html#credential-types)
+To get a list of all the available builtin credential types, [checkout the ansible doc's link here](https://docs.ansible.com/automation-controller/4.5/html/userguide/credential_types.html)
 
 ### Standard Credential Data Structure
 

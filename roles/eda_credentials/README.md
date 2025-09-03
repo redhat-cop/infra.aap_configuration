@@ -61,6 +61,10 @@ This also speeds up the overall role.
 |`credential_type`|"GitHub Personal Access Token"|yes|str|The type of the credential.|
 |`state`|`present`|no|str|Desired state of the credential.|
 
+### Credential types
+
+To get a list of all the available builtin credential types, [checkout the ansible doc's link here](https://docs.ansible.com/automation-controller/4.5/html/userguide/credential_types.html)
+
 ### Standard Credential Data Structure
 
 #### Yaml Example
@@ -68,11 +72,15 @@ This also speeds up the overall role.
 ```yaml
 ---
 eda_credentials:
-  - name: my_github_user
-    description: my GitHub Credential
-    credential_type: 'GitHub Personal Access Token'
-    username: githubuser
-    secret: GITHUBTOKEN
+  - name: control-tower
+    description: AAP credentials
+    credential_type: 'Red Hat Ansible Automation Platform'
+    organization: "Default"
+    inputs:
+      host: "https://aap.example.io"
+      password: "Ala-ma-kota-12" 
+      username: "admin"
+      verify_ssl: true
 ```
 
 ## Playbook Examples
