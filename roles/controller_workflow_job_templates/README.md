@@ -278,24 +278,24 @@ controller_workflows:
           type: job_template
           organization:
             name: Default
-      notification_templates_started: []
-      notification_templates_success: []
-      notification_templates_error: []
-      notification_templates_approvals: []
-      survey_spec:
-        name: ''
-        description: ''
-        spec:
-          - question_name: Basic Name
-            question_description: Name
-            required: true
-            type: text
-            variable: basic_name
-            min: 0
-            max: 1024
-            default: ''
-            choices: ''
-            new_question: true
+    notification_templates_started: []
+    notification_templates_success: []
+    notification_templates_error: []
+    notification_templates_approvals: []
+    survey_spec:
+      name: ''
+      description: ''
+      spec:
+        - question_name: Basic Name
+          question_description: Name
+          required: true
+          type: text
+          variable: basic_name
+          min: 0
+          max: 1024
+          default: ''
+          choices: ''
+          new_question: true
 
 ```
 
