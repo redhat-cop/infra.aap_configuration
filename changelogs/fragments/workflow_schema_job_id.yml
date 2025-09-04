@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - Fixes issue when adding workflow schemas where the job_id is not defined because a failure state has occured
