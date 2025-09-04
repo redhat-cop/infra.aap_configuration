@@ -42,7 +42,9 @@
         loop_var: __credentials_job_async_result_item
         label: "{{ __operation.verb }} credential {{ __credentials_job_async_result_item.__credential_item.name }} | Wait for finish the credential {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ eda_configuration_credentials_secure_logging }}"
+        cas_secure_logging: "{{ eda_configuration_credentials }}"
+        cas_async_delay: "{{ eda_configuration_credentials_async_delay }}"
+        cas_async_retries: "{{ eda_configuration_credentials_async_retries }}"
         cas_job_async_results_item: "{{ __credentials_job_async_result_item }}"
         cas_error_list_var_name: "eda_credentials_errors"
         __operation: "{{ operation_translate[__credentials_job_async_result_item.__controller_user_accounts_item.state | default(platform_state) | default('present')] }}"

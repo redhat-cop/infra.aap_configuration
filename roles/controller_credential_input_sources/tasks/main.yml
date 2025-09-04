@@ -48,7 +48,9 @@
         loop_var: __credential_input_sources_job_async_results_item
         label: "{{ __operation.verb }} Controller Credential Input Source for Credential {{ __credential_input_sources_job_async_results_item.__cred_input_src_item.target_credential }}"
       vars:
-        cas_secure_logging: "{{ controller_configuration_credential_input_sources_secure_logging }}"
+        cas_secure_logging: "{{ controller_configuration_credential_input_sources }}"
+        cas_async_delay: "{{ controller_configuration_credential_input_sources_async_delay }}"
+        cas_async_retries: "{{ controller_configuration_credential_input_sources_async_retries }}"
         cas_job_async_results_item: "{{ __credential_input_sources_job_async_results_item }}"
         cas_error_list_var_name: "controller_credential_input_sources_errors"
         __operation: "{{ operation_translate[__credential_input_sources_job_async_results_item.__cred_input_src_item.state | default(platform_state) | default('present')] }}"

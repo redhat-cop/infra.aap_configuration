@@ -50,7 +50,9 @@
         label: "{{ __operation.verb }} AAP Platform Authenticator Maps {{ __gateway_authenticator_maps_job_async_results_item.__gateway_authenticator_maps_item.name }}
           | Wait for finish the Authenticator Map {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ gateway_authenticator_maps_secure_logging }}"
+        cas_secure_logging: "{{ gateway_authenticator_maps }}"
+        cas_async_delay: "{{ gateway_authenticator_maps_async_delay }}"
+        cas_async_retries: "{{ gateway_authenticator_maps_async_retries }}"
         cas_job_async_results_item: "{{ __gateway_authenticator_maps_job_async_results_item }}"
         cas_error_list_var_name: "gateway_authenticator_maps_errors"
         __operation: "{{ operation_translate[__gateway_authenticator_maps_job_async_results_item.state | default(platform_state) | default('present')] }}"

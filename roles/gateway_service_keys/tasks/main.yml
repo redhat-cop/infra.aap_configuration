@@ -46,7 +46,9 @@
         loop_var: __gateway_service_keys_job_async_results_item
         label: "{{ __operation.verb }} Gateway service key {{ __gateway_service_keys_job_async_results_item.__gateway_service_keys_item.name }} | Wait for finish the Gateway service key {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ gateway_service_keys_secure_logging }}"
+        cas_secure_logging: "{{ gateway_service_keys }}"
+        cas_async_delay: "{{ gateway_service_keys_async_delay }}"
+        cas_async_retries: "{{ gateway_service_keys_async_retries }}"
         cas_job_async_results_item: "{{ __gateway_service_keys_job_async_results_item }}"
         cas_error_list_var_name: "gateway_service_keys_errors"
         __operation: "{{ operation_translate[__gateway_service_keys_job_async_results_item.state | default(platform_state) | default('present')] }}"

@@ -114,7 +114,9 @@
       loop_control:
         loop_var: __publish_job_async_result_item
       vars:
-        cas_secure_logging: "{{ hub_configuration_publish_secure_logging }}"
+        cas_secure_logging: "{{ hub_configuration_publish }}"
+        cas_async_delay: "{{ hub_configuration_publish_async_delay }}"
+        cas_async_retries: "{{ hub_configuration_publish_async_retries }}"
         cas_job_async_results_item: "{{ __publish_job_async_result_item }}"
         cas_error_list_var_name: "hub_publish_errors"
 

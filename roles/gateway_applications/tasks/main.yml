@@ -52,7 +52,9 @@
         label: "{{ __operation.verb }} AAP Platform Applications {{ __gateway_applications_job_async_results_item.__gateway_application_item.name }} | Wait for finish
           the Applications {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ gateway_applications_secure_logging }}"
+        cas_secure_logging: "{{ gateway_applications }}"
+        cas_async_delay: "{{ gateway_applications_async_delay }}"
+        cas_async_retries: "{{ gateway_applications_async_retries }}"
         cas_job_async_results_item: "{{ __gateway_applications_job_async_results_item }}"
         cas_error_list_var_name: "gateway_applications_errors"
         __operation: "{{ operation_translate[__gateway_applications_job_async_results_item.state | default(platform_state) | default('present')] }}"
