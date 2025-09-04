@@ -78,7 +78,7 @@ eda_credentials:
     organization: "Default"
     inputs:
       host: "https://aap.example.io"
-      password: "Ala-ma-kota-12" 
+      password: "Ala-ma-kota-12"
       username: "admin"
       verify_ssl: true
 ```
