@@ -4,6 +4,15 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v3.5.1
+======
+
+Bugfixes
+--------
+
+- Fix accidentally removed usage of '_async_delay' and '_async_retries' variables
+- Fixes issue when adding workflow schemas where the job_id is not defined because a failure state has occured
+
 v3.5.0
 ======
 

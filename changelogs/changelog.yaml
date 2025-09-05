@@ -871,3 +871,13 @@ releases:
     - objects_ids.yml
     - update_controller_credentials_readme.yml
     release_date: '2025-09-01'
+  3.5.1:
+    changes:
+      bugfixes:
+      - Fix accidentally removed usage of '_async_delay' and '_async_retries' variables
+      - Fixes issue when adding workflow schemas where the job_id is not defined because
+        a failure state has occured
+    fragments:
+    - 1154_retries_delay.yml
+    - workflow_schema_job_id.yml
+    release_date: '2025-09-05'
