@@ -49,7 +49,9 @@
         loop_var: __host_job_async_results_item
         label: "{{ __operation.verb }} Controller Host {{ __host_job_async_results_item.__controller_host_item.name }} | Wait for finish the Hosts {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ controller_configuration_hosts_secure_logging }}"
+        cas_secure_logging: "{{ controller_configuration_hosts }}"
+        cas_async_delay: "{{ controller_configuration_hosts_async_delay }}"
+        cas_async_retries: "{{ controller_configuration_hosts_async_retries }}"
         cas_job_async_results_item: "{{ __host_job_async_results_item }}"
         cas_error_list_var_name: "controller_hosts_errors"
         __operation: "{{ operation_translate[__host_job_async_results_item.__controller_host_item.state | default(platform_state) | default('present')] }}"

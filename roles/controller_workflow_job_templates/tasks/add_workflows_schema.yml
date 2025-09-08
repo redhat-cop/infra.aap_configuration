@@ -65,7 +65,9 @@
       loop_control:
         loop_var: __workflows_node_async_results_item
       vars:
-        cas_secure_logging: "{{ workflow_job_templates_secure_logging }}"
+        cas_secure_logging: "{{ workflow_job_templates }}"
+        cas_async_delay: "{{ workflow_job_templates_async_delay }}"
+        cas_async_retries: "{{ workflow_job_templates_async_retries }}"
         cas_job_async_results_item: "{{ __workflows_node_async_results_item }}"
         cas_error_list_var_name: "controller_workflows_errors"
 
@@ -118,12 +120,17 @@
       loop_control:
         loop_var: __workflows_link_async_results_item
       vars:
-        cas_secure_logging: "{{ workflow_job_templates_secure_logging }}"
+        cas_secure_logging: "{{ workflow_job_templates }}"
+        cas_async_delay: "{{ workflow_job_templates_async_delay }}"
+        cas_async_retries: "{{ workflow_job_templates_async_retries }}"
         cas_job_async_results_item: "{{ __workflows_link_async_results_item }}"
         cas_error_list_var_name: "controller_workflows_errors"
 
   always:
     - name: add_workflows_schema | Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __workflows_schema_results_item.ansible_job_id is defined
       ansible.builtin.async_status:
         jid: "{{ __workflows_schema_results_item.ansible_job_id }}"
         mode: cleanup

@@ -83,7 +83,9 @@
         loop_var: __workflows_job_async_results_item
         label: "{{ __operation.verb }} Workflow {{ __workflows_job_async_results_item.__workflow_loop_item.name }} | Wait for finish the workflow {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ workflow_job_templates_secure_logging }}"
+        cas_secure_logging: "{{ workflow_job_templates }}"
+        cas_async_delay: "{{ workflow_job_templates_async_delay }}"
+        cas_async_retries: "{{ workflow_job_templates_async_retries }}"
         cas_job_async_results_item: "{{ __workflows_job_async_results_item }}"
         cas_error_list_var_name: "controller_workflows_errors"
         __operation: "{{ operation_translate[__workflows_job_async_results_item.__workflow_loop_item.state | default(platform_state) | default('present')] }}"

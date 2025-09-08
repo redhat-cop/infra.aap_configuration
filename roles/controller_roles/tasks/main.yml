@@ -64,7 +64,9 @@
         loop_var: __controller_role_job_async_results_item
         label: "{{ __operation.verb }} Role {{ __controller_role_job_async_results_item.__controller_role_item.1 | default(__controller_role_job_async_results_item.__controller_role_item.role) }} | Wait for finish the Roles {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ controller_configuration_role_secure_logging }}"
+        cas_secure_logging: "{{ controller_configuration_role }}"
+        cas_async_delay: "{{ controller_configuration_role_async_delay }}"
+        cas_async_retries: "{{ controller_configuration_role_async_retries }}"
         cas_job_async_results_item: "{{ __controller_role_job_async_results_item }}"
         cas_error_list_var_name: "controller_roles_errors"
         __operation: "{{ operation_translate[__controller_role_job_async_results_item.__controller_role_item.state | default(platform_state) | default('present')] }}"

@@ -46,7 +46,9 @@
         loop_var: __controller_label_job_async_results_item
         label: "{{ __operation.verb }} Label {{ __controller_label_job_async_results_item.__controller_label_item.name }} | Wait for finish the Label {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ controller_configuration_labels_secure_logging }}"
+        cas_secure_logging: "{{ controller_configuration_labels }}"
+        cas_async_delay: "{{ controller_configuration_labels_async_delay }}"
+        cas_async_retries: "{{ controller_configuration_labels_async_retries }}"
         cas_job_async_results_item: "{{ __controller_label_job_async_results_item }}"
         cas_error_list_var_name: "controller_labels_errors"
         __operation: "{{ operation_translate[__controller_label_job_async_results_item.__controller_label_item.state | default(platform_state) | default('present')] }}"

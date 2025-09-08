@@ -78,7 +78,7 @@ This also speeds up the overall role.
 |`description`|`false`|no|Description of  of Credential.|
 |`organization`|""|no|Organization this Credential belongs to. If provided on creation, do not give either user or team.|
 |`credential_type`|""|no|Name of credential type. See below for list of options. More information in Ansible controller documentation. |
-|`inputs`|""|no|Credential inputs where the keys are var names used in templating. Refer to the Ansible controller documentation for example syntax. Individual examples can be found at /api/v2/credential_types/ on an controller.|
+|`inputs`|""|no|Credential inputs where the keys are var names used in templating. Refer to the Ansible controller documentation for example syntax. Individual examples can be found at /api/controller/v2/credential_types/ on an controller.|
 |`user`|""|no|User that should own this credential. If provided, do not give either team or organization. |
 |`team`|""|no|Team that should own this credential. If provided, do not give either user or organization. |
 |`state`|`present`|no|Desired state of the resource.|
@@ -86,7 +86,7 @@ This also speeds up the overall role.
 
 ### Credential types
 
-To get a list of all the available builtin credential types, [checkout the ansible doc's link here](https://docs.ansible.com/automation-controller/latest/html/userguide/credentials.html#credential-types)
+To get a list of all the available builtin credential types, [checkout the ansible doc's link here](https://docs.ansible.com/automation-controller/4.5/html/userguide/credential_types.html)
 
 ### Standard Credential Data Structure
 

@@ -1,3 +1,0 @@
----
-minor_changes:
-  - Add object_ids parameter to gateway_role_user_assignments role
