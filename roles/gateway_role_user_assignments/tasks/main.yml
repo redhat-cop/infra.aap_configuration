@@ -44,7 +44,7 @@
         loop_var: __gateway_role_user_assignments_job_async_results_item
         label: "{{ __operation.verb }} Role {{ __gateway_role_user_assignments_job_async_results_item.__gateway_role_user_assignments_item.1 | default(__gateway_role_user_assignments_job_async_results_item.__gateway_role_user_assignments_item.role_definition) }} | Wait for finish the Roles {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ gateway_role_user_assignments }}"
+        cas_secure_logging: "{{ gateway_role_user_assignments_secure_logging }}"
         cas_async_delay: "{{ gateway_role_user_assignments_async_delay }}"
         cas_async_retries: "{{ gateway_role_user_assignments_async_retries }}"
         cas_job_async_results_item: "{{ __gateway_role_user_assignments_job_async_results_item }}"

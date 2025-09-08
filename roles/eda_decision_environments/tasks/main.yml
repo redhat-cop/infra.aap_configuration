@@ -43,7 +43,7 @@
         label: "{{ __operation.verb }} decision environment {{ __decision_environments_job_async_result_item.__de_item.name }} | Wait for finish the decision environment
           {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ eda_configuration_decision_environments }}"
+        cas_secure_logging: "{{ eda_configuration_decision_environments_secure_logging }}"
         cas_async_delay: "{{ eda_configuration_decision_environments_async_delay }}"
         cas_async_retries: "{{ eda_configuration_decision_environments_async_retries }}"
         cas_job_async_results_item: "{{ __decision_environments_job_async_result_item }}"

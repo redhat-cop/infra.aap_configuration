@@ -52,7 +52,7 @@
         label: "{{ __operation.verb }} Gateway service cluster {{ __gateway_service_clusters_job_async_results_item.__gateway_service_clusters_item.name }} | Wait for finish the Gateway service cluster
           {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ gateway_service_clusters }}"
+        cas_secure_logging: "{{ gateway_service_clusters_secure_logging }}"
         cas_async_delay: "{{ gateway_service_clusters_async_delay }}"
         cas_async_retries: "{{ gateway_service_clusters_async_retries }}"
         cas_job_async_results_item: "{{ __gateway_service_clusters_job_async_results_item }}"

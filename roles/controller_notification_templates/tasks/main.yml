@@ -52,7 +52,7 @@
         label: "{{ __operation.verb }} notification {{ __controller_notification_job_async_results_item.__controller_notification_item.name }} | Wait for finish the notifications
           {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ controller_configuration_notifications }}"
+        cas_secure_logging: "{{ controller_configuration_notifications_secure_logging }}"
         cas_async_delay: "{{ controller_configuration_notifications_async_delay }}"
         cas_async_retries: "{{ controller_configuration_notifications_async_retries }}"
         cas_job_async_results_item: "{{ __controller_notification_job_async_results_item }}"

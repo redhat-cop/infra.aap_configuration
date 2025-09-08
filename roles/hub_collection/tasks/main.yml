@@ -52,7 +52,7 @@
         loop_var: __collections_job_async_result_item
         label: "{{ __operation.verb }} Collection {{ __collections_job_async_result_item.__hub_collection_item.name }} | Wait for finish the Collection {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ hub_configuration_collection }}"
+        cas_secure_logging: "{{ hub_configuration_collection_secure_logging }}"
         cas_async_delay: "{{ hub_configuration_collection_async_delay }}"
         cas_async_retries: "{{ hub_configuration_collection_async_retries }}"
         cas_job_async_results_item: "{{ __collections_job_async_result_item }}"

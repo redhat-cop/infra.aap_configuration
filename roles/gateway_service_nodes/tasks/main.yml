@@ -43,7 +43,7 @@
         loop_var: __gateway_service_nodes_job_async_results_item
         label: "{{ __operation.verb }} Gateway service node {{ __gateway_service_nodes_job_async_results_item.__gateway_service_nodes_item.name }} | Wait for finish the Gateway service node {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ gateway_service_nodes }}"
+        cas_secure_logging: "{{ gateway_service_nodes_secure_logging }}"
         cas_async_delay: "{{ gateway_service_nodes_async_delay }}"
         cas_async_retries: "{{ gateway_service_nodes_async_retries }}"
         cas_job_async_results_item: "{{ __gateway_service_nodes_job_async_results_item }}"

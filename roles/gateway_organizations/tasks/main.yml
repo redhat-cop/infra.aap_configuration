@@ -41,7 +41,7 @@
         - not ansible_check_mode
         - __gateway_organizations_job_async_results_item.ansible_job_id is defined
       vars:
-        cas_secure_logging: "{{ gateway_organizations }}"
+        cas_secure_logging: "{{ gateway_organizations_secure_logging }}"
         cas_async_delay: "{{ gateway_organizations_async_delay }}"
         cas_async_retries: "{{ gateway_organizations_async_retries }}"
         cas_job_async_results_item: "{{ __gateway_organizations_job_async_results_item }}"
@@ -103,7 +103,7 @@
         label: "{{ __operation.verb }} Controller Organization {{ __organizations_job_async_results_item.__controller_organizations_item.name }} | Wait for finish the
           organization {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ gateway_organizations }}"
+        cas_secure_logging: "{{ gateway_organizations_secure_logging }}"
         cas_async_delay: "{{ gateway_organizations_async_delay }}"
         cas_async_retries: "{{ gateway_organizations_async_retries }}"
         cas_job_async_results_item: "{{ __organizations_job_async_results_item }}"

@@ -54,7 +54,7 @@
         label: "{{ __operation.verb }} Controller Execution Environment {{ __execution_environments_job_async_results_item.__execution_environments_item.name }} | Wait
           for finish the Controller Execution Environment {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ controller_configuration_execution_environments }}"
+        cas_secure_logging: "{{ controller_configuration_execution_environments_secure_logging }}"
         cas_async_delay: "{{ controller_configuration_execution_environments_async_delay }}"
         cas_async_retries: "{{ controller_configuration_execution_environments_async_retries }}"
         cas_job_async_results_item: "{{ __execution_environments_job_async_results_item }}"

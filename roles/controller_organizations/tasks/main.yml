@@ -56,7 +56,7 @@
         label: "{{ __operation.verb }} Controller Organization {{ __organizations_job_async_results_item.__controller_organizations_item.name }} | Wait for finish the
           organization {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ controller_configuration_organizations }}"
+        cas_secure_logging: "{{ controller_configuration_organizations_secure_logging }}"
         cas_async_delay: "{{ controller_configuration_organizations_async_delay }}"
         cas_async_retries: "{{ controller_configuration_organizations_async_retries }}"
         cas_job_async_results_item: "{{ __organizations_job_async_results_item }}"

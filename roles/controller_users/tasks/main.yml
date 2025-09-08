@@ -54,7 +54,7 @@
         loop_var: __controller_user_accounts_job_async_results_item
         label: "{{ __operation.verb }} User {{ __controller_user_accounts_job_async_results_item.__controller_user_accounts_item.user | default(__controller_user_accounts_job_async_results_item.__controller_user_accounts_item.username) }} | Wait for finish the Users {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ controller_configuration_users }}"
+        cas_secure_logging: "{{ controller_configuration_users_secure_logging }}"
         cas_async_delay: "{{ controller_configuration_users_async_delay }}"
         cas_async_retries: "{{ controller_configuration_users_async_retries }}"
         cas_job_async_results_item: "{{ __controller_user_accounts_job_async_results_item }}"

@@ -38,7 +38,7 @@
         loop_var: __controller_tokens_job_async_result_item
         label: "{{ __operation.verb }} Controller token {{ __controller_tokens_job_async_result_item.__token_item.name }} | Wait for finish the Controller token {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ eda_configuration_users_token }}"
+        cas_secure_logging: "{{ eda_configuration_users_token_secure_logging }}"
         cas_async_delay: "{{ eda_configuration_users_token_async_delay }}"
         cas_async_retries: "{{ eda_configuration_users_token_async_retries }}"
         cas_job_async_results_item: "{{ __controller_tokens_job_async_result_item }}"

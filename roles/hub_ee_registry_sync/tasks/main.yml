@@ -41,7 +41,7 @@
         loop_var: __ee_registry_syncs_job_async_result_item
         label: "{{ __operation.verb }} EE registry sync {{ __ee_registry_syncs_job_async_result_item.__hub_ee_registry_sync_item.name }} | Wait for finish the EE registry sync {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ hub_configuration_ee_registry }}"
+        cas_secure_logging: "{{ hub_configuration_ee_registry_secure_logging }}"
         cas_async_delay: "{{ hub_configuration_ee_registry_async_delay }}"
         cas_async_retries: "{{ hub_configuration_ee_registry_async_retries }}"
         cas_job_async_results_item: "{{ __ee_registry_syncs_job_async_result_item }}"

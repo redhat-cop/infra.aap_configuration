@@ -49,7 +49,7 @@
         loop_var: __gateway_routes_job_async_results_item
         label: "{{ __operation.verb }} Gateway route {{ __gateway_routes_job_async_results_item.__gateway_routes_item.name }} | Wait for finish the Gateway route {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ gateway_routes }}"
+        cas_secure_logging: "{{ gateway_routes_secure_logging }}"
         cas_async_delay: "{{ gateway_routes_async_delay }}"
         cas_async_retries: "{{ gateway_routes_async_retries }}"
         cas_job_async_results_item: "{{ __gateway_routes_job_async_results_item }}"
