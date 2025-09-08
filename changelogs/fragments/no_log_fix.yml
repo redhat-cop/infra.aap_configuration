@@ -1,0 +1,4 @@
+---
+bugfix:
+  - fixing bug that got introduced in 3.5.1 causing no_log issues
+...
