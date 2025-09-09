@@ -881,3 +881,10 @@ releases:
     - 1154_retries_delay.yml
     - workflow_schema_job_id.yml
     release_date: '2025-09-05'
+  3.5.2:
+    changes:
+      bugfixes:
+      - fixing bug that got introduced in 3.5.1 causing no_log issues
+    fragments:
+    - no_log_fix.yml
+    release_date: '2025-09-09'

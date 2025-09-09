@@ -4,6 +4,14 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v3.5.2
+======
+
+Bugfixes
+--------
+
+- fixing bug that got introduced in 3.5.1 causing no_log issues
+
 v3.5.1
 ======
 
