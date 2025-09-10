@@ -43,11 +43,11 @@ Enabling this will enforce configuration without specifying every option in the 
 The following Variables compliment each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to false as normally the add Workflow Job Templates task does not include sensitive information.
-workflow_job_templates_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of genie roles with a single variable, or for the user to selectively use it.
+controller_configuration_workflow_job_templates_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of genie roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`workflow_job_templates_secure_logging`|`false`|no|Whether or not to include the sensitive Workflow Job Templates role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.|
+|`controller_configuration_workflow_job_templates_secure_logging`|`false`|no|Whether or not to include the sensitive Workflow Job Templates role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.|
 |`aap_configuration_secure_logging`|`false`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
