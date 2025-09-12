@@ -2,7 +2,7 @@
 - name: Manage Controller Workflows Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ workflow_job_templates_secure_logging }}"
+  no_log: "{{ controller_configuration_workflow_job_templates_secure_logging }}"
   block:
     # Create links between workflow node
     - name: Loop over nodes in schema to add to workflow templates
@@ -83,9 +83,9 @@
         loop_var: __workflows_job_async_results_item
         label: "{{ __operation.verb }} Workflow {{ __workflows_job_async_results_item.__workflow_loop_item.name }} | Wait for finish the workflow {{ __operation.action }}"
       vars:
-        cas_secure_logging: "{{ workflow_job_templates_secure_logging }}"
-        cas_async_delay: "{{ workflow_job_templates_async_delay }}"
-        cas_async_retries: "{{ workflow_job_templates_async_retries }}"
+        cas_secure_logging: "{{ controller_configuration_workflow_job_templates_secure_logging }}"
+        cas_async_delay: "{{ controller_configuration_workflow_job_templates_async_delay }}"
+        cas_async_retries: "{{ controller_configuration_workflow_job_templates_async_retries }}"
         cas_job_async_results_item: "{{ __workflows_job_async_results_item }}"
         cas_error_list_var_name: "controller_workflows_errors"
         __operation: "{{ operation_translate[__workflows_job_async_results_item.__workflow_loop_item.state | default(platform_state) | default('present')] }}"
