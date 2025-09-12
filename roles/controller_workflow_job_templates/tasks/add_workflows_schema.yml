@@ -96,8 +96,7 @@
         label: "{{ __workflow_loop_node_item.identifier }}"
       # Execute only the nodes that define links to the following
       when: ((__workflow_loop_node_item.always_nodes is defined and __workflow_loop_node_item.always_nodes | length > 0) or (__workflow_loop_node_item.success_nodes is
-        defined and __workflow_loop_node_item.success_nodes | length > 0) or (__workflow_loop_node_item.failure_nodes is defined and __workflow_loop_node_item.failure_nodes
-        | length > 0))
+        defined and __workflow_loop_node_item.success_nodes | length > 0) or (__workflow_loop_node_item.failure_nodes is defined and __workflow_loop_node_item.failure_nodes | length > 0))
       async: "{{ ansible_check_mode | ternary(0, 1000) }}"
       poll: 0
       register: __workflows_link_async

@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - added a sync option to collection_repository_sync role to allow more easily skipping of specific repositories
+...
