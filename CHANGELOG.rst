@@ -4,6 +4,21 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v3.6.0
+======
+
+Minor Changes
+-------------
+
+- added a sync option to collection_repository_sync role to allow more easily skipping of specific repositories
+
+Bugfixes
+--------
+
+- changing `workflow_job_templates_secure_logging` to fit standard `controller_configuration_workflow_job_templates_secure_logging`
+- fixing `workflow_job_templates_async_delay` to what it was supposed to be `controller_configuration_workflow_async_delay`
+- fixing `workflow_job_templates_async_retries` to what it was supposed to be controller_configuration_workflow_async_retries`
+
 v3.5.2
 ======
 

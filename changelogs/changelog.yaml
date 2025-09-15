@@ -888,3 +888,18 @@ releases:
     fragments:
     - no_log_fix.yml
     release_date: '2025-09-09'
+  3.6.0:
+    changes:
+      bugfixes:
+      - changing `workflow_job_templates_secure_logging` to fit standard `controller_configuration_workflow_job_templates_secure_logging`
+      - fixing `workflow_job_templates_async_delay` to what it was supposed to be
+        `controller_configuration_workflow_async_delay`
+      - fixing `workflow_job_templates_async_retries` to what it was supposed to be
+        controller_configuration_workflow_async_retries`
+      minor_changes:
+      - added a sync option to collection_repository_sync role to allow more easily
+        skipping of specific repositories
+    fragments:
+    - collection_repo_sync.yml
+    - workflow_jt_vars.yml
+    release_date: '2025-09-15'
