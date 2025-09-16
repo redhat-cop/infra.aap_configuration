@@ -202,5 +202,4 @@ aap_configuration_dispatcher_roles: >
    + controller_configuration_dispatcher_roles
    + eda_configuration_dispatcher_roles }}
 
-aap_configuration_collect_logs: false
 ...

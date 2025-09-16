@@ -44,7 +44,7 @@
     - name: Managing Controller Applications | Wait for finish the Application management
       when:
         - not ansible_check_mode
-        - not ansible_check_mode and __applications_job_async_results_item.ansible_job_id is defined
+        - __applications_job_async_results_item.ansible_job_id is defined
       ansible.builtin.include_role:
         name: infra.aap_configuration.collect_async_status
       loop: "{{ __applications_job_async.results }}"

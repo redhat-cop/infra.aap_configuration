@@ -75,7 +75,7 @@
     - name: Managing Workflows | Wait for finish the workflow management
       when:
         - not ansible_check_mode
-        - not ansible_check_mode and __workflows_job_async_results_item.ansible_job_id is defined
+        - __workflows_job_async_results_item.ansible_job_id is defined
       ansible.builtin.include_role:
         name: infra.aap_configuration.collect_async_status
       loop: "{{ __workflows_job_async.results }}"

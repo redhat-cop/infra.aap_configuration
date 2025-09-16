@@ -20,5 +20,4 @@ gateway_http_ports_async_retries: "{{ aap_configuration_async_retries | default(
 gateway_http_ports_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 gateway_http_ports_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 aap_configuration_async_dir:
-aap_configuration_collect_logs: false
 ...
