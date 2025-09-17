@@ -1,0 +1,5 @@
+---
+bugfixes:
+  - Update role readme files to be consistently worded for the aap_configuration_collect_logs variable
+  - Fix usage of aap_configuration_collect_logs variable
+  - Add enhance async handling to the controller_settings role
