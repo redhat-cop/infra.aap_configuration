@@ -4,6 +4,21 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v3.7.0
+======
+
+Minor Changes
+-------------
+
+- Set async log collection default once
+
+Bugfixes
+--------
+
+- fixing `controller_configuration_workflow_async_delay` to what it was supposed to be `controller_configuration_workflow_job_templates_async_delay`
+- fixing `controller_configuration_workflow_async_retries` to what it was supposed to be `controller_configuration_workflow_job_templates_async_retries`
+- fixing `controller_configuration_workflow_loop_delay` to what it was supposed to be `controller_configuration_workflow_job_templates_loop_delay`
+
 v3.6.0
 ======
 
