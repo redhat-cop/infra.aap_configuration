@@ -45,28 +45,30 @@
 
     - name: Find if variable contains file or dir
       ansible.builtin.stat:
-        path: "{{ __ah_build_result_item.path }}"
-      register: ah_build_stat_results
+        path: "{{ __hub_build_result_item.path }}"
+      register: hub_build_stat_results
       loop: "{{ ah_build_results.results }}"
       loop_control:
-        loop_var: __ah_build_result_item
+        loop_var: __hub_build_result_item
       when: hub_collection_list | length > 0
 
-    # __ah_build_result_item.results.path will be the output_path in ansible<2.10 but the actual built path in ansible>=2.10
+    # __hub_build_result_item.results.path will be the output_path in ansible<2.10 but the actual built path in ansible>=2.10
     - name: Find all relevant built collection files
       ansible.builtin.find:
-        paths: "{{ (__ah_build_result_item.stat.isdir) | ternary(__ah_build_result_item.stat.path, (__ah_build_result_item.stat.path | dirname)) }}"
-        patterns: "{{ (__ah_build_result_item.stat.isdir) | ternary('*.tar.gz', (__ah_build_result_item.stat.path | basename)) }}"
+        paths: "{{ (__hub_build_result_item.stat.isdir) | ternary(__hub_build_result_item.stat.path, (__hub_build_result_item.stat.path | dirname)) }}"
+        patterns: "{{ (__hub_build_result_item.stat.isdir) | ternary('*.tar.gz', (__hub_build_result_item.stat.path | basename)) }}"
       register: __hub_collections_find_results
-      loop: "{{ ah_build_stat_results.results }}"
+      loop: "{{ hub_build_stat_results.results }}"
       loop_control:
-        loop_var: __ah_build_result_item
+        loop_var: __hub_build_result_item
       when: hub_collection_list | length > 0
 
     - name: Set path for all collections found
       ansible.builtin.set_fact:
         hub_collection_list: "{{ __hub_collections_find_results.results | map(attribute='files') | flatten | map(attribute='path') | flatten }}"
-      when: hub_collection_list | length > 0
+      when:
+        - hub_collection_list | length > 0
+        - hub_build_stat_results.results | length > 0
 
     - name: Get token
       ansible.hub.ah_token:
