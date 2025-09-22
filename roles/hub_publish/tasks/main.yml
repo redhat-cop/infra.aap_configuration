@@ -16,7 +16,7 @@
         loop_var: __hub_collection_item
         pause: "{{ hub_configuration_publish_loop_delay }}"
       when:
-        - hub_collection_list | length is not 0
+        - hub_collection_list | length > 0
         - __hub_collection_item.collection_local_path is not defined
 
     - name: Copy local collection to working dir
@@ -29,7 +29,7 @@
       loop_control:
         loop_var: __hub_collection_item
       when:
-        - hub_collection_list | length is not 0
+        - hub_collection_list | length > 0
         - __hub_collection_item.collection_local_path is defined
 
     - name: Build Collections
@@ -41,7 +41,7 @@
       loop: "{{ hub_collections }}"
       loop_control:
         loop_var: __hub_collection_item
-      when: hub_collection_list | length is not 0
+      when: hub_collection_list | length > 0
 
     - name: Find if variable contains file or dir
       ansible.builtin.stat:
@@ -50,7 +50,7 @@
       loop: "{{ ah_build_results.results }}"
       loop_control:
         loop_var: __ah_build_result_item
-      when: hub_collection_list | length is not 0
+      when: hub_collection_list | length > 0
 
     # __ah_build_result_item.results.path will be the output_path in ansible<2.10 but the actual built path in ansible>=2.10
     - name: Find all relevant built collection files
@@ -61,7 +61,7 @@
       loop: "{{ ah_build_stat_results.results }}"
       loop_control:
         loop_var: __ah_build_result_item
-      when: hub_collection_list | length is not 0
+      when: hub_collection_list | length > 0
 
     - name: Set path for all collections found
       ansible.builtin.set_fact:
