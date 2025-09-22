@@ -66,7 +66,7 @@
     - name: Set path for all collections found
       ansible.builtin.set_fact:
         hub_collection_list: "{{ __hub_collections_find_results.results | map(attribute='files') | flatten | map(attribute='path') | flatten }}"
-      when: hub_collection_list | length is not 0
+      when: (hub_collection_list | length is not 0) | bool
 
     - name: Get token
       ansible.hub.ah_token:
