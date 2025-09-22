@@ -37,7 +37,7 @@
         path: "{{ aap_configuration_working_dir }}/{{ __hub_collection_item.collection_name }}"
         output_path: "{{ aap_configuration_working_dir }}/{{ __hub_collection_item.collection_name }}"
         force: true
-      register: ah_build_results
+      register: hub_build_results
       loop: "{{ hub_collections }}"
       loop_control:
         loop_var: __hub_collection_item
@@ -47,7 +47,7 @@
       ansible.builtin.stat:
         path: "{{ __hub_build_result_item.path }}"
       register: hub_build_stat_results
-      loop: "{{ ah_build_results.results }}"
+      loop: "{{ hub_build_results.results }}"
       loop_control:
         loop_var: __hub_build_result_item
       when: hub_collection_list | length > 0
