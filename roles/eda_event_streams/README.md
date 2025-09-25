@@ -27,7 +27,7 @@ eda_configuration_event_streams_secure_logging defaults to the value of aap_conf
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`eda_configuration_event_streams_secure_logging`|`false`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `true` if you will be providing your sensitive values from elsewhere.|
+|`eda_configuration_event_streams_secure_logging`|`true`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `true` if you will be providing your sensitive values from elsewhere.|
 |`aap_configuration_secure_logging`|`false`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `true` if you will be providing your sensitive values from elsewhere.|
 
 ### Asynchronous Retry Variables
