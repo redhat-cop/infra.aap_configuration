@@ -51,7 +51,7 @@ This also speeds up the overall role.
 
 ## Data Structure
 
-### Service Arguments
+### Route Arguments
 
 Options for the `gateway_routes` variable:
 
