@@ -51,7 +51,7 @@ This also speeds up the overall role.
 
 ### Authenticator Arguments
 
-Options for the `authenticators_list` variable:
+Options for the `gateway_authenticators` variable:
 
 | Variable Name    |    Default Value    | Required | Type | Description                                                                                                                  |
 |:-----------------|:-------------------:|:--------:|:----:|:-----------------------------------------------------------------------------------------------------------------------------|

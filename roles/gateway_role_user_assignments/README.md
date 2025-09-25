@@ -51,7 +51,7 @@ This also speeds up the overall role.
 
 ### Role User Assignments Arguments
 
-Options for the `role_user_assignments` variable:
+Options for the `gateway_role_user_assignments` variable:
 
 | Variable Name       | Default Value | Required | Type | Description                                                                                           |
 |:--------------------|:-------------:|:--------:|:----:|:------------------------------------------------------------------------------------------------------|

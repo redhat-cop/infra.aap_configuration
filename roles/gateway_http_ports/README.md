@@ -51,7 +51,7 @@ This also speeds up the overall role.
 
 ### Http Port Arguments
 
-Options for the `http_ports_list` variable:
+Options for the `gateway_http_ports` variable:
 
 | Variable Name | Default Value | Required | Type | Description                                                                      |
 |:--------------|:-------------:|:--------:|:----:|:---------------------------------------------------------------------------------|

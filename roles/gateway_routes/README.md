@@ -53,7 +53,7 @@ This also speeds up the overall role.
 
 ### Service Arguments
 
-Options for the `routes_list` variable:
+Options for the `gateway_routes` variable:
 
 | Variable Name         |    Default Value    | Required | Type | Description                                                                         |
 |:----------------------|:-------------------:|:--------:|:----:|:------------------------------------------------------------------------------------|
@@ -87,7 +87,7 @@ Options for the `routes_list` variable:
 
 ```json
 {
-  "gateway_services": [
+  "gateway_routes": [
     {
       "name": "Controller Config Route",
       "state": "exists"
@@ -120,7 +120,7 @@ File name: `data/gateway_routes.yml`
 ```yaml
 ---
 platform_state: exists
-routes_list:
+gateway_routes:
 - name: "Controller Config route"
   gateway_path: '/config/controller/'
   http_port: Port 8000
