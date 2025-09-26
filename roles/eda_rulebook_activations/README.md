@@ -44,7 +44,7 @@ This also speeds up the overall role.
 |`aap_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
 |`eda_configuration_rulebook_activations_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
 |`aap_configuration_loop_delay`|1000|no|This variable sets the loop_delay for the role globally.|
-|`eda_configuration_rulebook_activations_async_delay`|`aap_configuration_loop_delay`|no|This variable sets the loop_delay for the role.| ??
+|`eda_configuration_rulebook_activations_async_delay`|`aap_configuration_loop_delay`|no|This variable sets the loop_delay for the role.|
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
 ## Data Structure
