@@ -14,9 +14,9 @@ An Ansible Role to create groups in Automation Hub.
 |`aap_validate_certs`|`true`|no|Whether or not to validate the Ansible Automation Platform Server's SSL certificate.||
 |`aap_request_timeout`|`10`|no|Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.||
 |`hub_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
+|`aap_configuration_collect_logs`|`false`|no|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
 |`ah_groups`|`see below`|yes|Data structure describing your groups, described below.||
-|`aap_configuration_collect_logs`|`false`|no|Specify whether it collects logs for all failed tasks related to hub group creation, instead of failing on the first error.||
 
 ### Secure Logging Variables
 

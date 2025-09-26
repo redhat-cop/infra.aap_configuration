@@ -1,49 +1,65 @@
 ---
 # tasks file for controller_settings
-- name: Update Ansible Controller Settings from dictionary or list of dictionaries
-  ansible.controller.settings:
-    settings: "{{ __controller_setting_item.settings | default(omit, true) }}"
-    name: "{{ __controller_setting_item.name | default(omit, true) }}"
-    value: "{{ __controller_setting_item.value | default(omit) }}"
-
-    # Role Standard Options
-    controller_host: "{{ aap_hostname | default(omit, true) }}"
-    controller_password: "{{ aap_password | default(omit, true) }}"
-    controller_username: "{{ aap_username | default(omit, true) }}"
-    controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
-    request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-    validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  # controller_settings must be either a dictionary/mapping or a list of dictionaries
-  loop: "{{ controller_settings is mapping | ternary([controller_settings], controller_settings) }}"
-  loop_control:
-    loop_var: __controller_setting_item
-    label: "{{ __controller_setting_item.name | default(__controller_setting_item.settings) }}"
-    pause: "{{ controller_configuration_settings_loop_delay }}"
-  no_log: "{{ controller_configuration_settings_secure_logging }}"
-  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
-  poll: 0
-  register: __controller_setting_job_async
-  changed_when: (__controller_setting_job_async.changed if ansible_check_mode else false)
+- name: Manage Controller Controller Settings Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-
-- name: Flag for errors (check mode only)
-  ansible.builtin.set_fact:
-    error_flag: true
-  when: ansible_check_mode and __controller_setting_job_async.failed is defined and __controller_setting_job_async.failed
-
-- name: Configure Settings | Wait for finish the Settings creation
-  ansible.builtin.async_status:
-    jid: "{{ __controller_setting_job_async_results_item.ansible_job_id }}"
-  register: __controller_setting_job_async_result
-  until: __controller_setting_job_async_result.finished
-  retries: "{{ controller_configuration_settings_async_retries }}"
-  delay: "{{ controller_configuration_settings_async_delay }}"
-  loop: "{{ __controller_setting_job_async.results }}"
-  loop_control:
-    loop_var: __controller_setting_job_async_results_item
-  when: not ansible_check_mode and __controller_setting_job_async_results_item.ansible_job_id is defined
   no_log: "{{ controller_configuration_settings_secure_logging }}"
-  vars:
-    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  block:
+    - name: Update Ansible Controller Settings from dictionary or list of dictionaries
+      ansible.controller.settings:
+        settings: "{{ __controller_setting_item.settings | default(omit, true) }}"
+        name: "{{ __controller_setting_item.name | default(omit, true) }}"
+        value: "{{ __controller_setting_item.value | default(omit) }}"
+
+        # Role Standard Options
+        controller_host: "{{ aap_hostname | default(omit, true) }}"
+        controller_password: "{{ aap_password | default(omit, true) }}"
+        controller_username: "{{ aap_username | default(omit, true) }}"
+        controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      # controller_settings must be either a dictionary/mapping or a list of dictionaries
+      loop: "{{ controller_settings is mapping | ternary([controller_settings], controller_settings) }}"
+      loop_control:
+        loop_var: __controller_setting_item
+        label: "{{ __controller_setting_item.name | default(__controller_setting_item.settings) }}"
+        pause: "{{ controller_configuration_settings_loop_delay }}"
+      async: "{{ ansible_check_mode | ternary(0, 1000) }}"
+      poll: 0
+      register: __controller_setting_job_async
+      changed_when: (__controller_setting_job_async.changed if ansible_check_mode else false)
+
+    - name: Flag for errors (check mode only)
+      ansible.builtin.set_fact:
+        error_flag: true
+      when: ansible_check_mode and __controller_setting_job_async.failed is defined and __controller_setting_job_async.failed
+
+    - name: Configure Settings | Wait for finish the Settings creation
+      when:
+        - not ansible_check_mode
+        - __controller_setting_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __controller_setting_job_async.results }}"
+      loop_control:
+        loop_var: __controller_setting_job_async_results_item
+      vars:
+        cas_secure_logging: "{{ controller_configuration_settings_secure_logging }}"
+        cas_async_delay: "{{ controller_configuration_settings_async_delay }}"
+        cas_async_retries: "{{ controller_configuration_settings_async_retries }}"
+        cas_job_async_results_item: "{{ __controller_setting_job_async_results_item }}"
+        cas_error_list_var_name: "controller_settings_errors"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __controller_setting_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __controller_setting_job_async_results_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __controller_setting_job_async.results }}"
+      loop_control:
+        loop_var: __controller_setting_job_async_results_item
+        label: "Cleaning up job results file: {{ __controller_setting_job_async_results_item.results_file | default('Unknown') }}"
 ...
