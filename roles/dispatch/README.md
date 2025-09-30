@@ -8,6 +8,27 @@ An Ansible Role to run all roles in the infra.aap_configuration collection.
 
 This is a meta role, its purpose is to run the other roles in the collection, it does not run all of them, and can be used to call roles in a custom order, The control variable is the `aap_configuration_dispatcher_roles` which will pull roles from the different services and run them, If you wish to just run a subset of services from our default lists remove entries from this var.
 
+There is also an option `dispatch_sort_included_vars` which is default set to `false` but if true it expects you to have used include_vars dir option and the vars themselves to match the naming but add on to them for example `controller_templates_dev`.
+
+```yaml
+- name: Include common vars
+  ansible.builtin.include_vars:
+    dir: ../config/all
+    extensions:
+      - 'yml'
+
+# Inside ../config/all/controller_job_templates.yml
+controller_templates_all:
+  - name: aap_config
+    project: config_as_code
+    playbook: playbooks/aap_config.yml
+    inventory: config_as_code
+    credentials:
+      - aap_admin
+
+```
+
+
 ```yaml
 aap_configuration_dispatcher_roles: >
   {{ gateway_configuration_dispatcher_roles
