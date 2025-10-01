@@ -24,6 +24,9 @@ galaxy_info:
     - application
     - applications
 
+collections:
+  - ansible.platform
+
 dependencies:
   - role: global_vars
 ...

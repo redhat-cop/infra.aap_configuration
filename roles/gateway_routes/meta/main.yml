@@ -24,6 +24,9 @@ galaxy_info:
     - route
     - routes
 
+collections:
+  - ansible.platform
+
 dependencies:
   - role: global_vars
 ...

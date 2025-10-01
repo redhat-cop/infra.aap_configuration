@@ -24,6 +24,9 @@ galaxy_info:
     - organization
     - organizations
 
+collections:
+  - ansible.platform
+
 dependencies:
   - role: global_vars
 ...

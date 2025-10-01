@@ -24,6 +24,9 @@ galaxy_info:
     - team
     - teams
 
+collections:
+  - ansible.platform
+
 dependencies:
   - role: global_vars
 ...
