@@ -20,7 +20,7 @@ This example shows how to structure your files and playbook to use this feature,
 
 First, create folders to hold your common and environment-specific configurations. This approach allows you to separate different types of configurations into their own files and reduce duplication.
 
-```
+```bash
 .
 ├── playbook.yml
 └── config/
@@ -38,7 +38,7 @@ Next, define the variables inside the corresponding files. Notice the variable n
 
 **`config/all/projects.yml`:**
 
-```
+```yaml
 controller_projects_common:
   - name: Common Intranet Project
     organization: Default
@@ -48,7 +48,7 @@ controller_projects_common:
 
 **`config/prod/projects.yml`:**
 
-```
+```yaml
 controller_projects_production:
   - name: Production App Project
     organization: Production
@@ -62,7 +62,7 @@ In your main playbook, you must load all the relevant configuration files. A com
 
 **`playbook.yml`:**
 
-```
+```yaml
 - name: Configure AAP
   hosts: localhost
   gather_facts: false
@@ -94,7 +94,7 @@ When you run the playbook (e.g., with `-e "env=prod"`), it loads variables from 
 
 **Resulting Master List:**
 
-```
+```yaml
 controller_projects:
   - name: Common Intranet Project
     organization: Default
