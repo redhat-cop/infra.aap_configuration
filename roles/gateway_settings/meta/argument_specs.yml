@@ -30,8 +30,8 @@ argument_specs:
         description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `~/.ansible_async`.
 
       # No_log variables
-      gateway_services_secure_logging:
-        default: "{{ aap_configuration_secure_logging | default(true) }}"
+      gateway_settings_secure_logging:
+        default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
         description: Whether or not to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.

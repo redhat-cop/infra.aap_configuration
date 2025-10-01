@@ -89,7 +89,7 @@ argument_specs:
 
       # No_log variables
       gateway_users_secure_logging:
-        default: "{{ aap_configuration_secure_logging | default(true) }}"
+        default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
         description: Whether or not to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
