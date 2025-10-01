@@ -248,4 +248,5 @@
   ansible.builtin.set_fact:
     eda_rulebook_activations: "{{ (eda_rulebook_activations | default([])) + lookup('ansible.builtin.vars', item) }}"
   loop: "{{ [] if (lookup('ansible.builtin.varnames', 'eda_rulebook_activations.*')) is not string else (lookup('ansible.builtin.varnames', 'eda_rulebook_activations.*') | split(',')) }}"
+
 ...
