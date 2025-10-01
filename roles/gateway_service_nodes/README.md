@@ -67,7 +67,7 @@ This also speeds up the overall role.
 
 ### Service Node Arguments
 
-Options for the `service_nodes_list` variable:
+Options for the `gateway_service_nodes` variable:
 
 | Variable Name     | Default Value | Required | Type | Description                                                                      |
 |:------------------|:-------------:|:--------:|:----:|:---------------------------------------------------------------------------------|

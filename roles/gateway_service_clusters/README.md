@@ -51,7 +51,7 @@ This also speeds up the overall role.
 
 ### Service Cluster Arguments
 
-Options for the `gateway_service_nodes` variable:
+Options for the `gateway_service_clusters` variable:
 
 | Variable Name  | Default Value |      Required      | Type | Description                                                                             |
 |:---------------|:-------------:|:------------------:|:----:|:----------------------------------------------------------------------------------------|
