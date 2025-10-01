@@ -16,7 +16,7 @@ This option provides a powerful way to organize your configuration. When you set
 
 This example shows how to structure your files and playbook to use this feature, combining a set of "common" projects with environment-specific ones.
 
-**1. Organize Your Configuration Files**
+#### 1. Organize Your Configuration Files
 
 First, create folders to hold your common and environment-specific configurations. This approach allows you to separate different types of configurations into their own files and reduce duplication.
 
@@ -32,7 +32,7 @@ First, create folders to hold your common and environment-specific configuration
         └── projects.yml
 ```
 
-**2. Define Variables in Your Files**
+#### 2. Define Variables in Your Files
 
 Next, define the variables inside the corresponding files. Notice the variable names end with a suffix (`_common`, `_production`, etc.) that identifies their purpose.
 
@@ -56,7 +56,7 @@ controller_projects_production:
     scm_url: git@github.com:acme-org/prod-app.git
 ```
 
-**3. Load the Variables in Your Playbook**
+#### 3. Load the Variables in Your Playbook
 
 In your main playbook, you must load all the relevant configuration files. A common pattern is to load the `all` directory first, then layer the environment-specific configuration on top.
 
@@ -88,11 +88,11 @@ In your main playbook, you must load all the relevant configuration files. A com
         dispatch_include_wildcard_vars: true
 ```
 
-**4. See the Result**
+ #### 4. See the Result
 
 When you run the playbook (e.g., with `-e "env=prod"`), it loads variables from both `config/all` and `config/prod`. The `dispatch` role will then detect both the `controller_projects_common` and `controller_projects_production` variables. Because `dispatch_include_wildcard_vars` is **`true`**, it automatically merges their contents into the base `controller_projects` variable.
 
-**Resulting Master List:**
+#### Resulting Master List:
 
 ```yaml
 controller_projects:
