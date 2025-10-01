@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Added logic to better label the collect_async_status role/tasks to more easily understand where automation is at any given point
+...
