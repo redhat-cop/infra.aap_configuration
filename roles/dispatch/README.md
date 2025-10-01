@@ -108,7 +108,6 @@ controller_projects:
 
 By default, this option is **`false`**.
 
-
 ```yaml
 aap_configuration_dispatcher_roles: >
   {{ gateway_configuration_dispatcher_roles
