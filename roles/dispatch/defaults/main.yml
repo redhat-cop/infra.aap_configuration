@@ -1,5 +1,5 @@
 ---
-dispatch_sort_included_vars: false
+dispatch_include_wildcard_vars: false
 gateway_configuration_dispatcher_roles:
   - role: gateway_authenticators
     var: gateway_authenticators
