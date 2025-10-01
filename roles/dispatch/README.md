@@ -88,11 +88,11 @@ In your main playbook, you must load all the relevant configuration files. A com
         dispatch_include_wildcard_vars: true
 ```
 
- #### 4. See the Result
+#### 4. See the Result
 
 When you run the playbook (e.g., with `-e "env=prod"`), it loads variables from both `config/all` and `config/prod`. The `dispatch` role will then detect both the `controller_projects_common` and `controller_projects_production` variables. Because `dispatch_include_wildcard_vars` is **`true`**, it automatically merges their contents into the base `controller_projects` variable.
 
-#### Resulting Master List:
+#### Resulting Master List
 
 ```yaml
 controller_projects:
@@ -107,6 +107,7 @@ controller_projects:
 ```
 
 By default, this option is **`false`**.
+
 
 ```yaml
 aap_configuration_dispatcher_roles: >
