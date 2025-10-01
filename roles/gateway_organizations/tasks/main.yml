@@ -111,10 +111,6 @@
         __operation: "{{ operation_translate[__organizations_job_async_results_item.__controller_organizations_item.state | default(platform_state) | default('present')] }}"
 
   always:
-    - name: Debug
-      ansible.builtin.debug:
-        msg: "{{ __gateway_organizations_job_async.results | default([]) + __organizations_job_async.results | default([]) }}"
-
     - name: Cleanup async results files
       when:
         - not ansible_check_mode

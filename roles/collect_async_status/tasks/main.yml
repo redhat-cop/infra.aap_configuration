@@ -1,4 +1,8 @@
 ---
+- name: TMP debug
+  ansible.builtin.debug:
+    msg: "{{ cas_job_async_results_item }}"
+
 - name: An async_error_reporting block
   no_log: "{{ cas_secure_logging }}"
   block:
