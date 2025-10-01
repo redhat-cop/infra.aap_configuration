@@ -34,12 +34,12 @@ First, create folders to hold your common and environment-specific configuration
 
 #### 2. Define Variables in Your Files
 
-Next, define the variables inside the corresponding files. Notice the variable names end with a suffix (`_common`, `_production`, etc.) that identifies their purpose.
+Next, define the variables inside the corresponding files. Notice the variable names end with a suffix (`_all`, `_prod`, etc.) that identifies their purpose.
 
 **`config/all/projects.yml`:**
 
 ```yaml
-controller_projects_common:
+controller_projects_all:
   - name: Common Intranet Project
     organization: Default
     scm_type: git
@@ -49,7 +49,7 @@ controller_projects_common:
 **`config/prod/projects.yml`:**
 
 ```yaml
-controller_projects_production:
+controller_projects_prod:
   - name: Production App Project
     organization: Production
     scm_type: git
@@ -90,7 +90,7 @@ In your main playbook, you must load all the relevant configuration files. A com
 
 #### 4. See the Result
 
-When you run the playbook (e.g., with `-e "env=prod"`), it loads variables from both `config/all` and `config/prod`. The `dispatch` role will then detect both the `controller_projects_common` and `controller_projects_production` variables. Because `dispatch_include_wildcard_vars` is **`true`**, it automatically merges their contents into the base `controller_projects` variable.
+When you run the playbook (e.g., with `-e "env=prod"`), it loads variables from both `config/all` and `config/prod`. The `dispatch` role will then detect both the `controller_projects_all` and `controller_projects_prod` variables. Because `dispatch_include_wildcard_vars` is **`true`**, it automatically merges their contents into the base `controller_projects` variable.
 
 #### Resulting Master List
 
