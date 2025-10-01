@@ -5,5 +5,5 @@ hub_collections:
   - collection_local_path: /var/tmp/tower_configuration
     collection_name: tower_configuration
 
-ah_auto_approve: true
+hub_auto_approve: true
 ...
