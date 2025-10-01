@@ -36,7 +36,7 @@ gateway_configuration_dispatcher_roles:
     var: aap_applications
     tags: applications
   - role: gateway_http_ports
-    var: http_ports_list
+    var: gateway_http_ports
     tags: http_ports
   - role: gateway_organizations
     var: aap_organizations
@@ -67,7 +67,7 @@ gateway_configuration_dispatcher_roles:
     tags: teams
   - role: gateway_users
     var: aap_user_accounts
-    tags: teams
+    tags: users
 ```
 
 #### Hub Roles
