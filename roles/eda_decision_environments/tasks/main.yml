@@ -49,6 +49,7 @@
         cas_job_async_results_item: "{{ __decision_environments_job_async_result_item }}"
         cas_error_list_var_name: "eda_decision_environments_errors"
         __operation: "{{ operation_translate[__decision_environments_job_async_result_item.__de_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} decision environment {{ __decision_environments_job_async_result_item.__de_item.name }} | Wait for finish the decision environment {{ __operation.action }}"
 
   always:
     - name: Cleanup async results files

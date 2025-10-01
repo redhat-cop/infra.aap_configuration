@@ -54,6 +54,7 @@
         cas_async_retries: "{{ controller_configuration_inventory_source_update_async_retries }}"
         cas_job_async_results_item: "{{ __inventory_source_update_async_results_item }}"
         cas_error_list_var_name: "controller_inventory_source_update_errors"
+        cas_object_label: "Waiting for Controller Inventory Source {{ __inventory_source_update_async_results_item.__inventory_source_update_item.name }} to update"
 
   always:
     - name: Cleanup async results files

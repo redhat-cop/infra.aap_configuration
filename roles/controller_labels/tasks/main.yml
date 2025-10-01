@@ -52,6 +52,7 @@
         cas_job_async_results_item: "{{ __controller_label_job_async_results_item }}"
         cas_error_list_var_name: "controller_labels_errors"
         __operation: "{{ operation_translate[__controller_label_job_async_results_item.__controller_label_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} Label {{ __controller_label_job_async_results_item.__controller_label_item.name }} | Wait for finish the Label {{ __operation.action }}"
 
   always:
     - name: Cleanup async results files

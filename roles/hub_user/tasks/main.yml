@@ -51,7 +51,8 @@
         cas_async_retries: "{{ hub_configuration_user_async_retries }}"
         cas_job_async_results_item: "{{ __users_job_async_result_item }}"
         cas_error_list_var_name: "hub_user_errors"
-        __operation: "{{ operation_translate[__users_job_async_result_item.state | default(platform_state) | default('present')] }}"
+        __operation: "{{ operation_translate[__users_job_async_result_item.__hub_user_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} User {{ __users_job_async_result_item.__hub_user_item.username }} | Wait for finish the User {{ __operation.action }}"
 
   always:
     - name: Cleanup async results files

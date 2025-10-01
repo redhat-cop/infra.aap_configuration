@@ -55,6 +55,7 @@
         cas_job_async_results_item: "{{ __host_job_async_results_item }}"
         cas_error_list_var_name: "controller_hosts_errors"
         __operation: "{{ operation_translate[__host_job_async_results_item.__controller_host_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} Controller Host {{ __host_job_async_results_item.__controller_host_item.name }} | Wait for finish the Hosts {{ __operation.action }}"
 
   always:
     - name: Cleanup async results files

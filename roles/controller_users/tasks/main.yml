@@ -60,6 +60,7 @@
         cas_job_async_results_item: "{{ __controller_user_accounts_job_async_results_item }}"
         cas_error_list_var_name: "controller_users_errors"
         __operation: "{{ operation_translate[__controller_user_accounts_job_async_results_item.__controller_user_accounts_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} User {{ __controller_user_accounts_job_async_results_item.__controller_user_accounts_item.user | default(__controller_user_accounts_job_async_results_item.__controller_user_accounts_item.username) }} | Wait for finish the Users {{ __operation.action }}"
 
   always:
     - name: Cleanup async results files

@@ -58,6 +58,7 @@
         cas_job_async_results_item: "{{ __group_job_async_results_item }}"
         cas_error_list_var_name: "controller_host_groups_errors"
         __operation: "{{ operation_translate[__group_job_async_results_item.__controller_groups_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} Controller Group {{ __group_job_async_results_item.__controller_groups_item.name }} | Wait for finish the Controller Group {{ __operation.action }}"
 
   always:
     - name: Cleanup async results files

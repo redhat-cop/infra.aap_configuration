@@ -54,6 +54,7 @@
         cas_async_retries: "{{ controller_configuration_project_update_async_retries }}"
         cas_job_async_results_item: "{{ __project_update_job_async_results_item }}"
         cas_error_list_var_name: "controller_project_update_errors"
+        cas_object_label: "Waiting for Controller Project {{ __project_update_job_async_results_item.__project_update_update_item.name }} to update"
 
   always:
     - name: Cleanup async results files
