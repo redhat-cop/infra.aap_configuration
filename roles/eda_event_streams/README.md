@@ -27,7 +27,7 @@ eda_configuration_event_streams_secure_logging defaults to the value of aap_conf
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`eda_configuration_event_streams_secure_logging`|`false`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `true` if you will be providing your sensitive values from elsewhere.|
+|`eda_configuration_event_streams_secure_logging`|`true`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `true` if you will be providing your sensitive values from elsewhere.|
 |`aap_configuration_secure_logging`|`false`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `true` if you will be providing your sensitive values from elsewhere.|
 
 ### Asynchronous Retry Variables
@@ -40,9 +40,9 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`aap_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
-|`eda_configuration_event_streams_secure_logging`|`aap_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
+|`eda_configuration_event_streams_async_retries`|`aap_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
 |`aap_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
-|`eda_configuration_event_streams_async_retries`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
+|`eda_configuration_event_streams_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
 |`aap_configuration_loop_delay`|1000|no|This variable sets the loop_delay for the role globally.|
 |`eda_configuration_event_streams_async_delay`|`aap_configuration_loop_delay`|no|This variable sets the loop_delay for the role.|
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
