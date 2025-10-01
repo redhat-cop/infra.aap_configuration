@@ -36,5 +36,6 @@ galaxy_info:
     - ansible
     - config
 
-dependencies: []
+dependencies:
+  - role: global_vars
 ...

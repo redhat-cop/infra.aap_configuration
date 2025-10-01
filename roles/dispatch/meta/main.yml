@@ -45,5 +45,6 @@ collections:
   - ansible.eda
   - awx.awx
 
-dependencies: []
+dependencies:
+  - role: global_vars
 ...
