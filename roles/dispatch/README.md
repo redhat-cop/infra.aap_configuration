@@ -32,6 +32,8 @@ First, create folders to hold your common and environment-specific configuration
         └── projects.yml
 ```
 
+NOTE: This is just an example and you can organize it however you want. You can also use group_vars as well the only thing that matters is the naming the vars and getting them ingested in some way.
+
 #### 2. Define Variables in Your Files
 
 Next, define the variables inside the corresponding files. Notice the variable names end with a suffix (`_all`, `_prod`, etc.) that identifies their purpose.
