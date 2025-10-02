@@ -1,0 +1,14 @@
+---
+controller_bulk_hosts:
+  - name: "test-host-01"
+    description: "Test host 1"
+    inventory: "Demo Inventory"
+    variables: "ansible_host: 192.168.1.10"
+  - name: "test-host-02"
+    description: "Test host 2"
+    inventory: "Demo Inventory"
+    variables: "ansible_host: 192.168.1.11"
+  - name: "test-host-03"
+    description: "Test host 3"
+    inventory: "Demo Inventory"
+    variables: "ansible_host: 192.168.1.12"

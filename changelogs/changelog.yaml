@@ -97,7 +97,7 @@ releases:
         job_launch, job_cancel, project_update, workflow_launch
       - Updated collection to use and comply with ansible-lint v5
       minor_changes:
-      - Fixed default filters to use true when neccessary and changed a few defaults
+      - Fixed default filters to use true when necessary and changed a few defaults
         to omit rather then a value or empty string.
       - updated various Readmes to fix typos and missing information.
     fragments:
@@ -876,7 +876,7 @@ releases:
       bugfixes:
       - Fix accidentally removed usage of '_async_delay' and '_async_retries' variables
       - Fixes issue when adding workflow schemas where the job_id is not defined because
-        a failure state has occured
+        a failure state has occurred
     fragments:
     - 1154_retries_delay.yml
     - workflow_schema_job_id.yml
