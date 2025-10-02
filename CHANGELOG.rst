@@ -49,7 +49,7 @@ Bugfixes
 --------
 
 - Fix accidentally removed usage of '_async_delay' and '_async_retries' variables
-- Fixes issue when adding workflow schemas where the job_id is not defined because a failure state has occured
+- Fixes issue when adding workflow schemas where the job_id is not defined because a failure state has occurred
 
 v3.5.0
 ======
@@ -715,7 +715,7 @@ Major Changes
 Minor Changes
 -------------
 
-- Fixed default filters to use true when neccessary and changed a few defaults to omit rather then a value or empty string.
+- Fixed default filters to use true when necessary and changed a few defaults to omit rather then a value or empty string.
 - updated various Readmes to fix typos and missing information.
 
 Breaking Changes / Porting Guide

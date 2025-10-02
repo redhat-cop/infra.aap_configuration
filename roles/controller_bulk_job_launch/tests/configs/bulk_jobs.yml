@@ -1,0 +1,7 @@
+---
+controller_bulk_launch_jobs:
+  - name: "demo-job-template"
+    job_type: "run"
+    limit: "webservers"
+  - name: "demo-workflow-job-template"
+    job_type: "run"
