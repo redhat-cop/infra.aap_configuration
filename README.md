@@ -2,7 +2,7 @@
 
 ![pre-commit tests](https://github.com/redhat-cop/aap_configuration/actions/workflows/pre-commit.yml/badge.svg)
 ![Release](https://github.com/redhat-cop/aap_configuration/actions/workflows/release.yml/badge.svg)
-<!-- markdownlint-disable-line MD033 MD034 --><a href="https://raw.githubusercontent.com/redhat-cop/infra.controller_configuration/devel/docs/aap_config_as_code_public_meeting.ics"><img border="0" alt="Google Calendar invite" width="60" src="https://ssl.gstatic.com/calendar/images/dynamiclogo_2020q4/calendar_20_2x.png"></a>
+<!-- markdownlint-disable-line MD033 MD034 --><a href="https://raw.githubusercontent.com/redhat-cop/infra.aap_configuration/devel/docs/aap_config_as_code_public_meeting.ics"><img border="0" alt="Google Calendar invite" width="60" src="https://ssl.gstatic.com/calendar/images/dynamiclogo_2020q4/calendar_20_2x.png"></a>
 <!-- Further CI badges go here as above -->
 
 This Ansible collection allows for easy interaction with AAP 2.5+ via Ansible roles using the modules from the certified collections.
@@ -147,10 +147,10 @@ Controller token module would be invoked with this code:
 
 ### Error Handling
 
-Many of the roles in this collection use asynchrous tasks to perform their
-actions. By default the first failed asyncronous task will cause the playbook to
+Many of the roles in this collection use asynchronous tasks to perform their
+actions. By default the first failed asynchronous task will cause the playbook to
 fail. Setting the `aap_configuration_collect_logs` variable to `true` will
-enable collecting all asyncronous task failure messages and allow the playbook
+enable collecting all asynchronous task failure messages and allow the playbook
 to run to completion.
 
 When `aap_configuration_collect_logs` is enabled the reported errors are
@@ -239,7 +239,7 @@ Adding the ability to use direct output from the awx export command in the roles
 We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [Controller Configuration collection repository](https://github.com/redhat-cop/aap_configuration).
 More information about contributing can be found in our [Contribution Guidelines.](https://github.com/redhat-cop/aap_configuration/blob/devel/.github/CONTRIBUTING.md)
 
-<!-- markdownlint-disable-line MD033 MD034 -->We have a community meeting every 4 weeks. Find the agenda in the [issues](https://github.com/redhat-cop/infra.controller_configuration/issues) and the calendar invitation here:<a target="_blank" href="https://raw.githubusercontent.com/redhat-cop/infra.controller_configuration/devel/docs/aap_config_as_code_public_meeting.ics"><img border="0" alt="Google Calendar invite" width="20" src="https://ssl.gstatic.com/calendar/images/dynamiclogo_2020q4/calendar_20_2x.png"></a>
+<!-- markdownlint-disable-line MD033 MD034 -->We have a community meeting every 4 weeks. Find the agenda in the [issues](https://github.com/redhat-cop/infra.aap_configuration/issues) and the calendar invitation here:<a target="_blank" href="https://raw.githubusercontent.com/redhat-cop/infra.aap_configuration/devel/docs/aap_config_as_code_public_meeting.ics"><img border="0" alt="Google Calendar invite" width="20" src="https://ssl.gstatic.com/calendar/images/dynamiclogo_2020q4/calendar_20_2x.png"></a>
 
 ## Code of Conduct
 

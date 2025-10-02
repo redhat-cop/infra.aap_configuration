@@ -33,7 +33,7 @@ argument_specs:
 
       # Async variables
       hub_configuration_publish_async_retries:
-        default: "{{ aap_configuration_async_retries | default(50) }}"
+        default: "{{ aap_configuration_async_retries | default(30) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
       aap_configuration_async_retries:
