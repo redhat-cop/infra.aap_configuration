@@ -66,9 +66,7 @@ This also speeds up the overall role.
 
 ### Role Team Assignment Variables
 
-**WARNING: This role will only work in AAP 2.6+**
-
-Options for the `aap_role_team_assignments` variable:
+**WARNING: This role will only work in AAP 2.6+** Options for the `aap_role_team_assignments` variable:
 
 | Variable Name       | Default Value | Required | Type | Description                                                                                           |
 |:--------------------|:-------------:|:--------:|:----:|:------------------------------------------------------------------------------------------------------|

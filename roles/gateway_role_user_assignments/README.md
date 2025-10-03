@@ -66,9 +66,7 @@ This also speeds up the overall role.
 
 ### Role User Assignment Variables
 
-**WARNING: Some options only will work in AAP 2.6+**
-
-Options for the `aap_role_user_assignments` variable:
+**WARNING! Some options only will work in AAP 2.6+** Options for the `aap_role_user_assignments` variable:
 
 | Variable Name       | Default Value | Required | Type | Description                                                                                           |
 |:--------------------|:-------------:|:--------:|:----:|:------------------------------------------------------------------------------------------------------|
