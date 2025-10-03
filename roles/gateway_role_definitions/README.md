@@ -66,6 +66,8 @@ This also speeds up the overall role.
 
 ### Role Definition Variables
 
+**WARNING: This role will only work in AAP 2.6+**
+
 Options for the `aap_role_definitions` variable:
 
 | Variable Name       | Default Value | Required | Type | Description                                                                                           |
