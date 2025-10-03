@@ -15,7 +15,7 @@ An Ansible Role to create/update/remove Role User Assignments on Ansible gateway
 |`aap_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|""|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
-|`aap_role_user_assignments`|`see below`|yes|Data structure describing your role user assignments Described below.||
+|`gateway_role_user_assignments`|`see below`|yes|Data structure describing your role user assignments Described below.||
 
 ### Enforcing defaults
 
@@ -66,7 +66,7 @@ This also speeds up the overall role.
 
 ### Role User Assignment Variables
 
-**WARNING! Some options only will work in AAP 2.6+** Options for the `aap_role_user_assignments` variable:
+**WARNING! Some options only will work in AAP 2.6+** Options for the `gateway_role_user_assignments` variable:
 
 | Variable Name       | Default Value | Required | Type | Description                                                                                           |
 |:--------------------|:-------------:|:--------:|:----:|:------------------------------------------------------------------------------------------------------|

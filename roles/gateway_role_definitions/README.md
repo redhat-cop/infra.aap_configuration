@@ -15,7 +15,7 @@ An Ansible Role to create/update/remove Role Definitions on Ansible gateway.
 |`aap_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|""|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
-|`aap_role_definitions`|`see below`|yes|Data structure describing your role definitions Described below.||
+|`gateway_role_definitions`|`see below`|yes|Data structure describing your role definitions Described below.||
 
 ### Enforcing defaults
 
@@ -66,7 +66,7 @@ This also speeds up the overall role.
 
 ### Role Definition Variables
 
-**WARNING: This role will only work in AAP 2.6+** Options for the `aap_role_definitions` variable:
+**WARNING: This role will only work in AAP 2.6+** Options for the `gateway_role_definitions` variable:
 
 | Variable Name       | Default Value | Required | Type | Description                                                                                           |
 |:--------------------|:-------------:|:--------:|:----:|:------------------------------------------------------------------------------------------------------|
@@ -83,7 +83,7 @@ This also speeds up the overall role.
 
 ```json
 {
-  "aap_role_definitions": [
+  "gateway_role_definitions": [
     {
       "name": "Create a role definition",
       "ansible.platform.role_definition": {
@@ -103,11 +103,11 @@ This also speeds up the overall role.
 
 #### Yaml Example
 
-File name: `data/aap_role_definitions.yml`
+File name: `data/gateway_role_definitions.yml`
 
 ```yaml
 ---
-aap_role_definitions:
+gateway_role_definitions:
 - name: Create a role definition
   ansible.platform.role_definition:
     name: Organization Inventory Admin
