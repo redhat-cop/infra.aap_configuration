@@ -87,13 +87,17 @@ Options for the `aap_role_definitions` variable:
 {
   "aap_role_definitions": [
     {
-      "name": "Inventory Viewer",
-      "content_type": "awx.inventory",
-      "description": "Role to view inventories",
-      "permissions": [
-        "awx.view_inventory"
-      ],
-      "state": "present"
+      "name": "Create a role definition",
+      "ansible.platform.role_definition": {
+        "name": "Organization Inventory Admin",
+        "description": "Grants full inventory access",
+        "content_type": "awx.inventory",
+        "permissions": [
+          "awx.view_inventory",
+          "awx.change_inventory"
+        ],
+        "state": "present"
+      }
     }
   ]
 }
@@ -106,12 +110,15 @@ File name: `data/aap_role_definitions.yml`
 ```yaml
 ---
 aap_role_definitions:
-- name: "Inventory Viewer"
-  content_type: "awx.inventory"
-  description: "Role to view inventories"
-  permissions:
-    - "awx.view_inventory"
-  state: "present"
+- name: Create a role definition
+  ansible.platform.role_definition:
+    name: Organization Inventory Admin
+    description: Grants full inventory access
+    content_type: awx.inventory
+    permissions:
+      - awx.view_inventory
+      - awx.change_inventory
+    state: present
 ```
 
 ## License

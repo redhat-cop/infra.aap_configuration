@@ -90,12 +90,11 @@ Options for the `aap_role_user_assignments` variable:
 
 ```json
 {
-  "aap_role_user_assignments": [
+  "gateway_role_user_assignments": [
     {
-      "role_definition": "Organization Member",
+      "role_definition": "Organization Admin",
       "user": "Bob",
-      "object_ids": ["1"],
-      "state": "present"
+      "object_ids": "org1"
     }
   ]
 }
@@ -103,16 +102,15 @@ Options for the `aap_role_user_assignments` variable:
 
 #### Yaml Example
 
-File name: `data/aap_role_user_assignments.yml`
+File name: `data/gateway_role_user_assignments.yml`
 
 ```yaml
 ---
-aap_role_user_assignments:
-- role_definition: "Organization Member"
-  user: "Bob"
-  object_ids:
-    - "1"
-  state: "present"
+gateway_role_user_assignments:
+  - role_definition: Organization Admin
+    user: Bob
+    object_ids: org1
+
 ```
 
 ## License
