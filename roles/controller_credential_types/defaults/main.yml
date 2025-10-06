@@ -2,7 +2,7 @@
 # list of dict to define Controller credential types
 controller_credential_types: []
 controller_configuration_credential_types_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
-controller_configuration_credential_types_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+controller_configuration_credential_types_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 controller_configuration_credential_types_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 controller_configuration_credential_types_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 aap_configuration_async_dir:

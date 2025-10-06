@@ -2,7 +2,7 @@
 # a list of dicts describing Controller credentials
 controller_credentials: []
 controller_configuration_credentials_secure_logging: "{{ aap_configuration_secure_logging | default(true) }}"
-controller_configuration_credentials_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+controller_configuration_credentials_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 controller_configuration_credentials_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 controller_configuration_credentials_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 aap_configuration_async_dir:

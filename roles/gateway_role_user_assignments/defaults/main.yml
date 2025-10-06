@@ -10,7 +10,7 @@
 # a list of dictionaries describing the gateway role_user_assignments
 gateway_role_user_assignments: []
 gateway_role_user_assignments_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
-gateway_role_user_assignments_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+gateway_role_user_assignments_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 gateway_role_user_assignments_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 gateway_role_user_assignments_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 gateway_role_user_assignments_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"

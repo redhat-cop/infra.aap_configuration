@@ -11,7 +11,7 @@
 # a list of dictionaries describing the teams
 aap_teams: []
 gateway_teams_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
-gateway_teams_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+gateway_teams_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 gateway_teams_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 gateway_teams_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 aap_configuration_async_dir:

@@ -11,7 +11,7 @@
 # a list of dictionaries describing the organizations
 aap_organizations: []
 gateway_organizations_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
-gateway_organizations_async_retries: "{{ aap_configuration_async_retries | default(30) }}"
+gateway_organizations_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 gateway_organizations_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 gateway_organizations_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 gateway_organizations_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"

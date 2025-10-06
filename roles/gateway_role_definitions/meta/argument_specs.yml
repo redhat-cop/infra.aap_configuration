@@ -34,7 +34,7 @@ argument_specs:
 
       # Async variables
       role_definitions_async_retries:
-        default: "{{ aap_configuration_async_retries | default(30) }}"
+        default: "{{ aap_configuration_async_retries | default(50) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
       aap_configuration_async_retries:
@@ -97,4 +97,9 @@ argument_specs:
         required: false
         description: Gateway Admin User's token on the Ansible gateway Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
         type: str
+      aap_request_timeout:
+        default: 10
+        required: false
+        description: Specify the timeout Ansible should use in requests to the Ansible gateway Server.
+        type: float
 ...
