@@ -195,9 +195,18 @@ objects:
         gateway.
       name: gateway_organizations
       version_added: null
+    gateway_role_definitions:
+      description: An Ansible Role to create role_definitions on Ansible gateway for
+        AAP 2.6+.
+      name: gateway_role_definitions
+      version_added: null
+    gateway_role_team_assignments:
+      description: An Ansible Role to create role_team_assignments on Ansible gateway
+        for AAP 2.6+.
+      name: gateway_role_team_assignments
+      version_added: null
     gateway_role_user_assignments:
-      description: An Ansible Role to create role user assignment on automation platform
-        gateway.
+      description: An Ansible Role to create role_user_assignments on Ansible gateway.
       name: gateway_role_user_assignments
       version_added: null
     gateway_routes:
@@ -321,4 +330,4 @@ plugins:
   strategy: {}
   test: {}
   vars: {}
-version: 3.7.0
+version: 3.8.0

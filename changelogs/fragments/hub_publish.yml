@@ -1,4 +1,0 @@
----
-minor_changes:
-  - updated vars to `hub_` from `ah_` that were missed in hub_publish role
-...
