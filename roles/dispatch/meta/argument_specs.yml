@@ -205,7 +205,7 @@ argument_specs:
 
       # Async variables
       aap_configuration_async_retries:
-        default: 30
+        default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
       aap_configuration_async_delay:

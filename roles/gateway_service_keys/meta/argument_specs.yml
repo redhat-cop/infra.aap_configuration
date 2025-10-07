@@ -46,7 +46,7 @@ argument_specs:
         required: false
         description: This variable sets the number of retries to attempt for the role.
       aap_configuration_async_retries:
-        default: 30
+        default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
       gateway_service_keys_async_delay:
@@ -58,7 +58,7 @@ argument_specs:
         required: false
         description: This variable sets delay between retries across all roles as a default.
       aap_configuration_async_dir:
-        default:
+        default: null
         required: false
         description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `~/.ansible_async`.
 

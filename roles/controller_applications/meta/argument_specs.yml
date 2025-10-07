@@ -51,7 +51,7 @@ argument_specs:
         required: false
         description: This variable sets the number of retries to attempt for the role.
       aap_configuration_async_retries:
-        default: 30
+        default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
       controller_configuration_applications_async_delay:
@@ -63,9 +63,25 @@ argument_specs:
         required: false
         description: This variable sets delay between retries across all roles as a default.
       aap_configuration_async_dir:
-        default:
+        default: null
         required: false
         description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.
+      controller_configuration_applications_loop_delay:
+        default: "{{ aap_configuration_loop_delay | default(0) }}"
+        required: false
+        description: This variable sets the pause between each item in the loop for the role.
+      aap_configuration_loop_delay:
+        default: 0
+        required: false
+        description: This variable sets the pause between each item in the loop for the roles globally.
+      controller_configuration_applications_enforce_defaults:
+        default: "{{ aap_configuration_enforce_defaults | default(false) }}"
+        required: false
+        description: This variable enforces default values for optional fields.
+      aap_configuration_enforce_defaults:
+        default: false
+        required: false
+        description: This variable enforces default values for optional fields across all roles.
 
       # No_log variables
       controller_configuration_applications_secure_logging:

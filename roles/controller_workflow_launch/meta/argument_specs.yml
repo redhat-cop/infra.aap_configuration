@@ -52,7 +52,7 @@ argument_specs:
         required: false
         description: This variable sets the number of retries to attempt for the role.
       aap_configuration_async_retries:
-        default: 30
+        default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
       controller_configuration_workflow_launch_async_delay:
