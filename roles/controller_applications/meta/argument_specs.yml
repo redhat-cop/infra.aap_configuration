@@ -3,7 +3,7 @@ argument_specs:
   main:
     short_description: An Ansible Role to create Applications on Ansible Controller.
     options:
-      controller_applications:
+      aap_applications:
         description: Data structure describing your applications
         type: list
         elements: dict
