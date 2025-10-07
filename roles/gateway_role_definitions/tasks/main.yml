@@ -47,6 +47,7 @@
         cas_job_async_results_item: "{{ __gateway_role_definitions_job_async_results_item }}"
         cas_error_list_var_name: "gateway_role_definitions_errors"
         __operation: "{{ operation_translate[__gateway_role_definitions_job_async_results_item.__controller_role_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} Role {{ __gateway_role_definitions_job_async_results_item.__gateway_role_definitions_item.1 | default(__gateway_role_definitions_job_async_results_item.__gateway_role_definitions_item.role_definition) }} | Wait for finish the Roles {{ __operation.action }}"
 
   always:
     - name: Cleanup async results files

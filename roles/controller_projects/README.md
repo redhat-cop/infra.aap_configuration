@@ -59,7 +59,7 @@ This also speeds up the overall role.
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---|
-|`aap_configuration_async_retries`|30|no|str|This variable sets the number of retries to attempt for the role globally.|
+|`aap_configuration_async_retries`|50|no|str|This variable sets the number of retries to attempt for the role globally.|
 |`controller_configuration_projects_async_retries`|`{{ aap_configuration_async_retries }}`|no|str|This variable sets the number of retries to attempt for the role.|
 |`aap_configuration_async_delay`|1|no|str|This sets the delay between retries for the role globally.|
 |`controller_configuration_projects_async_delay`|`aap_configuration_async_delay`|no|str|This sets the delay between retries for the role.|
