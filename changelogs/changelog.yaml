@@ -918,3 +918,26 @@ releases:
     - fix_async_variable.yaml
     - fix_workflow_variable_names.yaml
     release_date: '2025-09-17'
+  3.8.0:
+    changes:
+      bugfixes:
+      - Add enhance async handling to the controller_settings role
+      - Added logic to better label the collect_async_status role/tasks to more easily
+        understand where automation is at any given point
+      - Fix usage of aap_configuration_collect_logs variable
+      - Update role readme files to be consistently worded for the aap_configuration_collect_logs
+        variable
+      minor_changes:
+      - Added `gateway_role_definitions` role for AAP 2.6+
+      - Added `gateway_role_team_assignments` role for AAP 2.6+
+      - Updated `gateway_role_user_assignments` role these changes will only work
+        in AAP 2.6+
+      - added include_wildcard_vars option to dispatch role.
+      - updated vars to `hub_` from `ah_` that were missed in hub_publish role
+    fragments:
+    - aap_26_additions.yml
+    - async_fixes.yml
+    - async_improved_logging.yml
+    - hub_publish.yml
+    - include_wildcard_vars.yml
+    release_date: '2025-10-06'

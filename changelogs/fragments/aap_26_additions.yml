@@ -1,6 +1,0 @@
----
-minor_changes:
-  - Updated `gateway_role_user_assignments` role these changes will only work in AAP 2.6+
-  - Added `gateway_role_team_assignments` role for AAP 2.6+
-  - Added `gateway_role_definitions` role for AAP 2.6+
-...
