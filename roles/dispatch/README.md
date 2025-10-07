@@ -167,12 +167,12 @@ gateway_configuration_dispatcher_roles:
   - role: gateway_role_definitions
     var: gateway_role_definitions
     tags: role_definitions
-  - role: gateway_role_user_assignments
-    var: gateway_role_user_assignments
-    tags: role_user_assignments
   - role: gateway_role_team_assignments
     var: gateway_role_team_assignments
     tags: role_team_assignments
+  - role: gateway_role_user_assignments
+    var: gateway_role_user_assignments
+    tags: role_user_assignments
   - role: gateway_routes
     var: gateway_routes
     tags: routes
