@@ -296,9 +296,6 @@ controller_configuration_dispatcher_roles:
   - role: controller_schedules
     var: controller_schedules
     tags: schedules
-  - role: controller_roles
-    var: controller_roles
-    tags: roles
   - role: controller_job_launch
     var: controller_launch_jobs
     tags: job_launch
