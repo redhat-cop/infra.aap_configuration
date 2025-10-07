@@ -1,0 +1,7 @@
+---
+bugfixes:
+  - Added `gateway_role_team_assignments` role to dispatch roles
+  - Added `gateway_role_definitions` role to dispatch roles
+trivial:
+  - Updated main readme to link to the now public ansible.platform repo
+...
