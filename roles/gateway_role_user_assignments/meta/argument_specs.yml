@@ -8,35 +8,35 @@ argument_specs:
         type: list
         required: true
         elements: dict
-        options:
-          object_ansible_id:
-            required: false
-            type: str
-            description: ['UUID of the object(team/organization) this role applies to. Alternative to the object_id/object_ids field.', 'This option is mutually exclusive with I(object_id) and I(object_ids)']
-          object_id:
-            required: false
-            type: int
-            description: ['B(Deprecated)', 'This option is deprecated and will be removed in a release after 2026-01-31.', 'For associating a user to team(s)/organization(s), please use the object_ids param.', 'HORIZONTALLINE', 'Primary key/Name of the object this assignment applies to.', 'This option is mutually exclusive with I(object_ids) and I(object_ansible_id).']
-          object_ids:
-            required: false
-            type: list
-            description: ['List of object IDs(Primary Key ) or names this assignment applies to.', 'This option is mutually exclusive with I(object_id) and I(object_ansible_id).']
-          role_definition:
-            required: true
-            type: str
-            description: ['The name or id of the role definition to assign to the user.']
-          state:
-            default: present
-            type: str
-            description: ['Desired state of the resource.']
-          user:
-            required: false
-            type: str
-            description: ['The name or id of the user to assign to the object.', 'This option is mutually exclusive with I(user_ansible_id).']
-          user_ansible_id:
-            required: false
-            type: str
-            description: ['Resource id of the user who will receive permissions from this assignment. Alternative to user field.', 'This option is mutually exclusive with I(user).']
+#        options:
+#          object_ansible_id:
+#            required: false
+#            type: str
+#            description: ['UUID of the object(team/organization) this role applies to. Alternative to the object_id/object_ids field.', 'This option is mutually exclusive with I(object_id) and I(object_ids)']
+#          object_id:
+#            required: false
+#            type: int
+#            description: ['B(Deprecated)', 'This option is deprecated and will be removed in a release after 2026-01-31.', 'For associating a user to team(s)/organization(s), please use the object_ids param.', 'HORIZONTALLINE', 'Primary key/Name of the object this assignment applies to.', 'This option is mutually exclusive with I(object_ids) and I(object_ansible_id).']
+#          object_ids:
+#            required: false
+#            type: list
+#            description: ['List of object IDs(Primary Key ) or names this assignment applies to.', 'This option is mutually exclusive with I(object_id) and I(object_ansible_id).']
+#          role_definition:
+#            required: true
+#            type: str
+#            description: ['The name or id of the role definition to assign to the user.']
+#          state:
+#            default: present
+#            type: str
+#            description: ['Desired state of the resource.']
+#          user:
+#            required: false
+#            type: str
+#            description: ['The name or id of the user to assign to the object.', 'This option is mutually exclusive with I(user_ansible_id).']
+#          user_ansible_id:
+#            required: false
+#            type: str
+#            description: ['Resource id of the user who will receive permissions from this assignment. Alternative to user field.', 'This option is mutually exclusive with I(user).']
 
       # Async variables
       role_user_assignments_async_retries:

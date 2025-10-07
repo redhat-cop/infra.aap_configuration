@@ -8,26 +8,26 @@ argument_specs:
         type: list
         required: true
         elements: dict
-        options:
-          assignment_objects:
-            type: list
-            description: ['List of dicts mapping resource names to their types.', 'When using name, each dict must include C(name) and C(type).']
-          role_definition:
-            required: true
-            type: str
-            description: ['The role definition which defines permissions conveyed by this assignment.']
-          state:
-            default: present
-            type: str
-            description: ['Desired state of the resource.']
-          team:
-            required: false
-            type: str
-            description: ['The name or id of the team to assign to the object.']
-          team_ansible_id:
-            required: false
-            type: str
-            description: ['Resource id of the team who will receive permissions from this assignment. Alternative to I(team) field.']
+#        options:
+#          assignment_objects:
+#            type: list
+#            description: ['List of dicts mapping resource names to their types.', 'When using name, each dict must include C(name) and C(type).']
+#          role_definition:
+#            required: true
+#            type: str
+#            description: ['The role definition which defines permissions conveyed by this assignment.']
+#          state:
+#            default: present
+#            type: str
+#            description: ['Desired state of the resource.']
+#          team:
+#            required: false
+#            type: str
+#            description: ['The name or id of the team to assign to the object.']
+#          team_ansible_id:
+#            required: false
+#            type: str
+#            description: ['Resource id of the team who will receive permissions from this assignment. Alternative to I(team) field.']
 
       # Async variables
       role_team_assignments_async_retries:
