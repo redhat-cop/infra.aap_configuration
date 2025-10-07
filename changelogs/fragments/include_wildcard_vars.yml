@@ -1,4 +1,0 @@
----
-minor_changes:
-  - added include_wildcard_vars option to dispatch role.
-...

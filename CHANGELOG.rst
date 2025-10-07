@@ -4,6 +4,26 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v3.8.0
+======
+
+Minor Changes
+-------------
+
+- Added `gateway_role_definitions` role for AAP 2.6+
+- Added `gateway_role_team_assignments` role for AAP 2.6+
+- Updated `gateway_role_user_assignments` role these changes will only work in AAP 2.6+
+- added include_wildcard_vars option to dispatch role.
+- updated vars to `hub_` from `ah_` that were missed in hub_publish role
+
+Bugfixes
+--------
+
+- Add enhance async handling to the controller_settings role
+- Added logic to better label the collect_async_status role/tasks to more easily understand where automation is at any given point
+- Fix usage of aap_configuration_collect_logs variable
+- Update role readme files to be consistently worded for the aap_configuration_collect_logs variable
+
 v3.7.0
 ======
 
