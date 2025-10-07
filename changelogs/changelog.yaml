@@ -941,3 +941,14 @@ releases:
     - hub_publish.yml
     - include_wildcard_vars.yml
     release_date: '2025-10-06'
+  3.8.1:
+    changes:
+      bugfixes:
+      - Added `gateway_role_definitions` role to dispatch roles
+      - Added `gateway_role_team_assignments` role to dispatch roles
+      - Updated the async retries default to 50 for the roles to be consistent across
+        the collection.
+    fragments:
+    - new_dispatch_roles.yml
+    - updated_async_retries.yml
+    release_date: '2025-10-07'
