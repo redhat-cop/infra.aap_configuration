@@ -134,18 +134,18 @@ gateway_configuration_dispatcher_roles:
   - role: gateway_settings
     var: gateway_settings
     tags: settings
-  - role: gateway_applications
-    var: aap_applications
-    tags: applications
-  - role: gateway_http_ports
-    var: gateway_http_ports
-    tags: http_ports
   - role: gateway_organizations
     var: aap_organizations
     tags: organizations
     assign_galaxy_credentials_to_org: false
     assign_default_ee_to_org: false
     assign_notification_templates_to_org: false
+  - role: gateway_applications
+    var: aap_applications
+    tags: applications
+  - role: gateway_http_ports
+    var: gateway_http_ports
+    tags: http_ports
   - role: gateway_service_clusters
     var: gateway_service_clusters
     tags: service_clusters
@@ -158,18 +158,24 @@ gateway_configuration_dispatcher_roles:
   - role: gateway_services
     var: gateway_services
     tags: services
-  - role: gateway_role_user_assignments
-    var: gateway_role_user_assignments
-    tags: role_user_assignments
-  - role: gateway_routes
-    var: gateway_routes
-    tags: routes
   - role: gateway_teams
     var: aap_teams
     tags: teams
   - role: gateway_users
     var: aap_user_accounts
     tags: users
+  - role: gateway_role_definitions
+    var: gateway_role_definitions
+    tags: role_definitions
+  - role: gateway_role_team_assignments
+    var: gateway_role_team_assignments
+    tags: role_team_assignments
+  - role: gateway_role_user_assignments
+    var: gateway_role_user_assignments
+    tags: role_user_assignments
+  - role: gateway_routes
+    var: gateway_routes
+    tags: routes
 ```
 
 #### Hub Roles

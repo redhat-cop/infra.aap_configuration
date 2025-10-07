@@ -35,7 +35,7 @@ collections:
 
 |                                      Collection Name                                |            Purpose            |
 |:-----------------------------------------------------------------------------------:|:-----------------------------:|
-| ansible.platform repo (no public repo for this collection)                          | gateway/platform modules      |
+| [ansible.platform repo](https://github.com/ansible/ansible.platform)                | gateway/platform modules      |
 | [ansible.hub repo](https://github.com/ansible-collections/ansible_hub)              | Automation hub modules        |
 | [ansible.controller repo](https://github.com/ansible/awx/tree/devel/awx_collection) | Automation controller modules |
 | [ansible.eda repo](https://github.com/ansible/event-driven-ansible)                 | Event Driven Ansible modules  |
