@@ -6,12 +6,12 @@
   block:
     - name: Role definitions | Configuration
       ansible.platform.role_definition:
-        name: "{{ __gateway_role_definition_item.name | mandatory }}"
-        new_name: "{{ __gateway_role_definition_item.new_name | default(omit, true) }}"
-        description: "{{ __gateway_role_definition_item.description | default(('' if gateway_role_definitions_enforce_defaults else omit), true) }}"
-        content_type: "{{ __gateway_role_definition_item.content_type | mandatory }}"
-        permissions: "{{ __gateway_role_definition_item.permissions | mandatory }}"
-        state: "{{ __gateway_role_definition_item.state | default(platform_state | default(omit, true)) }}"
+        name: "{{ __gateway_role_definitions_item.name | mandatory }}"
+        new_name: "{{ __gateway_role_definitions_item.new_name | default(omit, true) }}"
+        description: "{{ __gateway_role_definitions_item.description | default(('' if gateway_role_definitions_enforce_defaults else omit), true) }}"
+        content_type: "{{ __gateway_role_definitions_item.content_type | mandatory }}"
+        permissions: "{{ __gateway_role_definitions_item.permissions | mandatory }}"
+        state: "{{ __gateway_role_definitions_item.state | default(platform_state | default(omit, true)) }}"
 
         # Role Standard Options
         gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
