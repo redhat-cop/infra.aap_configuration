@@ -1,0 +1,252 @@
+---
+- name: include_wildcard_vars | Set fact for gateway_authenticators
+  ansible.builtin.set_fact:
+    gateway_authenticators: "{{ (gateway_authenticators | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'gateway_authenticators.*')) is not string else (lookup('ansible.builtin.varnames', 'gateway_authenticators.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for gateway_authenticator_maps
+  ansible.builtin.set_fact:
+    gateway_authenticator_maps: "{{ (gateway_authenticator_maps | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'gateway_authenticator_maps.*')) is not string else (lookup('ansible.builtin.varnames', 'gateway_authenticator_maps.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for gateway_settings
+  ansible.builtin.set_fact:
+    gateway_settings: "{{ (gateway_settings | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'gateway_settings.*')) is not string else (lookup('ansible.builtin.varnames', 'gateway_settings.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for aap_organizations
+  ansible.builtin.set_fact:
+    aap_organizations: "{{ (aap_organizations | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'aap_organizations.*')) is not string else (lookup('ansible.builtin.varnames', 'aap_organizations.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for aap_applications
+  ansible.builtin.set_fact:
+    aap_applications: "{{ (aap_applications | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'aap_applications.*')) is not string else (lookup('ansible.builtin.varnames', 'aap_applications.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for gateway_service_clusters
+  ansible.builtin.set_fact:
+    gateway_service_clusters: "{{ (gateway_service_clusters | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'gateway_service_clusters.*')) is not string else (lookup('ansible.builtin.varnames', 'gateway_service_clusters.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for gateway_service_keys
+  ansible.builtin.set_fact:
+    gateway_service_keys: "{{ (gateway_service_keys | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'gateway_service_keys.*')) is not string else (lookup('ansible.builtin.varnames', 'gateway_service_keys.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for gateway_service_nodes
+  ansible.builtin.set_fact:
+    gateway_service_nodes: "{{ (gateway_service_nodes | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'gateway_service_nodes.*')) is not string else (lookup('ansible.builtin.varnames', 'gateway_service_nodes.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for gateway_services
+  ansible.builtin.set_fact:
+    gateway_services: "{{ (gateway_services | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'gateway_services.*')) is not string else (lookup('ansible.builtin.varnames', 'gateway_services.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for aap_teams
+  ansible.builtin.set_fact:
+    aap_teams: "{{ (aap_teams | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'aap_teams.*')) is not string else (lookup('ansible.builtin.varnames', 'aap_teams.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for aap_user_accounts
+  ansible.builtin.set_fact:
+    aap_user_accounts: "{{ (aap_user_accounts | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'aap_user_accounts.*')) is not string else (lookup('ansible.builtin.varnames', 'aap_user_accounts.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for gateway_role_user_assignments
+  ansible.builtin.set_fact:
+    gateway_role_user_assignments: "{{ (gateway_role_user_assignments | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'gateway_role_user_assignments.*')) is not string else (lookup('ansible.builtin.varnames', 'gateway_role_user_assignments.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for gateway_routes
+  ansible.builtin.set_fact:
+    gateway_routes: "{{ (gateway_routes | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'gateway_routes.*')) is not string else (lookup('ansible.builtin.varnames', 'gateway_routes.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for http_ports
+  ansible.builtin.set_fact:
+    http_ports: "{{ (http_ports | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'http_ports.*')) is not string else (lookup('ansible.builtin.varnames', 'http_ports.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for hub_namespaces
+  ansible.builtin.set_fact:
+    hub_namespaces: "{{ (hub_namespaces | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'hub_namespaces.*')) is not string else (lookup('ansible.builtin.varnames', 'hub_namespaces.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for hub_collections
+  ansible.builtin.set_fact:
+    hub_collections: "{{ (hub_collections | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'hub_collections.*')) is not string else (lookup('ansible.builtin.varnames', 'hub_collections.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for hub_ee_registries
+  ansible.builtin.set_fact:
+    hub_ee_registries: "{{ (hub_ee_registries | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'hub_ee_registries.*')) is not string else (lookup('ansible.builtin.varnames', 'hub_ee_registries.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for hub_ee_repositories
+  ansible.builtin.set_fact:
+    hub_ee_repositories: "{{ (hub_ee_repositories | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'hub_ee_repositories.*')) is not string else (lookup('ansible.builtin.varnames', 'hub_ee_repositories.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for hub_ee_repository_sync
+  ansible.builtin.set_fact:
+    hub_ee_repository_sync: "{{ (hub_ee_repository_sync | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'hub_ee_repository_sync.*')) is not string else (lookup('ansible.builtin.varnames', 'hub_ee_repository_sync.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for hub_ee_images
+  ansible.builtin.set_fact:
+    hub_ee_images: "{{ (hub_ee_images | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'hub_ee_images.*')) is not string else (lookup('ansible.builtin.varnames', 'hub_ee_images.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for hub_collection_remotes
+  ansible.builtin.set_fact:
+    hub_collection_remotes: "{{ (hub_collection_remotes | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'hub_collection_remotes.*')) is not string else (lookup('ansible.builtin.varnames', 'hub_collection_remotes.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for hub_collection_repositories
+  ansible.builtin.set_fact:
+    hub_collection_repositories: "{{ (hub_collection_repositories | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'hub_collection_repositories.*')) is not string else (lookup('ansible.builtin.varnames', 'hub_collection_repositories.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_settings
+  ansible.builtin.set_fact:
+    controller_settings: "{{ (controller_settings | default({})) | combine(lookup('ansible.builtin.vars', item), list_merge='append', recursive=true) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_settings.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_settings.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_instances
+  ansible.builtin.set_fact:
+    controller_instances: "{{ (controller_instances | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_instances.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_instances.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_instance_groups
+  ansible.builtin.set_fact:
+    controller_instance_groups: "{{ (controller_instance_groups | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_instance_groups.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_instance_groups.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_labels
+  ansible.builtin.set_fact:
+    controller_labels: "{{ (controller_labels | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_labels.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_labels.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_credential_types
+  ansible.builtin.set_fact:
+    controller_credential_types: "{{ (controller_credential_types | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_credential_types.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_credential_types.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_credentials
+  ansible.builtin.set_fact:
+    controller_credentials: "{{ (controller_credentials | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_credentials.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_credentials.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_credential_input_sources
+  ansible.builtin.set_fact:
+    controller_credential_input_sources: "{{ (controller_credential_input_sources | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_credential_input_sources.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_credential_input_sources.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_execution_environments
+  ansible.builtin.set_fact:
+    controller_execution_environments: "{{ (controller_execution_environments | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_execution_environments.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_execution_environments.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_notifications
+  ansible.builtin.set_fact:
+    controller_notifications: "{{ (controller_notifications | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_notifications.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_notifications.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_projects
+  ansible.builtin.set_fact:
+    controller_projects: "{{ (controller_projects | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_projects.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_projects.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_inventories
+  ansible.builtin.set_fact:
+    controller_inventories: "{{ (controller_inventories | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_inventories.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_inventories.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_inventory_sources
+  ansible.builtin.set_fact:
+    controller_inventory_sources: "{{ (controller_inventory_sources | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_inventory_sources.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_inventory_sources.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_hosts
+  ansible.builtin.set_fact:
+    controller_hosts: "{{ (controller_hosts | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_hosts.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_hosts.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_bulk_hosts
+  ansible.builtin.set_fact:
+    controller_bulk_hosts: "{{ (controller_bulk_hosts | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_bulk_hosts.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_bulk_hosts.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_groups
+  ansible.builtin.set_fact:
+    controller_groups: "{{ (controller_groups | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_groups.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_groups.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_templates
+  ansible.builtin.set_fact:
+    controller_templates: "{{ (controller_templates | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_templates.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_templates.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_workflows
+  ansible.builtin.set_fact:
+    controller_workflows: "{{ (controller_workflows | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_workflows.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_workflows.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_schedules
+  ansible.builtin.set_fact:
+    controller_schedules: "{{ (controller_schedules | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_schedules.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_schedules.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_roles
+  ansible.builtin.set_fact:
+    controller_roles: "{{ (controller_roles | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_roles.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_roles.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_launch_jobs
+  ansible.builtin.set_fact:
+    controller_launch_jobs: "{{ (controller_launch_jobs | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_launch_jobs.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_launch_jobs.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for controller_workflow_launch_jobs
+  ansible.builtin.set_fact:
+    controller_workflow_launch_jobs: "{{ (controller_workflow_launch_jobs | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'controller_workflow_launch_jobs.*')) is not string else (lookup('ansible.builtin.varnames', 'controller_workflow_launch_jobs.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for eda_credential_types
+  ansible.builtin.set_fact:
+    eda_credential_types: "{{ (eda_credential_types | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'eda_credential_types.*')) is not string else (lookup('ansible.builtin.varnames', 'eda_credential_types.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for eda_credentials
+  ansible.builtin.set_fact:
+    eda_credentials: "{{ (eda_credentials | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'eda_credentials.*')) is not string else (lookup('ansible.builtin.varnames', 'eda_credentials.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for eda_controller_tokens
+  ansible.builtin.set_fact:
+    eda_controller_tokens: "{{ (eda_controller_tokens | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'eda_controller_tokens.*')) is not string else (lookup('ansible.builtin.varnames', 'eda_controller_tokens.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for eda_projects
+  ansible.builtin.set_fact:
+    eda_projects: "{{ (eda_projects | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'eda_projects.*')) is not string else (lookup('ansible.builtin.varnames', 'eda_projects.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for eda_event_streams
+  ansible.builtin.set_fact:
+    eda_event_streams: "{{ (eda_event_streams | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'eda_event_streams.*')) is not string else (lookup('ansible.builtin.varnames', 'eda_event_streams.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for eda_decision_environments
+  ansible.builtin.set_fact:
+    eda_decision_environments: "{{ (eda_decision_environments | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'eda_decision_environments.*')) is not string else (lookup('ansible.builtin.varnames', 'eda_decision_environments.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for eda_rulebook_activations
+  ansible.builtin.set_fact:
+    eda_rulebook_activations: "{{ (eda_rulebook_activations | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'eda_rulebook_activations.*')) is not string else (lookup('ansible.builtin.varnames', 'eda_rulebook_activations.*') | split(',')) }}"
+
+...

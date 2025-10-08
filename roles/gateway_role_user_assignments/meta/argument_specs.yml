@@ -1,60 +1,53 @@
 ---
 argument_specs:
   main:
-    short_description: An Ansible Role to create role user assignment on automation platform gateway.
+    short_description: An Ansible Role to create role_user_assignments on Ansible gateway.
     options:
       gateway_role_user_assignments:
-        description: Data structure describing your role user assignment
+        description: Data structure describing your role_user_assignments
         type: list
         required: true
         elements: dict
-        options:
-          role_definition:
-            description:
-              - The name or id of the role definition to assign to the user.
-            required: true
-            type: str
-          object_id:
-            description:
-              - Primary key of the object this assignment applies to.
-            required: false
-            type: int
-          object_ids:
-            description:
-              - List of object IDs (Primary Key) or names this assignment applies to.
-            required: false
-            type: list
-          user:
-            description:
-              - The name or id of the user to assign to the object.
-            required: false
-            type: str
-          object_ansible_id:
-            description:
-              - Resource id of the object this role applies to. Alternative to the object_id field.
-            required: false
-            type: str
-          user_ansible_id:
-            description:
-              - Resource id of the user who will receive permissions from this assignment. Alternative to user field.
-            required: false
-            type: str
-          state:
-            default: "{{ platform_state | default('present') }}"
-            required: false
-            type: str
-            description: Desired state of the resource.
+#        options:
+#          object_ansible_id:
+#            required: false
+#            type: str
+#            description: ['UUID of the object(team/organization) this role applies to. Alternative to the object_id/object_ids field.', 'This option is mutually exclusive with I(object_id) and I(object_ids)']
+#          object_id:
+#            required: false
+#            type: int
+#            description: ['B(Deprecated)', 'This option is deprecated and will be removed in a release after 2026-01-31.', 'For associating a user to team(s)/organization(s), please use the object_ids param.', 'HORIZONTALLINE', 'Primary key/Name of the object this assignment applies to.', 'This option is mutually exclusive with I(object_ids) and I(object_ansible_id).']
+#          object_ids:
+#            required: false
+#            type: list
+#            description: ['List of object IDs(Primary Key ) or names this assignment applies to.', 'This option is mutually exclusive with I(object_id) and I(object_ansible_id).']
+#          role_definition:
+#            required: true
+#            type: str
+#            description: ['The name or id of the role definition to assign to the user.']
+#          state:
+#            default: present
+#            type: str
+#            description: ['Desired state of the resource.']
+#          user:
+#            required: false
+#            type: str
+#            description: ['The name or id of the user to assign to the object.', 'This option is mutually exclusive with I(user_ansible_id).']
+#          user_ansible_id:
+#            required: false
+#            type: str
+#            description: ['Resource id of the user who will receive permissions from this assignment. Alternative to user field.', 'This option is mutually exclusive with I(user).']
 
       # Async variables
-      gateway_role_user_assignments_async_retries:
-        default: "{{ aap_configuration_async_retries | default(30) }}"
+      role_user_assignments_async_retries:
+        default: "{{ aap_configuration_async_retries | default(50) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
       aap_configuration_async_retries:
-        default: 30
+        default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
-      gateway_role_user_assignments_async_delay:
+      role_user_assignments_async_delay:
         default: "{{ aap_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -63,10 +56,9 @@ argument_specs:
         required: false
         description: This variable sets delay between retries across all roles as a default.
       aap_configuration_async_dir:
-        default:
+        default: null
         required: false
-        description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `~/.ansible_async`.
-
+        description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.
 
       # No_log variables
       gateway_role_user_assignments_secure_logging:
@@ -75,7 +67,7 @@ argument_specs:
         type: bool
         description: Whether or not to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
       aap_configuration_secure_logging:
-        default: true
+        default: false
         required: false
         type: bool
         description: This variable enables secure logging across all roles as a default.
@@ -89,26 +81,26 @@ argument_specs:
       aap_hostname:
         default: None
         required: false
-        description: URL to the Ansible Automation Platform Server.
+        description: URL to the Ansible gateway Server.
         type: str
       aap_validate_certs:
         default: true
         required: false
-        description: Whether or not to validate the Ansible Automation Platform Server's SSL certificate.
+        description: Whether or not to validate the Ansible gateway Server's SSL certificate.
         type: str
       aap_username:
         default: None
         required: false
-        description: Admin User on the Ansible Automation Platform Server. Either username / password or oauthtoken need to be specified.
+        description: Admin User on the Ansible gateway Server. Either username / password or oauthtoken need to be specified.
         type: str
       aap_password:
         default: None
         required: false
-        description: Controller Admin User's password on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
+        description: Gateway Admin User's password on the Ansible gateway Server. This should be stored in an Ansible Vault at vars/gateway-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
         type: str
       aap_token:
         default: None
         required: false
-        description: Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
+        description: Gateway Admin User's token on the Ansible gateway Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
         type: str
 ...

@@ -8,12 +8,12 @@ argument_specs:
         type: str
         required: false
         description: The working directory where the built artifacts live, or where the artifacts will be built.
-      ah_auto_approve:
+      hub_auto_approve:
         default: false
         type: bool
         required: false
         description: Whether the collection will be automatically approved in Automation Hub. This will only work if the account being used has correct privileges.
-      ah_overwrite_existing:
+      hub_overwrite_existing:
         default: false
         type: bool
         required: false
@@ -21,10 +21,10 @@ argument_specs:
       hub_collections:
         default: []
         required: false
-        description: Data structure describing your collections, mutually exclusive to ah_collection_list
+        description: Data structure describing your collections, mutually exclusive to hub_collection_list
         type: list
         elements: dict
-      ah_collection_list:
+      hub_collection_list:
         default: []
         required: false
         description: Data structure file paths to pre built collections, mutually exclusive with hub_collections.
@@ -49,7 +49,7 @@ argument_specs:
         required: false
         description: This variable sets delay between retries across all roles as a default.
       aap_configuration_async_dir:
-        default:
+        default: null
         required: false
         description: Sets the directory to write the results file for async tasks. The default value is set to  `null` which uses the Ansible Default of `/root/.ansible_async/`.
 

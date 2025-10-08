@@ -8,6 +8,108 @@ An Ansible Role to run all roles in the infra.aap_configuration collection.
 
 This is a meta role, its purpose is to run the other roles in the collection, it does not run all of them, and can be used to call roles in a custom order, The control variable is the `aap_configuration_dispatcher_roles` which will pull roles from the different services and run them, If you wish to just run a subset of services from our default lists remove entries from this var.
 
+### Option: `dispatch_include_wildcard_vars`
+
+This option provides a powerful way to organize your configuration. When you set `dispatch_include_wildcard_vars: true`, the role will automatically find and combine settings that you have defined across multiple different variables. This lets you keep your configuration neat and tidy (e.g., defining projects for each environment in separate, organized files) instead of managing one giant list.
+
+#### Example Setup and Workflow
+
+This example shows how to structure your files and playbook to use this feature, combining a set of "common" projects with environment-specific ones.
+
+#### 1. Organize Your Configuration Files
+
+First, create folders to hold your common and environment-specific configurations. This approach allows you to separate different types of configurations into their own files and reduce duplication.
+
+```bash
+.
+├── playbook.yml
+└── config/
+    ├── all/
+    │   └── projects.yml
+    ├── dev/
+    │   └── projects.yml
+    └── prod/
+        └── projects.yml
+```
+
+NOTE: This is just an example and you can organize it however you want. You can also use group_vars as well the only thing that matters is the naming the vars and getting them ingested in some way.
+
+#### 2. Define Variables in Your Files
+
+Next, define the variables inside the corresponding files. Notice the variable names end with a suffix (`_all`, `_prod`, etc.) that identifies their purpose.
+
+**`config/all/projects.yml`:**
+
+```yaml
+controller_projects_all:
+  - name: Common Intranet Project
+    organization: Default
+    scm_type: git
+    scm_url: git@github.com:acme-org/common-intranet.git
+```
+
+**`config/prod/projects.yml`:**
+
+```yaml
+controller_projects_prod:
+  - name: Production App Project
+    organization: Production
+    scm_type: git
+    scm_url: git@github.com:acme-org/prod-app.git
+```
+
+#### 3. Load the Variables in Your Playbook
+
+In your main playbook, you must load all the relevant configuration files. A common pattern is to load the `all` directory first, then layer the environment-specific configuration on top.
+
+**`playbook.yml`:**
+
+```yaml
+- name: Configure AAP
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Load all common configuration
+      ansible.builtin.include_vars:
+        dir: "config/all"
+        extensions:
+          - 'yml'
+
+    - name: Load environment-specific configuration
+      ansible.builtin.include_vars:
+        dir: "config/{{ env }}"
+        extensions:
+          - 'yml'
+      # Example: Run with `ansible-playbook playbook.yml -e "env=prod"`
+
+    - name: Run the main configuration role
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.dispatch
+      vars:
+        dispatch_include_wildcard_vars: true
+```
+
+#### 4. See the Result
+
+When you run the playbook (e.g., with `-e "env=prod"`), it loads variables from both `config/all` and `config/prod`. The `dispatch` role will then detect both the `controller_projects_all` and `controller_projects_prod` variables. Because `dispatch_include_wildcard_vars` is **`true`**, it automatically merges their contents into the base `controller_projects` variable.
+
+#### Resulting Master List
+
+```yaml
+controller_projects:
+  - name: Common Intranet Project
+    organization: Default
+    scm_type: git
+    scm_url: git@github.com:acme-org/common-intranet.git
+  - name: Production App Project
+    organization: Production
+    scm_type: git
+    scm_url: git@github.com:acme-org/prod-app.git
+```
+
+By default, this option is **`false`**.
+
 ```yaml
 aap_configuration_dispatcher_roles: >
   {{ gateway_configuration_dispatcher_roles
@@ -32,18 +134,18 @@ gateway_configuration_dispatcher_roles:
   - role: gateway_settings
     var: gateway_settings
     tags: settings
-  - role: gateway_applications
-    var: aap_applications
-    tags: applications
-  - role: gateway_http_ports
-    var: http_ports_list
-    tags: http_ports
   - role: gateway_organizations
     var: aap_organizations
     tags: organizations
     assign_galaxy_credentials_to_org: false
     assign_default_ee_to_org: false
     assign_notification_templates_to_org: false
+  - role: gateway_applications
+    var: aap_applications
+    tags: applications
+  - role: gateway_http_ports
+    var: gateway_http_ports
+    tags: http_ports
   - role: gateway_service_clusters
     var: gateway_service_clusters
     tags: service_clusters
@@ -56,18 +158,24 @@ gateway_configuration_dispatcher_roles:
   - role: gateway_services
     var: gateway_services
     tags: services
+  - role: gateway_teams
+    var: aap_teams
+    tags: teams
+  - role: gateway_users
+    var: aap_user_accounts
+    tags: users
+  - role: gateway_role_definitions
+    var: gateway_role_definitions
+    tags: role_definitions
+  - role: gateway_role_team_assignments
+    var: gateway_role_team_assignments
+    tags: role_team_assignments
   - role: gateway_role_user_assignments
     var: gateway_role_user_assignments
     tags: role_user_assignments
   - role: gateway_routes
     var: gateway_routes
     tags: routes
-  - role: gateway_teams
-    var: aap_teams
-    tags: teams
-  - role: gateway_users
-    var: aap_user_accounts
-    tags: teams
 ```
 
 #### Hub Roles

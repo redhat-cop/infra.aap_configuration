@@ -8,52 +8,52 @@ argument_specs:
         type: list
         required: true
         elements: dict
-        options:
-          name:
-            required: true
-            type: str
-            description: Name of the resource
-          new_name:
-            type: str
-            description: Setting this option will change the existing name (looked up via the name field)
-          slug:
-            type: str
-            description: An immutable identifier for the authenticator Must be unique
-          enabled:
-            type: bool
-            default: false
-            description: Enable/Disable the authenticator
-          create_objects:
-            type: bool
-            default: true
-            description: Allow authenticator to create objects (users, teams, organizations)
-          remove_users:
-            type: bool
-            default: true
-            description: When a user authenticates from this source should they be removed from any other groups they were previously added to
-          configuration:
-            type: dict
-            default: {}
-            description: The required configuration for this source
-          type:
-            type: str
-            description: The type of authentication service this is
-          order:
-            type: int
-            description: The order in which an authenticator will be tried. This only pertains to username/password authenticators defaults to 1 (by API)
-          state:
-            default: "{{ platform_state | default('present') }}"
-            required: false
-            type: str
-            description: Desired state of the resource.
+#        options:
+#          name:
+#            required: true
+#            type: str
+#            description: Name of the resource
+#          new_name:
+#            type: str
+#            description: Setting this option will change the existing name (looked up via the name field)
+#          slug:
+#            type: str
+#            description: An immutable identifier for the authenticator Must be unique
+#          enabled:
+#            type: bool
+#            default: false
+#            description: Enable/Disable the authenticator
+#          create_objects:
+#            type: bool
+#            default: true
+#            description: Allow authenticator to create objects (users, teams, organizations)
+#          remove_users:
+#            type: bool
+#            default: true
+#            description: When a user authenticates from this source should they be removed from any other groups they were previously added to
+#          configuration:
+#            type: dict
+#            default: {}
+#            description: The required configuration for this source
+#          type:
+#            type: str
+#            description: The type of authentication service this is
+#          order:
+#            type: int
+#            description: The order in which an authenticator will be tried. This only pertains to username/password authenticators defaults to 1 (by API)
+#          state:
+#            default: "{{ platform_state | default('present') }}"
+#            required: false
+#            type: str
+#            description: Desired state of the resource.
 
       # Async variables
       gateway_authenticators_async_retries:
-        default: "{{ aap_configuration_async_retries | default(30) }}"
+        default: "{{ aap_configuration_async_retries | default(50) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
       aap_configuration_async_retries:
-        default: 30
+        default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
       gateway_authenticators_async_delay:
@@ -65,7 +65,7 @@ argument_specs:
         required: false
         description: This variable sets delay between retries across all roles as a default.
       aap_configuration_async_dir:
-        default:
+        default: null
         required: false
         description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `~/.ansible_async`.
 

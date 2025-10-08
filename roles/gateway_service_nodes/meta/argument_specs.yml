@@ -8,38 +8,38 @@ argument_specs:
         type: list
         required: true
         elements: dict
-        options:
-          name:
-            required: true
-            type: str
-            description: Name of the resource
-          new_name:
-            type: str
-            description: Setting this option will change the existing name (looked up via the name field)
-          address:
-            type: str
-            description: Network address to route traffic for this service to.
-          service_cluster:
-            description: Type of service ("hub", "controller", "eda", "gateway")
-            type: str
-          tags:
-            type: str
-            description:
-              - Comma separated string
-              - Selects which (tagged) nodes receive traffic from this route
-          state:
-            default: "{{ platform_state | default('present') }}"
-            required: false
-            type: str
-            description: Desired state of the resource.
+#        options:
+#          name:
+#            required: true
+#            type: str
+#            description: Name of the resource
+#          new_name:
+#            type: str
+#            description: Setting this option will change the existing name (looked up via the name field)
+#          address:
+#            type: str
+#            description: Network address to route traffic for this service to.
+#          service_cluster:
+#            description: Type of service ("hub", "controller", "eda", "gateway")
+#            type: str
+#          tags:
+#            type: str
+#            description:
+#              - Comma separated string
+#              - Selects which (tagged) nodes receive traffic from this route
+#          state:
+#            default: "{{ platform_state | default('present') }}"
+#            required: false
+#            type: str
+#            description: Desired state of the resource.
 
       # Async variables
       gateway_service_nodes_async_retries:
-        default: "{{ aap_configuration_async_retries | default(30) }}"
+        default: "{{ aap_configuration_async_retries | default(50) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
       aap_configuration_async_retries:
-        default: 30
+        default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
       gateway_service_nodes_async_delay:
@@ -51,7 +51,7 @@ argument_specs:
         required: false
         description: This variable sets delay between retries across all roles as a default.
       aap_configuration_async_dir:
-        default:
+        default: null
         required: false
         description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `~/.ansible_async`.
 

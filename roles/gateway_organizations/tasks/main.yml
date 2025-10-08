@@ -46,7 +46,8 @@
         cas_async_retries: "{{ gateway_organizations_async_retries }}"
         cas_job_async_results_item: "{{ __gateway_organizations_job_async_results_item }}"
         cas_error_list_var_name: "aap_organizations_errors"
-        __operation: "{{ operation_translate[__gateway_organizations_job_async_results_item.state | default(platform_state) | default('present')] }}"
+        __operation: "{{ operation_translate[__gateway_organizations_job_async_results_item.__gateway_organization_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organizations_job_async_results_item.__gateway_organization_item.name }} | Wait for finish the Organizations {{ __operation.action }}"
 
     - name: Organizations | Controller Configuration
       ansible.controller.organization:
@@ -100,8 +101,7 @@
       loop: "{{ __organizations_job_async.results }}"
       loop_control:
         loop_var: __organizations_job_async_results_item
-        label: "{{ __operation.verb }} Controller Organization {{ __organizations_job_async_results_item.__controller_organizations_item.name }} | Wait for finish the
-          organization {{ __operation.action }}"
+        label: "{{ __operation.verb }} Controller Organization {{ __organizations_job_async_results_item.__controller_organizations_item.name }} | Wait for finish the organization {{ __operation.action }}"
       vars:
         cas_secure_logging: "{{ gateway_organizations_secure_logging }}"
         cas_async_delay: "{{ gateway_organizations_async_delay }}"
@@ -109,12 +109,9 @@
         cas_job_async_results_item: "{{ __organizations_job_async_results_item }}"
         cas_error_list_var_name: "aap_organizations_errors"
         __operation: "{{ operation_translate[__organizations_job_async_results_item.__controller_organizations_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} Controller Organization {{ __organizations_job_async_results_item.__controller_organizations_item.name }} | Wait for finish the organization {{ __operation.action }}"
 
   always:
-    - name: Debug
-      ansible.builtin.debug:
-        msg: "{{ __gateway_organizations_job_async.results | default([]) + __organizations_job_async.results | default([]) }}"
-
     - name: Cleanup async results files
       when:
         - not ansible_check_mode

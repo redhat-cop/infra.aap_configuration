@@ -7,61 +7,61 @@ argument_specs:
         description: Data structure describing your credentials
         type: list
         elements: dict
-        # options:
-        #   name:
-        #     type: str
-        #     required: true
-        #     description: Name of Credential
-        #   description:
-        #     type: str
-        #     required: false
-        #     description: The description of the credential to give more detail about it.
-        #   new_name:
-        #     type: str
-        #     required: false
-        #     description: Setting this option will change the existing name (looked up via the name field).
-        #   copy_from:
-        #     type: str
-        #     required: false
-        #     description: Name or id to copy the credential from. This will copy an existing credential and change any parameters supplied.
-        #   organization:
-        #     type: str
-        #     required: false
-        #     description: Organization this Credential belongs to. If provided on creation, do not give either user or team.
-        #   credential_type:
-        #     type: str
-        #     required: false
-        #     description: Name of credential type. See below for list of options. More information in Ansible controller documentation.
-        #   inputs:
-        #     type: dict
-        #     required: false
-        #     description: Credential inputs where the keys are var names used in templating. Refer to the Ansible controller documentation for example syntax. Individual examples can be found at /api/v2/credential_types/ on an controller.
-        #   user:
-        #     type: str
-        #     required: false
-        #     description: User that should own this credential. If provided, do not give either team or organization.
-        #   team:
-        #     type: str
-        #     required: false
-        #     description: Team that should own this credential. If provided, do not give either user or organization.
-        #   update_secrets:
-        #     default: true
-        #     type: bool
-        #     required: false
-        #     description: true will always change password if user specifies password, even if API gives $encrypted$ for password. false will only set the password if other values change too.
-        #   state:
-        #     default: "{{ controller_state | default('present') }}"
-        #     type: str
-        #     required: false
-        #     description: Desired state of the resource.
+#        options:
+#          name:
+#            type: str
+#            required: true
+#            description: Name of Credential
+#          description:
+#            type: str
+#            required: false
+#            description: The description of the credential to give more detail about it.
+#          new_name:
+#            type: str
+#            required: false
+#            description: Setting this option will change the existing name (looked up via the name field).
+#          copy_from:
+#            type: str
+#            required: false
+#            description: Name or id to copy the credential from. This will copy an existing credential and change any parameters supplied.
+#          organization:
+#            type: str
+#            required: false
+#            description: Organization this Credential belongs to. If provided on creation, do not give either user or team.
+#          credential_type:
+#            type: str
+#            required: false
+#            description: Name of credential type. See below for list of options. More information in Ansible controller documentation.
+#          inputs:
+#            type: dict
+#            required: false
+#            description: Credential inputs where the keys are var names used in templating. Refer to the Ansible controller documentation for example syntax. Individual examples can be found at /api/v2/credential_types/ on an controller.
+#          user:
+#            type: str
+#            required: false
+#            description: User that should own this credential. If provided, do not give either team or organization.
+#          team:
+#            type: str
+#            required: false
+#            description: Team that should own this credential. If provided, do not give either user or organization.
+#          update_secrets:
+#            default: true
+#            type: bool
+#            required: false
+#            description: true will always change password if user specifies password, even if API gives $encrypted$ for password. false will only set the password if other values change too.
+#          state:
+#            default: "{{ controller_state | default('present') }}"
+#            type: str
+#            required: false
+#            description: Desired state of the resource.
 
       # Async variables
       controller_configuration_credentials_async_retries:
-        default: "{{ aap_configuration_async_retries | default(30) }}"
+        default: "{{ aap_configuration_async_retries | default(50) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
       aap_configuration_async_retries:
-        default: 30
+        default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
       controller_configuration_credentials_async_delay:
@@ -73,7 +73,7 @@ argument_specs:
         required: false
         description: This variable sets delay between retries across all roles as a default.
       aap_configuration_async_dir:
-        default:
+        default: null
         required: false
         description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.
 
@@ -120,4 +120,14 @@ argument_specs:
         required: false
         description: Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
         type: str
+      aap_request_timeout:
+        default: 10
+        required: false
+        description: Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.
+        type: float
+      aap_configuration_collect_logs:
+        default: false
+        required: false
+        description: Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the aap_configuration_role_errors variable.
+        type: bool
 ...

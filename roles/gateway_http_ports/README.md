@@ -20,7 +20,7 @@ An Ansible Role to add proxy Http Ports on Ansible Automation gateway.
 
 ### Secure Logging Variables
 
-The following Variables compliment each other.
+The following Variables complement each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to false as normally the add ee_registry task does not include sensitive information.
 gateway_http_ports_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of automation hub configuration roles with a single variable, or for the user to selectively use it.
@@ -51,7 +51,7 @@ This also speeds up the overall role.
 
 ### Http Port Arguments
 
-Options for the `http_ports_list` variable:
+Options for the `gateway_http_ports` variable:
 
 | Variable Name | Default Value | Required | Type | Description                                                                      |
 |:--------------|:-------------:|:--------:|:----:|:---------------------------------------------------------------------------------|

@@ -68,7 +68,7 @@
       loop: "{{ __inventory_source_job_async.results }}"
       loop_control:
         loop_var: __inventory_source_job_async_results_item
-        label: "{{ __operation.verb }} Inventory Source {{ __inventory_source_job_async_results_item }} | Wait for finish the Inventory Source {{ __operation.action }}"
+        label: "{{ __operation.verb }} Inventory Source {{ __inventory_source_job_async_results_item.__controller_source_item.name }} | Wait for finish the Inventory Source {{ __operation.action }}"
       vars:
         cas_secure_logging: "{{ controller_configuration_inventory_sources_secure_logging }}"
         cas_async_delay: "{{ controller_configuration_inventory_sources_async_delay }}"
@@ -76,6 +76,7 @@
         cas_job_async_results_item: "{{ __inventory_source_job_async_results_item }}"
         cas_error_list_var_name: "controller_inventory_sources_errors"
         __operation: "{{ operation_translate[__inventory_source_job_async_results_item.__controller_source_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} Inventory Source {{ __inventory_source_job_async_results_item.__controller_source_item.name }} | Wait for finish the Inventory Source {{ __operation.action }}"
 
   always:
     - name: Cleanup async results files

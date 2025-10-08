@@ -43,14 +43,15 @@
       loop: "{{ __users_job_async.results }}"
       loop_control:
         loop_var: __users_job_async_result_item
-        label: "{{ __operation.verb }} user {{ __users_job_async_result_item.__user_item.username }} | Wait for finish the rulebook activation {{ __operation.action }}"
+        label: "{{ __operation.verb }} user {{ __users_job_async_result_item.__user_item.username }} | Wait for finish the user {{ __operation.action }}"
       vars:
         cas_secure_logging: "{{ eda_configuration_users_secure_logging }}"
         cas_async_delay: "{{ eda_configuration_users_async_delay }}"
         cas_async_retries: "{{ eda_configuration_users_async_retries }}"
         cas_job_async_results_item: "{{ __users_job_async_result_item }}"
         cas_error_list_var_name: "eda_users_errors"
-        __operation: "{{ operation_translate[__users_job_async_result.__user_item.state | default(platform_state) | default('present')] }}"
+        __operation: "{{ operation_translate[__users_job_async_result_item.__user_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} user {{ __users_job_async_result_item.__user_item.username }} | Wait for finish the user {{ __operation.action }}"
 
   always:
     - name: Cleanup async results files

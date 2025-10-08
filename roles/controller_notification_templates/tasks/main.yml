@@ -58,6 +58,7 @@
         cas_job_async_results_item: "{{ __controller_notification_job_async_results_item }}"
         cas_error_list_var_name: "controller_notification_templates_errors"
         __operation: "{{ operation_translate[__controller_notification_job_async_results_item.__controller_notification_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} notification {{ __controller_notification_job_async_results_item.__controller_notification_item.name }} | Wait for finish the notifications {{ __operation.action }}"
 
   always:
     - name: Cleanup async results files

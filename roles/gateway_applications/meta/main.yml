@@ -8,7 +8,7 @@ galaxy_info:
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
   # issue_tracker_url: http://example.com/issue/tracker
-  license: GPLv3
+  license: GPL-3.0-or-later
 
   min_ansible_version: 2.16.0
 
@@ -23,6 +23,9 @@ galaxy_info:
     - configuration
     - application
     - applications
+
+collections:
+  - ansible.platform
 
 dependencies:
   - role: global_vars

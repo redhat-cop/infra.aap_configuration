@@ -55,6 +55,7 @@
         cas_job_async_results_item: "{{ __credentialtypes_job_async_result_item }}"
         cas_error_list_var_name: "controller_credential_types_errors"
         __operation: "{{ operation_translate[__credentialtypes_job_async_result_item.__controller_credential_type_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} Controller Credential Type {{ __credentialtypes_job_async_result_item.__controller_credential_type_item.name }} | Wait for finish the credential type {{ __operation.action }}"
 
   always:
     - name: Cleanup async results files

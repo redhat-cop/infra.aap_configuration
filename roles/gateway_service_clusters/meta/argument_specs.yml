@@ -8,60 +8,60 @@ argument_specs:
         type: list
         required: true
         elements: dict
-        options:
-          name:
-            required: true
-            type: str
-            description: Name of the resource
-          new_name:
-            type: str
-            description: Setting this option will change the existing name (looked up via the name field)
-          service_type:
-            type: str
-            description: Type of service ["hub", "controller", "eda", "gateway"] Required when creating new Service Cluster
-          state:
-            default: "{{ platform_state | default('present') }}"
-            required: false
-            type: str
-            description: Desired state of the resource.
-          outlier_detection_enabled:
-            type: bool
-            description: If true, outlier detection will be used to determine if a node is unhealthy and should be ejected from the cluster.
-          outlier_detection_consecutive_5xx:
-            type: int
-            description: Number of consecutive 5xx responses to consider a node unhealthy.
-          outlier_detection_interval_seconds:
-            type: int
-            description: The time interval between ejection analysis sweeps.
-          outlier_detection_base_ejection_time_seconds:
-            type: int
-            description: The base time a node will be ejected for.
-          outlier_detection_max_ejection_percent:
-            type: int
-            description: The maximum percent of nodes that can be ejected from the cluster.
-          health_checks_enabled:
-            type: bool
-            description: If true, health checks will be used to determine if a node is healthy.
-          health_check_timeout_seconds:
-            type: int
-            description: The time to wait for a health check to complete.
-          health_check_interval_seconds:
-            type: int
-            description: The time between health check requests.
-          health_check_unhealthy_threshold:
-            type: int
-            description: The number of consecutive failed health checks before a node is considered unhealthy.
-          health_check_healthy_threshold:
-            type: int
-            description: The number of consecutive successful health checks before a node is considered healthy.
+#        options:
+#          name:
+#            required: true
+#            type: str
+#            description: Name of the resource
+#          new_name:
+#            type: str
+#            description: Setting this option will change the existing name (looked up via the name field)
+#          service_type:
+#            type: str
+#            description: Type of service ["hub", "controller", "eda", "gateway"] Required when creating new Service Cluster
+#          state:
+#            default: "{{ platform_state | default('present') }}"
+#            required: false
+#            type: str
+#            description: Desired state of the resource.
+#          outlier_detection_enabled:
+#            type: bool
+#            description: If true, outlier detection will be used to determine if a node is unhealthy and should be ejected from the cluster.
+#          outlier_detection_consecutive_5xx:
+#            type: int
+#            description: Number of consecutive 5xx responses to consider a node unhealthy.
+#          outlier_detection_interval_seconds:
+#            type: int
+#            description: The time interval between ejection analysis sweeps.
+#          outlier_detection_base_ejection_time_seconds:
+#            type: int
+#            description: The base time a node will be ejected for.
+#          outlier_detection_max_ejection_percent:
+#            type: int
+#            description: The maximum percent of nodes that can be ejected from the cluster.
+#          health_checks_enabled:
+#            type: bool
+#            description: If true, health checks will be used to determine if a node is healthy.
+#          health_check_timeout_seconds:
+#            type: int
+#            description: The time to wait for a health check to complete.
+#          health_check_interval_seconds:
+#            type: int
+#            description: The time between health check requests.
+#          health_check_unhealthy_threshold:
+#            type: int
+#            description: The number of consecutive failed health checks before a node is considered unhealthy.
+#          health_check_healthy_threshold:
+#            type: int
+#            description: The number of consecutive successful health checks before a node is considered healthy.
 
       # Async variables
       gateway_service_clusters_async_retries:
-        default: "{{ aap_configuration_async_retries | default(30) }}"
+        default: "{{ aap_configuration_async_retries | default(50) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
       aap_configuration_async_retries:
-        default: 30
+        default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
       gateway_service_clusters_async_delay:
@@ -73,7 +73,7 @@ argument_specs:
         required: false
         description: This variable sets delay between retries across all roles as a default.
       aap_configuration_async_dir:
-        default:
+        default: null
         required: false
         description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `~/.ansible_async`.
 

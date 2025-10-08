@@ -5,26 +5,32 @@ argument_specs:
     options:
       gateway_configuration_dispatcher_roles:
         default:
-          - role: gateway_authenticator
-            var: authenticators_list
+          - role: gateway_authenticators
+            var: gateway_authenticators
             tags: authenticators
-          - role: gateway_authenticator_map
+          - role: gateway_authenticator_maps
             var: gateway_authenticator_maps
             tags: authenticator_maps
           - role: gateway_settings
-            var: settings_list
+            var: gateway_settings
             tags: settings
-          - role: gateway_http_ports
-            var: http_ports_list
-            tags: http_ports
           - role: gateway_organizations
             var: aap_organizations
             tags: organizations
+            assign_galaxy_credentials_to_org: false
+            assign_default_ee_to_org: false
+            assign_notification_templates_to_org: false
+          - role: gateway_applications
+            var: aap_applications
+            tags: applications
+          - role: gateway_http_ports
+            var: gateway_http_ports
+            tags: http_ports
           - role: gateway_service_clusters
             var: gateway_service_clusters
             tags: service_clusters
           - role: gateway_service_keys
-            var: service_keys_list
+            var: gateway_service_keys
             tags: service_keys
           - role: gateway_service_nodes
             var: gateway_service_nodes
@@ -32,15 +38,64 @@ argument_specs:
           - role: gateway_services
             var: gateway_services
             tags: services
+          - role: gateway_teams
+            var: aap_teams
+            tags: teams
+          - role: gateway_users
+            var: aap_user_accounts
+            tags: users
           - role: gateway_role_user_assignments
-            var: role_user_assignments_list
+            var: gateway_role_user_assignments
             tags: role_user_assignments
+          - role: gateway_role_team_assignments
+            var: gateway_role_team_assignments
+            tags: role_team_assignments
+          - role: gateway_role_definitions
+            var: gateway_role_definitions
+            tags: role_definitions
           - role: gateway_routes
             var: gateway_routes
             tags: routes
-          - role: gateway_teams
-            var: platform_teams
-            tags: teams
+
+      hub_configuration_dispatcher_roles:
+        default:
+          - role: hub_namespace
+            var: hub_namespaces
+            tags: namespaces
+          - role: hub_collection
+            var: hub_collections
+            tags: collections
+          - role: hub_ee_registry
+            var: hub_ee_registries
+            tags: registries
+          - role: hub_ee_repository
+            var: hub_ee_repositories
+            tags: repos
+          - role: hub_ee_repository_sync
+            var: hub_ee_repository_sync
+            tags: reposync
+          - role: hub_ee_image
+            var: hub_ee_images
+            tags: images
+          - role: hub_ee_registry
+            var: hub_ee_registries
+            tags: registry
+          - role: hub_ee_registry_index
+            var: hub_ee_registries
+            tags: ee_indices
+          - role: hub_ee_registry_sync
+            var: hub_ee_registries
+            tags: regsync
+          - role: hub_collection_remote
+            var: hub_collection_remotes
+            tags: collectionremote
+          - role: hub_collection_repository
+            var: hub_collection_repositories
+            tags: collectionsrep
+          - role: hub_collection_repository_sync
+            var: hub_collection_repositories
+            tags: collectionsrepsync
+
       controller_configuration_dispatcher_roles:
         default:
           - role: controller_settings
@@ -67,33 +122,51 @@ argument_specs:
           - role: controller_execution_environments
             var: controller_execution_environments
             tags: execution_environments
+          - role: controller_applications
+            var: aap_applications
+            tags: applications
           - role: controller_notification_templates
             var: controller_notifications
             tags: notification_templates
+          - role: gateway_organizations
+            var: aap_organizations
+            tags: organizations
+            assign_galaxy_credentials_to_org: true
+            assign_default_ee_to_org: true
+            assign_notification_templates_to_org: true
           - role: controller_projects
             var: controller_projects
-            tags: projects
+            tags:
+              - inventories
+              - projects
           - role: controller_inventories
             var: controller_inventories
             tags: inventories
           - role: controller_inventory_sources
             var: controller_inventory_sources
-            tags: inventory_sources
+            tags:
+              - inventories
+              - inventory_sources
           - role: controller_inventory_source_update
             var: controller_inventory_sources
-            tags: inventory_sources
-          - role: controller_applications
-            var: aap_applications
-            tags: applications
+            tags:
+              - inventories
+              - inventory_sources
           - role: controller_hosts
             var: controller_hosts
-            tags: hosts
+            tags:
+              - inventories
+              - hosts
           - role: controller_bulk_host_create
             var: controller_bulk_hosts
-            tags: bulk_hosts
-          - role: controller_groups
+            tags:
+              - inventories
+              - bulk_hosts
+          - role: controller_host_groups
             var: controller_groups
-            tags: inventories
+            tags:
+              - inventories
+              - host_groups
           - role: controller_job_templates
             var: controller_templates
             tags: job_templates
@@ -112,83 +185,33 @@ argument_specs:
           - role: controller_workflow_launch
             var: controller_workflow_launch_jobs
             tags: workflow_launch
-      hub_configuration_dispatcher_roles:
-        default:
-          - role: hub_group
-            var: aap_teams
-            tags: groups
-          - role: hub_user
-            var: aap_user_accounts
-            tags: users
-          - role: hub_namespace
-            var: hub_namespaces
-            tags: namespaces
-          - role: hub_collection
-            var: hub_collections
-            tags: collections
-          - role: hub_ee_registry
-            var: hub_ee_registries
-            tags: registries
-          - role: hub_ee_repository
-            var: hub_ee_repositories
-            tags: repos
-          - role: hub_ee_repository_sync
-            var: hub_ee_repository_sync
-            tags: reposync
-          - role: hub_ee_image
-            var: hub_ee_images
-            tags: images
-          - role: hub_ee_registry_index
-            var: hub_ee_registries
-            tags: indices
-          - role: hub_ee_registry_sync
-            var: hub_ee_registries
-            tags: regsync
-          - role: hub_collection_remote
-            var: hub_collection_remotes
-            tags: collectionremote
-          - role: hub_collection_repository
-            var: hub_collection_repositories
-            tags: collectionsrep
-          - role: hub_collection_repository_sync
-            var: hub_collection_repositories
-            tags: collectionsrepsync
-          - role: hub_group_roles
-            var: hub_group_roles
-            tags: group_roles
       eda_configuration_dispatcher_roles:
         default:
-          - role: eda_user
-            var: eda_users
-            tags: user
           - role: eda_credential_types
             var: eda_credential_types
             tags: credential_type
-          - role: eda_credential
+          - role: eda_credentials
             var: eda_credentials
             tags: credential
-          - role: eda_controller_token
+          - role: eda_controller_tokens
             var: eda_controller_tokens
             tags: controller_token
-          - role: eda_project
+          - role: eda_projects
             var: eda_projects
             tags: project
-          - role: eda_project_sync
-            var: eda_projects
-            tags: project_sync
           - role: eda_event_streams
             var: eda_event_streams
             tags: event_stream
-          - role: eda_decision_environment
+          - role: eda_decision_environments
             var: eda_decision_environments
             tags: decision_environment
-          - role: eda_rulebook_activation
+          - role: eda_rulebook_activations
             var: eda_rulebook_activations
             tags: rulebook_activation
 
       # Async variables
       aap_configuration_async_retries:
-        default: 30
+        default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
       aap_configuration_async_delay:

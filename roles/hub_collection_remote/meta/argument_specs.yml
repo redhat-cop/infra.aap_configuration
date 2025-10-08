@@ -23,8 +23,24 @@ argument_specs:
         description: Information regarding the proxy that AH will use to communicate to the Red Hat repositories. Can be left empty if no proxy used.
 
       # Async variables
+      hub_configuration_collection_remote_async_retries:
+        default: "{{ aap_configuration_async_retries | default(50) }}"
+        required: false
+        description: This variable sets the number of retries to attempt for the role.
+      aap_configuration_async_retries:
+        default: 50
+        required: false
+        description: This variable sets number of retries across all roles as a default.
+      hub_configuration_collection_remote_async_delay:
+        default: "{{ aap_configuration_async_delay | default(1) }}"
+        required: false
+        description: This variable sets delay between retries for the role.
+      aap_configuration_async_delay:
+        default: 1
+        required: false
+        description: This variable sets delay between retries across all roles as a default.
       aap_configuration_async_dir:
-        default:
+        default: null
         required: false
         description: Sets the directory to write the results file for async tasks. The default value is set to  `null` which uses the Ansible Default of `/root/.ansible_async/`.
 

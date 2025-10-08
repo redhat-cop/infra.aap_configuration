@@ -37,5 +37,6 @@ galaxy_info:
     - application
     - applications
 
-dependencies: []
+dependencies:
+  - role: global_vars
 ...

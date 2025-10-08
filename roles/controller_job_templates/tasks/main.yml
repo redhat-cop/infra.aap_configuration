@@ -95,7 +95,7 @@
       loop: "{{ __job_templates_job_async.results }}"
       loop_control:
         loop_var: __job_templates_job_async_result_item
-        label: "{{ __operation.verb }} Job Template {{ __job_templates_job_async_result_item }} | Wait for finish the Job Template {{ __operation.action }}"
+        label: "{{ __operation.verb }} Job Template {{ __job_templates_job_async_result_item.__controller_template_item.name }} | Wait for finish the Job Template {{ __operation.action }}"
       vars:
         cas_secure_logging: "{{ controller_configuration_job_templates_secure_logging }}"
         cas_async_delay: "{{ controller_configuration_job_templates_async_delay }}"
@@ -103,6 +103,7 @@
         cas_job_async_results_item: "{{ __job_templates_job_async_result_item }}"
         cas_error_list_var_name: "controller_job_templates_errors"
         __operation: "{{ operation_translate[__job_templates_job_async_result_item.__controller_template_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} Job Template {{ __job_templates_job_async_result_item.__controller_template_item.name }} | Wait for finish the Job Template {{ __operation.action }}"
 
   always:
     - name: Cleanup async results files

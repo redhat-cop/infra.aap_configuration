@@ -17,4 +17,3 @@
 
   roles:
     - { role: ../.., when: controller_workflows is defined }
-...

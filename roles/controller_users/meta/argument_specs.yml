@@ -7,65 +7,65 @@ argument_specs:
         description: Data structure describing your users
         type: list
         elements: dict
-        # options:
-        #   username:
-        #     required: true
-        #     type: str
-        #     description: Username of user
-        #   password:
-        #     required: true
-        #     type: str
-        #     description: Password of user, defaults to "{{ controller_user_default_password }}" if not set
-        #   email:
-        #     required: false
-        #     type: str
-        #     description: email of the user
-        #   first_name:
-        #     required: false
-        #     type: str
-        #     description: first_name of the user
-        #   last_name:
-        #     required: false
-        #     type: str
-        #     description: last_name of the user
-        #   is_superuser:
-        #     default: false
-        #     required: false
-        #     type: bool
-        #     description: Whether the user is a superuser
-        #   is_system_auditor:
-        #     default: false
-        #     required: false
-        #     type: bool
-        #     description: Whether the user is an auditor
-        #   update_secrets:
-        #     default: true
-        #     required: false
-        #     type: bool
-        #     description: true will always change password if user specifies password, even if API gives $encrypted$ for password. false will only set the password if other values change too.
-        #   organization:
-        #     required: false
-        #     type: str
-        #     description: Organization this user belongs to.
-        #   state:
-        #     default: "{{ controller_state | default('present') }}"
-        #     required: false
-        #     type: str
-        #     description: Desired state of the resource.
+#        options:
+#          username:
+#            required: true
+#            type: str
+#            description: Username of user
+#          password:
+#            required: true
+#            type: str
+#            description: Password of user, defaults to "{{ controller_user_default_password }}" if not set
+#          email:
+#            required: false
+#            type: str
+#            description: email of the user
+#          first_name:
+#            required: false
+#            type: str
+#            description: first_name of the user
+#          last_name:
+#            required: false
+#            type: str
+#            description: last_name of the user
+#          is_superuser:
+#            default: false
+#            required: false
+#            type: bool
+#            description: Whether the user is a superuser
+#          is_system_auditor:
+#            default: false
+#            required: false
+#            type: bool
+#            description: Whether the user is an auditor
+#          update_secrets:
+#            default: true
+#            required: false
+#            type: bool
+#            description: true will always change password if user specifies password, even if API gives $encrypted$ for password. false will only set the password if other values change too.
+#          organization:
+#            required: false
+#            type: str
+#            description: Organization this user belongs to.
+#          state:
+#            default: "{{ controller_state | default('present') }}"
+#            required: false
+#            type: str
+#            description: Desired state of the resource.
 
-      controller_user_default_password:
-        default: None
-        required: false
-        type: str
-        description: Global variable to set the password for all users.
+#      controller_user_default_password:
+#        default: None
+#        required: false
+#        type: str
+#        description: Global variable to set the password for all users.
 
       # Async variables
       controller_configuration_users_async_retries:
-        default: "{{ aap_configuration_async_retries | default(30) }}"
+        default: "{{ aap_configuration_async_retries | default(50) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
       aap_configuration_async_retries:
-        default: 30
+        default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
       controller_configuration_users_async_delay:
@@ -77,7 +77,7 @@ argument_specs:
         required: false
         description: This variable sets delay between retries across all roles as a default.
       aap_configuration_async_dir:
-        default:
+        default: null
         required: false
         description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.
 

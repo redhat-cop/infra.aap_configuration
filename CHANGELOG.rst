@@ -4,6 +4,45 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v3.8.2
+======
+
+Bugfixes
+--------
+
+- fixing gateway_role_definitions loop_var `__gateway_role_definition_item` to `__gateway_role_definitions_item`
+- fixing role_team_assignments var typo `__gateway_role_team_assignment_item` to `__gateway_role_team_assignments_item`
+
+v3.8.1
+======
+
+Bugfixes
+--------
+
+- Added `gateway_role_definitions` role to dispatch roles
+- Added `gateway_role_team_assignments` role to dispatch roles
+- Updated the async retries default to 50 for the roles to be consistent across the collection.
+
+v3.8.0
+======
+
+Minor Changes
+-------------
+
+- Added `gateway_role_definitions` role for AAP 2.6+
+- Added `gateway_role_team_assignments` role for AAP 2.6+
+- Updated `gateway_role_user_assignments` role these changes will only work in AAP 2.6+
+- added include_wildcard_vars option to dispatch role.
+- updated vars to `hub_` from `ah_` that were missed in hub_publish role
+
+Bugfixes
+--------
+
+- Add enhance async handling to the controller_settings role
+- Added logic to better label the collect_async_status role/tasks to more easily understand where automation is at any given point
+- Fix usage of aap_configuration_collect_logs variable
+- Update role readme files to be consistently worded for the aap_configuration_collect_logs variable
+
 v3.7.0
 ======
 
@@ -49,7 +88,7 @@ Bugfixes
 --------
 
 - Fix accidentally removed usage of '_async_delay' and '_async_retries' variables
-- Fixes issue when adding workflow schemas where the job_id is not defined because a failure state has occured
+- Fixes issue when adding workflow schemas where the job_id is not defined because a failure state has occurred
 
 v3.5.0
 ======
@@ -715,7 +754,7 @@ Major Changes
 Minor Changes
 -------------
 
-- Fixed default filters to use true when neccessary and changed a few defaults to omit rather then a value or empty string.
+- Fixed default filters to use true when necessary and changed a few defaults to omit rather then a value or empty string.
 - updated various Readmes to fix typos and missing information.
 
 Breaking Changes / Porting Guide

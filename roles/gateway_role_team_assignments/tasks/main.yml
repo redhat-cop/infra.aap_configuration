@@ -1,0 +1,63 @@
+---
+- name: Manage Gateway Role Team Assignments Block
+  vars:
+    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  no_log: "{{ gateway_role_team_assignments_secure_logging }}"
+  block:
+    - name: Role Team Assignments | Configuration
+      ansible.platform.role_team_assignment:
+        team: "{{ __gateway_role_team_assignments_item.team | default(omit, true) }}"
+        team_ansible_id: "{{ __gateway_role_team_assignments_item.team_ansible_id | default(omit, true) }}"
+        role_definition: "{{ __gateway_role_team_assignments_item.role_definition | default(omit, true) }}"
+        assignment_objects: "{{ __gateway_role_team_assignments_item.assignment_objects | default(omit, true) }}"
+        state: "{{ __gateway_role_team_assignments_item.state | default(platform_state | default(omit, true)) }}"
+
+        # Role Standard Options
+        gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
+        gateway_username: "{{ aap_username | default(omit, true) }}"
+        gateway_password: "{{ aap_password | default(omit, true) }}"
+        gateway_token: "{{ aap_token | default(omit, true) }}"
+        gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      loop: "{{ gateway_role_team_assignments }}"
+      loop_control:
+        loop_var: __gateway_role_team_assignments_item
+        label: "{{ __operation.verb }} Role Team Assignments on Gateway {{ __gateway_role_team_assignments_item.role_definition }}"
+        pause: "{{ gateway_role_team_assignments_loop_delay }}"
+      async: 1000
+      poll: 0
+      register: __gateway_role_team_assignments_job_async
+      changed_when: not __gateway_role_team_assignments_job_async.changed
+      vars:
+        __operation: "{{ operation_translate[__gateway_role_team_assignments_item.state | default(platform_state) | default('present')] }}"
+
+    - name: Role Team Assignments | Wait for finish the configuration
+      when:
+        - not ansible_check_mode
+        - __gateway_role_team_assignments_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __gateway_role_team_assignments_job_async.results }}"
+      loop_control:
+        loop_var: __gateway_role_team_assignments_job_async_results_item
+        label: "{{ __operation.verb }} Role Team Assignments {{ __gateway_role_team_assignments_job_async_results_item.__gateway_role_team_assignments_item.role_definition }} | Wait for finish the Role Team Assignments {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ gateway_role_team_assignments_secure_logging }}"
+        cas_job_async_results_item: "{{ __gateway_role_team_assignments_job_async_results_item }}"
+        cas_error_list_var_name: "gateway_role_team_assignments_errors"
+        __operation: "{{ operation_translate[__gateway_role_team_assignments_job_async_results_item.__gateway_role_team_assignments_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} Role Team Assignments {{ __gateway_role_team_assignments_job_async_results_item.__gateway_role_team_assignments_item.role_definition }} | Wait for finish the Role Team Assignments {{ __operation.action }}"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __gateway_role_team_assignments_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __gateway_role_team_assignments_job_async_results_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __gateway_role_team_assignments_job_async.results }}"
+      loop_control:
+        loop_var: __gateway_role_team_assignments_job_async_results_item
+        label: "Cleaning up job results file: {{ __gateway_role_team_assignments_job_async_results_item.results_file | default('Unknown') }}"
+...

@@ -28,7 +28,7 @@ This role requires both `ansible.platform` and `ansible.controller` collections.
 
 ### Enforcing defaults
 
-The following Variables compliment each other.
+The following Variables complement each other.
 If Both variables are not set, enforcing default values is not done.
 Enabling these variables enforce default values on options that are optional in the controller API.
 This should be enabled to enforce configuration and prevent configuration drift. It is recommended to be enabled, however it is not enforced by default.
@@ -44,7 +44,7 @@ Enabling this will enforce configuration without specifying every option in the 
 
 ### Secure Logging Variables
 
-The following Variables compliment each other.
+The following Variables complement each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to false as normally the add ee_registry task does not include sensitive information.
 aap_organizations_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of automation hub configuration roles with a single variable, or for the user to selectively use it.
@@ -136,12 +136,18 @@ File name: `data/aap_organizations.yml`
 ```yaml
 ---
 aap_organizations:
-- name: Default
-  description: This is the Default Group
-- name: Automation Group
-  description: This is the Automation Group
+- name: Deprecated Org
+  description: This is the Deprecated Org Group
+  state: absent
+- name: Org 1
+  description: This is the Org 1 Group
+  state: exists
+- name: Org 2
+  description: This is the Org 2 Group
+- name: Org 3
   custom_virtualenv: "/opt/cust/environment/"
   max_hosts: 10
+  new_name: Org 4
 ```
 
 ### Run Playbook

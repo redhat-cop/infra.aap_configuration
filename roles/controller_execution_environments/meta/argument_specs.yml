@@ -7,49 +7,49 @@ argument_specs:
         description: Data structure describing your execution_environments
         type: list
         elements: dict
-        # options:
-        #   name:
-        #     required: true
-        #     type: str
-        #     description: Name of execution environment
-        #   description:
-        #     required: false
-        #     type: str
-        #     description: Description to use for the execution environment.
-        #   image:
-        #     required: true
-        #     type: str
-        #     description: Container image to use for the execution environment
-        #   organization:
-        #     required: false
-        #     type: str
-        #     description: The organization the execution environment belongs to.
-        #   credential:
-        #     required: false
-        #     type: str
-        #     description: Name of the credential to use for the execution environment.
-        #   pull:
-        #     default: missing
-        #     required: false
-        #     type: str
-        #     choices:
-        #       - always
-        #       - missing
-        #       - never
-        #     description: Determine image pull behavior
-        #   state:
-        #     default: "{{ controller_state | default('present') }}"
-        #     required: false
-        #     type: str
-        #     description: Desired state of the resource.
+#        options:
+#          name:
+#            required: true
+#            type: str
+#            description: Name of execution environment
+#          description:
+#            required: false
+#            type: str
+#            description: Description to use for the execution environment.
+#          image:
+#            required: true
+#            type: str
+#            description: Container image to use for the execution environment
+#          organization:
+#            required: false
+#            type: str
+#            description: The organization the execution environment belongs to.
+#          credential:
+#            required: false
+#            type: str
+#            description: Name of the credential to use for the execution environment.
+#          pull:
+#            default: missing
+#            required: false
+#            type: str
+#            choices:
+#              - always
+#              - missing
+#              - never
+#            description: Determine image pull behavior
+#          state:
+#            default: "{{ controller_state | default('present') }}"
+#            required: false
+#            type: str
+#            description: Desired state of the resource.
 
       # Async variables
       controller_configuration_execution_environments_async_retries:
-        default: "{{ aap_configuration_async_retries | default(30) }}"
+        default: "{{ aap_configuration_async_retries | default(50) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
       aap_configuration_async_retries:
-        default: 30
+        default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
       controller_configuration_execution_environments_async_delay:
@@ -61,7 +61,7 @@ argument_specs:
         required: false
         description: This variable sets delay between retries across all roles as a default.
       aap_configuration_async_dir:
-        default:
+        default: null
         required: false
         description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.
 

@@ -49,6 +49,7 @@
         cas_async_retries: "{{ controller_configuration_settings_async_retries }}"
         cas_job_async_results_item: "{{ __controller_setting_job_async_results_item }}"
         cas_error_list_var_name: "controller_settings_errors"
+        cas_object_label: "Waiting for Controller Setting to be configured"
 
   always:
     - name: Cleanup async results files

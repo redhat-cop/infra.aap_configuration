@@ -2,6 +2,7 @@
 - name: Playbook to configure ansible controller post installation
   hosts: localhost
   connection: local
+  gather_facts: false
   tasks:
     - name: Include vars from configs directory
       ansible.builtin.include_vars:

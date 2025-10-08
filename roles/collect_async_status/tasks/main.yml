@@ -2,7 +2,7 @@
 - name: An async_error_reporting block
   no_log: "{{ cas_secure_logging }}"
   block:
-    - name: Managing AAP Object | Wait for management to complete
+    - name: "{{ cas_object_label }}"
       ansible.builtin.async_status:
         jid: "{{ cas_job_async_results_item.ansible_job_id }}"
       register: __cas_job_async_result

@@ -1,0 +1,105 @@
+---
+argument_specs:
+  main:
+    short_description: An Ansible Role to create role_definitions on Ansible gateway for AAP 2.6+.
+    options:
+      gateway_role_definitions:
+        description: Data structure describing your role_definitions
+        type: list
+        required: true
+        elements: dict
+#        options:
+#          content_type:
+#            required: true
+#            type: str
+#            description: The content type for which the role applies (e.g., awx.inventory)
+#          description:
+#            type: str
+#            description: Description of the role definition
+#          name:
+#            required: true
+#            type: str
+#            description: The name of the role definition (must be unique)
+#          new_name:
+#            type: str
+#            description: Setting this option will change the existing name (looked up via the name field)
+#          permissions:
+#            required: true
+#            type: list
+#            description: List of permission strings to associate with the role (e.g., awx.view_inventory)
+#          state:
+#            default: present
+#            type: str
+#            description: Desired state of the role definition
+
+      # Async variables
+      role_definitions_async_retries:
+        default: "{{ aap_configuration_async_retries | default(50) }}"
+        required: false
+        description: This variable sets the number of retries to attempt for the role.
+      aap_configuration_async_retries:
+        default: 50
+        required: false
+        description: This variable sets number of retries across all roles as a default.
+      role_definitions_async_delay:
+        default: "{{ aap_configuration_async_delay | default(1) }}"
+        required: false
+        description: This variable sets delay between retries for the role.
+      aap_configuration_async_delay:
+        default: 1
+        required: false
+        description: This variable sets delay between retries across all roles as a default.
+      aap_configuration_async_dir:
+        default: null
+        required: false
+        description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.
+
+      # No_log variables
+      gateway_role_definitions_secure_logging:
+        default: "{{ aap_configuration_secure_logging | default(false) }}"
+        required: false
+        type: bool
+        description: Whether or not to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
+      aap_configuration_secure_logging:
+        default: false
+        required: false
+        type: bool
+        description: This variable enables secure logging across all roles as a default.
+
+      # Generic across all roles
+      platform_state:
+        default: present
+        required: false
+        description: The state all objects will take unless overridden by object default
+        type: str
+      aap_hostname:
+        default: None
+        required: false
+        description: URL to the Ansible gateway Server.
+        type: str
+      aap_validate_certs:
+        default: true
+        required: false
+        description: Whether or not to validate the Ansible gateway Server's SSL certificate.
+        type: str
+      aap_username:
+        default: None
+        required: false
+        description: Admin User on the Ansible gateway Server. Either username / password or oauthtoken need to be specified.
+        type: str
+      aap_password:
+        default: None
+        required: false
+        description: Gateway Admin User's password on the Ansible gateway Server. This should be stored in an Ansible Vault at vars/gateway-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
+        type: str
+      aap_token:
+        default: None
+        required: false
+        description: Gateway Admin User's token on the Ansible gateway Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.
+        type: str
+      aap_request_timeout:
+        default: 10
+        required: false
+        description: Specify the timeout Ansible should use in requests to the Ansible gateway Server.
+        type: float
+...

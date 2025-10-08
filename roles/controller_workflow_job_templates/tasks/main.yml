@@ -89,6 +89,7 @@
         cas_job_async_results_item: "{{ __workflows_job_async_results_item }}"
         cas_error_list_var_name: "controller_workflows_errors"
         __operation: "{{ operation_translate[__workflows_job_async_results_item.__workflow_loop_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} Workflow {{ __workflows_job_async_results_item.__workflow_loop_item.name }} | Wait for finish the workflow {{ __operation.action }}"
 
     # Create links between workflow node
     - name: Loop over nodes in schema to add to workflow templates
