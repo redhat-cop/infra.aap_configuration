@@ -136,10 +136,16 @@ File name: `data/aap_organizations.yml`
 ```yaml
 ---
 aap_organizations:
-- name: Default
-  description: This is the Default Group
-- name: Automation Group
-  description: This is the Automation Group
+- name: Deprecated Org
+  description: This is the Deprecated Org Group
+  state: absent
+- name: Org 1
+  description: This is the Org 1 Group
+  state: exists
+- name: Org 2
+  description: This is the Org 2 Group
+- name: Org 3
+  new_name: Org 4
   custom_virtualenv: "/opt/cust/environment/"
   max_hosts: 10
 ```
