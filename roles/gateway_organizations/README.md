@@ -145,9 +145,9 @@ aap_organizations:
 - name: Org 2
   description: This is the Org 2 Group
 - name: Org 3
-  new_name: Org 4
   custom_virtualenv: "/opt/cust/environment/"
   max_hosts: 10
+  new_name: Org 4
 ```
 
 ### Run Playbook
