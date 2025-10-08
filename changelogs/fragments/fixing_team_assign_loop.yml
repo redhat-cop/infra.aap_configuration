@@ -1,4 +1,0 @@
----
-bugfixes:
-  - fixing role_team_assignments var typo `__gateway_role_team_assignment_item` to `__gateway_role_team_assignments_item`
-...
