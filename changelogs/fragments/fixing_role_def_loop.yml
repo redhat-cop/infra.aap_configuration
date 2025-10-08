@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - fixing gateway_role_definitions loop_var `__gateway_role_definition_item` to `__gateway_role_definitions_item`
+...
