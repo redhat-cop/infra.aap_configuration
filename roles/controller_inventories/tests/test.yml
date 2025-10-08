@@ -1,5 +1,5 @@
 ---
-- name: Add Inventies on Controller
+- name: Add Inventories on Controller
   hosts: localhost
   connection: local
   gather_facts: false
