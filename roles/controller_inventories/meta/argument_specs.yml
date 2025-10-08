@@ -40,7 +40,8 @@ argument_specs:
         #     choices:
         #       - ""
         #       - smart
-        #     description: The kind of inventory. Currently choices are '' and 'smart'
+        #       - constructed
+        #     description: The kind of inventory. Currently choices are '', 'smart' and 'constructed'
         #   host_filter:
         #     default: false
         #     required: false
