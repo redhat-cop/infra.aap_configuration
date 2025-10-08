@@ -4,6 +4,16 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v3.8.1
+======
+
+Bugfixes
+--------
+
+- Added `gateway_role_definitions` role to dispatch roles
+- Added `gateway_role_team_assignments` role to dispatch roles
+- Updated the async retries default to 50 for the roles to be consistent across the collection.
+
 v3.8.0
 ======
 

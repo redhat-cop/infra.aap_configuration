@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Updated the async retries default to 50 for the roles to be consistent across the collection.
-...
