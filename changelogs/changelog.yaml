@@ -952,3 +952,15 @@ releases:
     - new_dispatch_roles.yml
     - updated_async_retries.yml
     release_date: '2025-10-07'
+  3.8.2:
+    changes:
+      bugfixes:
+      - fixing gateway_role_definitions loop_var `__gateway_role_definition_item`
+        to `__gateway_role_definitions_item`
+      - fixing role_team_assignments var typo `__gateway_role_team_assignment_item`
+        to `__gateway_role_team_assignments_item`
+    fragments:
+    - fixing_role_def_loop.yml
+    - fixing_team_assign_loop.yml
+    - gateway_org_doc.yml
+    release_date: '2025-10-08'

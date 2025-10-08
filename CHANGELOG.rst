@@ -4,6 +4,15 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v3.8.2
+======
+
+Bugfixes
+--------
+
+- fixing gateway_role_definitions loop_var `__gateway_role_definition_item` to `__gateway_role_definitions_item`
+- fixing role_team_assignments var typo `__gateway_role_team_assignment_item` to `__gateway_role_team_assignments_item`
+
 v3.8.1
 ======
 
