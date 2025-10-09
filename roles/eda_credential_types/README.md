@@ -219,7 +219,7 @@ eda_credential_types:
 
 ## License
 
-[GPL-3.0](https://github.com/redhat-cop/aap_configuration#licensing)
+[GPLv3+](https://github.com/ansible/galaxy_collection#licensing)
 
 ## Author
 

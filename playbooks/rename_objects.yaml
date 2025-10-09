@@ -17,7 +17,7 @@
       ansible.builtin.replace:
         path: "{{ __file.path }}"
         regexp: ^(.*){{ current_name | regex_escape() }}(.*)$
-        replace: \1{{ new_name }}\2
+        replace: "\\1{{ new_name }}\\2"
       loop: "{{ __list_files.files }}"
       loop_control:
         loop_var: __file
