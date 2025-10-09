@@ -19,14 +19,14 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 |`aap_password`|""|no|Platform Admin User's password on the Server.  This should be stored in an Ansible Vault at vars/platform-secrets.yml or elsewhere and called from a parent playbook.||
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
-|`controller_bulk_launch_jobs`|`see below`|yes|Data structure describing your organization or organizations Described below.||
+|`controller_bulk_launch_jobs`|`see below`|yes|Data structure describing the jobs to bulk launch Described below.||
 
 ### Secure Logging Variables
 
 The following Variables complement each other.
 If Both variables are not set, secure logging defaults to false.
-The role defaults to false as normally the add ******* task does not include sensitive information.
-controller_configuration_*******_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
+The role defaults to false as normally the add bulk job launch task does not include sensitive information.
+controller_configuration_bulk_job_launch_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
