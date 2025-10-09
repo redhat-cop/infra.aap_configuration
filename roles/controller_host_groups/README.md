@@ -168,7 +168,7 @@ controller_groups:
 
 ## License
 
-[GPLv3+](https://github.com/ansible/galaxy_collection#licensing)
+[GPLv3+](https://github.com/redhat-cop/infra.aap_configuration/blob/devel/LICENSE)
 
 ## Author
 

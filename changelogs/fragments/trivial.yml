@@ -1,4 +1,7 @@
 ---
 trivial:
   - Adding back Brant Evans @branic as a major contributor to the collection. (unsure how this got removed)
+  - Updated get_stats playbook to have validate_certs be a var
+  - Updated readme license links
+  - Updated markdownlint related settings
 ...

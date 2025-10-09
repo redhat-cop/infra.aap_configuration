@@ -42,7 +42,7 @@ This also speeds up the overall role.
 
 ## License
 
-[GPLv3+](https://github.com/redhat-cop/eda_configuration#licensing)
+[GPLv3+](https://github.com/redhat-cop/infra.aap_configuration/blob/devel/LICENSE)
 
 ## Author
 
