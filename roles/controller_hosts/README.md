@@ -43,11 +43,11 @@ Enabling this will enforce configuration without specifying every option in the 
 The following Variables complement each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to false as normally the add host task does not include sensitive information.
-`controller_configuration_host_secure_logging` defaults to the value of `aap_configuration_secure_logging` if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
+`controller_configuration_hosts_secure_logging` defaults to the value of `aap_configuration_secure_logging` if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`controller_configuration_host_secure_logging`|`false`|no|Whether or not to include the sensitive host role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.|
+|`controller_configuration_hosts_secure_logging`|`false`|no|Whether or not to include the sensitive host role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.|
 |`aap_configuration_secure_logging`|`false`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
@@ -60,9 +60,9 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`aap_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
-|`controller_configuration_host_async_retries`|`{{ aap_configuration_async_retries }}`|no|This variable sets the number of retries to attempt for the role.|
+|`controller_configuration_hosts_async_retries`|`{{ aap_configuration_async_retries }}`|no|This variable sets the number of retries to attempt for the role.|
 |`aap_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
-|`controller_configuration_host_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
+|`controller_configuration_hosts_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
 |`aap_configuration_loop_delay`|0|no|This sets the pause between each item in the loop for the roles globally. To help when API is getting overloaded.|
 |`controller_configuration_hosts_loop_delay`|`aap_configuration_loop_delay`|no|This sets the pause between each item in the loop for the role. To help when API is getting overloaded.|
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
