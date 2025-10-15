@@ -19,18 +19,18 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 |`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`controller_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`aap_configuration_collect_logs`|`false`|no|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
-|`controller_configuration_bulk_hosts_secure_logging`|`see below`|yes|Data structure describing your organization or organizations Described below.||
+|`controller_bulk_hosts`|`see below`|yes|Data structure describing the hosts to bulk create Described below.||
 
 ### Secure Logging Variables
 
 The following Variables complement each other.
 If Both variables are not set, secure logging defaults to false.
-The role defaults to false as normally the add ******* task does not include sensitive information.
-controller_configuration_*******_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
+The role defaults to false as normally the add bulk host create task does not include sensitive information.
+controller_configuration_bulk_hosts_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`controller_configuration_bulk_hosts_secure_logging`|`false`|no|Whether or not to include the sensitive ******* role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.|
+|`controller_configuration_bulk_hosts_secure_logging`|`false`|no|Whether or not to include the sensitive bulk_host_create role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.|
 |`aap_configuration_secure_logging`|`false`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables

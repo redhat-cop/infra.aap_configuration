@@ -11,6 +11,7 @@ authors:
   - Tom Page @Tompage1994
   - Sean Sullivan @sean-m-sullivan
   - David Danielsson @djdanielsson
+  - Brant Evans @branic
 repository: https://github.com/redhat-cop/aap_configuration/
 issues: https://github.com/redhat-cop/aap_configuration/issues
 build_ignore:
