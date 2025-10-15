@@ -964,3 +964,11 @@ releases:
     - fixing_team_assign_loop.yml
     - gateway_org_doc.yml
     release_date: '2025-10-08'
+  3.8.3:
+    changes:
+      bugfixes:
+      - Unnecessary gather_facts set to false in configure_aap.yml
+    fragments:
+    - gather_face_false.yml
+    - trivial.yml
+    release_date: '2025-10-15'

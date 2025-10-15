@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Unnecessary gather_facts set to false in configure_aap.yml
-...

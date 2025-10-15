@@ -4,6 +4,14 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v3.8.3
+======
+
+Bugfixes
+--------
+
+- Unnecessary gather_facts set to false in configure_aap.yml
+
 v3.8.2
 ======
 
