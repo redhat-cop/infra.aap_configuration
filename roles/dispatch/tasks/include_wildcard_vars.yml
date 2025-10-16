@@ -24,6 +24,11 @@
     aap_applications: "{{ (aap_applications | default([])) + lookup('ansible.builtin.vars', item) }}"
   loop: "{{ [] if (lookup('ansible.builtin.varnames', 'aap_applications.*')) is not string else (lookup('ansible.builtin.varnames', 'aap_applications.*') | split(',')) }}"
 
+- name: include_wildcard_vars | Set fact for gateway_http_ports
+  ansible.builtin.set_fact:
+    gateway_http_ports: "{{ (gateway_http_ports | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'gateway_http_ports.*')) is not string else (lookup('ansible.builtin.varnames', 'gateway_http_ports.*') | split(',')) }}"
+
 - name: include_wildcard_vars | Set fact for gateway_service_clusters
   ansible.builtin.set_fact:
     gateway_service_clusters: "{{ (gateway_service_clusters | default([])) + lookup('ansible.builtin.vars', item) }}"
@@ -54,6 +59,16 @@
     aap_user_accounts: "{{ (aap_user_accounts | default([])) + lookup('ansible.builtin.vars', item) }}"
   loop: "{{ [] if (lookup('ansible.builtin.varnames', 'aap_user_accounts.*')) is not string else (lookup('ansible.builtin.varnames', 'aap_user_accounts.*') | split(',')) }}"
 
+- name: include_wildcard_vars | Set fact for gateway_role_definitions
+  ansible.builtin.set_fact:
+    gateway_role_definitions: "{{ (gateway_role_definitions | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'gateway_role_definitions.*')) is not string else (lookup('ansible.builtin.varnames', 'gateway_role_definitions.*') | split(',')) }}"
+
+- name: include_wildcard_vars | Set fact for gateway_role_team_assignments
+  ansible.builtin.set_fact:
+    gateway_role_team_assignments: "{{ (gateway_role_team_assignments | default([])) + lookup('ansible.builtin.vars', item) }}"
+  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'gateway_role_team_assignments.*')) is not string else (lookup('ansible.builtin.varnames', 'gateway_role_team_assignments.*') | split(',')) }}"
+
 - name: include_wildcard_vars | Set fact for gateway_role_user_assignments
   ansible.builtin.set_fact:
     gateway_role_user_assignments: "{{ (gateway_role_user_assignments | default([])) + lookup('ansible.builtin.vars', item) }}"
@@ -63,11 +78,6 @@
   ansible.builtin.set_fact:
     gateway_routes: "{{ (gateway_routes | default([])) + lookup('ansible.builtin.vars', item) }}"
   loop: "{{ [] if (lookup('ansible.builtin.varnames', 'gateway_routes.*')) is not string else (lookup('ansible.builtin.varnames', 'gateway_routes.*') | split(',')) }}"
-
-- name: include_wildcard_vars | Set fact for http_ports
-  ansible.builtin.set_fact:
-    http_ports: "{{ (http_ports | default([])) + lookup('ansible.builtin.vars', item) }}"
-  loop: "{{ [] if (lookup('ansible.builtin.varnames', 'http_ports.*')) is not string else (lookup('ansible.builtin.varnames', 'http_ports.*') | split(',')) }}"
 
 - name: include_wildcard_vars | Set fact for hub_namespaces
   ansible.builtin.set_fact:

@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Fix missing wildcard variable tasks for gateway_http_portsgateway_role_definitions, and gateway_role_team_assignments to ensure all variables defined in defaults are properly handled
+...
