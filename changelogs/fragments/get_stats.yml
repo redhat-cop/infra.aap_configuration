@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Updated get_stats playbook to have validate_certs be a var
+...
