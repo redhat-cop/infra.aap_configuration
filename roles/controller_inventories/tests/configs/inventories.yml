@@ -8,4 +8,9 @@ controller_inventories:
     kind: smart
     host_filter: name__icontains=test
     variables: '{"key1":"val1", "key2":"val2"}'
+  - name: test3
+    organization: Default
+    kind: constructed
+    input_inventories:
+      - test1
 ...
