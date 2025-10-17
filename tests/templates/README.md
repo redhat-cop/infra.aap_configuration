@@ -39,7 +39,7 @@ You will also need Tower or Controller credentials with sufficient permissions t
 
 `controller_config.yml`:
 
-```
+```yaml
 absent_present
 
     I suggest leaving `absent_present` set to "present".
@@ -55,7 +55,7 @@ CONTROLLER_VERIFY_SSL
 
 `vars/controller_credential_types.yml`:
 
-```
+```yaml
 controller_credential_types
 
     Dictionary of credential types to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional credential types.
@@ -63,7 +63,7 @@ controller_credential_types
 
 `vars/controller_credentials.yml`:
 
-```
+```yaml
 controller_credentials
 
     Dictionary of credentials to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional credentials.
@@ -71,7 +71,7 @@ controller_credentials
 
 `vars/controller_groups.yml`:
 
-```
+```yaml
 controller_groups
 
     Dictionary of (host) groups to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional groups.  You will need to ensure the inventory and hosts exists before you add groups.
@@ -79,7 +79,7 @@ controller_groups
 
 `vars/controller_hosts.yml`:
 
-```
+```yaml
 controller_hosts
 
     Dictionary of hosts to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional hosts.  You will need to ensure the inventory exists before you add hosts to it.
@@ -87,7 +87,7 @@ controller_hosts
 
 `vars/controller_inventories.yml`:
 
-```
+```yaml
 controller_inventories
 
     Dictionary of inventories to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional inventories.
@@ -95,7 +95,7 @@ controller_inventories
 
 `vars/controller_inventory_sources.yml`:
 
-```
+```yaml
 controller_inventory_sources
 
     Dictionary of inventory sources to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional inventory sources.  You will need to ensure the inventory exists before you add hosts to it.
@@ -103,7 +103,7 @@ controller_inventory_sources
 
 `vars/controller_job_templates.yml`:
 
-```
+```yaml
 controller_job_templates
 
     Dictionary of job templates to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional job templates.
@@ -111,7 +111,7 @@ controller_job_templates
 
 `vars/controller_labels.yml`:
 
-```
+```yaml
 controller_labels
 
     Dictionary of labels to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional labels.
@@ -119,7 +119,7 @@ controller_labels
 
 `vars/controller_notification_templates.yml`:
 
-```
+```yaml
 controller_notification_templates
 
     Dictionary of notification templates to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional notification templates.
@@ -127,7 +127,7 @@ controller_notification_templates
 
 `vars/controller_organizations_with_hub.yml`:
 
-```
+```yaml
 controller_organizations
 
     Dictionary of organizations to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional organizations.
@@ -141,7 +141,7 @@ However, you cannot associate a Galaxy / Private Automation Hub credential to an
 
 `vars/controller_organizations.yml`:
 
-```
+```yaml
 controller_organizations
 
     Dictionary of organizations to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional organizations.
@@ -151,7 +151,7 @@ This vars file has the organization defined without the Galaxy / Automation Hub 
 
 `vars/controller_projects.yml`:
 
-```
+```yaml
 controller_projects
 
     Dictionary of projects to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional projects.
@@ -159,7 +159,7 @@ controller_projects
 
 `vars/controller_schedules.yml`:
 
-```
+```yaml
 controller_schedules
 
     Dictionary of schedules to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional schedules.
@@ -167,7 +167,7 @@ controller_schedules
 
 `vars/controller_settings.yml`:
 
-```
+```yaml
 controller_settings
 
     Dictionary of settings to create.  This file does not contain an example.  Check `tasks/manage_controller_settings.yml` for a link to documentation of the `controller_configuration` collection.
@@ -175,7 +175,7 @@ controller_settings
 
 `vars/controller_teams.yml`:
 
-```
+```yaml
 controller_teams
 
     Dictionary of teams to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional teams.
@@ -183,7 +183,7 @@ controller_teams
 
 `vars/controller_users.yml`:
 
-```
+```yaml
 Unless otherwise instructed, please refrain from adding local users.  Users should be added to the organization via LDAP mapping.
 
 controller_users
@@ -193,7 +193,7 @@ controller_users
 
 `vars/controller_vars.yml`:
 
-```
+```yaml
 DO NOT: populate this file with valid credentials and then commit the file to GitHub!
 
 controller_vars
@@ -205,7 +205,7 @@ controller_vars
 
 `vars/controller_workflows.yml`:
 
-```
+```yaml
 controller_workflows
 
     Dictionary of workflows to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional workflows.
@@ -213,7 +213,7 @@ controller_workflows
 
 `vars/controller_execution_environments.yml`:
 
-```
+```yaml
 controller_execution_environments
 
     Dictionary of execution environments to define.  One example exists that will need to be filled in.  You can also copy / paste the example for additional execution environments.
@@ -221,7 +221,7 @@ controller_execution_environments
 
 `vars/controller_notification_templates.yml`:
 
-```
+```yaml
 controller_notification_templates
 
     Dictionary of notification templates to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional notification templates.
@@ -229,7 +229,7 @@ controller_notification_templates
 
 `vars/controller_roles.yml`:
 
-```
+```yaml
 controller_roles
 
     Dictionary of roles to define.  One example exists that will need to be filled in.  You can also copy / paste the example for additional roles.
@@ -237,7 +237,7 @@ controller_roles
 
 `vars/controller_instance_groups.yml`:
 
-```
+```yaml
 controller_instance_groups
 
     Dictionary of instance groups to create.  One example exists that will need to be filled in.  You can also copy / paste the example for additional instance groups.
@@ -254,7 +254,7 @@ You can run this playbook from ansible cli or as a Job Template in Tower / Contr
 
 From the command line to define all objects:
 
-```
+```bash
 ansible-playbook controller_config.yml --tags alltags
 
 or just to create new job templates:
