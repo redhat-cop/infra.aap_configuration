@@ -264,7 +264,7 @@ ansible-playbook controller_config.yaml --tags jobtemplates
 
 ## License
 
-BSD
+[GPLv3+](https://github.com/redhat-cop/infra.aap_configuration/blob/devel/LICENSE)
 
 ## Author Information
 
