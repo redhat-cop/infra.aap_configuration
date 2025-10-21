@@ -72,7 +72,7 @@ Example:
 
 Because of this it is difficult to provide controller with the required format for these fields.
 
-The workaround is easier to do in yaml with unsafe syntax, to read more about this check out the [documentation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_advanced_syntax.html):
+The workaround is easier to do in yaml with unsafe syntax, to read more about this check out the [documentation](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_advanced_syntax.html):
 
 ```yaml
 !unsafe '{{ variable }}'

@@ -80,7 +80,7 @@ This also speeds up the overall role.
 |`description`|""|no|str|Description to use for the credential input source.|
 |`state`|`present`|no|str|Desired state of the resource.|
 
-For further details on fields see <https://docs.ansible.com/automation-controller/latest/html/userguide/credential_plugins.html>. The input accepted by the `metadata` field will differ depending on the credential plugin being used.
+For further details on fields see <https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/configuring_automation_execution/assembly-controller-secret-management>. The input accepted by the `metadata` field will differ depending on the credential plugin being used.
 
 ### Standard Credential Input Source Data Structure
 
