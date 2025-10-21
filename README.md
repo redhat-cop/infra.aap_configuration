@@ -1,7 +1,7 @@
 # Red Hat Communities of Practice AAP Configuration Collection
 
-![pre-commit tests](https://github.com/redhat-cop/aap_configuration/actions/workflows/pre-commit.yml/badge.svg)
-![Release](https://github.com/redhat-cop/aap_configuration/actions/workflows/release.yml/badge.svg)
+[![pre-commit tests](https://github.com/redhat-cop/infra.aap_configuration/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/redhat-cop/infra.aap_configuration/actions/workflows/pre-commit.yml)
+[![Release - Automated](https://github.com/redhat-cop/infra.aap_configuration/actions/workflows/release_auto.yml/badge.svg)](https://github.com/redhat-cop/infra.aap_configuration/actions/workflows/release_auto.yml)
 <!-- markdownlint-disable-line MD033 MD034 --><a href="https://raw.githubusercontent.com/redhat-cop/infra.aap_configuration/devel/docs/aap_config_as_code_public_meeting.ics"><img border="0" alt="Google Calendar invite" width="60" src="https://ssl.gstatic.com/calendar/images/dynamiclogo_2020q4/calendar_20_2x.png"></a>
 <!-- Further CI badges go here as above -->
 
@@ -111,7 +111,7 @@ You can also specify authentication by a combination of either:
 * `aap_hostname`, `aap_token`
 
 The OAuth2 token is the preferred method. You can obtain the token through the preferred `controller_token` module, or through the
-AWX CLI [login](https://docs.ansible.com/automation-controller/latest/html/controllerapi/authentication.html)
+AWX CLI [login](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/automation_execution_api_overview/controller-api-auth-methods)
 command.
 
 These can be specified via (from highest to lowest precedence):
