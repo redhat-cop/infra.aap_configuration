@@ -23,7 +23,7 @@
         return_content: true
         headers:
           Content-Type: application/json
-        validate_certs: false
+        validate_certs: "{{ aap_validate_certs | default(false) }}"
       register: r_metrics
 
     - name: Debug metrics
@@ -47,7 +47,7 @@
         return_content: true
         headers:
           Content-Type: application/json
-        validate_certs: false
+        validate_certs: "{{ aap_validate_certs | default(false) }}"
       register: r_users
 
     - name: Debug users
@@ -90,7 +90,7 @@
         return_content: true
         headers:
           Content-Type: application/json
-        validate_certs: false
+        validate_certs: "{{ aap_validate_certs | default(false) }}"
       register: r_subscription
 
     - name: Output

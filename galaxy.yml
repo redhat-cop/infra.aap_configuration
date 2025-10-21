@@ -12,8 +12,8 @@ authors:
   - Sean Sullivan @sean-m-sullivan
   - David Danielsson @djdanielsson
   - Brant Evans @branic
-repository: https://github.com/redhat-cop/aap_configuration/
-issues: https://github.com/redhat-cop/aap_configuration/issues
+repository: https://github.com/redhat-cop/infra.aap_configuration
+issues: https://github.com/redhat-cop/infra.aap_configuration/issues
 build_ignore:
   - galaxy.yml.j2
   - release.yml
