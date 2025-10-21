@@ -1,7 +1,7 @@
 # Red Hat Communities of Practice AAP Configuration Collection
 
-![pre-commit tests](https://github.com/redhat-cop/aap_configuration/actions/workflows/pre-commit.yml/badge.svg)
-![Release](https://github.com/redhat-cop/aap_configuration/actions/workflows/release.yml/badge.svg)
+![pre-commit tests](https://github.com/redhat-cop/infra.aap_configuration/actions/workflows/pre-commit.yml/badge.svg)
+![Release](https://github.com/redhat-cop/infra.aap_configuration/actions/workflows/release_auto.yml/badge.svg)
 <!-- markdownlint-disable-line MD033 MD034 --><a href="https://raw.githubusercontent.com/redhat-cop/infra.aap_configuration/devel/docs/aap_config_as_code_public_meeting.ics"><img border="0" alt="Google Calendar invite" width="60" src="https://ssl.gstatic.com/calendar/images/dynamiclogo_2020q4/calendar_20_2x.png"></a>
 <!-- Further CI badges go here as above -->
 
