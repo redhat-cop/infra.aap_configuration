@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Rename variable to fix conflict between hub_collections variable used in hub_collections and hub_publish roles
+...

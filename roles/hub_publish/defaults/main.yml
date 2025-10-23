@@ -12,7 +12,7 @@
 # A list of paths to collection tarballs to publish if you are not cloning from a git and building them.
 hub_collection_list: "{{ ah_collection_list | default([]) }}"
 # a list of dictionaries describing collections to publish
-hub_collections: []
+hub_collections_publish: []
 # possible fields:
 # - collection_name:  "name of collection, normally the last part before the / in a git url"  # mandatory
 #   git_url: "url to git repo."  # mandatory when type=git
