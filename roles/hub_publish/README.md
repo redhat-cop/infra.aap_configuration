@@ -20,8 +20,8 @@ An Ansible Role to publish collections to Automation Hub or Galaxies.
 |`aap_configuration_working_dir`|`/var/tmp`|no|The working directory where the built artifacts live, or where the artifacts will be built.||
 |`hub_auto_approve`|`false`|no|Whether the collection will be automatically approved in Automation Hub. This will only work if the account being used has correct privileges.||
 |`hub_overwrite_existing`|`false`|no|Whether the collection will be automatically overwrite an existing collection in Automation Hub. This will only work if the account being used has correct privileges.||
-|`hub_collections_publish`|`see below`|no|Data structure describing your collections, mutually exclusive to hub_collection_list, described below.||
-|`hub_collection_list`|`list`|no|Data structure file paths to pre built collections, mutually exclusive with hub_collections_publish.||
+|`hub_custom_collections`|`see below`|no|Data structure describing your collections, mutually exclusive to hub_collection_list, described below.||
+|`hub_collection_list`|`list`|no|Data structure file paths to pre built collections, mutually exclusive with hub_custom_collections.||
 
 ### Secure Logging Variables
 
@@ -55,7 +55,7 @@ This also speeds up the overall role.
 
 ## Data Structure
 
-### hub_collections_publish Variables
+### hub_custom_collections Variables
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
@@ -72,7 +72,7 @@ This also speeds up the overall role.
 
 ```yaml
 ---
-hub_collections_publish:
+hub_custom_collections:
   - collection_name: cisco.iosxr
     git_url: https://github.com/ansible-collections/cisco.iosxr
 

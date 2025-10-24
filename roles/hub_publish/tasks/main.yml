@@ -11,7 +11,7 @@
         version: "{{ __hub_collection_item.version | default(omit) }}"
         key_file: "{{ __hub_collection_item.key_path | default(omit) }}"
         ssh_opts: "{{ __hub_collection_item.ssh_opts | default(omit) }}"
-      loop: "{{ hub_collections_publish }}"
+      loop: "{{ hub_custom_collections }}"
       loop_control:
         loop_var: __hub_collection_item
         pause: "{{ hub_configuration_publish_loop_delay }}"
@@ -38,7 +38,7 @@
         output_path: "{{ aap_configuration_working_dir }}/{{ __hub_collection_item.collection_name }}"
         force: true
       register: __hub_build_results
-      loop: "{{ hub_collection_list | default(hub_collections_publish, true) | select }}"
+      loop: "{{ hub_collection_list | default(hub_custom_collections, true) | select }}"
       loop_control:
         loop_var: __hub_collection_item
 
