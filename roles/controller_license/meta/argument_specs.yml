@@ -9,9 +9,9 @@ argument_specs:
         type: dict
         options:
           manifest_file:
-#            required: false
-#            type: str
-#            description: File path to a Red Hat subscription manifest (a .zip file)
+            required: false
+            type: str
+            description: File path to a Red Hat subscription manifest (a .zip file)
 #          manifest_url:
 #            required: false
 #            type: str
