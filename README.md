@@ -102,8 +102,8 @@ This error usually means the required Ansible collection (e.g., `infra.aap_confi
 
 Verify installation with `ansible-galaxy collection list` and that you have all the stated dependencies listed above in the requirements section.
 
-Define following vars here, or in `aap_configs/controller_auth.yml`
-`aap_hostname: ansible-controller-web-svc-test-project.example.com`
+Define following vars here, or in `aap_configs/auth.yml`
+`aap_hostname: aap.example.com`
 
 You can also specify authentication by a combination of either:
 

@@ -6,7 +6,7 @@
     controller_configuration_workflow_job_templates_secure_logging: false
     aap_validate_certs: false
   # Define following vars here, or in configs/controller_auth.yml
-  # aap_hostname: controller.example.com
+  # aap_hostname: aap.example.com
   # aap_username: admin
   # aap_password: changeme
   pre_tasks:
