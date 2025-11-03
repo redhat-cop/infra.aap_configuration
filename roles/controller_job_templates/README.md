@@ -281,7 +281,7 @@ controller_templates:
 - name: Playbook to configure ansible controller post installation
   hosts: localhost
   connection: local
-  # Define following vars here, or in platform_configs/controller_auth.yml
+  # Define following vars here, or in aap_configs/auth.yml
   # aap_hostname: aap.example.com
   # aap_username: admin
   # aap_password: changeme

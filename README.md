@@ -110,36 +110,19 @@ You can also specify authentication by a combination of either:
 * `aap_hostname`, `aap_username`, `aap_password`
 * `aap_hostname`, `aap_token`
 
-The OAuth2 token is the preferred method. You can obtain the token through the preferred `controller_token` module, or through the
+The OAuth2 token is the preferred method. You can obtain the token through the preferred `aap_token` module, or through the
 AWX CLI [login](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/automation_execution_api_overview/controller-api-auth-methods)
 command.
 
-These can be specified via (from highest to lowest precedence):
-
-* direct role variables as mentioned above
-* environment variables (most useful when running against localhost)
-* a config file path specified by the `controller_config_file` parameter
-* a config file at `~/.controller_cli.cfg`
-* a config file at `/etc/controller/controller_cli.cfg`
-
-Config file syntax looks like this:
-
-```ini
-[general]
-host = https://localhost:8043
-verify_ssl = true
-oauth_token = LEdCpKVKc4znzffcpQL5vLG8oyeku6
-```
-
-Controller token module would be invoked with this code:
+AAP token module would be invoked with this code:
 
 ```yaml
-    - name: Create a new token using controller username/password
-      ansible.controller.token:
+    - name: Create a new token using platform username/password
+      ansible.platform.token:
         description: 'Creating token to test controller jobs'
         scope: "write"
         state: present
-        controller_host: "{{ aap_hostname }}"
+        aap_hostname: "{{ aap_hostname }}"
         aap_username: "{{ aap_username }}"
         aap_password: "{{ aap_password }}"
 
