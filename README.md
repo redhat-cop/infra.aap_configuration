@@ -7,6 +7,10 @@
 
 This Ansible collection allows for easy interaction with AAP 2.5+ via Ansible roles using the modules from the certified collections.
 
+## Getting Started
+
+**New to this collection?** Check out our [Getting Started Guide](https://github.com/redhat-cop/infra.aap_configuration/blob/devel/docs/GETTING_STARTED.md) for a step-by-step introduction to using the `dispatch` role and configuring your AAP environment.
+
 ## Getting Help
 
 We are on the Ansible Forums and Matrix, if you want to discuss something, ask for help, or participate in the community, please use the #infra-config-as-code tag on the form, or post to the chat in Matrix.
