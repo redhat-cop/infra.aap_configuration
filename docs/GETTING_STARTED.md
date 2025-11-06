@@ -15,7 +15,7 @@ The `infra.aap_configuration` collection provides a comprehensive set of Ansible
 
 Before you begin, ensure you have:
 
-1. **Ansible** installed (version 2.9 or higher recommended)
+1. **Ansible** installed (version 2.15 or higher recommended)
 2. **Access to an AAP 2.5+** environment
 3. **API credentials** for your AAP instance (username/password or OAuth token)
 
@@ -352,7 +352,7 @@ controller_credential_types:
           secret: true
     injectors:
       extra_vars:
-        custom_ssh_key: "{{ ssh_key }}"
+        custom_ssh_key: !unsafe "{{ ssh_key }}"
 
 controller_credentials:
   - name: GitHub Access Token
@@ -517,6 +517,3 @@ The collection is idempotent. If an object already exists with the same name, it
 - [Template Repository](https://github.com/redhat-cop/aap_configuration_template) - Ready-to-use project template
 
 ---
-
-Happy Automating! 🚀
-
