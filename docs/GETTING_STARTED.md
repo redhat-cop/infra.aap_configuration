@@ -229,7 +229,7 @@ Common tags include:
 
 For larger deployments, organize your configuration by type and environment:
 
-```
+```bash
 aap-config/
 ├── configs/
 │   ├── common/
