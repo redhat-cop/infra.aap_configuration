@@ -87,6 +87,7 @@ aap_validate_certs: false  # Set to true in production
 ```
 
 > **Security Note:** Never commit credentials to version control! Use Ansible Vault to encrypt this file:
+>
 > ```bash
 > ansible-vault encrypt configs/auth.yml
 > ```
@@ -229,7 +230,7 @@ Common tags include:
 
 For larger deployments, organize your configuration by type and environment:
 
-```bash
+```text
 aap-config/
 ├── configs/
 │   ├── common/
@@ -463,11 +464,13 @@ eda_rulebook_activations:
 If you see errors like "couldn't resolve module/action":
 
 1. Verify all collections are installed:
+
    ```bash
    ansible-galaxy collection list
    ```
 
 2. Reinstall if needed:
+
    ```bash
    ansible-galaxy collection install -r requirements.yml --force
    ```
@@ -479,6 +482,7 @@ If you get authentication errors:
 1. Verify your credentials are correct
 2. Check that `aap_hostname` includes the correct protocol (https://)
 3. Test API access with curl:
+
    ```bash
    curl -k -u admin:password https://aap.example.com/api/v2/ping/
    ```
