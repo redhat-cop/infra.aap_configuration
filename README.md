@@ -7,6 +7,10 @@
 
 This Ansible collection allows for easy interaction with AAP 2.5+ via Ansible roles using the modules from the certified collections.
 
+## Getting Started
+
+**New to this collection?** Check out our [Getting Started Guide](https://github.com/redhat-cop/infra.aap_configuration/blob/devel/docs/GETTING_STARTED.md) for a step-by-step introduction to using the `dispatch` role and configuring your AAP environment.
+
 ## Getting Help
 
 We are on the Ansible Forums and Matrix, if you want to discuss something, ask for help, or participate in the community, please use the #infra-config-as-code tag on the form, or post to the chat in Matrix.
@@ -102,44 +106,27 @@ This error usually means the required Ansible collection (e.g., `infra.aap_confi
 
 Verify installation with `ansible-galaxy collection list` and that you have all the stated dependencies listed above in the requirements section.
 
-Define following vars here, or in `aap_configs/controller_auth.yml`
-`aap_hostname: ansible-controller-web-svc-test-project.example.com`
+Define following vars here, or in `aap_configs/auth.yml`
+`aap_hostname: aap.example.com`
 
 You can also specify authentication by a combination of either:
 
 * `aap_hostname`, `aap_username`, `aap_password`
 * `aap_hostname`, `aap_token`
 
-The OAuth2 token is the preferred method. You can obtain the token through the preferred `controller_token` module, or through the
+The OAuth2 token is the preferred method. You can obtain the token through the preferred `aap_token` module, or through the
 AWX CLI [login](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/automation_execution_api_overview/controller-api-auth-methods)
 command.
 
-These can be specified via (from highest to lowest precedence):
-
-* direct role variables as mentioned above
-* environment variables (most useful when running against localhost)
-* a config file path specified by the `controller_config_file` parameter
-* a config file at `~/.controller_cli.cfg`
-* a config file at `/etc/controller/controller_cli.cfg`
-
-Config file syntax looks like this:
-
-```ini
-[general]
-host = https://localhost:8043
-verify_ssl = true
-oauth_token = LEdCpKVKc4znzffcpQL5vLG8oyeku6
-```
-
-Controller token module would be invoked with this code:
+AAP token module would be invoked with this code:
 
 ```yaml
-    - name: Create a new token using controller username/password
-      ansible.controller.token:
+    - name: Create a new token using platform username/password
+      ansible.platform.token:
         description: 'Creating token to test controller jobs'
         scope: "write"
         state: present
-        controller_host: "{{ aap_hostname }}"
+        aap_hostname: "{{ aap_hostname }}"
         aap_username: "{{ aap_username }}"
         aap_password: "{{ aap_password }}"
 
