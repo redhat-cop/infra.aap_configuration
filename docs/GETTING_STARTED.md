@@ -128,7 +128,7 @@ Create `configure_aap.yml`:
   hosts: localhost
   connection: local
   gather_facts: false
-  
+
   tasks:
     - name: Load all configuration files
       ansible.builtin.include_vars:
@@ -137,7 +137,7 @@ Create `configure_aap.yml`:
           - yml
       tags:
         - always
-    
+
     - name: Configure AAP using dispatch role
       ansible.builtin.include_role:
         name: infra.aap_configuration.dispatch
@@ -169,13 +169,13 @@ You can also use individual roles for more granular control:
     aap_hostname: aap.example.com
     aap_username: admin
     aap_password: password
-    
+
     controller_projects:
       - name: My Project
         organization: Default
         scm_type: git
         scm_url: https://github.com/ansible/ansible-examples.git
-  
+
   tasks:
     - name: Configure Controller Projects
       ansible.builtin.include_role:
@@ -256,20 +256,20 @@ Load configurations based on environment:
   hosts: localhost
   connection: local
   gather_facts: false
-  
+
   tasks:
     - name: Load common configuration
       ansible.builtin.include_vars:
         dir: configs/common
         extensions:
           - yml
-    
+
     - name: Load environment-specific configuration
       ansible.builtin.include_vars:
         dir: "configs/{{ environment }}"
         extensions:
           - yml
-    
+
     - name: Apply configuration using dispatch
       ansible.builtin.include_role:
         name: infra.aap_configuration.dispatch
