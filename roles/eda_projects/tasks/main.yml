@@ -18,6 +18,7 @@
         controller_host: "{{ aap_hostname | default(omit, true) }}"
         controller_username: "{{ aap_username | default(omit, true) }}"
         controller_password: "{{ aap_password | default(omit, true) }}"
+        controller_token: "{{ aap_token | default(omit, true) }}"
         request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
         validate_certs: "{{ aap_validate_certs | default(omit) }}"
       loop: "{{ eda_projects }}"
