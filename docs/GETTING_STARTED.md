@@ -1,6 +1,6 @@
 # Getting Started with infra.aap_configuration
 
-Welcome to the **infra.aap_configuration** collection! This guide will help you get started quickly with configuring your Ansible Automation Platform (AAP) using this collection.
+Welcome to the **infra.aap_configuration** collection. This guide will help you get started quickly with configuring your Ansible Automation Platform (AAP) using this collection.
 
 ## What is this Collection?
 
