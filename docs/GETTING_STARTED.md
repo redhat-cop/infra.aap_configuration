@@ -1,6 +1,6 @@
 # Getting Started with infra.aap_configuration
 
-Welcome to the **infra.aap_configuration** collection! This guide will help you get started quickly with configuring your Ansible Automation Platform (AAP) using this collection.
+Welcome to the **infra.aap_configuration** collection. This guide will help you get started quickly with configuring your Ansible Automation Platform (AAP) using this collection.
 
 ## What is this Collection?
 
@@ -87,6 +87,7 @@ aap_validate_certs: false  # Set to true in production
 ```
 
 > **Security Note:** Never commit credentials to version control! Use Ansible Vault to encrypt this file:
+>
 > ```bash
 > ansible-vault encrypt configs/auth.yml
 > ```
@@ -127,7 +128,7 @@ Create `configure_aap.yml`:
   hosts: localhost
   connection: local
   gather_facts: false
-  
+
   tasks:
     - name: Load all configuration files
       ansible.builtin.include_vars:
@@ -136,7 +137,7 @@ Create `configure_aap.yml`:
           - yml
       tags:
         - always
-    
+
     - name: Configure AAP using dispatch role
       ansible.builtin.include_role:
         name: infra.aap_configuration.dispatch
@@ -168,13 +169,13 @@ You can also use individual roles for more granular control:
     aap_hostname: aap.example.com
     aap_username: admin
     aap_password: password
-    
+
     controller_projects:
       - name: My Project
         organization: Default
         scm_type: git
         scm_url: https://github.com/ansible/ansible-examples.git
-  
+
   tasks:
     - name: Configure Controller Projects
       ansible.builtin.include_role:
@@ -229,7 +230,7 @@ Common tags include:
 
 For larger deployments, organize your configuration by type and environment:
 
-```
+```text
 aap-config/
 ├── configs/
 │   ├── common/
@@ -255,20 +256,20 @@ Load configurations based on environment:
   hosts: localhost
   connection: local
   gather_facts: false
-  
+
   tasks:
     - name: Load common configuration
       ansible.builtin.include_vars:
         dir: configs/common
         extensions:
           - yml
-    
+
     - name: Load environment-specific configuration
       ansible.builtin.include_vars:
         dir: "configs/{{ environment }}"
         extensions:
           - yml
-    
+
     - name: Apply configuration using dispatch
       ansible.builtin.include_role:
         name: infra.aap_configuration.dispatch
@@ -463,11 +464,13 @@ eda_rulebook_activations:
 If you see errors like "couldn't resolve module/action":
 
 1. Verify all collections are installed:
+
    ```bash
    ansible-galaxy collection list
    ```
 
 2. Reinstall if needed:
+
    ```bash
    ansible-galaxy collection install -r requirements.yml --force
    ```
@@ -479,6 +482,7 @@ If you get authentication errors:
 1. Verify your credentials are correct
 2. Check that `aap_hostname` includes the correct protocol (https://)
 3. Test API access with curl:
+
    ```bash
    curl -k -u admin:password https://aap.example.com/api/v2/ping/
    ```
