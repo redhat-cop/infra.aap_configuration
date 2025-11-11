@@ -90,7 +90,7 @@ This also speeds up the overall role.
   hosts: localhost
   connection: local
   # Define following vars here, or in controller_configs/controller_auth.yml
-  # aap_hostname: ansible-controller-web-svc-test-project.example.com
+  # aap_hostname: aap.example.com
   # aap_username: admin
   # aap_password: changeme
   pre_tasks:
