@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - fixing examples for gateway_role_definitions and gateway_role_team_assignments
+...
