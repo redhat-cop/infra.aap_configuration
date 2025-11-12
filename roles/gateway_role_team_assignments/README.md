@@ -84,8 +84,6 @@ This also speeds up the overall role.
 {
   "gateway_role_team_assignments": [
     {
-      "name": "Assign roles for multiple objects using names",
-      "ansible.platform.role_team_assignment": {
         "assignment_objects": [
           {
             "name": "org1",
@@ -98,9 +96,6 @@ This also speeds up the overall role.
         ],
         "role_definition": "Organization Inventory Admin",
         "team": "team2",
-        "state": "present"
-      },
-      "register": "result"
     }
   ]
 }
@@ -112,17 +107,14 @@ File name: `data/gateway_role_team_assignments.yml`
 
 ```yaml
 ---
-- name: Assign roles for multiple objects using names
-  ansible.platform.role_team_assignment:
-    assignment_objects:
+gateway_role_team_assignments:
+  - assignment_objects:
       - name: org1
         type: organizations
       - name: org2
         type: organizations
     role_definition: Organization Inventory Admin
     team: team2
-    state: present
-  register: result
 ```
 
 ## License
