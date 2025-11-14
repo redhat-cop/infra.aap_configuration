@@ -85,17 +85,13 @@ This also speeds up the overall role.
 {
   "gateway_role_definitions": [
     {
-      "name": "Create a role definition",
-      "ansible.platform.role_definition": {
-        "name": "Organization Inventory Admin",
-        "description": "Grants full inventory access",
-        "content_type": "awx.inventory",
-        "permissions": [
-          "awx.view_inventory",
-          "awx.change_inventory"
-        ],
-        "state": "present"
-      }
+      "name": "Organization Inventory Admin",
+      "description": "Grants full inventory access",
+      "content_type": "awx.inventory",
+      "permissions": [
+        "awx.view_inventory",
+        "awx.change_inventory"
+      ]
     }
   ]
 }
@@ -108,15 +104,12 @@ File name: `data/gateway_role_definitions.yml`
 ```yaml
 ---
 gateway_role_definitions:
-- name: Create a role definition
-  ansible.platform.role_definition:
-    name: Organization Inventory Admin
+  - name: Organization Inventory Admin
     description: Grants full inventory access
     content_type: awx.inventory
     permissions:
       - awx.view_inventory
       - awx.change_inventory
-    state: present
 ```
 
 ## License
