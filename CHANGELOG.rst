@@ -4,6 +4,19 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v3.8.4
+======
+
+Bugfixes
+--------
+
+- Add `kind: constructed` in controller_inventories role document
+- Fix missing wildcard variable tasks for gateway_http_portsgateway_role_definitions, and gateway_role_team_assignments to ensure all variables defined in defaults are properly handled
+- Rename variable to fix conflict between hub_collections variable used in hub_collections and hub_publish roles
+- Updated get_stats playbook to have validate_certs be a var
+- fixing eda roles that were missing aap_token arguments even though it was shown in the arg spec
+- fixing examples for gateway_role_definitions and gateway_role_team_assignments
+
 v3.8.3
 ======
 

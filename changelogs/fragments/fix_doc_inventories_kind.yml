@@ -1,4 +1,0 @@
----
-bugfixes:
-  - "Add `kind: constructed` in controller_inventories role document"
-...
