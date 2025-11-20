@@ -60,6 +60,7 @@ This also speeds up the overall role.
 |`url`|""|yes|str|A URL to a remote archive, such as a Github Release or a build artifact stored in Artifactory and unpacks it into the project path for use. (Alias: scm_url)|
 |`organization`|""|no|str|Organization this project belongs to.|
 |`credential`|""|no|str|The token needed to utilize the SCM URL.|
+|`proxy`|""|no|str|Proxy used to access HTTP or HTTPS servers.|
 |`sync`|`false`|no|str|Project sync once created/updated or not.|
 |`state`|`present`|no|str|Desired state of the project.|
 
