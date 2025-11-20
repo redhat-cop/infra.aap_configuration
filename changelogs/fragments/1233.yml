@@ -1,5 +1,5 @@
 ---
-bugfixes:
+minor_changes:
   - added the option of project sync to eda_projects
   - added proxy option to eda_projects
 ...
