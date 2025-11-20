@@ -14,6 +14,7 @@
         scm_branch: "{{ __project_item.scm_branch | default(omit) }}"
         credential: "{{ __project_item.credential | default(omit) }}"
         organization_name: "{{ __project_item.organization | default(omit) }}"
+        sync: "{{ __project_item.sync | default('false') }}"
         state: "{{ __project_item.state | default(eda_state | default('present')) }}"
         controller_host: "{{ aap_hostname | default(omit, true) }}"
         controller_username: "{{ aap_username | default(omit, true) }}"
