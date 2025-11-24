@@ -18,6 +18,7 @@ aap_user_accounts: []
 #  - last_name
 #  - email
 #  - is_superuser
+#  - is_platform_auditor
 #  - password
 #  - authenticators
 #  - authenticator_uid

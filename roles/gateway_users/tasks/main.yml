@@ -13,6 +13,7 @@
         first_name: "{{ __gateway_user_accounts_item.first_name | default(omit, true) }}"
         last_name: "{{ __gateway_user_accounts_item.last_name | default(omit, true) }}"
         is_superuser: "{{ __gateway_user_accounts_item.is_superuser | default(omit) }}"
+        is_platform_auditor: "{{ __gateway_user_accounts_item.is_platform_auditor | default(omit) }}"
         update_secrets: "{{ __gateway_user_accounts_item.update_secrets | default(omit) }}"
         organizations: "{{ __gateway_user_accounts_item.organizations | default(omit) }}"
         authenticators: "{{ __gateway_user_accounts_item.authenticators | default(omit) }}"

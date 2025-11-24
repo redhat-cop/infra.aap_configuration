@@ -34,6 +34,11 @@ argument_specs:
         #     required: false
         #     type: bool
         #     description: Whether the user is a superuser
+        #   is_platform_auditor:
+        #     default: false
+        #     required: false
+        #     type: bool
+        #     description: Whether the user is a platform auditor
         #   update_secrets:
         #     default: true
         #     required: false
