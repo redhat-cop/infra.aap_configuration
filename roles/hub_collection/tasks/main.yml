@@ -58,7 +58,9 @@
         cas_job_async_results_item: "{{ __collections_job_async_result_item }}"
         cas_error_list_var_name: "hub_collections_errors"
         __operation: "{{ operation_translate[__collections_job_async_result_item.__hub_collection_item.state | default(platform_state) | default('present')] }}"
-        cas_object_label: "{{ __operation.verb }} Collection {{ __collections_job_async_result_item.__hub_collection_item.name }} | Wait for finish the Collection {{ __operation.action }}"
+        cas_object_label: "{{ __operation.verb }} Collection {{ _collection_object_label }} | Wait for finish the Collection {{ __operation.action }}"
+        _collection_object_label: "{{ __collections_job_async_result_item.__hub_collection_item.path | default(_collection_backup_label) }}"
+        _collection_backup_label: "{{ __collections_job_async_result_item.__hub_collection_item.namespace }}.{{ __collections_job_async_result_item.__hub_collection_item.name }}:{{ __collections_job_async_result_item.__hub_collection_item.version | default('') }}"
 
   always:
     - name: Cleanup async results files

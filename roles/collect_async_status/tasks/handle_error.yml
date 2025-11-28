@@ -84,6 +84,20 @@
       ansible.builtin.set_fact:
         __cas_job_async_item: "{{ __cas_job_async_item | combine({ 'groups': cas_job_async_results_item[__cas_job_async_item_loop_var]['groups']}) }}"
 
+    - name: handle_error | Check item for namespace
+      when:
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["namespace"] is defined
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["namespace"] is not none
+      ansible.builtin.set_fact:
+        __cas_job_async_item: "{{ __cas_job_async_item | combine({ 'namespace': cas_job_async_results_item[__cas_job_async_item_loop_var]['namespace']}) }}"
+
+    - name: handle_error | Check item for path
+      when:
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["path"] is defined
+        - cas_job_async_results_item[__cas_job_async_item_loop_var]["path"] is not none
+      ansible.builtin.set_fact:
+        __cas_job_async_item: "{{ __cas_job_async_item | combine({ 'path': cas_job_async_results_item[__cas_job_async_item_loop_var]['path']}) }}"
+
     - name: handle_error | Build consolidated list of failed objects and the error
       ansible.builtin.set_fact:
         aap_configuration_role_errors: "{{ aap_configuration_role_errors | default({})
@@ -106,4 +120,6 @@
           user: "{{ __cas_job_async_item['user'] | default(omit) }}"
           username: "{{ __cas_job_async_item['username'] | default(omit) }}"
           groups: "{{ __cas_job_async_item['groups'] | default(omit) }}"
+          namespace: "{{ __cas_job_async_item['namespace'] | default(omit) }}"
+          path: "{{ __cas_job_async_item['path'] | default(omit) }}"
 ...
