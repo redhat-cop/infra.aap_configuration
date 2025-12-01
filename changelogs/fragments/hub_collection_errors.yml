@@ -1,3 +1,0 @@
----
-bugfixes:
-  - Improve error handling output for collection uploads. Now displays path and namespace.

@@ -994,3 +994,15 @@ releases:
     - get_stats.yml
     - trivial_stuff.yml
     release_date: '2025-11-15'
+  3.9.0:
+    changes:
+      bugfixes:
+      - Improve error handling output for collection uploads. Now displays path and
+        namespace.
+      minor_changes:
+      - added proxy option to eda_projects
+      - added the option of project sync to eda_projects
+    fragments:
+    - 1233.yml
+    - hub_collection_errors.yml
+    release_date: '2025-12-01'
