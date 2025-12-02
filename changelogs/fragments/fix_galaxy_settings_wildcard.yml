@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - Fix wildcard variable handling for gateway_settings

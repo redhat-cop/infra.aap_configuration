@@ -11,7 +11,7 @@
 
 - name: include_wildcard_vars | Set fact for gateway_settings
   ansible.builtin.set_fact:
-    gateway_settings: "{{ (gateway_settings | default([])) + lookup('ansible.builtin.vars', item) }}"
+    gateway_settings: "{{ (gateway_settings | default({})) | combine(lookup('ansible.builtin.vars', item), list_merge='append', recursive=true) }}"
   loop: "{{ [] if (lookup('ansible.builtin.varnames', 'gateway_settings.*')) is not string else (lookup('ansible.builtin.varnames', 'gateway_settings.*') | split(',')) }}"
 
 - name: include_wildcard_vars | Set fact for aap_organizations
