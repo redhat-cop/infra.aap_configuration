@@ -205,10 +205,13 @@ eda_configuration_dispatcher_roles:
     var: eda_rulebook_activations
     tags: rulebook_activation
 
+aap_configuration_dispatcher_exclude_roles: []
+
 aap_configuration_dispatcher_roles: >
-  {{ gateway_configuration_dispatcher_roles
-   + hub_configuration_dispatcher_roles
-   + controller_configuration_dispatcher_roles
-   + eda_configuration_dispatcher_roles }}
+  {{ (gateway_configuration_dispatcher_roles
+     + hub_configuration_dispatcher_roles
+     + controller_configuration_dispatcher_roles
+     + eda_configuration_dispatcher_roles)
+     | rejectattr('role', 'in', aap_configuration_dispatcher_exclude_roles) }}
 
 ...

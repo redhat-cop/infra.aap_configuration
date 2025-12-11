@@ -6,7 +6,11 @@ An Ansible Role to run all roles in the infra.aap_configuration collection.
 
 ## Variables
 
-This is a meta role, its purpose is to run the other roles in the collection, it does not run all of them, and can be used to call roles in a custom order, The control variable is the `aap_configuration_dispatcher_roles` which will pull roles from the different services and run them, If you wish to just run a subset of services from our default lists remove entries from this var.
+This is a meta role, its purpose is to run the other roles in the collection, it does not run all of them, and can be used to call roles in a custom order.
+
+The control variable is `aap_configuration_dispatcher_roles` which will set the roles to run for different services.
+
+If you wish to run just a subset of roles either use `aap_configuration_dispatcher_exclude_roles` to exclude entries from the default list or define `aap_configuration_dispatcher_roles` with wanted roles locally.
 
 ### Option: `dispatch_include_wildcard_vars`
 
@@ -112,14 +116,23 @@ By default, this option is **`false`**.
 
 ```yaml
 aap_configuration_dispatcher_roles: >
-  {{ gateway_configuration_dispatcher_roles
-   + hub_configuration_dispatcher_roles
-   + controller_configuration_dispatcher_roles
-   + eda_configuration_dispatcher_roles
+  {{ (gateway_configuration_dispatcher_roles
+    + hub_configuration_dispatcher_roles
+    + controller_configuration_dispatcher_roles
+    + eda_configuration_dispatcher_roles)
+    | rejectattr('role', 'in', aap_configuration_dispatcher_exclude_roles) }}
   }}
 ```
 
 In addition each service has its own subset of roles, and each role has its own tag that can be used as well.
+
+To exclude roles to avoid unwanted updates, use `aap_configuration_dispatcher_exclude_roles`:
+
+```yaml
+aap_configuration_dispatcher_exclude_roles:
+  - controller_inventory_source_update
+  - hub_ee_registry_index
+```
 
 ### Gateway Roles
 
