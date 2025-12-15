@@ -19,11 +19,11 @@
     timeout: "{{ __ad_hoc_command_item.timeout | default(omit, true) }}"
 
     # Role Standard Options
-    controller_username: "{{ aap_username | default(omit, true) }}"
-    controller_password: "{{ aap_password | default(omit, true) }}"
-    controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
+    controller_username: "{{ aap_username | default(lookup('env', 'CONTROLLER_USERNAME'), true) | default(omit, true) }}"
+    controller_password: "{{ aap_password | default(lookup('env', 'CONTROLLER_PASSWORD'), true) | default(omit, true) }}"
+    controller_oauthtoken: "{{ aap_token | default(lookup('env', 'CONTROLLER_OAUTH_TOKEN'), true) | default(omit, true) }}"
     request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-    controller_host: "{{ aap_hostname | default(omit, true) }}"
+    controller_host: "{{ aap_hostname | default(lookup('env', 'CONTROLLER_HOST'), true) | default(omit, true) }}"
     validate_certs: "{{ aap_validate_certs | default(omit) }}"
   loop: "{{ controller_ad_hoc_commands }}"
   loop_control:

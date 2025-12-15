@@ -50,11 +50,11 @@
         notification_templates_approvals: "{{ (__workflow_loop_item.related.notification_templates_approvals | map(attribute='name') | list if __workflow_loop_item.related.notification_templates_approvals is defined) | default(__workflow_loop_item.notification_templates_approvals) | default(([] if controller_configuration_workflows_enforce_defaults else omit), true) }}"
 
         # Role Standard Options
-        controller_username: "{{ aap_username | default(omit, true) }}"
-        controller_password: "{{ aap_password | default(omit, true) }}"
-        controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
+        controller_username: "{{ aap_username | default(lookup('env', 'CONTROLLER_USERNAME'), true) | default(omit, true) }}"
+        controller_password: "{{ aap_password | default(lookup('env', 'CONTROLLER_PASSWORD'), true) | default(omit, true) }}"
+        controller_oauthtoken: "{{ aap_token | default(lookup('env', 'CONTROLLER_OAUTH_TOKEN'), true) | default(omit, true) }}"
         request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-        controller_host: "{{ aap_hostname | default(omit, true) }}"
+        controller_host: "{{ aap_hostname | default(lookup('env', 'CONTROLLER_HOST'), true) | default(omit, true) }}"
         validate_certs: "{{ aap_validate_certs | default(omit) }}"
       loop: "{{ workflow_job_templates if workflow_job_templates is defined else controller_workflows }}"
       loop_control:

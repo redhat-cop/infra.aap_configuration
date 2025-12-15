@@ -22,10 +22,10 @@
         state: "{{ __gateway_application_item.state | default(platform_state | default(omit, true)) }}"
 
         # Role specific options
-        gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
-        gateway_username: "{{ aap_username | default(omit, true) }}"
-        gateway_password: "{{ aap_password | default(omit, true) }}"
-        gateway_token: "{{ aap_token | default(omit, true) }}"
+        gateway_hostname: "{{ aap_hostname | default(lookup('env', 'CONTROLLER_HOST'), true) | default(omit, true) }}"
+        gateway_username: "{{ aap_username | default(lookup('env', 'CONTROLLER_USERNAME'), true) | default(omit, true) }}"
+        gateway_password: "{{ aap_password | default(lookup('env', 'CONTROLLER_PASSWORD'), true) | default(omit, true) }}"
+        gateway_token: "{{ aap_token | default(lookup('env', 'CONTROLLER_OAUTH_TOKEN'), true) | default(omit, true) }}"
         gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
         gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
       loop: "{{ aap_applications }}"

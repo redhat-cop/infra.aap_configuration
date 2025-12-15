@@ -15,11 +15,11 @@
         state: "{{ __controller_credential_type_item.state | default(platform_state | default('present')) }}"
 
         # Role specific options
-        controller_username: "{{ aap_username | default(omit, true) }}"
-        controller_password: "{{ aap_password | default(omit, true) }}"
-        controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
+        controller_username: "{{ aap_username | default(lookup('env', 'CONTROLLER_USERNAME'), true) | default(omit, true) }}"
+        controller_password: "{{ aap_password | default(lookup('env', 'CONTROLLER_PASSWORD'), true) | default(omit, true) }}"
+        controller_oauthtoken: "{{ aap_token | default(lookup('env', 'CONTROLLER_OAUTH_TOKEN'), true) | default(omit, true) }}"
         request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-        controller_host: "{{ aap_hostname | default(omit, true) }}"
+        controller_host: "{{ aap_hostname | default(lookup('env', 'CONTROLLER_HOST'), true) | default(omit, true) }}"
         validate_certs: "{{ aap_validate_certs | default(omit) }}"
       loop: "{{ credential_types if credential_types is defined else controller_credential_types }}"
       loop_control:
