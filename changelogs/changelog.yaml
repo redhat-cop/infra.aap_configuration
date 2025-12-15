@@ -1006,3 +1006,10 @@ releases:
     - 1233.yml
     - hub_collection_errors.yml
     release_date: '2025-12-01'
+  3.9.1:
+    changes:
+      bugfixes:
+      - Fix wildcard variable handling for gateway_settings
+    fragments:
+    - fix_galaxy_settings_wildcard.yml
+    release_date: '2025-12-15'

@@ -4,6 +4,14 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v3.9.1
+======
+
+Bugfixes
+--------
+
+- Fix wildcard variable handling for gateway_settings
+
 v3.9.0
 ======
 
