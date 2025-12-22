@@ -11,6 +11,16 @@
       delay: "{{ cas_async_delay }}"
       ignore_errors: true
 
+    - name: Register value
+      when: aap_configuration_register is defined or _register_var is defined
+      vars:
+        _register_var: "{{ cas_job_async_results_item[cas_job_async_results_item.ansible_loop_var]['register'] | default('_') }}"
+        _register_value: "{{ lookup('vars', aap_configuration_register | default('_'), default={}) }}"
+        _appended_value: "{{ _register_value[cas_register_subvar] | default([]) + [__cas_job_async_result] }}"
+      ansible.builtin.set_fact:
+        "{{ _register_var }}": "{{ __cas_job_async_result }}"
+        "{{ aap_configuration_register | default('_') }}": "{{ _register_value | combine({cas_register_subvar: _appended_value}) }}"
+
     - name: Handle Async Job Failure
       when: __cas_job_async_result is failed
       ansible.builtin.include_tasks:

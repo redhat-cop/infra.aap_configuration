@@ -43,6 +43,7 @@
         cas_async_delay: "{{ eda_configuration_users_token_async_delay }}"
         cas_async_retries: "{{ eda_configuration_users_token_async_retries }}"
         cas_job_async_results_item: "{{ __controller_tokens_job_async_result_item }}"
+        cas_register_subvar: eda_controller_tokens
         cas_error_list_var_name: "eda_controller_tokens_errors"
         __operation: "{{ operation_translate[__controller_tokens_job_async_result_item.__token_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Controller token {{ __controller_tokens_job_async_result_item.__token_item.name }} | Wait for finish the Controller token {{ __operation.action }}"

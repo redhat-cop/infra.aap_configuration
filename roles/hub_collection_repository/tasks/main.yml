@@ -53,6 +53,7 @@
         cas_async_delay: "{{ hub_configuration_collection_repository_async_delay }}"
         cas_async_retries: "{{ hub_configuration_collection_repository_async_retries }}"
         cas_job_async_results_item: "{{ __collection_repository_job_async_result_item }}"
+        cas_register_subvar: hub_collection_repository
         cas_error_list_var_name: "hub_collection_repository_errors"
         __operation: "{{ operation_translate[__collection_repository_job_async_result_item.__hub_collection_repository_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Collection repository {{ __collection_repository_job_async_result_item.__hub_collection_repository_item.name }} | Wait for finish the Collection repository {{ __operation.action }}"

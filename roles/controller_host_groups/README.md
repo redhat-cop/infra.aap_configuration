@@ -20,6 +20,7 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`aap_configuration_collect_logs`|`false`|no|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
+|`aap_configuration_register`|""|no|Specify a variable to register the values of all aap_configuration tasks. This will create an object with each aap object as an element containing a list of each item created.||
 |`controller_groups`|`see below`|yes|Data structure describing your group or groups Described below.||
 
 ### Enforcing defaults
@@ -103,6 +104,7 @@ The role will strip the double space between the curly bracket in order to provi
 |`preserve_existing_hosts`|`false`|no|bool|Whether to preserve existing hosts in an existing group|
 |`preserve_existing_children`|`false`|no|bool|Whether to preserve existing children in an existing group|
 |`state`|`present`|no|str|Desired state of the resource.|
+|`register`|""|no|str|Variable to set based on the result of the object creation/modification|
 
 ### Standard Group Data Structure
 

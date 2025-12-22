@@ -57,6 +57,7 @@
         cas_async_delay: "{{ controller_configuration_applications_async_delay }}"
         cas_async_retries: "{{ controller_configuration_applications_async_retries }}"
         cas_job_async_results_item: "{{ __applications_job_async_results_item }}"
+        cas_register_subvar: controller_applications
         cas_error_list_var_name: "controller_applications_errors"
         __operation: "{{ operation_translate[__applications_job_async_results_item.__application_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Controller Application {{ __applications_job_async_results_item.__application_item.name }} | Wait for finish the Application {{ __operation.action }}"

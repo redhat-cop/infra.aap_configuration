@@ -14,6 +14,7 @@ An Ansible Role to create EE Registries in Automation Hub.
 |`aap_validate_certs`|`true`|no|Whether or not to validate the Ansible Automation Platform Server's SSL certificate.||
 |`aap_request_timeout`|`10`|no|Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.||
 |`aap_configuration_collect_logs`|`false`|no|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
+|`aap_configuration_register`|""|no|Specify a variable to register the values of all aap_configuration tasks. This will create an object with each aap object as an element containing a list of each item created.||
 |`hub_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
 |`proxy_url`|""|no|str|The URL for the proxy. Defaults to global `proxy_url` variable.|
@@ -66,6 +67,7 @@ This also speeds up the overall role.
 |`download_concurrency`|""|no|str|Number of concurrent collections to download|
 |`rate_limit`|""|no|str|Limits total download rate in requests per second.|
 |`state`|`present`|no|str|Desired state of the ee_registry.|
+|`register`|""|no|str|Variable to set based on the result of the object creation/modification|
 
 ### Standard Project Data Structure
 

@@ -56,6 +56,7 @@
         cas_async_delay: "{{ hub_configuration_collection_async_delay }}"
         cas_async_retries: "{{ hub_configuration_collection_async_retries }}"
         cas_job_async_results_item: "{{ __collections_job_async_result_item }}"
+        cas_register_subvar: hub_collections
         cas_error_list_var_name: "hub_collections_errors"
         __operation: "{{ operation_translate[__collections_job_async_result_item.__hub_collection_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Collection {{ _collection_object_label }} | Wait for finish the Collection {{ __operation.action }}"

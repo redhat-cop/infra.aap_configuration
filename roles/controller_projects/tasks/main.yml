@@ -74,6 +74,7 @@
         cas_async_delay: "{{ controller_configuration_projects_async_delay }}"
         cas_async_retries: "{{ controller_configuration_projects_async_retries }}"
         cas_job_async_results_item: "{{ __projects_job_async_results_item }}"
+        cas_register_subvar: controller_projects
         cas_error_list_var_name: "controller_projects_errors"
         __operation: "{{ operation_translate[__projects_job_async_results_item.__controller_project_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Project {{ __projects_job_async_results_item.__controller_project_item.name }} | Wait for finish the project {{ __operation.action }}"

@@ -57,6 +57,7 @@
         cas_async_delay: "{{ controller_configuration_credentials_async_delay }}"
         cas_async_retries: "{{ controller_configuration_credentials_async_retries }}"
         cas_job_async_results_item: "{{ __credentials_job_async_results_item }}"
+        cas_register_subvar: controller_credentials
         cas_error_list_var_name: "controller_credentials_errors"
         __operation: "{{ operation_translate[__credentials_job_async_results_item.__controller_credentials_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Credential {{ __credentials_job_async_results_item.__controller_credentials_item.name }} | Wait for finish the credential {{ __operation.action }}"

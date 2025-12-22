@@ -117,6 +117,7 @@
         cas_async_delay: "{{ hub_configuration_publish_async_delay }}"
         cas_async_retries: "{{ hub_configuration_publish_async_retries }}"
         cas_job_async_results_item: "{{ __publish_job_async_result_item }}"
+        cas_register_subvar: hub_publish
         cas_error_list_var_name: "hub_publish_errors"
         cas_object_label: "Waiting for collection {{ (__publish_job_async_result_item.__hub_collection_file | basename).split('-')[1] }} to be published"
 

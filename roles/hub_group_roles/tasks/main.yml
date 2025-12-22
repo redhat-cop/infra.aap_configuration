@@ -43,6 +43,7 @@
         cas_async_delay: "{{ hub_configuration_group_roles_async_delay }}"
         cas_async_retries: "{{ hub_configuration_group_roles_async_retries }}"
         cas_job_async_results_item: "{{ __group_roles_job_async_result_item }}"
+        cas_register_subvar: hub_group_roles
         cas_error_list_var_name: "hub_group_roles_errors"
         __operation: "{{ operation_translate[__group_roles_job_async_result_item.__hub_group_roles_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Group roles {{ __group_roles_job_async_result_item.__hub_group_roles_item.groups }} | Wait for finish the Group roles {{ __operation.action }}"

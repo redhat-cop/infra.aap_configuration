@@ -64,6 +64,7 @@
         cas_async_delay: "{{ hub_configuration_namespace_async_delay }}"
         cas_async_retries: "{{ hub_configuration_namespace_async_retries }}"
         cas_job_async_results_item: "{{ __namespaces_job_async_result_item }}"
+        cas_register_subvar: hub_namespace
         cas_error_list_var_name: "hub_namespace_errors"
         __operation: "{{ operation_translate[__namespaces_job_async_result_item.__hub_namespace_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Namespace {{ __namespaces_job_async_result_item.__hub_namespace_item.name }} | Wait for finish the Namespace {{ __operation.action }}"

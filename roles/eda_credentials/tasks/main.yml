@@ -47,6 +47,7 @@
         cas_async_delay: "{{ eda_configuration_credentials_async_delay }}"
         cas_async_retries: "{{ eda_configuration_credentials_async_retries }}"
         cas_job_async_results_item: "{{ __credentials_job_async_result_item }}"
+        cas_register_subvar: eda_credentials
         cas_error_list_var_name: "eda_credentials_errors"
         __operation: "{{ operation_translate[__credentials_job_async_result_item.__credential_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} credential {{ __credentials_job_async_result_item.__credential_item.name }} | Wait for finish the credential {{ __operation.action }}"

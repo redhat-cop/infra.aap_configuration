@@ -20,6 +20,7 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`aap_configuration_collect_logs`|`false`|no|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
+|`aap_configuration_register`|""|no|Specify a variable to register the values of all aap_configuration tasks. This will create an object with each aap object as an element containing a list of each item created.||
 |`controller_workflows`|`see below`|yes|Data structure describing your workflow job templates described below. Alias: workflow_job_templates ||
 
 ### Enforcing defaults
@@ -98,6 +99,7 @@ This also speeds up the overall role.
 |`notification_templates_success`|""|no|list|The notifications on success to use for this organization in a list.|
 |`scm_branch`|""|no|str|SCM branch applied as a prompt, assuming job template prompts for SCM branch|
 |`state`|`present`|no|str|Desired state of the resource.|
+|`register`|""|no|str|Variable to set based on the result of the object creation/modification|
 |`workflow_nodes`|""|no|dict|A json list of nodes and their corresponding options. The sub-options are in the module doc.|
 |`destroy_current_nodes`|""|no|bool|Set in order to destroy current schema on the workflow, used in cases where drastic changes to schema are happening.|
 |`survey_enabled`|""|no|bool|Enable a survey on the job template.|
@@ -128,6 +130,7 @@ This also speeds up the overall role.
 |`success_nodes`|""|no|list|Nodes that will run after this node completes.|
 |`verbosity`|""|no|str|Verbosity applied as a prompt, if job template prompts for verbosity|
 |`state`|""|no|str|Desired state of the resource|
+|`register`|""|no|str|Variable to set based on the result of the object creation/modification|
 |`credentials`|""|no|list|Credentials to be applied to job as launch-time prompts.|
 |`diff_mode`|""|no|bool|Run diff mode, applied as a prompt, if job template prompts for diff mode|
 |`extra_data`|""|no|dict|Variables to apply at launch time. Will only be accepted if job template prompts for vars or has a survey asking for those vars. extra_data are extra_vars at the node level and named so to match the module and the API. These are only for "ask extra vars on prompt" on a given job template.|

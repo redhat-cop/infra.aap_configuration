@@ -183,6 +183,58 @@ fatal: [localhost]: FAILED! => {
 }
 ```
 
+### Registering values
+
+As of version 4.0.0 of this collection, you can now collect information from the items which are created or modified by this collection. You can either add `register: <var>` to any item which is created to capture the outputs of that item, or set a value for `aap_configuration_register` which will capture all objects created. This fuinctionality may be particularly useful for capturing IDs of objects to enable performing further actions.
+
+Below is an example for adding a register to a signle item:
+
+```yaml
+controller_templates:
+  - name: myjt1
+    project: Demo Project
+    playbook: install_product_demos.yml
+    inventory: Demo Inventory
+    register: register_var
+```
+
+The resulting varaible from setting `aap_configuration_register` will be as follows:
+
+```json
+"aap_register_var": {
+        "job_templates": [
+            {
+                "ansible_job_id": "j994617402834.25953",
+                "attempts": 4,
+                "changed": false,
+                "failed": false,
+                "finished": 1,
+                "id": 11,
+                "results_file": "/Users/tpage/.ansible_async/j994617402834.25953",
+                "started": 1,
+                "stderr": "",
+                "stderr_lines": [],
+                "stdout": "",
+                "stdout_lines": []
+            },
+            {
+                "ansible_job_id": "j666467675004.25976",
+                "attempts": 1,
+                "changed": false,
+                "failed": false,
+                "finished": 1,
+                "id": 12,
+                "results_file": "/Users/tpage/.ansible_async/j666467675004.25976",
+                "started": 1,
+                "stderr": "",
+                "stderr_lines": [],
+                "stdout": "",
+                "stdout_lines": []
+            }
+        ]
+    }
+```
+
 ### Automate the Automation
 
 Every Ansible Controller instance has it's own particularities and needs. Every administrator team has it's own practices and customs. This collection allows adaptation to every need, from small to large scale, having the objects distributed across multiple environments and leveraging Automation Webhook that can be used to link a Git repository and Ansible automation natively.

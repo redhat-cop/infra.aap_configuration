@@ -45,6 +45,7 @@
         cas_async_delay: "{{ gateway_organizations_async_delay }}"
         cas_async_retries: "{{ gateway_organizations_async_retries }}"
         cas_job_async_results_item: "{{ __gateway_organizations_job_async_results_item }}"
+        cas_register_subvar: aap_organizations
         cas_error_list_var_name: "aap_organizations_errors"
         __operation: "{{ operation_translate[__gateway_organizations_job_async_results_item.__gateway_organization_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organizations_job_async_results_item.__gateway_organization_item.name }} | Wait for finish the Organizations {{ __operation.action }}"
@@ -107,6 +108,7 @@
         cas_async_delay: "{{ gateway_organizations_async_delay }}"
         cas_async_retries: "{{ gateway_organizations_async_retries }}"
         cas_job_async_results_item: "{{ __organizations_job_async_results_item }}"
+        cas_register_subvar: aap_organizations
         cas_error_list_var_name: "aap_organizations_errors"
         __operation: "{{ operation_translate[__organizations_job_async_results_item.__controller_organizations_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Controller Organization {{ __organizations_job_async_results_item.__controller_organizations_item.name }} | Wait for finish the organization {{ __operation.action }}"

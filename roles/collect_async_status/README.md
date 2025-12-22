@@ -12,6 +12,7 @@ This is an internal role that is not meant to be called directly by users of thi
 |:---|:---:|:---:|:---|
 |`cas_job_async_results_item`||yes|The asynchronous item to check the status of. This must be from the registered `async` task|
 |`cas_error_list_var_name`||yes|The name of the dictionary key to use when collecting errors|
+|`cas_register_subvar`||yes|The name of the dictionary key to use when registering values|
 |`aap_configuration_collect_logs`|`false`|no|When enabled collects error messages and continues execution. Messages are collected in a variable called `aap_configuration_role_errors`|
 
 ### Secure Logging Variables
