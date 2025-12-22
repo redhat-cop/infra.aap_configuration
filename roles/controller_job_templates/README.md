@@ -129,6 +129,23 @@ This also speeds up the overall role.
 |`notification_templates_success`|""|no|list|The notifications on success to use for this organization in a list.|
 |`notification_templates_error`|""|no|list|The notifications on error to use for this organization in a list.|
 |`state`|`present`|no|str|Desired state of the resource.|
+|`roles`|""|no|obj|Controller roles to apply to the job template. See roles section below for how to apply.|
+
+#### Applying roles to users or teams
+
+You can apply roles to users or teams using the `roles` field. This is applied as a dictionary as follows:
+
+```yaml
+- name: my_jt
+  roles:
+    exeute:
+      teams:
+        - myteam1
+        - myteam2
+    admin:
+      users:
+        - sysadmin1
+```
 
 ### Surveys
 

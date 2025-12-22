@@ -105,6 +105,25 @@ This also speeds up the overall role.
 |`survey`|""|no|dict|JSON/YAML dict formatted survey definition. Alias of survey_spec|
 |`webhook_service`|""|no|str|Service that webhook requests will be accepted from (github, gitlab)|
 |`webhook_credential`|""|no|str|Personal Access Token for posting back the status to the service API|
+|`roles`|""|no|obj|Controller roles to apply to the workflow job template. See roles section below for how to apply.|
+
+#### Applying roles to users or teams
+
+You can apply roles to users or teams using the `roles` field. This is applied as a dictionary as follows:
+
+```yaml
+- name: my_wjt
+  roles:
+    execute:
+      teams:
+        - myteam1
+        - myteam2
+    admin:
+      users:
+        - sysadmin1
+    approve:
+      users: manager1
+```
 
 ### Variables For Workflow Job Template Node
 

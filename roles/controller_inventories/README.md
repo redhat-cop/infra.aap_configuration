@@ -105,6 +105,29 @@ The role will strip the double space between the curly bracket in order to provi
 |`host_filter`|""|no|str|The host filter field, useful only when 'kind=smart'|
 |`prevent_instance_group_fallback`|`false`|no|bool|Prevent falling back to instance groups set on the organization|
 |`state`|`present`|no|str|Desired state of the resource.|
+|`roles`|""|no|obj|Controller roles to apply to the inventory. See roles section below for how to apply.|
+
+#### Applying roles to users or teams
+
+You can apply roles to users or teams using the `roles` field. This is applied as a dictionary as follows:
+
+```yaml
+- name: my_inventory
+  roles:
+    use:
+      teams:
+        - myteam1
+        - myteam2
+    admin:
+      users:
+        - sysadmin1
+    adhoc:
+      users: jim
+    update:
+      teams:
+        - myteam1
+        - myteam2
+```
 
 ### Standard Inventory Data Structure
 

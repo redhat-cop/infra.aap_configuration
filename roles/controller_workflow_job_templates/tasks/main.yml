@@ -114,4 +114,23 @@
       loop_control:
         loop_var: __workflows_job_async_results_item
         label: "Cleaning up job results file: {{ __workflows_job_async_results_item.results_file | default('Unknown') }}"
+
+- name: Add roles to job templates
+  ansible.builtin.include_role:
+    name: infra.aap_configuration.controller_roles
+  vars:
+    controller_roles: "{{ _controller_roles | from_yaml | default([], true) | list }}"
+    _item_list: "{{ workflow_job_templates if workflow_job_templates is defined else controller_workflows }}"
+    _controller_roles: |
+      {% for _item in _item_list %}
+      {% if _item.roles is defined %}
+      {% for _role in _item.roles.keys() %}
+      - role: "{{ _role }}"
+        workflows:
+          - "{{ _item.name }}"
+        teams: "{{ _item.roles[_role].teams | default(omit) }}"
+        users: "{{ _item.roles[_role].users | default(omit) }}"
+      {% endfor %}
+      {% endif %}
+      {% endfor %}
 ...

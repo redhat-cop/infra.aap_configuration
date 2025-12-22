@@ -85,6 +85,23 @@ This also speeds up the overall role.
 |`pod_spec_override`|""|no|str|A custom Kubernetes or OpenShift Pod specification.|
 |`instances`|""|no|list|The instances associated with this instance_group.|
 |`state`|`present`|no|str|Desired state of the resource.|
+|`roles`|""|no|obj|Controller roles to apply to the instance group. See roles section below for how to apply.|
+
+#### Applying roles to users or teams
+
+You can apply roles to users or teams using the `roles` field. This is applied as a dictionary as follows:
+
+```yaml
+- name: my_instance_group
+  roles:
+    use:
+      teams:
+        - myteam1
+        - myteam2
+    admin:
+      users:
+        - sysadmin1
+```
 
 ### Standard Instance Group Data Structure
 

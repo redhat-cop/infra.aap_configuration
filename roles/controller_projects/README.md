@@ -101,6 +101,27 @@ This also speeds up the overall role.
 |`wait`|""|no|bool|Provides option to wait for completed project sync before returning.|
 |`update_project`|`false`|no|bool|Force project to update after changes.Used in conjunction with wait, interval, and timeout.|
 |`interval`|`controller_configuration_projects_async_delay`|no|float|The interval to request an update from controller. Requires wait.|
+|`roles`|""|no|obj|Controller roles to apply to the project. See roles section below for how to apply.|
+
+#### Applying roles to users or teams
+
+You can apply roles to users or teams using the `roles` field. This is applied as a dictionary as follows:
+
+```yaml
+- name: my_project
+  roles:
+    use:
+      teams:
+        - myteam1
+        - myteam2
+    admin:
+      users:
+        - sysadmin1
+    update:
+      teams:
+        - myteam1
+        - myteam2
+```
 
 ### Standard Project Data Structure
 
