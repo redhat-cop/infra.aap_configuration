@@ -50,6 +50,7 @@
         cas_async_delay: "{{ eda_configuration_projects_async_delay }}"
         cas_async_retries: "{{ eda_configuration_projects_async_retries }}"
         cas_job_async_results_item: "{{ __projects_job_async_result_item }}"
+        cas_register_subvar: eda_projects
         cas_error_list_var_name: "eda_projects_errors"
         __operation: "{{ operation_translate[__projects_job_async_result_item.__project_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} project {{ __projects_job_async_result_item.__project_item.name }} | Wait for finish the project {{ __operation.action }}"

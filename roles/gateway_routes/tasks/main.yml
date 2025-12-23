@@ -53,6 +53,7 @@
         cas_async_delay: "{{ gateway_routes_async_delay }}"
         cas_async_retries: "{{ gateway_routes_async_retries }}"
         cas_job_async_results_item: "{{ __gateway_routes_job_async_results_item }}"
+        cas_register_subvar: gateway_routes
         cas_error_list_var_name: "gateway_routes_errors"
         __operation: "{{ operation_translate[__gateway_routes_job_async_results_item.__gateway_routes_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Gateway route {{ __gateway_routes_job_async_results_item.__gateway_routes_item.name }} | Wait for finish the Gateway route {{ __operation.action }}"

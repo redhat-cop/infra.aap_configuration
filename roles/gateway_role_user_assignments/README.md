@@ -77,6 +77,7 @@ This also speeds up the overall role.
 | `state`             |   `present`   |    no    | str  | Desired state of the resource.                                                                        |
 | `user`              |      N/A      |    no    | str  | The name or id of the user to assign to the object. This option is mutually exclusive with user_ansible_id. |
 | `user_ansible_id`   |      N/A      |    no    | str  | Resource id of the user who will receive permissions from this assignment. Alternative to user field. This option is mutually exclusive with user. |
+|`register`                   |         ""          |   no     | str  | Variable to set based on the result of the object creation/modification                |
 
 **Unique value:**
 

@@ -98,6 +98,7 @@ This also speeds up the overall role.
 |`notification_templates_success`|""|no|list|The notifications on success to use for this organization in a list.|
 |`notification_templates_error`|""|no|list|The notifications on error to use for this organization in a list.|
 |`state`|`present`|no|str|Desired state of the resource.|
+|`register`|""|no|str|Variable to set based on the result of the object creation/modification|
 |`wait`|""|no|bool|Provides option to wait for completed project sync before returning.|
 |`update_project`|`false`|no|bool|Force project to update after changes.Used in conjunction with wait, interval, and timeout.|
 |`interval`|`controller_configuration_projects_async_delay`|no|float|The interval to request an update from controller. Requires wait.|

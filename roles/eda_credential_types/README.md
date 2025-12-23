@@ -16,6 +16,7 @@ An Ansible Role to create Credential Types in EDA Controller.
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the controller host.||
 |`aap_configuration_collect_logs`|`false`|no|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
+|`aap_configuration_register`|""|no|Specify a variable to register the values of all aap_configuration tasks. This will create an object with each aap object as an element containing a list of each item created.||
 |`eda_credential_types`|`see below`|yes|Data structure describing your users Described below.||
 
 ### Secure Logging Variables
@@ -59,6 +60,7 @@ This also speeds up the overall role.
 |`inputs`|""|no|dict|Credential inputs where the keys are var names used in templating. Refer to the EDA controller documentation for example syntax.|
 |`injectors`|""|no|dict|Enter injectors using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax. See below on proper formatting.|
 |`state`|`present`|no|str|Desired state of the credential.|
+|`register`|""|no|str|Variable to set based on the result of the object creation/modification|
 
 ### Formatting Injectors
 

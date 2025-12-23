@@ -16,6 +16,7 @@ An Ansible Role to configure Service Nodes on Ansible Automation gateway.
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`aap_configuration_collect_logs`|`false`|no|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
+|`aap_configuration_register`|""|no|Specify a variable to register the values of all aap_configuration tasks. This will create an object with each aap object as an element containing a list of each item created.||
 |`gateway_service_nodes`|`see below`|yes|Data structure describing your gateway_service_nodes Described below.||
 
 ### Enforcing defaults
@@ -77,6 +78,7 @@ Options for the `gateway_service_nodes` variable:
 | `service_cluster` |      N/A      |    no    | str  | ID or name referencing the [Service Cluster](../gateway_service_clusters/README.md)      |
 | `tags`            |      N/A      |    no    | str  | Comma separated list of tags to assign to the node, for filtering route traffic  |
 | `state`           |   `present`   |    no    | str  | README.md#state-variable)                                           |
+|`register`                   |         ""          |   no     | str  | Variable to set based on the result of the object creation/modification                |
 
 **Unique value:**
 

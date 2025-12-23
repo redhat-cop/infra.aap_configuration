@@ -45,6 +45,7 @@
       vars:
         cas_secure_logging: "{{ gateway_role_definitions_secure_logging }}"
         cas_job_async_results_item: "{{ __gateway_role_definitions_job_async_results_item }}"
+        cas_register_subvar: gateway_role_definitions
         cas_error_list_var_name: "gateway_role_definitions_errors"
         __operation: "{{ operation_translate[__gateway_role_definitions_job_async_results_item.__gateway_role_definitions_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Role {{ __gateway_role_definitions_job_async_results_item.__gateway_role_definitions_item.name }} | Wait for finish the Roles {{ __operation.action }}"

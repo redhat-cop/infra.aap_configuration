@@ -44,6 +44,7 @@
         cas_async_delay: "{{ hub_configuration_role_async_delay }}"
         cas_async_retries: "{{ hub_configuration_role_async_retries }}"
         cas_job_async_results_item: "{{ __roles_job_async_result_item }}"
+        cas_register_subvar: hub_role
         cas_error_list_var_name: "hub_role_errors"
         __operation: "{{ operation_translate[__roles_job_async_result_item.__hub_role_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Role {{ __roles_job_async_result_item.__hub_role_item.name }} | Wait for finish the Role {{ __operation.action }}"

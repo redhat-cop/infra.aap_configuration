@@ -75,6 +75,7 @@ This also speeds up the overall role.
 | `state`             |   `present`   |    no    | str  | Desired state of the resource.                                                                        |
 | `team`              |      N/A      |    no    | str  | The name or id of the team to assign to the object.                                                   |
 | `team_ansible_id`   |      N/A      |    no    | str  | Resource id of the team who will receive permissions from this assignment. Alternative to team field. |
+|`register`                   |         ""          |   no     | str  | Variable to set based on the result of the object creation/modification                |
 
 ### Standard Role Team Assignment Data Structure
 

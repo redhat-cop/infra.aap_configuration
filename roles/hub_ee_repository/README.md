@@ -14,6 +14,7 @@ An Ansible Role to create Repositories in Automation Hub.
 |`aap_validate_certs`|`true`|no|Whether or not to validate the Ansible Automation Platform Server's SSL certificate.||
 |`aap_request_timeout`|`10`|no|Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.||
 |`aap_configuration_collect_logs`|`false`|no|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
+|`aap_configuration_register`|""|no|Specify a variable to register the values of all aap_configuration tasks. This will create an object with each aap object as an element containing a list of each item created.||
 |`hub_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
 |`hub_ee_repositories`|`see below`|yes|Data structure describing your ee_repositories, described below.||
@@ -59,6 +60,7 @@ This also speeds up the overall role.
 |`readme`|""|no|str|The readme for the ee repository. (mutex with readme_file)|
 |`readme_file`|""|no|str|The file location for the readme for the ee repository. (mutex with readme)|
 |`state`|`present`|no|str|Desired state of the ee_repository.|
+|`register`|""|no|str|Variable to set based on the result of the object creation/modification|
 |`registry`|""|no|str|The remote registry that the repository belongs in.|
 |`upstream_name`|""|no|str|The name of the image upstream.|
 |`include_tags`|""|no|str|The tags to pull in.|

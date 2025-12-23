@@ -48,6 +48,7 @@
         cas_async_delay: "{{ gateway_role_user_assignments_async_delay }}"
         cas_async_retries: "{{ gateway_role_user_assignments_async_retries }}"
         cas_job_async_results_item: "{{ __gateway_role_user_assignments_job_async_results_item }}"
+        cas_register_subvar: gateway_role_user_assignments
         cas_error_list_var_name: "gateway_role_user_assignments_errors"
         __operation: "{{ operation_translate[__gateway_role_user_assignments_job_async_results_item.__gateway_role_user_assignments_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Role {{ __gateway_role_user_assignments_job_async_results_item.__gateway_role_user_assignments_item.1 | default(__gateway_role_user_assignments_job_async_results_item.__gateway_role_user_assignments_item.role_definition) }} | Wait for finish the Roles {{ __operation.action }}"

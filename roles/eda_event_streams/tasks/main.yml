@@ -47,6 +47,7 @@
         cas_async_delay: "{{ eda_configuration_event_streams_async_delay }}"
         cas_async_retries: "{{ eda_configuration_event_streams_async_retries }}"
         cas_job_async_results_item: "{{ __event_streams_job_async_result_item }}"
+        cas_register_subvar: eda_event_streams
         cas_error_list_var_name: "eda_event_streams_errors"
         __operation: "{{ operation_translate[__event_streams_job_async_result_item.__event_stream_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Event stream {{ __event_streams_job_async_result_item.__event_stream_item.name }} | Wait for finish the Event stream {{ __operation.action }}"

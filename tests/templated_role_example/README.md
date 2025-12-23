@@ -62,6 +62,7 @@ This also speeds up the overall role.
 |`description`|`false`|no|str|Description to use for the job template.|
 
 |`state`|`present`|no|str|Desired state of the resource.|
+|`register`|""|no|str|Variable to set based on the result of the object creation/modification|
 
 ### Standard ************ Data Structure
 

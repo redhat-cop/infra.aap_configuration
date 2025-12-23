@@ -45,6 +45,7 @@
         cas_async_delay: "{{ hub_configuration_ee_registry_sync_async_delay }}"
         cas_async_retries: "{{ hub_configuration_ee_registry_sync_async_retries }}"
         cas_job_async_results_item: "{{ __ee_registry_syncs_job_async_result_item }}"
+        cas_register_subvar: hub_ee_registry_sync
         cas_error_list_var_name: "hub_ee_registry_sync_errors"
         __operation: "{{ operation_translate[__ee_registry_syncs_job_async_result_item.__hub_ee_registry_sync_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} EE registry sync {{ __ee_registry_syncs_job_async_result_item.__hub_ee_registry_sync_item.name }} | Wait for finish the EE registry sync {{ __operation.action }}"

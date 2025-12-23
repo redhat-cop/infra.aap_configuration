@@ -20,6 +20,7 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`aap_configuration_collect_logs`|`false`|no|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
+|`aap_configuration_register`|""|no|Specify a variable to register the values of all aap_configuration tasks. This will create an object with each aap object as an element containing a list of each item created.||
 |`controller_credential_input_sources`|`see below`|yes|Data structure describing your credential input sources Described below.||
 
 ### Enforcing defaults
@@ -79,6 +80,7 @@ This also speeds up the overall role.
 |`metadata`|""|no|dict|The metadata applied to the source.|
 |`description`|""|no|str|Description to use for the credential input source.|
 |`state`|`present`|no|str|Desired state of the resource.|
+|`register`|""|no|str|Variable to set based on the result of the object creation/modification|
 
 For further details on fields see <https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/configuring_automation_execution/assembly-controller-secret-management>. The input accepted by the `metadata` field will differ depending on the credential plugin being used.
 

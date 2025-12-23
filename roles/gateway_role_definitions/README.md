@@ -76,6 +76,7 @@ This also speeds up the overall role.
 | `new_name`          |      N/A      |    no    | str  | Setting this option will change the existing name (looked up via the name field)                      |
 | `permissions`       |      N/A      |   yes    | list | List of permission strings to associate with the role (e.g., awx.view_inventory)                      |
 | `state`             |   `present`   |    no    | str  | Desired state of the resource.                                                                        |
+|`register`                   |         ""          |   no     | str  | Variable to set based on the result of the object creation/modification                |
 
 ### Standard Role Definition Data Structure
 

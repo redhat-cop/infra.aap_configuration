@@ -15,6 +15,7 @@ An Ansible Role to create Namespaces in Automation Hub.
 |`aap_validate_certs`|`true`|no|Whether or not to validate the Ansible Automation Platform Server's SSL certificate.||
 |`aap_request_timeout`|`10`|no|Specify the timeout Ansible should use in requests to the Galaxy or Automation Hub host.||
 |`aap_configuration_collect_logs`|`false`|no|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
+|`aap_configuration_register`|""|no|Specify a variable to register the values of all aap_configuration tasks. This will create an object with each aap object as an element containing a list of each item created.||
 |`hub_path_prefix`|""|no|API path used to access the api. Either galaxy, automation-hub, or custom||
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
 |`hub_namespaces`|`see below`|yes|Data structure describing your namespaces, described below.||
@@ -65,6 +66,7 @@ This also speeds up the overall role.
 |`links`|[]|no|list|A list of dictionaries of Name and url values for links related the Namespace. See below for details.|
 |`groups`|[]|yes|list|A list of dictionaries of the Names of groups that own the Namespace.|
 |`state`|`present`|no|str|Desired state of the namespace.|
+|`register`|""|no|str|Variable to set based on the result of the object creation/modification|
 
 #### Links
 

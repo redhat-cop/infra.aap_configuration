@@ -69,6 +69,7 @@
         cas_async_delay: "{{ controller_configuration_workflow_job_templates_async_delay }}"
         cas_async_retries: "{{ controller_configuration_workflow_job_templates_async_retries }}"
         cas_job_async_results_item: "{{ __workflows_node_async_results_item }}"
+        cas_register_subvar: controller_workflows
         cas_error_list_var_name: "controller_workflows_errors"
 
     # Create links between workflow node
@@ -123,6 +124,7 @@
         cas_async_delay: "{{ controller_configuration_workflow_job_templates_async_delay }}"
         cas_async_retries: "{{ controller_configuration_workflow_job_templates_async_retries }}"
         cas_job_async_results_item: "{{ __workflows_link_async_results_item }}"
+        cas_register_subvar: controller_workflows
         cas_error_list_var_name: "controller_workflows_errors"
 
   always:

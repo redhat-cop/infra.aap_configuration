@@ -18,6 +18,7 @@ http port and path in the destination service (gateway, controller, hub, eda).
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`aap_configuration_collect_logs`|`false`|no|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
+|`aap_configuration_register`|""|no|Specify a variable to register the values of all aap_configuration tasks. This will create an object with each aap object as an element containing a list of each item created.||
 |`gateway_services`|`see below`|yes|Data structure describing your gateway_services Described below.||
 
 ### Secure Logging Variables
@@ -70,6 +71,7 @@ Options for the `gateway_services` variable:
 | `order`               |  "" (`50` by API)   |    no    | int  | The order to apply the routes in lower numbers are first. Items with the same value have no guaranteed order                                      |
 | `tags`                |         ""          |    no    | str  | Comma-separated string, selects which (tagged) nodes receive traffic from this route                                                              |
 | `state`               |      `present`      |    no    | str  | README.md#state-variable)                                                                                                            |
+|`register`                   |         ""          |   no     | str  | Variable to set based on the result of the object creation/modification                |
 
 **Unique value:**
 

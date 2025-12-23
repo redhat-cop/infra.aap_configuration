@@ -101,6 +101,7 @@
         cas_async_delay: "{{ controller_configuration_job_templates_async_delay }}"
         cas_async_retries: "{{ controller_configuration_job_templates_async_retries }}"
         cas_job_async_results_item: "{{ __job_templates_job_async_result_item }}"
+        cas_register_subvar: controller_job_templates
         cas_error_list_var_name: "controller_job_templates_errors"
         __operation: "{{ operation_translate[__job_templates_job_async_result_item.__controller_template_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Job Template {{ __job_templates_job_async_result_item.__controller_template_item.name }} | Wait for finish the Job Template {{ __operation.action }}"

@@ -59,6 +59,7 @@
         cas_async_delay: "{{ controller_configuration_inventories_async_delay }}"
         cas_async_retries: "{{ controller_configuration_inventories_async_retries }}"
         cas_job_async_results_item: "{{ __inventories_job_async_result_item }}"
+        cas_register_subvar: controller_inventories
         cas_error_list_var_name: "controller_inventories_errors"
         __operation: "{{ operation_translate[__inventories_job_async_result_item.__controller_inventory_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Controller inventory {{ __inventories_job_async_result_item.__controller_inventory_item.name }} | Wait for finish the inventories {{ __operation.action }}"

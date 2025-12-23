@@ -45,6 +45,7 @@
         cas_async_delay: "{{ controller_configuration_bulk_hosts_async_delay }}"
         cas_async_retries: "{{ controller_configuration_bulk_hosts_async_retries }}"
         cas_job_async_results_item: "{{ __controller_bulk_hosts_job_async_results_item }}"
+        cas_register_subvar: controller_bulk_hosts
         cas_error_list_var_name: "controller_bulk_hosts_errors"
         cas_object_label: "Waiting for bulk host creation in inventory {{ __controller_bulk_hosts_job_async_results_item.__controller_bulk_hosts_item.inventory }} to complete"
 
