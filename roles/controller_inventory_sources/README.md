@@ -118,7 +118,7 @@ The role will strip the double space between the curly bracket in order to provi
 |`source_project`|""|no|Project to use as source with scm option.|
 |`scm_branch`|""|no|Project scm branch to use as source with scm option. Project must have branch override enabled.|
 |`state`|`present`|no|Desired state of the resource.|
-|`register`|""|no|str|Variable to set based on the result of the object creation/modification|
+|`register`|""|no|Variable to set based on the result of the object creation/modification|
 |`notification_templates_started`|""|no|The notifications on started to use for this inventory source in a list.|
 |`notification_templates_success`|""|no|The notifications on success to use for this inventory source in a list.|
 |`notification_templates_error`|""|no|The notifications on error to use for this inventory source in a list.|

@@ -81,7 +81,7 @@ This also speeds up the overall role.
 |`inputs`|""|no|Enter inputs using either JSON or YAML syntax. Refer to the Ansible controller documentation for example syntax.|
 |`kind`|"cloud"|no|The type of credential type being added. Note that only cloud and net can be used for creating credential types.|
 |`state`|`present`|no|Desired state of the resource.|
-|`register`|""|no|str|Variable to set based on the result of the object creation/modification|
+|`register`|""|no|Variable to set based on the result of the object creation/modification|
 
 ### Formatting Injectors
 

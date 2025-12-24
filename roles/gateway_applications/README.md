@@ -87,7 +87,6 @@ Options for the `aap_applications` variable:
 | `state`                     |      `present`      |    no    | str  | Desired state of the application.                                                      |
 |`register`                   |         ""          |   no     | str  | Variable to set based on the result of the object creation/modification                |
 
-
 ### Standard Application Data Structure
 
 #### Json Example

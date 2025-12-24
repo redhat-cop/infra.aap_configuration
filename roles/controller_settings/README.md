@@ -61,7 +61,7 @@ There are two choices for entering settings. Either provide as a single dict und
 |`settings`|{}|no|Dict of key-value pairs of settings|
 |`name`|""|no|Name of the setting to set.|
 |`value`|""|no|Value of the setting.|
-|`register`|""|no|str|Variable to set based on the result of the object creation/modification|
+|`register`|""|no|Variable to set based on the result of the object creation/modification|
 
 ### Standard Setting Data Structure - as a dict
 

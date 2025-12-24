@@ -84,9 +84,9 @@ This also speeds up the overall role.
 |`user`|""|no|User that should own this credential. If provided, do not give either team or organization. |
 |`team`|""|no|Team that should own this credential. If provided, do not give either user or organization. |
 |`state`|`present`|no|Desired state of the resource.|
-|`register`|""|no|str|Variable to set based on the result of the object creation/modification|
+|`register`|""|no|Variable to set based on the result of the object creation/modification|
 |`update_secrets`|true|no| true will always change password if user specifies password, even if API gives $encrypted$ for password. false will only set the password if other values change too.|
-|`roles`|""|no|obj|Controller roles to apply to the credential. See roles section below for how to apply.|
+|`roles`|""|no|Controller roles to apply to the credential. See roles section below for how to apply.|
 
 #### Applying roles to users or teams
 
