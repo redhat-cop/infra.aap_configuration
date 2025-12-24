@@ -131,7 +131,6 @@ You can apply roles to users or teams using the `roles` field. This is applied a
         - myteam2
 ```
 
-
 ### Standard Inventory Data Structure
 
 #### Json Example

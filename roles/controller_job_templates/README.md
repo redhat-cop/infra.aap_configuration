@@ -149,7 +149,6 @@ You can apply roles to users or teams using the `roles` field. This is applied a
         - sysadmin1
 ```
 
-
 ### Surveys
 
 Refer to the [controller Api Guide](https://docs.ansible.com/ansible-tower/latest/html/towerapi/api_ref.html#/Job_Templates/Job_Templates_job_templates_survey_spec_create) for more information about forming surveys

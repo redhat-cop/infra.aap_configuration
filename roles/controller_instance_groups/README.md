@@ -105,7 +105,6 @@ You can apply roles to users or teams using the `roles` field. This is applied a
         - sysadmin1
 ```
 
-
 ### Standard Instance Group Data Structure
 
 #### Yaml Example
