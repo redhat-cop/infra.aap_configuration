@@ -119,6 +119,7 @@
 - name: Add roles to job templates
   ansible.builtin.include_role:
     name: infra.aap_configuration.controller_roles
+  when: aap_configuration_apply_object_roles
   vars:
     controller_roles: "{{ _controller_roles | from_yaml | default([], true) | list }}"
     _item_list: "{{ workflow_job_templates if workflow_job_templates is defined else controller_workflows }}"

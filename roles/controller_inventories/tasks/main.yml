@@ -80,6 +80,7 @@
 - name: Add roles to inventories
   ansible.builtin.include_role:
     name: infra.aap_configuration.controller_roles
+  when: aap_configuration_apply_object_roles
   vars:
     controller_roles: "{{ _controller_roles | from_yaml | default([], true) | list }}"
     _item_list: "{{ inventory if inventory is defined else controller_inventories }}"

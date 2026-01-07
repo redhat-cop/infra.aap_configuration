@@ -105,6 +105,8 @@ You can apply roles to users or teams using the `roles` field. This is applied a
         - sysadmin1
 ```
 
+This functionality can be disabled by setting `aap_configuration_apply_object_roles` as `false`.
+
 ### Standard Instance Group Data Structure
 
 #### Yaml Example

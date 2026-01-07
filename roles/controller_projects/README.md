@@ -124,6 +124,8 @@ You can apply roles to users or teams using the `roles` field. This is applied a
         - myteam2
 ```
 
+This functionality can be disabled by setting `aap_configuration_apply_object_roles` as `false`.
+
 ### Standard Project Data Structure
 
 #### Json Example

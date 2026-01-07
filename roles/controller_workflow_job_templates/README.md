@@ -127,6 +127,8 @@ You can apply roles to users or teams using the `roles` field. This is applied a
       users: manager1
 ```
 
+This functionality can be disabled by setting `aap_configuration_apply_object_roles` as `false`.
+
 ### Variables For Workflow Job Template Node
 
 |Variable Name|Default Value|Required|Type|Description|

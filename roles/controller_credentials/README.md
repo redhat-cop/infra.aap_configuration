@@ -104,6 +104,8 @@ You can apply roles to users or teams using the `roles` field. This is applied a
         - sysadmin1
 ```
 
+This functionality can be disabled by setting `aap_configuration_apply_object_roles` as `false`.
+
 ### Credential types
 
 To get a list of all the available builtin credential types, [checkout the ansible doc's link here](https://docs.ansible.com/automation-controller/4.5/html/userguide/credential_types.html)
