@@ -4,6 +4,14 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v4.1.0
+======
+
+Minor Changes
+-------------
+
+- Allow conditionally preventing object roles to be added to objects directly.
+
 v4.0.0
 ======
 
