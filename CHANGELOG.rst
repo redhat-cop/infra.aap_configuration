@@ -4,6 +4,21 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v4.0.0
+======
+
+Major Changes
+-------------
+
+- Added ability to attach roles directly to projects, credentials, inventories, instance groups, workflows and job_templates
+- Adds ability to set a var to register values for each item, or as a whole by setting `aap_configuration_register`.
+
+Minor Changes
+-------------
+
+- Make it possible to exclude roles from the default list in the dispatch role
+- Use just one task to combine wildcard variables in the dispatch role
+
 v3.9.1
 ======
 

@@ -1,4 +1,0 @@
----
-major_changes:
-  - Added ability to attach roles directly to projects, credentials, inventories, instance groups, workflows and job_templates
-...

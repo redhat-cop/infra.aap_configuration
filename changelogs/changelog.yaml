@@ -1013,3 +1013,19 @@ releases:
     fragments:
     - fix_galaxy_settings_wildcard.yml
     release_date: '2025-12-15'
+  4.0.0:
+    changes:
+      major_changes:
+      - Added ability to attach roles directly to projects, credentials, inventories,
+        instance groups, workflows and job_templates
+      - Adds ability to set a var to register values for each item, or as a whole
+        by setting `aap_configuration_register`.
+      minor_changes:
+      - Make it possible to exclude roles from the default list in the dispatch role
+      - Use just one task to combine wildcard variables in the dispatch role
+    fragments:
+    - dispatch_exclude_roles.yml
+    - dispatch_wildcore_one_task.yml
+    - register_values.yml
+    - role_apply.yml
+    release_date: '2026-01-07'

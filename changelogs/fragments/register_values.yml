@@ -1,4 +1,0 @@
----
-major_changes:
-  - Adds ability to set a var to register values for each item, or as a whole by setting `aap_configuration_register`.
-...
