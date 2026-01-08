@@ -1,0 +1,8 @@
+---
+eda_credential_input_sources: []
+eda_configuration_credential_input_sources_secure_logging: "{{ aap_configuration_secure_logging | default(true) }}"
+eda_configuration_credential_input_sources_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
+eda_configuration_credential_input_sources_async_delay: "{{ aap_configuration_async_delay| default(1) }}"
+aap_configuration_async_dir:
+eda_configuration_credential_input_sources_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
+...
