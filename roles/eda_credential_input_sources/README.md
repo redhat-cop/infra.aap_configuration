@@ -73,7 +73,7 @@ This also speeds up the overall role.
 |`target_credential`|""|yes|str|Target Credential name (the credential receiving the lookup value.)|
 |`source_credential`|""|yes|str|Source Credential name (the credential the lookup value will be retrieved from.)|
 |`description`|""|no|str|Description to use for the credential input source.|
-|`organization`|""|no|str|Organization this Credential Input Source belongs to.|
+|`organization`|""|yes|str|Organization this Credential Input Source belongs to.|
 |`input_field_name`|""|yes|str|The name of the Credential input field which will be set from the lookup value.|
 |`metadata`|{}|no|dict|Metadata provided to the target credential for the lookup.|
 |`state`|`present`|no|str|Desired state of the credential.|

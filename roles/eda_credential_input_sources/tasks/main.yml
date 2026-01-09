@@ -11,7 +11,7 @@
         input_field_name: "{{ __credential_input_source_item.input_field_name | mandatory }}"
         source_credential: "{{ __credential_input_source_item.source_credential | default(omit, true) }}"
         description: "{{ __credential_input_source_item.description | default(('' if eda_configuration_credential_input_sources_enforce_defaults else omit), true) }}"
-        organization_name: "{{ __credential_input_source_item.organization | default(omit) }}"
+        organization_name: "{{ __credential_input_source_item.organization | mandatory }}"
         metadata: "{{ __credential_input_source_item.metadata | default(({} if eda_configuration_credential_input_sources_enforce_defaults else omit), true) }}"
         state: "{{ __credential_input_source_item.state | default(platform_state | default('present')) }}"
 
@@ -43,7 +43,7 @@
       loop: "{{ __credential_input_sources_job_async.results }}"
       loop_control:
         loop_var: __credential_input_sources_job_async_result_item
-        label: "{{ __operation.verb }} credential input source {{ __credential_input_sources_job_async_result_item.__credential_input_source_item.name }} | Wait for finish the credential input source {{ __operation.action }}"
+        label: "{{ __operation.verb }} credential input source {{ __credential_input_sources_job_async_result_item.__credential_input_source_item.target_credential }} | Wait for finish the credential input source {{ __operation.action }}"
       vars:
         cas_secure_logging: "{{ eda_configuration_credential_input_sources_secure_logging }}"
         cas_async_delay: "{{ eda_configuration_credential_input_sources_async_delay }}"
@@ -52,7 +52,7 @@
         cas_register_subvar: eda_credential_input_sources
         cas_error_list_var_name: "eda_credential_input_sources_errors"
         __operation: "{{ operation_translate[__credential_input_sources_job_async_result_item.__credential_input_source_item.state | default(platform_state) | default('present')] }}"
-        cas_object_label: "{{ __operation.verb }} credential input source {{ __credential_input_sources_job_async_result_item.__credential_input_source_item.name }} | Wait for finish the credential input source {{ __operation.action }}"
+        cas_object_label: "{{ __operation.verb }} credential input source {{ __credential_input_sources_job_async_result_item.__credential_input_source_item.target_credential }} | Wait for finish the credential input source {{ __operation.action }}"
 
   always:
     - name: Cleanup async results files
