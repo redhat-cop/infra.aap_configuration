@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - controller_license - Make controller_license role compatible with license module by replacing pool_id parameter with subscription_id.
+...
