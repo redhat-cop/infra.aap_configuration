@@ -1,0 +1,69 @@
+---
+# Create EDA Controller Credential Input Source
+- name: Manage EDA Controller credential input source Block
+  vars:
+    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  no_log: "{{ eda_configuration_credential_input_sources_secure_logging }}"
+  block:
+    - name: Add EDA Controller credential input source
+      ansible.eda.credential_input_source:
+        target_credential: "{{ __credential_input_source_item.target_credential | mandatory }}"
+        input_field_name: "{{ __credential_input_source_item.input_field_name | mandatory }}"
+        source_credential: "{{ __credential_input_source_item.source_credential | default(omit, true) }}"
+        description: "{{ __credential_input_source_item.description | default(('' if eda_configuration_credential_input_sources_enforce_defaults else omit), true) }}"
+        organization_name: "{{ __credential_input_source_item.organization | mandatory }}"
+        metadata: "{{ __credential_input_source_item.metadata | default(({} if eda_configuration_credential_input_sources_enforce_defaults else omit), true) }}"
+        state: "{{ __credential_input_source_item.state | default(platform_state | default('present')) }}"
+
+        # Role specific options
+        controller_username: "{{ aap_username | default(omit, true) }}"
+        controller_password: "{{ aap_password | default(omit, true) }}"
+        controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        controller_host: "{{ aap_hostname | default(omit, true) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      loop: "{{ eda_credential_input_sources }}"
+      loop_control:
+        loop_var: __credential_input_source_item
+        label: "{{ __operation.verb }} EDA Credential Input Source for Credential {{ __credential_input_source_item.target_credential }}"
+        pause: "{{ eda_configuration_credential_input_sources_async_delay }}"
+      async: 1000
+      poll: 0
+      register: __credential_input_sources_job_async
+      changed_when: not __credential_input_sources_job_async.changed
+      vars:
+        __operation: "{{ operation_translate[__credential_input_sources_job_async.state | default(platform_state) | default('present')] }}"
+
+    - name: Create credential input source | Wait for finish the credential input source creation
+      when:
+        - not ansible_check_mode
+        - __credential_input_sources_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __credential_input_sources_job_async.results }}"
+      loop_control:
+        loop_var: __credential_input_sources_job_async_result_item
+        label: "{{ __operation.verb }} credential input source {{ __credential_input_sources_job_async_result_item.__credential_input_source_item.target_credential }} | Wait for finish the credential input source {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ eda_configuration_credential_input_sources_secure_logging }}"
+        cas_async_delay: "{{ eda_configuration_credential_input_sources_async_delay }}"
+        cas_async_retries: "{{ eda_configuration_credential_input_sources_async_retries }}"
+        cas_job_async_results_item: "{{ __credential_input_sources_job_async_result_item }}"
+        cas_register_subvar: eda_credential_input_sources
+        cas_error_list_var_name: "eda_credential_input_sources_errors"
+        __operation: "{{ operation_translate[__credential_input_sources_job_async_result_item.__credential_input_source_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} credential input source {{ __credential_input_sources_job_async_result_item.__credential_input_source_item.target_credential }} | Wait for finish the credential input source {{ __operation.action }}"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __credential_input_sources_job_async_result_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __credential_input_sources_job_async_result_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __credential_input_sources_job_async.results }}"
+      loop_control:
+        loop_var: __credential_input_sources_job_async_result_item
+        label: "Cleaning up job results file: {{ __credential_input_sources_job_async_result_item.results_file | default('Unknown') }}"
+...
