@@ -4,6 +4,10 @@
 
 An Ansible Role to create Credential Input Sources in EDA Controller.
 
+## Requirements
+
+This role requires ansible.eda >= 2.9.0
+
 ## Variables
 
 |Variable Name|Default Value|Required|Description|Example|
