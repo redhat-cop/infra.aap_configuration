@@ -1,5 +1,6 @@
 ---
 dispatch_include_wildcard_vars: false
+
 gateway_configuration_dispatcher_roles:
   - role: gateway_authenticators
     var: gateway_authenticators
@@ -73,9 +74,6 @@ hub_configuration_dispatcher_roles:
   - role: hub_ee_image
     var: hub_ee_images
     tags: images
-  - role: hub_ee_registry
-    var: hub_ee_registries
-    tags: registry
   - role: hub_ee_registry_index
     var: hub_ee_registries
     tags: ee_indices
@@ -91,6 +89,16 @@ hub_configuration_dispatcher_roles:
   - role: hub_collection_repository_sync
     var: hub_collection_repositories
     tags: collectionsrepsync
+
+hub_configuration_dispatcher_roles_publish:
+  - role: hub_publish
+    var: hub_collection_list
+    tags: publish
+  - role: hub_publish
+    var: hub_custom_collections
+    tags: publish
+
+hub_configuration_dispatcher_roles_include_publish: false
 
 controller_configuration_dispatcher_roles:
   - role: controller_settings
@@ -213,6 +221,8 @@ aap_configuration_dispatcher_exclude_roles: []
 aap_configuration_dispatcher_roles: >
   {{ (gateway_configuration_dispatcher_roles
      + hub_configuration_dispatcher_roles
+     + (hub_configuration_dispatcher_roles_publish
+       if hub_configuration_dispatcher_roles_include_publish else [])
      + controller_configuration_dispatcher_roles
      + eda_configuration_dispatcher_roles)
      | rejectattr('role', 'in', aap_configuration_dispatcher_exclude_roles) }}
