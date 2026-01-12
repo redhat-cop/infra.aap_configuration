@@ -1029,3 +1029,10 @@ releases:
     - register_values.yml
     - role_apply.yml
     release_date: '2026-01-07'
+  4.1.0:
+    changes:
+      minor_changes:
+      - Allow conditionally preventing object roles to be added to objects directly.
+    fragments:
+    - object_roles_conditional.yml
+    release_date: '2026-01-07'
