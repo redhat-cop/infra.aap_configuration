@@ -14,6 +14,7 @@
       loop: "{{ hub_custom_collections }}"
       loop_control:
         loop_var: __hub_collection_item
+        label: "{{ __hub_collection_item.git_url }}"
         pause: "{{ hub_configuration_publish_loop_delay }}"
       when:
         - hub_collection_list | length == 0
@@ -28,6 +29,7 @@
       loop: "{{ hub_collection_list }}"
       loop_control:
         loop_var: __hub_collection_item
+        label: "{{ __hub_collection_item.collection_local_path }}"
       when:
         - hub_collection_list | length > 0
         - __hub_collection_item.collection_local_path is defined
@@ -41,6 +43,7 @@
       loop: "{{ hub_collection_list | default(hub_custom_collections, true) | select }}"
       loop_control:
         loop_var: __hub_collection_item
+        label: "{{ __hub_collection_item.collection_name }}"
 
     - name: Find if variable contains file or dir
       ansible.builtin.stat:
@@ -49,6 +52,7 @@
       loop: "{{ __hub_build_results.results }}"
       loop_control:
         loop_var: __hub_build_result_item
+        label: "{{ __hub_build_result_item.path }}"
       when: __hub_build_results is not skipped
 
     - name: Find all relevant built collection files
@@ -59,6 +63,7 @@
       loop: "{{ __hub_build_stat_results.results }}"
       loop_control:
         loop_var: __hub_build_result_item
+        label: "{{ __hub_build_result_item.stat.path }}"
       when: __hub_build_results is not skipped
 
     - name: Set path for all collections found
