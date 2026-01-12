@@ -71,6 +71,8 @@
         cas_job_async_results_item: "{{ __workflows_node_async_results_item }}"
         cas_register_subvar: controller_workflows
         cas_error_list_var_name: "controller_workflows_errors"
+        __operation: "{{ operation_translate[__workflows_node_async_results_item.__workflow_loop_node_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} Workflow node {{ __workflows_node_async_results_item.__workflow_loop_node_item.identifier }} | Wait for finish the workflow {{ __operation.action }}"
 
     # Create links between workflow node
     - name: add_workflows_schema | Create links between Workflow Nodes
@@ -126,6 +128,8 @@
         cas_job_async_results_item: "{{ __workflows_link_async_results_item }}"
         cas_register_subvar: controller_workflows
         cas_error_list_var_name: "controller_workflows_errors"
+        __operation: "{{ operation_translate[__workflows_link_async_results_item.__workflow_loop_node_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} Workflow links for {{ __workflows_link_async_results_item.__workflow_loop_node_item.identifier }} | Wait for finish the workflow {{ __operation.action }}"
 
   always:
     - name: add_workflows_schema | Cleanup async results files
