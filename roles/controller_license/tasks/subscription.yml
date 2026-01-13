@@ -20,7 +20,7 @@
 
 - name: subscription | Install the Controller license
   ansible.controller.license:
-    pool_id: "{{ controller_license.pool_id | default(subscription.subscriptions[(controller_license.list_num | default(0))].pool_id) }}"
+    subscription_id: "{{ controller_license.subscription_id | default(subscription.subscriptions[(controller_license.list_num | default(0))].subscription_id) }}"
     force: "{{ controller_license.force | default(omit) }}"
     state: "{{ controller_license.state | default(omit) }}"
 

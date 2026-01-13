@@ -1,4 +1,0 @@
----
-minor_changes:
-  - Allow conditionally preventing object roles to be added to objects directly.
-...

@@ -51,6 +51,7 @@
       - controller_workflow_launch_jobs
       - eda_credential_types
       - eda_credentials
+      - eda_credential_input_sources
       - eda_controller_tokens
       - eda_projects
       - eda_event_streams

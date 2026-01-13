@@ -53,7 +53,7 @@ The module and this role can use either a manifest file, or lookup the subscript
 |`manifest`|""|no|obj|DEPRECATED - changed to `manifest_file` (still works as an alias)|
 |`manifest_username`|""|no|obj|Optional username for access to `manifest_url`|
 |`manifest_password`|""|no|obj|Optional password for access to `manifest_url`|
-|`pool_id`|""|no|str|Red Hat or Red Hat Satellite pool_id to attach to|
+|`subscription_id`|""|no|str|Red Hat or Red Hat Satellite subscription_id to attach to|
 |`eula_accepted`|""|yes|bool|DEPRECATED since Tower 3.8 - Whether to accept the End User License Agreement for Ansible controller|
 |`force`|`false`|no|bool|By default, the license manifest will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.|
 |`state`|`present`|no|str|Desired state of the resource.|
@@ -65,7 +65,7 @@ The module and this role can use either a manifest file, or lookup the subscript
 |`filters`|"default values"|no|str|dict of filters to use to narrow the subscription. See example below for how to use this.|
 |`support_level`|"Self-Support"|no|str|DEPRECATED - changed to `manifest_file` (still works as an alias)|
 |`list_num`|0|no|int|List index of the subscription to use, if you want to override the default, it is recommended to use the filters to limit the pools found.|
-|`pool_id`|""|no|str|Red Hat or Red Hat Satellite pool_id to attach to.|
+|`subscription_id`|""|no|str|Red Hat or Red Hat Satellite subscription_id to attach to.|
 |`force`|`false`|no|bool|By default, the license will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.|
 |`use_lookup`|`false`|no|bool|Whether or not to lookup subscriptions.|
 |`state`|`present`|no|str|Desired state of the resource.|
