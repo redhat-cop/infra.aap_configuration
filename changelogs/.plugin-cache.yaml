@@ -144,6 +144,10 @@ objects:
       description: An Ansible Role to create user tokens in EDA controller.
       name: eda_controller_tokens
       version_added: null
+    eda_credential_input_sources:
+      description: An Ansible Role to create credential input sources in EDA controller.
+      name: eda_credential_input_sources
+      version_added: null
     eda_credential_types:
       description: An Ansible Role to create credentials in EDA controller.
       name: eda_credential_types
@@ -330,4 +334,4 @@ plugins:
   strategy: {}
   test: {}
   vars: {}
-version: 4.1.0
+version: 4.2.0

@@ -1,3 +1,0 @@
----
-minor_changes:
-  - Avoid duplicates in hub_configuration_dispatcher_roles and allow including publish roles

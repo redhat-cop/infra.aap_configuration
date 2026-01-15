@@ -1,4 +1,0 @@
----
-bugfixes:
-  - controller_license - remove eula_accepted which has been deprecated and effectively removed by being unusable with this collection for many versions.
-...

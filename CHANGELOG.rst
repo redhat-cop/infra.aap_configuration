@@ -4,6 +4,23 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v4.2.0
+======
+
+Minor Changes
+-------------
+
+- Add role for creation of EDA credential input sources.
+- Avoid duplicates in hub_configuration_dispatcher_roles and allow including publish roles
+- Correctly set task labels during workflow management
+- Use labels where appropriate in hub_publish
+
+Bugfixes
+--------
+
+- controller_license - Make controller_license role compatible with license module by replacing pool_id parameter with subscription_id.
+- controller_license - remove eula_accepted which has been deprecated and effectively removed by being unusable with this collection for many versions.
+
 v4.1.0
 ======
 
