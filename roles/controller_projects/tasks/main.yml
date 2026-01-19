@@ -105,7 +105,7 @@
       {% for _role in _item.roles.keys() %}
       - role: "{{ _role }}"
         projects:
-          - "{{ projects if projects is defined else controller_projects }}"
+          - "{{ _item.name }}"
         teams: "{{ _item.roles[_role].teams | default(omit) }}"
         users: "{{ _item.roles[_role].users | default(omit) }}"
       {% endfor %}

@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - Fix incorrectly applied direct roles to projects
