@@ -1057,3 +1057,10 @@ releases:
     - hub_publish_labels.yml
     - workflow_task_labels.yml
     release_date: '2026-01-15'
+  4.2.1:
+    changes:
+      bugfixes:
+      - Fix incorrectly applied direct roles to projects
+    fragments:
+    - role_apply_project.yml
+    release_date: '2026-02-01'
