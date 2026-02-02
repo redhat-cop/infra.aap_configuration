@@ -12,44 +12,27 @@ argument_specs:
             required: false
             type: str
             description: File path to a Red Hat subscription manifest (a .zip file)
-#          manifest_url:
-#            required: false
-#            type: str
-#            description: URL containing a Red Hat subscription manifest (a .zip file)
-#          manifest_content:
-#            required: false
-#            type: str
-#            description: Base64 encoded content of Red Hat subscription manifest
-#          manifest:
-#            required: false
-#            type: str
-#            description: DEPRECATED - changed to `manifest_file` (still works as an alias)
-#          manifest_username:
-#            required: false
-#            type: str
-#            description: Optional username for access to `manifest_url`
-#          manifest_password:
-#            required: false
-#            type: str
-#            description: Optional password for access to `manifest_url`
-#          subscription_id:
-#            required: false
-#            type: str
-#            description: Red Hat or Red Hat Satellite subscription_id to attach to
-#          eula_accepted:
-#            required: true
-#            type: bool
-#            description: DEPRECATED since Tower 3.8 - Whether to accept the End User License Agreement for Ansible controller
-#          force:
-#            default: false
-#            required: false
-#            type: bool
-#            description: By default, the license manifest will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.
-#          use_lookup:
-#            default: false
-#            required: false
-#            type: bool
-#            description: Whether or not to lookup subscriptions.
+          manifest_url:
+            required: false
+            type: str
+            description: URL containing a Red Hat subscription manifest (a .zip file)
+          manifest_content:
+            required: false
+            type: str
+            description: Base64 encoded content of Red Hat subscription manifest
+          manifest:
+            required: false
+            type: str
+            description: DEPRECATED - changed to `manifest_file` (still works as an alias)
+          subscription_id:
+            required: false
+            type: str
+            description: Red Hat or Red Hat Satellite subscription_id to attach to
+          force:
+            default: false
+            required: false
+            type: bool
+            description: By default, the license manifest will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.
 
       # Variables used for Liscense lookup
       redhat_subscription_username:
