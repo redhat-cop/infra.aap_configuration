@@ -13,6 +13,7 @@ controller_workflows:
     ask_scm_branch_on_launch: false
     ask_limit_on_launch: false
     webhook_service: ""
+    webhook_url: ""
     webhook_credential:
     organization:
       name: Default
@@ -309,6 +310,7 @@ controller_workflows:
     ask_scm_branch_on_launch: false
     ask_limit_on_launch: false
     webhook_service: ""
+    webhook_url: ""
     webhook_credential:
     organization:
       name: Default

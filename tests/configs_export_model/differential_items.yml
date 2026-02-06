@@ -274,6 +274,7 @@ differential_expected:
       use_fact_cache: false
       verbosity: 0
       webhook_credential:
+      webhook_url:
       webhook_service: ""
   notification_templates:
     - description: Send out emails for tower jobs
@@ -755,6 +756,7 @@ differential_expected_gte_awx25:
       use_fact_cache: false
       verbosity: 0
       webhook_credential:
+      webhook_url:
       webhook_service: ""
   notification_templates:
     - description: Send out emails for tower jobs

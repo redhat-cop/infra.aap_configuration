@@ -33,6 +33,7 @@
         ask_scm_branch_on_launch: "{{ __workflow_loop_item.ask_scm_branch_on_launch | default((false if controller_configuration_workflows_enforce_defaults else omit)) }}"
         ask_limit_on_launch: "{{ __workflow_loop_item.ask_limit_on_launch | default((false if controller_configuration_workflows_enforce_defaults else omit)) }}"
         webhook_service: "{{ __workflow_loop_item.webhook_service | default(omit, true) }}"
+        webhook_url: "{{ __workflow_loop_item.webhook_url | default(omit, true) }}"
         webhook_credential: "{{ __workflow_loop_item.webhook_credential.name | default(__workflow_loop_item.webhook_credential | default(omit, true)) }}"
         survey_enabled: "{{ __workflow_loop_item.survey_enabled | default((false if controller_configuration_workflows_enforce_defaults else omit)) }}"
         survey_spec: "{{ __workflow_loop_item.related.survey_spec | default(__workflow_loop_item.survey_spec | default(__workflow_loop_item.survey | default(({} if controller_configuration_workflows_enforce_defaults else omit), true))) }}"

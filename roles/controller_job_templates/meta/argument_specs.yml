@@ -210,6 +210,10 @@ argument_specs:
 #            required: false
 #            type: str
 #            description: Service that webhook requests will be accepted from (github, gitlab)
+#          webhook_url:
+#            required: false
+#            type: str
+#            description: URL for the webhook service
 #          webhook_credential:
 #            required: false
 #            type: str

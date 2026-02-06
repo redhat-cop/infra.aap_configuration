@@ -33,6 +33,7 @@ job_templates:
     custom_virtualenv:
     job_slice_count: 1
     webhook_service: ""
+    webhook_url: ""
     inventory:
       organization:
         name: Satellite
@@ -104,6 +105,7 @@ job_templates:
     custom_virtualenv:
     job_slice_count: 1
     webhook_service: ""
+    webhook_url: ""
     inventory:
       organization:
         name: Satellite

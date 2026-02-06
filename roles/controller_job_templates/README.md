@@ -122,6 +122,7 @@ This also speeds up the overall role.
 |`instance_groups`|""|no|list|list of Instance Groups for this Job Template to run on.|
 |`job_slice_count`|""|no|int|The number of jobs to slice into at runtime. Will cause the Job Template to launch a workflow if value is greater than 1.|
 |`webhook_service`|""|no|str|Service that webhook requests will be accepted from (github, gitlab)|
+|`webhook_url`|""|no|str|URL for the webhook service|
 |`webhook_credential`|""|no|str|Personal Access Token for posting back the status to the service API|
 |`scm_branch`|""|no|str|Branch to use in job run. Project default used if blank. Only allowed if project allow_override field is set to true.|
 |`labels`|""|no|list|The labels applied to this job template. NOTE: Labels must be created with the [labels](https://github.com/redhat-cop/aap_configuration/tree/devel/roles/controller_labels) role first, an error will occur if the label supplied to this role does not exist.|

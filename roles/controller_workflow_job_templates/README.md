@@ -106,6 +106,7 @@ This also speeds up the overall role.
 |`survey_spec`|""|no|dict|JSON/YAML dict formatted survey definition.|
 |`survey`|""|no|dict|JSON/YAML dict formatted survey definition. Alias of survey_spec|
 |`webhook_service`|""|no|str|Service that webhook requests will be accepted from (github, gitlab)|
+|`webhook_url`|""|no|str|URL for the webhook service|
 |`webhook_credential`|""|no|str|Personal Access Token for posting back the status to the service API|
 |`roles`|""|no|obj|Controller roles to apply to the workflow job template. See roles section below for how to apply.|
 
@@ -221,6 +222,7 @@ controller_workflows:
     ask_limit_on_launch: false
     destroy_current_nodes: false
     webhook_service: ''
+    webhook_url: ''
     webhook_credential:
     organization: Default
     schedules: []
@@ -279,6 +281,7 @@ controller_workflows:
     ask_scm_branch_on_launch: false
     ask_limit_on_launch: false
     webhook_service: ''
+    webhook_url: ''
     webhook_credential:
     organization:
       name: Default
@@ -342,6 +345,7 @@ controller_workflows:
       "ask_scm_branch_on_launch": false,
       "ask_limit_on_launch": false,
       "webhook_service": "",
+      "webhook_url": "",
       "webhook_credential": null,
       "organization": {
         "name": "Default"
