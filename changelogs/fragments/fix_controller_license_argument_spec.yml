@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - Fix controller_license argument_specs: re-allow parameters that should be allowed
