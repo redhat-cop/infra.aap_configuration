@@ -4,6 +4,14 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v4.2.1
+======
+
+Bugfixes
+--------
+
+- Fix incorrectly applied direct roles to projects
+
 v4.2.0
 ======
 

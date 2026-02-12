@@ -146,7 +146,7 @@ Note that the `roles` option takes precedence over the `role` option and simply 
 }
 ```
 
-git check
+#### Yaml Example
 
 ```yaml
 ---
