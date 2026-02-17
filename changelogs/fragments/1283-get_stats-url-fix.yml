@@ -1,0 +1,2 @@
+bugfixes:
+  - api endpoint for get_stats playbook was incorrect, fixed to match the correct endpoint for users and subscription info
