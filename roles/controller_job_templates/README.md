@@ -140,7 +140,7 @@ You can apply roles to users or teams using the `roles` field. This is applied a
 ```yaml
 - name: my_jt
   roles:
-    exeute:
+    execute:
       teams:
         - myteam1
         - myteam2
