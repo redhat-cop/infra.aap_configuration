@@ -69,7 +69,7 @@ This also speeds up the overall role.
 |`eda_credentials`|""|no|list|A list of IDs for EDA credentials used by the rulebook activation.|
 |`k8s_service_name`|""|no|str|The name of the Kubernetes service associated with this rulebook activation.|
 |`swap_single_source`|"true"|no|bool|Allow swapping of single sources in a rulebook without name match.|
-|`event_streams`|""|no|list|A list of event stream names that this rulebook activation listens to.|
+|`event_streams`|""|no|list|A list of event streams, source names, and source_index that this rulebook activation listens to. |
 |`log_level`|""|no|str|Allow setting the desired log level.|
 
 ### Standard rulebook activation Data Structure
@@ -84,6 +84,10 @@ eda_rulebook_activations:
     project: EDA_example
     rulebook: git-hook-deploy-rules.yml
     decision_environment: Automation Hub Default Decision Environment
+    event_streams:
+      - event_stream: "Example Event Stream"
+        source_name: "Sample source"
+        source_index: 0
     extra_vars:
       provider: github-local
       repo_url: https://github.com/ansible/ansible-rulebook.git
