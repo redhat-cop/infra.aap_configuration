@@ -130,8 +130,8 @@
       - role: "{{ _role }}"
         workflows:
           - "{{ _item.name }}"
-        teams: "{{ _item.roles[_role].teams | default(omit) }}"
-        users: "{{ _item.roles[_role].users | default(omit) }}"
+        teams: {{ _item.roles[_role].teams | default(omit) | to_json }}
+        users: {{ _item.roles[_role].users | default(omit) | to_json }}
       {% endfor %}
       {% endif %}
       {% endfor %}
