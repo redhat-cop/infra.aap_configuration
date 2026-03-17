@@ -107,9 +107,6 @@ controller_configuration_dispatcher_roles:
   - role: controller_instances
     var: controller_instances
     tags: instances
-  - role: controller_instance_groups
-    var: controller_instance_groups
-    tags: instance_groups
   - role: controller_labels
     var: controller_labels
     tags: labels
@@ -122,6 +119,9 @@ controller_configuration_dispatcher_roles:
   - role: controller_credential_input_sources
     var: controller_credential_input_sources
     tags: credential_input_sources
+  - role: controller_instance_groups
+    var: controller_instance_groups
+    tags: instance_groups
   - role: controller_execution_environments
     var: controller_execution_environments
     tags: execution_environments
