@@ -1,0 +1,5 @@
+---
+trivial:
+  - Updated pre-commit configuration to use ansible-lint v26.3.0
+  - Updated ansible-lint config and added ignore file to include roles without argument spec
+...

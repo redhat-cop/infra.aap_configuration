@@ -81,7 +81,7 @@
         request_timeout: "{{ aap_request_timeout | default(omit) }}"
       when:
         - hub_token is not defined
-        - lookup("ansible.builtin.env", "AH_API_TOKEN") == ""
+        - lookup("ansible.builtin.env", "AH_API_TOKEN") | length > 0
         - __hub_collection_list is defined
 
     - name: Publish Collections
