@@ -147,6 +147,61 @@ gateway_authenticator_maps:
   new_authenticator: "Auth 2"
 ```
 
+### LDAP Authenticator Map Examples
+
+```yaml
+---
+gateway_authenticator_maps:
+  # Grant superuser to members of an LDAP admin group
+  - name: LDAP Superuser Map
+    authenticator: "LDAP Corporate"
+    map_type: is_superuser
+    triggers:
+      groups:
+        has_or:
+          - "cn=aap-admins,ou=groups,dc=example,dc=com"
+
+  # Map LDAP group membership to a team
+  - name: LDAP Developers Team Map
+    authenticator: "LDAP Corporate"
+    map_type: team
+    team: "Developers"
+    organization: "Default"
+    role: "Team Member"
+    triggers:
+      groups:
+        has_or:
+          - "cn=developers,ou=groups,dc=example,dc=com"
+          - "cn=engineering,ou=groups,dc=example,dc=com"
+
+  # Map LDAP group to an organization
+  - name: LDAP Org Map
+    authenticator: "LDAP Corporate"
+    map_type: organization
+    organization: "Production"
+    role: "Organization Member"
+    revoke: true
+    triggers:
+      groups:
+        has_and:
+          - "cn=production-access,ou=groups,dc=example,dc=com"
+
+  # Map by LDAP attribute instead of group
+  - name: LDAP Attribute Map
+    authenticator: "LDAP Corporate"
+    map_type: team
+    team: "Ops"
+    organization: "Default"
+    role: "Team Member"
+    triggers:
+      attributes:
+        join_condition: "or"
+        department:
+          contains: "Operations"
+        title:
+          contains: "SRE"
+```
+
 ### Run Playbook
 
 File name: [configure_aap.yml](https://github.com/redhat-cop/infra.aap_configuration/blob/devel/playbooks/configure_aap.yml) can be found in the top level playbooks directory.
