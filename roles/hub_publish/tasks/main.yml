@@ -90,6 +90,7 @@
         name: "{{ (__hub_collection_file | basename).split('-')[1] }}"
         version: "{{ (__hub_collection_file | basename).split('-')[2:] | join('-') | splitext | first | splitext | first }}"
         path: "{{ __hub_collection_file }}"
+        repository: "{{ hub_repository }}"
         auto_approve: "{{ hub_auto_approve }}"
         overwrite_existing: "{{ hub_overwrite_existing }}"
         ah_host: "{{ aap_hostname | default(omit) }}"
