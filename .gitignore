@@ -12,3 +12,4 @@ tests/localtest.yml
 .venv
 .devcontainer
 ansible_collections/
+importer_result.json
