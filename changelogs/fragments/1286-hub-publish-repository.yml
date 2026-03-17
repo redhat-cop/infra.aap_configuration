@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Add hub_repository variable to hub_publish role allowing collections to be published to any repository, not just staging.
+...
