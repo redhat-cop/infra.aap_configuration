@@ -98,15 +98,18 @@ controller_license:
 
 ### Standard Manifest Role Usage
 
+**Note:** Controller authentication is required for both manifest and subscription flows. You must provide either `aap_username`/`aap_password` or `aap_token` to authenticate against the controller.
+
 ```yaml
 ---
 - name: Playbook to configure ansible controller post installation
   hosts: localhost
   connection: local
-  # Define following vars here, or in aap_configs/auth.yml
-  # aap_hostname: aap.example.com
-  # aap_username: admin
-  # aap_password: changeme
+  vars:
+    aap_validate_certs: false
+    aap_hostname: aap.example.com
+    aap_username: admin
+    aap_password: changeme
   pre_tasks:
     - name: Include vars from platform_configs directory
       ansible.builtin.include_vars:
