@@ -1,0 +1,3 @@
+---
+major_changes:
+  - Added the controller_role_definitions role; this allows AAP 2.5 compatibility with creating roles 
