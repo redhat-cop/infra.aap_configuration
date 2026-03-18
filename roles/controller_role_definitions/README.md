@@ -84,6 +84,122 @@ This also speeds up the overall role.
 | `state`             |   `present`   |    no    | str  | Desired state of the resource.                                                                        |
 |`register`           |         ""    |    no    | str  | Variable to set based on the result of the object creation/modification                               |
 
+#### Content Type
+
+Below are the available content_types that can be used when managing role definitions. Under the content type names, are available permissions that can used with those content types.
+
+`shared.organization`
+
+- shared.audit_organization
+- shared.change_organization
+- shared.delete_organization
+- shared.member_organization
+- shared.view_organization
+- shared.add_team
+- shared.change_team
+- shared.delete_team
+- shared.member_team
+- shared.view_team
+- awx.add_executionenvironment
+- awx.change_executionenvironment
+- awx.delete_executionenvironment
+- awx.add_project
+- awx.change_project
+- awx.delete_project
+- awx.update_project
+- awx.use_project
+- awx.view_project
+- awx.change_jobtemplate
+- awx.delete_jobtemplate
+- awx.execute_jobtemplate
+- awx.view_jobtemplate
+- awx.add_credential
+- awx.change_credential
+- awx.delete_credential
+- awx.use_credential
+- awx.view_credential
+- awx.add_notificationtemplate
+- awx.change_notificationtemplate
+- awx.delete_notificationtemplate
+- awx.view_notificationtemplate
+- awx.add_inventory
+- awx.adhoc_inventory
+- awx.change_inventory
+- awx.delete_inventory
+- awx.update_inventory
+- awx.use_inventory
+- awx.view_inventory
+- awx.add_workflowjobtemplate
+- awx.approve_workflowjobtemplate
+- awx.change_workflowjobtemplate
+- awx.delete_workflowjobtemplate
+- awx.execute_workflowjobtemplate
+- awx.view_workflowjobtemplate
+
+`shared.team`
+
+- shared.change_team
+- shared.delete_team
+- shared.member_team
+- shared.view_team
+
+`awx.credential`
+
+- awx.change_credential
+- awx.delete_credential
+- awx.use_credential
+- awx.view_credential
+
+`awx.executionenvironment`
+
+- awx.change_executionenvironment
+- awx.delete_executionenvironment
+
+`awx.instancegroup`
+
+- awx.change_instancegroup
+- awx.delete_instancegroup
+- awx.use_instancegroup
+- awx.view_instancegroup
+
+`awx.inventory`
+
+- awx.adhoc_inventory
+- awx.change_inventory
+- awx.delete_inventory
+- awx.update_inventory
+- awx.use_inventory
+- awx.view_inventory
+
+`awx.jobtemplate`
+
+- awx.change_jobtemplate
+- awx.delete_jobtemplate
+- awx.execute_jobtemplate
+- awx.view_jobtemplate
+
+`awx.notificationtemplate`
+
+- awx.change_notificationtemplate
+- awx.delete_notificationtemplate
+- awx.view_notificationtemplate
+
+`awx.project`
+
+- awx.change_project
+- awx.delete_project
+- awx.update_project
+- awx.use_project
+- awx.view_project
+
+`awx.workflowjobtemplate`
+
+- awx.approve_workflowjobtemplate
+- awx.change_workflowjobtemplate
+- awx.delete_workflowjobtemplate
+- awx.execute_workflowjobtemplate
+- awx.view_workflowjobtemplate
+
 ### Standard Role Definition Data Structure
 
 #### Json Example
