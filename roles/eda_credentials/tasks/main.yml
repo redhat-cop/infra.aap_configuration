@@ -12,7 +12,7 @@
         description: "{{ __credential_item.description | default(omit) }}"
         organization_name: "{{ __credential_item.organization | default(omit) }}"
         credential_type_name: "{{ __credential_item.credential_type | mandatory }}"
-        inputs: "{{ __credential_item.inputs | default(omit) }}"
+        inputs: "{{ __credential_item.inputs | default(({} if (__credential_item.state | default(eda_state | default('present'))) == 'present' else omit)) }}"
         state: "{{ __credential_item.state | default(eda_state | default('present')) }}"
         controller_host: "{{ aap_hostname | default(omit, true) }}"
         controller_username: "{{ aap_username | default(omit, true) }}"

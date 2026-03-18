@@ -21,6 +21,7 @@ An Ansible Role to publish collections to Automation Hub or Galaxies.
 |`aap_configuration_working_dir`|`/var/tmp`|no|The working directory where the built artifacts live, or where the artifacts will be built.||
 |`hub_auto_approve`|`false`|no|Whether the collection will be automatically approved in Automation Hub. This will only work if the account being used has correct privileges.||
 |`hub_overwrite_existing`|`false`|no|Whether the collection will be automatically overwrite an existing collection in Automation Hub. This will only work if the account being used has correct privileges.||
+|`hub_repository`|`staging`|no|Name of the destination repository to publish collections to. Defaults to `staging`.||
 |`hub_custom_collections`|`see below`|no|Data structure describing your collections, mutually exclusive to hub_collection_list, described below.||
 |`hub_collection_list`|`list`|no|Data structure file paths to pre built collections, mutually exclusive with hub_custom_collections.||
 
