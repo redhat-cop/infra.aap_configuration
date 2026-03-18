@@ -1,0 +1,65 @@
+---
+- name: Manage Controller Role Definitions Block
+  vars:
+    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  no_log: "{{ controller_role_definitions_secure_logging }}"
+  block:
+    - name: Role definitions | Configuration
+      ansible.controller.role_definition:
+        name: "{{ __controller_role_definitions_item.name | mandatory }}"
+        new_name: "{{ __controller_role_definitions_item.new_name | default(omit, true) }}"
+        description: "{{ __controller_role_definitions_item.description | default(('' if controller_role_definitions_enforce_defaults else omit), true) }}"
+        content_type: "{{ __controller_role_definitions_item.content_type | mandatory }}"
+        permissions: "{{ __controller_role_definitions_item.permissions | mandatory }}"
+        state: "{{ __controller_role_definitions_item.state | default(platform_state | default(omit, true)) }}"
+
+        # Role Standard Options
+        controller_host: "{{ aap_hostname | default(omit, true) }}"
+        controller_username: "{{ aap_username | default(omit, true) }}"
+        controller_password: "{{ aap_password | default(omit, true) }}"
+        controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      loop: "{{ controller_role_definitions }}"
+      loop_control:
+        loop_var: __controller_role_definitions_item
+        label: "{{ __operation.verb }} Role Based Access Entry on Controller {{ __controller_role_definitions_item.name }}"
+        pause: "{{ controller_role_definitions_loop_delay }}"
+      async: "{{ ansible_check_mode | ternary(0, 1000) }}"
+      poll: 0
+      register: __controller_role_definitions_job_async
+      changed_when: not __controller_role_definitions_job_async.changed
+      vars:
+        __operation: "{{ operation_translate[__controller_role_definitions_item.state | default(platform_state) | default('present')] }}"
+
+    - name: Role definitions | Wait for finish the configuration
+      when:
+        - not ansible_check_mode
+        - __controller_role_definitions_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __controller_role_definitions_job_async.results }}"
+      loop_control:
+        loop_var: __controller_role_definitions_job_async_results_item
+        label: "{{ __operation.verb }} Role {{ __controller_role_definitions_job_async_results_item.__controller_role_definitions_item.name }} | Wait for finish the Roles {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ controller_role_definitions_secure_logging }}"
+        cas_job_async_results_item: "{{ __controller_role_definitions_job_async_results_item }}"
+        cas_register_subvar: controller_role_definitions
+        cas_error_list_var_name: "controller_role_definitions_errors"
+        __operation: "{{ operation_translate[__controller_role_definitions_job_async_results_item.__controller_role_definitions_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} Role {{ __controller_role_definitions_job_async_results_item.__controller_role_definitions_item.name }} | Wait for finish the Roles {{ __operation.action }}"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __controller_role_definitions_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __controller_role_definitions_job_async_results_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __controller_role_definitions_job_async.results }}"
+      loop_control:
+        loop_var: __controller_role_definitions_job_async_results_item
+        label: "Cleaning up job results file: {{ __controller_role_definitions_job_async_results_item.results_file | default('Unknown') }}"
+...
