@@ -157,7 +157,7 @@ This functionality can be disabled by setting `aap_configuration_apply_object_ro
       "organization": "Default",
       "description": "created by Ansible Playbook - Constructed Inventory",
       "kind": "constructed",
-      "input_inventories": "Satellite"
+      "input_inventories": ["Satellite"]
     }
   ]
 }
@@ -181,7 +181,29 @@ controller_inventories:
     organization: Default
     description: created by Ansible Playbook - Constructed Inventory
     kind: constructed
-    input_inventories: Satellite
+    input_inventories:
+      - Satellite
+    variables:
+      compose:
+        my_host_alias: ansible_host
+      groups:
+        rhel7: ansible_distribution_major_version == '7'
+      keyed_groups:
+        - key: ansible_distribution
+          prefix: os
+          separator: "_"
+```
+
+To update a constructed inventory source after creating it, use the
+`controller_inventory_sources` role with `source: constructed`:
+
+```yaml
+controller_inventory_sources:
+  - name: "All RHEL 7 Hosts source"
+    inventory: "All RHEL 7 Hosts"
+    organization: "Default"
+    source: constructed
+    update_on_launch: true
 ```
 
 ## Playbook Examples
