@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Fix dispatch ordering so credential_types, credentials, and credential_input_sources are processed before instance_groups.
+...
