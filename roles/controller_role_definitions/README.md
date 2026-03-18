@@ -12,13 +12,13 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 
 |Variable Name|Default Value|Required|Description|Example|
 |:---|:---:|:---:|:---|:---|
-|`controller_state`|"present"|no|str|The state all objects will take unless overridden by object default|'absent'|
-|`aap_hostname`|""|yes|str|URL to the Ansible Controller Server.|127.0.0.1|
-|`aap_validate_certs`|`true`|no|str|Whether or not to validate the Ansible Controller Server's SSL certificate.||
-|`aap_username`|""|no|str|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
-|`aap_password`|""|no|str|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
-|`controller_oauthtoken`|""|no|str|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
-|`controller_request_timeout`|`10`|no|int|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
+|`controller_state`|"present"|no|The state all objects will take unless overridden by object default|'absent'|
+|`aap_hostname`|""|yes|URL to the Ansible Controller Server.|127.0.0.1|
+|`aap_validate_certs`|`true`|no|Whether or not to validate the Ansible Controller Server's SSL certificate.||
+|`aap_username`|""|no|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
+|`aap_password`|""|no|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
+|`controller_oauthtoken`|""|no|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
+|`controller_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`aap_configuration_register`|""|no|Specify a variable to register the values of all aap_configuration tasks. This will create an object with each aap object as an element containing a list of each item created.||
 |`aap_configuration_collect_logs`|`false`|no|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
 |`controller_role_definitions`|`see below`|yes|Data structure describing your role definitions described below.||
@@ -82,7 +82,7 @@ This also speeds up the overall role.
 | `new_name`          |      N/A      |    no    | str  | Setting this option will change the existing name (looked up via the name field)                      |
 | `permissions`       |      N/A      |   yes    | list | List of permission strings to associate with the role (e.g., awx.view_inventory)                      |
 | `state`             |   `present`   |    no    | str  | Desired state of the resource.                                                                        |
-|`register`           |         ""    |    no    | str  | Variable to set based on the result of the object creation/modification                |
+|`register`           |         ""    |    no    | str  | Variable to set based on the result of the object creation/modification                               |
 
 ### Standard Role Definition Data Structure
 
