@@ -1,0 +1,4 @@
+---
+trivial:
+  - Clarify event_streams parameter format in eda_rulebook_activations documentation.
+...

@@ -21,6 +21,7 @@ aap_configuration_working_dir: /var/tmp
 
 hub_auto_approve: "{{ ah_auto_approve | default(false) }}"
 hub_overwrite_existing: "{{ ah_overwrite_existing | default(false) }}"
+hub_repository: "{{ ah_repository | default('staging') }}"
 
 hub_configuration_publish_secure_logging: "{{ aap_configuration_secure_logging | default(false) }}"
 hub_configuration_publish_async_timeout: "{{ aap_configuration_async_timeout | default(1000) }}"
