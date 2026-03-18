@@ -1,7 +1,7 @@
 ---
 argument_specs:
   main:
-    short_description: An Ansible Role to create role_definitions on Ansible Controller.
+    short_description: An Ansible Role to create role_definitions on Ansible Controller for AAP 2.5 ONLY.
     options:
       controller_role_definitions:
         description: Data structure describing your role_definitions

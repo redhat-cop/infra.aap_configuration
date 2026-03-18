@@ -2,7 +2,7 @@
 
 ## Description
 
-An Ansible Role to create/update/remove Role Definitions on Ansible Controller.
+An Ansible Role to create/update/remove Role Definitions on Ansible Controller **AAP 2.5 ONLY**.
 
 ## Requirements
 
@@ -72,7 +72,7 @@ This also speeds up the overall role.
 
 ### Role Definition Variables
 
-**WARNING: This role will only work in AAP 2.5+** Options for the `controller_role_definitions` variable:
+**WARNING: This role will only work in AAP 2.5** Options for the `controller_role_definitions` variable:
 
 | Variable Name       | Default Value | Required | Type | Description                                                                                           |
 |:--------------------|:-------------:|:--------:|:----:|:------------------------------------------------------------------------------------------------------|
