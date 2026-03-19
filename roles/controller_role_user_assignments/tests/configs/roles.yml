@@ -1,0 +1,6 @@
+---
+controller_role_user_assignments:
+  - role_definition: Demo Controller Role - Inventory Admin
+    object_id: 1
+    user: demo_user
+...
