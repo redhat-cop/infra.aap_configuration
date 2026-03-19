@@ -2,6 +2,7 @@
 - name: Sort out vars that are included
   ansible.builtin.include_tasks: include_wildcard_vars.yml
   when: dispatch_include_wildcard_vars
+  tags: always
 
 - name: "Run the following infra.aap_configuration roles: {{ aap_configuration_dispatcher_roles | map(attribute='role') | join(', ') }}"
   ansible.builtin.include_role:

@@ -67,5 +67,6 @@
                           (prev_val + curr_val) | unique }}"
   loop: "{{ query('ansible.builtin.varnames', '^(' + all_vars | join('|') + ')_.*') }}"
   when: not item.endswith('_secure_logging')
+  tags: always
 
 ...
