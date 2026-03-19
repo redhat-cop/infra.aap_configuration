@@ -1,0 +1,4 @@
+---
+trivial:
+  - Updated README.md for gateway_role_definitions with more examples; also added content_type and permissions list
+...

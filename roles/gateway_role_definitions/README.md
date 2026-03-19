@@ -76,7 +76,261 @@ This also speeds up the overall role.
 | `new_name`          |      N/A      |    no    | str  | Setting this option will change the existing name (looked up via the name field)                      |
 | `permissions`       |      N/A      |   yes    | list | List of permission strings to associate with the role (e.g., awx.view_inventory)                      |
 | `state`             |   `present`   |    no    | str  | Desired state of the resource.                                                                        |
-|`register`                   |         ""          |   no     | str  | Variable to set based on the result of the object creation/modification                |
+|`register`           |         ""    |   no     | str  | Variable to set based on the result of the object creation/modification                               |
+
+#### Content Type
+
+Below are the available content_types that can be used when managing role definitions. Under the content type names, are available permissions that can used with those content types.
+
+`shared.organization`
+
+- shared.audit_organization
+- shared.change_organization
+- shared.delete_organization
+- shared.member_organization
+- shared.view_organization
+- shared.add_team
+- shared.change_team
+- shared.delete_team
+- shared.member_team
+- shared.view_team
+- awx.add_executionenvironment
+- awx.change_executionenvironment
+- awx.delete_executionenvironment
+- awx.add_project
+- awx.change_project
+- awx.delete_project
+- awx.update_project
+- awx.use_project
+- awx.view_project
+- awx.change_jobtemplate
+- awx.delete_jobtemplate
+- awx.execute_jobtemplate
+- awx.view_jobtemplate
+- awx.add_credential
+- awx.change_credential
+- awx.delete_credential
+- awx.use_credential
+- awx.view_credential
+- awx.add_notificationtemplate
+- awx.change_notificationtemplate
+- awx.delete_notificationtemplate
+- awx.view_notificationtemplate
+- awx.add_inventory
+- awx.adhoc_inventory
+- awx.change_inventory
+- awx.delete_inventory
+- awx.update_inventory
+- awx.use_inventory
+- awx.view_inventory
+- awx.add_workflowjobtemplate
+- awx.approve_workflowjobtemplate
+- awx.change_workflowjobtemplate
+- awx.delete_workflowjobtemplate
+- awx.execute_workflowjobtemplate
+- awx.view_workflowjobtemplate
+- eda.add_activation
+- eda.change_activation
+- eda.delete_activation
+- eda.disable_activation
+- eda.enable_activation
+- eda.restart_activation
+- eda.view_activation
+- eda.view_auditrule
+- eda.view_rulebookprocess
+- eda.add_credentialinputsource
+- eda.change_credentialinputsource
+- eda.delete_credentialinputsource
+- eda.view_credentialinputsource
+- eda.add_decisionenvironment
+- eda.change_decisionenvironment
+- eda.delete_decisionenvironment
+- eda.view_decisionenvironment
+- eda.add_edacredential
+- eda.change_edacredential
+- eda.delete_edacredential
+- eda.view_edacredential
+- eda.add_eventstream
+- eda.change_eventstream
+- eda.delete_eventstream
+- eda.view_eventstream
+- eda.add_project
+- eda.change_project
+- eda.delete_project
+- eda.sync_project
+- eda.view_project
+- eda.view_rulebook
+
+`shared.team`
+
+- shared.change_team
+- shared.delete_team
+- shared.member_team
+- shared.view_team
+
+`awx.credential`
+
+- awx.change_credential
+- awx.delete_credential
+- awx.use_credential
+- awx.view_credential
+
+`awx.executionenvironment`
+
+- awx.change_executionenvironment
+- awx.delete_executionenvironment
+
+`awx.instancegroup`
+
+- awx.change_instancegroup
+- awx.delete_instancegroup
+- awx.use_instancegroup
+- awx.view_instancegroup
+
+`awx.inventory`
+
+- awx.adhoc_inventory
+- awx.change_inventory
+- awx.delete_inventory
+- awx.update_inventory
+- awx.use_inventory
+- awx.view_inventory
+
+`awx.jobtemplate`
+
+- awx.change_jobtemplate
+- awx.delete_jobtemplate
+- awx.execute_jobtemplate
+- awx.view_jobtemplate
+
+`awx.notificationtemplate`
+
+- awx.change_notificationtemplate
+- awx.delete_notificationtemplate
+- awx.view_notificationtemplate
+
+`awx.project`
+
+- awx.change_project
+- awx.delete_project
+- awx.update_project
+- awx.use_project
+- awx.view_project
+
+`awx.workflowjobtemplate`
+
+- awx.approve_workflowjobtemplate
+- awx.change_workflowjobtemplate
+- awx.delete_workflowjobtemplate
+- awx.execute_workflowjobtemplate
+- awx.view_workflowjobtemplate
+
+`eda.activation`
+
+- eda.change_activation
+- eda.delete_activation
+- eda.disable_activation
+- eda.enable_activation
+- eda.restart_activation
+- eda.view_activation
+- eda.view_auditrule
+- eda.view_rulebookprocess
+
+`eda.credentialinputsource`
+
+- eda.change_credentialinputsource
+- eda.delete_credentialinputsource
+- eda.view_credentialinputsource
+
+`eda.decisionenvironment`
+
+- eda.change_decisionenvironment
+- eda.delete_decisionenvironment
+- eda.view_decisionenvironment
+
+`eda.edacredential`
+
+- eda.change_edacredential
+- eda.delete_edacredential
+- eda.view_edacredential
+
+`eda.eventstream`
+
+- eda.change_eventstream
+- eda.delete_eventstream
+- eda.view_eventstream
+
+`eda.project`
+
+- eda.change_project
+- eda.delete_project
+- eda.sync_project
+- eda.view_project
+- eda.view_rulebook
+
+`galaxy.ansiblerepository`
+
+- galaxy.add_ansiblerepository
+- galaxy.change_ansiblerepository
+- galaxy.delete_ansiblerepository
+- galaxy.manage_roles_ansiblerepository
+- galaxy.modify_ansible_repo_content
+- galaxy.rebuild_metadata_ansiblerepository
+- galaxy.repair_ansiblerepository
+- galaxy.sign_ansiblerepository
+- galaxy.sync_ansiblerepository
+- galaxy.view_ansiblerepository
+
+`galaxy.collectionremote`
+
+- galaxy.add_collectionremote
+- galaxy.change_collectionremote
+- galaxy.delete_collectionremote
+- galaxy.manage_roles_collectionremote
+- galaxy.view_collectionremote
+
+`galaxy.containernamespace`
+
+- galaxy.add_containernamespace
+- galaxy.change_containernamespace
+- galaxy.delete_containernamespace
+- galaxy.manage_roles_containernamespace
+- galaxy.namespace_add_containerdistribution
+- galaxy.namespace_change_containerdistribution
+- galaxy.namespace_change_containerpushrepository
+- galaxy.namespace_delete_containerdistribution
+- galaxy.namespace_modify_content_containerpushrepository
+- galaxy.namespace_pull_containerdistribution
+- galaxy.namespace_push_containerdistribution
+- galaxy.namespace_view_containerdistribution
+- galaxy.namespace_view_containerpushrepository
+- galaxy.view_containernamespace
+
+`galaxy.containerrepository`
+
+- galaxy.add_containerrepository
+- galaxy.build_image_containerrepository
+- galaxy.change_containerrepository
+- galaxy.delete_containerrepository
+- galaxy.delete_containerrepository_versions
+- galaxy.manage_roles_containerrepository
+- galaxy.modify_content_containerrepository
+- galaxy.sync_containerrepository
+- galaxy.view_containerrepository
+
+`galaxy.namespace`
+
+- galaxy.add_namespace
+- galaxy.change_namespace
+- galaxy.upload_to_namespace
+
+`galaxy.task`
+
+- galaxy.add_task
+- galaxy.change_task
+- galaxy.delete_task
+- galaxy.manage_roles_task
+- galaxy.view_task
 
 ### Standard Role Definition Data Structure
 
@@ -86,31 +340,65 @@ This also speeds up the overall role.
 {
   "gateway_role_definitions": [
     {
-      "name": "Organization Inventory Admin",
-      "description": "Grants full inventory access",
+      "name": "Organization Inventory Use",
+      "description": "Grants use permissions to inventories for a single organization.",
       "content_type": "awx.inventory",
       "permissions": [
         "awx.view_inventory",
-        "awx.change_inventory"
+        "awx.use_inventory"
       ]
-    }
+    },
+    {
+      "name": "Organization Credential Use",
+      "description": "Grants use permissions to inventoriesfor a single organization.",
+      "content_type": "awx.credential",
+      "permissions": [
+        "awx.view_credential",
+        "awx.use_credential"
+      ]
+    },
+    {
+      "name": "Workflow Template Modify",
+      "description": "Grants modify permissions to workflow templates.",
+      "content_type": "awx.workflowjobtemplate",
+      "permissions": [
+        "awx.view_workflowjobtemplate",
+        "awx.approve_workflowjobtemplate",
+        "awx.change_workflowjobtemplate",
+        "awx.delete_workflowjobtemplate",
+      ]
+    },
   ]
 }
 ```
 
 #### Yaml Example
 
-File name: `data/gateway_role_definitions.yml`
+File name: `configs/gateway_role_definitions.yml`
 
 ```yaml
 ---
 gateway_role_definitions:
-  - name: Organization Inventory Admin
-    description: Grants full inventory access
-    content_type: awx.inventory
+  - name: Organization Inventory Use
+    description: Grants use permissions to inventories for a single organization.
+    content_type: shared.organization
     permissions:
       - awx.view_inventory
-      - awx.change_inventory
+      - awx.use_inventory
+  - name: Organization Credential Use
+    description: Grants use permissions to credentials for a single organization.
+    content_type: shared.organization
+    permissions:
+      - awx.view_credential
+      - awx.use_credential
+  - name: Workflow Template Modify
+    description: Grants modify permissions to workflow templates.
+    content_type: awx.workflowjobtemplate
+    permissions:
+      - awx.view_workflowjobtemplate
+      - awx.approve_workflowjobtemplate
+      - awx.change_workflowjobtemplate
+      - awx.delete_workflowjobtemplate
 ```
 
 ## License
