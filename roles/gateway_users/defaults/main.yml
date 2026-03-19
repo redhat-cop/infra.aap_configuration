@@ -24,7 +24,6 @@ aap_user_accounts: []
 #  - authenticator_uid
 #  - state
 
-
 gateway_users_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
 gateway_users_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 gateway_users_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
