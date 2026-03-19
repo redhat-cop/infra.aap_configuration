@@ -102,7 +102,7 @@ File name: `configs/controller/controller_role_user_assignments.yml`
 controller_role_user_assignments:
   # This will apply the role 'Inventory Admin' to the user 'user123' on the inventory with the id of '1'
   - role_definition: Inventory Admin
-    object_id: 1    
+    object_id: 1
     user: user123
   # This will apply the role 'Credential Use' to the user 'user456' on the credential with the id of '23'
   - role_definition: Credential Use
