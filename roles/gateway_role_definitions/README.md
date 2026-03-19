@@ -76,7 +76,7 @@ This also speeds up the overall role.
 | `new_name`          |      N/A      |    no    | str  | Setting this option will change the existing name (looked up via the name field)                      |
 | `permissions`       |      N/A      |   yes    | list | List of permission strings to associate with the role (e.g., awx.view_inventory)                      |
 | `state`             |   `present`   |    no    | str  | Desired state of the resource.                                                                        |
-|`register`                   |         ""          |   no     | str  | Variable to set based on the result of the object creation/modification                |
+|`register`           |         ""    |   no     | str  | Variable to set based on the result of the object creation/modification                               |
 
 #### Content Type
 
@@ -338,7 +338,7 @@ Below are the available content_types that can be used when managing role defini
 
 ```json
 {
-  "controller_role_definitions": [
+  "gateway_role_definitions": [
     {
       "name": "Organization Inventory Use",
       "description": "Grants use permissions to inventories for a single organization.",
@@ -374,11 +374,11 @@ Below are the available content_types that can be used when managing role defini
 
 #### Yaml Example
 
-File name: `configs/controller/controller_role_definitions.yml`
+File name: `configs/gateway_role_definitions.yml`
 
 ```yaml
 ---
-controller_role_definitions:
+gateway_role_definitions:
   - name: Organization Inventory Use
     description: Grants use permissions to inventories for a single organization.
     content_type: shared.organization
