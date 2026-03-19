@@ -1,0 +1,23 @@
+---
+controller_role_definitions:
+  - name: Demo Controller Role - Organization Inventory Use
+    description: Add permissions to demo role.
+    content_type: shared.organization
+    permissions:
+      - awx.view_inventory
+      - awx.use_inventory
+  - name: Demo Controller Role - Organization Credential Use
+    description: Add permissions to demo role.
+    content_type: shared.organization
+    permissions:
+      - awx.view_credential
+      - awx.use_credential
+  - name: Demo Controller Role - Workflow Template Modify
+    description: Add permissions to demo role.
+    content_type: awx.workflowjobtemplate
+    permissions:
+      - awx.view_workflowjobtemplate
+      - awx.approve_workflowjobtemplate
+      - awx.change_workflowjobtemplate
+      - awx.delete_workflowjobtemplate
+...
