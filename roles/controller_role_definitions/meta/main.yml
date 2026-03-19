@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: controller_role_definitions
   author: Matt Willis
-  description: An Ansible Role to create role_definitions in Ansible Controller.
+  description: An Ansible Role to create role_definitions in Ansible Controller (AAP 2.5 ONLY).
   company: Red Hat
 
   # If the issue tracker for your role is not on github, uncomment the
