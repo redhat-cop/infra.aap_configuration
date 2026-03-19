@@ -85,7 +85,7 @@ This also speeds up the overall role.
   "controller_role_team_assignments": [
     {
         "role_definition": "Organization Inventory Admin",
-        "object_id": 1,        
+        "object_id": 1,
         "team": "team2"
     }
   ]
