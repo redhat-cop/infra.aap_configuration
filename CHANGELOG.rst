@@ -4,6 +4,28 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v4.3.0
+======
+
+Minor Changes
+-------------
+
+- Add hub_repository variable to hub_publish role allowing collections to be published to any repository, not just staging.
+- Added the controller_role_definitions role; this allows AAP 2.5 compatibility with creating roles
+
+Bugfixes
+--------
+
+- Fix "argument 'variables' is of type str" error on ansible 2.19+ by avoiding regex_replace on non-string values.
+- Fix EDA credentials failing when inputs is not specified by defaulting to an empty dict when state is present.
+- Fix controller_license argument_specs, re-allow parameters that should be allowed
+- Fix dispatch ordering so credential_types, credentials, and credential_input_sources are processed before instance_groups.
+- Fix gateway_users role sending default password when none specified, causing failures for externally authenticated users.
+- Fix role assignment failing when users/teams are specified as lists in job_templates, inventories, and workflow_job_templates roles blocks.
+- Fixed labels and notification_templates not being applied when defined directly in user data because the Jinja2 expressions checked ``related.*`` (API-exported format) before the direct user value. Reordered the fallback chain to check the direct value first, matching the existing correct pattern used by ``credentials``. Affected roles - controller_job_templates, controller_schedules, controller_workflow_job_templates, controller_projects, controller_inventory_sources, controller_organizations, gateway_organizations (https://github.com/redhat-cop/infra.aap_configuration/issues/1270).
+- Removing enforce defaults for schedules on execution environments because the it causes the api to return an error
+- api endpoint for get_stats playbook was incorrect, fixed to match the correct endpoint for users and subscription info
+
 v4.2.1
 ======
 

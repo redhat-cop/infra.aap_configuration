@@ -1064,3 +1064,53 @@ releases:
     fragments:
     - role_apply_project.yml
     release_date: '2026-02-01'
+  4.3.0:
+    changes:
+      bugfixes:
+      - Fix "argument 'variables' is of type str" error on ansible 2.19+ by avoiding
+        regex_replace on non-string values.
+      - Fix EDA credentials failing when inputs is not specified by defaulting to
+        an empty dict when state is present.
+      - Fix controller_license argument_specs, re-allow parameters that should be
+        allowed
+      - Fix dispatch ordering so credential_types, credentials, and credential_input_sources
+        are processed before instance_groups.
+      - Fix gateway_users role sending default password when none specified, causing
+        failures for externally authenticated users.
+      - Fix role assignment failing when users/teams are specified as lists in job_templates,
+        inventories, and workflow_job_templates roles blocks.
+      - Fixed labels and notification_templates not being applied when defined directly
+        in user data because the Jinja2 expressions checked ``related.*`` (API-exported
+        format) before the direct user value. Reordered the fallback chain to check
+        the direct value first, matching the existing correct pattern used by ``credentials``.
+        Affected roles - controller_job_templates, controller_schedules, controller_workflow_job_templates,
+        controller_projects, controller_inventory_sources, controller_organizations,
+        gateway_organizations (https://github.com/redhat-cop/infra.aap_configuration/issues/1270).
+      - Removing enforce defaults for schedules on execution environments because
+        the it causes the api to return an error
+      - api endpoint for get_stats playbook was incorrect, fixed to match the correct
+        endpoint for users and subscription info
+      minor_changes:
+      - Add hub_repository variable to hub_publish role allowing collections to be
+        published to any repository, not just staging.
+      - Added the controller_role_definitions role; this allows AAP 2.5 compatibility
+        with creating roles
+    fragments:
+    - 1014-fix-dispatch-ordering.yml
+    - 1039-ldap-authenticator-map-examples.yml
+    - 1068-controller-license-auth-docs.yml
+    - 1216-constructed-inventory-docs.yml
+    - 1270-fix-labels-and-notification-templates-precedence.yml
+    - 1271-eda-rulebook-event-streams-docs.yml
+    - 1278-fix-eda-credentials-inputs.yml
+    - 1283-get_stats-url-fix.yml
+    - 1286-hub-publish-repository.yml
+    - 1287-fix-variables-argument-type-str.yml
+    - 1291-add_credentials-count-fix.yml
+    - 1295-fix.yml
+    - 1296-fix-role-assignment-lists.yml
+    - 1313-gateway-users-no-default-password.yml
+    - add_controller_role_definitions_role.yml
+    - fix_controller_license_argument_spec.yml
+    - pre-commit-update.yml
+    release_date: '2026-03-19'

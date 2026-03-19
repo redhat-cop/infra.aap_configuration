@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Fix role assignment failing when users/teams are specified as lists in job_templates, inventories, and workflow_job_templates roles blocks.
-...

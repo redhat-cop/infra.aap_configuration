@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Removing enforce defaults for schedules on execution environments because the it causes the api to return an error
-...

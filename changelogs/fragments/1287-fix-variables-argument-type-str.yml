@@ -1,3 +1,0 @@
----
-bugfixes:
-  - Fix "argument 'variables' is of type str" error on ansible 2.19+ by avoiding regex_replace on non-string values.

@@ -1,4 +1,0 @@
----
-trivial:
-  - Add LDAP authenticator map examples to gateway_authenticator_maps documentation.
-...

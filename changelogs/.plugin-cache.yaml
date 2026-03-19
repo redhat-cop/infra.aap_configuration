@@ -107,6 +107,11 @@ objects:
       description: An Ansible Role to create projects on Ansible Controller.
       name: controller_projects
       version_added: null
+    controller_role_definitions:
+      description: An Ansible Role to create role_definitions on Ansible Controller
+        for AAP 2.5 ONLY.
+      name: controller_role_definitions
+      version_added: null
     controller_roles:
       description: An Ansible Role to create roles on Ansible Controller.
       name: controller_roles
@@ -334,4 +339,4 @@ plugins:
   strategy: {}
   test: {}
   vars: {}
-version: 4.2.1
+version: 4.3.0
