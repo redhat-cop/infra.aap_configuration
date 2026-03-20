@@ -14,5 +14,6 @@ gateway_teams_secure_logging: "{{ aap_configuration_secure_logging | default('fa
 gateway_teams_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 gateway_teams_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 gateway_teams_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
+gateway_teams_async_concurrency: "{{ aap_configuration_async_concurrency | default(100) }}"
 aap_configuration_async_dir:
 ...

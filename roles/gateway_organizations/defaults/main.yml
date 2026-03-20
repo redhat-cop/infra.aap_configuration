@@ -14,6 +14,9 @@ gateway_organizations_secure_logging: "{{ aap_configuration_secure_logging | def
 gateway_organizations_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 gateway_organizations_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 gateway_organizations_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
+gateway_organizations_async_concurrency: "{{ aap_configuration_async_concurrency | default(100) }}"
+# TODO: Auto-detect based on X-API-Product-Version header from /api endpoint once 2.7+ is released
+gateway_organizations_skip_controller_api: "{{ aap_configuration_skip_controller_org_api | default(true) }}"
 gateway_organizations_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 aap_configuration_async_dir:
 

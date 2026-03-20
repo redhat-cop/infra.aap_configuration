@@ -4,7 +4,20 @@
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
   no_log: "{{ controller_configuration_hosts_secure_logging }}"
   block:
-    - name: Managing Controller Hosts
+    - name: Hosts | Set batch size
+      ansible.builtin.set_fact:
+        __batch_size: "{{ controller_configuration_hosts_async_concurrency | int }}"
+
+    - name: Hosts | Process in batches
+      ansible.builtin.include_tasks:
+        file: process_host_batch.yml
+      loop: "{{ range(0, controller_hosts | length, __batch_size | int) | list }}"
+      loop_control:
+        loop_var: __batch_start_index
+        label: "Batch {{ (__batch_start_index | int / __batch_size | int) + 1 }} of {{ ((controller_hosts | length - 1) / __batch_size | int) + 1 }}"
+
+    - name: Managing Controller Hosts (legacy)
+      when: false
       ansible.controller.host:
         name: "{{ __controller_host_item.name | mandatory }}"
         new_name: "{{ __controller_host_item.new_name | default(omit, true) }}"

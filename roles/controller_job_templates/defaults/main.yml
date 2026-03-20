@@ -5,6 +5,8 @@ controller_configuration_job_templates_secure_logging: "{{ aap_configuration_sec
 controller_configuration_job_templates_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 controller_configuration_job_templates_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 controller_configuration_job_templates_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
+controller_configuration_job_templates_async_concurrency: "{{ aap_configuration_async_concurrency | default(100) }}"
+controller_configuration_job_templates_batch_delay: "{{ aap_configuration_batch_delay | default(3) }}"
 aap_configuration_async_dir:
 controller_configuration_job_templates_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 aap_configuration_apply_object_roles: true

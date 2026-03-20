@@ -5,6 +5,8 @@ controller_configuration_hosts_secure_logging: "{{ aap_configuration_secure_logg
 controller_configuration_hosts_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 controller_configuration_hosts_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 controller_configuration_hosts_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
+controller_configuration_hosts_async_concurrency: "{{ aap_configuration_async_concurrency | default(100) }}"
+controller_configuration_hosts_batch_delay: "{{ aap_configuration_batch_delay | default(3) }}"
 aap_configuration_async_dir:
 controller_configuration_host_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 ...

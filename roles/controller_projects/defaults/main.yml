@@ -2,9 +2,11 @@
 # list of dict describing Controller projects
 controller_projects: []
 controller_configuration_projects_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
-controller_configuration_projects_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
-controller_configuration_projects_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
+controller_configuration_projects_async_retries: "{{ aap_configuration_async_retries | default(500) }}"
+controller_configuration_projects_async_delay: "{{ aap_configuration_async_delay | default(2) }}"
 controller_configuration_projects_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
+controller_configuration_projects_async_concurrency: "{{ aap_configuration_async_concurrency | default(100) }}"
+controller_configuration_projects_batch_delay: "{{ aap_configuration_batch_delay | default(3) }}"
 aap_configuration_async_dir:
 controller_configuration_projects_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 aap_configuration_apply_object_roles: true

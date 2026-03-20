@@ -4,7 +4,20 @@
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
   no_log: "{{ controller_configuration_inventories_secure_logging }}"
   block:
-    - name: Managing Inventories
+    - name: Inventories | Set batch size
+      ansible.builtin.set_fact:
+        __batch_size: "{{ controller_configuration_inventories_async_concurrency | int }}"
+
+    - name: Inventories | Process in batches
+      ansible.builtin.include_tasks:
+        file: process_inventory_batch.yml
+      loop: "{{ range(0, (inventory if inventory is defined else controller_inventories) | length, __batch_size | int) | list }}"
+      loop_control:
+        loop_var: __batch_start_index
+        label: "Batch {{ (__batch_start_index | int / __batch_size | int) + 1 }} of {{ (((inventory if inventory is defined else controller_inventories) | length - 1) / __batch_size | int) + 1 }}"
+
+    - name: Managing Inventories (legacy)
+      when: false
       ansible.controller.inventory:
         name: "{{ __controller_inventory_item.name | mandatory }}"
         new_name: "{{ __controller_inventory_item.new_name | default(omit, true) }}"

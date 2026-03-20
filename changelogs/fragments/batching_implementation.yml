@@ -1,0 +1,17 @@
+major_changes:
+  - Implemented batch processing across multiple roles to throttle concurrent API calls and prevent overwhelming Gateway/Controller APIs on OpenShift deployments
+  - controller_credential_types - Added configurable batch processing with `controller_configuration_credential_types_async_concurrency` and `controller_configuration_credential_types_batch_delay` parameters
+  - controller_credentials - Added configurable batch processing with `controller_configuration_credentials_async_concurrency` and `controller_configuration_credentials_batch_delay` parameters
+  - controller_execution_environments - Added configurable batch processing with `controller_configuration_execution_environments_async_concurrency` and `controller_configuration_execution_environments_batch_delay` parameters
+  - controller_hosts - Added configurable batch processing with `controller_configuration_hosts_async_concurrency` and `controller_configuration_hosts_batch_delay` parameters
+  - controller_inventories - Added configurable batch processing with `controller_configuration_inventories_async_concurrency` and `controller_configuration_inventories_batch_delay` parameters
+  - controller_inventory_sources - Added configurable batch processing with `controller_configuration_inventory_sources_async_concurrency` and `controller_configuration_inventory_sources_batch_delay` parameters
+  - controller_job_templates - Added configurable batch processing with `controller_configuration_job_templates_async_concurrency` and `controller_configuration_job_templates_batch_delay` parameters
+  - controller_labels - Added configurable batch processing with `controller_configuration_labels_async_concurrency` and `controller_configuration_labels_batch_delay` parameters
+  - controller_notification_templates - Added configurable batch processing with `controller_configuration_notification_templates_async_concurrency` and `controller_configuration_notification_templates_batch_delay` parameters
+  - controller_projects - Added configurable batch processing with `controller_configuration_projects_async_concurrency` and `controller_configuration_projects_batch_delay` parameters
+  - controller_schedules - Added configurable batch processing with `controller_configuration_schedules_async_concurrency` and `controller_configuration_schedules_batch_delay` parameters
+  - gateway_organizations - Added configurable batch processing with `gateway_organizations_async_concurrency` and `gateway_organizations_batch_delay` parameters
+  - gateway_teams - Added configurable batch processing with `gateway_teams_async_concurrency` and `gateway_teams_batch_delay` parameters
+  - gateway_users - Added configurable batch processing with `gateway_users_async_concurrency` and `gateway_users_batch_delay` parameters
+  - Global defaults added - `aap_configuration_async_concurrency` (default 100) and `aap_configuration_batch_delay` (default 3 seconds) apply to all batched roles unless overridden

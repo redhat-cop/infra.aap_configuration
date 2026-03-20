@@ -4,64 +4,28 @@
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
   no_log: "{{ gateway_teams_secure_logging }}"
   block:
-    - name: Teams | Configuration
-      ansible.platform.team:
-        name: "{{ __gateway_teams_item.name | mandatory }}"
-        new_name: "{{ __gateway_teams_item.new_name | default(omit) }}"
-        description: "{{ __gateway_teams_item.description | default(omit) }}"
-        organization: "{{ __gateway_teams_item.organization | default(omit) }}"
-        new_organization: "{{ __gateway_teams_item.new_organization | default(omit) }}"
-        state: "{{ __gateway_teams_item.state | default(platform_state | default(omit, true)) }}"
+    - name: Teams | Set batch size
+      ansible.builtin.set_fact:
+        __batch_size: "{{ gateway_teams_async_concurrency | int }}"
 
-        # Role Standard Options
-        gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
-        gateway_username: "{{ aap_username | default(omit, true) }}"
-        gateway_password: "{{ aap_password | default(omit, true) }}"
-        gateway_token: "{{ aap_token | default(omit, true) }}"
-        gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-        gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-      loop: "{{ aap_teams }}"
+    - name: Teams | Process in batches
+      ansible.builtin.include_tasks:
+        file: process_team_batch.yml
+      loop: "{{ range(0, aap_teams | length, __batch_size | int) | list }}"
       loop_control:
-        loop_var: __gateway_teams_item
-        label: "{{ __operation.verb }} the Gateway team {{ __gateway_teams_item.name }}"
-        pause: "{{ gateway_teams_loop_delay }}"
-      async: 1000
-      poll: 0
-      register: __gateway_teams_job_async
-      changed_when: not __gateway_teams_job_async.changed
-      vars:
-        __operation: "{{ operation_translate[__gateway_teams_item.state | default(platform_state) | default('present')] }}"
-
-    - name: Teams | Wait for finish the configuration
-      when:
-        - not ansible_check_mode
-        - __gateway_teams_job_async_results_item.ansible_job_id is defined
-      ansible.builtin.include_role:
-        name: infra.aap_configuration.collect_async_status
-      loop: "{{ __gateway_teams_job_async.results }}"
-      loop_control:
-        loop_var: __gateway_teams_job_async_results_item
-        label: "{{ __operation.verb }} Gateway team {{ __gateway_teams_job_async_results_item.__gateway_teams_item.name }} | Wait for finish the Gateway team {{ __operation.action }}"
-      vars:
-        cas_secure_logging: "{{ gateway_teams_secure_logging }}"
-        cas_async_delay: "{{ gateway_teams_async_delay }}"
-        cas_async_retries: "{{ gateway_teams_async_retries }}"
-        cas_job_async_results_item: "{{ __gateway_teams_job_async_results_item }}"
-        cas_register_subvar: gateway_teams
-        cas_error_list_var_name: "gateway_teams_errors"
-        __operation: "{{ operation_translate[__gateway_teams_job_async_results_item.__gateway_teams_item.state | default(platform_state) | default('present')] }}"
-        cas_object_label: "{{ __operation.verb }} Gateway team {{ __gateway_teams_job_async_results_item.__gateway_teams_item.name }} | Wait for finish the Gateway team {{ __operation.action }}"
+        loop_var: __batch_start_index
+        label: "Batch {{ (__batch_start_index | int / __batch_size | int) + 1 }} of {{ ((aap_teams | length - 1) / __batch_size | int) + 1 }}"
 
   always:
     - name: Cleanup async results files
       when:
         - not ansible_check_mode
-        - __gateway_teams_job_async_results_item.ansible_job_id is defined
+        - __team_job_async_results_item.ansible_job_id is defined
       ansible.builtin.async_status:
-        jid: "{{ __gateway_teams_job_async_results_item.ansible_job_id }}"
+        jid: "{{ __team_job_async_results_item.ansible_job_id }}"
         mode: cleanup
-      loop: "{{ __gateway_teams_job_async.results }}"
+      loop: "{{ __gateway_teams_batch_async.results | default([]) }}"
       loop_control:
-        loop_var: __gateway_teams_job_async_results_item
-        label: "Cleaning up job results file: {{ __gateway_teams_job_async_results_item.results_file | default('Unknown') }}"
+        loop_var: __team_job_async_results_item
+        label: "Cleaning up job results file: {{ __team_job_async_results_item.results_file | default('Unknown') }}"
 ...

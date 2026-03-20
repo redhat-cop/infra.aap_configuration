@@ -4,56 +4,17 @@
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
   no_log: "{{ controller_configuration_labels_secure_logging }}"
   block:
-    - name: Managing Controller Labels
-      ansible.controller.label:
-        name: "{{ __controller_label_item.name | mandatory }}"
-        new_name: "{{ __controller_label_item.new_name | default(omit, true) }}"
-        organization: "{{ __controller_label_item.organization | mandatory }}"
-        state: "{{ __controller_label_item.state | default(platform_state | default('present')) }}"
-
-        # Role Standard Options
-        controller_host: "{{ aap_hostname | default(omit, true) }}"
-        controller_username: "{{ aap_username | default(omit, true) }}"
-        controller_password: "{{ aap_password | default(omit, true) }}"
-        controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
-        request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-        validate_certs: "{{ aap_validate_certs | default(omit) }}"
-      loop: "{{ controller_labels }}"
-      loop_control:
-        loop_var: __controller_label_item
-        label: "{{ __operation.verb }} the label {{ __controller_label_item.name }} to Controller"
-        pause: "{{ controller_configuration_labels_loop_delay }}"
-      async: "{{ ansible_check_mode | ternary(0, 1000) }}"
-      poll: 0
-      register: __controller_label_job_async
-      changed_when: (__controller_label_job_async.changed if ansible_check_mode else false)
-      vars:
-        __operation: "{{ operation_translate[__controller_label_item.state | default(platform_state) | default('present')] }}"
-
-    - name: Flag for errors (check mode only)
+    - name: Labels | Set batch size
       ansible.builtin.set_fact:
-        error_flag: true
-      when: ansible_check_mode and __controller_label_job_async.failed is defined and __controller_label_job_async.failed
+        __batch_size: "{{ controller_configuration_labels_async_concurrency | int }}"
 
-    - name: Managing Labels | Wait for finish the Labels management
-      when:
-        - not ansible_check_mode
-        - __controller_label_job_async_results_item.ansible_job_id is defined
-      ansible.builtin.include_role:
-        name: infra.aap_configuration.collect_async_status
-      loop: "{{ __controller_label_job_async.results }}"
+    - name: Labels | Process in batches
+      ansible.builtin.include_tasks:
+        file: process_label_batch.yml
+      loop: "{{ range(0, controller_labels | length, __batch_size | int) | list }}"
       loop_control:
-        loop_var: __controller_label_job_async_results_item
-        label: "{{ __operation.verb }} Label {{ __controller_label_job_async_results_item.__controller_label_item.name }} | Wait for finish the Label {{ __operation.action }}"
-      vars:
-        cas_secure_logging: "{{ controller_configuration_labels_secure_logging }}"
-        cas_async_delay: "{{ controller_configuration_labels_async_delay }}"
-        cas_async_retries: "{{ controller_configuration_labels_async_retries }}"
-        cas_job_async_results_item: "{{ __controller_label_job_async_results_item }}"
-        cas_register_subvar: controller_labels
-        cas_error_list_var_name: "controller_labels_errors"
-        __operation: "{{ operation_translate[__controller_label_job_async_results_item.__controller_label_item.state | default(platform_state) | default('present')] }}"
-        cas_object_label: "{{ __operation.verb }} Label {{ __controller_label_job_async_results_item.__controller_label_item.name }} | Wait for finish the Label {{ __operation.action }}"
+        loop_var: __batch_start_index
+        label: "Batch {{ (__batch_start_index | int / __batch_size | int) + 1 }} of {{ ((controller_labels | length - 1) / __batch_size | int) + 1 }}"
 
   always:
     - name: Cleanup async results files
@@ -63,7 +24,7 @@
       ansible.builtin.async_status:
         jid: "{{ __controller_label_job_async_results_item.ansible_job_id }}"
         mode: cleanup
-      loop: "{{ __controller_label_job_async.results }}"
+      loop: "{{ __labels_batch_async.results | default([]) }}"
       loop_control:
         loop_var: __controller_label_job_async_results_item
         label: "Cleaning up job results file: {{ __controller_label_job_async_results_item.results_file | default('Unknown') }}"

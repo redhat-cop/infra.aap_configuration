@@ -1,0 +1,66 @@
+---
+- name: process_notification_batch | Get current batch
+  ansible.builtin.set_fact:
+    __current_batch: "{{ (notification_templates if notification_templates is defined else controller_notifications)[__batch_start_index | int : __batch_start_index | int + __batch_size | int] }}"
+
+- name: process_notification_batch | Configuration (Batch {{ (__batch_start_index | int / __batch_size | int) + 1 }})
+  ansible.controller.notification_template:
+    name: "{{ __controller_notification_item.name | mandatory }}"
+    new_name: "{{ __controller_notification_item.new_name | default(omit, true) }}"
+    copy_from: "{{ __controller_notification_item.copy_from | default(omit, true) }}"
+    description: "{{ __controller_notification_item.description | default(('' if controller_configuration_notifications_enforce_defaults else omit), true) }}"
+    organization: "{{ __controller_notification_item.organization.name | default(__controller_notification_item.organization) | default(omit, true) }}"
+    notification_type: "{{ __controller_notification_item.notification_type | default(omit, true) }}"
+    notification_configuration: "{{ __controller_notification_item.notification_configuration | default(({} if controller_configuration_notifications_enforce_defaults else omit), true) }}"
+    messages: "{{ __controller_notification_item.messages | regex_replace('{  {', '{_~~remove~~_{') | regex_replace('_~~remove~~_', '') if (__controller_notification_item.messages is defined and __controller_notification_item.messages) else ({} if controller_configuration_notifications_enforce_defaults else omit) }}"
+    state: "{{ __controller_notification_item.state | default(platform_state | default('present')) }}"
+    controller_host: "{{ aap_hostname | default(omit, true) }}"
+    controller_username: "{{ aap_username | default(omit, true) }}"
+    controller_password: "{{ aap_password | default(omit, true) }}"
+    controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
+    request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+    validate_certs: "{{ aap_validate_certs | default(omit) }}"
+  loop: "{{ __current_batch }}"
+  loop_control:
+    loop_var: __controller_notification_item
+    label: "{{ __operation.verb }} Controller notification {{ __controller_notification_item.name }}"
+    pause: "{{ controller_configuration_notifications_loop_delay }}"
+  async: "{{ ansible_check_mode | ternary(0, 1000) }}"
+  poll: 0
+  register: __notification_batch_async
+  changed_when: (__notification_batch_async.changed if ansible_check_mode else false)
+  vars:
+    __operation: "{{ operation_translate[__controller_notification_item.state | default(platform_state) | default('present')] }}"
+
+- name: process_notification_batch | Flag for errors (check mode only)
+  ansible.builtin.set_fact:
+    error_flag: true
+  when: ansible_check_mode and __notification_batch_async.failed is defined and __notification_batch_async.failed
+
+- name: process_notification_batch | Wait for batch to complete
+  ansible.builtin.include_role:
+    name: infra.aap_configuration.collect_async_status
+  loop: "{{ __notification_batch_async.results }}"
+  loop_control:
+    loop_var: __controller_notification_job_async_results_item
+    label: "{{ __operation.verb }} notification {{ __controller_notification_job_async_results_item.__controller_notification_item.name }} | Wait for finish the notifications {{ __operation.action }}"
+  when:
+    - not ansible_check_mode
+    - __controller_notification_job_async_results_item.ansible_job_id is defined
+  vars:
+    cas_secure_logging: "{{ controller_configuration_notifications_secure_logging }}"
+    cas_async_delay: "{{ controller_configuration_notifications_async_delay }}"
+    cas_async_retries: "{{ controller_configuration_notifications_async_retries }}"
+    cas_job_async_results_item: "{{ __controller_notification_job_async_results_item }}"
+    cas_register_subvar: controller_notification_templates
+    cas_error_list_var_name: "controller_notification_templates_errors"
+    __operation: "{{ operation_translate[__controller_notification_job_async_results_item.__controller_notification_item.state | default(platform_state) | default('present')] }}"
+    cas_object_label: "{{ __operation.verb }} notification {{ __controller_notification_job_async_results_item.__controller_notification_item.name }} | Wait for finish the notifications {{ __operation.action }}"
+
+- name: process_notification_batch | Delay between batches
+  ansible.builtin.pause:
+    seconds: "{{ controller_configuration_notifications_batch_delay }}"
+  when:
+    - not ansible_check_mode
+    - controller_configuration_notifications_batch_delay | int > 0
+...

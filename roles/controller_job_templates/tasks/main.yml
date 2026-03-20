@@ -4,7 +4,20 @@
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
   no_log: "{{ controller_configuration_job_templates_secure_logging }}"
   block:
-    - name: Managing Controller Job Templates
+    - name: Job Templates | Set batch size
+      ansible.builtin.set_fact:
+        __batch_size: "{{ controller_configuration_job_templates_async_concurrency | int }}"
+
+    - name: Job Templates | Process in batches
+      ansible.builtin.include_tasks:
+        file: process_jt_batch.yml
+      loop: "{{ range(0, (job_templates if job_templates is defined else controller_templates) | length, __batch_size | int) | list }}"
+      loop_control:
+        loop_var: __batch_start_index
+        label: "Batch {{ (__batch_start_index | int / __batch_size | int) + 1 }} of {{ (((job_templates if job_templates is defined else controller_templates) | length - 1) / __batch_size | int) + 1 }}"
+
+    - name: Managing Controller Job Templates (legacy)
+      when: false
       ansible.controller.job_template:
         name: "{{ __controller_template_item.name | mandatory }}"
         new_name: "{{ __controller_template_item.new_name | default(omit, true) }}"

@@ -4,53 +4,20 @@
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
   no_log: "{{ gateway_organizations_secure_logging }}"
   block:
-    - name: Organizations | Configuration
-      ansible.platform.organization:
-        name: "{{ __gateway_organization_item.name | mandatory }}"
-        new_name: "{{ __gateway_organization_item.new_name | default(omit) }}"
-        description: "{{ __gateway_organization_item.description | default(omit) }}"
-        state: "{{ __gateway_organization_item.state | default(platform_state | default(omit, true)) }}"
+    - name: Organizations | Set batch size
+      ansible.builtin.set_fact:
+        __batch_size: "{{ gateway_organizations_async_concurrency | int }}"
 
-        # Role Standard Options
-        gateway_hostname: "{{ aap_hostname | default(omit, true) }}"
-        gateway_username: "{{ aap_username | default(omit, true) }}"
-        gateway_password: "{{ aap_password | default(omit, true) }}"
-        gateway_token: "{{ aap_token | default(omit, true) }}"
-        gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
-        gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-      loop: "{{ aap_organizations }}"
+    - name: Organizations | Process in batches
+      ansible.builtin.include_tasks:
+        file: process_org_batch.yml
+      loop: "{{ range(0, aap_organizations | length, __batch_size | int) | list }}"
       loop_control:
-        loop_var: __gateway_organization_item
-        label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organization_item.name }}"
-        pause: "{{ gateway_organizations_loop_delay }}"
-      async: 1000
-      poll: 0
-      register: __gateway_organizations_job_async
-      changed_when: not __gateway_organizations_job_async.changed
-      vars:
-        __operation: "{{ operation_translate[__gateway_organization_item.state | default(platform_state) | default('present')] }}"
-
-    - name: Organizations | Wait for finish the configuration
-      ansible.builtin.include_role:
-        name: infra.aap_configuration.collect_async_status
-      loop: "{{ __gateway_organizations_job_async.results }}"
-      loop_control:
-        loop_var: __gateway_organizations_job_async_results_item
-        label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organizations_job_async_results_item.__gateway_organization_item.name }} | Wait for finish the Organizations {{ __operation.action }}"
-      when:
-        - not ansible_check_mode
-        - __gateway_organizations_job_async_results_item.ansible_job_id is defined
-      vars:
-        cas_secure_logging: "{{ gateway_organizations_secure_logging }}"
-        cas_async_delay: "{{ gateway_organizations_async_delay }}"
-        cas_async_retries: "{{ gateway_organizations_async_retries }}"
-        cas_job_async_results_item: "{{ __gateway_organizations_job_async_results_item }}"
-        cas_register_subvar: aap_organizations
-        cas_error_list_var_name: "aap_organizations_errors"
-        __operation: "{{ operation_translate[__gateway_organizations_job_async_results_item.__gateway_organization_item.state | default(platform_state) | default('present')] }}"
-        cas_object_label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organizations_job_async_results_item.__gateway_organization_item.name }} | Wait for finish the Organizations {{ __operation.action }}"
+        loop_var: __batch_start_index
+        label: "Batch {{ (__batch_start_index | int / __batch_size | int) + 1 }} of {{ ((aap_organizations | length - 1) / __batch_size | int) + 1 }}"
 
     - name: Organizations | Controller Configuration
+      when: not gateway_organizations_skip_controller_api | bool
       ansible.controller.organization:
         name: "{{ __controller_organizations_item.name | mandatory }}"
         new_name: "{{ __controller_organizations_item.new_name | default(omit) }}"
@@ -95,6 +62,7 @@
 
     - name: Managing Controller Organizations | Wait for finish the Organizations management
       when:
+        - not gateway_organizations_skip_controller_api | bool
         - not ansible_check_mode
         - __organizations_job_async_results_item.ansible_job_id is defined
       ansible.builtin.include_role:
