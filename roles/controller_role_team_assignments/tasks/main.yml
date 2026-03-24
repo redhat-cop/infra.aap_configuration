@@ -28,9 +28,14 @@
       async: "{{ ansible_check_mode | ternary(0, 1000) }}"
       poll: 0
       register: __controller_role_team_assignments_job_async
-      changed_when: not __controller_role_team_assignments_job_async.changed
+      changed_when: (__controller_role_team_assignments_job_async.changed if ansible_check_mode else false)
       vars:
         __operation: "{{ operation_translate[__controller_role_team_assignments_item.state | default(platform_state) | default('present')] }}"
+    
+    - name: Flag for errors (check mode only)
+      ansible.builtin.set_fact:
+        error_flag: true
+      when: ansible_check_mode and __controller_role_team_assignments_job_async.failed is defined and __controller_role_team_assignments_job_async.failed
 
     - name: Role team_assignments | Wait for finish the configuration
       when:
@@ -49,6 +54,8 @@
         cas_error_list_var_name: "controller_role_team_assignments_errors"
         __operation: "{{ operation_translate[__controller_role_team_assignments_job_async_results_item.__controller_role_team_assignments_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} Role {{ __controller_role_team_assignments_job_async_results_item.__controller_role_team_assignments_item.role_definition }} | Wait for finish the Roles {{ __operation.action }}"
+        cas_async_delay: "{{ controller_role_team_assignments_async_delay }}"
+        cas_async_retries: "{{ controller_role_team_assignments_async_retries }}"
 
   always:
     - name: Cleanup async results files

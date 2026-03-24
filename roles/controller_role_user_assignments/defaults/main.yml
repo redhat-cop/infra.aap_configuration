@@ -5,7 +5,7 @@
 # aap_token: ""
 # aap_validate_certs: false
 
-# These are the default variables specific to the license role
+# These are the default variables specific to the controller_role_user_assignments role
 
 # a list of dictionaries describing the controller_role_user_assignments
 controller_role_user_assignments: []

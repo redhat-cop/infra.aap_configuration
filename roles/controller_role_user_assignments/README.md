@@ -4,8 +4,8 @@
 
 An Ansible Role to create/update/remove Role User Assignments on Ansible Controller **AAP 2.5 ONLY**.
 
-[!NOTE]
-This role is not included in the default dispatch role dispatcher list because it is AAP 2.5-only. To use it, either call the role directly in your playbook or create a custom dispatcher list that includes it. See the dispatch role's aap_configuration_dispatcher_roles variable for details.
+>[!NOTE]
+>This role is not included in the default dispatch role dispatcher list because it is AAP 2.5-only. To use it, either call the role directly in your playbook or create a custom dispatcher list that includes it. See the dispatch role's aap_configuration_dispatcher_roles variable for details.
 
 ## Variables
 
