@@ -11,6 +11,9 @@ on:
 jobs:
   remove-inactive:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
     steps:
       - name: remove inactive
         if: github.event.issue.state == 'open'
