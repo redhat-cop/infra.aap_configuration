@@ -3,6 +3,8 @@
 # See .pre-commit-config.yaml for what hooks are executed
 name: pre-commit tests
 
+permissions:
+  contents: read
 
 on:
   push:
