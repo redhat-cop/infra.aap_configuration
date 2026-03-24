@@ -1,6 +1,9 @@
 ---
 # https://github.com/marketplace/actions/issues-helper
 name: Check inactive
+permissions:
+  contents: read
+  issues: write
 
 on:
   schedule:
