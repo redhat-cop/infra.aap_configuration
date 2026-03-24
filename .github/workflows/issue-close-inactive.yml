@@ -2,6 +2,10 @@
 # https://github.com/marketplace/actions/issues-helper
 name: Check and close inactive
 
+permissions:
+  contents: read
+  issues: write
+
 on:
   schedule:
     - cron: "0 6 * * *"

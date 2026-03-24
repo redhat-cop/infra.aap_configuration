@@ -8,6 +8,9 @@ on:
     - cron: "0 0 1,15 * *"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   release:
     name: Release Collection to galaxy/AH

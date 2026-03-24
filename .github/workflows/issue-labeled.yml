@@ -6,6 +6,10 @@ on:
   issues:
     types: [labeled]
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   issue-labeled:
     runs-on: ubuntu-latest
