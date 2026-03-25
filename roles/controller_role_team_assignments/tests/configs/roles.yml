@@ -1,0 +1,6 @@
+---
+controller_role_team_assignments:
+  - role_definition: Demo Controller Role - Organization Inventory Admin
+    object_id: 1
+    team: demo_team
+...

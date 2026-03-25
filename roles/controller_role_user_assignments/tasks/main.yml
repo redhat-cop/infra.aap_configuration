@@ -1,0 +1,72 @@
+---
+- name: Manage Controller Role User Assignments Block
+  vars:
+    ansible_async_dir: "{{ aap_configuration_async_dir }}"
+  no_log: "{{ controller_role_user_assignments_secure_logging }}"
+  block:
+    - name: Role User Assignments | Configuration
+      ansible.controller.role_user_assignment:
+        role_definition: "{{ __controller_role_user_assignments_item.role_definition | mandatory }}"
+        object_id: "{{ __controller_role_user_assignments_item.object_id | default(omit, true)}}"
+        object_ansible_id: "{{ __controller_role_user_assignments_item.object_ansible_id | default(omit, true)}}"
+        user: "{{ __controller_role_user_assignments_item.user | default(omit, true) }}"
+        user_ansible_id: "{{ __controller_role_user_assignments_item.user_ansible_id | default(omit, true) }}"
+        state: "{{ __controller_role_user_assignments_item.state | default(platform_state | default(omit, true)) }}"
+
+        # Role Standard Options
+        controller_host: "{{ aap_hostname | default(omit, true) }}"
+        controller_username: "{{ aap_username | default(omit, true) }}"
+        controller_password: "{{ aap_password | default(omit, true) }}"
+        controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      loop: "{{ controller_role_user_assignments }}"
+      loop_control:
+        loop_var: __controller_role_user_assignments_item
+        label: "{{ __operation.verb }} Role Based Access Entry on Controller {{ __controller_role_user_assignments_item.role_definition }}"
+        pause: "{{ controller_role_user_assignments_loop_delay }}"
+      async: "{{ ansible_check_mode | ternary(0, 1000) }}"
+      poll: 0
+      register: __controller_role_user_assignments_job_async
+      changed_when: (__controller_role_user_assignments_job_async.changed if ansible_check_mode else false)
+      vars:
+        __operation: "{{ operation_translate[__controller_role_user_assignments_item.state | default(platform_state) | default('present')] }}"
+
+    - name: Flag for errors (check mode only)
+      ansible.builtin.set_fact:
+        error_flag: true
+      when: ansible_check_mode and __controller_role_user_assignments_job_async.failed is defined and __controller_role_user_assignments_job_async.failed
+
+    - name: Role user_assignments | Wait for finish the configuration
+      when:
+        - not ansible_check_mode
+        - __controller_role_user_assignments_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.collect_async_status
+      loop: "{{ __controller_role_user_assignments_job_async.results }}"
+      loop_control:
+        loop_var: __controller_role_user_assignments_job_async_results_item
+        label: "{{ __operation.verb }} Role {{ __controller_role_user_assignments_job_async_results_item.__controller_role_user_assignments_item.role_definition }} | Wait for finish the Roles {{ __operation.action }}"
+      vars:
+        cas_secure_logging: "{{ controller_role_user_assignments_secure_logging }}"
+        cas_job_async_results_item: "{{ __controller_role_user_assignments_job_async_results_item }}"
+        cas_register_subvar: controller_role_user_assignments
+        cas_error_list_var_name: "controller_role_user_assignments_errors"
+        __operation: "{{ operation_translate[__controller_role_user_assignments_job_async_results_item.__controller_role_user_assignments_item.state | default(platform_state) | default('present')] }}"
+        cas_object_label: "{{ __operation.verb }} Role {{ __controller_role_user_assignments_job_async_results_item.__controller_role_user_assignments_item.role_definition }} | Wait for finish the Roles {{ __operation.action }}"
+        cas_async_delay: "{{ controller_role_user_assignments_async_delay }}"
+        cas_async_retries: "{{ controller_role_user_assignments_async_retries }}"
+
+  always:
+    - name: Cleanup async results files
+      when:
+        - not ansible_check_mode
+        - __controller_role_user_assignments_job_async_results_item.ansible_job_id is defined
+      ansible.builtin.async_status:
+        jid: "{{ __controller_role_user_assignments_job_async_results_item.ansible_job_id }}"
+        mode: cleanup
+      loop: "{{ __controller_role_user_assignments_job_async.results }}"
+      loop_control:
+        loop_var: __controller_role_user_assignments_job_async_results_item
+        label: "Cleaning up job results file: {{ __controller_role_user_assignments_job_async_results_item.results_file | default('Unknown') }}"
+...
