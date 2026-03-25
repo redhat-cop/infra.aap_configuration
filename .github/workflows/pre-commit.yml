@@ -22,6 +22,7 @@ on:
 
 jobs:
   pre-commit_and_sanity:
+    environment: requires-approval
     uses: "redhat-cop/ansible_collections_tooling/.github/workflows/pre_commit_workflow_crc.yml@main"
     with:
       collection_namespace: infra
