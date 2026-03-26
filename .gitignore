@@ -1,3 +1,6 @@
+.env
+*.pem
+*.key
 collections/*
 !collections/requirements.yml
 *.tar.gz
