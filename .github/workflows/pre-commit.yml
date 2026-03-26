@@ -29,8 +29,6 @@ jobs:
 
   pre-commit_and_sanity:
     needs: approve_run
-    environment:
-      name: pr-approval
     uses: "redhat-cop/ansible_collections_tooling/.github/workflows/pre_commit_workflow_crc.yml@main"
     with:
       collection_namespace: infra
