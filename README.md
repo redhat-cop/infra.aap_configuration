@@ -185,9 +185,9 @@ fatal: [localhost]: FAILED! => {
 
 ### Registering values
 
-As of version 4.0.0 of this collection, you can now collect information from the items which are created or modified by this collection. You can either add `register: <var>` to any item which is created to capture the outputs of that item, or set a value for `aap_configuration_register` which will capture all objects created. This fuinctionality may be particularly useful for capturing IDs of objects to enable performing further actions.
+As of version 4.0.0 of this collection, you can now collect information from the items which are created or modified by this collection. You can either add `register: <var>` to any item which is created to capture the outputs of that item, or set a value for `aap_configuration_register` which will capture all objects created. This functionality may be particularly useful for capturing IDs of objects to enable performing further actions.
 
-Below is an example for adding a register to a signle item:
+Below is an example for adding a register to a single item:
 
 ```yaml
 controller_templates:
@@ -198,7 +198,7 @@ controller_templates:
     register: register_var
 ```
 
-The resulting varaible from setting `aap_configuration_register` will be as follows:
+The resulting variable from setting `aap_configuration_register` will be as follows:
 
 ```json
 "aap_register_var": {
