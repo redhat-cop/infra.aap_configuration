@@ -18,6 +18,7 @@ When reviewing pull requests to this collection, verify the following:
 ### Async Task Pattern
 
 All resource roles must follow the async block pattern:
+
 1. A block with `ansible_async_dir` and `no_log` set
 2. The module task loops over the resource list with `async` and `poll: 0`
 3. A "Flag for errors (check mode only)" task using `ansible.builtin.set_fact` to set `error_flag`
@@ -75,6 +76,7 @@ All resource roles must follow the async block pattern:
 ## PR Submission
 
 When submitting PRs:
+
 1. Run `pre-commit run --all -c .pre-commit-config.yaml` before pushing
 2. Include a changelog fragment in `changelogs/fragments/`
 3. Fill out the PR template completely (what, how to test, related issue)

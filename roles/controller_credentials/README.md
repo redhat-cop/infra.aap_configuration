@@ -21,7 +21,7 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`aap_configuration_collect_logs`|`false`|no|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
 |`aap_configuration_register`|""|no|Specify a variable to register the values of all aap_configuration tasks. This will create an object with each aap object as an element containing a list of each item created.||
-|`controller_credentials`|`see below`|yes|Data structure describing your credentials Described below. Alias: credentials ||
+|`controller_credentials`|`see below`|yes|Data structure describing your credentials Described below. Alias: credentials||
 
 ### Enforcing defaults
 
@@ -79,10 +79,10 @@ This also speeds up the overall role.
 |`copy_from`|""|no|Name or id to copy the credential from. This will copy an existing credential and change any parameters supplied.|
 |`description`|`false`|no|Description of  of Credential.|
 |`organization`|""|no|Organization this Credential belongs to. If provided on creation, do not give either user or team.|
-|`credential_type`|""|no|Name of credential type. See below for list of options. More information in Ansible controller documentation. |
+|`credential_type`|""|no|Name of credential type. See below for list of options. More information in Ansible controller documentation.|
 |`inputs`|""|no|Credential inputs where the keys are var names used in templating. Refer to the Ansible controller documentation for example syntax. Individual examples can be found at /api/controller/v2/credential_types/ on an controller.|
-|`user`|""|no|User that should own this credential. If provided, do not give either team or organization. |
-|`team`|""|no|Team that should own this credential. If provided, do not give either user or organization. |
+|`user`|""|no|User that should own this credential. If provided, do not give either team or organization.|
+|`team`|""|no|Team that should own this credential. If provided, do not give either user or organization.|
 |`state`|`present`|no|Desired state of the resource.|
 |`register`|""|no|Variable to set based on the result of the object creation/modification|
 |`update_secrets`|true|no|true will always change password if user specifies password, even if API gives $encrypted$ for password. false will only set the password if other values change too.|

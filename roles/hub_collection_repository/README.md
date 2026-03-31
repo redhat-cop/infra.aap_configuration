@@ -58,7 +58,7 @@ This also speeds up the overall role.
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str| Collection Repository name. Probably one of community, validated, rh-certified, or one you have created.|
+|`name`|""|yes|str|Collection Repository name. Probably one of community, validated, rh-certified, or one you have created.|
 |`description`|""|no|str|Description to use for the Collection Repository.|
 |`retain_repo_versions`|0|no|int|Retain X versions of the Collection repository. Default is 0 which retains all versions.|
 |`pulp_labels`|""|no|dict|Pipeline and search options for the collection repository. See additional options below for details.|

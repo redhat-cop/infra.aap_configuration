@@ -11,7 +11,7 @@ This is the `infra.aap_configuration` Ansible Collection, maintained by the Red 
 
 ## Repository Structure
 
-```
+```text
 ├── galaxy.yml                  # Collection metadata, version, dependencies
 ├── roles/                      # ~80 Ansible roles (the core of this collection)
 │   ├── dispatch/               # Meta-role that orchestrates all other roles in order
@@ -36,6 +36,7 @@ This is the `infra.aap_configuration` Ansible Collection, maintained by the Red 
 ## Key Dependencies
 
 Declared in `galaxy.yml`:
+
 - `ansible.platform` >= 2.5.0
 - `ansible.hub` >= 1.0.0
 - `ansible.controller` >= 4.6.0
@@ -46,6 +47,7 @@ Declared in `galaxy.yml`:
 ### Role Structure
 
 Every resource role follows a consistent pattern:
+
 - `defaults/main.yml` — Default variables (empty list for the resource, async/logging/delay settings)
 - `tasks/main.yml` — Async block pattern: create resources → collect async status → cleanup
 - `meta/main.yml` — Galaxy metadata, depends on `global_vars` and `meta_dependency_check`
@@ -56,6 +58,7 @@ Every resource role follows a consistent pattern:
 ### Async Task Pattern
 
 All resource-managing roles use the same async pattern:
+
 1. Loop over the resource list with `async` and `poll: 0`
 2. Register the async job results
 3. Include `collect_async_status` role to wait and gather results
@@ -65,6 +68,7 @@ All resource-managing roles use the same async pattern:
 ### The Dispatch Role
 
 The `dispatch` role is the primary entry point. It includes all other roles in dependency order via `aap_configuration_dispatcher_roles`, which combines:
+
 - `gateway_configuration_dispatcher_roles`
 - `hub_configuration_dispatcher_roles`
 - `controller_configuration_dispatcher_roles`
@@ -115,6 +119,7 @@ From `docs/STANDARDS.md` and linter configs:
 ## Linting & Pre-commit
 
 Pre-commit hooks (`.pre-commit-config.yaml`):
+
 1. `end-of-file-fixer` and `trailing-whitespace`
 2. `ansible-lint` with `--profile=production`
 3. `markdownlint-cli2`
@@ -123,6 +128,7 @@ Pre-commit hooks (`.pre-commit-config.yaml`):
 6. `changelog` and `galaxy-importer` (custom hooks)
 
 Run locally:
+
 ```bash
 pip install pre-commit
 pre-commit install --install-hooks -c .pre-commit-config.yaml
@@ -132,6 +138,7 @@ pre-commit run --all -c .pre-commit-config.yaml
 ## Changelogs
 
 Uses `antsibull-changelog` with fragments in `changelogs/fragments/`. Fragment categories:
+
 - `major_changes`, `minor_changes`, `breaking_changes`, `deprecated_features`
 - `removed_features`, `security_fixes`, `bugfixes`, `known_issues`
 
@@ -147,6 +154,7 @@ Every PR that adds features or fixes bugs must include a changelog fragment.
 ## CI/CD
 
 GitHub Actions workflows in `.github/workflows/`:
+
 - `pre-commit.yml` — Runs pre-commit hooks on PRs
 - `release_auto.yml` — Automated release pipeline
 - `office-hours-issue.yml` — Community meeting issue automation

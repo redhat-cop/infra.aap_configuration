@@ -76,7 +76,7 @@ This also speeds up the overall role.
 |:---:|:---:|:---:|:---:|:---:|
 |`target_credential`|""|yes|str|Name of credential to have the input source applied|
 |`input_field_name`|""|yes|str|Name of field which will be written by the input source|
-|`source_credential`|""|no|str|Name of the source credential which points to an external secret lookup credential |
+|`source_credential`|""|no|str|Name of the source credential which points to an external secret lookup credential|
 |`metadata`|""|no|dict|The metadata applied to the source.|
 |`description`|""|no|str|Description to use for the credential input source.|
 |`state`|`present`|no|str|Desired state of the resource.|

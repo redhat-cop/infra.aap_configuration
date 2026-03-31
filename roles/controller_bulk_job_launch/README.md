@@ -74,7 +74,7 @@ This also speeds up the overall role.
 |`unified_job_template`|""|yes|int|The ID of object that is to be launched. Example objects include projects, inventory sources, and templates. Required if state='present.|
 |`inventory`|""|no|str|Inventory to use for the job, only used if prompt for inventory is set.|
 |`execution_environment`|Job Template default|no|str|Execution Environment applied as a prompt. Job Template default used if not set. Only allowed if `ask_execution_environment_on_launch` set to true on Job Template|
-|`instance_groups`|Job Template default|no|str| List of Instance Groups applied as a prompt. Job Template default used if not set. Only allowed if `ask_instance_groups_on_launch` set to true on Job Template|
+|`instance_groups`|Job Template default|no|str|List of Instance Groups applied as a prompt. Job Template default used if not set. Only allowed if `ask_instance_groups_on_launch` set to true on Job Template|
 |`credentials`|""|no|list|TCredential to use for job, only used if prompt for credential is set.|
 |`labels`|Job Template default|no|list|List of labels to use in the job run. Job Template default used if not set. Only allowed if `ask_labels_on_launch` set to true on Job Template|
 |`extra_data`|""|no|dict|extra_data to use for the Job Template. ask_extra_vars needs to be set to true via controller_job_template module.|
