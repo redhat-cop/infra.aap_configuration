@@ -58,7 +58,7 @@ This also speeds up the overall role.
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|""|yes|str| Collection Repository name. Probably one of community, validated, rh-certified, or one you have created.|
+|`name`|""|yes|str|Collection Repository name. Probably one of community, validated, rh-certified, or one you have created.|
 |`wait`|`true`|no|bool|Wait for the Collection repository to finish syncing before returning.|
 |`interval`|1.0|no|float|The interval to request an update from Automation Hub.|
 |`sync`|true|no|bool|Whether to sync the collection_registry. By default it will sync unless this is set to false.|

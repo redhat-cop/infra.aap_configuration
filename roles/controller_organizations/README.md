@@ -21,11 +21,11 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`aap_configuration_collect_logs`|`false`|no|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
 |`aap_configuration_register`|""|no|Specify a variable to register the values of all aap_configuration tasks. This will create an object with each aap object as an element containing a list of each item created.||
-|`aap_organizations`|`see below`|yes|Data structure describing your organization or organizations Described below. Alias: organizations ||
-|`assign_galaxy_credentials_to_org`|`true`|no|Boolean to indicate whether credentials should be assigned or not. It should be noted that credentials must exist before adding it. The dispatch role will set this to `false`, before re-running the role with it set to `true`. ||
-|`assign_default_ee_to_org`|`true`|no|Boolean to indicate whether default execution environment should be assigned or not. It should be noted that execution environment must exist before adding it. The dispatch role will set this to `false`, before re-running the role with it set to `true`. ||
-|`assign_notification_templates_to_org`|`true`|no|Boolean to indicate whether notification templates should be assigned or not. It should be noted that the templates must exist before adding them. The dispatch role will set this to `false`, before re-running the role with it set to `true`. ||
-|`assign_instance_groups_to_org`|`true`|no|Boolean to indicate whether an instance group should be assigned or not. It should be noted that the instance group must exist before adding it. ||
+|`aap_organizations`|`see below`|yes|Data structure describing your organization or organizations Described below. Alias: organizations||
+|`assign_galaxy_credentials_to_org`|`true`|no|Boolean to indicate whether credentials should be assigned or not. It should be noted that credentials must exist before adding it. The dispatch role will set this to `false`, before re-running the role with it set to `true`.||
+|`assign_default_ee_to_org`|`true`|no|Boolean to indicate whether default execution environment should be assigned or not. It should be noted that execution environment must exist before adding it. The dispatch role will set this to `false`, before re-running the role with it set to `true`.||
+|`assign_notification_templates_to_org`|`true`|no|Boolean to indicate whether notification templates should be assigned or not. It should be noted that the templates must exist before adding them. The dispatch role will set this to `false`, before re-running the role with it set to `true`.||
+|`assign_instance_groups_to_org`|`true`|no|Boolean to indicate whether an instance group should be assigned or not. It should be noted that the instance group must exist before adding it.||
 
 ### Enforcing defaults
 

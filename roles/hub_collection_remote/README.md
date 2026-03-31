@@ -58,14 +58,14 @@ This also speeds up the overall role.
 
 |Variable Name|Default Value|Required|Description|Example|
 |:---:|:---:|:---:|:---:|:---:|
-|`name`|``|yes| Repository name. Probably one of community, validated, or rh-certified||
+|`name`|``|yes|Repository name. Probably one of community, validated, or rh-certified||
 |`url`|`https://cloud.redhat.com/api/automation-hub/`|no|(`ah_repository_certified`)Remote URL for the repository.|`https://console.redhat.com/api/automation-hub/content/`|
 |`url`|`https://galaxy.ansible.com/api/`|no|(`ah_repository_community`)Remote URL for the repository.||
 |`auth_url`|`https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token`|no|(`ah_repository_certified`)Remote URL for the repository authentication if separate.||
 |`token`|``|no|Token to authenticate to the remote repository.||
 |`policy`|`immediate`|no|The policy to use when downloading content. Can be one of `immediate`, `When syncing, download all metadata and content now.`.||
 |`requirements`|``|no|Requirements, a list of collections in [requirements file format](https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html#install-multiple-collections-with-a-requirements-file) to limit the download from remote. This will only download provided collections. This is only the list under collections. See examples for usage.||
-|`requirements_file`|``|no|A yaml requirements file to download from remote. In requirements file format. Exclusive with `requirements` ||
+|`requirements_file`|``|no|A yaml requirements file to download from remote. In requirements file format. Exclusive with `requirements`||
 |`username`|``|no|Username to authenticate to the remote repository.||
 |`password`|``|no|Password to authenticate to the remote repository.||
 |`tls_validation`|`true`|no|Whether to use TLS validation against the remote repository|true|
@@ -75,7 +75,7 @@ This also speeds up the overall role.
 |`client_key_path`|``|no|Path to a PEM encoded private key file used for authentication||
 |`client_cert_path`|``|no|Path to a PEM encoded client certificate used for authentication||
 |`ca_cert_path`|``|no|Path to a PEM encoded CA certificate used for authentication||
-|`download_concurrency`|`10`|no| Number of concurrent collections to download.||
+|`download_concurrency`|`10`|no|Number of concurrent collections to download.||
 |`max_retries`|`0`|no|Retries to use when running sync. Default is 0 which does not limit.||
 |`rate_limit`|`8`|no|Limits total download rate in requests per second.||
 |`signed_only`|`false`|no|Only download signed collections|false|

@@ -55,7 +55,7 @@ This also speeds up the overall role.
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`groups`|""|yes|str| List of Group Names to apply the roles to. If the group does not exist, it will be created. Must be lower case containing only alphanumeric characters and underscores.|
+|`groups`|""|yes|str|List of Group Names to apply the roles to. If the group does not exist, it will be created. Must be lower case containing only alphanumeric characters and underscores.|
 |`role_list`|""|yes|str|The list of roles to add to or remove from the given group. See below for options.|
 |`state`|`present`|no|str|Desired state of the group. Can be `present`, `enforced`, or `absent`. If absent, then the module deletes the given combination of roles for given groups. If present, then the module creates the group roles if it does not already exist. If enforced, then the module will remove any group role combinations not provided.|
 |`register`|""|no|str|Variable to set based on the result of the object creation/modification|

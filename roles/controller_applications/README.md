@@ -22,7 +22,7 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 |`aap_configuration_collect_logs`|`false`|no|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
 |`aap_configuration_register`|""|no|Specify a variable to register the values of all aap_configuration tasks. This will create an object with each aap object as an element containing a list of each item created.||
 
-|`aap_applications`|`see below`|yes|Data structure describing your applications, described below. Alias: applications ||
+|`aap_applications`|`see below`|yes|Data structure describing your applications, described below. Alias: applications||
 
 ### Enforcing defaults
 
