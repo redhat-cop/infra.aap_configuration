@@ -2,8 +2,9 @@
 
 [![pre-commit tests](https://github.com/redhat-cop/infra.aap_configuration/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/redhat-cop/infra.aap_configuration/actions/workflows/pre-commit.yml)
 [![Release - Automated](https://github.com/redhat-cop/infra.aap_configuration/actions/workflows/release_auto.yml/badge.svg)](https://github.com/redhat-cop/infra.aap_configuration/actions/workflows/release_auto.yml)
-[![Google Calendar invite](https://ssl.gstatic.com/calendar/images/dynamiclogo_2020q4/calendar_20_2x.png)](https://raw.githubusercontent.com/redhat-cop/infra.aap_configuration/devel/docs/aap_config_as_code_public_meeting.ics)
 <!-- Further CI badges go here as above -->
+
+[![Google Calendar invite](https://ssl.gstatic.com/calendar/images/dynamiclogo_2020q4/calendar_20_2x.png)](https://raw.githubusercontent.com/redhat-cop/infra.aap_configuration/devel/docs/aap_config_as_code_public_meeting.ics)
 
 This Ansible collection allows for easy interaction with AAP 2.5+ via Ansible roles using the modules from the certified collections.
 
