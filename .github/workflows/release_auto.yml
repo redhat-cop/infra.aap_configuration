@@ -1,6 +1,4 @@
 ---
-# This workflow action will run pre-commit, which will execute ansible and yaml linting
-# See .pre-commit-config.yaml for what hooks are executed
 name: Release - Automated
 
 on:
@@ -11,31 +9,326 @@ on:
 permissions:
   contents: read
 
+env:
+  COLLECTION_NAMESPACE: infra
+  COLLECTION_NAME: aap_configuration
+  COLLECTION_REPO: https://github.com/redhat-cop/infra.aap_configuration/
+
 jobs:
-  release:
-    name: Release Collection to galaxy/AH
-    uses: "redhat-cop/ansible_collections_tooling/.github/workflows/release_pipeline_dual_crc.yml@main"
+  calculate_version:
+    name: Calculate Collection Version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      collection_version: ${{ steps.bump-semver.outputs.new_version }}
+      change_level: ${{ steps.bump_level.outputs.level }}
+      change_present: ${{ steps.bump_level.outputs.change_present }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Determine current version
+        id: current_version
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          # Get the latest semver tag from git (all branches)
+          GIT_TAG=$(git tag --list --sort=-version:refname | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | head -n1)
+          echo "Latest git tag: ${GIT_TAG:-none}"
+
+          # Get the latest GitHub release tag
+          GH_RELEASE=$(gh release view --json tagName -q '.tagName' 2>/dev/null || true)
+          echo "Latest GitHub release: ${GH_RELEASE:-none}"
+
+          # Compare and use the higher version
+          if [ -z "$GIT_TAG" ] && [ -z "$GH_RELEASE" ]; then
+            echo "::error::No existing version found from git tags or GitHub releases"
+            exit 1
+          fi
+
+          # Function: return the higher of two semver strings
+          higher_version() {
+            printf '%s\n%s' "$1" "$2" | sort -t. -k1,1n -k2,2n -k3,3n | tail -n1
+          }
+
+          if [ -n "$GIT_TAG" ] && [ -n "$GH_RELEASE" ]; then
+            CURRENT=$(higher_version "$GIT_TAG" "$GH_RELEASE")
+          elif [ -n "$GIT_TAG" ]; then
+            CURRENT="$GIT_TAG"
+          else
+            CURRENT="$GH_RELEASE"
+          fi
+
+          echo "Resolved current version: $CURRENT"
+          echo "current_version=$CURRENT" >> "$GITHUB_OUTPUT"
+
+      - name: Calculate bump level
+        id: bump_level
+        shell: bash
+        run: |
+          if [ -z "$(ls changelogs/fragments/*.yml changelogs/fragments/*.yaml 2>/dev/null)" ]; then
+            echo "change_present=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "change_present=true" >> "$GITHUB_OUTPUT"
+          fi
+
+          MAJOR=1
+          if grep -RE '(major_changes|breaking_changes)' changelogs/fragments 2>/dev/null; then
+            MAJOR=0
+          fi
+          MINOR=1
+          if grep -R minor_changes changelogs/fragments 2>/dev/null; then
+            MINOR=0
+          fi
+
+          if [ $MAJOR -eq 0 ]; then
+            echo "level=major" >> "$GITHUB_OUTPUT"
+            echo "Determined change level: major"
+          elif [ $MINOR -eq 0 ]; then
+            echo "level=minor" >> "$GITHUB_OUTPUT"
+            echo "Determined change level: minor"
+          else
+            echo "level=patch" >> "$GITHUB_OUTPUT"
+            echo "Determined change level: patch"
+          fi
+
+      - name: Bump version
+        id: bump-semver
+        shell: bash
+        run: |
+          CURRENT="${{ steps.current_version.outputs.current_version }}"
+          LEVEL="${{ steps.bump_level.outputs.level }}"
+
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
+
+          case "$LEVEL" in
+            major) MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0 ;;
+            minor) MINOR=$((MINOR + 1)); PATCH=0 ;;
+            patch) PATCH=$((PATCH + 1)) ;;
+          esac
+
+          NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
+          echo "Bumping $CURRENT ($LEVEL) -> $NEW_VERSION"
+          echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+
+  changelog:
+    name: Generate Changelog
+    needs: calculate_version
+    if: >-
+      (needs.calculate_version.outputs.change_level != 'major'
+      && needs.calculate_version.outputs.change_present != 'false')
+      || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          token: "${{ secrets.GH_WORKFLOW_KEY }}"
+
+      - name: Create release branch
+        run: |
+          BRANCH="release/${{ needs.calculate_version.outputs.collection_version }}"
+          git checkout -B "${BRANCH}"
+
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install --upgrade "ansible-core>=2.15,<2.19" antsibull-changelog
+
+      - name: Update galaxy.yml version for changelog (remove -devel)
+        run: |
+          sed -i "s/^version:.*/version: ${{ needs.calculate_version.outputs.collection_version }}/" galaxy.yml
+
+      - name: Generate changelog
+        run: antsibull-changelog release --verbose --version ${{ needs.calculate_version.outputs.collection_version }}
+
+      - name: Commit and push to release branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "[AUTO] Update changelog ${{ needs.calculate_version.outputs.collection_version }}"
+          git push origin "release/${{ needs.calculate_version.outputs.collection_version }}"
+
+  create_github_release:
+    name: Create GitHub Release
+    needs:
+      - changelog
+      - calculate_version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@153bb8e04406b158c6c84fc1615b65b24149a1fe # v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ needs.calculate_version.outputs.collection_version }}
+          generate_release_notes: true
+
+  release_galaxy:
+    name: Publish to Galaxy
+    needs:
+      - create_github_release
+      - calculate_version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    environment: release
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: release/${{ needs.calculate_version.outputs.collection_version }}
+
+      - name: Build the collection
+        run: ansible-galaxy collection build -v --force
+
+      - name: Publish the collection on Galaxy
+        run: |
+          TARBALL=$(ls -1 ./*.tar.gz)
+          ansible-galaxy collection publish "${TARBALL}" --api-key "${{ secrets.GALAXY_INFRA_KEY }}"
+
+  release_ah:
+    name: Publish to Automation Hub
+    needs:
+      - create_github_release
+      - calculate_version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    environment: release
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: release/${{ needs.calculate_version.outputs.collection_version }}
+
+      - name: Set up Ansible
+        run: pip install --upgrade "ansible-core>=2.16"
+
+      - name: Build the collection
+        run: ansible-galaxy collection build -v --force
+
+      - name: Publish to Automation Hub
+        env:
+          AH_TOKEN: ${{ secrets.CRC_PUBLISH_KEY }}
+        run: |
+          TARBALL=$(ls -1 ./*.tar.gz | head -n1)
+          cat > ansible.cfg <<EOF
+          [galaxy]
+          server_list = rh_automation_hub
+
+          [galaxy_server.rh_automation_hub]
+          url=https://cloud.redhat.com/api/automation-hub/
+          auth_url=https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+          token=$AH_TOKEN
+          EOF
+
+          ansible-galaxy collection publish "${TARBALL}"
+          rm -f ansible.cfg
+
+  release_check:
+    name: Verify Releases
+    needs:
+      - release_galaxy
+      - release_ah
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "All releases completed successfully"
+
+  upload_tarball:
+    name: Upload Tarball to Release
+    needs:
+      - create_github_release
+      - calculate_version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: release/${{ needs.calculate_version.outputs.collection_version }}
+
+      - name: Build collection tarball
+        run: ansible-galaxy collection build -v --force
+
+      - name: Upload tarball to GitHub release
+        uses: svenstaro/upload-release-action@29e53e917877a24fad85510ded594ab3c9ca12de # v2
+        with:
+          repo_token: ${{ secrets.GH_WORKFLOW_KEY }}
+          file: "${{ env.COLLECTION_NAMESPACE }}-${{ env.COLLECTION_NAME }}*.tar.gz"
+          file_glob: true
+          tag: ${{ needs.calculate_version.outputs.collection_version }}
+          overwrite: true
+
+  merge_release:
+    name: Merge Release Branch
+    needs:
+      - calculate_version
+      - release_check
+      - upload_tarball
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: release/${{ needs.calculate_version.outputs.collection_version }}
+
+      - name: Create and merge release PR
+        run: |
+          gh pr create \
+            --base devel \
+            --head "release/${{ needs.calculate_version.outputs.collection_version }}" \
+            --title "[RELEASE] Update changelog ${{ needs.calculate_version.outputs.collection_version }}" \
+            --body "Updated with changelog for release ${{ needs.calculate_version.outputs.collection_version }}"
+          gh pr merge "release/${{ needs.calculate_version.outputs.collection_version }}" --rebase --admin
+        env:
+          GH_TOKEN: ${{ secrets.GH_WORKFLOW_KEY }}
+
+  deploy_ee:
+    name: Build Execution Environment
+    needs: merge_release
+    uses: redhat-cop/ansible_collections_tooling/.github/workflows/build_ee.yml@634342818b5d5fa2fa92b2c68c78a2bbe8aa4f10 # main
     with:
-      # Galaxy Publish
-      collection_namespace_1: infra
-      collection_name_1: aap_configuration
-      publish_url_collection_1: https://galaxy.ansible.com/api/
-      galaxy_publish_1: true
-      ah_publish_1: false
-      # CRC Publish
-      collection_namespace_2: infra
-      collection_name_2: aap_configuration
-      publish_url_collection_2: https://cloud.redhat.com/api/automation-hub/
-      galaxy_publish_2: false
-      ah_publish_2: true
-      collection_repo: https://github.com/redhat-cop/aap_configuration/
       quay_username: redhat_cop
-      collection_dependencies: ansible.controller ansible.platform ansible.eda ansible.hub
-      matrix_message: This Ansible collection allows for easy interaction with Ansible Automation Platform via Ansible roles using the supported collections modules.
     secrets:
-      collection_api_key_1: ${{ secrets.GALAXY_INFRA_KEY }}
-      collection_api_key_2: ${{ secrets.CRC_PUBLISH_KEY }}
-      git_token: ${{ secrets.GITHUB_TOKEN }}
       quay_token: ${{ secrets.quay_token }}
-      matrix_token: ${{ secrets.matrix_token }}
-...
+
+  send_message:
+    name: Send Matrix Notification
+    needs:
+      - release_check
+      - calculate_version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send message to newsbot channel
+        uses: fadenb/matrix-chat-message@89baab2b9ea06ffdd5f5b1ca80e9f888c3d7c9d3 # v0.0.6
+        with:
+          homeserver: "matrix.org"
+          token: ${{ secrets.matrix_token }}
+          channel: "!pMZboYFCScZJfXmOtH:ansible.im"
+          messagetype: "m.text"
+          message: |
+            @newsbot ${{ env.COLLECTION_NAMESPACE }}.${{ env.COLLECTION_NAME }} ${{ needs.calculate_version.outputs.collection_version }} has been released.
+            This Ansible collection allows for easy configuration of an Ansible Automation Platform via Ansible roles using the certified collections.
+            Visit ${{ env.COLLECTION_REPO }} For more information and updates.
+
+      - name: Send message to team channel
+        uses: fadenb/matrix-chat-message@89baab2b9ea06ffdd5f5b1ca80e9f888c3d7c9d3 # v0.0.6
+        with:
+          homeserver: "matrix.org"
+          token: ${{ secrets.matrix_token }}
+          channel: "!ccrdinGkMeyakqWzIM:matrix.org"
+          messagetype: "m.text"
+          message: |
+            ${{ env.COLLECTION_NAMESPACE }}.${{ env.COLLECTION_NAME }} ${{ needs.calculate_version.outputs.collection_version }} has been released.
+            This Ansible collection allows for easy configuration of an Ansible Automation Platform via Ansible roles using the certified collections.
+            Visit ${{ env.COLLECTION_REPO }} For more information and updates.

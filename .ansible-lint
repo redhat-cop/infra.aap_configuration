@@ -22,11 +22,85 @@ exclude_paths:
 # verbosity: 1
 
 # Mock modules or roles in order to pass ansible-playbook --syntax-check
-# mock_modules:
-#   - zuul_return
-#   # note the foo.bar is invalid as being neither a module or a collection
-#   - fake_namespace.fake_collection.fake_module
-#   - fake_namespace.fake_collection.fake_module.fake_submodule
+mock_modules:
+  - ansible.controller.ad_hoc_command
+  - ansible.controller.ad_hoc_command_cancel
+  - ansible.controller.application
+  - ansible.controller.bulk_host_create
+  - ansible.controller.bulk_job_launch
+  - ansible.controller.credential_input_source
+  - ansible.controller.credential_type
+  - ansible.controller.credential
+  - ansible.controller.execution_environment
+  - ansible.controller.group
+  - ansible.controller.host
+  - ansible.controller.instance_group
+  - ansible.controller.instance
+  - ansible.controller.inventory
+  - ansible.controller.inventory_source_update
+  - ansible.controller.inventory_source
+  - ansible.controller.job_launch
+  - ansible.controller.job_template
+  - ansible.controller.job_cancel
+  - ansible.controller.label
+  - ansible.controller.notification_template
+  - ansible.controller.organization
+  - ansible.controller.project_update
+  - ansible.controller.project
+  - ansible.controller.role_definition
+  - ansible.controller.role_team_assignment
+  - ansible.controller.role_user_assignment
+  - ansible.controller.role
+  - ansible.controller.schedule
+  - ansible.controller.settings
+  - ansible.controller.team
+  - ansible.controller.user
+  - ansible.controller.workflow_job_template
+  - ansible.controller.workflow_launch
+  - ansible.eda.controller_token
+  - ansible.eda.credential_input_source
+  - ansible.eda.credential_type
+  - ansible.eda.credential
+  - ansible.eda.decision_environment
+  - ansible.eda.event_stream
+  - ansible.eda.project
+  - ansible.eda.rulebook_activation
+  - ansible.eda.user
+  - ansible.platform.application
+  - ansible.platform.authenticator_map
+  - ansible.platform.authenticator
+  - ansible.platform.http_port
+  - ansible.platform.organization
+  - ansible.platform.role_definition
+  - ansible.platform.role_team_assignment
+  - ansible.platform.role_user_assignment
+  - ansible.platform.route
+  - ansible.platform.service_cluster
+  - ansible.platform.service_key
+  - ansible.platform.service_node
+  - ansible.platform.service
+  - ansible.platform.settings
+  - ansible.platform.team
+  - ansible.platform.user
+  - ansible.hub.ah_collection
+  - ansible.hub.collection_remote
+  - ansible.hub.collection_repository
+  - ansible.hub.collection_repository_sync
+  - ansible.hub.ah_ee_image
+  - ansible.hub.ah_ee_registry
+  - ansible.hub.ah_ee_registry_index
+  - ansible.hub.ah_ee_registry_sync
+  - ansible.hub.ah_ee_repository
+  - ansible.hub.ah_ee_repository_sync
+  - ansible.hub.ah_group
+  - ansible.hub.group_roles
+  - ansible.hub.ah_namespace
+  - ansible.hub.ah_build
+  - ansible.hub.ah_role
+  - ansible.hub.ah_user
+  - ansible.hub.ah_token
+  - ansible.hub.ah_approval
+
 # mock_roles:
 #   - mocked_role
 #   - author.role_name # old standalone galaxy role
