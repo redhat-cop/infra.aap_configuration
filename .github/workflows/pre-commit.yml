@@ -1,41 +1,98 @@
 ---
-# This workflow action will run pre-commit, which will execute ansible and yaml linting
-# See .pre-commit-config.yaml for what hooks are executed
-name: pre-commit tests
-
-permissions:
-  contents: read
+name: pre-commit and sanity tests
 
 on:
   push:
-    branches:
-      - '*_'  # ending underscore for trying things
-      - devel
-    tags:
-      - '*_'  # ending underscore for trying things
-      - 'v[0-9]+.[0-9]+.[0-9]+'  # final version
-      - 'v[0-9]+.[0-9]+.[0-9]+[abrc]+[0-9]+'  # alpha, beta, release candidate (rc)
-      - 'v[0-9]+.[0-9]+.[0-9]+.dev[0-9]+'  # development versions
+    branches: [devel]
   pull_request_target:
   schedule:
     - cron: "0 6 * * *"
+
+permissions:
+  contents: read
 
 jobs:
   approve_run:
     environment: requires-approval
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Approval granted. Proceeding to reusable workflow."
+      - run: echo "Approval granted."
 
-  pre-commit_and_sanity:
+  pre-commit:
     needs: approve_run
-    uses: "redhat-cop/ansible_collections_tooling/.github/workflows/pre_commit_workflow_crc.yml@main"
-    with:
-      collection_namespace: infra
-      collection_name: aap_configuration_extended
-      collection_version: 1.1.1
-      collection_repo: https://github.com/redhat-cop/aap_configuration_extended/
-      base_branch: devel
-    secrets:
-      ansible_ah_token: ${{ secrets.CRC_PUBLISH_KEY }}
-...
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        with:
+          python-version: "3.x"
+      - uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
+
+  # Sanity is inlined (rather than calling the reusable workflow) because
+  # this collection depends on certified collections that require Automation
+  # Hub authentication. Reusable workflows cannot receive env vars from the
+  # caller. Once ansible/ansible-content-actions supports a galaxy server
+  # auth input, this can switch to a simple `uses:` call.
+  sanity-matrix:
+    needs: approve_run
+    runs-on: ubuntu-latest
+    outputs:
+      envlist: ${{ steps.generate-matrix.outputs.envlist }}
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        with:
+          python-version: "3.14"
+      - run: python -m pip install tox-ansible
+      - uses: ansible/ansible-content-actions/.github/actions/add_tox_ansible@46de405af31ba872a770a9b75c90121493c1cbe5 # main
+      - name: Generate matrix
+        id: generate-matrix
+        run: python -m tox --ansible --gh-matrix --matrix-scope sanity --conf tox-ansible.ini
+
+  sanity:
+    needs: sanity-matrix
+    strategy:
+      fail-fast: false
+      matrix:
+        entry: ${{ fromJson(needs.sanity-matrix.outputs.envlist) }}
+    name: ${{ matrix.entry.name }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        with:
+          python-version: ${{ matrix.entry.python }}
+      - run: python -m pip install tox-ansible
+      - uses: ansible/ansible-content-actions/.github/actions/add_tox_ansible@46de405af31ba872a770a9b75c90121493c1cbe5 # main
+      - name: Configure Automation Hub access
+        env:
+          AH_TOKEN: ${{ secrets.CRC_PUBLISH_KEY }}
+        run: |
+          cat > ansible.cfg <<EOF
+          [galaxy]
+          server_list = automation_hub,galaxy
+
+          [galaxy_server.automation_hub]
+          url = https://console.redhat.com/api/automation-hub/content/published/
+          auth_url = https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+          token = ${AH_TOKEN}
+
+          [galaxy_server.galaxy]
+          url = https://galaxy.ansible.com/api/
+          EOF
+      - name: Run tox sanity tests
+        run: python -m tox --ansible -e ${{ matrix.entry.name }} --conf tox-ansible.ini
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Remove ansible.cfg
+        if: always()
+        run: rm -f ansible.cfg

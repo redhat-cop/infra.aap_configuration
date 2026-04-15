@@ -189,6 +189,7 @@ jobs:
     needs:
       - changelog
       - calculate_version
+    if: ${{ !cancelled() && needs.changelog.result == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
