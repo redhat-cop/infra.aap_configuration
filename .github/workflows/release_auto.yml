@@ -114,17 +114,44 @@ jobs:
           echo "Bumping $CURRENT ($LEVEL) -> $NEW_VERSION"
           echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
 
-  changelog:
-    name: Generate Changelog
+  major_release_gate:
+    name: Major Release Approval
     needs: calculate_version
     if: >-
-      (needs.calculate_version.outputs.change_level != 'major'
-      && needs.calculate_version.outputs.change_present != 'false')
-      || github.event_name == 'workflow_dispatch'
+      needs.calculate_version.outputs.change_level == 'major'
+      && needs.calculate_version.outputs.change_present != 'false'
+      && github.event_name != 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    environment: major-release
+    steps:
+      - name: Confirm major release
+        run: |
+          echo "::notice::Major release ${{ needs.calculate_version.outputs.collection_version }} has been approved."
+
+  changelog:
+    name: Generate Changelog
+    needs:
+      - calculate_version
+      - major_release_gate
+    if: >-
+      always()
+      && needs.calculate_version.result == 'success'
+      && needs.calculate_version.outputs.change_present != 'false'
+      && (needs.major_release_gate.result == 'success' || needs.major_release_gate.result == 'skipped')
+      && !(needs.major_release_gate.result == 'skipped' && needs.calculate_version.outputs.change_level == 'major' && github.event_name != 'workflow_dispatch')
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
+      - name: Validate GH_WORKFLOW_KEY secret
+        env:
+          TOKEN: ${{ secrets.GH_WORKFLOW_KEY }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::error::GH_WORKFLOW_KEY secret is not set. This is required for pushing release branches."
+            exit 1
+          fi
+
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
@@ -166,12 +193,17 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@153bb8e04406b158c6c84fc1615b65b24149a1fe # v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: ${{ needs.calculate_version.outputs.collection_version }}
-          generate_release_notes: true
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ needs.calculate_version.outputs.collection_version }}
+        run: |
+          if gh release view "$TAG" --repo "${{ github.repository }}" > /dev/null 2>&1; then
+            echo "::notice::Release $TAG already exists, updating it."
+            gh release edit "$TAG" --repo "${{ github.repository }}" --latest
+          else
+            gh release create "$TAG" --repo "${{ github.repository }}" --generate-notes --latest
+          fi
 
   release_galaxy:
     name: Publish to Galaxy
@@ -259,13 +291,19 @@ jobs:
         run: ansible-galaxy collection build -v --force
 
       - name: Upload tarball to GitHub release
-        uses: svenstaro/upload-release-action@29e53e917877a24fad85510ded594ab3c9ca12de # v2
-        with:
-          repo_token: ${{ secrets.GH_WORKFLOW_KEY }}
-          file: "${{ env.COLLECTION_NAMESPACE }}-${{ env.COLLECTION_NAME }}*.tar.gz"
-          file_glob: true
-          tag: ${{ needs.calculate_version.outputs.collection_version }}
-          overwrite: true
+        env:
+          GH_TOKEN: ${{ secrets.GH_WORKFLOW_KEY }}
+          TAG: ${{ needs.calculate_version.outputs.collection_version }}
+        run: |
+          for tarball in ${{ env.COLLECTION_NAMESPACE }}-${{ env.COLLECTION_NAME }}*.tar.gz; do
+            ASSET_NAME=$(basename "$tarball")
+            EXISTING=$(gh release view "$TAG" --repo "${{ github.repository }}" --json assets --jq ".assets[].name" 2>/dev/null || true)
+            if echo "$EXISTING" | grep -qF "$ASSET_NAME"; then
+              echo "::notice::Asset $ASSET_NAME already exists on release $TAG, deleting before re-upload."
+              gh release delete-asset "$TAG" "$ASSET_NAME" --repo "${{ github.repository }}" --yes
+            fi
+            gh release upload "$TAG" "$tarball" --repo "${{ github.repository }}"
+          done
 
   merge_release:
     name: Merge Release Branch
