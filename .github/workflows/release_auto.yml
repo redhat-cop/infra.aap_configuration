@@ -25,7 +25,7 @@ jobs:
       change_level: ${{ steps.bump_level.outputs.level }}
       change_present: ${{ steps.bump_level.outputs.change_present }}
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
 
@@ -35,21 +35,17 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          # Get the latest semver tag from git (all branches)
           GIT_TAG=$(git tag --list --sort=-version:refname | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | head -n1)
           echo "Latest git tag: ${GIT_TAG:-none}"
 
-          # Get the latest GitHub release tag
           GH_RELEASE=$(gh release view --json tagName -q '.tagName' 2>/dev/null || true)
           echo "Latest GitHub release: ${GH_RELEASE:-none}"
 
-          # Compare and use the higher version
           if [ -z "$GIT_TAG" ] && [ -z "$GH_RELEASE" ]; then
             echo "::error::No existing version found from git tags or GitHub releases"
             exit 1
           fi
 
-          # Function: return the higher of two semver strings
           higher_version() {
             printf '%s\n%s' "$1" "$2" | sort -t. -k1,1n -k2,2n -k3,3n | tail -n1
           }
@@ -152,7 +148,7 @@ jobs:
             exit 1
           fi
 
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
           token: "${{ secrets.GH_WORKFLOW_KEY }}"
@@ -162,7 +158,7 @@ jobs:
           BRANCH="release/${{ needs.calculate_version.outputs.collection_version }}"
           git checkout -B "${BRANCH}"
 
-      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
         with:
           python-version: "3.x"
 
@@ -194,16 +190,16 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Create or update GitHub Release
+      - name: Create draft GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ needs.calculate_version.outputs.collection_version }}
         run: |
           if gh release view "$TAG" --repo "${{ github.repository }}" > /dev/null 2>&1; then
             echo "::notice::Release $TAG already exists, updating it."
-            gh release edit "$TAG" --repo "${{ github.repository }}" --latest
+            gh release edit "$TAG" --repo "${{ github.repository }}" --draft=false --latest
           else
-            gh release create "$TAG" --repo "${{ github.repository }}" --generate-notes --latest
+            gh release create "$TAG" --repo "${{ github.repository }}" --generate-notes --draft
           fi
 
   release_galaxy:
@@ -211,12 +207,13 @@ jobs:
     needs:
       - create_github_release
       - calculate_version
+    if: ${{ !cancelled() && needs.create_github_release.result == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
     environment: release
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: release/${{ needs.calculate_version.outputs.collection_version }}
 
@@ -233,12 +230,13 @@ jobs:
     needs:
       - create_github_release
       - calculate_version
+    if: ${{ !cancelled() && needs.create_github_release.result == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
     environment: release
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: release/${{ needs.calculate_version.outputs.collection_version }}
 
@@ -263,6 +261,7 @@ jobs:
     needs:
       - release_galaxy
       - release_ah
+    if: ${{ !cancelled() && needs.release_galaxy.result == 'success' && needs.release_ah.result == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - run: echo "All releases completed successfully"
@@ -272,18 +271,19 @@ jobs:
     needs:
       - create_github_release
       - calculate_version
+    if: ${{ !cancelled() && needs.create_github_release.result == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: release/${{ needs.calculate_version.outputs.collection_version }}
 
       - name: Build collection tarball
         run: ansible-galaxy collection build -v --force
 
-      - name: Upload tarball to GitHub release
+      - name: Upload tarball and publish release
         env:
           GH_TOKEN: ${{ secrets.GH_WORKFLOW_KEY }}
           TAG: ${{ needs.calculate_version.outputs.collection_version }}
@@ -297,6 +297,7 @@ jobs:
             fi
             gh release upload "$TAG" "$tarball" --repo "${{ github.repository }}"
           done
+          gh release edit "$TAG" --repo "${{ github.repository }}" --draft=false --latest
 
   merge_release:
     name: Merge Release Branch
@@ -304,12 +305,13 @@ jobs:
       - calculate_version
       - release_check
       - upload_tarball
+    if: ${{ !cancelled() && needs.release_check.result == 'success' && needs.upload_tarball.result == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           ref: release/${{ needs.calculate_version.outputs.collection_version }}
 
@@ -327,6 +329,7 @@ jobs:
   deploy_ee:
     name: Build Execution Environment
     needs: merge_release
+    if: ${{ !cancelled() && needs.merge_release.result == 'success' }}
     uses: redhat-cop/ansible_collections_tooling/.github/workflows/build_ee.yml@634342818b5d5fa2fa92b2c68c78a2bbe8aa4f10 # main
     with:
       quay_username: redhat_cop
@@ -338,6 +341,7 @@ jobs:
     needs:
       - release_check
       - calculate_version
+    if: ${{ !cancelled() && needs.release_check.result == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Send message to newsbot channel

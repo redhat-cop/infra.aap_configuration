@@ -28,53 +28,19 @@ jobs:
       - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
         with:
           python-version: "3.x"
-      - uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
-
-  # Sanity is inlined (rather than calling the reusable workflow) because
-  # this collection depends on certified collections that require Automation
-  # Hub authentication. Reusable workflows cannot receive env vars from the
-  # caller. Once ansible/ansible-content-actions supports a galaxy server
-  # auth input, this can switch to a simple `uses:` call.
-  sanity-matrix:
-    needs: approve_run
-    runs-on: ubuntu-latest
-    outputs:
-      envlist: ${{ steps.generate-matrix.outputs.envlist }}
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-        with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
-        with:
-          python-version: "3.14"
-      - run: python -m pip install tox-ansible
-      - uses: ansible/ansible-content-actions/.github/actions/add_tox_ansible@46de405af31ba872a770a9b75c90121493c1cbe5 # main
-      - name: Generate matrix
-        id: generate-matrix
-        run: python -m tox --ansible --gh-matrix --matrix-scope sanity --conf tox-ansible.ini
-
-  sanity:
-    needs: sanity-matrix
-    strategy:
-      fail-fast: false
-      matrix:
-        entry: ${{ fromJson(needs.sanity-matrix.outputs.envlist) }}
-    name: ${{ matrix.entry.name }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-        with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          fetch-depth: 0
-      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
-        with:
-          python-version: ${{ matrix.entry.python }}
-      - run: python -m pip install tox-ansible
-      - uses: ansible/ansible-content-actions/.github/actions/add_tox_ansible@46de405af31ba872a770a9b75c90121493c1cbe5 # main
-      - name: Run tox sanity tests
-        run: python -m tox --ansible -e ${{ matrix.entry.name }} --conf tox-ansible.ini
+      - name: Run default pre-commit hooks
+        uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANSIBLE_GALAXY_SERVER_LIST: certified,galaxy
+          ANSIBLE_GALAXY_SERVER_CERTIFIED_URL: https://console.redhat.com/api/automation-hub/content/published/
+          ANSIBLE_GALAXY_SERVER_CERTIFIED_AUTH_URL: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+          ANSIBLE_GALAXY_SERVER_CERTIFIED_TOKEN: ${{ secrets.CRC_PUBLISH_KEY }}
+          ANSIBLE_GALAXY_SERVER_GALAXY_URL: https://galaxy.ansible.com/api/
+      - name: Run sanity (manual stage)
+        uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
+        with:
+          extra_args: --hook-stage manual sanity --all-files
+        env:
           ANSIBLE_GALAXY_SERVER_LIST: certified,galaxy
           ANSIBLE_GALAXY_SERVER_CERTIFIED_URL: https://console.redhat.com/api/automation-hub/content/published/
           ANSIBLE_GALAXY_SERVER_CERTIFIED_AUTH_URL: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
