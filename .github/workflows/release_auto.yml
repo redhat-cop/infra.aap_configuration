@@ -250,21 +250,13 @@ jobs:
 
       - name: Publish to Automation Hub
         env:
-          AH_TOKEN: ${{ secrets.CRC_PUBLISH_KEY }}
+          ANSIBLE_GALAXY_SERVER_LIST: rh_automation_hub
+          ANSIBLE_GALAXY_SERVER_RH_AUTOMATION_HUB_URL: https://cloud.redhat.com/api/automation-hub/
+          ANSIBLE_GALAXY_SERVER_RH_AUTOMATION_HUB_AUTH_URL: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+          ANSIBLE_GALAXY_SERVER_RH_AUTOMATION_HUB_TOKEN: ${{ secrets.CRC_PUBLISH_KEY }}
         run: |
           TARBALL=$(ls -1 ./*.tar.gz | head -n1)
-          cat > ansible.cfg <<EOF
-          [galaxy]
-          server_list = rh_automation_hub
-
-          [galaxy_server.rh_automation_hub]
-          url=https://cloud.redhat.com/api/automation-hub/
-          auth_url=https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
-          token=$AH_TOKEN
-          EOF
-
           ansible-galaxy collection publish "${TARBALL}"
-          rm -f ansible.cfg
 
   release_check:
     name: Verify Releases

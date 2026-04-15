@@ -73,26 +73,12 @@ jobs:
           python-version: ${{ matrix.entry.python }}
       - run: python -m pip install tox-ansible
       - uses: ansible/ansible-content-actions/.github/actions/add_tox_ansible@46de405af31ba872a770a9b75c90121493c1cbe5 # main
-      - name: Configure Automation Hub access
-        env:
-          AH_TOKEN: ${{ secrets.CRC_PUBLISH_KEY }}
-        run: |
-          cat > ansible.cfg <<EOF
-          [galaxy]
-          server_list = automation_hub,galaxy
-
-          [galaxy_server.automation_hub]
-          url = https://console.redhat.com/api/automation-hub/content/published/
-          auth_url = https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
-          token = ${AH_TOKEN}
-
-          [galaxy_server.galaxy]
-          url = https://galaxy.ansible.com/api/
-          EOF
       - name: Run tox sanity tests
         run: python -m tox --ansible -e ${{ matrix.entry.name }} --conf tox-ansible.ini
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Remove ansible.cfg
-        if: always()
-        run: rm -f ansible.cfg
+          ANSIBLE_GALAXY_SERVER_LIST: certified,galaxy
+          ANSIBLE_GALAXY_SERVER_CERTIFIED_URL: https://console.redhat.com/api/automation-hub/content/published/
+          ANSIBLE_GALAXY_SERVER_CERTIFIED_AUTH_URL: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+          ANSIBLE_GALAXY_SERVER_CERTIFIED_TOKEN: ${{ secrets.CRC_PUBLISH_KEY }}
+          ANSIBLE_GALAXY_SERVER_GALAXY_URL: https://galaxy.ansible.com/api/
