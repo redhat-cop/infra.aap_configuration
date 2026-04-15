@@ -1,22 +1,41 @@
 ---
+# This workflow action will run pre-commit, which will execute ansible and yaml linting
+# See .pre-commit-config.yaml for what hooks are executed
 name: pre-commit tests
-
-on:
-  pull_request:
-  push:
-    branches: [devel]
-  schedule:
-    - cron: "0 6 * * *"
 
 permissions:
   contents: read
 
+on:
+  push:
+    branches:
+      - '*_'  # ending underscore for trying things
+      - devel
+    tags:
+      - '*_'  # ending underscore for trying things
+      - 'v[0-9]+.[0-9]+.[0-9]+'  # final version
+      - 'v[0-9]+.[0-9]+.[0-9]+[abrc]+[0-9]+'  # alpha, beta, release candidate (rc)
+      - 'v[0-9]+.[0-9]+.[0-9]+.dev[0-9]+'  # development versions
+  pull_request_target:
+  schedule:
+    - cron: "0 6 * * *"
+
 jobs:
-  pre-commit:
+  approve_run:
+    environment: requires-approval
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
-        with:
-          python-version: "3.x"
-      - uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
+      - run: echo "Approval granted. Proceeding to reusable workflow."
+
+  pre-commit_and_sanity:
+    needs: approve_run
+    uses: "redhat-cop/ansible_collections_tooling/.github/workflows/pre_commit_workflow_crc.yml@main"
+    with:
+      collection_namespace: infra
+      collection_name: aap_configuration_extended
+      collection_version: 1.1.1
+      collection_repo: https://github.com/redhat-cop/aap_configuration_extended/
+      base_branch: devel
+    secrets:
+      ansible_ah_token: ${{ secrets.CRC_PUBLISH_KEY }}
+...
