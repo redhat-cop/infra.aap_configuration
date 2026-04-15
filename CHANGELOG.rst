@@ -4,6 +4,19 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v4.4.0
+======
+
+Minor Changes
+-------------
+
+- Added controller_role_user_assignments and controller_role_team_assignments to support AAP 2.5 and custom role definitions.
+
+Bugfixes
+--------
+
+- Added tag 'always' to tasks in the dispatch role for include_wildcard_vars to ensure they run regardless of applied tags.
+
 v4.3.0
 ======
 

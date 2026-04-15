@@ -1,4 +1,0 @@
----
-minor_changes:
-  - Added controller_role_user_assignments and controller_role_team_assignments to support AAP 2.5 and custom role definitions.
-...

@@ -1,2 +1,0 @@
-bugfixes:
-  - Added tag 'always' to tasks in the dispatch role for include_wildcard_vars to ensure they run regardless of applied tags.

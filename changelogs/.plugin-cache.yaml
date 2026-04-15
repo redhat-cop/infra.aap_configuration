@@ -112,6 +112,16 @@ objects:
         for AAP 2.5 ONLY.
       name: controller_role_definitions
       version_added: null
+    controller_role_team_assignments:
+      description: An Ansible Role to create role_team_assignments on Ansible Controller
+        for AAP 2.5 ONLY.
+      name: controller_role_team_assignments
+      version_added: null
+    controller_role_user_assignments:
+      description: An Ansible Role to create role_user_assignments on Ansible Controller
+        for AAP 2.5 ONLY.
+      name: controller_role_user_assignments
+      version_added: null
     controller_roles:
       description: An Ansible Role to create roles on Ansible Controller.
       name: controller_roles
@@ -339,4 +349,4 @@ plugins:
   strategy: {}
   test: {}
   vars: {}
-version: 4.3.0
+version: 4.4.0

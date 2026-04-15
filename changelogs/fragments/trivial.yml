@@ -1,5 +1,0 @@
----
-trivial:
-  - Updated release process to use the new release pipeline.
-  - Updated pre commit config file
-...
