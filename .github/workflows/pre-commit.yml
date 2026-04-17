@@ -40,6 +40,8 @@ jobs:
           ANSIBLE_GALAXY_SERVER_CERTIFIED_AUTH_URL: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
           ANSIBLE_GALAXY_SERVER_CERTIFIED_TOKEN: ${{ secrets.CRC_PUBLISH_KEY }}
           ANSIBLE_GALAXY_SERVER_GALAXY_URL: https://galaxy.ansible.com/api/
+      - name: Install system dependencies for EDA collection
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libsystemd-dev pkg-config libkrb5-dev
       - name: Run sanity (manual stage)
         uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
         with:
