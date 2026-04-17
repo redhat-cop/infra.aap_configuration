@@ -8,7 +8,7 @@
   ansible.builtin.include_role:
     name: "{{ __role.role }}"
     apply:
-      tags: "{{ __role.tags }}"
+      tags: "{{ __role.tags if __role.tags is string else __role.tags | last }}"
   when: vars[__role.var] is defined
   tags: always
   loop: "{{ aap_configuration_dispatcher_roles }}"
