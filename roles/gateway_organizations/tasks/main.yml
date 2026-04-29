@@ -50,6 +50,33 @@
         __operation: "{{ operation_translate[__gateway_organizations_job_async_results_item.__gateway_organization_item.state | default(platform_state) | default('present')] }}"
         cas_object_label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organizations_job_async_results_item.__gateway_organization_item.name }} | Wait for finish the Organizations {{ __operation.action }}"
 
+    - name: Organizations | Fetch AAP token for Controller Configuration
+      ansible.platform.token:
+        description: "Temp token for gateway_organizations controller sync"
+        scope: "write"
+        state: present
+        aap_hostname: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
+        aap_validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      register: __gateway_organizations_token
+      no_log: "{{ gateway_organizations_secure_logging }}"
+      run_once: true
+      when:
+        - aap_token is not defined
+        - aap_username is defined
+        - aap_password is defined
+
+    - name: Organizations | Set aap_token fact from fetched token
+      ansible.builtin.set_fact:
+        aap_token: "{{ __gateway_organizations_token.token }}"
+      no_log: "{{ gateway_organizations_secure_logging }}"
+      run_once: true
+      when:
+        - aap_token is not defined
+        - __gateway_organizations_token is not skipped
+        - __gateway_organizations_token.token is defined
+
     - name: Organizations | Controller Configuration
       ansible.controller.organization:
         name: "{{ __controller_organizations_item.name | mandatory }}"
