@@ -49,7 +49,7 @@ collections:
 
 |                                      Collection Name                                                  |                      Purpose                      |
 |:-----------------------------------------------------------------------------------------------------:|:-------------------------------------------------:|
-| [AAP <= 2.4 Controller Configuration](https://github.com/redhat-cop/infra.controller_configuration) | Automation controller configuration       |
+| [AAP <= 2.4 Controller Configuration](https://github.com/redhat-cop/infra.controller_configuration)   | Automation controller configuration               |
 | [AAP Configuration Extended](https://github.com/redhat-cop/aap_configuration_extended)                | Where other useful roles that don't fit here live |
 | [EE Utilities](https://github.com/redhat-cop/ee_utilities)                                            | Execution Environment creation utilities          |
 | [AAP installation Utilities](https://github.com/redhat-cop/aap_utilities)                             | Ansible Automation Platform Utilities             |
