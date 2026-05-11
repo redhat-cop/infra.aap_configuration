@@ -7,130 +7,207 @@ argument_specs:
         default:
           - role: gateway_authenticators
             var: gateway_authenticators
-            tags: authenticators
+            tags:
+              - authenticators
+              - gateway_authenticators
           - role: gateway_authenticator_maps
             var: gateway_authenticator_maps
-            tags: authenticator_maps
+            tags:
+              - authenticator_maps
+              - gateway_authenticator_maps
           - role: gateway_settings
             var: gateway_settings
-            tags: settings
+            tags:
+              - settings
+              - gateway_settings
           - role: gateway_organizations
             var: aap_organizations
-            tags: organizations
+            tags:
+              - organizations
+              - gateway_organizations
             assign_galaxy_credentials_to_org: false
             assign_default_ee_to_org: false
             assign_notification_templates_to_org: false
           - role: gateway_applications
             var: aap_applications
-            tags: applications
+            tags:
+              - applications
+              - gateway_applications
           - role: gateway_http_ports
             var: gateway_http_ports
-            tags: http_ports
+            tags:
+              - http_ports
+              - gateway_http_ports
           - role: gateway_service_clusters
             var: gateway_service_clusters
-            tags: service_clusters
+            tags:
+              - service_clusters
+              - gateway_service_clusters
           - role: gateway_service_keys
             var: gateway_service_keys
-            tags: service_keys
+            tags:
+              - service_keys
+              - gateway_service_keys
           - role: gateway_service_nodes
             var: gateway_service_nodes
-            tags: service_nodes
+            tags:
+              - service_nodes
+              - gateway_service_nodes
           - role: gateway_services
             var: gateway_services
-            tags: services
+            tags:
+              - services
+              - gateway_services
           - role: gateway_teams
             var: aap_teams
-            tags: teams
+            tags:
+              - teams
+              - gateway_teams
           - role: gateway_users
             var: aap_user_accounts
-            tags: users
+            tags:
+              - users
+              - gateway_users
           - role: gateway_role_user_assignments
             var: gateway_role_user_assignments
-            tags: role_user_assignments
+            tags:
+              - role_user_assignments
+              - gateway_role_user_assignments
           - role: gateway_role_team_assignments
             var: gateway_role_team_assignments
-            tags: role_team_assignments
+            tags:
+              - role_team_assignments
+              - gateway_role_team_assignments
           - role: gateway_role_definitions
             var: gateway_role_definitions
-            tags: role_definitions
+            tags:
+              - role_definitions
+              - gateway_role_definitions
           - role: gateway_routes
             var: gateway_routes
-            tags: routes
+            tags:
+              - routes
+              - gateway_routes
 
       hub_configuration_dispatcher_roles:
         default:
           - role: hub_namespace
             var: hub_namespaces
-            tags: namespaces
+            tags:
+              - namespaces
+              - hub_namespaces
           - role: hub_collection
             var: hub_collections
-            tags: collections
+            tags:
+              - collections
+              - hub_collections
           - role: hub_ee_registry
             var: hub_ee_registries
-            tags: registries
+            tags:
+              - registries
+              - hub_ee_registries
           - role: hub_ee_repository
             var: hub_ee_repositories
-            tags: repos
+            tags:
+              - repos
+              - hub_ee_repositories
           - role: hub_ee_repository_sync
             var: hub_ee_repository_sync
-            tags: reposync
+            tags:
+              - reposync
+              - hub_ee_repository_sync
           - role: hub_ee_image
             var: hub_ee_images
-            tags: images
+            tags:
+              - images
+              - hub_ee_images
           - role: hub_ee_registry
             var: hub_ee_registries
             tags: registry
           - role: hub_ee_registry_index
             var: hub_ee_registries
-            tags: ee_indices
+            tags:
+              - ee_indices
+              - hub_ee_registry_index
           - role: hub_ee_registry_sync
             var: hub_ee_registries
-            tags: regsync
+            tags:
+              - regsync
+              - hub_ee_registry_sync
           - role: hub_collection_remote
             var: hub_collection_remotes
-            tags: collectionremote
+            tags:
+              - collectionremote
+              - hub_collection_remotes
           - role: hub_collection_repository
             var: hub_collection_repositories
-            tags: collectionsrep
+            tags:
+              - collectionsrep
+              - hub_collection_repositories
           - role: hub_collection_repository_sync
             var: hub_collection_repositories
-            tags: collectionsrepsync
+            tags:
+              - collectionsrepsync
+              - hub_collection_repository_sync
 
       controller_configuration_dispatcher_roles:
         default:
           - role: controller_settings
             var: controller_settings
-            tags: settings
+            tags:
+              - settings
+              - controller_settings
           - role: controller_instances
             var: controller_instances
-            tags: instances
+            tags:
+              - instances
+              - controller_instances
           - role: controller_instance_groups
             var: controller_instance_groups
-            tags: instance_groups
+            tags:
+              - instance_groups
+              - controller_instance_groups
           - role: controller_labels
             var: controller_labels
-            tags: labels
+            tags:
+              - labels
+              - controller_labels
           - role: controller_credential_types
             var: controller_credential_types
-            tags: credential_types
+            tags:
+              - credential_types
+              - controller_credential_types
           - role: controller_credentials
             var: controller_credentials
-            tags: credentials
+            tags:
+              - credentials
+              - controller_credentials
           - role: controller_credential_input_sources
             var: controller_credential_input_sources
-            tags: credential_input_sources
+            tags:
+              - credential_input_sources
+              - controller_credential_input_sources
           - role: controller_execution_environments
             var: controller_execution_environments
-            tags: execution_environments
+            tags:
+              - execution_environments
+              - controller_execution_environments
           - role: controller_applications
             var: aap_applications
-            tags: applications
+            tags:
+              - applications
+              - controller_applications
           - role: controller_notification_templates
             var: controller_notifications
-            tags: notification_templates
+            tags:
+              - notification_templates
+              - controller_notification_templates
           - role: gateway_organizations
             var: aap_organizations
-            tags: organizations
+            tags:
+              - organizations
+              - controller_organizations
+              - gateway_organizations
             assign_galaxy_credentials_to_org: true
             assign_default_ee_to_org: true
             assign_notification_templates_to_org: true
@@ -139,75 +216,109 @@ argument_specs:
             tags:
               - inventories
               - projects
+              - controller_projects
           - role: controller_inventories
             var: controller_inventories
-            tags: inventories
+            tags:
+              - inventories
+              - controller_inventories
           - role: controller_inventory_sources
             var: controller_inventory_sources
             tags:
               - inventories
               - inventory_sources
+              - controller_inventory_sources
           - role: controller_inventory_source_update
             var: controller_inventory_sources
             tags:
               - inventories
               - inventory_sources
+              - controller_inventory_sources
           - role: controller_hosts
             var: controller_hosts
             tags:
               - inventories
               - hosts
+              - controller_hosts
           - role: controller_bulk_host_create
             var: controller_bulk_hosts
             tags:
               - inventories
               - bulk_hosts
+              - controller_bulk_hosts
           - role: controller_host_groups
             var: controller_groups
             tags:
               - inventories
               - host_groups
+              - controller_groups
           - role: controller_job_templates
             var: controller_templates
-            tags: job_templates
+            tags:
+              - job_templates
+              - controller_job_templates
           - role: controller_workflow_job_templates
             var: controller_workflows
-            tags: workflow_job_templates
+            tags:
+              - workflow_job_templates
+              - controller_workflow_job_templates
           - role: controller_schedules
             var: controller_schedules
-            tags: schedules
+            tags:
+              - schedules
+              - controller_schedules
           - role: controller_roles
             var: controller_roles
-            tags: roles
+            tags:
+              - roles
+              - controller_roles
           - role: controller_job_launch
             var: controller_launch_jobs
-            tags: job_launch
+            tags:
+              - job_launch
+              - controller_job_launch
           - role: controller_workflow_launch
             var: controller_workflow_launch_jobs
-            tags: workflow_launch
+            tags:
+              - workflow_launch
+              - controller_workflow_launch
       eda_configuration_dispatcher_roles:
         default:
           - role: eda_credential_types
             var: eda_credential_types
-            tags: credential_type
+            tags:
+              - credential_type
+              - eda_credential_types
           - role: eda_credentials
             var: eda_credentials
-            tags: credential
+            tags:
+              - credential
+              - eda_credentials
           - role: eda_controller_tokens
             var: eda_controller_tokens
-            tags: controller_token
+            tags:
+              - controller_token
+              - eda_controller_tokens
           - role: eda_projects
             var: eda_projects
-            tags: project
+            tags:
+              - project
+              - eda_projects
           - role: eda_event_streams
             var: eda_event_streams
-            tags: event_stream
+            tags:
+              - event_stream
+              - eda_event_streams
           - role: eda_decision_environments
             var: eda_decision_environments
-            tags: decision_environment
+            tags:
+              - decision_environment
+              - eda_decision_environments
           - role: eda_rulebook_activations
             var: eda_rulebook_activations
-            tags: rulebook_activation
+            tags:
+              - rulebook_activation
+              - eda_rulebook_activations
 
       # Async variables
       aap_configuration_async_retries:
