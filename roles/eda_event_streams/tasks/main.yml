@@ -13,7 +13,7 @@
         organization: "{{ __event_stream_item.organization | default(omit) }}"
         headers: "{{ __event_stream_item.headers | default(omit) }}"
         forward_events: "{{ __event_stream_item.forward_events | default(omit) }}"
-        state: "{{ __event_stream_item.state | default(eda_state | default('present')) }}"
+        state: "{{ __event_stream_item.state | default(platform_state | default('present')) }}"
         controller_host: "{{ aap_hostname | default(omit, true) }}"
         controller_username: "{{ aap_username | default(omit, true) }}"
         controller_password: "{{ aap_password | default(omit, true) }}"
