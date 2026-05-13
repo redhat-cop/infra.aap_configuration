@@ -28,13 +28,35 @@ argument_specs:
             required: false
             type: str
             description: Red Hat or Red Hat Satellite subscription_id to attach to
+          use_lookup:
+            default: false
+            required: false
+            type: bool
+            description: Whether or not to lookup subscriptions using Red Hat credentials.
+          filters:
+            required: false
+            type: dict
+            description: Dict of filters to narrow the subscription lookup results.
+          list_num:
+            default: 0
+            required: false
+            type: int
+            description: List index of the subscription to use from lookup results.
           force:
             default: false
             required: false
             type: bool
             description: By default, the license manifest will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.
+          state:
+            default: present
+            required: false
+            type: str
+            choices:
+              - present
+              - absent
+            description: Desired state of the resource.
 
-      # Variables used for Liscense lookup
+      # Variables used for License lookup (username/password or client_id/client_secret)
       redhat_subscription_username:
         default: None
         required: false
@@ -45,9 +67,19 @@ argument_specs:
         required: false
         type: str
         description: Red Hat or Red Hat Satellite password to get available subscriptions.
+      redhat_subscription_client_id:
+        default: None
+        required: false
+        type: str
+        description: Red Hat service account client ID to get available subscriptions.
+      redhat_subscription_client_secret:
+        default: None
+        required: false
+        type: str
+        description: Red Hat service account client secret to get available subscriptions.
 
       # No_log variables
-      controller_configuration_labels_secure_logging:
+      controller_configuration_license_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
