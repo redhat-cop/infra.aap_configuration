@@ -1129,3 +1129,21 @@ releases:
     - trivial.yml
     - update_gateway_role_definitions_readme.yml
     release_date: '2026-04-15'
+  4.5.0:
+    changes:
+      bugfixes:
+      - Tags used across filetree_read/object_diff (aap_configuration_extended) and
+        dispatch (this collection) were inconsistent (e.g. eda_credentials vs credential,
+        hub_namespaces vs namespaces, controller_credentials vs credentials).
+      - eda_projects, eda_credentials, eda_credential_types, eda_decision_environments,
+        eda_event_streams, eda_rulebook_activations, eda_users - Fixed roles to honor
+        the global ``platform_state`` variable, making them consistent with other
+        AAP configuration roles (https://github.com/redhat-cop/infra.aap_configuration/issues/1319).
+      minor_changes:
+      - README - Standardized collection links tables and added Support section for
+        certification review.
+    fragments:
+    - 1348-fix-eda-platform-state.yml
+    - 1350.yaml
+    - certification-review-readme.yaml
+    release_date: '2026-05-15'

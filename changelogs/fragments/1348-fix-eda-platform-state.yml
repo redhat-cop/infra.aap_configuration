@@ -1,6 +1,0 @@
-bugfixes:
-  - >-
-    eda_projects, eda_credentials, eda_credential_types, eda_decision_environments,
-    eda_event_streams, eda_rulebook_activations, eda_users - Fixed roles to honor the
-    global ``platform_state`` variable, making them consistent with other AAP
-    configuration roles (https://github.com/redhat-cop/infra.aap_configuration/issues/1319).

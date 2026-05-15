@@ -4,6 +4,20 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v4.5.0
+======
+
+Minor Changes
+-------------
+
+- README - Standardized collection links tables and added Support section for certification review.
+
+Bugfixes
+--------
+
+- Tags used across filetree_read/object_diff (aap_configuration_extended) and dispatch (this collection) were inconsistent (e.g. eda_credentials vs credential, hub_namespaces vs namespaces, controller_credentials vs credentials).
+- eda_projects, eda_credentials, eda_credential_types, eda_decision_environments, eda_event_streams, eda_rulebook_activations, eda_users - Fixed roles to honor the global ``platform_state`` variable, making them consistent with other AAP configuration roles (https://github.com/redhat-cop/infra.aap_configuration/issues/1319).
+
 v4.4.0
 ======
 
