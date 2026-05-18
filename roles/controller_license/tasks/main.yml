@@ -9,5 +9,9 @@
 - name: Use subscription id or subscription lookup
   ansible.builtin.include_tasks: subscription.yml
   when:
-    - (redhat_subscription_username is defined and redhat_subscription_password is defined) or controller_license.subscription_id is defined
+    - >-
+      (redhat_subscription_username is defined and redhat_subscription_password is defined)
+      or (redhat_subscription_client_id is defined and redhat_subscription_client_secret is defined)
+      or controller_license.subscription_id is defined
+      or (controller_license.use_lookup | default(false))
 ...

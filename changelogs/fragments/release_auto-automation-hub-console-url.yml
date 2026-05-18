@@ -1,0 +1,4 @@
+---
+trivial:
+  - >-
+    Update the Automation Hub API base URL in ``release_auto`` workflow for publishing.

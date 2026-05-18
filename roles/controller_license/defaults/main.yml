@@ -1,5 +1,13 @@
 ---
 controller_configuration_license_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
+
+# Red Hat credential variables for subscription lookup
+# Either username/password or client_id/client_secret must be provided when use_lookup is true
+# redhat_subscription_username:
+# redhat_subscription_password:
+# redhat_subscription_client_id:
+# redhat_subscription_client_secret:
+
 _redhat_cop_license_filters:
   product_name: Red Hat Ansible Automation Platform
   support_level: Self-Support
