@@ -1,0 +1,3 @@
+bugfixes:
+  - docs/CONVERSION_GUIDE.md - correct incorrect reference to ansible.gateway by 
+    replacing it with ansible.platform in the conversion guide documentation
