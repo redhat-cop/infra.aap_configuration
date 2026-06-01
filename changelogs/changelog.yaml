@@ -1147,3 +1147,25 @@ releases:
     - 1350.yaml
     - certification-review-readme.yaml
     release_date: '2026-05-15'
+  4.6.0:
+    changes:
+      bugfixes:
+      - 'controller_license - Fixed subscription lookup routing so that ``use_lookup:
+        true`` is considered when deciding whether to include the subscription tasks.
+        Previously the role silently did nothing when ``use_lookup`` was set without
+        ``redhat_subscription_username``/``redhat_subscription_password`` (https://github.com/redhat-cop/infra.aap_configuration/issues/1214).'
+      - docs/CONVERSION_GUIDE.md - correct incorrect reference to ansible.gateway
+        by replacing it with ansible.platform in the conversion guide documentation
+      minor_changes:
+      - controller_license - Added support for Red Hat service account authentication
+        via ``redhat_subscription_client_id`` and ``redhat_subscription_client_secret``
+        for subscription lookup. Added clear validation error when ``use_lookup``
+        is enabled but no credentials are provided. Added missing ``use_lookup``,
+        ``filters``, ``list_num``, and ``state`` sub-options to argument specs. Fixed
+        typo in secure logging variable name in argument specs. Added Limitations
+        section to documentation (https://github.com/redhat-cop/infra.aap_configuration/issues/1214).
+    fragments:
+    - 1214-controller-license-lookup.yml
+    - 1364-conversion-guide-fix.yaml
+    - release_auto-automation-hub-console-url.yml
+    release_date: '2026-06-01'

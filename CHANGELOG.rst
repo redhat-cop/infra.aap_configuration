@@ -4,6 +4,20 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v4.6.0
+======
+
+Minor Changes
+-------------
+
+- controller_license - Added support for Red Hat service account authentication via ``redhat_subscription_client_id`` and ``redhat_subscription_client_secret`` for subscription lookup. Added clear validation error when ``use_lookup`` is enabled but no credentials are provided. Added missing ``use_lookup``, ``filters``, ``list_num``, and ``state`` sub-options to argument specs. Fixed typo in secure logging variable name in argument specs. Added Limitations section to documentation (https://github.com/redhat-cop/infra.aap_configuration/issues/1214).
+
+Bugfixes
+--------
+
+- controller_license - Fixed subscription lookup routing so that ``use_lookup: true`` is considered when deciding whether to include the subscription tasks. Previously the role silently did nothing when ``use_lookup`` was set without ``redhat_subscription_username``/``redhat_subscription_password`` (https://github.com/redhat-cop/infra.aap_configuration/issues/1214).
+- docs/CONVERSION_GUIDE.md - correct incorrect reference to ansible.gateway by replacing it with ansible.platform in the conversion guide documentation
+
 v4.5.0
 ======
 
