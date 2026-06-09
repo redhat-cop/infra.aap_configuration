@@ -96,11 +96,6 @@ argument_specs:
             tags:
               - namespaces
               - hub_namespaces
-          - role: hub_collection
-            var: hub_collections
-            tags:
-              - collections
-              - hub_collections
           - role: hub_ee_registry
             var: hub_ee_registries
             tags:
@@ -149,6 +144,11 @@ argument_specs:
             tags:
               - collectionsrepsync
               - hub_collection_repository_sync
+          - role: hub_collection
+            var: hub_collections
+            tags:
+              - collections
+              - hub_collections
 
       controller_configuration_dispatcher_roles:
         default:

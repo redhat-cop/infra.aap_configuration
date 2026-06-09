@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - dispatch - Run hub_collection after hub_collection_repository so collections referencing a repository distribution are created successfully (https://github.com/redhat-cop/infra.aap_configuration/issues/1361)
+...

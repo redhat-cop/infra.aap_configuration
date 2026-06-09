@@ -93,11 +93,6 @@ hub_configuration_dispatcher_roles:
     tags:
       - namespaces
       - hub_namespaces
-  - role: hub_collection
-    var: hub_collections
-    tags:
-      - collections
-      - hub_collections
   - role: hub_ee_registry
     var: hub_ee_registries
     tags:
@@ -143,6 +138,11 @@ hub_configuration_dispatcher_roles:
     tags:
       - collectionsrepsync
       - hub_collection_repository_sync
+  - role: hub_collection
+    var: hub_collections
+    tags:
+      - collections
+      - hub_collections
 
 hub_configuration_dispatcher_roles_publish:
   - role: hub_publish
