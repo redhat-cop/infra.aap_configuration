@@ -1169,3 +1169,15 @@ releases:
     - 1364-conversion-guide-fix.yaml
     - release_auto-automation-hub-console-url.yml
     release_date: '2026-06-01'
+  4.6.1:
+    changes:
+      bugfixes:
+      - dispatch - Run hub_collection after hub_collection_repository so collections
+        referencing a repository distribution are created successfully (https://github.com/redhat-cop/infra.aap_configuration/issues/1361)
+      - hub_collection - Added missing ``repository``, ``timeout``, and ``interval``
+        variables to role documentation. Fixed incorrect default values for ``timeout``
+        and ``interval`` in the README (https://github.com/redhat-cop/infra.aap_configuration/issues/1214).
+    fragments:
+    - 1214-hub-collection-docs.yml
+    - 1361-hub-collection-dispatch-order.yml
+    release_date: '2026-06-15'

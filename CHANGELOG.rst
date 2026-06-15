@@ -4,6 +4,15 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v4.6.1
+======
+
+Bugfixes
+--------
+
+- dispatch - Run hub_collection after hub_collection_repository so collections referencing a repository distribution are created successfully (https://github.com/redhat-cop/infra.aap_configuration/issues/1361)
+- hub_collection - Added missing ``repository``, ``timeout``, and ``interval`` variables to role documentation. Fixed incorrect default values for ``timeout`` and ``interval`` in the README (https://github.com/redhat-cop/infra.aap_configuration/issues/1214).
+
 v4.6.0
 ======
 
