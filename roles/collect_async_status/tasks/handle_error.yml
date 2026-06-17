@@ -4,7 +4,7 @@
     - name: handle_error | Show error and stop execution
       when: not aap_configuration_collect_logs | default(false) | bool
       ansible.builtin.fail:
-        msg: "error: {{ __cas_job_async_result['msg'] | default('Unknown Error') }}"
+        msg: "error: {{ __cas_job_async_result['msg'] | default(__cas_job_async_result['detail'] | default(__cas_job_async_result['error'] | default('Unknown Error'))) }}"
 
     - name: handle_error | Set item details fact
       ansible.builtin.set_fact:
@@ -109,7 +109,7 @@
                                         }}"
       vars:
         __new_error:
-          ERROR_MESSAGE: "{{ __cas_job_async_result['msg'] | default('UNKNOWN ERROR') }}"
+          ERROR_MESSAGE: "{{ __cas_job_async_result['msg'] | default(__cas_job_async_result['detail'] | default(__cas_job_async_result['error'] | default('UNKNOWN ERROR'))) }}"
           name: "{{ __cas_job_async_item['name'] | default(omit) }}"
           organization: "{{ __cas_job_async_item['organization'] | default(omit) }}"
           hostname: "{{ __cas_job_async_item['hostname'] | default(omit) }}"

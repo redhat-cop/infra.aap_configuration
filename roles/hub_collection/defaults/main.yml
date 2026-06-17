@@ -13,8 +13,11 @@ hub_collections: []
 # - name
 # - version
 # - path
+# - repository
 # - wait
 # - auto_approve
+# - timeout
+# - interval
 # - overwrite_existing
 # - state
 

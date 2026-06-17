@@ -27,13 +27,14 @@ These are the sub options for the vars `hub_collections` which are dictionaries 
 |`name`|""|yes|Collection name. Must be lower case containing only alphanumeric characters and underscores.||
 |`version`|""|no|Collection Version. Must be lower case containing only alphanumeric characters and underscores. If not provided and 'auto_approve' true, will be derived from the path.||
 |`path`|""|no|Collection artifact file path.||
-|`wait`|"true"|no|Waits for the collection to be uploaded||
-|`auto_approve`|"true"|no|Approves a collection and requires version to be set.||
-|`timeout`|"true"||Maximum time to wait for the collection approval||
-|`interval`|"true"|10|Interval at which approval is checked||
-|`overwrite_existing`|"false"|no|Overwrites an existing collection and requires version to be set.||
-|`state`|"present"|no|Desired state of the resource||
-|`register`|""|no|str|Variable to set based on the result of the object creation/modification|
+|`repository`|"staging"|no|Name of the destination repository for the collection upload.||
+|`wait`|`true`|no|Waits for the collection to be uploaded.||
+|`auto_approve`|`true`|no|Approves a collection and requires version to be set.||
+|`timeout`|`null`|no|Maximum time in seconds to wait for the collection approval.||
+|`interval`|`10`|no|Interval in seconds at which approval is checked.||
+|`overwrite_existing`|`false`|no|Overwrites an existing collection and requires version to be set.||
+|`state`|"present"|no|Desired state of the resource.||
+|`register`|""|no|Variable to set based on the result of the object creation/modification.||
 
 The `aap_configuration_async_dir` variable sets the directory to write the results file for async tasks.
 The default value is set to  `null` which uses the Ansible Default of `/root/.ansible_async/`.

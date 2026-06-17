@@ -198,9 +198,6 @@ hub_configuration_dispatcher_roles:
   - role: hub_namespace
     var: hub_namespaces
     tags: namespaces
-  - role: hub_collection
-    var: hub_collections
-    tags: collections
   - role: hub_ee_registry
     var: hub_ee_registries
     tags: registries
@@ -231,6 +228,9 @@ hub_configuration_dispatcher_roles:
   - role: hub_collection_repository_sync
     var: hub_collection_repositories
     tags: collectionsrepsync
+  - role: hub_collection
+    var: hub_collections
+    tags: collections
 ```
 
 #### Controller Roles
