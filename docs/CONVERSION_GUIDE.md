@@ -84,7 +84,7 @@ gateway_configuration vars:
 - gateway_services
 - gateway_role_user_assignments
 - gateway_routes
-- aap_teams
+- aap_teams <- controller_teams
 
 ah_configuration vars:
 
