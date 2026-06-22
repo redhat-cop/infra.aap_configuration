@@ -55,7 +55,7 @@ argument_specs:
 #            description: Desired state of the resource.
 
       # Async variables
-      controller_configuration_groups_async_retries:
+      controller_configuration_group_async_retries:
         default: "{{ aap_configuration_async_retries | default(50) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -63,7 +63,7 @@ argument_specs:
         default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
-      controller_configuration_groups_async_delay:
+      controller_configuration_group_async_delay:
         default: "{{ aap_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -77,7 +77,7 @@ argument_specs:
         description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.
 
       # No_log variables
-      controller_configuration_groups_secure_logging:
+      controller_configuration_group_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
