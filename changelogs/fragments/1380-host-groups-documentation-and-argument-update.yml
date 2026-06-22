@@ -1,0 +1,5 @@
+---
+bugfixes:
+  - Updates documentation for host groups to use the variable names in the controller_host_groups role
+  - Updates argument_specs for host groups to use the variable names in the controller_host_groups role
+...
