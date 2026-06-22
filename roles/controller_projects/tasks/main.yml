@@ -99,13 +99,14 @@
   vars:
     controller_roles: "{{ _controller_roles | from_yaml | default([], true) | list }}"
     _item_list: "{{ projects if projects is defined else controller_projects }}"
+    _failed_items: "{{ aap_configuration_role_errors['controller_projects_errors'] | default([]) | map(attribute='name') | list }}"
     _controller_roles: |
       {% for _item in _item_list %}
-      {% if _item.roles is defined and (_item.state | default(platform_state | default('present'))) != 'absent' %}
+      {% if (_item.roles is defined) and ((_item.state | default(platform_state | default('present'))) != 'absent') and (_item.name not in _failed_items) %}
       {% for _role in _item.roles.keys() %}
       - role: "{{ _role }}"
         projects:
-          - "{{ _item.name }}"
+          - "{{ _item.new_name | default(_item.name) }}"
         teams: "{{ _item.roles[_role].teams | default(omit) }}"
         users: "{{ _item.roles[_role].users | default(omit) }}"
       {% endfor %}
