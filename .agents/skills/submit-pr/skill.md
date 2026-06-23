@@ -1,18 +1,45 @@
 # Submit PR
 
 name: submit-pr
-description: Prepare and submit a pull request for an Ansible Collection repository. Syncs with upstream, creates a feature branch, runs pre-commit and linting checks (ansible-lint, yamllint), updates documentation and changelogs as needed, commits with conventional commits, then creates the PR via gh. Use when the user asks to submit, create, or open a pull request, or says "submit PR", "open PR", "create PR".
+description: Prepare and submit a pull request for the infra.aap_configuration Ansible Collection. Syncs with upstream, creates a feature branch, runs pre-commit and linting checks (ansible-lint, yamllint), updates documentation and changelogs as needed, commits with conventional commits, then creates the PR via gh against redhat-cop/infra.aap_configuration. Use when the user asks to submit, create, or open a pull request, or says "submit PR", "open PR", "create PR".
 
 Submit PR
+
+## Repository configuration
+
+This skill is scoped to **infra.aap_configuration**:
+
+| Setting | Value |
+|---------|-------|
+| Upstream repo | `redhat-cop/infra.aap_configuration` |
+| Base branch | `devel` |
+| Fork (`origin`) | Your GitHub fork of `infra.aap_configuration` |
+| Upstream remote | `upstream` → `https://github.com/redhat-cop/infra.aap_configuration.git` |
+
+Ensure remotes are configured:
+
+```bash
+git remote -v
+# origin   git@github.com:YOUR_GITHUB_USER/infra.aap_configuration.git
+# upstream https://github.com/redhat-cop/infra.aap_configuration.git
+```
+
+If `upstream` is missing:
+
+```bash
+git remote add upstream https://github.com/redhat-cop/infra.aap_configuration.git
+```
 
 Workflow
 
 Step 1: Sync with upstream and create a feature branch
 
-Always start from the latest upstream main/master:
+Always start from the latest upstream devel:
 
+```bash
 git fetch upstream
-git checkout -b YOUR_BRANCH_NAME upstream/main
+git checkout -b YOUR_BRANCH_NAME upstream/devel
+```
 
 Use a descriptive branch name (e.g., feat/add-new-module, fix/nginx-role-idempotency).
 
@@ -30,7 +57,7 @@ ansible-lint
 yamllint .
 ansible-test sanity
 
-All checks must pass cleanly. If the branch has pre-existing violations (e.g., from an old base), rebase onto upstream/main first. Manually fix any violations and re-run until clean.
+All checks must pass cleanly. If the branch has pre-existing violations (e.g., from an old base), rebase onto `upstream/devel` first. Manually fix any violations and re-run until clean.
 
 Step 3: Update documentation
 
@@ -132,10 +159,23 @@ docs: add execution environment requirements to README
 
 Step 6: Push and create the pull request
 
+Push the branch to the fork (`origin`):
+
+```bash
 git push -u origin HEAD
+```
 
-gh pr create --repo upstream-owner/repo --title "conventional commit style title" --body "$(cat <<'EOF'
+**Always** open the PR against the upstream repository, not the fork. Resolve your GitHub username from `origin` (or `gh api user -q .login`) for the `--head` value:
 
+```bash
+FORK_OWNER="$(gh api user -q .login)"
+
+gh pr create \
+  --repo redhat-cop/infra.aap_configuration \
+  --head "${FORK_OWNER}:YOUR_BRANCH_NAME" \
+  --base devel \
+  --title "conventional commit style title" \
+  --body "$(cat <<'EOF'
 ## Summary
 
 - Concise description of what changed and why
@@ -153,16 +193,21 @@ gh pr create --repo upstream-owner/repo --title "conventional commit style title
 - [ ] Changelog fragment added (if applicable)
 EOF
 )"
+```
 
-The PR targets upstream's main/master branch from the fork. Return the PR URL to the user.
+Replace `YOUR_BRANCH_NAME` with the actual branch name. Do **not** run `gh pr create` without `--repo redhat-cop/infra.aap_configuration` — that creates a PR on the fork instead of upstream.
+
+Return the upstream PR URL to the user (e.g. `https://github.com/redhat-cop/infra.aap_configuration/pull/NNNN`).
 
 Maintaining the PR
 
-When pushing additional commits to an existing PR, always update the PR body to reflect the new changes:
+When pushing additional commits to an existing PR, always update the PR body to reflect the new changes. Use `--repo redhat-cop/infra.aap_configuration` for all `gh pr` commands:
 
-gh pr edit PR_NUMBER --body "$(cat <<'EOF'
+```bash
+gh pr edit PR_NUMBER --repo redhat-cop/infra.aap_configuration --body "$(cat <<'EOF'
 ...updated body...
 EOF
 )"
+```
 
 The Summary, Changes, and Test plan sections must stay current with all commits on the branch, not just the initial one.
