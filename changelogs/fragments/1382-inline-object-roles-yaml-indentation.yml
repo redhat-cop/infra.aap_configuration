@@ -1,0 +1,4 @@
+bugfixes:
+  - Fix YAML parsing failure when applying inline object roles with lookup_organization.
+  - Fix inline object role assignments for credentials, projects, and instance groups by removing quotes around teams and users so they render as YAML lists, preventing failures on Ansible 2.20.
+...
