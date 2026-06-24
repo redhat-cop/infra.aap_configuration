@@ -93,8 +93,8 @@
       - role: "{{ _role }}"
         instance_groups:
           - "{{ _item.new_name | default(_item.name) }}"
-        teams: "{{ _item.roles[_role].teams | default(omit) }}"
-        users: "{{ _item.roles[_role].users | default(omit) }}"
+        teams: {{ _item.roles[_role].teams | default(omit) }}
+        users: {{ _item.roles[_role].users | default(omit) }}
       {% endfor %}
       {% endif %}
       {% endfor %}
