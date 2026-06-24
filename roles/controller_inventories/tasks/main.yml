@@ -92,6 +92,9 @@
       - role: "{{ _role }}"
         inventories:
           - "{{ _item.new_name | default(_item.name) }}"
+        {% if _item.organization is defined %}
+        lookup_organization: "{{ _item.organization.name | default(_item.organization) }}"
+        {% endif %}
         teams: {{ _item.roles[_role].teams | default(omit) }}
         users: {{ _item.roles[_role].users | default(omit) }}
       {% endfor %}

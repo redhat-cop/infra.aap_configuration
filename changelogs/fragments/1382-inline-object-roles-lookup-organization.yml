@@ -1,0 +1,3 @@
+bugfixes:
+  - Include lookup_organization when applying inline roles on organization-scoped controller resources so duplicate object names resolve correctly.
+...
