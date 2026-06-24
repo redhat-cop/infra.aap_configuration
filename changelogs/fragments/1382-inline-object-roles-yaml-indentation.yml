@@ -1,0 +1,3 @@
+bugfixes:
+  - Fix YAML parsing failure when applying inline object roles with lookup_organization.
+...
