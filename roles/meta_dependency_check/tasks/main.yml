@@ -10,6 +10,7 @@
           host=aap_hostname,
           verify_ssl=aap_validate_certs
         ).version
+        | default('0.0.0')
       }}
 
 - name: "Assert that the AAP version is 2.5 or greater"
