@@ -1,5 +1,22 @@
 ---
 # tasks file for meta_dependency_check
+- name: "Set aap_version fact"
+  ansible.builtin.set_fact:
+    aap_version: >-
+      {{
+        lookup(
+          'ansible.platform.gateway_api',
+          'api/gateway/v1/ping',
+          host=aap_hostname,
+          verify_ssl=aap_validate_certs
+        ).version
+      }}
+
+- name: "Assert that the AAP version is 2.5 or greater"
+  ansible.builtin.assert:
+    that:
+      - "aap_version is version('2.5', '>=')"
+    fail_msg: "This collection is only supported on AAP 2.5+. Use infra.controller_configuration for earlier AAP/Ansible Tower versions."
 
 - name: Print dependency check status
   ansible.builtin.debug:
