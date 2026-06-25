@@ -4,6 +4,43 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v4.6.1
+======
+
+Bugfixes
+--------
+
+- dispatch - Run hub_collection after hub_collection_repository so collections referencing a repository distribution are created successfully (https://github.com/redhat-cop/infra.aap_configuration/issues/1361)
+- hub_collection - Added missing ``repository``, ``timeout``, and ``interval`` variables to role documentation. Fixed incorrect default values for ``timeout`` and ``interval`` in the README (https://github.com/redhat-cop/infra.aap_configuration/issues/1214).
+
+v4.6.0
+======
+
+Minor Changes
+-------------
+
+- controller_license - Added support for Red Hat service account authentication via ``redhat_subscription_client_id`` and ``redhat_subscription_client_secret`` for subscription lookup. Added clear validation error when ``use_lookup`` is enabled but no credentials are provided. Added missing ``use_lookup``, ``filters``, ``list_num``, and ``state`` sub-options to argument specs. Fixed typo in secure logging variable name in argument specs. Added Limitations section to documentation (https://github.com/redhat-cop/infra.aap_configuration/issues/1214).
+
+Bugfixes
+--------
+
+- controller_license - Fixed subscription lookup routing so that ``use_lookup: true`` is considered when deciding whether to include the subscription tasks. Previously the role silently did nothing when ``use_lookup`` was set without ``redhat_subscription_username``/``redhat_subscription_password`` (https://github.com/redhat-cop/infra.aap_configuration/issues/1214).
+- docs/CONVERSION_GUIDE.md - correct incorrect reference to ansible.gateway by replacing it with ansible.platform in the conversion guide documentation
+
+v4.5.0
+======
+
+Minor Changes
+-------------
+
+- README - Standardized collection links tables and added Support section for certification review.
+
+Bugfixes
+--------
+
+- Tags used across filetree_read/object_diff (aap_configuration_extended) and dispatch (this collection) were inconsistent (e.g. eda_credentials vs credential, hub_namespaces vs namespaces, controller_credentials vs credentials).
+- eda_projects, eda_credentials, eda_credential_types, eda_decision_environments, eda_event_streams, eda_rulebook_activations, eda_users - Fixed roles to honor the global ``platform_state`` variable, making them consistent with other AAP configuration roles (https://github.com/redhat-cop/infra.aap_configuration/issues/1319).
+
 v4.4.0
 ======
 

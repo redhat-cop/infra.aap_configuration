@@ -9,6 +9,60 @@ argument_specs:
         description: Data structure describing your collections to manage.
         type: list
         elements: dict
+#        options:
+#          namespace:
+#            required: true
+#            type: str
+#            description: Namespace name. Must be lower case containing only alphanumeric characters and underscores.
+#          name:
+#            required: true
+#            type: str
+#            description: Collection name. Must be lower case containing only alphanumeric characters and underscores.
+#          version:
+#            required: false
+#            type: str
+#            description: Collection version. If not provided and auto_approve is true, will be derived from the path.
+#          path:
+#            required: false
+#            type: str
+#            description: Collection artifact file path.
+#          repository:
+#            required: false
+#            type: str
+#            default: staging
+#            description: Name of the destination repository for the collection upload.
+#          wait:
+#            required: false
+#            type: bool
+#            default: true
+#            description: Waits for the collection to be uploaded.
+#          auto_approve:
+#            required: false
+#            type: bool
+#            default: true
+#            description: Approves a collection and requires version to be set.
+#          timeout:
+#            required: false
+#            type: int
+#            description: Maximum time in seconds to wait for the collection approval.
+#          interval:
+#            required: false
+#            type: float
+#            default: 10
+#            description: Interval in seconds at which approval is checked.
+#          overwrite_existing:
+#            required: false
+#            type: bool
+#            default: false
+#            description: Overwrites an existing collection and requires version to be set.
+#          state:
+#            required: false
+#            type: str
+#            default: present
+#            choices:
+#              - present
+#              - absent
+#            description: Desired state of the resource.
 
       # Async variables
       hub_configuration_collection_async_retries:

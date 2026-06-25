@@ -1,0 +1,5 @@
+---
+# markdownlint-cli2 configuration; rule definitions remain in .markdownlint.yml
+ignores:
+  - .agents/**
+...

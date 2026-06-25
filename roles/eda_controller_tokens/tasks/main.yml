@@ -24,7 +24,7 @@
       async: 1000
       poll: 0
       register: __controller_tokens_job_async
-      changed_when: not __controller_tokens_job_async.changed
+      changed_when: false
       vars:
         __operation: "{{ operation_translate[__controller_tokens_job_async.state | default(platform_state) | default('present')] }}"
 

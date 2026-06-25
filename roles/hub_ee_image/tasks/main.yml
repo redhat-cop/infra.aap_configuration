@@ -26,7 +26,7 @@
       async: "{{ hub_configuration_ee_image_async_timeout }}"
       poll: 0
       register: __ee_images_job_async
-      changed_when: not __ee_images_job_async.changed
+      changed_when: false
       vars:
         __operation: "{{ operation_translate[__ee_image_item.state | default(platform_state) | default('present')] }}"
 

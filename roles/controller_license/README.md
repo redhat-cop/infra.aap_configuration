@@ -4,7 +4,8 @@
 
 An Ansible Role to deploy a license on Ansible Controller.
 
-This will either accept a manifest file, or use redhat subscription account credentials to lookup available subscriptions and use them.
+This will either accept a manifest file, or use Red Hat account credentials to lookup available subscriptions and use them.
+Subscription lookup supports both username/password and service account (client_id/client_secret) authentication.
 
 ## Requirements
 
@@ -22,8 +23,10 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`controller_license`|`see below`|yes|Data structure describing your license for controller, described below.||
-|`redhat_subscription_username`|""|no|Red Hat or Red Hat Satellite username to get available subscriptions. Used only for Subscription lookup implementation.||
-|`redhat_subscription_password`|""|no|Red Hat or Red Hat Satellite password to get available subscriptions. Used only for Subscription lookup implementation.||
+|`redhat_subscription_username`|""|no|Red Hat or Red Hat Satellite username to get available subscriptions. Used only for subscription lookup.||
+|`redhat_subscription_password`|""|no|Red Hat or Red Hat Satellite password to get available subscriptions. Used only for subscription lookup.||
+|`redhat_subscription_client_id`|""|no|Red Hat service account client ID to get available subscriptions. Used only for subscription lookup.||
+|`redhat_subscription_client_secret`|""|no|Red Hat service account client secret to get available subscriptions. Used only for subscription lookup.||
 
 ### Secure Logging Variables
 
@@ -62,12 +65,11 @@ The module and this role can use either a manifest file, or lookup the subscript
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
-|`filters`|"default values"|no|str|dict of filters to use to narrow the subscription. See example below for how to use this.|
-|`support_level`|"Self-Support"|no|str|DEPRECATED - changed to `manifest_file` (still works as an alias)|
-|`list_num`|0|no|int|List index of the subscription to use, if you want to override the default, it is recommended to use the filters to limit the pools found.|
-|`subscription_id`|""|no|str|Red Hat or Red Hat Satellite subscription_id to attach to.|
+|`use_lookup`|`false`|no|bool|Whether or not to lookup subscriptions. Requires either `redhat_subscription_username`/`redhat_subscription_password` or `redhat_subscription_client_id`/`redhat_subscription_client_secret` to be set.|
+|`filters`|`see below`|no|dict|Dict of filters to narrow the subscription lookup results. Defaults to `product_name: "Red Hat Ansible Automation Platform"` and `support_level: "Self-Support"`.|
+|`list_num`|0|no|int|List index of the subscription to use from lookup results. It is recommended to use filters to limit the results instead.|
+|`subscription_id`|""|no|str|Red Hat or Red Hat Satellite subscription_id to attach to. When provided, the subscription lookup is skipped.|
 |`force`|`false`|no|bool|By default, the license will only be applied if controller is currently unlicensed or trial licensed. When force=true, the license is always applied.|
-|`use_lookup`|`false`|no|bool|Whether or not to lookup subscriptions.|
 |`state`|`present`|no|str|Desired state of the resource.|
 
 ### Standard License Data Structure
@@ -120,7 +122,7 @@ controller_license:
     - {role: infra.aap_configuration.controller_license, when: controller_license is defined}
 ```
 
-### Standard Subscription lookup Role Usage
+### Subscription Lookup with Username/Password
 
 ```yaml
 ---
@@ -142,6 +144,35 @@ controller_license:
   roles:
     - {role: infra.aap_configuration.controller_license}
 ```
+
+### Subscription Lookup with Service Account
+
+```yaml
+---
+- name: Playbook to configure ansible controller post installation
+  hosts: localhost
+  connection: local
+  vars:
+    aap_validate_certs: false
+    aap_hostname: aap.example.com
+    aap_username: admin
+    aap_password: changeme
+    redhat_subscription_client_id: "c6bd7594-d776-46e5-8156-6d17af147479"
+    redhat_subscription_client_secret: "MO9QUvoOZ5fc5JQKXoTch1AsTLI7nFsZ"
+    controller_license:
+      use_lookup: true
+      filters:
+        product_name: "Red Hat Ansible Automation Platform"
+        support_level: "Standard"
+  roles:
+    - {role: infra.aap_configuration.controller_license}
+```
+
+## Limitations
+
+- The subscription lookup (`use_lookup: true`) requires Red Hat credentials to be provided as separate variables (`redhat_subscription_username`/`redhat_subscription_password` or `redhat_subscription_client_id`/`redhat_subscription_client_secret`), not inside the `controller_license` dict.
+- The `client_id`/`client_secret` service account parameters require `ansible.controller` collection version 4.6+ (or the equivalent `awx.awx` version that includes service account support in the `subscriptions` module).
+- The `filters` option performs client-side filtering on the subscription list returned by the Red Hat API. If no subscriptions match the filters, the role will fail when attempting to access the subscription at the index specified by `list_num`.
 
 ## License
 

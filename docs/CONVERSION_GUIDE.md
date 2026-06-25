@@ -31,7 +31,7 @@ These collections are
 - [ansible.controller](https://console.redhat.com/ansible/automation-hub/repo/published/ansible/controller/)
 - [ansible.platform(Gateway collection)](https://console.redhat.com/ansible/automation-hub/repo/published/ansible/platform/)
 
-These collections are required for this collection to work, While ansible.controller and ansible.gateway are only available from [https://console.redhat.com/](https://console.redhat.com/).
+These collections are required for this collection to work. While ansible.controller and ansible.platform are only available from [https://console.redhat.com/](https://console.redhat.com/).
 
 ## Connection and Global Variables
 
@@ -84,7 +84,7 @@ gateway_configuration vars:
 - gateway_services
 - gateway_role_user_assignments
 - gateway_routes
-- aap_teams
+- aap_teams <- controller_teams
 
 ah_configuration vars:
 

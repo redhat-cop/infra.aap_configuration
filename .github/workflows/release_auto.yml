@@ -25,7 +25,7 @@ jobs:
       change_level: ${{ steps.bump_level.outputs.level }}
       change_present: ${{ steps.bump_level.outputs.change_present }}
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
 
@@ -148,7 +148,7 @@ jobs:
             exit 1
           fi
 
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           fetch-depth: 0
           token: "${{ secrets.GH_WORKFLOW_KEY }}"
@@ -213,7 +213,7 @@ jobs:
       contents: read
     environment: release
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: release/${{ needs.calculate_version.outputs.collection_version }}
 
@@ -236,7 +236,7 @@ jobs:
       contents: read
     environment: release
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: release/${{ needs.calculate_version.outputs.collection_version }}
 
@@ -249,7 +249,7 @@ jobs:
       - name: Publish to Automation Hub
         env:
           ANSIBLE_GALAXY_SERVER_LIST: rh_automation_hub
-          ANSIBLE_GALAXY_SERVER_RH_AUTOMATION_HUB_URL: https://cloud.redhat.com/api/automation-hub/
+          ANSIBLE_GALAXY_SERVER_RH_AUTOMATION_HUB_URL: https://console.redhat.com/api/automation-hub/
           ANSIBLE_GALAXY_SERVER_RH_AUTOMATION_HUB_AUTH_URL: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
           ANSIBLE_GALAXY_SERVER_RH_AUTOMATION_HUB_TOKEN: ${{ secrets.CRC_PUBLISH_KEY }}
         run: |
@@ -276,7 +276,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: release/${{ needs.calculate_version.outputs.collection_version }}
 
@@ -311,7 +311,7 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: release/${{ needs.calculate_version.outputs.collection_version }}
 

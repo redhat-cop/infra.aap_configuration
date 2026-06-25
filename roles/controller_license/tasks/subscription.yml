@@ -1,10 +1,26 @@
 ---
 # tasks file for license role - Subscription
 
+- name: subscription | Validate lookup credentials are provided
+  ansible.builtin.assert:
+    that:
+      - >-
+        (redhat_subscription_username is defined and redhat_subscription_password is defined)
+        or (redhat_subscription_client_id is defined and redhat_subscription_client_secret is defined)
+    fail_msg: >-
+      use_lookup is enabled but no Red Hat credentials were provided.
+      Set either redhat_subscription_username/redhat_subscription_password
+      or redhat_subscription_client_id/redhat_subscription_client_secret.
+  when:
+    - controller_license.use_lookup | default(false)
+    - controller_license.subscription_id is not defined
+
 - name: subscription | Get subscriptions with a filter
   ansible.controller.subscriptions:
-    username: "{{ redhat_subscription_username }}"
-    password: "{{ redhat_subscription_password }}"
+    username: "{{ redhat_subscription_username | default(omit) }}"
+    password: "{{ redhat_subscription_password | default(omit) }}"
+    client_id: "{{ redhat_subscription_client_id | default(omit) }}"
+    client_secret: "{{ redhat_subscription_client_secret | default(omit) }}"
     filters: "{{ controller_license.filters | default(_redhat_cop_license_filters) }}"
     # Role Standard Options
     controller_host: "{{ aap_hostname | default(omit, true) }}"
@@ -15,8 +31,8 @@
     validate_certs: "{{ aap_validate_certs | default(omit) }}"
   register: subscription
   when:
-    - "'use_lookup' in controller_license"
-    - controller_license.use_lookup
+    - controller_license.use_lookup | default(false)
+    - controller_license.subscription_id is not defined
 
 - name: subscription | Install the Controller license
   ansible.controller.license:

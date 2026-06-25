@@ -27,7 +27,7 @@
       async: 1000
       poll: 0
       register: __gateway_role_team_assignments_job_async
-      changed_when: not __gateway_role_team_assignments_job_async.changed
+      changed_when: false
       vars:
         __operation: "{{ operation_translate[__gateway_role_team_assignments_item.state | default(platform_state) | default('present')] }}"
 

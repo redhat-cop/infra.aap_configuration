@@ -7,12 +7,12 @@ repos:
       - id: trailing-whitespace
 
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.22.0
+    rev: v0.22.1
     hooks:
       - id: markdownlint-cli2
 
   - repo: https://github.com/psf/black
-    rev: 26.3.1
+    rev: 26.5.1
     hooks:
       - id: black
         name: black
@@ -29,7 +29,7 @@ repos:
         types: [python]
 
   - repo: https://github.com/djdanielsson/ansible-content-prek-actions
-    rev: v26.4.1
+    rev: v26.4.6
     hooks:
       - id: ansible-lint
       - id: changelog

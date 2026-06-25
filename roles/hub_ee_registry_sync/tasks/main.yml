@@ -26,7 +26,7 @@
       async: "{{ hub_configuration_ee_registry_sync_async_timeout }}"
       poll: 0
       register: __ee_registry_syncs_job_async
-      changed_when: not __ee_registry_syncs_job_async.changed
+      changed_when: false
       vars:
         __operation: "{{ operation_translate[__ee_registry_syncs_job_async.state | default(platform_state) | default('present')] }}"
 

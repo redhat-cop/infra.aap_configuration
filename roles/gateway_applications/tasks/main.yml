@@ -36,7 +36,7 @@
       async: "{{ ansible_check_mode | ternary(0, 1000) }}"
       poll: 0
       register: __gateway_applications_job_async
-      changed_when: not __gateway_applications_job_async.changed
+      changed_when: (__gateway_applications_job_async.changed if ansible_check_mode else false)
       vars:
         __operation: "{{ operation_translate[__gateway_application_item.state | default(platform_state) | default('present')] }}"
 

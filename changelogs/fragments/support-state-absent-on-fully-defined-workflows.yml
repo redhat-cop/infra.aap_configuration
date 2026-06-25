@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - "Setting state: absent on a fully defined workflow with nodes defined will no longer throw an error."
+...

@@ -26,7 +26,7 @@
       async: "{{ hub_configuration_collection_repository_sync_async_timeout }}"
       poll: 0
       register: __collection_repository_sync_job_async
-      changed_when: not __collection_repository_sync_job_async.changed
+      changed_when: false
       vars:
         __operation: "{{ operation_translate[__hub_collection_repository_sync_item.state | default(platform_state) | default('present')] }}"
 
