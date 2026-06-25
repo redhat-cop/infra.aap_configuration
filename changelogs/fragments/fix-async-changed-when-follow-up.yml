@@ -1,0 +1,4 @@
+bugfixes:
+  - gateway roles now do not set ``changed_when`` meaning that the tasks
+    updating gateway configuration correctly report the change status.
+...
