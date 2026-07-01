@@ -4,6 +4,31 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v4.7.0
+======
+
+Minor Changes
+-------------
+
+- Also handle {% .. %} like {{ .. }} in controller_credential_types.injectors.
+- Remove unused gateway_teams/tasks/async_gateway_team.yml file.
+- Updated the ``submit-pr`` agent skill to target ``redhat-cop/infra.aap_configuration`` on the ``devel`` branch, with generic fork-owner resolution for ``gh pr create``.
+
+Bugfixes
+--------
+
+- Correct inverted ``changed_when`` on async module tasks across gateway, hub, eda, and controller roles. Roles without check mode support now use ``changed_when: false``; roles with check mode support use the same ``(changed if ansible_check_mode else false)`` pattern as other controller roles.
+- Fix YAML parsing failure when applying inline object roles with lookup_organization.
+- Fix inline object role assignments for credentials, projects, and instance groups by removing quotes around teams and users so they render as YAML lists, preventing failures on Ansible 2.20.
+- Fix inline role assignments when ``new_name`` is specified on controller resources. Now uses the new name for role assignment.
+- Improve error messages in collect_async_status by checking detail and error keys before falling back to Unknown Error.
+- Include lookup_organization when applying inline roles on organization-scoped controller resources so duplicate object names resolve correctly.
+- Prevent inline role assignments from being applied to pre-existing objects when the resource creation/update fails during a ``new_name`` operation.
+- Setting state: absent on a fully defined workflow with nodes defined will no longer throw an error.
+- Skip inline role assignments when the parent object has state absent.
+- Updates argument_specs for host groups to use the variable names in the controller_host_groups role
+- Updates documentation for host groups to use the variable names in the controller_host_groups role
+
 v4.6.1
 ======
 

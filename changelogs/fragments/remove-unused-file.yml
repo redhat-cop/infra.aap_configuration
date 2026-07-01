@@ -1,4 +1,0 @@
----
-minor_changes:
-  - Remove unused gateway_teams/tasks/async_gateway_team.yml file.
-...

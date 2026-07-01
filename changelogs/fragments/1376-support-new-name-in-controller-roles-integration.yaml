@@ -1,5 +1,0 @@
----
-bugfixes:
-  - "Fix inline role assignments when ``new_name`` is specified on controller resources. Now uses the new name for role assignment."
-  - "Prevent inline role assignments from being applied to pre-existing objects when the resource creation/update fails during a ``new_name`` operation."
-...
