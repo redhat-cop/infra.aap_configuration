@@ -19,22 +19,22 @@
       - gateway_role_user_assignments
       - gateway_routes
       - hub_namespaces
-      - hub_collections
-      - hub_collection_list
-      - hub_custom_collections
       - hub_ee_registries
       - hub_ee_repositories
       - hub_ee_repository_sync
       - hub_ee_images
       - hub_collection_remotes
       - hub_collection_repositories
+      - hub_collections
+      - hub_collection_list
+      - hub_custom_collections
       - controller_settings
       - controller_instances
-      - controller_instance_groups
       - controller_labels
       - controller_credential_types
       - controller_credentials
       - controller_credential_input_sources
+      - controller_instance_groups
       - controller_execution_environments
       - controller_notifications
       - controller_projects
