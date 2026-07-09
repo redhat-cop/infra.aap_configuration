@@ -1,0 +1,3 @@
+minor_changes:
+  - Define the var list for include_wildcard_vars.yml in vars/, make it possible to use it outside of the collection.
+...

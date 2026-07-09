@@ -366,6 +366,19 @@ It is possible to redefine this variable with a subset of roles or with differen
 For more information about variables, see [top-level README](../../README.md).
 For more information about roles, see each roles' README (also linked in the top-level README)
 
+#### Using list of AAP CaC variables in external playbooks
+
+In case an external playbook needs to read and process the wildcard variables like the `dispatch` role does,
+the following task shows how to make the `aap_configuration_all_vars` list variable available in the playbook:
+
+```
+    - name: Read list of known AAP CaC wildcard variables
+      ansible.builtin.include_role:
+        name: infra.aap_configuration.dispatch
+        tasks_from: vars_only
+        public: true
+```
+
 ## License
 
 [GPLv3+](https://github.com/redhat-cop/infra.aap_configuration/blob/devel/LICENSE)
