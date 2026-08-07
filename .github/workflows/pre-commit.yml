@@ -28,9 +28,12 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          # Use the PR merge ref so fork pull_request_target workflows can fetch PR
-          # code without allow-unsafe-pr-checkout (blocked by checkout v7+).
-          ref: ${{ github.event.pull_request.number && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          # Fork PRs need the head ref to lint PR changes. actions/checkout v7+ blocks
+          # this by default in pull_request_target workflows; opt in after review:
+          # https://gh.io/securely-using-pull_request_target
+          # Risk is gated by the requires-approval environment on approve_run.
+          allow-unsafe-pr-checkout: true
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.x"
