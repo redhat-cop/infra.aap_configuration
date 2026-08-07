@@ -1,0 +1,3 @@
+bugfixes:
+  - Allow fork pull request checkout in pre-commit workflow via allow-unsafe-pr-checkout after maintainer approval gate.
+...
