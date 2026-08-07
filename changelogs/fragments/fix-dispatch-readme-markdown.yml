@@ -1,0 +1,3 @@
+bugfixes:
+  - Fix markdownlint MD040 failure in dispatch README by adding a language to the fenced code block.
+...
