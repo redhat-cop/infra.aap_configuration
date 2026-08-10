@@ -1,0 +1,3 @@
+bugfixes:
+  - Fix pre-commit CI failures by adding the missing YAML document end marker in dispatch vars_only task and using the PR merge ref for fork pull request checkouts.
+...
