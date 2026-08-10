@@ -1181,3 +1181,47 @@ releases:
     - 1214-hub-collection-docs.yml
     - 1361-hub-collection-dispatch-order.yml
     release_date: '2026-06-15'
+  4.7.0:
+    changes:
+      bugfixes:
+      - 'Correct inverted ``changed_when`` on async module tasks across gateway, hub,
+        eda, and controller roles. Roles without check mode support now use ``changed_when:
+        false``; roles with check mode support use the same ``(changed if ansible_check_mode
+        else false)`` pattern as other controller roles.'
+      - Fix YAML parsing failure when applying inline object roles with lookup_organization.
+      - Fix inline object role assignments for credentials, projects, and instance
+        groups by removing quotes around teams and users so they render as YAML lists,
+        preventing failures on Ansible 2.20.
+      - Fix inline role assignments when ``new_name`` is specified on controller resources.
+        Now uses the new name for role assignment.
+      - Improve error messages in collect_async_status by checking detail and error
+        keys before falling back to Unknown Error.
+      - Include lookup_organization when applying inline roles on organization-scoped
+        controller resources so duplicate object names resolve correctly.
+      - Prevent inline role assignments from being applied to pre-existing objects
+        when the resource creation/update fails during a ``new_name`` operation.
+      - 'Setting state: absent on a fully defined workflow with nodes defined will
+        no longer throw an error.'
+      - Skip inline role assignments when the parent object has state absent.
+      - Updates argument_specs for host groups to use the variable names in the controller_host_groups
+        role
+      - Updates documentation for host groups to use the variable names in the controller_host_groups
+        role
+      minor_changes:
+      - Also handle {% .. %} like {{ .. }} in controller_credential_types.injectors.
+      - Remove unused gateway_teams/tasks/async_gateway_team.yml file.
+      - Updated the ``submit-pr`` agent skill to target ``redhat-cop/infra.aap_configuration``
+        on the ``devel`` branch, with generic fork-owner resolution for ``gh pr create``.
+    fragments:
+    - 1267-improve-error-messages.yml
+    - 1376-support-new-name-in-controller-roles-integration.yaml
+    - 1377_skip_roles_on_absent.yml
+    - 1380-host-groups-documentation-and-argument-update.yml
+    - 1382-inline-object-roles-lookup-organization.yml
+    - 1382-inline-object-roles-yaml-indentation.yml
+    - credentials_types_escaping.yml
+    - fix-async-changed-when.yml
+    - remove-unused-file.yml
+    - submit-pr-skill-upstream.yml
+    - support-state-absent-on-fully-defined-workflows.yml
+    release_date: '2026-07-01'

@@ -1,8 +1,0 @@
-bugfixes:
-  - >-
-    Correct inverted ``changed_when`` on async module tasks across gateway, hub,
-    eda, and controller roles. Roles without check mode support now use
-    ``changed_when: false``; roles with check mode support use the same
-    ``(changed if ansible_check_mode else false)`` pattern as other controller
-    roles.
-...

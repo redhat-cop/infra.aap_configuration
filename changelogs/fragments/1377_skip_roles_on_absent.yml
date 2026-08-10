@@ -1,3 +1,0 @@
-bugfixes:
-  - Skip inline role assignments when the parent object has state absent.
-...

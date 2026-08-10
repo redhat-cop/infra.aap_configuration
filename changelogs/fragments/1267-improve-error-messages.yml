@@ -1,4 +1,0 @@
----
-bugfixes:
-  - Improve error messages in collect_async_status by checking detail and error keys before falling back to Unknown Error.
-...

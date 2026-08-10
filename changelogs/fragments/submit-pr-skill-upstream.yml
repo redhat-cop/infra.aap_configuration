@@ -1,5 +1,0 @@
-minor_changes:
-  - >-
-    Updated the ``submit-pr`` agent skill to target ``redhat-cop/infra.aap_configuration``
-    on the ``devel`` branch, with generic fork-owner resolution for ``gh pr create``.
-...
