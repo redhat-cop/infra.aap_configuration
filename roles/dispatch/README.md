@@ -371,7 +371,7 @@ For more information about roles, see each roles' README (also linked in the top
 In case an external playbook needs to read and process the wildcard variables like the `dispatch` role does,
 the following task shows how to make the `aap_configuration_all_vars` list variable available in the playbook:
 
-```
+```yaml
     - name: Read list of known AAP CaC wildcard variables
       ansible.builtin.include_role:
         name: infra.aap_configuration.dispatch
