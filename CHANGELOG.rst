@@ -4,6 +4,24 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v4.8.0
+======
+
+Minor Changes
+-------------
+
+- Define the var list for include_wildcard_vars.yml in vars/, make it possible to use it outside of the collection.
+- Minor wildcard handling improvement and optimization.
+
+Bugfixes
+--------
+
+- Allow fork pull request checkout in pre-commit workflow via allow-unsafe-pr-checkout after maintainer approval gate.
+- Fix markdownlint MD040 failure in dispatch README by adding a language to the fenced code block.
+- Fix pre-commit CI failures by adding the missing YAML document end marker in dispatch vars_only task and using the PR merge ref for fork pull request checkouts.
+- Install Python 3.11 through 3.14 in pre-commit CI so ansible-test sanity tox environments can find required interpreters.
+- Reorder all_vars list in include_wildcard_vars.yml to match the role call order by the dispatch role.
+
 v4.7.0
 ======
 
