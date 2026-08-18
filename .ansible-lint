@@ -41,6 +41,7 @@ mock_modules:
   - ansible.controller.job_launch
   - ansible.controller.job_template
   - ansible.controller.job_cancel
+  - ansible.controller.job_wait
   - ansible.controller.label
   - ansible.controller.notification_template
   - ansible.controller.organization
@@ -100,10 +101,33 @@ mock_modules:
   - ansible.hub.ah_token
   - ansible.hub.ah_approval
 
-# mock_roles:
-#   - mocked_role
-#   - author.role_name # old standalone galaxy role
-#   - fake_namespace.fake_collection.fake_role # role within a collection
+mock_roles:
+  - infra.aap_configuration.ansible_config
+  - infra.aap_configuration.dispatch
+  - infra.aap_configuration.eda_controller_tokens
+  - infra.aap_configuration.eda_credential_input_sources
+  - infra.aap_configuration.eda_credential_types
+  - infra.aap_configuration.eda_credentials
+  - infra.aap_configuration.eda_decision_environments
+  - infra.aap_configuration.eda_event_streams
+  - infra.aap_configuration.eda_projects
+  - infra.aap_configuration.eda_rulebook_activations
+  - infra.aap_configuration.eda_users
+  - infra.aap_configuration.hub_collection
+  - infra.aap_configuration.hub_collection_remote
+  - infra.aap_configuration.hub_collection_repository
+  - infra.aap_configuration.hub_ee_image
+  - infra.aap_configuration.hub_ee_registry
+  - infra.aap_configuration.hub_ee_registry_index
+  - infra.aap_configuration.hub_ee_registry_sync
+  - infra.aap_configuration.hub_ee_repository
+  - infra.aap_configuration.hub_ee_repository_sync
+  - infra.aap_configuration.hub_group
+  - infra.aap_configuration.hub_group_roles
+  - infra.aap_configuration.hub_namespace
+  - infra.aap_configuration.hub_publish
+  - infra.aap_configuration.hub_role
+  - infra.aap_configuration.hub_user
 
 # Enable checking of loop variable prefixes in roles
 loop_var_prefix: "^(__|{role}_)"
