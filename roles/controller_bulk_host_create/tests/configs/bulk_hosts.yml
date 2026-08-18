@@ -12,3 +12,4 @@ controller_bulk_hosts:
     description: "Test host 3"
     inventory: "Demo Inventory"
     variables: "ansible_host: 192.168.1.12"
+...

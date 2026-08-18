@@ -1,0 +1,4 @@
+bugfixes:
+  - Fix ansible-lint failures in test playbooks and role test files by adding YAML document end markers and simplifying controller_api lookup plugin detection.
+  - Fix release tarball upload by using the workflow GITHUB_TOKEN instead of the expired GH_WORKFLOW_KEY secret.
+...

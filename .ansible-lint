@@ -15,7 +15,6 @@ exclude_paths:
   - changelogs/
   - tests/templated_role_example
   - .ansible/
-  - tests/
 
 # quiet: true
 # strict: true
