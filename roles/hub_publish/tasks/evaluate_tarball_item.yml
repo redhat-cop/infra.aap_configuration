@@ -1,0 +1,20 @@
+---
+- name: evaluate_tarball_item | Set tarball metadata from filename
+  ansible.builtin.set_fact:
+    __hub_publish_namespace: "{{ (__hub_collection_tarball | basename).split('-')[0] }}"
+    __hub_publish_name: "{{ (__hub_collection_tarball | basename).split('-')[1] }}"
+    __hub_publish_version: "{{ (__hub_collection_tarball | basename).split('-')[2:] | join('-') | splitext | first | splitext | first }}"
+    __hub_publish_overwrite: "{{ hub_overwrite_existing | bool }}"
+    __hub_publish_should_skip: false
+
+- name: evaluate_tarball_item | Existence check for pre-built collection tarball
+  ansible.builtin.include_tasks: check_collection_version.yml
+  when: hub_skip_existing_collections | bool
+
+- name: evaluate_tarball_item | Register pending pre-built collection tarball
+  ansible.builtin.set_fact:
+    __hub_publish_pending_tarballs: "{{ __hub_publish_pending_tarballs + [__hub_collection_tarball] }}"
+    __hub_publish_overwrite_lookup: "{{ __hub_publish_overwrite_lookup | combine({(__hub_publish_namespace + '.' + __hub_publish_name + ':' + __hub_publish_version): __hub_publish_overwrite}) }}"
+  when: not (__hub_publish_should_skip | default(false) | bool)
+
+...

@@ -1,0 +1,26 @@
+---
+# ah_collection cannot query version existence without a path, so use the Hub API directly.
+# This checks whether the collection version exists globally, not repository membership in hub_repository.
+- name: check_collection_version | Query collection version in Hub
+  ansible.builtin.uri:
+    url: "{{ aap_hostname.rstrip('/') }}/api/{{ hub_path_prefix | default(ah_path_prefix | default('galaxy')) }}/v3/collections/{{ __hub_publish_namespace }}/{{ __hub_publish_name }}/versions/{{ __hub_publish_version }}/"
+    user: "{{ aap_username | default(omit) }}"
+    password: "{{ aap_password | default(omit) }}"
+    force_basic_auth: "{{ (aap_username is defined and aap_password is defined and hub_token is not defined) | bool }}"
+    headers: "{{ {'Authorization': 'Token ' + hub_token} if hub_token is defined else omit }}"
+    validate_certs: "{{ aap_validate_certs | default(true) }}"
+    timeout: "{{ aap_request_timeout | default(10) }}"
+    status_code: [200, 404]
+  register: __hub_publish_version_lookup
+
+- name: check_collection_version | Determine whether to skip publishing this collection version
+  ansible.builtin.set_fact:
+    __hub_publish_should_skip: "{{ hub_skip_existing_collections | bool and (__hub_publish_version_lookup.status == 200) and not __hub_publish_overwrite | bool }}"
+
+- name: check_collection_version | Skip collection already present in Automation Hub
+  ansible.builtin.debug:
+    msg: "Skipping {{ __hub_publish_namespace }}.{{ __hub_publish_name }}:{{ __hub_publish_version }} — already present in Automation Hub"
+    verbosity: 1
+  when: __hub_publish_should_skip | bool
+
+...

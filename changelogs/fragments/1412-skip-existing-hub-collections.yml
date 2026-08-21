@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - hub_publish - Skip clone, build, and upload when a collection version already exists in Automation Hub. Use hub_overwrite_existing or per-item force to re-publish. Optional namespace, name, and collection_version fields enable pre-clone skip checks. Set hub_skip_existing_collections to false to restore the previous always-build behavior.
+...

@@ -4,35 +4,39 @@
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
   no_log: "{{ hub_configuration_publish_secure_logging }}"
   block:
-    - name: Git checkout
-      ansible.builtin.git:
-        repo: "{{ __hub_collection_item.git_url }}"
-        dest: "{{ aap_configuration_working_dir }}/{{ __hub_collection_item.collection_name }}"
-        version: "{{ __hub_collection_item.version | default(omit) }}"
-        key_file: "{{ __hub_collection_item.key_path | default(omit) }}"
-        ssh_opts: "{{ __hub_collection_item.ssh_opts | default(omit) }}"
+    - name: Initialize publish item lists
+      ansible.builtin.set_fact:
+        __hub_publish_pending_items: []
+        __hub_publish_pending_tarballs: []
+        __hub_publish_overwrite_lookup: {}
+        __hub_collection_list: []
+
+    - name: Evaluate custom collections for skip
+      ansible.builtin.include_tasks: evaluate_custom_collection_item.yml
       loop: "{{ hub_custom_collections }}"
       loop_control:
         loop_var: __hub_collection_item
-        label: "{{ __hub_collection_item.git_url }}"
+        label: "{{ __hub_collection_item.collection_name }}"
         pause: "{{ hub_configuration_publish_loop_delay }}"
-      when:
-        - hub_collection_list | length == 0
-        - __hub_collection_item.collection_local_path is not defined
+      when: hub_collection_list | length == 0
 
-    - name: Copy local collection to working dir
-      ansible.builtin.copy:
-        src: "{{ __hub_collection_item.collection_local_path }}/"
-        dest: "{{ aap_configuration_working_dir }}/{{ __hub_collection_item.collection_name }}"
-        remote_src: true
-        mode: "0700"
-      loop: "{{ hub_collection_list }}"
+    - name: Evaluate hub_collection_list local collections for skip
+      ansible.builtin.include_tasks: evaluate_custom_collection_item.yml
+      loop: "{{ hub_collection_list | reject('string') | list }}"
       loop_control:
         loop_var: __hub_collection_item
-        label: "{{ __hub_collection_item.collection_local_path }}"
-      when:
-        - hub_collection_list | length > 0
-        - __hub_collection_item.collection_local_path is defined
+        label: "{{ __hub_collection_item.collection_name }}"
+        pause: "{{ hub_configuration_publish_loop_delay }}"
+      when: hub_collection_list | length > 0
+
+    - name: Evaluate pre-built collection tarballs for skip
+      ansible.builtin.include_tasks: evaluate_tarball_item.yml
+      loop: "{{ hub_collection_list | select('string') | list }}"
+      loop_control:
+        loop_var: __hub_collection_tarball
+        label: "{{ __hub_collection_tarball | basename }}"
+        pause: "{{ hub_configuration_publish_loop_delay }}"
+      when: hub_collection_list | length > 0
 
     - name: Build Collections
       ansible.hub.ah_build:
@@ -40,36 +44,52 @@
         output_path: "{{ aap_configuration_working_dir }}/{{ __hub_collection_item.collection_name }}"
         force: true
       register: __hub_build_results
-      loop: "{{ hub_collection_list | default(hub_custom_collections, true) | select }}"
+      loop: "{{ __hub_publish_pending_items }}"
       loop_control:
         loop_var: __hub_collection_item
         label: "{{ __hub_collection_item.collection_name }}"
+        pause: "{{ hub_configuration_publish_loop_delay }}"
+      when: __hub_publish_pending_items | length > 0
 
     - name: Find if variable contains file or dir
       ansible.builtin.stat:
         path: "{{ __hub_build_result_item.path }}"
       register: __hub_build_stat_results
-      loop: "{{ __hub_build_results.results }}"
+      loop: "{{ __hub_build_results.results | default([]) }}"
       loop_control:
         loop_var: __hub_build_result_item
         label: "{{ __hub_build_result_item.path }}"
-      when: __hub_build_results is not skipped
+      when:
+        - __hub_build_results is defined
+        - __hub_build_results is not skipped
 
     - name: Find all relevant built collection files
       ansible.builtin.find:
         paths: "{{ (__hub_build_result_item.stat.isdir) | ternary(__hub_build_result_item.stat.path, (__hub_build_result_item.stat.path | dirname)) }}"
         patterns: "{{ (__hub_build_result_item.stat.isdir) | ternary('*.tar.gz', (__hub_build_result_item.stat.path | basename)) }}"
       register: __hub_collections_find_results
-      loop: "{{ __hub_build_stat_results.results }}"
+      loop: "{{ __hub_build_stat_results.results | default([]) }}"
       loop_control:
         loop_var: __hub_build_result_item
         label: "{{ __hub_build_result_item.stat.path }}"
-      when: __hub_build_results is not skipped
+      when:
+        - __hub_build_results is defined
+        - __hub_build_results is not skipped
 
     - name: Set path for all collections found
       ansible.builtin.set_fact:
-        __hub_collection_list: "{{ __hub_collections_find_results.results | map(attribute='files') | flatten | map(attribute='path') | flatten }}"
-      when: __hub_build_results is not skipped
+        __hub_collection_list: "{{ (__hub_publish_pending_tarballs | default([])) + (__hub_collections_find_results.results | default([]) | map(attribute='files') | flatten | map(attribute='path') | list) }}"
+      when:
+        - __hub_build_results is defined
+        - __hub_build_results is not skipped or (__hub_publish_pending_tarballs | default([]) | length > 0)
+
+    - name: Set path for pending pre-built collection tarballs only
+      ansible.builtin.set_fact:
+        __hub_collection_list: "{{ __hub_publish_pending_tarballs }}"
+      when:
+        - hub_collection_list | length > 0
+        - __hub_publish_pending_tarballs | length > 0
+        - __hub_build_results is skipped
 
     - name: Get token
       ansible.hub.ah_token:
@@ -83,16 +103,22 @@
         - hub_token is not defined
         - lookup("ansible.builtin.env", "AH_API_TOKEN") | length > 0
         - __hub_collection_list is defined
+        - __hub_collection_list | length > 0
 
     - name: Publish Collections
+      vars:
+        __hub_publish_file_namespace: "{{ (__hub_collection_file | basename).split('-')[0] }}"
+        __hub_publish_file_name: "{{ (__hub_collection_file | basename).split('-')[1] }}"
+        __hub_publish_file_version: "{{ (__hub_collection_file | basename).split('-')[2:] | join('-') | splitext | first | splitext | first }}"
+        __hub_publish_file_key: "{{ __hub_publish_file_namespace + '.' + __hub_publish_file_name + ':' + __hub_publish_file_version }}"
       ansible.hub.ah_collection:
-        namespace: "{{ (__hub_collection_file | basename).split('-')[0] }}"
-        name: "{{ (__hub_collection_file | basename).split('-')[1] }}"
-        version: "{{ (__hub_collection_file | basename).split('-')[2:] | join('-') | splitext | first | splitext | first }}"
+        namespace: "{{ __hub_publish_file_namespace }}"
+        name: "{{ __hub_publish_file_name }}"
+        version: "{{ __hub_publish_file_version }}"
         path: "{{ __hub_collection_file }}"
         repository: "{{ hub_repository }}"
         auto_approve: "{{ hub_auto_approve }}"
-        overwrite_existing: "{{ hub_overwrite_existing }}"
+        overwrite_existing: "{{ __hub_publish_overwrite_lookup[__hub_publish_file_key] | default(hub_overwrite_existing) | bool }}"
         ah_host: "{{ aap_hostname | default(omit) }}"
         ah_username: "{{ aap_username | default(omit) }}"
         ah_password: "{{ aap_password | default(omit) }}"
@@ -103,11 +129,14 @@
       loop: "{{ __hub_collection_list }}"
       loop_control:
         loop_var: __hub_collection_file
+        pause: "{{ hub_configuration_publish_loop_delay }}"
       async: "{{ hub_configuration_publish_async_timeout }}"
       poll: 0
       register: __publish_job_async
       changed_when: false
-      when: __hub_collection_list is defined
+      when:
+        - __hub_collection_list is defined
+        - __hub_collection_list | length > 0
 
     - name: Publish Collection | Wait for finish the publish creation
       when:
@@ -115,7 +144,7 @@
         - __publish_job_async_result_item.ansible_job_id is defined
       ansible.builtin.include_role:
         name: infra.aap_configuration.collect_async_status
-      loop: "{{ __publish_job_async.results }}"
+      loop: "{{ __publish_job_async.results | default([]) }}"
       loop_control:
         loop_var: __publish_job_async_result_item
       vars:
@@ -139,12 +168,14 @@
         ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
         validate_certs: "{{ aap_validate_certs | default(omit) }}"
         request_timeout: "{{ aap_request_timeout | default(omit) }}"
-      loop: "{{ __hub_collection_list }}"
+      loop: "{{ __hub_collection_list | default([]) }}"
       loop_control:
         loop_var: __hub_collection_file
+        pause: "{{ hub_configuration_publish_loop_delay }}"
       when:
         - not hub_auto_approve
         - __hub_collection_list is defined
+        - __hub_collection_list | length > 0
       register: approval
       retries: 3
       delay: 2
@@ -154,11 +185,13 @@
       ansible.builtin.file:
         path: "{{ __hub_collection_item | dirname }}"
         state: absent
-      loop: "{{ __hub_collection_list }}"
+      loop: "{{ __hub_collection_list | default([]) }}"
       loop_control:
         loop_var: __hub_collection_item
         label: "{{ __hub_collection_item | dirname }}"
-      when: __hub_collection_list is defined
+      when:
+        - __hub_collection_list is defined
+        - __hub_collection_list | length > 0
 
   always:
     - name: Cleanup async results files
@@ -168,7 +201,7 @@
       ansible.builtin.async_status:
         jid: "{{ __publish_job_async_result_item.ansible_job_id }}"
         mode: cleanup
-      loop: "{{ __publish_job_async.results }}"
+      loop: "{{ __publish_job_async.results | default([]) }}"
       loop_control:
         loop_var: __publish_job_async_result_item
         label: "Cleaning up job results file: {{ __publish_job_async_result_item.results_file | default('Unknown') }}"
