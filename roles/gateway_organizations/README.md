@@ -115,7 +115,6 @@ Options for the `aap_organizations` variable:
       {
         "name": "Automation Group",
         "description": "This is the Automation Group",
-        "custom_virtualenv": "/opt/cust/environment/",
         "max_hosts": 10,
         "galaxy_credentials": "Automation Hub",
         "notification_templates_error": [
@@ -143,11 +142,10 @@ aap_organizations:
   state: absent
 - name: Org 1
   description: This is the Org 1 Group
-  state: exists
+  state: present
 - name: Org 2
   description: This is the Org 2 Group
 - name: Org 3
-  custom_virtualenv: "/opt/cust/environment/"
   max_hosts: 10
   new_name: Org 4
 ```
