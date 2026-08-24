@@ -3,7 +3,7 @@
 # This checks whether the collection version exists globally, not repository membership in hub_repository.
 - name: check_collection_version | Query collection version in Hub
   ansible.builtin.uri:
-    url: "{{ aap_hostname.rstrip('/') }}/api/{{ hub_path_prefix | default(ah_path_prefix | default('galaxy')) }}/v3/collections/{{ __hub_publish_namespace }}/{{ __hub_publish_name }}/versions/{{ __hub_publish_version }}/"
+    url: "https://{{ aap_hostname | regex_replace('^https?://', '') | rstrip('/') }}/api/{{ hub_path_prefix | default(ah_path_prefix | default('galaxy')) }}/v3/collections/{{ __hub_publish_namespace }}/{{ __hub_publish_name }}/versions/{{ __hub_publish_version }}/"
     user: "{{ aap_username | default(omit) }}"
     password: "{{ aap_password | default(omit) }}"
     force_basic_auth: "{{ (aap_username is defined and aap_password is defined and hub_token is not defined) | bool }}"
