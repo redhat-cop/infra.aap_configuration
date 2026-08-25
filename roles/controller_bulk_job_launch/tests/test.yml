@@ -17,3 +17,4 @@
 
   roles:
     - { role: ../.., when: controller_bulk_launch_jobs is defined }
+...

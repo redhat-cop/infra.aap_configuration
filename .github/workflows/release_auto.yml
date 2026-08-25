@@ -284,10 +284,16 @@ jobs:
 
       - name: Upload tarball and publish release
         env:
-          GH_TOKEN: ${{ secrets.GH_WORKFLOW_KEY }}
+          GH_TOKEN: ${{ github.token }}
           TAG: ${{ needs.calculate_version.outputs.collection_version }}
         run: |
-          for tarball in ${{ env.COLLECTION_NAMESPACE }}-${{ env.COLLECTION_NAME }}*.tar.gz; do
+          shopt -s nullglob
+          tarballs=(${{ env.COLLECTION_NAMESPACE }}-${{ env.COLLECTION_NAME }}*.tar.gz)
+          if [ ${#tarballs[@]} -eq 0 ]; then
+            echo "::error::No collection tarball found to upload"
+            exit 1
+          fi
+          for tarball in "${tarballs[@]}"; do
             ASSET_NAME=$(basename "$tarball")
             EXISTING=$(gh release view "$TAG" --repo "${{ github.repository }}" --json assets --jq ".assets[].name" 2>/dev/null || true)
             if echo "$EXISTING" | grep -qF "$ASSET_NAME"; then
