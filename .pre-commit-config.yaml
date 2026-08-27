@@ -29,7 +29,7 @@ repos:
         types: [python]
 
   - repo: https://github.com/djdanielsson/ansible-content-prek-actions
-    rev: v26.4.6
+    rev: v26.6.1
     hooks:
       - id: ansible-lint
       - id: changelog
