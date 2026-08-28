@@ -1,18 +1,5 @@
 ---
-# Create AH Namespace
-# - name: Get token
-#   ansible.hub.ah_token:
-#     ah_host:               "{{ aap_hostname | default(omit) }}"
-#     ah_username:          "{{ aap_username | default(omit) }}"
-#     ah_password:           "{{ aap_password | default(omit) }}"
-#     hub_path_prefix:        "{{ hub_path_prefix | default(omit) }}"
-#     validate_certs:        "{{ aap_validate_certs | default(omit) }}"
-#     request_timeout:       "{{ aap_request_timeout | default(omit) }}"
-#   when:
-#     - ah_token is not defined
-#     - lookup("ansible.builtin.env", "AH_API_TOKEN") == ""
-#     - hub_namespaces | length > 1
-
+# Create AH collection namespace
 - name: Manage Hub Namespaces Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"

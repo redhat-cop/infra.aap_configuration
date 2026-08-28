@@ -1,4 +1,5 @@
 ---
+# Publish AH collection
 - name: Manage Hub Publish Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
@@ -90,20 +91,6 @@
         - hub_collection_list | length > 0
         - __hub_publish_pending_tarballs | length > 0
         - __hub_build_results is skipped
-
-    - name: Get token
-      ansible.hub.ah_token:
-        ah_host: "{{ aap_hostname | default(omit) }}"
-        ah_username: "{{ aap_username | default(omit) }}"
-        ah_password: "{{ aap_password | default(omit) }}"
-        ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
-        validate_certs: "{{ aap_validate_certs | default(omit) }}"
-        request_timeout: "{{ aap_request_timeout | default(omit) }}"
-      when:
-        - hub_token is not defined
-        - lookup("ansible.builtin.env", "AH_API_TOKEN") | length > 0
-        - __hub_collection_list is defined
-        - __hub_collection_list | length > 0
 
     - name: Publish Collections
       vars:
