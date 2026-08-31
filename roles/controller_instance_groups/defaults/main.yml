@@ -7,4 +7,5 @@ controller_configuration_instance_groups_loop_delay: "{{ aap_configuration_loop_
 aap_configuration_async_dir:
 controller_configuration_instance_groups_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 aap_configuration_apply_object_roles: true
+controller_configuration_instance_groups_collect_errors: "{{ aap_configuration_collect_errors | default(false) }}"
 ...

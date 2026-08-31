@@ -3,9 +3,9 @@
 - name: Manage Hub EE Registry Sync Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ hub_configuration_ee_registry_secure_logging }}"
   block:
     - name: Sync Automation Hub EE Registry
+      no_log: "{{ hub_configuration_ee_registry_secure_logging }}"
       ansible.hub.ah_ee_registry_sync:
         name: "{{ __hub_ee_registry_sync_item.name }}"
         wait: "{{ __hub_ee_registry_sync_item.wait | default(omit) }}"
@@ -41,6 +41,7 @@
         loop_var: __ee_registry_syncs_job_async_result_item
         label: "{{ __operation.verb }} EE registry sync {{ __ee_registry_syncs_job_async_result_item.__hub_ee_registry_sync_item.name }} | Wait for finish the EE registry sync {{ __operation.action }}"
       vars:
+        cas_collect_errors: "{{ hub_configuration_ee_registry_collect_errors }}"
         cas_secure_logging: "{{ hub_configuration_ee_registry_secure_logging }}"
         cas_async_delay: "{{ hub_configuration_ee_registry_sync_async_delay }}"
         cas_async_retries: "{{ hub_configuration_ee_registry_sync_async_retries }}"

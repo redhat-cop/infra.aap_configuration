@@ -3,9 +3,9 @@
 - name: Manage Controller Projects Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ controller_configuration_project_update_secure_logging }}"
   block:
     - name: Run Controller project update
+      no_log: "{{ controller_configuration_project_update_secure_logging }}"
       ansible.controller.project_update:
         name: "{{ __project_update_update_item.name }}"
         organization: "{{ __project_update_update_item.organization.name | default(__project_update_update_item.organization | default(omit, true)) }}"
@@ -49,6 +49,7 @@
       loop_control:
         loop_var: __project_update_job_async_results_item
       vars:
+        cas_collect_errors: "{{ controller_configuration_project_update_collect_errors }}"
         cas_secure_logging: "{{ controller_configuration_project_update_secure_logging }}"
         cas_async_delay: "{{ controller_configuration_project_update_async_delay }}"
         cas_async_retries: "{{ controller_configuration_project_update_async_retries }}"

@@ -7,4 +7,5 @@ gateway_applications_async_delay: "{{ aap_configuration_async_delay | default(1)
 gateway_applications_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 aap_applications_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 aap_configuration_async_dir:
+gateway_applications_collect_errors: "{{ aap_configuration_collect_errors | default(false) }}"
 ...

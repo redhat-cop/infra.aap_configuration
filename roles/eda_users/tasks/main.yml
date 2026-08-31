@@ -3,9 +3,9 @@
 - name: Manage EDA Controller user Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ eda_configuration_users_secure_logging }}"
   block:
     - name: Add EDA Controller user
+      no_log: "{{ eda_configuration_users_secure_logging }}"
       ansible.eda.user:
         username: "{{ __user_item.username }}"
         new_username: "{{ __user_item.new_username | default(omit) }}"
@@ -46,6 +46,7 @@
         loop_var: __users_job_async_result_item
         label: "{{ __operation.verb }} user {{ __users_job_async_result_item.__user_item.username }} | Wait for finish the user {{ __operation.action }}"
       vars:
+        cas_collect_errors: "{{ eda_configuration_users_collect_errors }}"
         cas_secure_logging: "{{ eda_configuration_users_secure_logging }}"
         cas_async_delay: "{{ eda_configuration_users_async_delay }}"
         cas_async_retries: "{{ eda_configuration_users_async_retries }}"

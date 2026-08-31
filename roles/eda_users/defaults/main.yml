@@ -4,4 +4,5 @@ eda_configuration_users_secure_logging: "{{ aap_configuration_secure_logging | d
 eda_configuration_users_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 eda_configuration_users_async_delay: "{{ aap_configuration_async_delay| default(1) }}"
 aap_configuration_async_dir:
+eda_configuration_users_collect_errors: "{{ aap_configuration_collect_errors | default(false) }}"
 ...

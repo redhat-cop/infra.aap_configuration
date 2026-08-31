@@ -3,9 +3,9 @@
 - name: Manage Hub EE Image Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ hub_configuration_ee_image_secure_logging }}"
   block:
     - name: Add Automation Hub EE Image
+      no_log: "{{ hub_configuration_ee_image_secure_logging }}"
       ansible.hub.ah_ee_image:
         name: "{{ __ee_image_item.name }}"
         # new_name:         "{{ __ee_image_item.new_name | default(omit) }}"  <-- Needs adding once new_name option added to module
@@ -41,6 +41,7 @@
         loop_var: __ee_images_job_async_result_item
         label: "{{ __operation.verb }} EE Image {{ __ee_images_job_async_result_item.__ee_image_item.name }} | Wait for finish the EE image {{ __operation.action }}"
       vars:
+        cas_collect_errors: "{{ hub_configuration_ee_image_collect_errors }}"
         cas_secure_logging: "{{ hub_configuration_ee_image_secure_logging }}"
         cas_async_delay: "{{ hub_configuration_ee_image_async_delay }}"
         cas_async_retries: "{{ hub_configuration_ee_image_async_retries }}"

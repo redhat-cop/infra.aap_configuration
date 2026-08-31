@@ -2,9 +2,9 @@
 - name: Manage Controller Role Based Access Entries Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ controller_configuration_role_secure_logging }}"
   block:
     - name: Managing Role Based Access Entries on Controller
+      no_log: "{{ controller_configuration_role_secure_logging }}"
       ansible.controller.role:
         user: "{{ __controller_role_item.0.user | default(__controller_role_item.user) | default(omit, true) }}"
         users: "{{ __controller_role_item.0.users | default(__controller_role_item.users) | default(([] if controller_configuration_role_enforce_defaults else omit), true) }}"
@@ -64,6 +64,7 @@
         loop_var: __controller_role_job_async_results_item
         label: "{{ __operation.verb }} Role {{ __controller_role_job_async_results_item.__controller_role_item.1 | default(__controller_role_job_async_results_item.__controller_role_item.role) }} | Wait for finish the Roles {{ __operation.action }}"
       vars:
+        cas_collect_errors: "{{ controller_configuration_role_collect_errors }}"
         cas_secure_logging: "{{ controller_configuration_role_secure_logging }}"
         cas_async_delay: "{{ controller_configuration_role_async_delay }}"
         cas_async_retries: "{{ controller_configuration_role_async_retries }}"

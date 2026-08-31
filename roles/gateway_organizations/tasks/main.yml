@@ -2,9 +2,9 @@
 - name: Manage Organizations Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ gateway_organizations_secure_logging }}"
   block:
     - name: Organizations | Configuration
+      no_log: "{{ gateway_organizations_secure_logging }}"
       ansible.platform.organization:
         name: "{{ __gateway_organization_item.name | mandatory }}"
         new_name: "{{ __gateway_organization_item.new_name | default(omit) }}"
@@ -41,6 +41,7 @@
         - not ansible_check_mode
         - __gateway_organizations_job_async_results_item.ansible_job_id is defined
       vars:
+        cas_collect_errors: "{{ gateway_organizations_collect_errors }}"
         cas_secure_logging: "{{ gateway_organizations_secure_logging }}"
         cas_async_delay: "{{ gateway_organizations_async_delay }}"
         cas_async_retries: "{{ gateway_organizations_async_retries }}"
@@ -51,6 +52,7 @@
         cas_object_label: "{{ __operation.verb }} AAP Platform Organizations {{ __gateway_organizations_job_async_results_item.__gateway_organization_item.name }} | Wait for finish the Organizations {{ __operation.action }}"
 
     - name: Organizations | Controller Configuration
+      no_log: "{{ gateway_organizations_secure_logging }}"
       ansible.controller.organization:
         name: "{{ __controller_organizations_item.name | mandatory }}"
         new_name: "{{ __controller_organizations_item.new_name | default(omit) }}"
@@ -104,6 +106,7 @@
         loop_var: __organizations_job_async_results_item
         label: "{{ __operation.verb }} Controller Organization {{ __organizations_job_async_results_item.__controller_organizations_item.name }} | Wait for finish the organization {{ __operation.action }}"
       vars:
+        cas_collect_errors: "{{ gateway_organizations_collect_errors }}"
         cas_secure_logging: "{{ gateway_organizations_secure_logging }}"
         cas_async_delay: "{{ gateway_organizations_async_delay }}"
         cas_async_retries: "{{ gateway_organizations_async_retries }}"

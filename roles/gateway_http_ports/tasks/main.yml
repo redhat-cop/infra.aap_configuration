@@ -2,9 +2,9 @@
 - name: Manage Gateway HTTP Ports Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ gateway_http_ports_secure_logging }}"
   block:
     - name: HTTP Ports | Configuration
+      no_log: "{{ gateway_http_ports_secure_logging }}"
       ansible.platform.http_port:
         name: "{{ __gateway_http_ports_item.name | mandatory }}"
         new_name: "{{ __gateway_http_ports_item.new_name | default(omit) }}"
@@ -44,6 +44,7 @@
         label: "{{ __operation.verb }} AAP Platform Http Ports {{ __gateway_http_ports_job_async_results_item.__gateway_http_ports_item.name }} | Wait for finish the
           Http Ports {{ __operation.action }}"
       vars:
+        cas_collect_errors: "{{ gateway_http_ports_collect_errors }}"
         cas_secure_logging: "{{ gateway_http_ports_secure_logging }}"
         cas_async_delay: "{{ gateway_http_ports_async_delay }}"
         cas_async_retries: "{{ gateway_http_ports_async_retries }}"

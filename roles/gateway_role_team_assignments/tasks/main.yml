@@ -2,9 +2,9 @@
 - name: Manage Gateway Role Team Assignments Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ gateway_role_team_assignments_secure_logging }}"
   block:
     - name: Role Team Assignments | Configuration
+      no_log: "{{ gateway_role_team_assignments_secure_logging }}"
       ansible.platform.role_team_assignment:
         team: "{{ __gateway_role_team_assignments_item.team | default(omit, true) }}"
         team_ansible_id: "{{ __gateway_role_team_assignments_item.team_ansible_id | default(omit, true) }}"
@@ -42,6 +42,7 @@
         loop_var: __gateway_role_team_assignments_job_async_results_item
         label: "{{ __operation.verb }} Role Team Assignments {{ __gateway_role_team_assignments_job_async_results_item.__gateway_role_team_assignments_item.role_definition }} | Wait for finish the Role Team Assignments {{ __operation.action }}"
       vars:
+        cas_collect_errors: "{{ gateway_role_team_assignments_collect_errors }}"
         cas_secure_logging: "{{ gateway_role_team_assignments_secure_logging }}"
         cas_job_async_results_item: "{{ __gateway_role_team_assignments_job_async_results_item }}"
         cas_register_subvar: gateway_role_team_assignments

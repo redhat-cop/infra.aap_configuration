@@ -2,9 +2,9 @@
 - name: Manage Credentials Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ controller_configuration_credentials_secure_logging }}"
   block:
     - name: Managing Credentials
+      no_log: "{{ controller_configuration_credentials_secure_logging }}"
       ansible.controller.credential:
         name: "{{ __controller_credentials_item.name | mandatory }}"
         new_name: "{{ __controller_credentials_item.new_name | default(omit, true) }}"
@@ -53,6 +53,7 @@
         loop_var: __credentials_job_async_results_item
         label: "{{ __operation.verb }} Credential {{ __credentials_job_async_results_item.__controller_credentials_item.name }} | Wait for finish the credential {{ __operation.action }}"
       vars:
+        cas_collect_errors: "{{ controller_configuration_credentials_collect_errors }}"
         cas_secure_logging: "{{ controller_configuration_credentials_secure_logging }}"
         cas_async_delay: "{{ controller_configuration_credentials_async_delay }}"
         cas_async_retries: "{{ controller_configuration_credentials_async_retries }}"

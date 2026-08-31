@@ -28,7 +28,7 @@
     #   until: result.status == 200
     #   retries: 10
     #   delay: 30
-    #   ignore_errors: true
+    #   failed_when: false
 
     # - name: Wait for the controller node to be up
     #   ansible.builtin.uri:
@@ -157,5 +157,5 @@
         controller_password: "{{ aap_password }}"
         controller_host: "{{ aap_hostname }}"
         validate_certs: "{{ aap_validate_certs }}"
-      ignore_errors: true # noqa ignore-errors
+      failed_when: false # noqa ignore-errors
 ...

@@ -3,9 +3,9 @@
 - name: Manage Hub Collections Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ hub_configuration_collection_secure_logging }}"
   block:
     - name: Update or destroy Automation Hub Collection
+      no_log: "{{ hub_configuration_collection_secure_logging }}"
       ansible.hub.ah_collection:
         namespace: "{{ __hub_collection_item.namespace }}"
         name: "{{ __hub_collection_item.name }}"
@@ -52,6 +52,7 @@
         loop_var: __collections_job_async_result_item
         label: "{{ __operation.verb }} Collection {{ __collections_job_async_result_item.__hub_collection_item.name }} | Wait for finish the Collection {{ __operation.action }}"
       vars:
+        cas_collect_errors: "{{ hub_configuration_collection_collect_errors }}"
         cas_secure_logging: "{{ hub_configuration_collection_secure_logging }}"
         cas_async_delay: "{{ hub_configuration_collection_async_delay }}"
         cas_async_retries: "{{ hub_configuration_collection_async_retries }}"

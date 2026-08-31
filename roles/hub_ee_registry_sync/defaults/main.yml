@@ -22,4 +22,5 @@ hub_configuration_ee_registry_sync_async_retries: "{{ aap_configuration_async_re
 hub_configuration_ee_registry_sync_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 hub_configuration_ee_registry_sync_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 aap_configuration_async_dir:
+hub_configuration_ee_registry_collect_errors: "{{ aap_configuration_collect_errors | default(false) }}"
 ...

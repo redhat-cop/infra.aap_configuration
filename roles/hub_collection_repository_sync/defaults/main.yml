@@ -13,4 +13,5 @@ hub_configuration_collection_repository_sync_async_retries: "{{ aap_configuratio
 hub_configuration_collection_repository_sync_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 hub_configuration_collection_repository_sync_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 aap_configuration_async_dir:
+hub_configuration_collection_repository_sync_collect_errors: "{{ aap_configuration_collect_errors | default(false) }}"
 ...

@@ -2,4 +2,6 @@
 cas_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 cas_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 cas_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
+cas_collect_logs: "{{ aap_configuration_collect_logs | default(false) }}"
+cas_collect_errors: "{{ aap_configuration_collect_errors | default(false) }}"
 ...

@@ -2,7 +2,6 @@
 - name: Manage Hub Publish Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ hub_configuration_publish_secure_logging }}"
   block:
     - name: Initialize publish item lists
       ansible.builtin.set_fact:
@@ -39,6 +38,7 @@
       when: hub_collection_list | length > 0
 
     - name: Build Collections
+      no_log: "{{ hub_configuration_publish_secure_logging }}"
       ansible.hub.ah_build:
         path: "{{ aap_configuration_working_dir }}/{{ __hub_collection_item.collection_name }}"
         output_path: "{{ aap_configuration_working_dir }}/{{ __hub_collection_item.collection_name }}"
@@ -92,6 +92,7 @@
         - __hub_build_results is skipped
 
     - name: Get token
+      no_log: "{{ hub_configuration_publish_secure_logging }}"
       ansible.hub.ah_token:
         ah_host: "{{ aap_hostname | default(omit) }}"
         ah_username: "{{ aap_username | default(omit) }}"
@@ -111,6 +112,7 @@
         __hub_publish_file_name: "{{ (__hub_collection_file | basename).split('-')[1] }}"
         __hub_publish_file_version: "{{ (__hub_collection_file | basename).split('-')[2:] | join('-') | splitext | first | splitext | first }}"
         __hub_publish_file_key: "{{ __hub_publish_file_namespace + '.' + __hub_publish_file_name + ':' + __hub_publish_file_version }}"
+      no_log: "{{ hub_configuration_publish_secure_logging }}"
       ansible.hub.ah_collection:
         namespace: "{{ __hub_publish_file_namespace }}"
         name: "{{ __hub_publish_file_name }}"
@@ -148,6 +150,7 @@
       loop_control:
         loop_var: __publish_job_async_result_item
       vars:
+        cas_collect_errors: "{{ hub_configuration_publish_collect_errors }}"
         cas_secure_logging: "{{ hub_configuration_publish_secure_logging }}"
         cas_async_delay: "{{ hub_configuration_publish_async_delay }}"
         cas_async_retries: "{{ hub_configuration_publish_async_retries }}"
@@ -157,6 +160,7 @@
         cas_object_label: "Waiting for collection {{ (__publish_job_async_result_item.__hub_collection_file | basename).split('-')[1] }} to be published"
 
     - name: Approve Collections
+      no_log: "{{ hub_configuration_publish_secure_logging }}"
       ansible.hub.ah_approval:
         namespace: "{{ (__hub_collection_file | basename).split('-')[0] }}"
         name: "{{ (__hub_collection_file | basename).split('-')[1] }}"

@@ -6,4 +6,5 @@ controller_configuration_settings_async_retries: "{{ aap_configuration_async_ret
 controller_configuration_settings_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
 controller_configuration_settings_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 aap_configuration_async_dir:
+controller_configuration_settings_collect_errors: "{{ aap_configuration_collect_errors | default(false) }}"
 ...

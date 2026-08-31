@@ -3,9 +3,9 @@
 - name: Manage Controller Applications Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ controller_configuration_applications_secure_logging }}"
   block:
     - name: Managing Controller Applications
+      no_log: "{{ controller_configuration_applications_secure_logging }}"
       ansible.controller.application:
         name: "{{ __application_item.name | mandatory }}"
         new_name: "{{ __application_item.new_name | default(omit, true) }}"
@@ -53,6 +53,7 @@
         label: "{{ __operation.verb }} Controller Application {{ __applications_job_async_results_item.__application_item.name }} | Wait for finish the Application {{
           __operation.action }}"
       vars:
+        cas_collect_errors: "{{ controller_configuration_applications_collect_errors }}"
         cas_secure_logging: "{{ controller_configuration_applications_secure_logging }}"
         cas_async_delay: "{{ controller_configuration_applications_async_delay }}"
         cas_async_retries: "{{ controller_configuration_applications_async_retries }}"

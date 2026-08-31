@@ -2,9 +2,9 @@
 - name: Manage Gateway Teams Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ gateway_teams_secure_logging }}"
   block:
     - name: Teams | Configuration
+      no_log: "{{ gateway_teams_secure_logging }}"
       ansible.platform.team:
         name: "{{ __gateway_teams_item.name | mandatory }}"
         new_name: "{{ __gateway_teams_item.new_name | default(omit) }}"
@@ -43,6 +43,7 @@
         loop_var: __gateway_teams_job_async_results_item
         label: "{{ __operation.verb }} Gateway team {{ __gateway_teams_job_async_results_item.__gateway_teams_item.name }} | Wait for finish the Gateway team {{ __operation.action }}"
       vars:
+        cas_collect_errors: "{{ gateway_teams_collect_errors }}"
         cas_secure_logging: "{{ gateway_teams_secure_logging }}"
         cas_async_delay: "{{ gateway_teams_async_delay }}"
         cas_async_retries: "{{ gateway_teams_async_retries }}"

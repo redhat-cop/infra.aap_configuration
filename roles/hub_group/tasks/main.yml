@@ -3,9 +3,9 @@
 - name: Manage Hub Group Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ hub_configuration_group_secure_logging }}"
   block:
     - name: Add Automation Hub group
+      no_log: "{{ hub_configuration_group_secure_logging }}"
       ansible.hub.ah_group:
         name: "{{ __hub_group_item.name | default(omit) }}"
         # new_name:         "{{ __group.new_name | default(omit) }}"  <-- Needs adding once new_name option added to module
@@ -39,6 +39,7 @@
         loop_var: __groups_job_async_result_item
         label: "{{ __operation.verb }} Group {{ __groups_job_async_result_item.__hub_group_item.name }} | Wait for finish the Group {{ __operation.action }}"
       vars:
+        cas_collect_errors: "{{ hub_configuration_group_collect_errors }}"
         cas_secure_logging: "{{ hub_configuration_group_secure_logging }}"
         cas_async_delay: "{{ hub_configuration_group_async_delay }}"
         cas_async_retries: "{{ hub_configuration_group_async_retries }}"

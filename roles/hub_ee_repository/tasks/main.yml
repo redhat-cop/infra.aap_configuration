@@ -3,9 +3,9 @@
 - name: Manage Hub EE Repository Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ hub_configuration_ee_repository_secure_logging }}"
   block:
     - name: Add Automation Hub EE repository
+      no_log: "{{ hub_configuration_ee_repository_secure_logging }}"
       ansible.hub.ah_ee_repository:
         name: "{{ __hub_ee_repository_sync_item.name }}"
         description: "{{ __hub_ee_repository_sync_item.description | default(omit) }}"
@@ -45,6 +45,7 @@
         loop_var: __ee_repositories_job_async_result_item
         label: "{{ __operation.verb }} EE Repository {{ __ee_repositories_job_async_result_item.__hub_ee_repository_sync_item.name }} | Wait for finish the EE Repository {{ __operation.action }}"
       vars:
+        cas_collect_errors: "{{ hub_configuration_ee_repository_collect_errors }}"
         cas_secure_logging: "{{ hub_configuration_ee_repository_secure_logging }}"
         cas_async_delay: "{{ hub_configuration_ee_repository_async_delay }}"
         cas_async_retries: "{{ hub_configuration_ee_repository_async_retries }}"

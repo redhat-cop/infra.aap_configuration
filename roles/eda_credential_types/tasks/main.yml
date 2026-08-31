@@ -3,9 +3,9 @@
 - name: Manage EDA Controller credential Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ eda_configuration_credential_types_secure_logging }}"
   block:
     - name: Add EDA Controller credential
+      no_log: "{{ eda_configuration_credential_types_secure_logging }}"
       ansible.eda.credential_type:
         name: "{{ __credential_type_item.name }}"
         new_name: "{{ __credential_type_item.new_name | default(omit) }}"
@@ -42,6 +42,7 @@
         loop_var: __credential_types_job_async_result_item
         label: "{{ __operation.verb }} credential {{ __credential_types_job_async_result_item.__credential_type_item.name }} | Wait for finish the credential {{ __operation.action }}"
       vars:
+        cas_collect_errors: "{{ eda_configuration_credential_types_collect_errors }}"
         cas_secure_logging: "{{ eda_configuration_credential_types_secure_logging }}"
         cas_async_delay: "{{ eda_configuration_credential_types_async_delay }}"
         cas_async_retries: "{{ eda_configuration_credential_types_async_retries }}"

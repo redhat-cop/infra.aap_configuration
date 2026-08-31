@@ -8,4 +8,5 @@ controller_configuration_workflow_job_templates_loop_delay: "{{ aap_configuratio
 aap_configuration_async_dir:
 controller_configuration_workflows_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 aap_configuration_apply_object_roles: true
+controller_configuration_workflow_job_templates_collect_errors: "{{ aap_configuration_collect_errors | default(false) }}"
 ...
