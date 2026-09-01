@@ -1225,3 +1225,47 @@ releases:
     - submit-pr-skill-upstream.yml
     - support-state-absent-on-fully-defined-workflows.yml
     release_date: '2026-07-01'
+  4.9.0:
+    changes:
+      bugfixes:
+      - Allow fork pull request checkout in pre-commit workflow via allow-unsafe-pr-checkout
+        after maintainer approval gate.
+      - Correcting the documentation for the controller_credentials role to indicate
+        that credential_type is a required field.
+      - Fix ansible-lint failures in test playbooks and role test files by adding
+        YAML document end markers, simplifying controller_api lookup plugin detection,
+        and configuring ansible-lint mock modules/roles for job_wait and collection
+        role references.
+      - Fix markdownlint MD040 failure in dispatch README by adding a language to
+        the fenced code block.
+      - Fix pre-commit CI failures by adding the missing YAML document end marker
+        in dispatch vars_only task and using the PR merge ref for fork pull request
+        checkouts.
+      - Fix release tarball upload by using the workflow GITHUB_TOKEN instead of the
+        expired GH_WORKFLOW_KEY secret.
+      - Install Python 3.11 through 3.14 in pre-commit CI so ansible-test sanity tox
+        environments can find required interpreters.
+      - Reorder all_vars list in include_wildcard_vars.yml to match the role call
+        order by the dispatch role.
+      minor_changes:
+      - Define the var list for include_wildcard_vars.yml in vars/, make it possible
+        to use it outside of the collection.
+      - Minor wildcard handling improvement and optimization.
+      - allow for using hub_token for EE/collection management
+      - hub_publish - Skip clone, build, and upload when a collection version already
+        exists in Automation Hub. Use hub_overwrite_existing or per-item force to
+        re-publish. Optional namespace, name, and collection_version fields enable
+        pre-clone skip checks. Set hub_skip_existing_collections to false to restore
+        the previous always-build behavior.
+    fragments:
+    - 1412-skip-existing-hub-collections.yml
+    - define-wildcard-var-list.yml
+    - docs-credential-type-is-required.yml
+    - fix-ci-precommit.yml
+    - fix-dispatch-readme-markdown.yml
+    - fix-fork-pr-checkout.yml
+    - fix-lint-and-release-upload.yml
+    - optimize-wildcard.yml
+    - tweak-wildcard-var-list.yml
+    - use-hub-token.yml
+    release_date: '2026-09-01'
