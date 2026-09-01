@@ -1,6 +1,7 @@
 ---
 # tasks file for gateway_settings
 - name: Update automation platform gateway Settings
+  no_log: "{{ gateway_settings_secure_logging }}"
   ansible.platform.settings:
     settings: "{{ gateway_settings | default(omit, true) }}"
 
@@ -11,6 +12,5 @@
     gateway_token: "{{ aap_token | default(omit, true) }}"
     gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
     gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  no_log: "{{ gateway_settings_secure_logging }}"
   register: __gateway_setting_job
 ...
