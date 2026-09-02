@@ -1,0 +1,8 @@
+---
+bugfixes:
+  - >-
+    controller_job_templates, controller_workflow_job_templates, controller_schedules -
+    Preserve explicitly empty association lists such as ``labels: []`` so they clear
+    existing associations instead of being converted to omit
+    (https://github.com/redhat-cop/infra.aap_configuration/issues/1430).
+...
