@@ -1,6 +1,5 @@
 ---
 # defaults file for global_vars
-aap_request_timeout: 10
 operation_translate:
   present:
     verb: Create/Update
