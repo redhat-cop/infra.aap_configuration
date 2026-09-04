@@ -1,9 +1,10 @@
 ---
 bugfixes:
   - >-
-    Coerce empty or unset credential-injected aap_request_timeout values with
-    default(omit, true) on all roles so GitOps jobs using the Red Hat Ansible
-    Automation Platform credential without request_timeout configured do not pass
-    an invalid empty string to module request_timeout parameters.
+    Default aap_request_timeout to 10 seconds in global_vars and coerce empty or
+    unset credential-injected values to that default in all roles so GitOps jobs
+    using the Red Hat Ansible Automation Platform credential without
+    request_timeout configured do not pass an invalid empty string to module
+    request_timeout parameters.
 
 ...

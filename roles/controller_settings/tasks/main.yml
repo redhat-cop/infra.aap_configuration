@@ -16,7 +16,7 @@
         controller_password: "{{ aap_password | default(omit, true) }}"
         controller_username: "{{ aap_username | default(omit, true) }}"
         controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
-        request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        request_timeout: "{{ aap_request_timeout | default(10, true) }}"
         validate_certs: "{{ aap_validate_certs | default(omit) }}"
       # controller_settings must be either a dictionary/mapping or a list of dictionaries
       loop: "{{ controller_settings is mapping | ternary([controller_settings], controller_settings) }}"
