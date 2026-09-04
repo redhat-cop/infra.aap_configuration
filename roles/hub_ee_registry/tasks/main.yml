@@ -21,7 +21,7 @@
         ah_token: "{{ hub_token | default(omit) }}"
         ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
         validate_certs: "{{ aap_validate_certs | default(omit) }}"
-        request_timeout: "{{ aap_request_timeout | default(omit) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
         proxy_url: "{{ __hub_ee_registry_item.proxy_url | default(proxy_url | default(omit)) }}"
         proxy_username: "{{ __hub_ee_registry_item.proxy_username | default(proxy_username | default(omit)) }}"
         proxy_password: "{{ __hub_ee_registry_item.proxy_password | default(proxy_password | default(omit)) }}"

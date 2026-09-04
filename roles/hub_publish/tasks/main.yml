@@ -112,7 +112,7 @@
         ah_token: "{{ hub_token | default(omit) }}"
         ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
         validate_certs: "{{ aap_validate_certs | default(omit) }}"
-        request_timeout: "{{ aap_request_timeout | default(omit) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
       loop: "{{ __hub_collection_list }}"
       loop_control:
         loop_var: __hub_collection_file
@@ -154,7 +154,7 @@
         ah_token: "{{ hub_token | default(omit) }}"
         ah_path_prefix: "{{ hub_path_prefix | default(ah_path_prefix | default(omit)) }}"
         validate_certs: "{{ aap_validate_certs | default(omit) }}"
-        request_timeout: "{{ aap_request_timeout | default(omit) }}"
+        request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
       loop: "{{ __hub_collection_list | default([]) }}"
       loop_control:
         loop_var: __hub_collection_file
