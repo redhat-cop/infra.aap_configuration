@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - controller_hosts - Skip deleting hosts when their inventory is also marked for deletion, avoiding failures from inventory cascade deletes (https://github.com/redhat-cop/infra.aap_configuration/issues/1421).
+...

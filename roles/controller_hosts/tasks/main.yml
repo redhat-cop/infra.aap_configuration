@@ -1,4 +1,15 @@
 ---
+# Deleting an inventory cascades and removes its hosts. When both are marked
+# absent, skip host deletion so the role does not fail looking up a removed inventory.
+# See: https://github.com/redhat-cop/infra.aap_configuration/issues/1421
+- name: Identify inventories marked for deletion
+  ansible.builtin.set_fact:
+    __controller_inventories_absent_names: "{{ __absent_with_state + __absent_via_platform_state }}"
+  vars:
+    __inv_list: "{{ inventory if inventory is defined else (controller_inventories | default([])) }}"
+    __absent_with_state: "{{ __inv_list | selectattr('state', 'defined') | selectattr('state', 'equalto', 'absent') | map(attribute='name') | list }}"
+    __absent_via_platform_state: "{{ (__inv_list | rejectattr('state', 'defined') | map(attribute='name') | list) if ((platform_state | default('present')) == 'absent') else [] }}"
+
 - name: Manage Controller Hosts Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
@@ -26,6 +37,10 @@
         loop_var: __controller_host_item
         label: "{{ __operation.verb }} Controller host {{ __controller_host_item.name }}"
         pause: "{{ controller_configuration_hosts_loop_delay }}"
+      when:
+        - >-
+          (__controller_host_item.state | default(platform_state | default('present'))) != 'absent'
+          or __controller_host_item.inventory not in __controller_inventories_absent_names
       async: "{{ ansible_check_mode | ternary(0, 1000) }}"
       poll: 0
       register: __host_job_async
@@ -44,7 +59,7 @@
         - __host_job_async_results_item.ansible_job_id is defined
       ansible.builtin.include_role:
         name: infra.aap_configuration.collect_async_status
-      loop: "{{ __host_job_async.results }}"
+      loop: "{{ __host_job_async.results | default([]) }}"
       loop_control:
         loop_var: __host_job_async_results_item
         label: "{{ __operation.verb }} Controller Host {{ __host_job_async_results_item.__controller_host_item.name }} | Wait for finish the Hosts {{ __operation.action }}"
@@ -66,7 +81,7 @@
       ansible.builtin.async_status:
         jid: "{{ __host_job_async_results_item.ansible_job_id }}"
         mode: cleanup
-      loop: "{{ __host_job_async.results }}"
+      loop: "{{ __host_job_async.results | default([]) }}"
       loop_control:
         loop_var: __host_job_async_results_item
         label: "Cleaning up job results file: {{ __host_job_async_results_item.results_file | default('Unknown') }}"

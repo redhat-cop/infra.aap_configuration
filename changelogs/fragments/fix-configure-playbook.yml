@@ -1,0 +1,5 @@
+bugfixes:
+  - "configure_aap.yml: `Added ignore_unknown_extensions: true` to include_vars
+    task to prevent errors when non-YAML files (e.g., README.md) are present
+    in the configs directory"
+...
