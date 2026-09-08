@@ -86,7 +86,7 @@ This also speeds up the overall role.
 |`extra_vars`|""|no|dict|Specify extra_vars for the template.|
 |`allow_simultaneous`|""|no|bool|Allow simultaneous runs of the workflow job template.|
 |`inventory`|""|no|str|Inventory applied as a prompt, assuming job template prompts for inventory|
-|`limit`|""|no|str|Limit applied as a prompt, assuming job template prompts for limit|
+|`limit`|""|no|str|Limit applied as a prompt, assuming job template prompts for limit. Omit or set to null to leave the workflow-level limit unset so node-level limits can apply. Only set a non-empty value to override limits for all nodes.|
 |`labels`|""|no|list|The labels applied to this workflow job template. Set to `[]` to remove all labels. Omitting this key leaves existing labels unchanged. NOTE: Labels must be created with the [labels](https://github.com/redhat-cop/aap_configuration/tree/devel/roles/controller_labels) role first, an error will occur if the label supplied to this role does not exist.|
 |`ask_labels_on_launch`|""|no|bool|Prompt user for labels on launch.|
 |`job_tags`|""|no|str|Comma separated list of the tags to use for the workflow job template.|
