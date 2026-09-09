@@ -2,18 +2,114 @@
 # Derive controller_labels from labels referenced on templates, workflows, and schedules.
 # Organization is resolved from the owning object (or its project / unified job template).
 # Explicit controller_labels entries are preserved and win on (name, organization) duplicates.
-- name: derive_controller_labels | Collect and merge labels from resource definitions
+# Implemented in pure Jinja (same style as include_wildcard_vars.yml), no Python filter plugin.
+- name: derive_controller_labels | Build organization lookup maps
+  vars:
+    __dispatch_project_org_map: >-
+      {%- set ns = namespace(m={}) -%}
+      {%- for project in controller_projects | default([]) -%}
+        {%- if project.name is defined and project.organization is defined -%}
+          {%- set org = project.organization.name if project.organization is mapping else project.organization -%}
+          {%- if org -%}{%- set _ = ns.m.update({project.name: org}) -%}{%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {{ ns.m }}
+    __dispatch_template_org_map: >-
+      {%- set ns = namespace(m={}) -%}
+      {%- for template in controller_templates | default([]) -%}
+        {%- if template.name is defined -%}
+          {%- set t = namespace(org=none) -%}
+          {%- if template.organization is defined and template.organization -%}
+            {%- set t.org = template.organization.name if template.organization is mapping else template.organization -%}
+          {%- elif template.project is defined -%}
+            {%- if template.project is mapping -%}
+              {%- if template.project.organization is defined and template.project.organization -%}
+                {%- set t.org = template.project.organization.name if template.project.organization is mapping else template.project.organization -%}
+              {%- elif template.project.name is defined -%}
+                {%- set t.org = __dispatch_project_org_map[template.project.name] | default(none) -%}
+              {%- endif -%}
+            {%- else -%}
+              {%- set t.org = __dispatch_project_org_map[template.project] | default(none) -%}
+            {%- endif -%}
+          {%- endif -%}
+          {%- if t.org -%}{%- set _ = ns.m.update({template.name: t.org}) -%}{%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {{ ns.m }}
+    __dispatch_workflow_org_map: >-
+      {%- set ns = namespace(m={}) -%}
+      {%- for workflow in controller_workflows | default([]) -%}
+        {%- if workflow.name is defined and workflow.organization is defined and workflow.organization -%}
+          {%- set org = workflow.organization.name if workflow.organization is mapping else workflow.organization -%}
+          {%- if org -%}{%- set _ = ns.m.update({workflow.name: org}) -%}{%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {{ ns.m }}
   ansible.builtin.set_fact:
+    __dispatch_project_org_map: "{{ __dispatch_project_org_map }}"
+    __dispatch_template_org_map: "{{ __dispatch_template_org_map }}"
+    __dispatch_workflow_org_map: "{{ __dispatch_workflow_org_map }}"
+  tags: always
+
+- name: derive_controller_labels | Collect labels from resource definitions
+  vars:
     __dispatch_auto_labels_result: >-
-      {{
-        (controller_labels | default([]))
-        | infra.aap_configuration.dispatch_derive_labels(
-            controller_templates | default([]),
-            controller_projects | default([]),
-            controller_workflows | default([]),
-            controller_schedules | default([])
-          )
-      }}
+      {%- set ns = namespace(labels=[], unresolved=[], seen={}) -%}
+      {%- macro add_label(lab_name, org, source) -%}
+        {%- if lab_name -%}
+          {%- if org -%}
+            {%- set key = lab_name ~ '|' ~ org -%}
+            {%- if key not in ns.seen -%}
+              {%- set _ = ns.seen.update({key: true}) -%}
+              {%- set _ = ns.labels.append({'name': lab_name, 'organization': org}) -%}
+            {%- endif -%}
+          {%- else -%}
+            {%- set _ = ns.unresolved.append({'name': lab_name, 'source': source}) -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endmacro -%}
+      {%- macro label_list_from(obj) -%}
+        {%- if obj.labels is defined and obj.labels is sequence and obj.labels is not string -%}
+          {{ obj.labels | to_json }}
+        {%- elif obj.related is defined and obj.related is mapping
+              and obj.related.labels is defined and obj.related.labels is sequence
+              and obj.related.labels is not string -%}
+          {{ obj.related.labels | to_json }}
+        {%- else -%}
+          {{ '[]' }}
+        {%- endif -%}
+      {%- endmacro -%}
+      {%- macro process_labels(obj, default_org, source) -%}
+        {%- for lab in (label_list_from(obj) | from_json) -%}
+          {%- set lab_name = lab if lab is string else (lab.name if lab is mapping and lab.name is defined else none) -%}
+          {%- set lab_ns = namespace(org=default_org) -%}
+          {%- if lab is mapping and lab.organization is defined and lab.organization -%}
+            {%- set lab_ns.org = lab.organization.name if lab.organization is mapping else lab.organization -%}
+          {%- endif -%}
+          {{- add_label(lab_name, lab_ns.org, source) -}}
+        {%- endfor -%}
+      {%- endmacro -%}
+      {%- for template in controller_templates | default([]) -%}
+        {%- set default_org = __dispatch_template_org_map[template.name] | default(none) if template.name is defined else none -%}
+        {{- process_labels(template, default_org, 'controller_templates:' ~ (template.name | default('unknown'))) -}}
+      {%- endfor -%}
+      {%- for workflow in controller_workflows | default([]) -%}
+        {%- set default_org = __dispatch_workflow_org_map[workflow.name] | default(none) if workflow.name is defined else none -%}
+        {%- set source = 'controller_workflows:' ~ (workflow.name | default('unknown')) -%}
+        {{- process_labels(workflow, default_org, source) -}}
+        {%- for node in workflow.simplified_workflow_nodes | default(workflow.workflow_nodes | default([])) -%}
+          {{- process_labels(node, default_org, source ~ '/node:' ~ (node.identifier | default(node.name | default('unknown')))) -}}
+        {%- endfor -%}
+      {%- endfor -%}
+      {%- for schedule in controller_schedules | default([]) -%}
+        {%- set ujt = schedule.unified_job_template | default(none) -%}
+        {%- set ujt_name = ujt.name if ujt is mapping else ujt -%}
+        {%- set default_org = (__dispatch_template_org_map[ujt_name] | default(__dispatch_workflow_org_map[ujt_name] | default(none))) if ujt_name else none -%}
+        {{- process_labels(schedule, default_org, 'controller_schedules:' ~ (schedule.name | default('unknown'))) -}}
+      {%- endfor -%}
+      {{ {'labels': ns.labels, 'unresolved': ns.unresolved} }}
+  ansible.builtin.set_fact:
+    __dispatch_auto_labels_result: "{{ __dispatch_auto_labels_result }}"
   tags: always
 
 - name: derive_controller_labels | Warn about labels that could not be mapped to an organization
@@ -28,9 +124,32 @@
       - "{{ __dispatch_auto_labels_result.unresolved }}"
   tags: always
 
-- name: derive_controller_labels | Set controller_labels from derived results
+- name: derive_controller_labels | Merge derived labels into controller_labels
   when: (__dispatch_auto_labels_result.labels | default([])) | length > 0
+  vars:
+    __dispatch_merged_controller_labels: >-
+      {%- set ns = namespace(result=[], seen={}) -%}
+      {%- for item in controller_labels | default([]) -%}
+        {%- if item.name is defined and item.organization is defined -%}
+          {%- set org = item.organization.name if item.organization is mapping else item.organization -%}
+          {%- set key = item.name ~ '|' ~ org -%}
+          {%- if key not in ns.seen -%}
+            {%- set _ = ns.seen.update({key: true}) -%}
+            {%- set _ = ns.result.append(item | combine({'organization': org})) -%}
+          {%- endif -%}
+        {%- else -%}
+          {%- set _ = ns.result.append(item) -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- for item in __dispatch_auto_labels_result.labels -%}
+        {%- set key = item.name ~ '|' ~ item.organization -%}
+        {%- if key not in ns.seen -%}
+          {%- set _ = ns.seen.update({key: true}) -%}
+          {%- set _ = ns.result.append({'name': item.name, 'organization': item.organization}) -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {{ ns.result }}
   ansible.builtin.set_fact:
-    controller_labels: "{{ __dispatch_auto_labels_result.labels }}"
+    controller_labels: "{{ __dispatch_merged_controller_labels }}"
   tags: always
 ...
