@@ -1,0 +1,6 @@
+---
+minor_changes:
+  - |
+    dispatch - Add optional ``dispatch_auto_labels`` to derive ``controller_labels`` from
+    labels used on templates, workflows, and schedules before roles run.
+...

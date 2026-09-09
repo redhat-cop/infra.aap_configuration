@@ -1,5 +1,8 @@
 ---
 dispatch_include_wildcard_vars: false
+# When true, build/merge controller_labels from labels used on templates, workflows, and schedules
+# before roles run. Explicit controller_labels entries are preserved.
+dispatch_auto_labels: false
 
 gateway_configuration_dispatcher_roles:
   - role: gateway_authenticators

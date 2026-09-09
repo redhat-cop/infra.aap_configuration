@@ -4,6 +4,11 @@
   when: dispatch_include_wildcard_vars
   tags: always
 
+- name: Derive controller_labels from templates, workflows, and schedules
+  ansible.builtin.include_tasks: derive_controller_labels.yml
+  when: dispatch_auto_labels | bool
+  tags: always
+
 - name: "Run the following infra.aap_configuration roles: {{ aap_configuration_dispatcher_roles | map(attribute='role') | join(', ') }}"
   ansible.builtin.include_role:
     name: "{{ __role.role }}"

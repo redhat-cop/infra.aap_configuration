@@ -114,6 +114,24 @@ controller_projects:
 
 By default, this option is **`false`**.
 
+### Option: `dispatch_auto_labels`
+
+When `dispatch_auto_labels: true`, dispatch scans `controller_templates`, `controller_workflows` (including workflow nodes), and `controller_schedules` for label references and builds/merges `controller_labels` before roles run. That means you can attach labels on those resources without maintaining a separate `controller_labels` list.
+
+Organization ownership is resolved from the local vars tree:
+
+- Workflows: `organization` on the workflow (also used for node labels)
+- Job templates: `organization` if set, otherwise the related `controller_projects` entry's organization (or export-style `project.organization`)
+- Schedules: organization of the referenced `unified_job_template` (job template or workflow in the same vars)
+
+Explicit `controller_labels` entries are kept and win on `(name, organization)` duplicates. Label references that cannot be mapped to an organization are skipped and reported in a debug warning.
+
+By default, this option is **`false`**.
+
+```yaml
+dispatch_auto_labels: true
+```
+
 ```yaml
 aap_configuration_dispatcher_roles: >
   {{ (gateway_configuration_dispatcher_roles

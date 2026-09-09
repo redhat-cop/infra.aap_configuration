@@ -343,6 +343,16 @@ argument_specs:
         required: false
         description: The state all objects will take unless overridden by object default
         type: str
+      dispatch_include_wildcard_vars:
+        default: false
+        required: false
+        type: bool
+        description: When true, combine wildcard-suffixed configuration variables into their base list/dict vars before roles run.
+      dispatch_auto_labels:
+        default: false
+        required: false
+        type: bool
+        description: When true, derive and merge controller_labels from labels used on templates, workflows, and schedules before roles run.
       aap_hostname:
         default: None
         required: false

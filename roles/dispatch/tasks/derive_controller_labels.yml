@@ -1,0 +1,36 @@
+---
+# Derive controller_labels from labels referenced on templates, workflows, and schedules.
+# Organization is resolved from the owning object (or its project / unified job template).
+# Explicit controller_labels entries are preserved and win on (name, organization) duplicates.
+- name: derive_controller_labels | Collect and merge labels from resource definitions
+  ansible.builtin.set_fact:
+    __dispatch_auto_labels_result: >-
+      {{
+        (controller_labels | default([]))
+        | infra.aap_configuration.dispatch_derive_labels(
+            controller_templates | default([]),
+            controller_projects | default([]),
+            controller_workflows | default([]),
+            controller_schedules | default([])
+          )
+      }}
+  tags: always
+
+- name: derive_controller_labels | Warn about labels that could not be mapped to an organization
+  when: (__dispatch_auto_labels_result.unresolved | default([])) | length > 0
+  ansible.builtin.debug:
+    msg:
+      - >-
+        dispatch_auto_labels could not resolve an organization for
+        {{ __dispatch_auto_labels_result.unresolved | length }} label reference(s).
+        These labels were skipped. Ensure the owning template/workflow has an organization
+        (or a project present in controller_projects), or define them in controller_labels manually.
+      - "{{ __dispatch_auto_labels_result.unresolved }}"
+  tags: always
+
+- name: derive_controller_labels | Set controller_labels from derived results
+  when: (__dispatch_auto_labels_result.labels | default([])) | length > 0
+  ansible.builtin.set_fact:
+    controller_labels: "{{ __dispatch_auto_labels_result.labels }}"
+  tags: always
+...
