@@ -1,0 +1,8 @@
+---
+bugfixes:
+  - >-
+    controller_workflow_job_templates - Do not send an empty workflow-level limit when
+    ``limit`` is unset or null. Exported workflow definitions commonly use ``limit: null``,
+    which was rendered as an empty string and stored in ``char_prompts``, causing workflow
+    node limits to be ignored at runtime.
+...
