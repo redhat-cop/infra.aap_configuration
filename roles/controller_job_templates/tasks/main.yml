@@ -1,4 +1,23 @@
 ---
+- name: Auto create labels for job templates
+  ansible.builtin.include_role:
+    name: infra.aap_configuration.controller_labels
+  when: aap_configuration_autocreate_labels
+  vars:
+    _jts: "{{ job_templates if job_templates is defined else controller_templates }}"
+    controller_labels: "{{ _controller_labels | from_yaml | default([], true) | unique | list }}"
+    _controller_labels: |
+      {% for _jt in _jts %}
+      {% set _org = _jt.organization.name | default(_jt.organization | default(none), true) %}
+      {% if _org %}
+      {% for _label in (_jt.labels | default([])) + (_jt.related.labels | default([])) %}
+      {% set _name = _label.name | default(_label) %}
+      - name: "{{ _name }}"
+        organization: "{{ _org }}"
+      {% endfor %}
+      {% endif %}
+      {% endfor %}
+
 - name: Manage Controller Job Templates Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
