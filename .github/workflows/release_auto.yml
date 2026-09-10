@@ -139,15 +139,6 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Validate GH_WORKFLOW_KEY secret
-        env:
-          TOKEN: ${{ secrets.GH_WORKFLOW_KEY }}
-        run: |
-          if [ -z "$TOKEN" ]; then
-            echo "::error::GH_WORKFLOW_KEY secret is not set. This is required for pushing release branches."
-            exit 1
-          fi
-
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
@@ -172,9 +163,12 @@ jobs:
         run: antsibull-changelog release --verbose --version ${{ needs.calculate_version.outputs.collection_version }}
 
       - name: Commit and push to release branch
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
           git add -A
           git commit -m "[AUTO] Update changelog ${{ needs.calculate_version.outputs.collection_version }}"
           git push origin "release/${{ needs.calculate_version.outputs.collection_version }}"
@@ -191,7 +185,7 @@ jobs:
     steps:
       - name: Create draft GitHub Release
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
           TAG: ${{ needs.calculate_version.outputs.collection_version }}
         run: |
           if gh release view "$TAG" --repo "${{ github.repository }}" > /dev/null 2>&1; then
@@ -321,15 +315,15 @@ jobs:
           ref: release/${{ needs.calculate_version.outputs.collection_version }}
 
       - name: Create and merge release PR
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           gh pr create \
             --base devel \
             --head "release/${{ needs.calculate_version.outputs.collection_version }}" \
             --title "[RELEASE] Update changelog ${{ needs.calculate_version.outputs.collection_version }}" \
             --body "Updated with changelog for release ${{ needs.calculate_version.outputs.collection_version }}"
-          gh pr merge "release/${{ needs.calculate_version.outputs.collection_version }}" --rebase --admin
-        env:
-          GH_TOKEN: ${{ secrets.GH_WORKFLOW_KEY }}
+          gh pr merge "release/${{ needs.calculate_version.outputs.collection_version }}" --rebase
 
   deploy_ee:
     name: Build Execution Environment
