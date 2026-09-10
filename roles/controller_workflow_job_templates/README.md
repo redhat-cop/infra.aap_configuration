@@ -70,7 +70,7 @@ This also speeds up the overall role.
 
 ### Auto-create Labels
 
-When `aap_configuration_autocreate_labels` is set to `true`, labels referenced on workflow job templates are automatically created using the [controller_labels](https://github.com/redhat-cop/infra.aap_configuration/tree/devel/roles/controller_labels) role before workflow job templates are managed. Labels are collected from the `labels` or `related.labels` fields on each workflow job template and on each entry in `simplified_workflow_nodes`. A label is only created when the workflow job template defines an `organization`; workflows without an organization are skipped. Duplicate name and organization pairs are deduplicated.
+When `aap_configuration_autocreate_labels` is set to `true`, labels referenced on workflow job templates are automatically created using the [controller_labels](https://github.com/redhat-cop/infra.aap_configuration/tree/devel/roles/controller_labels) role `autocreate_labels` task file before workflow job templates are managed. Labels are collected from the `labels` or `related.labels` fields on each workflow job template and on each entry in `simplified_workflow_nodes`. A label is only created when the workflow job template defines an `organization`; workflows without an organization are skipped. Duplicate name and organization pairs are deduplicated.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|

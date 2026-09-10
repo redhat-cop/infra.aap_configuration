@@ -70,7 +70,7 @@ This also speeds up the overall role.
 
 ### Auto-create Labels
 
-When `aap_configuration_autocreate_labels` is set to `true`, labels referenced on job templates are automatically created using the [controller_labels](https://github.com/redhat-cop/infra.aap_configuration/tree/devel/roles/controller_labels) role before job templates are managed. Labels are collected from the `labels` field or `related.labels` on each job template. A label is only created when the job template defines an `organization`; templates without an organization are skipped. Duplicate name and organization pairs across job templates are deduplicated.
+When `aap_configuration_autocreate_labels` is set to `true`, labels referenced on job templates are automatically created using the [controller_labels](https://github.com/redhat-cop/infra.aap_configuration/tree/devel/roles/controller_labels) role `autocreate_labels` task file before job templates are managed. Labels are collected from the `labels` field or `related.labels` on each job template. A label is only created when the job template defines an `organization`; templates without an organization are skipped. Duplicate name and organization pairs across job templates are deduplicated.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
