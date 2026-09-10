@@ -83,7 +83,8 @@ eda_rulebook_activations:
     description: Hook to listen for changes in GitHub
     project: EDA_example
     rulebook: git-hook-deploy-rules.yml
-    decision_environment: Automation Hub Default Decision Environment
+    decision_environment: Hub Default Decision Environment
+    organization: Default
     event_streams:
       - event_stream: "Example Event Stream"
         source_name: "Sample source"
