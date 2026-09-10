@@ -50,6 +50,10 @@ This also speeds up the overall role.
 
 ## Data Structure
 
+### ⚠️ WARNING
+
+**The `force_restart` option stops a running rulebook activation before applying configuration changes and starts it again afterward when the desired state is `present` or `enabled`. This causes a service outage and may result in missed events and alerts during the restart window. Only use `force_restart` when you understand and accept this impact.**
+
 ### Rulebook activation Variables
 
 |Variable Name|Default Value|Required|Type|Description|
@@ -71,6 +75,7 @@ This also speeds up the overall role.
 |`swap_single_source`|"true"|no|bool|Allow swapping of single sources in a rulebook without name match.|
 |`event_streams`|""|no|list|A list of dicts defining event streams for this rulebook activation. Each dict requires `event_stream` (str, the event stream name) and one of `source_name` (str) or `source_index` (int) to identify the source. `source_name` and `source_index` are mutually exclusive. See the YAML example below.|
 |`log_level`|""|no|str|Allow setting the desired log level.|
+|`force_restart`|`false`|no|bool|Stop the rulebook activation before applying changes and start it again afterward when the desired state is `enabled`, or `present` with `enabled` not set to `false`. Required when updating a running activation that cannot be modified in place. Only use on existing activations. See the warning above.|
 
 ### Standard rulebook activation Data Structure
 
@@ -92,6 +97,14 @@ eda_rulebook_activations:
       provider: github-local
       repo_url: https://github.com/ansible/ansible-rulebook.git
     enabled: false
+    state: present
+  - name: Github Hook
+    description: Hook to listen for changes in GitHub
+    project: EDA_example
+    rulebook: git-hook-deploy-rules.yml
+    decision_environment: Automation Hub Default Decision Environment
+    organization: Default
+    force_restart: true
     state: present
 ```
 

@@ -1,0 +1,6 @@
+---
+minor_changes:
+  - >-
+    eda_rulebook_activations - Add per-object ``force_restart`` option to stop a
+    running rulebook activation before applying changes and start it again afterward.
+...
