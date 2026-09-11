@@ -1,4 +1,12 @@
 ---
+- name: Auto create labels for job templates
+  ansible.builtin.include_role:
+    name: infra.aap_configuration.controller_labels
+    tasks_from: autocreate_labels
+  when: aap_configuration_autocreate_labels
+  vars:
+    controller_labels_autocreate_source: "{{ job_templates if job_templates is defined else controller_templates }}"
+
 - name: Manage Controller Job Templates Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
