@@ -1,4 +1,12 @@
 ---
+- name: Auto create labels for workflow job templates
+  ansible.builtin.include_role:
+    name: infra.aap_configuration.controller_labels
+    tasks_from: autocreate_labels
+  when: aap_configuration_autocreate_labels
+  vars:
+    controller_labels_autocreate_source: "{{ controller_workflows | default(workflow_job_templates) }}"
+
 - name: Manage Controller Workflows Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"

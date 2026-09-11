@@ -68,6 +68,14 @@ This also speeds up the overall role.
 |`controller_configuration_job_templates_loop_delay`|`aap_configuration_loop_delay`|no|This sets the pause between each item in the loop for the role. To help when API is getting overloaded.|
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
+### Auto-create Labels
+
+When `aap_configuration_autocreate_labels` is set to `true`, labels referenced on job templates are automatically created using the [controller_labels](https://github.com/redhat-cop/infra.aap_configuration/tree/devel/roles/controller_labels) role `autocreate_labels` task file before job templates are managed. Labels are collected from the `labels` field or `related.labels` on each job template. A label is only created when the job template defines an `organization`; templates without an organization are skipped. Duplicate name and organization pairs across job templates are deduplicated.
+
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|
+|`aap_configuration_autocreate_labels`|`false`|no|Automatically create labels defined on job templates when an organization is set|
+
 ## Data Structure
 
 ### Job Template Variables
@@ -124,7 +132,7 @@ This also speeds up the overall role.
 |`webhook_service`|""|no|str|Service that webhook requests will be accepted from (github, gitlab)|
 |`webhook_credential`|""|no|str|Personal Access Token for posting back the status to the service API|
 |`scm_branch`|""|no|str|Branch to use in job run. Project default used if blank. Only allowed if project allow_override field is set to true.|
-|`labels`|""|no|list|The labels applied to this job template. Set to `[]` to remove all labels. Omitting this key leaves existing labels unchanged. NOTE: Labels must be created with the [labels](https://github.com/redhat-cop/aap_configuration/tree/devel/roles/controller_labels) role first, an error will occur if the label supplied to this role does not exist.|
+|`labels`|""|no|list|The labels applied to this job template. Set to `[]` to remove all labels. Omitting this key leaves existing labels unchanged. NOTE: Labels must be created with the [labels](https://github.com/redhat-cop/aap_configuration/tree/devel/roles/controller_labels) role first, an error will occur if the label supplied to this role does not exist. Labels can be automatically created if `aap_configuration_autocreate_labels` is set to `true` and organization is defined on the job template.|
 |`custom_virtualenv`|""|no|str|Local absolute file path containing a custom Python virtualenv to use.|
 |`notification_templates_started`|""|no|list|The notifications on started to use for this organization in a list. Set to `[]` to remove all. Omitting this key leaves existing notifications unchanged.|
 |`notification_templates_success`|""|no|list|The notifications on success to use for this organization in a list. Set to `[]` to remove all. Omitting this key leaves existing notifications unchanged.|

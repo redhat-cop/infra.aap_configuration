@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Automatically create labels defined on job templates and workflow job templates when `aap_configuration_autocreate_labels` is set to `true`.
+...

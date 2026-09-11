@@ -68,6 +68,14 @@ This also speeds up the overall role.
 |`controller_configuration_workflow_job_templates_loop_delay`|`aap_configuration_loop_delay`|no|This sets the pause between each item in the loop for the role. To help when API is getting overloaded.|
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
+### Auto-create Labels
+
+When `aap_configuration_autocreate_labels` is set to `true`, labels referenced on workflow job templates are automatically created using the [controller_labels](https://github.com/redhat-cop/infra.aap_configuration/tree/devel/roles/controller_labels) role `autocreate_labels` task file before workflow job templates are managed. Labels are collected from the `labels` or `related.labels` fields on each workflow job template and on each entry in `simplified_workflow_nodes`. A label is only created when the workflow job template defines an `organization`; workflows without an organization are skipped. Duplicate name and organization pairs are deduplicated.
+
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|
+|`aap_configuration_autocreate_labels`|`false`|no|Automatically create labels defined on workflow job templates when an organization is set|
+
 ## Data Structure
 
 ### Variables For Workflow Job Template
@@ -87,7 +95,7 @@ This also speeds up the overall role.
 |`allow_simultaneous`|""|no|bool|Allow simultaneous runs of the workflow job template.|
 |`inventory`|""|no|str|Inventory applied as a prompt, assuming job template prompts for inventory|
 |`limit`|""|no|str|Limit applied as a prompt, assuming job template prompts for limit. Omit or set to null to leave the workflow-level limit unset so node-level limits can apply. Only set a non-empty value to override limits for all nodes.|
-|`labels`|""|no|list|The labels applied to this workflow job template. Set to `[]` to remove all labels. Omitting this key leaves existing labels unchanged. NOTE: Labels must be created with the [labels](https://github.com/redhat-cop/aap_configuration/tree/devel/roles/controller_labels) role first, an error will occur if the label supplied to this role does not exist.|
+|`labels`|""|no|list|The labels applied to this workflow job template. Set to `[]` to remove all labels. Omitting this key leaves existing labels unchanged. NOTE: Labels must be created with the [labels](https://github.com/redhat-cop/aap_configuration/tree/devel/roles/controller_labels) role first, an error will occur if the label supplied to this role does not exist. Labels can be automatically created if `aap_configuration_autocreate_labels` is set to `true` and organization is defined on the workflow job template.|
 |`ask_labels_on_launch`|""|no|bool|Prompt user for labels on launch.|
 |`job_tags`|""|no|str|Comma separated list of the tags to use for the workflow job template.|
 |`skip_tags`|""|no|str|Comma separated list of the tags to skip for the workflow job template.|
@@ -141,7 +149,7 @@ This functionality can be disabled by setting `aap_configuration_apply_object_ro
 |`forks`|Job Template default|no|str|Forks applied as a prompt. Job Template default used if not set. Only allowed if `ask_forks_on_launch` set to true on Job Template|
 |`instance_groups`|Job Template default|no|str|List of Instance Groups applied as a prompt. Job Template default used if not set. Only allowed if `ask_instance_groups_on_launch` set to true on Job Template|
 |`job_slice_count`|Job Template default|no|str|Job Slice Count to use in the job run. Job Template default used if not set. Only allowed if `ask_job_slice_count_on_launch` set to true on Job Template|
-|`labels`|Job Template default|no|list|List of labels to use in the job run. Job Template default used if not set. Only allowed if `ask_labels_on_launch` set to true on Job Template. NOTE: Labels must be created with the [labels](https://github.com/redhat-cop/aap_configuration/tree/devel/roles/controller_labels) role first, an error will occur if the label supplied to this role does not exist.|
+|`labels`|Job Template default|no|list|List of labels to use in the job run. Job Template default used if not set. Only allowed if `ask_labels_on_launch` set to true on Job Template. NOTE: Labels must be created with the [labels](https://github.com/redhat-cop/aap_configuration/tree/devel/roles/controller_labels) role first, an error will occur if the label supplied to this role does not exist. Labels can be automatically created if `aap_configuration_autocreate_labels` is set to `true` and organization is defined on the parent workflow job template.|
 |`timeout`|Job Template default|no|str|Timeout to use in the job run. Job Template default used if not set. Only allowed if `ask_timeout_on_launch` set to true on Job Template|
 |`approval_node`|""|no|str|A dictionary of Name, description, and timeout values for the approval node. This parameter is mutually exclusive with unified_job_template.|
 |`organization`|""|no|str|The organization of the workflow job template the node exists in. Used for looking up the workflow, not a direct model field.|
