@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - Fix the Rulebook Activation yaml definition example for organization is mandatory when state=present and DE is now called 'Hub Default Decision Environment' instead of 'Automation Hub...'
+...
