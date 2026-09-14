@@ -141,6 +141,9 @@ gateway_configuration_dispatcher_roles:
   - role: gateway_authenticators
     var: gateway_authenticators
     tags: authenticators
+  - role: gateway_role_definitions
+    var: gateway_role_definitions
+    tags: role_definitions
   - role: gateway_authenticator_maps
     var: gateway_authenticator_maps
     tags: authenticator_maps
@@ -177,9 +180,6 @@ gateway_configuration_dispatcher_roles:
   - role: gateway_users
     var: aap_user_accounts
     tags: users
-  - role: gateway_role_definitions
-    var: gateway_role_definitions
-    tags: role_definitions
   - role: gateway_role_team_assignments
     var: gateway_role_team_assignments
     tags: role_team_assignments
