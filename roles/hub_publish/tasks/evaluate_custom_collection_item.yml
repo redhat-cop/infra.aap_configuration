@@ -1,0 +1,81 @@
+---
+- name: evaluate_custom_collection_item | Set per-item overwrite flag
+  ansible.builtin.set_fact:
+    __hub_publish_overwrite: "{{ __hub_collection_item.overwrite_existing | default(__hub_collection_item.force | default(hub_overwrite_existing)) | bool }}"
+    __hub_publish_has_early_metadata: "{{ (__hub_collection_item.namespace | default('') | length > 0) and (__hub_collection_item.name | default('') | length > 0) and (__hub_collection_item.collection_version | default('') | length > 0) }}"
+    __hub_publish_should_skip: false
+
+- name: evaluate_custom_collection_item | Set collection metadata from item fields
+  ansible.builtin.set_fact:
+    __hub_publish_namespace: "{{ __hub_collection_item.namespace }}"
+    __hub_publish_name: "{{ __hub_collection_item.name }}"
+    __hub_publish_version: "{{ __hub_collection_item.collection_version }}"
+  when: __hub_publish_has_early_metadata | bool
+
+- name: evaluate_custom_collection_item | Early existence check with upfront metadata
+  ansible.builtin.include_tasks: check_collection_version.yml
+  when:
+    - __hub_publish_has_early_metadata | bool
+    - hub_skip_existing_collections | bool
+
+- name: evaluate_custom_collection_item | Git checkout
+  ansible.builtin.git:
+    repo: "{{ __hub_collection_item.git_url }}"
+    dest: "{{ aap_configuration_working_dir }}/{{ __hub_collection_item.collection_name }}"
+    version: "{{ __hub_collection_item.version | default(omit) }}"
+    key_file: "{{ __hub_collection_item.key_path | default(omit) }}"
+    ssh_opts: "{{ __hub_collection_item.ssh_opts | default(omit) }}"
+  when:
+    - not (__hub_publish_should_skip | default(false) | bool)
+    - __hub_collection_item.git_url is defined
+    - __hub_collection_item.collection_local_path is not defined
+
+- name: evaluate_custom_collection_item | Copy local collection to working dir
+  ansible.builtin.copy:
+    src: "{{ __hub_collection_item.collection_local_path }}/"
+    dest: "{{ aap_configuration_working_dir }}/{{ __hub_collection_item.collection_name }}"
+    remote_src: true
+    mode: "0700"
+  when:
+    - not (__hub_publish_should_skip | default(false) | bool)
+    - __hub_collection_item.collection_local_path is defined
+
+- name: evaluate_custom_collection_item | Read collection galaxy.yml
+  ansible.builtin.slurp:
+    src: "{{ aap_configuration_working_dir }}/{{ __hub_collection_item.collection_name }}/galaxy.yml"
+  register: __hub_publish_galaxy_yml
+  when:
+    - not (__hub_publish_should_skip | default(false) | bool)
+    - not (__hub_publish_has_early_metadata | bool)
+
+- name: evaluate_custom_collection_item | Parse collection metadata from galaxy.yml
+  ansible.builtin.set_fact:
+    __hub_publish_namespace: "{{ (__hub_publish_galaxy_yml.content | b64decode | from_yaml).namespace }}"
+    __hub_publish_name: "{{ (__hub_publish_galaxy_yml.content | b64decode | from_yaml).name }}"
+    __hub_publish_version: "{{ (__hub_publish_galaxy_yml.content | b64decode | from_yaml).version }}"
+  when:
+    - not (__hub_publish_should_skip | default(false) | bool)
+    - not (__hub_publish_has_early_metadata | bool)
+
+- name: evaluate_custom_collection_item | Existence check after reading collection metadata
+  ansible.builtin.include_tasks: check_collection_version.yml
+  when:
+    - not (__hub_publish_should_skip | default(false) | bool)
+    - not (__hub_publish_has_early_metadata | bool)
+    - hub_skip_existing_collections | bool
+
+- name: evaluate_custom_collection_item | Cleanup working dir for skipped collection
+  ansible.builtin.file:
+    path: "{{ aap_configuration_working_dir }}/{{ __hub_collection_item.collection_name }}"
+    state: absent
+  when:
+    - __hub_publish_should_skip | default(false) | bool
+    - not (__hub_publish_has_early_metadata | bool)
+
+- name: evaluate_custom_collection_item | Register pending collection item
+  ansible.builtin.set_fact:
+    __hub_publish_pending_items: "{{ __hub_publish_pending_items + [__hub_collection_item] }}"
+    __hub_publish_overwrite_lookup: "{{ __hub_publish_overwrite_lookup | combine({(__hub_publish_namespace + '.' + __hub_publish_name + ':' + __hub_publish_version): __hub_publish_overwrite}) }}"
+  when: not (__hub_publish_should_skip | default(false) | bool)
+
+...

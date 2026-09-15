@@ -18,12 +18,62 @@ argument_specs:
         type: bool
         required: false
         description: Whether the collection will be automatically overwrite an existing collection in Automation Hub. This will only work if the account being used has correct privileges.
+      hub_skip_existing_collections:
+        default: true
+        type: bool
+        required: false
+        description: Skip clone, build, and upload when the collection version already exists in Automation Hub. Set hub_overwrite_existing to true to force re-publishing.
       hub_collections:
         default: []
         required: false
         description: Data structure describing your collections, mutually exclusive to hub_collection_list
         type: list
         elements: dict
+        options:
+          collection_name:
+            type: str
+            required: true
+            description: Name of collection, normally the last part before the / in a git url.
+          git_url:
+            type: str
+            required: false
+            description: Url to git repo. Required if collection_local_path not set.
+          version:
+            type: str
+            required: false
+            description: Git ref to pull. Will default to default branch if unset.
+          key_path:
+            type: str
+            required: false
+            description: Path to ssh key for authentication.
+          ssh_opts:
+            type: str
+            required: false
+            description: Options git will pass to ssh when used as protocol.
+          collection_local_path:
+            type: str
+            required: false
+            description: Path to collection stored locally. Required if git_url not set.
+          namespace:
+            type: str
+            required: false
+            description: Collection namespace. Enables pre-clone skip checks when set with name and collection_version.
+          name:
+            type: str
+            required: false
+            description: Collection name. Enables pre-clone skip checks when set with namespace and collection_version.
+          collection_version:
+            type: str
+            required: false
+            description: Collection version from galaxy.yml. Enables pre-clone skip checks when set with namespace and name.
+          overwrite_existing:
+            type: bool
+            required: false
+            description: Per-item override of hub_overwrite_existing.
+          force:
+            type: bool
+            required: false
+            description: Alias for per-item overwrite_existing true.
       hub_collection_list:
         default: []
         required: false

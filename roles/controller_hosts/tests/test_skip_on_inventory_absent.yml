@@ -1,0 +1,88 @@
+---
+# Unit-style checks for host skip logic when inventories are also absent (issue 1421).
+# Does not require a live Controller; only validates the filter expressions used by the role.
+- name: Verify host skip when inventory also absent
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    platform_state: present
+    controller_inventories:
+      - name: delete-me
+        organization: Default
+        state: absent
+      - name: keep-me
+        organization: Default
+        state: present
+    controller_hosts:
+      - name: host-on-deleted-inv
+        inventory: delete-me
+        state: absent
+      - name: host-on-kept-inv
+        inventory: keep-me
+        state: absent
+      - name: host-present-on-deleted-inv
+        inventory: delete-me
+        state: present
+  tasks:
+    - name: Identify inventories marked for deletion
+      ansible.builtin.set_fact:
+        __controller_inventories_absent_names: "{{ __absent_with_state + __absent_via_platform_state }}"
+      vars:
+        __inv_list: "{{ inventory if inventory is defined else (controller_inventories | default([])) }}"
+        __absent_with_state: "{{ __inv_list | selectattr('state', 'defined') | selectattr('state', 'equalto', 'absent') | map(attribute='name') | list }}"
+        __absent_via_platform_state: "{{ (__inv_list | rejectattr('state', 'defined') | map(attribute='name') | list) if ((platform_state | default('present')) == 'absent') else [] }}"
+
+    - name: Evaluate skip condition per host
+      ansible.builtin.set_fact:
+        __should_manage: "{{ __should_manage | default({}) | combine({item.name: ((item.state | default(platform_state | default('present'))) != 'absent') or (item.inventory not in __controller_inventories_absent_names)}) }}"
+      loop: "{{ controller_hosts }}"
+
+    - name: Assert absent inventory detection
+      ansible.builtin.assert:
+        that:
+          - "'delete-me' in __controller_inventories_absent_names"
+          - "'keep-me' not in __controller_inventories_absent_names"
+          - not __should_manage['host-on-deleted-inv']
+          - __should_manage['host-on-kept-inv']
+          - __should_manage['host-present-on-deleted-inv']
+
+- name: Verify platform_state absent marks inventories without explicit state
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    platform_state: absent
+    controller_inventories:
+      - name: implied-absent
+        organization: Default
+      - name: explicitly-present
+        organization: Default
+        state: present
+    controller_hosts:
+      - name: host-implied
+        inventory: implied-absent
+      - name: host-explicit-present-inv
+        inventory: explicitly-present
+  tasks:
+    - name: Identify inventories marked for deletion
+      ansible.builtin.set_fact:
+        __controller_inventories_absent_names: "{{ __absent_with_state + __absent_via_platform_state }}"
+      vars:
+        __inv_list: "{{ inventory if inventory is defined else (controller_inventories | default([])) }}"
+        __absent_with_state: "{{ __inv_list | selectattr('state', 'defined') | selectattr('state', 'equalto', 'absent') | map(attribute='name') | list }}"
+        __absent_via_platform_state: "{{ (__inv_list | rejectattr('state', 'defined') | map(attribute='name') | list) if ((platform_state | default('present')) == 'absent') else [] }}"
+
+    - name: Evaluate skip condition per host
+      ansible.builtin.set_fact:
+        __should_manage: "{{ __should_manage | default({}) | combine({item.name: ((item.state | default(platform_state | default('present'))) != 'absent') or (item.inventory not in __controller_inventories_absent_names)}) }}"
+      loop: "{{ controller_hosts }}"
+
+    - name: Assert platform_state absent behavior
+      ansible.builtin.assert:
+        that:
+          - "'implied-absent' in __controller_inventories_absent_names"
+          - "'explicitly-present' not in __controller_inventories_absent_names"
+          - not __should_manage['host-implied']
+          - __should_manage['host-explicit-present-inv']
+...

@@ -24,7 +24,7 @@
         gateway_username: "{{ aap_username | default(omit, true) }}"
         gateway_password: "{{ aap_password | default(omit, true) }}"
         gateway_token: "{{ aap_token | default(omit, true) }}"
-        gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        gateway_request_timeout: "{{ aap_request_timeout | default(10, true) }}"
         gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
       loop: "{{ gateway_authenticator_maps }}"
       loop_control:

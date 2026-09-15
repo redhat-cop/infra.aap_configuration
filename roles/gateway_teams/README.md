@@ -103,7 +103,7 @@ File name: `data/gateway_teams.yml`
 aap_teams:
 - name: "Happy Team"
   organization: "Productive Organization"
-  state: exists
+  state: present
 - name: "Managers"
   organization: "Org X"
   state: absent
