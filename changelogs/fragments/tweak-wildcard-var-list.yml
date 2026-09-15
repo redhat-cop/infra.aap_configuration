@@ -1,3 +1,0 @@
-bugfixes:
-  - Reorder all_vars list in include_wildcard_vars.yml to match the role call order by the dispatch role.
-...
