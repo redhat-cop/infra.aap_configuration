@@ -1,3 +1,0 @@
----
-bugfixes:
-  - gateway_organizations - allow users to override assign_galaxy_credentials_to_org and other assign_* flags at the playbook level to prevent galaxy_credentials from being sent when the referenced credentials do not yet exist on fresh platforms
