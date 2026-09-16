@@ -1,0 +1,4 @@
+---
+trivial:
+  - README - correct the Galaxy install name from ``infra.aap_configuration.collection`` to ``infra.aap_configuration``.
+...
