@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - dispatch - reorder gateway_role_definitions before gateway_authenticator_maps to prevent failures when an authenticator map references a custom role definition
