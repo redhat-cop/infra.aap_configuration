@@ -63,7 +63,7 @@ Click the `Content` button to see the list of content included in this collectio
 
 ## Installing this collection
 
-You can install the infra.aap_configuration.collection with the Ansible Galaxy CLI:
+You can install the infra.aap_configuration collection with the Ansible Galaxy CLI:
 
 ```console
 ansible-galaxy collection install infra.aap_configuration
