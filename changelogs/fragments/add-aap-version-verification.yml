@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Add aap_version verification to the meta_dependency_check role
+...
