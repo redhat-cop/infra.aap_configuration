@@ -7,7 +7,7 @@
     - name: Include vars from configs directory
       ansible.builtin.include_vars:
         dir: "{{ aap_configs_dir | default((lookup('env', 'AAP_CONFIGS_DIR') == '') | ternary('./configs', lookup('env', 'AAP_CONFIGS_DIR'))) }}"
-        ignore_files: [controller_config.yml.template]
+        ignore_unknown_extensions: true
         extensions: [yml]
       tags:
         - always

@@ -9,7 +9,7 @@
     force_basic_auth: "{{ (aap_username is defined and aap_password is defined and hub_token is not defined) | bool }}"
     headers: "{{ {'Authorization': 'Token ' + hub_token} if hub_token is defined else omit }}"
     validate_certs: "{{ aap_validate_certs | default(true) }}"
-    timeout: "{{ aap_request_timeout | default(10) }}"
+    timeout: "{{ aap_request_timeout | default(10, true) }}"
     status_code: [200, 404]
   register: __hub_publish_version_lookup
 
