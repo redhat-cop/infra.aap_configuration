@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - controller_inventory_sources - Only apply enforce_defaults empty values for SCM-only fields (source_project, source_path, scm_branch) when the inventory source type is scm, preventing project lookup failures for non-SCM sources such as ec2.
+...

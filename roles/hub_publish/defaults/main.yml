@@ -21,6 +21,7 @@ aap_configuration_working_dir: /var/tmp
 
 hub_auto_approve: "{{ ah_auto_approve | default(false) }}"
 hub_overwrite_existing: "{{ ah_overwrite_existing | default(false) }}"
+hub_skip_existing_collections: "{{ ah_skip_existing_collections | default(true) }}"
 hub_repository: "{{ ah_repository | default('staging') }}"
 
 hub_configuration_publish_secure_logging: "{{ aap_configuration_secure_logging | default(false) }}"

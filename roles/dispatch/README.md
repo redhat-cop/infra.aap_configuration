@@ -141,6 +141,9 @@ gateway_configuration_dispatcher_roles:
   - role: gateway_authenticators
     var: gateway_authenticators
     tags: authenticators
+  - role: gateway_role_definitions
+    var: gateway_role_definitions
+    tags: role_definitions
   - role: gateway_authenticator_maps
     var: gateway_authenticator_maps
     tags: authenticator_maps
@@ -177,9 +180,6 @@ gateway_configuration_dispatcher_roles:
   - role: gateway_users
     var: aap_user_accounts
     tags: users
-  - role: gateway_role_definitions
-    var: gateway_role_definitions
-    tags: role_definitions
   - role: gateway_role_team_assignments
     var: gateway_role_team_assignments
     tags: role_team_assignments
@@ -371,7 +371,7 @@ For more information about roles, see each roles' README (also linked in the top
 In case an external playbook needs to read and process the wildcard variables like the `dispatch` role does,
 the following task shows how to make the `aap_configuration_all_vars` list variable available in the playbook:
 
-```
+```yaml
     - name: Read list of known AAP CaC wildcard variables
       ansible.builtin.include_role:
         name: infra.aap_configuration.dispatch

@@ -21,6 +21,7 @@ An Ansible Role to publish collections to Automation Hub or Galaxies.
 |`aap_configuration_working_dir`|`/var/tmp`|no|The working directory where the built artifacts live, or where the artifacts will be built.||
 |`hub_auto_approve`|`false`|no|Whether the collection will be automatically approved in Automation Hub. This will only work if the account being used has correct privileges.||
 |`hub_overwrite_existing`|`false`|no|Whether the collection will be automatically overwrite an existing collection in Automation Hub. This will only work if the account being used has correct privileges.||
+|`hub_skip_existing_collections`|`true`|no|Skip clone, build, and upload when the collection version already exists in Automation Hub. Set `hub_overwrite_existing` to `true` to force re-publishing. Set to `false` to restore the previous always-build behavior.||
 |`hub_repository`|`staging`|no|Name of the destination repository to publish collections to. Defaults to `staging`.||
 |`hub_custom_collections`|`see below`|no|Data structure describing your collections, mutually exclusive to hub_collection_list, described below.||
 |`hub_collection_list`|`list`|no|Data structure file paths to pre built collections, mutually exclusive with hub_custom_collections.||
@@ -67,7 +68,23 @@ This also speeds up the overall role.
 |`key_path`|""|no|str|Path to ssh key for authentication.|
 |`ssh_opts`|""|no|str|Options git will pass to ssh when used as protocol.|
 |`collection_local_path`|""|no|str|Path to collection stored locally. Required if git_url not set. This value will be used rather than git_url if set.|
+|`namespace`|""|no|str|Collection namespace. When combined with `name` and `collection_version`, enables a pre-clone Hub check to skip git checkout on re-runs.|
+|`name`|""|no|str|Collection name. When combined with `namespace` and `collection_version`, enables a pre-clone Hub check to skip git checkout on re-runs.|
+|`collection_version`|""|no|str|Collection version from `galaxy.yml`. Distinct from the git `version` ref. Enables pre-clone skip checks when set with `namespace` and `name`.|
+|`overwrite_existing`|`false`|no|bool|Per-item override of `hub_overwrite_existing`.|
+|`force`|`false`|no|bool|Alias for per-item `overwrite_existing: true`.|
 |`register`|""|no|str|Variable to set based on the result of the object creation/modification|
+
+The same per-item fields also apply to dictionary entries in `hub_collection_list` when publishing from a local source path.
+
+### Skip Existing Collections
+
+When `hub_skip_existing_collections` is `true` (default), the role queries Automation Hub for each collection version before cloning, building, or uploading. If the version already exists, those steps are skipped for that item.
+
+- The existence check uses the global collection version API endpoint, matching `ansible.hub.ah_collection` behavior. It does not verify repository membership in `hub_repository`.
+- Provide `namespace`, `name`, and `collection_version` on an item to enable a pre-clone skip check without reading `galaxy.yml`.
+- Set `hub_skip_existing_collections: false` to always clone and build, matching pre-4.7 behavior.
+- Per-item `overwrite_existing` or `force` disables the skip check for that item and passes the overwrite flag through to upload.
 
 ### Standard Project Data Structure
 
@@ -76,10 +93,15 @@ This also speeds up the overall role.
 ```yaml
 ---
 hub_custom_collections:
-  - collection_name: cisco.iosxr
-    git_url: https://github.com/ansible-collections/cisco.iosxr
+  - collection_name: ansible.utils
+    git_url: https://github.com/ansible-collections/ansible.utils
+    namespace: ansible
+    name: utils
+    collection_version: "4.1.0"
+    version: "v4.1.0"
 
 hub_auto_approve: true
+hub_skip_existing_collections: true
 ```
 
 ## Playbook Examples

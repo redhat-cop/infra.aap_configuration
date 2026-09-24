@@ -1,0 +1,41 @@
+---
+- name: Test hub_publish hostname URL normalization
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    __hub_publish_namespace: infra
+    __hub_publish_name: aap_configuration
+    __hub_publish_version: "4.7.0"
+    __hub_publish_hostname_url_cases:
+      - hostname: aap.example.com
+        expected_host: aap.example.com
+      - hostname: https://aap.example.com
+        expected_host: aap.example.com
+      - hostname: https://aap.example.com/
+        expected_host: aap.example.com
+      - hostname: http://aap.example.com
+        expected_host: aap.example.com
+      - hostname: aap.example.com/
+        expected_host: aap.example.com
+      - hostname: https://hub.example.com
+        hub_path_prefix: automation-hub
+        expected_host: hub.example.com
+        expected_path_prefix: automation-hub
+  tasks:
+    - name: Validate hub_publish version check URL for each hostname format
+      ansible.builtin.assert:
+        that:
+          - __hub_publish_version_check_url == __hub_publish_expected_url
+        fail_msg: >-
+          hostname '{{ item.hostname }}' produced '{{ __hub_publish_version_check_url }}',
+          expected '{{ __hub_publish_expected_url }}'
+      vars:
+        __hub_publish_path_prefix: "{{ item.hub_path_prefix | default(hub_path_prefix | default(ah_path_prefix | default('galaxy'))) }}"
+        __hub_publish_version_check_url: "https://{{ (item.hostname | regex_replace('^https?://', '')).rstrip('/') }}/api/{{ __hub_publish_path_prefix }}/v3/collections/{{ __hub_publish_namespace }}/{{ __hub_publish_name }}/versions/{{ __hub_publish_version }}/"
+        __hub_publish_expected_url: "https://{{ item.expected_host }}/api/{{ item.expected_path_prefix | default('galaxy') }}/v3/collections/{{ __hub_publish_namespace }}/{{ __hub_publish_name }}/versions/{{ __hub_publish_version }}/"
+      loop: "{{ __hub_publish_hostname_url_cases }}"
+      loop_control:
+        label: "{{ item.hostname }}"
+
+...

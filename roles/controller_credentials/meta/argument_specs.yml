@@ -30,7 +30,7 @@ argument_specs:
 #            description: Organization this Credential belongs to. If provided on creation, do not give either user or team.
 #          credential_type:
 #            type: str
-#            required: false
+#            required: true
 #            description: Name of credential type. See below for list of options. More information in Ansible controller documentation.
 #          inputs:
 #            type: dict

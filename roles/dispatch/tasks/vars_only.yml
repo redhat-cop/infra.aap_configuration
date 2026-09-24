@@ -1,3 +1,4 @@
 ---
 # This file is intentionally blank.
 # It allows external playbooks to load this role's variables safely.
+...

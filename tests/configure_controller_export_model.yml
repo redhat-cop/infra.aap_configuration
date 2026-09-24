@@ -22,10 +22,22 @@
             awx_awx_collection_installed: "{{ lookup('ansible.builtin.pipe', 'ansible-galaxy collection list | grep -i awx.awx || echo NOTINSTALLED') }}"
           failed_when: awx_awx_collection_installed is match('NOTINSTALLED')
       always:
-        - name: Set the collection providing the controller_api lookup plugin
+        - name: Set the collection providing the controller_api lookup plugin from ansible.controller
           ansible.builtin.set_fact:
-            controller_api_plugin: "{{ ('ansible.controller.controller_api' if ansible_controller_collection_installed is defined) | default('awx.awx.controller_api'
-              if awx_awx_collection_installed is defined) | default('NONE') }}"
+            controller_api_plugin: ansible.controller.controller_api
+          when: ansible_controller_collection_installed is defined
+
+        - name: Set the collection providing the controller_api lookup plugin from awx.awx
+          ansible.builtin.set_fact:
+            controller_api_plugin: awx.awx.controller_api
+          when:
+            - controller_api_plugin is not defined
+            - awx_awx_collection_installed is defined
+
+        - name: Set the collection providing the controller_api lookup plugin to none
+          ansible.builtin.set_fact:
+            controller_api_plugin: NONE
+          when: controller_api_plugin is not defined
         - name: Fail if no collection is detected
           ansible.builtin.fail:
             msg: "One of the following collections is required to be installed: 'ansible.controller' or 'awx.awx'."

@@ -10,6 +10,11 @@ argument_specs:
             tags:
               - authenticators
               - gateway_authenticators
+          - role: gateway_role_definitions
+            var: gateway_role_definitions
+            tags:
+              - role_definitions
+              - gateway_role_definitions
           - role: gateway_authenticator_maps
             var: gateway_authenticator_maps
             tags:
@@ -78,11 +83,6 @@ argument_specs:
             tags:
               - role_team_assignments
               - gateway_role_team_assignments
-          - role: gateway_role_definitions
-            var: gateway_role_definitions
-            tags:
-              - role_definitions
-              - gateway_role_definitions
           - role: gateway_routes
             var: gateway_routes
             tags:

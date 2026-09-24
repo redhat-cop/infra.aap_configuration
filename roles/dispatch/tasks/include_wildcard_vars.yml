@@ -1,16 +1,16 @@
 ---
 - name: include_wildcard_vars | Combine wildcard vars
   vars:
-    var_name: "{{ item | regex_replace('^(' + aap_configuration_all_vars | join('|') + ')_.*', '\\1') }}"
+    var_pattern: "^({{ aap_configuration_all_vars | join('|') }})_.*"
+    var_name: "{{ item | regex_replace(var_pattern, '\\1') }}"
     curr_val: "{{ lookup('ansible.builtin.vars', item) }}"
-    is_dict: "{{ true if curr_val is mapping else false }}"
+    is_dict: "{{ curr_val is mapping }}"
     prev_val: "{{ lookup('ansible.builtin.vars', var_name, default={} if is_dict else []) }}"
   ansible.builtin.set_fact:
     "{{ var_name }}": "{{ prev_val | combine(curr_val, list_merge='append', recursive=true)
                           if is_dict else
                           (prev_val + curr_val) | unique }}"
-  loop: "{{ query('ansible.builtin.varnames', '^(' + aap_configuration_all_vars | join('|') + ')_.*') }}"
-  when: not item.endswith('_secure_logging')
+  loop: "{{ query('ansible.builtin.varnames', var_pattern) | reject('search', '_secure_logging$') }}"
   tags: always
 
 ...
