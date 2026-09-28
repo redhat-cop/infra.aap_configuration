@@ -6,51 +6,82 @@
     that: controller_license.manifest_file is defined or controller_license.manifest is defined or controller_license.manifest_url is defined or controller_license.manifest_content is defined or controller_license.pool_id is defined
     fail_msg: Must set a source for the manifest or pool. Please set 'manifest_file', 'manifest_url', 'manifest_content', or 'pool_id'
 
-- name: manifest | Move manifest file to temporary location
-  ansible.builtin.copy:
-    src: "{{ controller_license.manifest_file | default(controller_license.manifest) }}"
-    dest: "{{ __controller_manifest_path }}"
-    mode: "0600"
-  when:
-    - controller_license.manifest_file is defined or controller_license.manifest is defined
+- name: manifest | Stage and install license
+  block:
+    - name: manifest | Create temporary file for license manifest
+      ansible.builtin.tempfile:
+        prefix: controller_license_manifest_
+        suffix: .zip
+      register: __controller_manifest_tmpfile
+      when:
+        - controller_license_manifest_path | default('') | length == 0
+        - __controller_manifest_path is not defined
 
-- name: manifest | Fetch manifest from URL
-  ansible.builtin.get_url:
-    url: "{{ controller_license.manifest_url }}"
-    dest: "{{ __controller_manifest_path }}"
-    username: "{{ controller_license.manifest_username | default(omit) }}"
-    password: "{{ controller_license.manifest_password | default(omit) }}"
-    mode: "0600"
-  when:
-    - controller_license.manifest_url is defined
-    - not controller_license.manifest_file is defined
-    - not controller_license.manifest is defined
+    - name: manifest | Set staging path from configured dest
+      ansible.builtin.set_fact:
+        __controller_manifest_path: "{{ controller_license_manifest_path }}"
+      when:
+        - controller_license_manifest_path | default('') | length > 0
 
-- name: manifest | Create manifest file from base64 encoded content
-  ansible.builtin.template:
-    src: controller_manifest.j2
-    dest: "{{ __controller_manifest_path }}"
-    mode: "0600"
-  when:
-    - controller_license.manifest_content is defined
-    - not controller_license.manifest_url is defined
-    - not controller_license.manifest_file is defined
-    - not controller_license.manifest is defined
+    - name: manifest | Set staging path from Ansible tempfile
+      ansible.builtin.set_fact:
+        __controller_manifest_path: "{{ __controller_manifest_tmpfile.path }}"
+      when:
+        - controller_license_manifest_path | default('') | length == 0
+        - __controller_manifest_tmpfile.path | default('') | length > 0
 
-- name: manifest | Install the Controller license
-  ansible.controller.license:
-    manifest: "{{ __controller_manifest_path | default(omit) }}"
-    subscription_id: "{{ controller_license.subscription_id | default(omit) }}"
-    force: "{{ controller_license.force | default(omit) }}"
-    state: "{{ controller_license.state | default(omit) }}"
+    - name: manifest | Move manifest file to temporary location
+      ansible.builtin.copy:
+        src: "{{ controller_license.manifest_file | default(controller_license.manifest) }}"
+        dest: "{{ __controller_manifest_path }}"
+        mode: "0600"
+      when:
+        - controller_license.manifest_file is defined or controller_license.manifest is defined
 
-    # Role Standard Options
-    controller_host: "{{ aap_hostname | default(omit, true) }}"
-    controller_username: "{{ aap_username | default(omit, true) }}"
-    controller_password: "{{ aap_password | default(omit, true) }}"
-    controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
-    request_timeout: "{{ aap_request_timeout | default(10, true) }}"
-    validate_certs: "{{ aap_validate_certs | default(omit) }}"
-  no_log: "{{ controller_configuration_license_secure_logging }}"
-  when: controller_license is defined
+    - name: manifest | Fetch manifest from URL
+      ansible.builtin.get_url:
+        url: "{{ controller_license.manifest_url }}"
+        dest: "{{ __controller_manifest_path }}"
+        username: "{{ controller_license.manifest_username | default(omit) }}"
+        password: "{{ controller_license.manifest_password | default(omit) }}"
+        mode: "0600"
+      when:
+        - controller_license.manifest_url is defined
+        - not controller_license.manifest_file is defined
+        - not controller_license.manifest is defined
+
+    - name: manifest | Create manifest file from base64 encoded content
+      ansible.builtin.template:
+        src: controller_manifest.j2
+        dest: "{{ __controller_manifest_path }}"
+        mode: "0600"
+      when:
+        - controller_license.manifest_content is defined
+        - not controller_license.manifest_url is defined
+        - not controller_license.manifest_file is defined
+        - not controller_license.manifest is defined
+
+    - name: manifest | Install the Controller license
+      ansible.controller.license:
+        manifest: "{{ __controller_manifest_path | default(omit) }}"
+        subscription_id: "{{ controller_license.subscription_id | default(omit) }}"
+        force: "{{ controller_license.force | default(omit) }}"
+        state: "{{ controller_license.state | default(omit) }}"
+
+        # Role Standard Options
+        controller_host: "{{ aap_hostname | default(omit, true) }}"
+        controller_username: "{{ aap_username | default(omit, true) }}"
+        controller_password: "{{ aap_password | default(omit, true) }}"
+        controller_oauthtoken: "{{ aap_token | default(omit, true) }}"
+        request_timeout: "{{ aap_request_timeout | default(10, true) }}"
+        validate_certs: "{{ aap_validate_certs | default(omit) }}"
+      no_log: "{{ controller_configuration_license_secure_logging }}"
+      when: controller_license is defined
+  always:
+    - name: manifest | Remove generated temporary manifest file
+      ansible.builtin.file:
+        path: "{{ __controller_manifest_tmpfile.path | default('') }}"
+        state: absent
+      when:
+        - __controller_manifest_tmpfile.path | default('') | length > 0
 ...

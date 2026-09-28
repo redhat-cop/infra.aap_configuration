@@ -1,6 +1,9 @@
 ---
 controller_configuration_license_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
 
+# Destination for the staged license zip. Empty uses ansible.builtin.tempfile (honors TMPDIR).
+controller_license_manifest_path: ""
+
 # Red Hat credential variables for subscription lookup
 # Either username/password or client_id/client_secret must be provided when use_lookup is true
 # redhat_subscription_username:

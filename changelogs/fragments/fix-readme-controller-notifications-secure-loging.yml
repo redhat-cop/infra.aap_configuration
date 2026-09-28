@@ -1,0 +1,4 @@
+---
+trivial:
+  - README - Corrected the ``controller_configuration_notification_secure_logging`` in the README to match the actual configuration option name.
+...
