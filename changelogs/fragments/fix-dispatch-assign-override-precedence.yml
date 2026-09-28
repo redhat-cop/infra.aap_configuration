@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - gateway_organizations - dispatch task vars for assign_galaxy_credentials_to_org and other assign_* flags blocked playbook-level overrides. Renamed dispatch vars to _dispatch_assign_* so users can set assign_* at the playbook level.
+...
