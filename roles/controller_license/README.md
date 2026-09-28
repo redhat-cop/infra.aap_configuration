@@ -23,6 +23,7 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 |`aap_token`|""|no|Controller Admin User's token on the Ansible Automation Platform Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
 |`aap_request_timeout`|`10`|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`controller_license`|`see below`|yes|Data structure describing your license for controller, described below.||
+|`controller_license_manifest_path`|`""`|no|Destination path for the staged license zip. Empty uses `ansible.builtin.tempfile` (honors `TMPDIR`). Set this when the Ansible temp directory is not writable.||
 |`redhat_subscription_username`|""|no|Red Hat or Red Hat Satellite username to get available subscriptions. Used only for subscription lookup.||
 |`redhat_subscription_password`|""|no|Red Hat or Red Hat Satellite password to get available subscriptions. Used only for subscription lookup.||
 |`redhat_subscription_client_id`|""|no|Red Hat service account client ID to get available subscriptions. Used only for subscription lookup.||
@@ -89,6 +90,7 @@ The module and this role can use either a manifest file, or lookup the subscript
 
 ```yaml
 ---
+controller_license_manifest_path: /var/tmp/controller_license_manifest.zip
 controller_license:
   manifest_url: "https://fileserver.internal/controller_license.zip"
   manifest_username: admin
@@ -170,6 +172,7 @@ controller_license:
 
 ## Limitations
 
+- The role still stages a zip on disk before calling `ansible.controller.license` because that module requires a file path, and `manifest_url` / `manifest_content` must be materialized. Staging no longer assumes `/tmp`; it uses `ansible.builtin.tempfile` unless `controller_license_manifest_path` is set.
 - The subscription lookup (`use_lookup: true`) requires Red Hat credentials to be provided as separate variables (`redhat_subscription_username`/`redhat_subscription_password` or `redhat_subscription_client_id`/`redhat_subscription_client_secret`), not inside the `controller_license` dict.
 - The `client_id`/`client_secret` service account parameters require `ansible.controller` collection version 4.6+ (or the equivalent `awx.awx` version that includes service account support in the `subscriptions` module).
 - The `filters` option performs client-side filtering on the subscription list returned by the Red Hat API. If no subscriptions match the filters, the role will fail when attempting to access the subscription at the index specified by `list_num`.
