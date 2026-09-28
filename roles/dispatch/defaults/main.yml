@@ -7,6 +7,11 @@ gateway_configuration_dispatcher_roles:
     tags:
       - authenticators
       - gateway_authenticators
+  - role: gateway_role_definitions
+    var: gateway_role_definitions
+    tags:
+      - role_definitions
+      - gateway_role_definitions
   - role: gateway_authenticator_maps
     var: gateway_authenticator_maps
     tags:
@@ -66,11 +71,6 @@ gateway_configuration_dispatcher_roles:
     tags:
       - users
       - gateway_users
-  - role: gateway_role_definitions
-    var: gateway_role_definitions
-    tags:
-      - role_definitions
-      - gateway_role_definitions
   - role: gateway_role_team_assignments
     var: gateway_role_team_assignments
     tags:

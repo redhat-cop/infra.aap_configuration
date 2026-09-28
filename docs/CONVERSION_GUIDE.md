@@ -73,6 +73,7 @@ Below listed are the top level variables for each object in the order they are r
 gateway_configuration vars:
 
 - gateway_authenticators
+- gateway_role_definitions
 - gateway_authenticator_maps
 - gateway_settings
 - aap_applications
