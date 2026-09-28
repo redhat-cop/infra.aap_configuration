@@ -3,9 +3,9 @@
 - name: Manage Controller Instances Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ controller_configuration_instances_secure_logging }}"
   block:
     - name: Add Controller Instance
+      no_log: "{{ controller_configuration_instances_secure_logging }}"
       ansible.controller.instance:
         hostname: "{{ __controller_instance_item.hostname | mandatory }}"
         capacity_adjustment: "{{ __controller_instance_item.capacity_adjustment | default((1.0 if controller_configuration_instances_enforce_defaults else omit), true) }}"
@@ -50,6 +50,7 @@
       loop_control:
         loop_var: __instance_job_async_results_item
       vars:
+        cas_collect_errors: "{{ controller_configuration_instances_collect_errors }}"
         cas_secure_logging: "{{ controller_configuration_instances_secure_logging }}"
         cas_async_delay: "{{ controller_configuration_instances_async_delay }}"
         cas_async_retries: "{{ controller_configuration_instances_async_retries }}"

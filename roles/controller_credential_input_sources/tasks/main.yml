@@ -2,9 +2,9 @@
 - name: Manage Controller Credential Input Sources Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ controller_configuration_credential_input_sources_secure_logging }}"
   block:
     - name: Managing Controller Credential Input Sources
+      no_log: "{{ controller_configuration_credential_input_sources_secure_logging }}"
       ansible.controller.credential_input_source:
         target_credential: "{{ __cred_input_src_item.target_credential | mandatory }}"
         input_field_name: "{{ __cred_input_src_item.input_field_name | mandatory }}"
@@ -48,6 +48,7 @@
         loop_var: __credential_input_sources_job_async_results_item
         label: "{{ __operation.verb }} Controller Credential Input Source for Credential {{ __credential_input_sources_job_async_results_item.__cred_input_src_item.target_credential }}"
       vars:
+        cas_collect_errors: "{{ controller_configuration_credential_input_sources_collect_errors }}"
         cas_secure_logging: "{{ controller_configuration_credential_input_sources_secure_logging }}"
         cas_async_delay: "{{ controller_configuration_credential_input_sources_async_delay }}"
         cas_async_retries: "{{ controller_configuration_credential_input_sources_async_retries }}"

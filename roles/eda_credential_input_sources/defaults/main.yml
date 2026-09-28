@@ -5,4 +5,5 @@ eda_configuration_credential_input_sources_async_retries: "{{ aap_configuration_
 eda_configuration_credential_input_sources_async_delay: "{{ aap_configuration_async_delay| default(1) }}"
 aap_configuration_async_dir:
 eda_configuration_credential_input_sources_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
+eda_configuration_credential_input_sources_collect_errors: "{{ aap_configuration_collect_errors | default(false) }}"
 ...

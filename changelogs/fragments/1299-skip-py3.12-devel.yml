@@ -1,0 +1,2 @@
+bugfixes:
+  - sanity - Skip py3.12-devel tox environment because ansible-core devel requires Python >=3.13.

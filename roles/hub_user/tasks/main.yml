@@ -3,9 +3,9 @@
 - name: Manage Hub Users Block
   vars:
     ansible_async_dir: "{{ aap_configuration_async_dir }}"
-  no_log: "{{ hub_configuration_user_secure_logging }}"
   block:
     - name: Add Automation Hub User
+      no_log: "{{ hub_configuration_user_secure_logging }}"
       ansible.hub.ah_user:
         username: "{{ __hub_user_item.username | default(omit) }}"
         # new_name:         "{{ __user.new_name | default(omit) }}"  <-- Needs adding once new_name option added to module
@@ -46,6 +46,7 @@
         loop_var: __users_job_async_result_item
         label: "{{ __operation.verb }} User {{ __users_job_async_result_item.__hub_user_item.username }} | Wait for finish the User {{ __operation.action }}"
       vars:
+        cas_collect_errors: "{{ hub_configuration_user_collect_errors }}"
         cas_secure_logging: "{{ hub_configuration_user_secure_logging }}"
         cas_async_delay: "{{ hub_configuration_user_async_delay }}"
         cas_async_retries: "{{ hub_configuration_user_async_retries }}"

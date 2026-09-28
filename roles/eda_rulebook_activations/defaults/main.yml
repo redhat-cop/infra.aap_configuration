@@ -4,4 +4,5 @@ eda_configuration_rulebook_activations_secure_logging: "{{ aap_configuration_sec
 eda_configuration_rulebook_activations_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 eda_configuration_rulebook_activations_async_delay: "{{ aap_configuration_async_delay| default(1) }}"
 aap_configuration_async_dir:
+eda_configuration_rulebook_activations_collect_errors: "{{ aap_configuration_collect_errors | default(false) }}"
 ...

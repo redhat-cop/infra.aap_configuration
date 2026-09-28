@@ -21,4 +21,5 @@ assign_galaxy_credentials_to_org: true
 assign_default_ee_to_org: true
 assign_notification_templates_to_org: true
 assign_instance_groups_to_org: true
+gateway_organizations_collect_errors: "{{ aap_configuration_collect_errors | default(false) }}"
 ...

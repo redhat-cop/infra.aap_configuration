@@ -1,0 +1,12 @@
+---
+bugfixes:
+  - Improve error messages in collect_async_status by checking detail and error keys before falling back to Unknown Error (also addresses #1267, #1255).
+minor_changes:
+  - main.yml Replaced monolithic block with a loop over cas_task_files list, defaulting to [collect_async_status.yml, handle_error.yml] — register removed from default path to reduce output
+  - collect_async_status.yml (new) Extracted async polling; uses failed_when gated by cas_collect_logs instead of ignore_errors true
+  - register_value.yml (new) Extracted value registration; self-guarded, opt-in via cas_task_files
+  - handle_error.yml Added self-guard (when result is defined and failed), added no_log, switched from aap_configuration_collect_logs to cas_collect_logs, added API response detail and status code to error output
+  - defaults/main.yml Added cas_collect_logs (falls back to aap_configuration_collect_logs, default false)
+  - README.md Documented composable task files, cas_task_files, cas_collect_logs, error output fields
+  - tests/ Replaced ignore_errors true with failed_when false
+...

@@ -1,28 +1,16 @@
 ---
-- name: An async_error_reporting block
+- name: "{{ cas_object_label | default('collect_async_status | Wait for async job to complete') }}"
   no_log: "{{ cas_secure_logging }}"
-  block:
-    - name: "{{ cas_object_label }}"
-      ansible.builtin.async_status:
-        jid: "{{ cas_job_async_results_item.ansible_job_id }}"
-      register: __cas_job_async_result
-      until: __cas_job_async_result.finished
-      retries: "{{ cas_async_retries }}"
-      delay: "{{ cas_async_delay }}"
-      ignore_errors: true
+  ansible.builtin.async_status:
+    jid: "{{ cas_job_async_results_item.ansible_job_id }}"
+  register: __cas_job_async_result
+  until: __cas_job_async_result.finished
+  retries: "{{ cas_async_retries }}"
+  delay: "{{ cas_async_delay }}"
+  failed_when: __cas_job_async_result is failed and not (cas_collect_logs | bool or cas_collect_errors | bool)
 
-    - name: Register value
-      when: aap_configuration_register is defined or _register_var is defined
-      vars:
-        _register_var: "{{ cas_job_async_results_item[cas_job_async_results_item.ansible_loop_var]['register'] | default('_') }}"
-        _register_value: "{{ lookup('vars', aap_configuration_register | default('_'), default={}) }}"
-        _appended_value: "{{ _register_value[cas_register_subvar] | default([]) + [__cas_job_async_result] }}"
-      ansible.builtin.set_fact:
-        "{{ _register_var }}": "{{ __cas_job_async_result }}"
-        "{{ aap_configuration_register | default('_') }}": "{{ _register_value | combine({cas_register_subvar: _appended_value}) }}"
-
-    - name: Handle Async Job Failure
-      when: __cas_job_async_result is failed
-      ansible.builtin.include_tasks:
-        file: handle_error.yml
+- name: "Handle errors"
+  when: cas_collect_errors | bool and __cas_job_async_result is defined and __cas_job_async_result.status is defined and __cas_job_async_result.status == 'failed'
+  ansible.builtin.include_tasks:
+    file: handle_error.yml
 ...
