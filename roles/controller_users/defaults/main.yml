@@ -1,9 +1,14 @@
 ---
 # list of dicts describing Controller users
 aap_user_accounts: []
-# if you're too lazy to give your users a password, this is the default they will get
-# set this variable to something false and there won't be a default password
-controller_user_default_password: change_me
+# Password applied to any entry in aap_user_accounts that does not set one of its own.
+# Empty by default: a configuration run should not invent a credential, and a literal shipped
+# here is the same password on every installation that uses this role. Set it only if you want
+# that, and note that ansible.controller.user defaults update_secrets to true, so a non-empty value is
+# re-applied to accounts that already have a password.
+# A new account still needs a password of its own: the controller API rejects creating a local
+# user without one.
+controller_user_default_password: ""
 
 controller_configuration_users_secure_logging: "{{ aap_configuration_secure_logging | default('true') }}"
 controller_configuration_users_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
