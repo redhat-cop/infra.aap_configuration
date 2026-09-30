@@ -1,0 +1,5 @@
+---
+bugfixes:
+  - controller_inventories - Preserve explicitly empty ``kind``, ``host_filter``, and ``variables`` so standard inventories are idempotent and empty values are not treated as unset (https://github.com/redhat-cop/infra.aap_configuration/issues/1459).
+  - controller_job_templates, controller_schedules, controller_workflow_job_templates - Preserve explicitly empty ``job_tags``, ``skip_tags``, and ``limit`` instead of omitting them via ``default(..., true)``.
+...

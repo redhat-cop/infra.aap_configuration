@@ -97,9 +97,9 @@ When `aap_configuration_autocreate_labels` is set to `true`, labels referenced o
 |`limit`|""|no|str|A host pattern to further constrain the list of hosts managed or affected by the playbook|
 |`verbosity`|""|no|int|Control the output level Ansible produces as the playbook runs. 0 - Normal, 1 - Verbose, 2 - More Verbose, 3 - Debug, 4 - Connection Debug .|
 |`extra_vars`|""|no|dict|Specify extra_vars for the template.|
-|`job_tags`|""|no|str|Comma separated list of the tags to use for the job template.|
+|`job_tags`|""|no|str|Comma separated list of the tags to use for the job template. Set to `''` to clear. Omitting this key leaves existing job tags unchanged.|
 |`force_handlers`|""|no|bool|Enable forcing playbook handlers to run even if a task fails.|
-|`skip_tags`|""|no|str|Comma separated list of the tags to skip for the job template.|
+|`skip_tags`|""|no|str|Comma separated list of the tags to skip for the job template. Set to `''` to clear. Omitting this key leaves existing skip tags unchanged.|
 |`start_at_task`|""|no|str|Start the playbook at the task matching this name.|
 |`diff_mode`|""|no|bool|Enable diff mode for the job template|
 |`use_fact_cache`|""|no|bool|Enable use of fact caching for the job template.|

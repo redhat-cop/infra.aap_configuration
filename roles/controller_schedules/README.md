@@ -89,9 +89,9 @@ This also speeds up the overall role.
 |`labels`|Job Template default|no|list|List of labels to use in the job run. Job Template default used if not set. Only allowed if `ask_labels_on_launch` set to true on Job Template. Set to `[]` to remove all labels. Omitting this key leaves existing labels unchanged.|
 |`timeout`|Job Template default|no|str|Timeout to use in the job run. Job Template default used if not set. Only allowed if `ask_timeout_on_launch` set to true on Job Template|
 |`job_type`|Job template default|no|str|The job type used for the job template.|
-|`job_tags`|""|no|str|Comma separated list of tags to apply to the job|
-|`skip_tags`|""|no|str|Comma separated list of tags to skip for the job|
-|`limit`|""|no|str|A host pattern to constrain the list of hosts managed or affected by the playbook|
+|`job_tags`|""|no|str|Comma separated list of tags to apply to the job. Set to `''` to clear. Omitting this key leaves existing job tags unchanged.|
+|`skip_tags`|""|no|str|Comma separated list of tags to skip for the job. Set to `''` to clear. Omitting this key leaves existing skip tags unchanged.|
+|`limit`|""|no|str|A host pattern to constrain the list of hosts managed or affected by the playbook. Set to `''` to clear. Omitting this key leaves the existing limit unchanged.|
 |`diff_mode`|Job template default|no|bool|Enable diff mode for the job template|
 |`verbosity`|Job template default|no|int|Level of verbosity for the job. Only allowed if configured to prompt on launch|
 |`unified_job_template`|""|no|string|The name of object that is being targeted by the schedule. Example objects include projects, inventory sources, and templates. Required if state='present.|
