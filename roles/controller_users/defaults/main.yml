@@ -8,7 +8,7 @@ aap_user_accounts: []
 # re-applied to accounts that already have a password.
 # A new account still needs a password of its own: the controller API rejects creating a local
 # user without one.
-controller_user_default_password: ""
+# controller_user_default_password: ""
 
 controller_configuration_users_secure_logging: "{{ aap_configuration_secure_logging | default('true') }}"
 controller_configuration_users_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
