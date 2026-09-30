@@ -1,0 +1,4 @@
+---
+trivial:
+  - docs/CONVERSION_GUIDE - document that ``object_diff``, ``controller_object_diff``, ``filetree_create``, and ``filetree_read`` live in ``infra.aap_configuration_extended``.
+...
