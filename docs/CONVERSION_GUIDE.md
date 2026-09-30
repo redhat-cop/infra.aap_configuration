@@ -227,4 +227,23 @@ These loop through all the applicable roles to create objects in the AAP. They w
 
 ## Roles moved
 
-Any role that was not creating and managing objects on the AAP was moved to the [extended collection](https://github.com/redhat-cop/aap_configuration_extended). This includes lookup plugins, filetree and other roles.
+Any role that was not creating and managing objects on the AAP was moved to the
+[extended collection](https://github.com/redhat-cop/aap_configuration_extended).
+This includes lookup plugins, filetree, object diff, and other helper roles.
+
+Former `infra.controller_configuration` names and their replacements:
+
+- `object_diff` ->
+  [`infra.aap_configuration_extended.object_diff`](https://github.com/redhat-cop/aap_configuration_extended/tree/devel/roles/object_diff)
+  (remove Controller objects that are no longer declared)
+- `controller_object_diff` lookup ->
+  [`infra.aap_configuration_extended.controller_object_diff`](https://github.com/redhat-cop/aap_configuration_extended/blob/devel/plugins/lookup/controller_object_diff.py)
+- `filetree_create` ->
+  [`infra.aap_configuration_extended.filetree_create`](https://github.com/redhat-cop/aap_configuration_extended/tree/devel/roles/filetree_create)
+- `filetree_read` ->
+  [`infra.aap_configuration_extended.filetree_read`](https://github.com/redhat-cop/aap_configuration_extended/tree/devel/roles/filetree_read)
+
+Install and use the extended collection alongside this one when you need export,
+import helpers, or differential cleanup. The `tests/tasks/differential.yml`
+playbook in this repository is a legacy example and expects the
+`controller_object_diff` lookup from the extended collection.
