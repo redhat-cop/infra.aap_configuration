@@ -25,7 +25,7 @@
         controller_host: "{{ aap_hostname | default(omit, true) }}"
         request_timeout: "{{ aap_request_timeout | default(10, true) }}"
         validate_certs: "{{ aap_validate_certs | default(omit) }}"
-      loop: "{{ credentials if credentials is defined else controller_credentials }}"
+      loop: "{{ controller_credentials }}"
       loop_control:
         loop_var: __controller_credentials_item
         label: "{{ __operation.verb }} Credential {{ __controller_credentials_item.name }}"
