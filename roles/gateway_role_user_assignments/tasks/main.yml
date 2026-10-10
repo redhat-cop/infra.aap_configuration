@@ -26,11 +26,17 @@
         loop_var: __gateway_role_user_assignments_item
         label: "{{ __operation.verb }} Role Based Access Entry on Controller {{ __gateway_role_user_assignments_item.1 | default(__gateway_role_user_assignments_item.role_definition) }}"
         pause: "{{ gateway_role_user_assignments_loop_delay }}"
-      async: 1000
+      async: "{{ ansible_check_mode | ternary(0, 1000) }}"
       poll: 0
       register: __gateway_role_user_assignments_job_async
+      changed_when: (__gateway_role_user_assignments_job_async.changed if ansible_check_mode else false)
       vars:
         __operation: "{{ operation_translate[__gateway_role_user_assignments_item.state | default(platform_state) | default('present')] }}"
+
+    - name: Flag for errors (check mode only)
+      ansible.builtin.set_fact:
+        error_flag: true
+      when: ansible_check_mode and __gateway_role_user_assignments_job_async.failed is defined and __gateway_role_user_assignments_job_async.failed
 
     - name: Role User Assignments | Wait for finish the configuration
       when:

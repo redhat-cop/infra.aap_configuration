@@ -24,12 +24,17 @@
         label: "{{ __operation.verb }} the EE repository sync {{ __hub_ee_repository_sync_item.name }} in Hub"
         pause: "{{ hub_configuration_ee_repository_sync_loop_delay }}"
       when: __hub_ee_repository_sync_item.sync | default(false)
-      async: "{{ hub_configuration_ee_repository_sync_async_timeout }}"
+      async: "{{ ansible_check_mode | ternary(0, hub_configuration_ee_repository_sync_async_timeout) }}"
       poll: 0
       register: __ee_repository_syncs_job_async
-      changed_when: false
+      changed_when: (__ee_repository_syncs_job_async.changed if ansible_check_mode else false)
       vars:
         __operation: "{{ operation_translate[__hub_ee_repository_sync_item.state | default(platform_state) | default('present')] }}"
+
+    - name: Flag for errors (check mode only)
+      ansible.builtin.set_fact:
+        error_flag: true
+      when: ansible_check_mode and __ee_repository_syncs_job_async.failed is defined and __ee_repository_syncs_job_async.failed
 
     - name: EE Repository Sync | Wait for finish the ee_repository_sync to finish
       when:

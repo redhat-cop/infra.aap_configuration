@@ -30,12 +30,17 @@
         loop_var: __hub_ee_registry_item
         label: "{{ __operation.verb }} the EE registry {{ __hub_ee_registry_item.name }} in Hub"
         pause: "{{ hub_configuration_ee_registry_loop_delay }}"
-      async: "{{ hub_configuration_ee_registry_async_timeout }}"
+      async: "{{ ansible_check_mode | ternary(0, hub_configuration_ee_registry_async_timeout) }}"
       poll: 0
       register: __ee_registries_job_async
-      changed_when: false
+      changed_when: (__ee_registries_job_async.changed if ansible_check_mode else false)
       vars:
         __operation: "{{ operation_translate[__hub_ee_registry_item.state | default(platform_state) | default('present')] }}"
+
+    - name: Flag for errors (check mode only)
+      ansible.builtin.set_fact:
+        error_flag: true
+      when: ansible_check_mode and __ee_registries_job_async.failed is defined and __ee_registries_job_async.failed
 
     - name: Create EE Registry | Wait for finish the ee_registry creation
       when:

@@ -1,0 +1,11 @@
+---
+bugfixes:
+  - >-
+    Apply check-mode aware async handling across gateway, hub, and eda roles.
+    Async tasks now use ``ansible_check_mode | ternary(0, <timeout>)``,
+    report ``changed`` from the module result in check mode, set ``error_flag`` on
+    check-mode failures for dispatch, and continue to skip async wait/cleanup when
+    running with ``--check``. Also complete the same pattern on remaining controller
+    and gateway partial gaps (role definitions, workflow link nodes, applications,
+    organizations).
+...
