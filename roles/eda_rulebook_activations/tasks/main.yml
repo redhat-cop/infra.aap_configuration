@@ -33,6 +33,7 @@
         decision_environment: "{{ __ra_item.decision_environment | default(omit) }}"
         awx_token: "{{ __ra_item.awx_token | default(omit) }}"
         restart_policy: "{{ __ra_item.restart_policy | default(omit) }}"
+        restart_on_project_update: "{{ __ra_item.restart_on_project_update | default(omit) }}"
         extra_vars: "{{ __ra_item.extra_vars | default(omit) }}"
         enabled: "{{ __ra_item.enabled | default(omit) }}"
         organization: "{{ __ra_item.organization | default(omit) }}"
