@@ -25,11 +25,17 @@
         loop_var: __gateway_teams_item
         label: "{{ __operation.verb }} the Gateway team {{ __gateway_teams_item.name }}"
         pause: "{{ gateway_teams_loop_delay }}"
-      async: 1000
+      async: "{{ ansible_check_mode | ternary(0, 1000) }}"
       poll: 0
       register: __gateway_teams_job_async
+      changed_when: (__gateway_teams_job_async.changed if ansible_check_mode else false)
       vars:
         __operation: "{{ operation_translate[__gateway_teams_item.state | default(platform_state) | default('present')] }}"
+
+    - name: Flag for errors (check mode only)
+      ansible.builtin.set_fact:
+        error_flag: true
+      when: ansible_check_mode and __gateway_teams_job_async.failed is defined and __gateway_teams_job_async.failed
 
     - name: Teams | Wait for finish the configuration
       when:

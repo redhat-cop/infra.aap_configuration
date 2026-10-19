@@ -22,12 +22,17 @@
         loop_var: __hub_role_item
         label: "{{ __operation.verb }} the Role {{ __hub_role_item.name }} to Hub"
         pause: "{{ hub_configuration_role_loop_delay }}"
-      async: "{{ hub_configuration_role_async_timeout }}"
+      async: "{{ ansible_check_mode | ternary(0, hub_configuration_role_async_timeout) }}"
       poll: 0
       register: __roles_job_async
-      changed_when: false
+      changed_when: (__roles_job_async.changed if ansible_check_mode else false)
       vars:
         __operation: "{{ operation_translate[__hub_role_item.state | default(platform_state) | default('present')] }}"
+
+    - name: Flag for errors (check mode only)
+      ansible.builtin.set_fact:
+        error_flag: true
+      when: ansible_check_mode and __roles_job_async.failed is defined and __roles_job_async.failed
 
     - name: Create Role | Wait for finish the role creation
       when:

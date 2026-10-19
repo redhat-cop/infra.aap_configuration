@@ -104,6 +104,7 @@
       async: "{{ ansible_check_mode | ternary(0, 1000) }}"
       poll: 0
       register: __workflows_link_async
+      changed_when: (__workflows_link_async.changed if ansible_check_mode else false)
 
     - name: add_workflows_schema | Flag for errors (check mode only)
       ansible.builtin.set_fact:

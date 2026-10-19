@@ -27,12 +27,17 @@
         loop_var: __credential_input_source_item
         label: "{{ __operation.verb }} EDA Credential Input Source for Credential {{ __credential_input_source_item.target_credential }}"
         pause: "{{ eda_configuration_credential_input_sources_async_delay }}"
-      async: 1000
+      async: "{{ ansible_check_mode | ternary(0, 1000) }}"
       poll: 0
       register: __credential_input_sources_job_async
-      changed_when: false
+      changed_when: (__credential_input_sources_job_async.changed if ansible_check_mode else false)
       vars:
         __operation: "{{ operation_translate[__credential_input_sources_job_async.state | default(platform_state) | default('present')] }}"
+
+    - name: Flag for errors (check mode only)
+      ansible.builtin.set_fact:
+        error_flag: true
+      when: ansible_check_mode and __credential_input_sources_job_async.failed is defined and __credential_input_sources_job_async.failed
 
     - name: Create credential input source | Wait for finish the credential input source creation
       when:

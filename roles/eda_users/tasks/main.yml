@@ -28,12 +28,17 @@
         loop_var: __user_item
         label: "{{ __operation.verb }} the user {{ __user_item.username }} to EDA"
         pause: "{{ eda_configuration_users_async_delay }}"
-      async: 1000
+      async: "{{ ansible_check_mode | ternary(0, 1000) }}"
       poll: 0
       register: __users_job_async
-      changed_when: false
+      changed_when: (__users_job_async.changed if ansible_check_mode else false)
       vars:
         __operation: "{{ operation_translate[__user_item.state | default(platform_state) | default('present')] }}"
+
+    - name: Flag for errors (check mode only)
+      ansible.builtin.set_fact:
+        error_flag: true
+      when: ansible_check_mode and __users_job_async.failed is defined and __users_job_async.failed
 
     - name: Create user | Wait for finish the user creation
       when:
