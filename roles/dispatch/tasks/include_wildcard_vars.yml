@@ -10,7 +10,8 @@
     "{{ var_name }}": "{{ prev_val | combine(curr_val, list_merge='append', recursive=true)
                           if is_dict else
                           (prev_val + curr_val) | unique }}"
-  loop: "{{ query('ansible.builtin.varnames', var_pattern) | reject('search', '_secure_logging$') }}"
+  loop: "{{ query('ansible.builtin.varnames', var_pattern)
+            | reject('search', '_(secure_logging|async_retries|async_delay|loop_delay|enforce_defaults)$') }}"
   tags: always
 
 ...
