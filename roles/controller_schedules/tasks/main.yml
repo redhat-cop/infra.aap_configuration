@@ -11,10 +11,7 @@
         description: "{{ __controller_schedule_item.description | default(('' if controller_configuration_schedules_enforce_defaults else omit), true) }}"
         rrule: "{{ __controller_schedule_item.rrule | default(omit, true) }}"
         extra_data: "{{ __controller_schedule_item.extra_data | default(({} if controller_configuration_schedules_enforce_defaults else omit), true) }}"
-        inventory: >-
-          {{ __controller_schedule_item.inventory | default(('' if controller_configuration_schedules_enforce_defaults else omit), true)
-             if __controller_schedule_item.unified_job_type | default('') != 'inventory_update'
-             else omit }}
+        inventory: "{{ __controller_schedule_item.inventory | default(('' if controller_configuration_schedules_enforce_defaults else omit), true) if __controller_schedule_item.unified_job_type | default('') != 'inventory_update' else omit }}"
         credentials: "{{ __controller_schedule_item.credentials if __controller_schedule_item.credentials is defined else omit }}"
         scm_branch: "{{ __controller_schedule_item.scm_branch | default(('' if controller_configuration_schedules_enforce_defaults else omit), true) }}"
         execution_environment: "{{ __controller_schedule_item.execution_environment.name | default(__controller_schedule_item.execution_environment | default(omit, true)) }}"
