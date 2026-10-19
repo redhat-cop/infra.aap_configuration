@@ -24,7 +24,7 @@
         overwrite_vars: "{{ __controller_source_item.overwrite_vars | default((false if controller_configuration_inventory_sources_enforce_defaults else omit)) }}"
         custom_virtualenv: "{{ __controller_source_item.custom_virtualenv | default(('' if controller_configuration_inventory_sources_enforce_defaults else omit), true) }}"
         timeout: "{{ __controller_source_item.timeout | default(0, true) if __controller_source_item.timeout is defined or controller_configuration_inventory_sources_enforce_defaults else omit }}"
-        verbosity: "{{ __controller_source_item.verbosity | default((1 if controller_configuration_inventory_sources_enforce_defaults else omit), true) }}"
+        verbosity: "{{ __controller_source_item.verbosity | default((1 if controller_configuration_inventory_sources_enforce_defaults else omit)) }}"
         update_on_launch: "{{ __controller_source_item.update_on_launch | default((false if controller_configuration_inventory_sources_enforce_defaults else omit)) }}"
         update_cache_timeout: "{{ __controller_source_item.update_cache_timeout | default(0, true) if __controller_source_item.update_cache_timeout is defined or controller_configuration_inventory_sources_enforce_defaults else omit }}"
         source_project: "{{ __controller_source_item.source_project.name | default(__controller_source_item.source_project | default(('' if __inventory_source_is_scm else omit), true)) }}"
