@@ -6,7 +6,7 @@
       ansible.builtin.async_status:
         jid: "{{ cas_job_async_results_item.ansible_job_id }}"
       register: __cas_job_async_result
-      until: __cas_job_async_result.finished
+      until: __cas_job_async_result is finished
       retries: "{{ cas_async_retries }}"
       delay: "{{ cas_async_delay }}"
       ignore_errors: true
