@@ -101,5 +101,5 @@ argument_specs:
         default: 10
         required: false
         description: Specify the timeout Ansible should use in requests to the Ansible gateway Server.
-        type: float
+        type: raw
 ...
