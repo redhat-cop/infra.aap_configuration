@@ -77,7 +77,7 @@ This also speeds up the overall role.
 |`name`|""|yes|str|Name of execution environment|
 |`new_name`|""|no|str|Setting this option will change the existing name (looked up via the name field).|
 |`description`|""|no|str|Description to use for the execution environment.|
-|`image`|""|yes|str|Container image to use for the execution environment|
+|`image`|""|no|str|Container image to use for the execution environment; required when creating an execution environment|
 |`organization`|""|no|str|The organization the execution environment belongs to.|
 |`credential`|""|no|str|Name of the credential to use for the execution environment.|
 |`pull`|"missing"|no|choice("always", "missing", "never")|Determine image pull behavior|
