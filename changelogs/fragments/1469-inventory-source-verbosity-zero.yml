@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - controller_inventory_sources - Preserve an explicitly configured verbosity of 0 instead of treating it as an undefined value.
