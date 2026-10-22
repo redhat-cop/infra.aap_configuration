@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - controller_schedules - Omit the inventory launch override for inventory-update schedules, which the Controller API rejects.
+...
