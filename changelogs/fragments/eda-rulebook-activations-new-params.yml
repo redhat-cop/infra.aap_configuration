@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - eda_rulebook_activations - Add support for ``new_name``, ``restart_on_project_update``, ``enable_persistence``, and ``rule_engine_credential_id`` parameters from ``ansible.eda.rulebook_activation``.
+...
