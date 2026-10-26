@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - dispatch role - exclude reserved per-resource control variables (``_secure_logging``, ``_async_retries``, ``_async_delay``, ``_loop_delay`` and ``_enforce_defaults``) from ``dispatch_include_wildcard_vars`` discovery so they are not merged into user-defined wildcard variables and no longer cause templating type errors.
+...
