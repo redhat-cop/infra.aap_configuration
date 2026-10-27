@@ -133,7 +133,7 @@ argument_specs:
         default: 10
         required: false
         description: Specify the timeout Ansible should use in requests to the Ansible Automation Platform Server.
-        type: float
+        type: raw
       aap_username:
         default: None
         required: false
