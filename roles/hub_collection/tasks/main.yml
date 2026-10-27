@@ -40,6 +40,7 @@
     - name: Sleep for 10 seconds and continue with play
       ansible.builtin.wait_for:
         timeout: 10
+      when: not ansible_check_mode
 
     - name: Flag for errors (check mode only)
       ansible.builtin.set_fact:

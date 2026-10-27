@@ -7,5 +7,6 @@ bugfixes:
     check-mode failures for dispatch, and continue to skip async wait/cleanup when
     running with ``--check``. Also complete the same pattern on remaining controller
     and gateway partial gaps (role definitions, workflow link nodes, applications,
-    organizations).
+    organizations). Skip the ``hub_collection`` post-async sleep when running in
+    check mode.
 ...
