@@ -27,12 +27,14 @@
     - name: Add EDA Controller rulebook activation
       ansible.eda.rulebook_activation:
         name: "{{ __ra_item.name }}"
+        new_name: "{{ __ra_item.new_name | default(omit) }}"
         description: "{{ __ra_item.description | default(omit) }}"
         project: "{{ __ra_item.project | default(omit) }}"
         rulebook: "{{ __ra_item.rulebook | default(omit) }}"
         decision_environment: "{{ __ra_item.decision_environment | default(omit) }}"
         awx_token: "{{ __ra_item.awx_token | default(omit) }}"
         restart_policy: "{{ __ra_item.restart_policy | default(omit) }}"
+        restart_on_project_update: "{{ __ra_item.restart_on_project_update | default(omit) }}"
         extra_vars: "{{ __ra_item.extra_vars | default(omit) }}"
         enabled: "{{ __ra_item.enabled | default(omit) }}"
         organization: "{{ __ra_item.organization | default(omit) }}"
@@ -41,6 +43,8 @@
         swap_single_source: "{{ __ra_item.swap_single_source | default(omit) }}"
         event_streams: "{{ __ra_item.event_streams | default(omit) }}"
         log_level: "{{ __ra_item.log_level | default(omit) }}"
+        enable_persistence: "{{ __ra_item.enable_persistence | default(omit) }}"
+        rule_engine_credential_id: "{{ __ra_item.rule_engine_credential_id | default(omit) }}"
         state: "{{ __ra_item.state | default(platform_state | default('present')) }}"
         controller_host: "{{ aap_hostname | default(omit, true) }}"
         controller_username: "{{ aap_username | default(omit, true) }}"

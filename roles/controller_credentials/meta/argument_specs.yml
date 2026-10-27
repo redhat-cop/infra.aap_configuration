@@ -124,7 +124,7 @@ argument_specs:
         default: 10
         required: false
         description: Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.
-        type: float
+        type: raw
       aap_configuration_collect_logs:
         default: false
         required: false

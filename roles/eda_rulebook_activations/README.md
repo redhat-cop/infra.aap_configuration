@@ -59,11 +59,13 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---:|
 |`name`|""|yes|str|Rulebook activation name. Must be lower case containing only alphanumeric characters and underscores.|
+|`new_name`|""|no|str|Setting this option will change the existing name (looked up via the name field).|
 |`description`|""|no|str|Description to use for the Activation.|
 |`project`|""|no|str|Project to use for the Activation.|
 |`rulebook`|""|yes|str|rulebook to use for the Activation.|
 |`decision_environment`|""|yes|str|Decision_environment to use for the Activation.|
 |`restart_policy`|"always"|no|str|Restart_policy to use for the Activation, choice of ["always", "never", "on-failure"]|
+|`restart_on_project_update`|`false`|no|bool|Whether the activation should restart after a project update.|
 |`extra_vars`|""|no|str|Extra_vars to use for the Activation.|
 |`awx_token`|""|no|str|The token used to authenticate to controller.|
 |`enabled`|"true"|no|str|Whether the rulebook activation is automatically enabled to run.|
@@ -74,7 +76,9 @@ This also speeds up the overall role.
 |`k8s_service_name`|""|no|str|The name of the Kubernetes service associated with this rulebook activation.|
 |`swap_single_source`|"true"|no|bool|Allow swapping of single sources in a rulebook without name match.|
 |`event_streams`|""|no|list|A list of dicts defining event streams for this rulebook activation. Each dict requires `event_stream` (str, the event stream name) and one of `source_name` (str) or `source_index` (int) to identify the source. `source_name` and `source_index` are mutually exclusive. See the YAML example below.|
-|`log_level`|""|no|str|Allow setting the desired log level.|
+|`log_level`|""|no|str|Allow setting the desired log level. Choices: ["debug", "info", "error"].|
+|`enable_persistence`|`false`|no|bool|Enable event persistence for this activation.|
+|`rule_engine_credential_id`|""|no|int|The ID of the Event-Driven Ansible Rule Engine Credential.|
 |`force_restart`|`false`|no|bool|Stop the rulebook activation before applying changes and start it again afterward when the desired state is `enabled`, or `present` with `enabled` not set to `false`. Required when updating a running activation that cannot be modified in place. Only use on existing activations. See the warning above.|
 
 ### Standard rulebook activation Data Structure
@@ -90,6 +94,9 @@ eda_rulebook_activations:
     rulebook: git-hook-deploy-rules.yml
     decision_environment: Hub Default Decision Environment
     organization: Default
+    restart_on_project_update: true
+    enable_persistence: false
+    log_level: error
     event_streams:
       - event_stream: "Example Event Stream"
         source_name: "Sample source"
@@ -100,6 +107,7 @@ eda_rulebook_activations:
     enabled: false
     state: present
   - name: Github Hook
+    new_name: Github Hook Renamed
     description: Hook to listen for changes in GitHub
     project: EDA_example
     rulebook: git-hook-deploy-rules.yml
