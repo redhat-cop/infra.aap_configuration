@@ -73,9 +73,11 @@ This also speeds up the overall role.
 ```yaml
 ---
 hub_ee_repositories:
-  - name: abc15
-    description: string
+  - name: my-ee
+    description: custom DB EE
     readme: "# My ee repo"
+    upstream_name: quay.io/my/registry/my-ee
+    registry: My EE Registry
 ```
 
 ## Playbook Examples

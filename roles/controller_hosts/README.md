@@ -4,6 +4,12 @@
 
 An Ansible Role to add/update/remove hosts on Ansible Controller.
 
+When a host and its inventory are both marked for deletion (`state: absent`),
+this role skips deleting the host. Inventory deletion already removes member
+hosts, and attempting to delete the host afterward fails because the inventory
+no longer exists. Hosts whose inventory is not being deleted are still removed
+normally.
+
 ## Requirements
 
 ansible-galaxy collection install -r tests/collections/requirements.yml to be installed

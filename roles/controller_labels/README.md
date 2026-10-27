@@ -52,6 +52,16 @@ This also speeds up the overall role.
 |`controller_configuration_labels_loop_delay`|`aap_configuration_loop_delay`|no|This sets the pause between each item in the loop for the role. To help when API is getting overloaded.|
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
+### Auto-create Labels from Templates
+
+The `autocreate_labels` task file builds and manages labels referenced on job templates or workflow job templates. It is included by `controller_job_templates` and `controller_workflow_job_templates` when `aap_configuration_autocreate_labels` is set to `true`.
+
+|Variable Name|Default Value|Required|Description|
+|:---:|:---:|:---:|:---:|
+|`controller_labels_autocreate_source`|`[]`|yes|List of job template or workflow job template definitions to extract labels from|
+
+Labels are collected from the `labels` and `related.labels` fields on each item in `controller_labels_autocreate_source`, and from `labels` and `related.labels` on each entry in `simplified_workflow_nodes` when present. A label is only created when the item defines an `organization`; items without an organization are skipped. Duplicate name and organization pairs are deduplicated before labels are managed.
+
 ## Data Structure
 
 ### Labels Variables

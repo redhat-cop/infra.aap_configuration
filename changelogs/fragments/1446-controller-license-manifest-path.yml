@@ -1,0 +1,4 @@
+---
+bugfixes:
+  - controller_license - Stage the license manifest with ``ansible.builtin.tempfile`` instead of hardcoded ``/tmp/controller_license_manifest.zip``. The destination is configurable via ``controller_license_manifest_path`` for hosts where the Ansible temp directory is not writable (https://github.com/redhat-cop/infra.aap_configuration/issues/1446).
+...

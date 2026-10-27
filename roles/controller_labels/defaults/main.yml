@@ -1,5 +1,6 @@
 ---
 controller_labels: []
+controller_labels_autocreate_source: []
 controller_configuration_labels_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
 controller_configuration_labels_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 controller_configuration_labels_async_delay: "{{ aap_configuration_async_delay | default(1) }}"

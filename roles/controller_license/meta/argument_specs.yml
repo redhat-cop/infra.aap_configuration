@@ -56,6 +56,12 @@ argument_specs:
               - absent
             description: Desired state of the resource.
 
+      controller_license_manifest_path:
+        default: ""
+        required: false
+        type: str
+        description: Destination path for the staged license manifest zip. When empty, the role creates a file with ansible.builtin.tempfile (honors TMPDIR). Set this when the Ansible temp directory is not writable.
+
       # Variables used for License lookup (username/password or client_id/client_secret)
       redhat_subscription_username:
         default: None

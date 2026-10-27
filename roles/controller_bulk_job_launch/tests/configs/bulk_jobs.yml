@@ -5,3 +5,4 @@ controller_bulk_launch_jobs:
     limit: "webservers"
   - name: "demo-workflow-job-template"
     job_type: "run"
+...

@@ -1,0 +1,25 @@
+---
+- name: autocreate_labels | Manage auto-created controller labels
+  ansible.builtin.include_tasks: main.yml
+  when: controller_labels | length > 0
+  vars:
+    controller_labels: "{{ _controller_labels | from_yaml | default([], true) | unique | list }}"
+    _controller_labels: |
+      {% for _obj in controller_labels_autocreate_source %}
+      {% set _org = _obj.organization.name | default(_obj.organization | default(none), true) %}
+      {% if _org %}
+      {% for _label in (_obj.labels | default([])) + (_obj.related.labels | default([])) %}
+      {% set _name = _label.name | default(_label) %}
+      - name: "{{ _name }}"
+        organization: "{{ _org }}"
+      {% endfor %}
+      {% for _node in _obj.simplified_workflow_nodes | default([]) %}
+      {% for _label in (_node.labels | default([])) + (_node.related.labels | default([])) %}
+      {% set _name = _label.name | default(_label) %}
+      - name: "{{ _name }}"
+        organization: "{{ _org }}"
+      {% endfor %}
+      {% endfor %}
+      {% endif %}
+      {% endfor %}
+...

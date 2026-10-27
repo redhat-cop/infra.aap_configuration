@@ -1,6 +1,7 @@
 ---
 aap_configuration_all_vars:
   - gateway_authenticators
+  - gateway_role_definitions
   - gateway_authenticator_maps
   - gateway_settings
   - aap_organizations
@@ -12,7 +13,6 @@ aap_configuration_all_vars:
   - gateway_services
   - aap_teams
   - aap_user_accounts
-  - gateway_role_definitions
   - gateway_role_team_assignments
   - gateway_role_user_assignments
   - gateway_routes

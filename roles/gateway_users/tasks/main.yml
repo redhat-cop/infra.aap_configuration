@@ -25,7 +25,7 @@
         gateway_username: "{{ aap_username | default(omit, true) }}"
         gateway_password: "{{ aap_password | default(omit, true) }}"
         gateway_token: "{{ aap_token | default(omit, true) }}"
-        gateway_request_timeout: "{{ aap_request_timeout | default(omit, true) }}"
+        gateway_request_timeout: "{{ aap_request_timeout | default(10, true) }}"
         gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
       loop: "{{ aap_user_accounts }}"
       loop_control:
@@ -35,7 +35,6 @@
       async: 1000
       poll: 0
       register: __gateway_user_accounts_job_async
-      changed_when: false
       vars:
         __operation: "{{ operation_translate[__gateway_user_accounts_item.state | default(platform_state) | default('present')] }}"
 
