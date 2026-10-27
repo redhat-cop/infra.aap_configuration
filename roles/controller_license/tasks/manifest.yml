@@ -16,6 +16,7 @@
       when:
         - controller_license_manifest_path | default('') | length == 0
         - __controller_manifest_path is not defined
+      check_mode: false
 
     - name: manifest | Set staging path from configured dest
       ansible.builtin.set_fact:
@@ -84,4 +85,5 @@
         state: absent
       when:
         - __controller_manifest_tmpfile.path | default('') | length > 0
+      check_mode: false
 ...

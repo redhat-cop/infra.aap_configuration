@@ -24,12 +24,17 @@
         label: "{{ __operation.verb }} the sync {{ __hub_collection_repository_sync_item.name }} in Hub"
         pause: "{{ hub_configuration_collection_repository_sync_loop_delay }}"
       when: __hub_collection_repository_sync_item.sync | default(true)
-      async: "{{ hub_configuration_collection_repository_sync_async_timeout }}"
+      async: "{{ ansible_check_mode | ternary(0, hub_configuration_collection_repository_sync_async_timeout) }}"
       poll: 0
       register: __collection_repository_sync_job_async
-      changed_when: false
+      changed_when: (__collection_repository_sync_job_async.changed if ansible_check_mode else false)
       vars:
         __operation: "{{ operation_translate[__hub_collection_repository_sync_item.state | default(platform_state) | default('present')] }}"
+
+    - name: Flag for errors (check mode only)
+      ansible.builtin.set_fact:
+        error_flag: true
+      when: ansible_check_mode and __collection_repository_sync_job_async.failed is defined and __collection_repository_sync_job_async.failed
 
     - name: Sync Repository | Wait for finish the repository sync
       when:

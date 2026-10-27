@@ -20,10 +20,12 @@ When reviewing pull requests to this collection, verify the following:
 All resource roles must follow the async block pattern:
 
 1. A block with `ansible_async_dir` and `no_log` set
-2. The module task loops over the resource list with `async` and `poll: 0`
+2. The module task loops over the resource list with `async: "{{ ansible_check_mode | ternary(0, <timeout>) }}"` and `poll: 0`, plus `changed_when: (__<register>.changed if ansible_check_mode else false)`
 3. A "Flag for errors (check mode only)" task using `ansible.builtin.set_fact` to set `error_flag`
-4. An `include_role` of `infra.aap_configuration.collect_async_status` to wait for results, passing `cas_async_delay`, `cas_async_retries`, `cas_secure_logging`, `cas_job_async_results_item`, `cas_register_subvar`, `cas_error_list_var_name`, and `cas_object_label`
-5. An `always` block that cleans up async result files via `ansible.builtin.async_status` with `mode: cleanup`
+4. An `include_role` of `infra.aap_configuration.collect_async_status` to wait for results (gated with `not ansible_check_mode`), passing `cas_async_delay`, `cas_async_retries`, `cas_secure_logging`, `cas_job_async_results_item`, `cas_register_subvar`, `cas_error_list_var_name`, and `cas_object_label`
+5. An `always` block that cleans up async result files via `ansible.builtin.async_status` with `mode: cleanup` (also gated with `not ansible_check_mode`)
+
+See `docs/STANDARDS.md` for the full async + check mode requirements.
 
 ### Variable Naming
 

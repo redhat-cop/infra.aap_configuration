@@ -30,16 +30,22 @@
         loop_var: __hub_collection_item
         label: "{{ __operation.verb }} the collection {{ __hub_collection_item.name }} in Hub"
         pause: "{{ hub_configuration_collection_loop_delay }}"
-      async: "{{ hub_configuration_collection_async_timeout }}"
+      async: "{{ ansible_check_mode | ternary(0, hub_configuration_collection_async_timeout) }}"
       poll: 0
       register: __collections_job_async
-      changed_when: false
+      changed_when: (__collections_job_async.changed if ansible_check_mode else false)
       vars:
         __operation: "{{ operation_translate[__hub_collection_item.state | default(platform_state) | default('present')] }}"
 
     - name: Sleep for 10 seconds and continue with play
       ansible.builtin.wait_for:
         timeout: 10
+      when: not ansible_check_mode
+
+    - name: Flag for errors (check mode only)
+      ansible.builtin.set_fact:
+        error_flag: true
+      when: ansible_check_mode and __collections_job_async.failed is defined and __collections_job_async.failed
 
     - name: Update/Destroy collection | Wait for finish the update/destruction of collection
       when:
