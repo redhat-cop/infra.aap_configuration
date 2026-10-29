@@ -123,7 +123,7 @@ hub_group_roles:
           - galaxy.collection_namespace_owner
         targets:
           collection_namespaces:
-            - autohubtest2
+            - test_namespace
 ```
 
 ## Playbook Examples

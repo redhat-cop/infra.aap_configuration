@@ -94,6 +94,7 @@ mock_modules:
   - ansible.hub.ah_ee_repository_sync
   - ansible.hub.ah_group
   - ansible.hub.group_roles
+  - ansible.hub.team_roles
   - ansible.hub.ah_namespace
   - ansible.hub.ah_build
   - ansible.hub.ah_role
@@ -127,6 +128,7 @@ mock_roles:
   - infra.aap_configuration.hub_namespace
   - infra.aap_configuration.hub_publish
   - infra.aap_configuration.hub_role
+  - infra.aap_configuration.hub_team_roles
   - infra.aap_configuration.hub_user
 
 # Enable checking of loop variable prefixes in roles

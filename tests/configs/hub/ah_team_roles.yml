@@ -1,0 +1,22 @@
+---
+hub_team_roles:
+  - team: satellite-qe
+    organization: Satellite
+    role: galaxy.collection_namespace_owner
+    targets:
+      collection_namespaces:
+        - infra
+        - test_namespace
+    state: present
+  - team: satlab-admin
+    organization: Satellite
+    role: galaxy.user_admin
+    state: present
+  - team: satlab-admin
+    organization: Satellite
+    role: galaxy.collection_namespace_owner
+    targets:
+      collection_namespaces:
+        - test_namespace
+    state: absent
+...

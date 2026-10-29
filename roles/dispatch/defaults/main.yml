@@ -143,6 +143,11 @@ hub_configuration_dispatcher_roles:
     tags:
       - collections
       - hub_collections
+  - role: hub_team_roles
+    var: hub_team_roles
+    tags:
+      - teams
+      - hub_teams
 
 hub_configuration_dispatcher_roles_publish:
   - role: hub_publish
