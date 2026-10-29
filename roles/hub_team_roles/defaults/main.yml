@@ -1,0 +1,24 @@
+---
+
+# These are the default variables common to most ah_configuration roles
+# You shouldn't need to define them again and again but they should be defined
+# ah_username: "{{ inventory_hostname }}"
+# ah_oauthtoken: ""
+# aap_validate_certs: false
+
+# These are the default variables specific to the team roles role
+
+# a list of dictionaries describing the Automation Hub team roles
+hub_team_roles: []
+#  - team
+#  - organization
+#  - role
+#  - targets
+
+hub_configuration_team_roles_async_timeout: "{{ aap_configuration_async_timeout | default(1000) }}"
+hub_configuration_team_roles_secure_logging: "{{ aap_configuration_secure_logging | default(false) }}"
+hub_configuration_team_roles_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
+hub_configuration_team_roles_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
+hub_configuration_team_roles_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
+aap_configuration_async_dir:
+...
