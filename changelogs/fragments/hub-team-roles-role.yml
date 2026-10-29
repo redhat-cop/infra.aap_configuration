@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Add hub_team_roles role to manage team role assignments in Automation Hub using the ansible.hub.team_roles module.
+...
