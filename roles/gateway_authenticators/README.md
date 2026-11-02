@@ -122,6 +122,78 @@ gateway_authenticators:
     SECRET: 'oidc-secret'
 ```
 
+### LDAP Authenticator Example
+
+The `configuration` keys are specific to the selected authenticator plugin. This example uses Active Directory with a service account, searches users and groups beneath the directory base, and maps directory attributes to AAP user fields. Store the bind password in an Ansible Vault variable; do not commit it as plain text.
+
+File name: `aap_configs/gateway_authenticators.yml`
+
+```yaml
+---
+gateway_authenticators_secure_logging: true
+gateway_authenticators:
+  - name: Corporate LDAP
+    slug: corporate-ldap
+    type: ansible_base.authentication.authenticator_plugins.ldap
+    enabled: true
+    create_objects: true
+    remove_users: false
+    order: 2
+    configuration:
+      SERVER_URI:
+        - ldaps://ldap.example.com:636
+      BIND_DN: "CN=aap-bind,OU=Service Accounts,DC=example,DC=com"
+      BIND_PASSWORD: "{{ vault_ldap_bind_password }}"
+      START_TLS: false
+      CONNECTION_OPTIONS:
+        OPT_REFERRALS: 0
+        OPT_NETWORK_TIMEOUT: 30
+      USER_SEARCH:
+        - "DC=example,DC=com"
+        - SCOPE_SUBTREE
+        - "(sAMAccountName=%(user)s)"
+      GROUP_SEARCH:
+        - "DC=example,DC=com"
+        - SCOPE_SUBTREE
+        - "(objectClass=group)"
+      GROUP_TYPE: ActiveDirectoryGroupType
+      GROUP_TYPE_PARAMS:
+        name_attr: cn
+        member_attr: member
+      USER_ATTR_MAP:
+        first_name: givenName
+        last_name: sn
+        email: mail
+```
+
+Set `gateway_authenticators_secure_logging: true` when supplying bind credentials so the role does not print sensitive task details. Use `ldaps://` for LDAP over TLS, or configure StartTLS for an LDAP URI where appropriate. The gateway must trust the LDAP server certificate. Adjust the user and group search bases, login attribute, group type, and attribute names to match your directory schema. Available group types and LDAP fields are described in the [AAP 2.5 LDAP configuration guide](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/access_management_and_authentication/gw-configure-authentication). Authorization rules such as requiring membership in a group or assigning AAP organizations and teams belong in [`gateway_authenticator_maps`](../gateway_authenticator_maps/README.md), not in this authenticator's `configuration`.
+
+## Playbook Examples
+
+### Standard Role Usage
+
+For AAP 2.5 and later, `aap_hostname` must be the externally reachable platform gateway URL. Define it with the other connection variables in `aap_configs/controller_auth.yml`.
+
+```yaml
+---
+- name: Playbook to configure AAP gateway authenticators post installation
+  hosts: localhost
+  connection: local
+  # Define following vars here, or in aap_configs/controller_auth.yml
+  # aap_hostname: https://gateway.example.com
+  # aap_username: admin
+  # aap_password: "{{ vault_aap_password }}"
+  pre_tasks:
+    - name: Include vars from aap_configs directory
+      ansible.builtin.include_vars:
+        dir: ./aap_configs
+        extensions: ["yml"]
+  roles:
+    - {role: infra.aap_configuration.gateway_authenticators, when: gateway_authenticators is defined}
+```
+
+For a playbook that applies both authenticators and their maps in order, see [Standard Role Usage for `gateway_authenticator_maps`](../gateway_authenticator_maps/README.md#standard-role-usage).
+
 ### Run Playbook
 
 File name: [configure_aap.yml](https://github.com/redhat-cop/infra.aap_configuration/blob/devel/playbooks/configure_aap.yml) can be found in the top level playbooks directory.

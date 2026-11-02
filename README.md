@@ -108,8 +108,16 @@ This error usually means the required Ansible collection (e.g., `infra.aap_confi
 
 Verify installation with `ansible-galaxy collection list` and that you have all the stated dependencies listed above in the requirements section.
 
-Define following vars here, or in `aap_configs/auth.yml`
-`aap_hostname: aap.example.com`
+For Ansible Automation Platform 2.5 and later, set `aap_hostname` to the externally reachable **platform gateway** URL (the same URL users use to access AAP), not a direct Automation Controller service URL. Define it with your authentication variables in `aap_configs/controller_auth.yml` or in the playbook, for example:
+
+```yaml
+---
+aap_hostname: https://gateway.example.com
+aap_username: admin
+# Store the password in Ansible Vault rather than in plain text.
+aap_password: "{{ vault_aap_password }}"
+...
+```
 
 You can also specify authentication by a combination of either:
 
