@@ -149,6 +149,8 @@ gateway_authenticator_maps:
 
 ### LDAP Authenticator Map Examples
 
+File name: `aap_configs/gateway_authenticator_maps.yml`
+
 ```yaml
 ---
 gateway_authenticator_maps:
@@ -202,7 +204,34 @@ gateway_authenticator_maps:
           contains: "SRE"
 ```
 
-### Run Playbook
+## Playbook Examples
+
+### Standard Role Usage
+
+For AAP 2.5 and later, `aap_hostname` must be the externally reachable platform gateway URL. Define it with the other connection variables in `aap_configs/controller_auth.yml`.
+
+```yaml
+---
+- name: Playbook to configure AAP gateway authentication post installation
+  hosts: localhost
+  connection: local
+  # Define following vars here, or in aap_configs/controller_auth.yml
+  # aap_hostname: https://gateway.example.com
+  # aap_username: admin
+  # aap_password: "{{ vault_aap_password }}"
+  pre_tasks:
+    - name: Include vars from aap_configs directory
+      ansible.builtin.include_vars:
+        dir: ./aap_configs
+        extensions: ["yml"]
+  roles:
+    - {role: infra.aap_configuration.gateway_authenticators, when: gateway_authenticators is defined}
+    - {role: infra.aap_configuration.gateway_authenticator_maps, when: gateway_authenticator_maps is defined}
+```
+
+The map's `authenticator` value must match the name of an authenticator created by `gateway_authenticators`. The example applies authenticators before their maps; ensure referenced organizations, teams, and roles also exist. The LDAP examples above show group and attribute triggers.
+
+### Run the Collection Playbook
 
 File name: [configure_aap.yml](https://github.com/redhat-cop/infra.aap_configuration/blob/devel/playbooks/configure_aap.yml) can be found in the top level playbooks directory.
 
