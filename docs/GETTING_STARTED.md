@@ -75,16 +75,18 @@ Create `configs/auth.yml` with your AAP credentials:
 ```yaml
 ---
 # Connection details
-aap_hostname: aap.example.com
+aap_hostname: https://gateway.example.com
 aap_username: admin
 aap_password: your-secure-password
 aap_validate_certs: false  # Set to true in production
 
 # Alternatively, use an OAuth token (recommended)
-# aap_hostname: aap.example.com
+# aap_hostname: https://gateway.example.com
 # aap_token: your-oauth-token
 # aap_validate_certs: true
 ```
+
+For AAP 2.5 and later, `aap_hostname` must point to the externally reachable platform gateway URL, not a direct Automation Controller service URL. Keep credentials in Ansible Vault; the example password above is a placeholder.
 
 > **Security Note:** Never commit credentials to version control! Use Ansible Vault to encrypt this file:
 >
@@ -166,7 +168,7 @@ You can also use individual roles for more granular control:
   connection: local
   gather_facts: false
   vars:
-    aap_hostname: aap.example.com
+    aap_hostname: https://gateway.example.com
     aap_username: admin
     aap_password: password
 
