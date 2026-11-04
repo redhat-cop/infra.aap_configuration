@@ -4,6 +4,41 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v4.11.0
+=======
+
+Minor Changes
+-------------
+
+- Add aap_version verification to the meta_dependency_check role
+- Add hub_team_roles role to manage team role assignments in Automation Hub using the ansible.hub.team_roles module.
+- Documentation - Clarify that ``aap_hostname`` points to the AAP platform gateway and add direct role usage and enterprise LDAP authenticator examples.
+- eda_rulebook_activations - Add support for ``new_name``, ``restart_on_project_update``, ``enable_persistence``, and ``rule_engine_credential_id`` parameters from ``ansible.eda.rulebook_activation``.
+
+Security Fixes
+--------------
+
+- controller_users role - ``controller_user_default_password`` no longer defaults to the literal ``change_me``, which was applied to every entry in ``aap_user_accounts`` that did not set a password of its own. Because ``ansible.controller.user`` defaults ``update_secrets`` to ``true``, the value was also written over the password of accounts that already existed, including token-only service accounts intended to have no usable password. The default is now empty.
+- controller_users role - an entry in ``aap_user_accounts`` that creates a new account without a ``password`` no longer gets ``change_me``; the controller API rejects it instead. Declare ``password`` on new accounts, or set ``controller_user_default_password`` explicitly to keep the previous behavior.
+
+Bugfixes
+--------
+
+- Apply check-mode aware async handling across gateway, hub, and eda roles. Async tasks now use ``ansible_check_mode | ternary(0, <timeout>)``, report ``changed`` from the module result in check mode, set ``error_flag`` on check-mode failures for dispatch, and continue to skip async wait/cleanup when running with ``--check``. Also complete the same pattern on remaining controller and gateway partial gaps (role definitions, workflow link nodes, applications, organizations). Skip the ``hub_collection`` post-async sleep when running in check mode.
+- Use the task-level fallback for ``aap_request_timeout`` when AAP credentials inject an empty value, rather than failing role argument validation.
+- collect_async_status - Use Ansible's ``finished`` test when polling async job status to avoid conditional type deprecation warnings.
+- controller_execution_environments - Allow deleting an execution environment without specifying its image.
+- controller_inventories - Preserve explicitly empty ``kind``, ``host_filter``, and ``variables`` so standard inventories are idempotent and empty values are not treated as unset (https://github.com/redhat-cop/infra.aap_configuration/issues/1459).
+- controller_inventory_sources - Only apply enforce_defaults empty values for SCM-only fields (source_project, source_path, scm_branch) when the inventory source type is scm, preventing project lookup failures for non-SCM sources such as ec2.
+- controller_inventory_sources - Preserve an explicitly configured verbosity of 0 instead of treating it as an undefined value.
+- controller_job_templates, controller_schedules, controller_workflow_job_templates - Preserve explicitly empty ``job_tags``, ``skip_tags``, and ``limit`` instead of omitting them via ``default(..., true)``.
+- controller_license - Stage the license manifest with ``ansible.builtin.tempfile`` instead of hardcoded ``/tmp/controller_license_manifest.zip``. The destination is configurable via ``controller_license_manifest_path`` for hosts where the Ansible temp directory is not writable (https://github.com/redhat-cop/infra.aap_configuration/issues/1446).
+- controller_schedules - Omit the inventory launch override for inventory-update schedules, which the Controller API rejects.
+- dispatch - reorder gateway_role_definitions before gateway_authenticator_maps to prevent failures when an authenticator map references a custom role definition
+- dispatch role - exclude reserved per-resource control variables (``_secure_logging``, ``_async_retries``, ``_async_delay``, ``_loop_delay`` and ``_enforce_defaults``) from ``dispatch_include_wildcard_vars`` discovery so they are not merged into user-defined wildcard variables and no longer cause templating type errors.
+- gateway roles now do not set ``changed_when`` meaning that the tasks updating gateway configuration correctly report the change status.
+- gateway_organizations - dispatch task vars for assign_galaxy_credentials_to_org and other assign_* flags blocked playbook-level overrides. Renamed dispatch vars to _dispatch_assign_* so users can set assign_* at the playbook level.
+
 v4.10.0
 =======
 

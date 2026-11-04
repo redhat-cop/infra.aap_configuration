@@ -1,4 +1,0 @@
----
-minor_changes:
-  - Documentation - Clarify that ``aap_hostname`` points to the AAP platform gateway and add direct role usage and enterprise LDAP authenticator examples.
-...
