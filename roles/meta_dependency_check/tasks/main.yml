@@ -8,7 +8,7 @@
           'ansible.platform.gateway_api',
           'api/gateway/v1/ping',
           host=aap_hostname,
-          verify_ssl=aap_validate_certs | default(true),
+          verify_ssl=aap_validate_certs | default(true)
         ).version
         | default('0.0.0')
       }}
