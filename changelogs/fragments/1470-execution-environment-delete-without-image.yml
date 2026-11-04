@@ -1,4 +1,0 @@
----
-bugfixes:
-  - controller_execution_environments - Allow deleting an execution environment without specifying its image.
-...

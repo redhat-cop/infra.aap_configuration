@@ -1,3 +1,0 @@
-bugfixes:
-  - collect_async_status - Use Ansible's ``finished`` test when polling async job status to avoid conditional type deprecation warnings.
-...
