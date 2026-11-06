@@ -31,5 +31,5 @@ dependencies:
   "ansible.platform": ">=2.5.0"
   "ansible.hub": ">=1.0.0"
   "ansible.controller": ">=4.6.0"
-  "ansible.eda": ">=2.5.0"
+  "ansible.eda": ">=2.9.0"
 ...

@@ -1,0 +1,3 @@
+---
+minor_changes:
+  - eda_event_streams - Add optional ``uuid`` parameter to support specifying a custom UUID for the event stream URL (AAPRFE-3206).
