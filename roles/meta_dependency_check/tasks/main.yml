@@ -7,10 +7,12 @@
         lookup(
           'ansible.platform.gateway_api',
           'api/gateway/v1/ping',
-          host=aap_hostname,
-          verify_ssl=aap_validate_certs | default(true)
+          host=aap_hostname
+            | default(lookup('ansible.builtin.env', 'AAP_HOSTNAME') | default('127.0.0.1', true), true),
+          verify_ssl=aap_validate_certs
+            | default(lookup('ansible.builtin.env', 'AAP_VALIDATE_CERTS') | default(true, true))
+            | bool
         ).version
-        | default('0.0.0')
       }}
 
 - name: "Assert that the AAP version is 2.5 or greater"
