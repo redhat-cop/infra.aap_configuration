@@ -1200,6 +1200,14 @@ releases:
     - fix-readme-controller-notifications-secure-loging.yml
     - hub-team-roles-role.yml
     release_date: '2026-11-04'
+  4.11.1:
+    changes:
+      bugfixes:
+      - meta_dependency_check - Fix aap_validate_certs undefined error when aap_validate_certs
+        is not defined
+    fragments:
+    - fix-version-check-aap_validate_certs-undefined.yml
+    release_date: '2026-11-10'
   4.2.0:
     changes:
       bugfixes:
