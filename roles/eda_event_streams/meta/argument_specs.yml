@@ -9,6 +9,32 @@ argument_specs:
         description: Data structure describing your event streams to manage.
         type: list
         elements: dict
+        options:
+          name:
+            type: str
+            required: true
+            description: Name of the event stream.
+          new_name:
+            type: str
+            description: New name of the event stream.
+          credential_name:
+            type: str
+            description: Name of the credential to use for the event stream.
+          organization:
+            type: str
+            description: Organization that owns the event stream.
+          headers:
+            type: dict
+            description: Dictionary of headers to send with the event stream.
+          forward_events:
+            type: bool
+            description: Whether to forward events from the event stream.
+          state:
+            type: str
+            description: State of the event stream.
+          uuid:
+            type: str
+            description: Optional UUID for the event stream URL. Requires ansible.eda >= 2.9.0.
 
       # Async variables
       eda_configuration_event_streams_async_retries:

@@ -1,5 +1,10 @@
 ---
 eda_event_streams:
+  - name: my_event_stream
+    organization: Default
+    credential_name: my_eda_credential
+    forward_events: true
+    uuid: "550e8400-e29b-41d4-a716-446655440000"
   - name: my_github_user
     description: my GitHub Credential
     credential_type: GitHub Personal Access Token

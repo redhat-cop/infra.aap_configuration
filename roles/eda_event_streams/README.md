@@ -60,6 +60,7 @@ This also speeds up the overall role.
 |`organization`|""|no|str|Organization this event stream belongs to.|
 |`headers`|""|no|str|Comma separated HTTP header keys that you want to include in the event payload. To include all headers in the event payload, leave the field empty.|
 |`forward_events`|`false`|no|bool|Enable the event stream to forward events to the rulebook activation where it is configured.|
+|`uuid`|""|no|str|Optional UUID for the event stream URL. Requires ansible.eda >= 2.9.0.|
 |`state`|`present`|no|str|Desired state of the project.|
 |`register`|""|no|str|Variable to set based on the result of the object creation/modification|
 
@@ -73,6 +74,7 @@ eda_event_streams:
   - name: Example Event Stream
     credential_name: Example Credential
     organization: Default
+    uuid: "550e8400-e29b-41d4-a716-446655440000"
 ```
 
 ## Playbook Examples
