@@ -1,0 +1,5 @@
+---
+bugfixes:
+  - hub_publish - Run the collection version lookup in check mode too. With ``hub_skip_existing_collections`` enabled (the default), check mode
+    failed with ``object of type 'dict' has no attribute 'status'`` because the skipped ``uri`` task has no ``status`` (https://github.com/redhat-cop/infra.aap_configuration/issues/1494).
+...
