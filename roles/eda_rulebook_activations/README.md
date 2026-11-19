@@ -48,6 +48,12 @@ This also speeds up the overall role.
 |`eda_configuration_rulebook_activations_loop_delay`|`aap_configuration_loop_delay`|no|This variable sets the pause between each item in the loop for the role.|
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
+### Troubleshooting missing rulebooks after project sync
+
+If activation fails because EDA cannot find the rulebook file, check that the referenced project has finished syncing and that the file exists on the configured branch. When managing multiple activations, try setting `eda_configuration_rulebook_activations_loop_delay` to a few seconds to give the sync more time before later activations are launched. If you sync multiple projects in the same run, `eda_configuration_projects_loop_delay` can also help by spacing out the project requests.
+
+These settings pause between items. If the first or only activation fails while the sync is still running, wait for the project sync to finish before running the activation role.
+
 ## Data Structure
 
 ### ⚠️ WARNING
