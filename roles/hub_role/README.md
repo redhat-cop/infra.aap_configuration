@@ -24,7 +24,7 @@ An Ansible Role to create role permissions in Automation Hub.
 The following Variables complement each other.
 If Both variables are not set, secure logging defaults to false.
 The role defaults to false as normally the add group task does not include sensitive information.
-hub_configuration_group_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of automation hub configuration roles with a single variable, or for the user to selectively use it.
+hub_configuration_role_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of automation hub configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
@@ -44,6 +44,8 @@ This also speeds up the overall role.
 |`hub_configuration_role_async_timeout`|`aap_configuration_async_timeout`|no|This variable sets the async timeout for the role.|
 |`aap_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
 |`hub_configuration_role_async_retries`|`aap_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
+|`aap_configuration_loop_delay`|0|no|Pause in seconds between loop items across roles.|
+|`hub_configuration_role_loop_delay`|`aap_configuration_loop_delay`|no|Pause in seconds between loop items for this role.|
 |`aap_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
 |`hub_configuration_role_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
 
