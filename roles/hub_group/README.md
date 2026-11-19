@@ -17,7 +17,7 @@ An Ansible Role to create groups in Automation Hub.
 |`aap_configuration_collect_logs`|`false`|no|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
 |`aap_configuration_register`|""|no|Specify a variable to register the values of all aap_configuration tasks. This will create an object with each aap object as an element containing a list of each item created.||
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.||
-|`ah_groups`|`see below`|yes|Data structure describing your groups, described below.||
+|`ah_groups`|`aap_teams`|no|Groups to manage. If unset, the role uses `aap_teams`, which defaults to an empty list.||
 
 ### Secure Logging Variables
 
@@ -40,9 +40,11 @@ This also speeds up the overall role.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
+|`aap_configuration_async_timeout`|1000|no|Maximum time in seconds an async task can run across roles.|
+|`hub_configuration_group_async_timeout`|`aap_configuration_async_timeout`|no|Maximum time in seconds an async task can run for this role.|
 |`aap_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
 |`hub_configuration_group_async_retries`|`aap_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
-|`aap_configuration_loop_delay`|1000|no|This variable sets the loop_delay for the role globally.|
+|`aap_configuration_loop_delay`|0|no|This variable sets the loop_delay for the role globally.|
 |`hub_configuration_group_loop_delay`|`aap_configuration_loop_delay`|no|This variable sets the loop_delay for the role.|
 |`aap_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
 |`hub_configuration_group_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
