@@ -24,7 +24,7 @@
       loop_control:
         loop_var: __de_item
         label: "{{ __operation.verb }} the decision environment {{ __de_item.name }} to EDA"
-        pause: "{{ eda_configuration_decision_environments_async_delay }}"
+        pause: "{{ eda_configuration_decision_environments_loop_delay }}"
       async: "{{ ansible_check_mode | ternary(0, 1000) }}"
       poll: 0
       register: __decision_environments_job_async
