@@ -3,9 +3,7 @@ argument_specs:
   main:
     short_description: An Ansible Role to launch workflows on Ansible Controller.
     options:
-      controller_workflow_launch_jobs:
-        default: []
-        required: false
+      controller_projects:
         description: Data structure describing your workflow_launch
         type: list
         elements: dict
@@ -49,24 +47,34 @@ argument_specs:
 #            description: If waiting for the update to complete this will abort after this amount of seconds.
 
       # Async variables
+      controller_configuration_workflow_launch_async_retries:
+        default: "{{ aap_configuration_async_retries | default(50) }}"
+        required: false
+        description: This variable sets the number of retries to attempt for the role.
+      aap_configuration_async_retries:
+        default: 50
+        required: false
+        description: This variable sets number of retries across all roles as a default.
+      controller_configuration_workflow_launch_async_delay:
+        default: "{{ aap_configuration_async_delay | default(1) }}"
+        required: false
+        description: This variable sets delay between retries for the role.
+      aap_configuration_async_delay:
+        default: 1
+        required: false
+        description: This variable sets delay between retries across all roles as a default.
 
       # No_log variables
-      controller_configuration_workflow_launch_secure_logging:
-        default: "{{ aap_configuration_secure_logging | default('false') }}"
+      controller_configuration_groups_secure_logging:
+        default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
-        description: Whether to hide sensitive task output for this role.
+        description: Whether or not to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
       aap_configuration_secure_logging:
         default: false
         required: false
         type: bool
-        description: Whether to hide sensitive task output across roles.
-
-      aap_request_timeout:
-        default: 10
-        required: false
-        type: raw
-        description: Specify the timeout in seconds Ansible should use in requests to the controller host.
+        description: This variable enables secure logging across all roles as a default.
 
       # Generic across all roles
       platform_state:

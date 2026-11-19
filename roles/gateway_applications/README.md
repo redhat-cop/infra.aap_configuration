@@ -28,24 +28,24 @@ This should be enabled to enforce configuration and prevent configuration drift.
 
 Enabling this will enforce configuration without specifying every option in the configuration files.
 
-'gateway_applications_enforce_defaults' defaults to the value of 'aap_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
+'aap_applications_enforce_defaults' defaults to the value of 'aap_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`gateway_applications_enforce_defaults`|`false`|no|Whether or not to enforce default option values on only the applications role|Whether to supply default values for omitted optional fields in this role.|
+|`aap_applications_enforce_defaults`|`false`|no|Whether or not to enforce default option values on only the applications role|
 |`aap_configuration_enforce_defaults`|`false`|no|This variable enables enforced default values as well, but is shared globally.|
 
 ### Secure Logging Variables
 
 The following Variables complement each other.
 If Both variables are not set, secure logging defaults to false.
-The role-specific setting below controls secure logging. It can be set for this role or shared across roles with `aap_configuration_secure_logging`.
-gateway_applications_secure_logging uses the shared `aap_configuration_secure_logging` setting unless explicitly overridden. This allows for secure logging to be toggled for the entire suite of automation hub configuration roles with a single variable, or for the user to selectively use it.
+The role defaults to false as normally the add applications task does not include sensitive information.
+aap_applications_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of automation hub configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`gateway_applications_secure_logging`|`false`|no|Whether or not to include the sensitive applications role tasks in the log.  Set this value to `true` if you will be providing your sensitive values from elsewhere.|Whether to hide sensitive task output for this role.|
-|`aap_configuration_secure_logging`|`false`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|Whether to hide sensitive task output across roles.|
+|`aap_applications_secure_logging`|`false`|no|Whether or not to include the sensitive applications role tasks in the log.  Set this value to `true` if you will be providing your sensitive values from elsewhere.|
+|`aap_configuration_secure_logging`|`false`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
 
 ### Asynchronous Retry Variables
 
@@ -57,10 +57,10 @@ This also speeds up the overall role.
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
 |`aap_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
-|`gateway_applications_async_retries`|`aap_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
+|`aap_applications_async_retries`|`aap_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
 |`aap_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
-|`gateway_applications_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
-|`aap_configuration_loop_delay`|0|no|This variable sets the loop_delay for the role globally.|
+|`aap_applications_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
+|`aap_configuration_loop_delay`|1000|no|This variable sets the loop_delay for the role globally.|
 |`aap_applications_loop_delay`|`aap_configuration_loop_delay`|no|This variable sets the loop_delay for the role.|
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 

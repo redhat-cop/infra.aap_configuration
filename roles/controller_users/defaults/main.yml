@@ -1,7 +1,6 @@
 ---
 # list of dicts describing Controller users
 aap_user_accounts: []
-controller_user_default_password: ""
 # Password applied to any entry in aap_user_accounts that does not set one of its own.
 # Empty by default: a configuration run should not invent a credential, and a literal shipped
 # here is the same password on every installation that uses this role. Set it only if you want

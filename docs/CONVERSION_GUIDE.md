@@ -60,7 +60,7 @@ Other Variables that will apply to all roles when used globally. Each of these h
 |`aap_configuration_secure_logging`|`false`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `true` if you will be providing your sensitive values from elsewhere.|
 |`aap_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for each role globally.|
 |`aap_configuration_async_delay`|1|no|This sets the delay between retries for each role globally.|
-|`aap_configuration_loop_delay`|0|no|This variable sets the loop_delay for each role globally.|
+|`aap_configuration_loop_delay`|1000|no|This variable sets the loop_delay for each role globally.|
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
 ## Role variables
@@ -174,30 +174,45 @@ eda_configuration vars:
 
 ### Role Vars
 
-Role-level controls use the variable names documented by each role. For example, the Automation Hub collection repository role uses `hub_configuration_collection_repository_async_delay` for asynchronous result checks and `hub_configuration_collection_repository_loop_delay` to pause between loop items. Older Automation Hub variables with the `ah_configuration_` prefix use the current `hub_configuration_` prefix.
+The following role vars have been updated as well. there are too many as its one for each role, so will go into how the name is crafted.
 
-The shared controls are:
+For example the previous var of
+controller_configuration_projects_loop_delay
+is still
+controller_configuration_projects_loop_delay
+however
+ah_configuration_collection_repository_async_delay
+is now
+hub_configuration_collection_repository_loop_delay
+
+These are the following global variables:
 
 - `aap_configuration_enforce_defaults`
 - `aap_configuration_secure_logging`
 - `aap_configuration_async_retries`
 - `aap_configuration_async_delay`
-- `aap_configuration_async_timeout`
 - `aap_configuration_loop_delay`
 - `aap_configuration_async_dir`
 
-Role-level overrides are component-specific. Common prefixes include `controller_configuration_`, `hub_configuration_`, `gateway_`, and `eda_configuration_`. The role README and argument spec define the exact variable name and default for each role.
+This is the format that is used for each using the appropriate prefix
 
-Role-level control suffixes include:
+Prefixes
 
-- `_enforce_defaults`
-- `_secure_logging`
-- `_async_retries`
-- `_async_delay`
-- `_async_timeout` (for Hub async roles)
-- `_loop_delay`
+- controller_configuration_
+- ah_configuration_
+- gateway_
+- eda_configuration_
 
-`aap_configuration_async_dir` is a shared setting and does not have a role-specific suffix.
+Format:
+
+- `prefix`+`role_name`+`_enforce_defaults`
+- `prefix`+`role_name`+`_secure_logging`
+- `prefix`+`role_name`+`_async_retries`
+- `prefix`+`role_name`+`_async_delay`
+- `prefix`+`role_name`+`_loop_delay`
+- `prefix`+`role_name`+`_async_dir`
+
+use these to tweak how the role runs, this is particularly useful for projects syncing, long lists of job templates, and other tasks that can take a while to loop around. These all have defaults, and each global var is described above as to what it does.
 
 ## Dispatch changes
 

@@ -23,27 +23,30 @@ An Ansible Role to create rulebook activations in EDA Controller.
 
 The following Variables complement each other.
 If Both variables are not set, secure logging defaults to false.
-The role-specific setting below controls secure logging. It can be set for this role or shared across roles with `aap_configuration_secure_logging`.
-eda_configuration_rulebook_activations_secure_logging uses the shared `aap_configuration_secure_logging` setting unless explicitly overridden. This allows for secure logging to be toggled for the entire suite of automation hub configuration roles with a single variable, or for the user to selectively use it.
+The role defaults to false as normally the add group_roles task does not include sensitive information.
+eda_configuration_rulebook_activations_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of automation hub configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`eda_configuration_rulebook_activations_secure_logging`|`false`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `true` if you will be providing your sensitive values from elsewhere.|Whether to hide sensitive task output for this role.|
-|`aap_configuration_secure_logging`|`false`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `true` if you will be providing your sensitive values from elsewhere.|Whether to hide sensitive task output across roles.|
+|`eda_configuration_rulebook_activations_secure_logging`|`false`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `true` if you will be providing your sensitive values from elsewhere.|
+|`aap_configuration_secure_logging`|`false`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `true` if you will be providing your sensitive values from elsewhere.|
 
 ### Asynchronous Retry Variables
 
-The following variables control asynchronous result collection and the delay between items in a loop.
+The following Variables set asynchronous retries for the role.
+If neither of the retries or delay or retries are set, they will default to their respective defaults.
+This allows for all items to be created, then checked that the task finishes successfully.
+This also speeds up the overall role.
 
 |Variable Name|Default Value|Required|Description|
-|:---:|:---:|:---:|:---|
-|`aap_configuration_async_retries`|50|no|Default number of result checks across roles.|
-|`eda_configuration_rulebook_activations_async_retries`|`aap_configuration_async_retries`|no|Number of result checks for this role.|
-|`aap_configuration_async_delay`|1|no|Default delay between asynchronous result checks across roles.|
-|`eda_configuration_rulebook_activations_async_delay`|`aap_configuration_async_delay`|no|Delay between asynchronous result checks for this role.|
-|`aap_configuration_loop_delay`|0|no|Default pause between loop items across roles.|
-|`eda_configuration_rulebook_activations_loop_delay`|`aap_configuration_loop_delay`|no|Pause between loop items for this role.|
-|`aap_configuration_async_dir`|`null`|no|Directory for async task result files; `null` uses Ansible's default `/root/.ansible_async/`.|
+|:---:|:---:|:---:|:---:|
+|`aap_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
+|`eda_configuration_rulebook_activations_async_retries`|`aap_configuration_async_retries`|no|This variable sets the number of retries to attempt for the role.|
+|`aap_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
+|`eda_configuration_rulebook_activations_async_delay`|`aap_configuration_async_delay`|no|This sets the delay between retries for the role.|
+|`aap_configuration_loop_delay`|0|no|This variable sets the loop_delay for the role globally.|
+|`eda_configuration_rulebook_activations_loop_delay`|`aap_configuration_loop_delay`|no|This variable sets the pause between each item in the loop for the role.|
+|`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
 ## Data Structure
 

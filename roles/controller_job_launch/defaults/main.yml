@@ -1,4 +1,3 @@
 ---
-controller_launch_jobs: []
 controller_configuration_job_launch_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
 ...

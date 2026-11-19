@@ -23,7 +23,7 @@ argument_specs:
         default: "{{ aap_configuration_async_delay| default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
-      aap_configuration_async_delay:
+      eda_configuration_async_delay:
         default: 1
         required: false
         description: This variable sets delay between retries across all roles as a default.
@@ -45,39 +45,12 @@ argument_specs:
         default: "{{ aap_configuration_secure_logging | default(true) }}"
         required: false
         type: bool
-        description: Whether to hide sensitive task output for this role.
+        description: Whether or not to include the sensitive role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
       aap_configuration_secure_logging:
         default: false
         required: false
         type: bool
-        description: Whether to hide sensitive task output across roles.
-
-      eda_configuration_credential_input_sources_enforce_defaults:
-        default: "{{ aap_configuration_enforce_defaults | default(false) }}"
-        required: false
-        type: bool
-        description: Whether to supply default values for omitted optional fields in this role.
-      aap_configuration_enforce_defaults:
-        default: false
-        required: false
-        type: bool
-        description: Whether to supply default values for omitted optional fields in this role.
-
-      aap_request_timeout:
-        default: 10
-        required: false
-        type: raw
-        description: Specify the timeout in seconds Ansible should use in requests to the controller host.
-      aap_configuration_collect_logs:
-        default: false
-        required: false
-        type: bool
-        description: Collect async results and continue after failed tasks instead of failing on the first error.
-      aap_configuration_register:
-        default: ""
-        required: false
-        type: str
-        description: Variable to register results from this role.
+        description: This variable enables secure logging across all roles as a default.
 
       # Generic across all roles
       platform_state:

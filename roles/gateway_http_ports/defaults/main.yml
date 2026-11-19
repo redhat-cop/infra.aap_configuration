@@ -1,5 +1,5 @@
 ---
-gateway_http_ports: []
+
 # These are the default variables common to most gw_conf roles
 # You shouldn't need to define them again and again but they should be defined
 # aap_hostname: "{{ inventory_hostname }}"
@@ -9,6 +9,7 @@ gateway_http_ports: []
 # These are the default variables specific to the license role
 
 # a list of dictionaries describing the envoy http ports (available GW API ports)
+http_ports: []
 # possible fields:
 #  - number
 #  - use_https
