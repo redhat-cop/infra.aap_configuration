@@ -1,3 +1,4 @@
 ---
+controller_cancel_jobs: []
 controller_configuration_jobs_cancel_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
 ...

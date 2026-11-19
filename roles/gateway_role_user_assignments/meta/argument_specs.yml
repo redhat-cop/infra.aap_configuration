@@ -39,7 +39,7 @@ argument_specs:
 #            description: ['Resource id of the user who will receive permissions from this assignment. Alternative to user field.', 'This option is mutually exclusive with I(user).']
 
       # Async variables
-      role_user_assignments_async_retries:
+      gateway_role_user_assignments_async_retries:
         default: "{{ aap_configuration_async_retries | default(50) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -47,7 +47,7 @@ argument_specs:
         default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
-      role_user_assignments_async_delay:
+      gateway_role_user_assignments_async_delay:
         default: "{{ aap_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -60,17 +60,38 @@ argument_specs:
         required: false
         description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.
 
+      gateway_role_user_assignments_loop_delay:
+        default: "{{ aap_configuration_loop_delay | default(0) }}"
+        required: false
+        description: Pause between each item in the loop for the role.
+      aap_configuration_loop_delay:
+        default: 0
+        required: false
+        description: This variable sets the default pause between loop items across all roles.
+
       # No_log variables
       gateway_role_user_assignments_secure_logging:
-        default: "{{ aap_configuration_secure_logging | default(false) }}"
+        default: "{{ aap_configuration_secure_logging | default('false') }}"
         required: false
         type: bool
-        description: Whether or not to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
+        description: Whether to hide sensitive task output for this role.
       aap_configuration_secure_logging:
         default: false
         required: false
         type: bool
-        description: This variable enables secure logging across all roles as a default.
+        description: Whether to hide sensitive task output across roles.
+
+      aap_configuration_enforce_defaults:
+        default: false
+        required: false
+        type: bool
+        description: Whether to supply default values for omitted optional fields in this role.
+
+      aap_request_timeout:
+        default: 10
+        required: false
+        type: raw
+        description: Specify the timeout in seconds Ansible should use in requests to the controller host.
 
       # Generic across all roles
       platform_state:

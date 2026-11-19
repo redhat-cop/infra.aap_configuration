@@ -1,4 +1,5 @@
 ---
+controller_ad_hoc_commands: []
 # These are the default variables specific to the ad_hoc_command role
 controller_configuration_ad_hoc_command_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
 ...

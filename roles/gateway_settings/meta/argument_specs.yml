@@ -8,38 +8,24 @@ argument_specs:
         required: true
         type: raw
       # Async variables
-      settings_async_retries:
-        default: "{{ aap_configuration_async_retries | default(50) }}"
-        required: false
-        description: This variable sets the number of retries to attempt for the role.
-      aap_configuration_async_retries:
-        default: 50
-        required: false
-        description: This variable sets number of retries across all roles as a default.
-      settings_async_delay:
-        default: "{{ aap_configuration_async_delay | default(1) }}"
-        required: false
-        description: This variable sets delay between retries for the role.
-      aap_configuration_async_delay:
-        default: 1
-        required: false
-        description: This variable sets delay between retries across all roles as a default.
-      aap_configuration_async_dir:
-        default: null
-        required: false
-        description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `~/.ansible_async`.
 
       # No_log variables
       gateway_settings_secure_logging:
-        default: "{{ aap_configuration_secure_logging | default(false) }}"
+        default: "{{ aap_configuration_secure_logging | default('false') }}"
         required: false
         type: bool
-        description: Whether or not to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
+        description: Whether to hide sensitive task output for this role.
       aap_configuration_secure_logging:
         default: true
         required: false
         type: bool
-        description: This variable enables secure logging across all roles as a default.
+        description: Whether to hide sensitive task output across roles.
+
+      aap_request_timeout:
+        default: 10
+        required: false
+        type: raw
+        description: Specify the timeout in seconds Ansible should use in requests to the controller host.
 
       # Generic across all roles
       platform_state:

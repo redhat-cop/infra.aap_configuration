@@ -3,22 +3,39 @@ argument_specs:
   main:
     short_description: An Ansible Role to run a list of ad hoc commands on Ansible Controller.
     options:
-      controller_bulk_job_launch_commands:
+      controller_bulk_launch_jobs:
+        default: []
+        required: false
         description: Data structure describing your ad hoc commands to run
         type: list
         elements: dict
 
+      controller_configuration_bulk_job_launch_loop_delay:
+        default: "{{ aap_configuration_loop_delay | default(0) }}"
+        required: false
+        description: Pause between each item in the loop for the role.
+      aap_configuration_loop_delay:
+        default: 0
+        required: false
+        description: This variable sets the default pause between loop items across all roles.
+
       # No_log variables
       controller_configuration_bulk_job_launch_secure_logging:
-        default: "{{ aap_configuration_secure_logging | default(false) }}"
+        default: "{{ aap_configuration_secure_logging | default('false') }}"
         required: false
         type: bool
-        description: Whether or not to include the sensitive ad_hoc_command role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
+        description: Whether to hide sensitive task output for this role.
       aap_configuration_secure_logging:
         default: false
         required: false
         type: bool
-        description: This variable enables secure logging across all roles as a default.
+        description: Whether to hide sensitive task output across roles.
+
+      aap_request_timeout:
+        default: 10
+        required: false
+        type: raw
+        description: Specify the timeout in seconds Ansible should use in requests to the controller host.
 
       # Generic across all roles
       platform_state:
