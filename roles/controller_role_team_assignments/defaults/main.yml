@@ -12,7 +12,6 @@ controller_role_team_assignments: []
 controller_role_team_assignments_secure_logging: "{{ aap_configuration_secure_logging | default('false') }}"
 controller_role_team_assignments_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 controller_role_team_assignments_async_delay: "{{ aap_configuration_async_delay | default(1) }}"
-controller_role_team_assignments_enforce_defaults: "{{ aap_configuration_enforce_defaults | default(false) }}"
 controller_role_team_assignments_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 aap_configuration_async_dir:
 ...

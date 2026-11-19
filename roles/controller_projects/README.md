@@ -12,13 +12,13 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 
 |Variable Name|Default Value|Required|Type|Description|Example|
 |:---|:---:|:---:|:---|:---|:---|
-|`controller_state`|"present"|no|str|The state all objects will take unless overridden by object default|'absent'|
+|`platform_state`|"present"|no|str|The state all objects will take unless overridden by object default|'absent'|
 |`aap_hostname`|""|yes|str|URL to the Ansible Controller Server.|127.0.0.1|
 |`aap_validate_certs`|`true`|no|str|Whether or not to validate the Ansible Controller Server's SSL certificate.||
 |`aap_username`|""|no|str|Admin User on the Ansible Controller Server. Either username / password or oauthtoken need to be specified.||
 |`aap_password`|""|no|str|Controller Admin User's password on the Ansible Controller Server. This should be stored in an Ansible Vault at vars/controller-secrets.yml or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
-|`controller_oauthtoken`|""|no|str|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
-|`controller_request_timeout`|`10`|no|int|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
+|`aap_token`|""|no|str|Controller Admin User's token on the Ansible Controller Server. This should be stored in an Ansible Vault at or elsewhere and called from a parent playbook. Either username / password or oauthtoken need to be specified.||
+|`aap_request_timeout`|`10`|no|int|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`aap_configuration_collect_logs`|`false`|no|bool|Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.||
 |`controller_projects`|`see below`|yes|str|Data structure describing your project or projects Described below. Alias: projects||
 
@@ -35,20 +35,20 @@ Enabling this will enforce configuration without specifying every option in the 
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`controller_configuration_projects_enforce_defaults`|`false`|no|Whether or not to enforce default option values on only the applications role|
+|`controller_configuration_projects_enforce_defaults`|`false`|no|Whether or not to enforce default option values on only the applications role|Whether to supply default values for omitted optional fields in this role.|
 |`aap_configuration_enforce_defaults`|`false`|no|This variable enables enforced default values as well, but is shared across multiple roles, see above.|
 
 ### Secure Logging Variables
 
 The following Variables complement each other.
 If Both variables are not set, secure logging defaults to false.
-The role defaults to false as normally the add projects task does not include sensitive information.
-controller_configuration_projects_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
+The role-specific setting below controls secure logging. It can be set for this role or shared across roles with `aap_configuration_secure_logging`.
+controller_configuration_projects_secure_logging uses the shared `aap_configuration_secure_logging` setting unless explicitly overridden. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Type|Description|
 |:---:|:---:|:---:|:---:|:---|
-|`controller_configuration_projects_secure_logging`|`false`|no|str|Whether or not to include the sensitive Project role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.|
-|`aap_configuration_secure_logging`|`false`|no|str|This variable enables secure logging as well, but is shared across multiple roles, see above.|
+|`controller_configuration_projects_secure_logging`|`false`|no|str|Whether or not to include the sensitive Project role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.|Whether to hide sensitive task output for this role.|
+|`aap_configuration_secure_logging`|`false`|no|str|This variable enables secure logging as well, but is shared across multiple roles, see above.|Whether to hide sensitive task output across roles.|
 
 ### Asynchronous Retry Variables
 
@@ -124,7 +124,7 @@ You can apply roles to users or teams using the `roles` field. This is applied a
         - myteam2
 ```
 
-This functionality can be disabled by setting `aap_configuration_apply_object_roles` as `false`.
+Object roles are applied by default. Set `aap_configuration_apply_object_roles` to `false` to disable this behavior.
 
 ### Standard Project Data Structure
 

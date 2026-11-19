@@ -27,13 +27,13 @@ ansible-galaxy collection install -r tests/collections/requirements.yml to be in
 
 The following Variables complement each other.
 If Both variables are not set, secure logging defaults to false.
-The role defaults to false as normally the project update task does not include sensitive information.
-controller_configuration_project_update_secure_logging defaults to the value of aap_configuration_secure_logging if it is not explicitly called. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
+The role-specific setting below controls secure logging. It can be set for this role or shared across roles with `aap_configuration_secure_logging`.
+controller_configuration_project_update_secure_logging uses the shared `aap_configuration_secure_logging` setting unless explicitly overridden. This allows for secure logging to be toggled for the entire suite of configuration roles with a single variable, or for the user to selectively use it.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`controller_configuration_project_update_secure_logging`|`false`|no|Whether or not to include the sensitive Project role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.|
-|`aap_configuration_secure_logging`|`false`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|
+|`controller_configuration_project_update_secure_logging`|`false`|no|Whether or not to include the sensitive Project role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.|Whether to hide sensitive task output for this role.|
+|`aap_configuration_secure_logging`|`false`|no|This variable enables secure logging as well, but is shared across multiple roles, see above.|Whether to hide sensitive task output across roles.|
 
 ### Asynchronous Retry Variables
 
@@ -44,9 +44,9 @@ This also speeds up the overall role.
 
 |Variable Name|Default Value|Required|Description|
 |:---:|:---:|:---:|:---:|
-|`aap_configuration_async_retries`|60|no|This variable sets the number of retries to attempt for the role globally.|
+|`aap_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for the role globally.|
 |`controller_configuration_project_update_async_retries`|60|no|This variable sets the number of retries to attempt for the role.|
-|`aap_configuration_async_delay`|10|no|This sets the delay between retries for the role globally.|
+|`aap_configuration_async_delay`|1|no|This sets the delay between retries for the role globally.|
 |`controller_configuration_project_update_async_delay`|10|no|This sets the delay between retries for the role.|
 |`aap_configuration_loop_delay`|0|no|This sets the pause between each item in the loop for the roles globally. To help when API is getting overloaded.|
 |`controller_configuration_project_update_loop_delay`|`aap_configuration_loop_delay`|no|This sets the pause between each item in the loop for the role. To help when API is getting overloaded.|

@@ -1,4 +1,5 @@
 ---
+hub_collection_remotes: []
 
 # These are the default variables common to most ah_configuration roles
 # You shouldn't need to define them again and again but they should be defined

@@ -4,14 +4,12 @@
 # You shouldn't need to define them again and again but they should be defined
 # aap_hostname: "{{ inventory_hostname }}"
 # ah_oauthtoken: ""
-# aap_validate_certs: false
-
+# aap_
 # These are the default variables specific to the ansible config role
 # ansible_config_owner: # optional
 # ansible_config_group: # optional
 ansible_config_mode: "0644"
 aap_configuration_working_dir: /var/tmp
-validate_certs: false
 hub_path_prefix: galaxy
 # a list of dictionaries describing the Automation Hub namespace
 automation_hub_list: []
