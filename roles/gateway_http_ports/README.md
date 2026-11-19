@@ -17,7 +17,7 @@ An Ansible Role to add proxy Http Ports on Ansible Automation gateway.
 | `aap_request_timeout`            | `10`          | no       | Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.                                                                                                                               |           |
 | `aap_configuration_collect_logs` | `false`       | no       | Specify whether to collect async results and continue for all failed async tasks instead of failing on the first error. Collected results are available in the `aap_configuration_role_errors` variable.                             |           |
 | `aap_configuration_register`     | ""            | no       | Specify a variable to register the values of all aap_configuration tasks. This will create an object with each aap object as an element containing a list of each item created.                                                      |           |
-| `gateway_http_ports`             | `see below`   | yes      | Data structure describing your http_ports entries Described below.                                                                                                                                                                   |           |
+| `gateway_http_ports` | `http_ports` | no | HTTP ports to manage. When the role is called directly and this variable is unset, the role uses `http_ports`, which defaults to an empty list. | |
 
 ### Secure Logging Variables
 
@@ -43,8 +43,8 @@ This also speeds up the overall role.
 | `aap_configuration_async_retries`      | 50                                | no       | This variable sets the number of retries to attempt for the role globally.                                                                                  |
 | `gateway_http_ports_async_retries`     | `aap_configuration_async_retries` | no       | This variable sets the number of retries to attempt for the role.                                                                                           |
 | `aap_configuration_async_delay`        | 1                                 | no       | This sets the delay between retries for the role globally.                                                                                                  |
-| `gateway_http_ports_hosts_async_delay` | `aap_configuration_async_delay`   | no       | This sets the delay between retries for the role.                                                                                                           |
-| `aap_configuration_loop_delay`         | 1000                              | no       | This variable sets the loop_delay for the role globally.                                                                                                    |
+| `gateway_http_ports_async_delay` | `aap_configuration_async_delay`   | no       | This sets the delay between retries for the role.                                                                                                           |
+| `aap_configuration_loop_delay`         | 0                              | no       | This variable sets the loop_delay for the role globally.                                                                                                    |
 | `gateway_http_ports_loop_delay`        | `aap_configuration_loop_delay`    | no       | This variable sets the loop_delay for the role.                                                                                                             |
 | `aap_configuration_async_dir`          | `null`                            | no       | Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`. |
 

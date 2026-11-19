@@ -3,6 +3,11 @@ argument_specs:
   main:
     short_description: An Ansible Role to create groups in Automation Hub.
     options:
+      ah_groups:
+        required: false
+        type: list
+        elements: dict
+        description: Groups to manage. Takes precedence over aap_teams when set.
       aap_teams:
         default: []
         required: false

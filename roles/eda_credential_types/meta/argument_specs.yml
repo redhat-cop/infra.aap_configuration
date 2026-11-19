@@ -23,7 +23,7 @@ argument_specs:
         default: "{{ aap_configuration_async_delay| default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
-      eda_configuration_async_delay:
+      aap_configuration_async_delay:
         default: 1
         required: false
         description: This variable sets delay between retries across all roles as a default.
