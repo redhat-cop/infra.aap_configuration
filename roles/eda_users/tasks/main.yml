@@ -27,7 +27,7 @@
       loop_control:
         loop_var: __user_item
         label: "{{ __operation.verb }} the user {{ __user_item.username }} to EDA"
-        pause: "{{ eda_configuration_users_async_delay }}"
+        pause: "{{ eda_configuration_users_loop_delay }}"
       async: "{{ ansible_check_mode | ternary(0, 1000) }}"
       poll: 0
       register: __users_job_async

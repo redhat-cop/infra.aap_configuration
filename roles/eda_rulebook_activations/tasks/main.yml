@@ -56,7 +56,7 @@
       loop_control:
         loop_var: __ra_item
         label: "{{ __operation.verb }} the rulebook activation {{ __ra_item.name }} to EDA"
-        pause: "{{ eda_configuration_rulebook_activations_async_delay }}"
+        pause: "{{ eda_configuration_rulebook_activations_loop_delay }}"
       async: "{{ ansible_check_mode | ternary(0, 1000) }}"
       poll: 0
       register: __rulebook_activations_job_async
