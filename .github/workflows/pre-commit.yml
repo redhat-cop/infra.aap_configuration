@@ -25,6 +25,7 @@ jobs:
       - name: Check whether the PR qualifies for automatic CI approval
         id: trusted
         # Add trusted GitHub user IDs to the JSON array through a reviewed PR.
+        # In order: djdanielsson, Tompage1994, sean-m-sullivan, branic, lennysh, ivarmu.
         # The PR author must own the fork and trigger the event for this revision.
         if: >-
           github.event_name == 'pull_request_target' &&
@@ -33,7 +34,7 @@ jobs:
           github.event.pull_request.head.sha != '' &&
           github.event.pull_request.user.id == github.event.pull_request.head.repo.owner.id &&
           github.event.pull_request.user.id == github.event.sender.id &&
-          contains(fromJSON('[]'), github.event.pull_request.user.id)
+          contains(fromJSON('[15205330, 9056568, 30054029, 13800082, 1304756, 26822043]'), github.event.pull_request.user.id)
         run: echo "approved=true" >> "$GITHUB_OUTPUT"
 
   approve_run:
