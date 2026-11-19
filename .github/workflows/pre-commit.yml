@@ -25,7 +25,13 @@ jobs:
       - name: Check whether the PR qualifies for automatic CI approval
         id: trusted
         # Add trusted GitHub user IDs to the JSON array through a reviewed PR.
-        # In order: djdanielsson, Tompage1994, sean-m-sullivan, branic, lennysh, ivarmu.
+        # Keep these username labels in sync with the IDs in the approval check.
+        # 15205330 = djdanielsson
+        # 9056568  = Tompage1994
+        # 30054029 = sean-m-sullivan
+        # 13800082 = branic
+        # 1304756  = lennysh
+        # 26822043 = ivarmu
         # The PR author must own the fork and trigger the event for this revision.
         if: >-
           github.event_name == 'pull_request_target' &&
