@@ -32,45 +32,17 @@ argument_specs:
         required: false
         description: Sets the directory to write the results file for async tasks. The default value is set to  `null` which uses the Ansible Default of `/root/.ansible_async/`.
 
-      hub_configuration_ee_image_async_timeout:
-        default: "{{ aap_configuration_async_timeout | default(1000) }}"
-        required: false
-        description: Asynchronous task timeout for the role.
-      hub_configuration_ee_image_loop_delay:
-        default: "{{ aap_configuration_loop_delay | default(0) }}"
-        required: false
-        description: Pause between each item in the loop for the role.
-      aap_configuration_async_timeout:
-        default: 1000
-        required: false
-        description: This variable sets the default asynchronous task timeout across all roles.
-      aap_configuration_loop_delay:
-        default: 0
-        required: false
-        description: This variable sets the default pause between loop items across all roles.
-
       # No_log variables
       hub_configuration_ee_image_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
-        description: Whether to hide sensitive task output for this role.
+        description: Whether or not to include the sensitive role tasks in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
       aap_configuration_secure_logging:
         default: false
         required: false
         type: bool
-        description: Whether to hide sensitive task output across roles.
-
-      aap_configuration_collect_logs:
-        default: false
-        required: false
-        type: bool
-        description: Collect async results and continue after failed tasks instead of failing on the first error.
-      aap_configuration_register:
-        default: ""
-        required: false
-        type: str
-        description: Variable to register results from this role.
+        description: This variable enables secure logging across all roles as a default.
 
       # Generic across all roles
       aap_hostname:

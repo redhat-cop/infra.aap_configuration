@@ -33,7 +33,7 @@ argument_specs:
 #            description: Desired state of the role definition
 
       # Async variables
-      gateway_role_definitions_async_retries:
+      role_definitions_async_retries:
         default: "{{ aap_configuration_async_retries | default(50) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -41,7 +41,7 @@ argument_specs:
         default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
-      gateway_role_definitions_async_delay:
+      role_definitions_async_delay:
         default: "{{ aap_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.
@@ -54,37 +54,17 @@ argument_specs:
         required: false
         description: Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.
 
-      gateway_role_definitions_loop_delay:
-        default: "{{ aap_configuration_loop_delay | default(0) }}"
-        required: false
-        description: Pause between each item in the loop for the role.
-      aap_configuration_loop_delay:
-        default: 0
-        required: false
-        description: This variable sets the default pause between loop items across all roles.
-
       # No_log variables
       gateway_role_definitions_secure_logging:
-        default: "{{ aap_configuration_secure_logging | default('false') }}"
+        default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
-        description: Whether to hide sensitive task output for this role.
+        description: Whether or not to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
       aap_configuration_secure_logging:
         default: false
         required: false
         type: bool
-        description: Whether to hide sensitive task output across roles.
-
-      gateway_role_definitions_enforce_defaults:
-        default: "{{ aap_configuration_enforce_defaults | default(false) }}"
-        required: false
-        type: bool
-        description: Whether to supply default values for omitted optional fields in this role.
-      aap_configuration_enforce_defaults:
-        default: false
-        required: false
-        type: bool
-        description: Whether to supply default values for omitted optional fields in this role.
+        description: This variable enables secure logging across all roles as a default.
 
       # Generic across all roles
       platform_state:

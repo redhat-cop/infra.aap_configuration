@@ -1,8 +1,5 @@
 ---
 bugfixes:
-  - Use dedicated loop delay settings in EDA roles, separate from asynchronous retry delays.
-  - Correct misnamed role inputs and overrides across Controller, EDA, Gateway, and Hub roles; ensure documented task inputs have defaults and argument specs.
-  - Pass role-specific async delay and retry settings to the shared result collector in Controller and Gateway role assignment roles.
-  - Align role variable tables and argument-spec defaults with task behavior and role defaults.
-  - Correct the Hub EE registry sync loop delay documentation.
+  - Add and use dedicated loop delay settings in EDA roles, separate from async retry delays.
+  - Correct the documented loop delay variable for the Hub EE registry sync role.
 ...

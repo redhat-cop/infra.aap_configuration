@@ -4,8 +4,6 @@ argument_specs:
     short_description: An Ansible Role to cancel a list of ad hoc commands on Ansible Controller.
     options:
       controller_ad_hoc_commands_cancel:
-        default: []
-        required: false
         description: Data structure describing your ad hoc jobs to cancel
         type: list
         elements: dict
@@ -32,21 +30,15 @@ argument_specs:
 
       # No_log variables
       controller_configuration_ad_hoc_command_cancel_secure_logging:
-        default: "{{ aap_configuration_secure_logging | default('false') }}"
+        default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool
-        description: Whether to hide sensitive task output for this role.
+        description: Whether or not to include the sensitive tasks from this role in the log. Set this value to `true` if you will be providing your sensitive values from elsewhere.
       aap_configuration_secure_logging:
         default: false
         required: false
         type: bool
-        description: Whether to hide sensitive task output across roles.
-
-      aap_request_timeout:
-        default: 10
-        required: false
-        type: raw
-        description: Specify the timeout in seconds Ansible should use in requests to the controller host.
+        description: This variable enables secure logging across all roles as a default.
 
       # Generic across all roles
       platform_state:
