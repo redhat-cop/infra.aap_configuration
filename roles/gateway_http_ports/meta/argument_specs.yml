@@ -3,10 +3,14 @@ argument_specs:
   main:
     short_description: An Ansible Role to create http ports on automation platform gateway.
     options:
-      http_ports:
-        description: Data structure describing http(s) ports where Envoy proxy listens
+      gateway_http_ports:
+        description: HTTP ports to manage. Takes precedence over http_ports when set.
         type: list
-        required: true
+        elements: dict
+      http_ports:
+        description: Fallback input for direct use of the role when gateway_http_ports is unset.
+        default: []
+        type: list
         elements: dict
 #        options:
 #          name:

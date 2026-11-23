@@ -49,6 +49,13 @@ Release announcements will be made to the [Ansible Announce] list.
 Possible security bugs should be reported via email
 to <mailto:security@ansible.com>.
 
+### CI approval
+
+Maintainers can add numeric GitHub user IDs to the allowlist in the [pre-commit workflow](workflows/pre-commit.yml) through a reviewed pull request.
+An allowlisted user can start CI automatically by opening or updating their own PR from a fork they own.
+The workflow checks the allowlist for each PR event before testing the associated commit. All other runs use the `requires-approval` environment.
+Limit the list to accounts trusted to run CI with the certified Galaxy credential.
+
 ## Code of Conduct
 
 As with all Ansible projects, we have a [Code of Conduct].

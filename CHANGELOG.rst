@@ -4,6 +4,14 @@ infra.aap\_configuration Release Notes
 
 .. contents:: Topics
 
+v4.11.1
+=======
+
+Bugfixes
+--------
+
+- meta_dependency_check - Fix aap_validate_certs undefined error when aap_validate_certs is not defined
+
 v4.11.0
 =======
 

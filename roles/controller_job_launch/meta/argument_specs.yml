@@ -102,7 +102,7 @@ argument_specs:
 #            description: If waiting for the job to complete this will abort after this amount of seconds.
 
       # No_log variables
-      controller_configuration_groups_secure_logging:
+      controller_configuration_job_launch_secure_logging:
         default: "{{ aap_configuration_secure_logging | default(false) }}"
         required: false
         type: bool

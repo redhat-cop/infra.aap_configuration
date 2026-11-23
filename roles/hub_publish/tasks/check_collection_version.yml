@@ -12,6 +12,8 @@
     timeout: "{{ aap_request_timeout | default(10, true) }}"
     status_code: [200, 404]
   register: __hub_publish_version_lookup
+  # Read-only GET; run it in check mode too so the skip decision has a status.
+  check_mode: false
 
 - name: check_collection_version | Determine whether to skip publishing this collection version
   ansible.builtin.set_fact:

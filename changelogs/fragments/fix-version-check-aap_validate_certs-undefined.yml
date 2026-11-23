@@ -1,3 +1,0 @@
----
-bugfixes:
-  - meta_dependency_check - Fix aap_validate_certs undefined error when aap_validate_certs is not defined

@@ -24,7 +24,7 @@
       loop_control:
         loop_var: __credential_item
         label: "{{ __operation.verb }} the credential {{ __credential_item.name }} to EDA"
-        pause: "{{ eda_configuration_credentials_async_delay }}"
+        pause: "{{ eda_configuration_credentials_loop_delay }}"
       async: "{{ ansible_check_mode | ternary(0, 1000) }}"
       poll: 0
       register: __credentials_job_async

@@ -25,7 +25,7 @@
       loop_control:
         loop_var: __event_stream_item
         label: "{{ __operation.verb }} the Event stream {{ __event_stream_item.name }} to EDA"
-        pause: "{{ eda_configuration_event_streams_async_delay }}"
+        pause: "{{ eda_configuration_event_streams_loop_delay }}"
       async: "{{ ansible_check_mode | ternary(0, 1000) }}"
       poll: 0
       register: __event_streams_job_async

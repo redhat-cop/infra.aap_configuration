@@ -16,14 +16,47 @@ permissions:
   contents: read
 
 jobs:
+  check_pr_author:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      trusted: ${{ steps.trusted.outputs.approved }}
+    steps:
+      - name: Check whether the PR qualifies for automatic CI approval
+        id: trusted
+        # Add trusted GitHub user IDs to the JSON array through a reviewed PR.
+        # Keep these username labels in sync with the IDs in the approval check.
+        # 15205330 = djdanielsson
+        # 9056568  = Tompage1994
+        # 30054029 = sean-m-sullivan
+        # 13800082 = branic
+        # 1304756  = lennysh
+        # 26822043 = ivarmu
+        # The PR author must own the fork and trigger the event for this revision.
+        if: >-
+          github.event_name == 'pull_request_target' &&
+          github.event.pull_request.head.repo.fork == true &&
+          github.event.pull_request.head.repo.owner.type == 'User' &&
+          github.event.pull_request.head.sha != '' &&
+          github.event.pull_request.user.id == github.event.pull_request.head.repo.owner.id &&
+          github.event.pull_request.user.id == github.event.sender.id &&
+          contains(fromJSON('[15205330, 9056568, 30054029, 13800082, 1304756, 26822043]'), github.event.pull_request.user.id)
+        run: echo "approved=true" >> "$GITHUB_OUTPUT"
+
   approve_run:
+    needs: check_pr_author
+    if: needs.check_pr_author.outputs.trusted != 'true'
     environment: requires-approval
     runs-on: ubuntu-latest
     steps:
       - run: echo "Approval granted."
 
   pre-commit:
-    needs: approve_run
+    needs: [check_pr_author, approve_run]
+    if: >-
+      ${{ !cancelled() && needs.check_pr_author.result == 'success' &&
+          (needs.approve_run.result == 'success' ||
+           (needs.approve_run.result == 'skipped' && needs.check_pr_author.outputs.trusted == 'true')) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -32,7 +65,7 @@ jobs:
           # Fork PRs need the head ref to lint PR changes. actions/checkout v7+ blocks
           # this by default in pull_request_target workflows; opt in after review:
           # https://gh.io/securely-using-pull_request_target
-          # Risk is gated by the requires-approval environment on approve_run.
+          # CI requires a trusted PR event or manual approval on approve_run.
           allow-unsafe-pr-checkout: true
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
