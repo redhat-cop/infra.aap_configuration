@@ -49,6 +49,8 @@
         label: "{{ __operation.verb }} Role {{ __controller_role_definitions_job_async_results_item.__controller_role_definitions_item.name }} | Wait for finish the Roles {{ __operation.action }}"
       vars:
         cas_secure_logging: "{{ controller_role_definitions_secure_logging }}"
+        cas_async_delay: "{{ controller_role_definitions_async_delay }}"
+        cas_async_retries: "{{ controller_role_definitions_async_retries }}"
         cas_job_async_results_item: "{{ __controller_role_definitions_job_async_results_item }}"
         cas_register_subvar: controller_role_definitions
         cas_error_list_var_name: "controller_role_definitions_errors"
