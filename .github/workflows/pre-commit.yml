@@ -19,28 +19,31 @@ jobs:
   check_pr_author:
     runs-on: ubuntu-latest
     permissions: {}
+    env:
+      # Add trusted GitHub user IDs through a reviewed PR and keep these labels in sync.
+      # 15205330 = djdanielsson
+      # 9056568  = Tompage1994
+      # 30054029 = sean-m-sullivan
+      # 13800082 = branic
+      # 1304756  = lennysh
+      # 26822043 = ivarmu
+      TRUSTED_PR_USER_IDS: '[15205330, 9056568, 30054029, 13800082, 1304756, 26822043]'
     outputs:
       trusted: ${{ steps.trusted.outputs.approved }}
     steps:
       - name: Check whether the PR qualifies for automatic CI approval
         id: trusted
-        # Add trusted GitHub user IDs to the JSON array through a reviewed PR.
-        # Keep these username labels in sync with the IDs in the approval check.
-        # 15205330 = djdanielsson
-        # 9056568  = Tompage1994
-        # 30054029 = sean-m-sullivan
-        # 13800082 = branic
-        # 1304756  = lennysh
-        # 26822043 = ivarmu
-        # The PR author must own the fork and trigger the event for this revision.
+        # Both accounts must be trusted. For forks, the author must also own the fork.
         if: >-
           github.event_name == 'pull_request_target' &&
-          github.event.pull_request.head.repo.fork == true &&
-          github.event.pull_request.head.repo.owner.type == 'User' &&
           github.event.pull_request.head.sha != '' &&
-          github.event.pull_request.user.id == github.event.pull_request.head.repo.owner.id &&
-          github.event.pull_request.user.id == github.event.sender.id &&
-          contains(fromJSON('[15205330, 9056568, 30054029, 13800082, 1304756, 26822043]'), github.event.pull_request.user.id)
+          github.event.pull_request.head.repo.id != null &&
+          contains(fromJSON(env.TRUSTED_PR_USER_IDS), github.event.pull_request.user.id) &&
+          contains(fromJSON(env.TRUSTED_PR_USER_IDS), github.event.sender.id) &&
+          (github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id ||
+           (github.event.pull_request.head.repo.fork == true &&
+            github.event.pull_request.head.repo.owner.type == 'User' &&
+            github.event.pull_request.user.id == github.event.pull_request.head.repo.owner.id))
         run: echo "approved=true" >> "$GITHUB_OUTPUT"
 
   approve_run:
@@ -94,3 +97,4 @@ jobs:
           ANSIBLE_GALAXY_SERVER_CERTIFIED_AUTH_URL: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
           ANSIBLE_GALAXY_SERVER_CERTIFIED_TOKEN: ${{ secrets.CRC_PUBLISH_KEY }}
           ANSIBLE_GALAXY_SERVER_GALAXY_URL: https://galaxy.ansible.com/api/
+...

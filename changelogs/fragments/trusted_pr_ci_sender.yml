@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Start CI automatically when the pull request author and event sender are trusted and the branch is in the same repository or the author's own fork.
+...
