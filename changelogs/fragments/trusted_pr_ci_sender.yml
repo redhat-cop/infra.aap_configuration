@@ -1,4 +1,4 @@
 ---
 minor_changes:
-  - Allow a trusted account to start CI automatically on a pull request from another trusted author's own fork.
+  - Start CI automatically when the pull request author and event sender are trusted and the branch is in the same repository or the author's own fork.
 ...
