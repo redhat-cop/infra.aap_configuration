@@ -39,7 +39,7 @@ argument_specs:
 #            description: ['Resource id of the user who will receive permissions from this assignment. Alternative to user field.', 'This option is mutually exclusive with I(user).']
 
       # Async variables
-      role_user_assignments_async_retries:
+      gateway_role_user_assignments_async_retries:
         default: "{{ aap_configuration_async_retries | default(50) }}"
         required: false
         description: This variable sets the number of retries to attempt for the role.
@@ -47,7 +47,7 @@ argument_specs:
         default: 50
         required: false
         description: This variable sets number of retries across all roles as a default.
-      role_user_assignments_async_delay:
+      gateway_role_user_assignments_async_delay:
         default: "{{ aap_configuration_async_delay | default(1) }}"
         required: false
         description: This variable sets delay between retries for the role.

@@ -20,7 +20,7 @@
         gateway_token: "{{ aap_token | default(omit, true) }}"
         gateway_request_timeout: "{{ aap_request_timeout | default(10, true) }}"
         gateway_validate_certs: "{{ aap_validate_certs | default(omit) }}"
-      loop: "{{ gateway_http_ports }}"
+      loop: "{{ gateway_http_ports | default(http_ports) }}"
       loop_control:
         loop_var: __gateway_http_ports_item
         label: "{{ __operation.verb }} AAP Platform Http Ports {{ __gateway_http_ports_item.name }}"

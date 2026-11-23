@@ -1,0 +1,6 @@
+---
+bugfixes:
+  - Honor the documented Hub group and Gateway HTTP port inputs while retaining their previous input names as fallbacks.
+  - Honor role-specific async delay and retry settings when collecting controller role definitions, gateway role definitions, and gateway team role assignments.
+  - Correct misnamed role overrides, misleading defaults, and unsupported settings in role documentation and argument specifications.
+...

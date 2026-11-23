@@ -20,22 +20,6 @@ An Ansible Role to create/update/remove Role Team Assignments on Ansible Control
 |`aap_request_timeout`|""|no|Specify the timeout in seconds Ansible should use in requests to the Ansible Automation Platform host.||
 |`controller_role_team_assignments`|`see below`|yes|Data structure describing your role team assignments Described below.||
 
-### Enforcing defaults
-
-The following Variables complement each other.
-If Both variables are not set, enforcing default values is not done.
-Enabling these variables enforce default values on options that are optional in the controller API.
-This should be enabled to enforce configuration and prevent configuration drift. It is recommended to be enabled, however it is not enforced by default.
-
-Enabling this will enforce configuration without specifying every option in the configuration files.
-
-'controller_role_team_assignments_enforce_defaults' defaults to the value of 'aap_configuration_enforce_defaults' if it is not explicitly called. This allows for enforced defaults to be toggled for the entire suite of controller configuration roles with a single variable, or for the user to selectively use it.
-
-|Variable Name|Default Value|Required|Description|
-|:---:|:---:|:---:|:---:|
-|`controller_role_team_assignments_enforce_defaults`|`false`|no|Whether or not to enforce default option values on only the role team assignments role|
-|`aap_configuration_enforce_defaults`|`false`|no|This variable enables enforced default values as well, but is shared globally.|
-
 ### Secure Logging Variables
 
 The following Variables complement each other.
