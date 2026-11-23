@@ -3,5 +3,6 @@ eda_rulebook_activations: []
 eda_configuration_rulebook_activations_secure_logging: "{{ aap_configuration_secure_logging | default(false) }}"
 eda_configuration_rulebook_activations_async_retries: "{{ aap_configuration_async_retries | default(50) }}"
 eda_configuration_rulebook_activations_async_delay: "{{ aap_configuration_async_delay| default(1) }}"
+eda_configuration_rulebook_activations_loop_delay: "{{ aap_configuration_loop_delay | default(0) }}"
 aap_configuration_async_dir:
 ...

@@ -27,6 +27,14 @@ argument_specs:
         default: 1
         required: false
         description: This variable sets delay between retries across all roles as a default.
+      eda_configuration_credential_input_sources_loop_delay:
+        default: "{{ aap_configuration_loop_delay | default(0) }}"
+        required: false
+        description: This variable sets the pause between each item in the loop for the role.
+      aap_configuration_loop_delay:
+        default: 0
+        required: false
+        description: This variable sets the pause between each item in the loop across all roles as a default.
       aap_configuration_async_dir:
         default: null
         required: false
