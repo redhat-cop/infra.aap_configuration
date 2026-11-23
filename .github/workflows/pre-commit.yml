@@ -33,15 +33,17 @@ jobs:
     steps:
       - name: Check whether the PR qualifies for automatic CI approval
         id: trusted
-        # The author must own the fork. Both the author and event sender must be trusted.
+        # Both accounts must be trusted. For forks, the author must also own the fork.
         if: >-
           github.event_name == 'pull_request_target' &&
-          github.event.pull_request.head.repo.fork == true &&
-          github.event.pull_request.head.repo.owner.type == 'User' &&
           github.event.pull_request.head.sha != '' &&
-          github.event.pull_request.user.id == github.event.pull_request.head.repo.owner.id &&
+          github.event.pull_request.head.repo.id != null &&
           contains(fromJSON(env.TRUSTED_PR_USER_IDS), github.event.pull_request.user.id) &&
-          contains(fromJSON(env.TRUSTED_PR_USER_IDS), github.event.sender.id)
+          contains(fromJSON(env.TRUSTED_PR_USER_IDS), github.event.sender.id) &&
+          (github.event.pull_request.head.repo.id == github.event.pull_request.base.repo.id ||
+           (github.event.pull_request.head.repo.fork == true &&
+            github.event.pull_request.head.repo.owner.type == 'User' &&
+            github.event.pull_request.user.id == github.event.pull_request.head.repo.owner.id))
         run: echo "approved=true" >> "$GITHUB_OUTPUT"
 
   approve_run:
