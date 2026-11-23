@@ -52,7 +52,7 @@ to <mailto:security@ansible.com>.
 ### CI approval
 
 Maintainers can add numeric GitHub user IDs to the allowlist in the [pre-commit workflow](workflows/pre-commit.yml) through a reviewed pull request.
-An allowlisted user can start CI automatically by opening or updating their own PR from a fork they own.
+CI starts automatically for a PR from a fork the author owns when both the author and the account that triggered the event are allowlisted.
 The workflow checks the allowlist for each PR event before testing the associated commit. All other runs use the `requires-approval` environment.
 Limit the list to accounts trusted to run CI with the certified Galaxy credential.
 
