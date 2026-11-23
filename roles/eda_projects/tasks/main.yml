@@ -27,7 +27,7 @@
       loop_control:
         loop_var: __project_item
         label: "{{ __operation.verb }} the project {{ __project_item.name }} to EDA"
-        pause: "{{ eda_configuration_projects_async_delay }}"
+        pause: "{{ eda_configuration_projects_loop_delay }}"
       async: "{{ ansible_check_mode | ternary(0, 1000) }}"
       poll: 0
       register: __projects_job_async

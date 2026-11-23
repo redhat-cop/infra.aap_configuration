@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - Allow maintainers to configure trusted GitHub accounts for automatic CI approval on pull requests from their own forks.
+...

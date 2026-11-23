@@ -60,7 +60,7 @@ Other Variables that will apply to all roles when used globally. Each of these h
 |`aap_configuration_secure_logging`|`false`|no|Whether or not to include the sensitive Registry role tasks in the log.  Set this value to `true` if you will be providing your sensitive values from elsewhere.|
 |`aap_configuration_async_retries`|50|no|This variable sets the number of retries to attempt for each role globally.|
 |`aap_configuration_async_delay`|1|no|This sets the delay between retries for each role globally.|
-|`aap_configuration_loop_delay`|1000|no|This variable sets the loop_delay for each role globally.|
+|`aap_configuration_loop_delay`|0|no|This variable sets the loop_delay for each role globally.|
 |`aap_configuration_async_dir`|`null`|no|Sets the directory to write the results file for async tasks. The default value is set to `null` which uses the Ansible Default of `/root/.ansible_async/`.|
 
 ## Role variables
@@ -183,7 +183,7 @@ controller_configuration_projects_loop_delay
 however
 ah_configuration_collection_repository_async_delay
 is now
-hub_configuration_collection_repository_loop_delay
+hub_configuration_collection_repository_async_delay
 
 These are the following global variables:
 
@@ -199,7 +199,7 @@ This is the format that is used for each using the appropriate prefix
 Prefixes
 
 - controller_configuration_
-- ah_configuration_
+- hub_configuration_
 - gateway_
 - eda_configuration_
 
@@ -210,7 +210,6 @@ Format:
 - `prefix`+`role_name`+`_async_retries`
 - `prefix`+`role_name`+`_async_delay`
 - `prefix`+`role_name`+`_loop_delay`
-- `prefix`+`role_name`+`_async_dir`
 
 use these to tweak how the role runs, this is particularly useful for projects syncing, long lists of job templates, and other tasks that can take a while to loop around. These all have defaults, and each global var is described above as to what it does.
 

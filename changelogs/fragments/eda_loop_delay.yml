@@ -1,0 +1,5 @@
+---
+bugfixes:
+  - Add and use dedicated loop delay settings in EDA roles, separate from async retry delays.
+  - Correct the documented loop delay variable for the Hub EE registry sync role.
+...

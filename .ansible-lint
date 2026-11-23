@@ -155,7 +155,6 @@ use_default_rules: true
 skip_list:
   - jinja[spacing]
   - role-name[path]
-  - sanity[cannot-ignore] # We're only ignoring sanity rules when we have to
   - var-naming[no-role-prefix]
 
 # Ansible-lint does not automatically load rules that have the 'opt-in' tag.
